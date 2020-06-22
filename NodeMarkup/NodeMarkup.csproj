@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="Manager\Classes.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="Manager\NodeMarkupManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool.cs" />
     <Compile Include="UI\NodeMarkupButton.cs" />

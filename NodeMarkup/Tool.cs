@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Math;
 using ColossalFramework.UI;
 using NodeMarkup.UI;
 using NodeMarkup.Utils;
@@ -9,14 +10,26 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
+using NodeMarkup.Manager;
 
 namespace NodeMarkup
 {
     public class NodeMarkupTool : ToolBase
     {
-        ushort hoverNodeId = 0;
-        ushort selectNodeId = 0;
+        private Mode ToolMode { get; set; } = Mode.SelectNode;
+
+        private Ray _mouseRay;
+        private float _mouseRayLength;
+        private bool _mouseRayValid;
+        private Vector3 _mousePosition;
+
+        ushort _hoverNodeId = 0;
+        ushort _selectNodeId = 0;
+        MarkupPoint _hoverPoint = null;
+        MarkupPoint _selectPoint = null;
+
         Color32 hoverColor = new Color32(51, 181, 229, 224);
+        Color32 whiteColor = new Color32(255, 255, 255, 128);
         Color32[] linePointColors = new Color32[]
         {
             new Color32(204, 0, 0, 224),
@@ -30,8 +43,10 @@ namespace NodeMarkup
             new Color32(255, 0, 204, 224),
         };
 
-        bool IsHover => hoverNodeId != 0;
-        bool IsSelect => selectNodeId != 0;
+        bool IsHoverNode => _hoverNodeId != 0;
+        bool IsSelectNode => _selectNodeId != 0;
+        bool IsHoverPoint => _hoverPoint != null;
+        bool IsSelectPoint => _selectPoint != null;
 
         private NetManager NetManager => Singleton<NetManager>.instance;
         private RenderManager RenderManager => Singleton<RenderManager>.instance;
@@ -82,117 +97,30 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
             base.OnEnable();
             Button?.Activate();
-            hoverNodeId = 0;
+            _hoverNodeId = 0;
         }
         protected override void OnDisable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
             base.OnDisable();
             Button?.Deactivate();
-            hoverNodeId = 0;
+            _hoverNodeId = 0;
+            _selectNodeId = 0;
         }
 
         protected override void OnToolUpdate()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnToolUpdate)}");
-            GetHovered();
-        }
-        private void GetHovered()
-        {
-            if (!UIView.IsInsideUI() && Cursor.visible)
+
+            switch (ToolMode)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastInput input = new RaycastInput(ray, Camera.main.farClipPlane)
-                {
-                    m_ignoreTerrain = true,
-                    m_ignoreNodeFlags = NetNode.Flags.None,
-                    m_ignoreSegmentFlags = NetSegment.Flags.All
-                };
-                input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);
-                input.m_netService.m_service = ItemClass.Service.Road;
-
-                if (RayCast(input, out RaycastOutput output))
-                {
-                    hoverNodeId = output.m_netNode;
-                    return;
-                }
+                case Mode.SelectNode:
+                    GetHoveredNode();
+                    break;
+                case Mode.ConnectLine:
+                    GetHoverPoint();
+                    break;
             }
-
-            hoverNodeId = 0;
-        }
-
-        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(RenderOverlay)}");
-
-            base.RenderOverlay(cameraInfo);
-
-            if (hoverNodeId == 0)
-                return;
-
-            var node = Utilities.GetNode(hoverNodeId);
-            RenderManager.OverlayEffect.DrawCircle(cameraInfo, hoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
-
-            var nodeMarkup = new NodeMarkup(hoverNodeId);
-            foreach(var enter in nodeMarkup)
-            {
-                var points = enter.ToArray();
-                for (var i = 0; i < points.Length; i += 1)
-                {
-                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, linePointColors[i % linePointColors.Length], points[i].Position, 1f, -1f, 1280f, false, true);
-                }
-            }
-
-            //foreach (var segment in node.Segments())
-            //{
-            //    var segmentDir = segment.m_startNode == hoverNodeId ? SegmentDir.Start : SegmentDir.End;
-            //    var direction = segmentDir == SegmentDir.Start ? segment.m_startDirection : segment.m_endDirection;
-            //    var segmentInvert = (segment.m_flags & NetSegment.Flags.Invert) == NetSegment.Flags.Invert;
-            //    var laneInvert = segmentDir == SegmentDir.Start ^ segmentInvert;
-
-            //    var cornerAngle = (segmentDir == SegmentDir.Start) ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd;
-            //    var cornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false) * (laneInvert ? 1 : -1);
-
-            //    var lineList = new MarkupLine[segment.Info.m_lanes.Length + 1];
-            //    var lanes = segment.GetLanes().ToArray();
-            //    var driveLane = 0;
-            //    for (var i = 0; i < segment.Info.m_lanes.Length; i += 1)
-            //    {
-            //        var sortI = segment.Info.m_sortedLanes[!laneInvert ? segment.Info.m_lanes.Length - i - 1 : i];
-            //        //var sortI = segment.Info.m_sortedLanes[i];
-            //        var lane = lanes[sortI];
-            //        var laneInfo = segment.Info.m_lanes[sortI];
-            //        if ((laneInfo.m_vehicleType & VehicleInfo.VehicleType.Car) != VehicleInfo.VehicleType.None && (laneInfo.m_laneType & NetInfo.LaneType.Parking) == NetInfo.LaneType.None)
-            //        {
-            //            lineList[driveLane].RightInfo = laneInfo;
-            //            lineList[driveLane].RightLane = lane;
-            //            lineList[driveLane + 1].LeftInfo = laneInfo;
-            //            lineList[driveLane + 1].LeftLane = lane;
-
-            //            driveLane += 1;
-            //        }
-            //    }
-
-            //    var drawLine = new List<MarkupLine>();
-            //    foreach (var line in lineList)
-            //    {
-            //        if (line.IsEmpty)
-            //            continue;
-            //        if (!line.NeedSeparate)
-            //            drawLine.Add(line);
-            //        else
-            //        {
-            //            drawLine.Add(line.RightMarkupLine);
-            //            drawLine.Add(line.LeftMarkupLine);
-            //        }
-            //    }
-
-            //    for (var i = 0; i < drawLine.Count; i += 1)
-            //    {
-            //        var position = drawLine[i].GetPosition(segmentDir, cornerDir);
-            //        RenderManager.OverlayEffect.DrawCircle(cameraInfo, linePointColors[i % linePointColors.Length], position, 1f, -1f, 1280f, false, true);
-            //    }
-            //}
         }
         public void ToggleTool()
         {
@@ -213,283 +141,210 @@ namespace NodeMarkup
             if (CurrentTool == this)
                 ToolsModifierControl.SetTool<DefaultTool>();
         }
-    }
-    //public struct MarkupLine
-    //{
-    //    public NetLane RightLane;
-    //    public NetInfo.Lane RightInfo;
 
-    //    public NetLane LeftLane;
-    //    public NetInfo.Lane LeftInfo;
-
-    //    public bool IsRightEdge => LeftInfo == null;
-    //    public bool IsLeftEdge => RightInfo == null;
-    //    public bool IsEmpty => IsRightEdge && IsLeftEdge;
-    //    public bool IsEdge => IsRightEdge ^ IsLeftEdge;
-
-    //    private NetLane EdgeLane => IsRightEdge ? RightLane : LeftLane;
-    //    private NetInfo.Lane EdgeLaneInfo => IsRightEdge ? RightInfo : LeftInfo;
-
-    //    public MarkupLine LeftMarkupLine => new MarkupLine()
-    //    {
-    //        LeftLane = LeftLane,
-    //        LeftInfo = LeftInfo
-    //    };
-    //    public MarkupLine RightMarkupLine => new MarkupLine()
-    //    {
-    //        RightLane = RightLane,
-    //        RightInfo = RightInfo
-    //    };
-    //    private float CenterDelte => IsEdge ? 0f : (RightInfo?.m_position ?? 0) - (LeftInfo?.m_position ?? 0);
-    //    private float SideDelta => CenterDelte - ((RightInfo?.m_width ?? 0) + (LeftInfo?.m_width ?? 0)) / 2;
-    //    public bool NeedSeparate => !IsEdge && SideDelta >= (RightInfo.m_width + LeftInfo.m_width) / 4;
-
-    //    public Vector3 GetPosition(SegmentDir segmentDir, Vector3 cornerDir)
-    //    {
-    //        var point = segmentDir == SegmentDir.Start ? 0f : 1f;
-
-    //        if (!IsEdge)
-    //        {
-    //            var rightPos = RightLane.CalculatePosition(point);
-    //            var leftPos = LeftLane.CalculatePosition(point);
-
-    //            var part = (RightInfo.m_width + SideDelta) / 2 / CenterDelte;
-    //            var pos = Vector3.Lerp(rightPos, leftPos, part);
-
-    //            return pos;
-    //        }
-    //        else
-    //        {
-    //            var pos = EdgeLane.CalculatePosition(point);
-    //            var lineShift = (IsRightEdge ? RightInfo.m_width : -LeftInfo.m_width) / 2;
-    //            pos += cornerDir * lineShift;
-
-    //            return pos;
-    //        }
-    //    }
-    //}
-    public enum SegmentDir
-    {
-        Start,
-        End
-    }
-
-    public class NodeMarkup : IEnumerable<SegmentEnter>
-    {
-        public ushort NodeId { get; }
-        Dictionary<ushort, SegmentEnter> Enters { get; } = new Dictionary<ushort, SegmentEnter>();
-
-        public NodeMarkup(ushort nodeId)
+        private void GetHoveredNode()
         {
-            NodeId = nodeId;
-
-            var node = Utilities.GetNode(NodeId);
-            foreach (var segmentId in node.SegmentsId())
+            if (!UIView.IsInsideUI() && Cursor.visible)
             {
-                var enter = new SegmentEnter(NodeId, segmentId);
-                Enters[segmentId] = enter;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastInput input = new RaycastInput(ray, Camera.main.farClipPlane)
+                {
+                    m_ignoreTerrain = true,
+                    m_ignoreNodeFlags = NetNode.Flags.None,
+                    m_ignoreSegmentFlags = NetSegment.Flags.All
+                };
+                input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);
+                input.m_netService.m_service = ItemClass.Service.Road;
+
+                if (RayCast(input, out RaycastOutput output))
+                {
+                    _hoverNodeId = output.m_netNode;
+                    return;
+                }
+            }
+
+            _hoverNodeId = 0;
+        }
+        private void GetHoverPoint()
+        {
+            if (!UIView.IsInsideUI() && Cursor.visible)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                var markup = NodeMarkupManager.Get(_selectNodeId);
+                foreach (var enter in markup.Enters)
+                {
+                    foreach (var point in enter)
+                    {
+                        if (point.IsIntersect(ray) && (!IsSelectPoint || point.Enter != _selectPoint.Enter))
+                        {
+                            _hoverPoint = point;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            _hoverPoint = null;
+        }
+        protected override void OnToolGUI(Event e)
+        {
+            base.OnToolGUI(e);
+            if (e.type == EventType.MouseUp && _mouseRayValid)
+            {
+                if (e.button == 0)
+                    OnPrimaryMouseClicked();
+                else if (e.button == 1)
+                    OnSecondaryMouseClicked();
+            }
+        }
+        protected override void OnToolLateUpdate()
+        {
+            base.OnToolUpdate();
+            _mousePosition = Input.mousePosition;
+            _mouseRay = Camera.main.ScreenPointToRay(_mousePosition);
+            _mouseRayLength = Camera.main.farClipPlane;
+            _mouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
+        }
+        private void OnPrimaryMouseClicked()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnPrimaryMouseClicked)}");
+
+            switch (ToolMode)
+            {
+                case Mode.SelectNode when IsHoverNode:
+                    _selectNodeId = _hoverNodeId;
+                    ToolMode = Mode.ConnectLine;
+                    break;
+                case Mode.ConnectLine when IsHoverPoint && !IsSelectPoint:
+                    _selectPoint = _hoverPoint;
+                    break;
+                case Mode.ConnectLine when IsHoverPoint && IsSelectPoint:
+                    var markup = NodeMarkupManager.Get(_selectNodeId);
+                    markup.ToggleConnection(new MarkupPointPair(_selectPoint, _hoverPoint));
+                    _selectPoint = null;
+                    break;
+            }
+        }
+        private void OnSecondaryMouseClicked()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnSecondaryMouseClicked)}");
+
+            switch (ToolMode)
+            {
+                case Mode.ConnectLine when IsSelectPoint:
+                    _selectPoint = null;
+                    break;
+                case Mode.ConnectLine when !IsSelectPoint:
+                    ToolMode = Mode.SelectNode;
+                    _selectNodeId = 0;
+                    break;
+                case Mode.SelectNode:
+                    DisableTool();
+                    break;
             }
         }
 
-        public IEnumerator<SegmentEnter> GetEnumerator() => Enters.Values.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    }
-    public class SegmentEnter : IEnumerable<MarkupPoint>
-    {
-        public ushort SegmentId { get; }
-        public NetSegment Segment { get; }
-        public bool IsStartSide { get; }
-        public bool IsLaneInvert => IsStartSide ^ Segment.IsInvert();
-        List<MarkupPoint> Points { get; } = new List<MarkupPoint>();
-        public Vector3 CornerDir { get; private set; }
 
-        public SegmentEnter(ushort nodeId, ushort segmentId)
+        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            SegmentId = segmentId;
-            Segment = Utilities.GetSegment(SegmentId);
-            IsStartSide = Segment.m_startNode == nodeId;
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(RenderOverlay)}");
 
-            Update();
+            base.RenderOverlay(cameraInfo);
 
-            CreatePoints();
-        }
-        private void CreatePoints()
-        {
-            var info = Segment.Info;
-            var lanes = Segment.GetLanesId().ToArray();
-            var driveLanesIdxs = info.m_sortedLanes.Where(s => Utilities.IsDriveLane(info.m_lanes[s]));
-            if (!IsLaneInvert)
-                driveLanesIdxs = driveLanesIdxs.Reverse();
-
-            var driveLanes = driveLanesIdxs.Select(d => new SegmentLane(lanes[d], info.m_lanes[d])).ToArray();
-
-            var markupLines = new SegmentMarkupLine[driveLanes.Length + 1];
-
-            for(int i = 0; i < markupLines.Length; i += 1)
+            switch (ToolMode)
             {
-                var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
-                var right = i < driveLanes.Length ? driveLanes[i] : null;
-                var markupLine = new SegmentMarkupLine(this, left, right);
-                markupLines[i] = markupLine;
-            }
+                case Mode.SelectNode when IsHoverNode:
+                    var node = Utilities.GetNode(_hoverNodeId);
+                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, hoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
+                    break;
+                case Mode.ConnectLine:
+                    if (IsHoverPoint)
+                        RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, _hoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
-            foreach(var markupLine in markupLines)
-            {
-                var points = markupLine.GetMarkupPoints();
-                Points.AddRange(points);
+                    RenderPointOverlay(cameraInfo, _selectPoint?.Enter);
+                    RenderLineOverlay(cameraInfo);
+                    RenderConnectLineOverlay(cameraInfo);
+                    break;
             }
         }
-
-        public void Update()
+        private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, SegmentEnter ignore = null)
         {
-            var cornerAngle = IsStartSide ? Segment.m_cornerAngleStart : Segment.m_cornerAngleEnd;
-            CornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? 1 : -1);
-        }
-
-        public MarkupPoint this[int index] => Points[index];
-
-        public IEnumerator<MarkupPoint> GetEnumerator() => Points.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    }
-    public class SegmentLane
-    {
-        public uint LaneId { get; }
-        public NetInfo.Lane Info { get; }
-        public NetLane NetLane => Utilities.GetLane(LaneId);
-        public float Position => Info.m_position;
-        public float HalfWidth => Info.m_width / 2;
-        public float LeftSidePos => Position - HalfWidth;
-        public float RightSidePos => Position + HalfWidth;
-
-        public SegmentLane(uint laneId, NetInfo.Lane info)
-        {
-            LaneId = laneId;
-            Info = info;
-        }
-    }
-    public class SegmentMarkupLine
-    {
-        public SegmentEnter SegmentEnter { get; }
-
-        SegmentLane LeftLane { get; }
-        SegmentLane RightLane { get; }
-        float Point => SegmentEnter.IsStartSide ? 0f : 1f;
-
-        public bool IsRightEdge => LeftLane == null;
-        public bool IsLeftEdge => RightLane == null;
-        public bool IsEdge => IsRightEdge ^ IsLeftEdge;
-        public bool NeedSplit => !IsEdge && SideDelta >= (RightLane.HalfWidth + LeftLane.HalfWidth) / 2;
-
-        public float CenterDelte => IsEdge ? 0f : RightLane.Position - LeftLane.Position;
-        public float SideDelta => IsEdge ? 0f : RightLane.LeftSidePos - LeftLane.RightSidePos;
-        public float HalfSideDelta => SideDelta / 2;
-
-        public SegmentMarkupLine(SegmentEnter segmentEnter, SegmentLane leftLane, SegmentLane rightLane)
-        {
-            SegmentEnter = segmentEnter;
-            LeftLane = leftLane;
-            RightLane = rightLane;
-        }
-
-        public MarkupPoint[] GetMarkupPoints()
-        {
-            if (IsEdge)
+            var markup = NodeMarkupManager.Get(_selectNodeId);
+            foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
-                var point = new MarkupPoint(this, IsRightEdge ? MarkupPoint.Type.RightEdge : MarkupPoint.Type.LeftEdge);
-                return new MarkupPoint[] { point };
+                var points = enter.ToArray();
+                for (var i = 0; i < points.Length; i += 1)
+                {
+                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, linePointColors[i % linePointColors.Length], points[i].Position, 1f, -1f, 1280f, false, true);
+                }
             }
-            else if (NeedSplit)
+        }
+        private void RenderLineOverlay(RenderManager.CameraInfo cameraInfo)
+        {
+            var markup = NodeMarkupManager.Get(_selectNodeId);
+            foreach(var line in markup.Lines)
             {
-                var pointLeft = new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
-                var pointRight = new MarkupPoint(this, MarkupPoint.Type.RightEdge);
-                return new MarkupPoint[] { pointLeft, pointRight };
+                RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, line.Trajectory, 0.1f, 0.1f, 0.1f, -1f, 1280f, false, true);
+            }
+        }
+        private void RenderConnectLineOverlay(RenderManager.CameraInfo cameraInfo)
+        {
+            if (!IsSelectPoint)
+                return;
+
+            var bezier = new Bezier3();
+            var color = default(Color);
+
+            if (IsHoverPoint)
+            {
+                var markup = NodeMarkupManager.Get(_selectNodeId);
+                var pointPair = new MarkupPointPair(_selectPoint, _hoverPoint);
+                color = markup.ExistConnection(pointPair) ? Color.red : Color.white;
+
+                bezier.a = _selectPoint.Position;
+                bezier.b = _selectPoint.Direction;
+                bezier.c = _hoverPoint.Direction;
+                bezier.d = _hoverPoint.Position;
             }
             else
             {
-                var point = new MarkupPoint(this, MarkupPoint.Type.Between);
-                return new MarkupPoint[] { point };
+                color = Color.white;
+
+                RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength);
+                RayCast(input, out RaycastOutput output);
+
+                bezier.a = _selectPoint.Position;
+                bezier.b = _selectPoint.Direction;
+                bezier.c = _selectPoint.Direction.Turn90(true);
+                bezier.d = output.m_hitPos;
+
+                Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
+                bezier.c = v >= 0 ? bezier.c : -bezier.c;
             }
+
+            //RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength);
+            //RayCast(input, out RaycastOutput output);
+
+            //var bezier = new Bezier3
+            //{
+            //    a = _selectPoint.Position,
+            //    d = _hoverPoint?.Position ?? output.m_hitPos
+            //};
+
+            //var endDir = _selectPoint.Direction.Turn90(true);
+            //Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + _selectPoint.Direction), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + endDir), out float u, out float v);
+            //endDir = v >= 0 ? endDir : -endDir;
+
+            //NetSegment.CalculateMiddlePoints(bezier.a, _selectPoint.Direction, bezier.d, _hoverPoint?.Direction ?? endDir, true, true, out bezier.b, out bezier.c);
+            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0.5f, 0.5f, -1f, 1280f, false, true);
         }
 
-        public void GetPositionAndDirection(MarkupPoint.Type pointType, out Vector3 position, out Vector3 direction)
+        enum Mode
         {
-            if ((pointType & MarkupPoint.Type.Between) != MarkupPoint.Type.None)
-                GetMiddlePosition(out position, out direction);
-
-            else if ((pointType & MarkupPoint.Type.Edge) != MarkupPoint.Type.None)
-                GetEdgePosition(pointType, out position, out direction);
-
-            else
-                throw new Exception();
-        }
-        void GetMiddlePosition(out Vector3 position, out Vector3 direction)
-        {
-            RightLane.NetLane.CalculatePositionAndDirection(Point, out Vector3 rightPos, out Vector3 rightDir);
-            LeftLane.NetLane.CalculatePositionAndDirection(Point, out Vector3 leftPos, out Vector3 leftDir);
-
-            var part = (RightLane.HalfWidth + HalfSideDelta) / CenterDelte;
-            position = Vector3.Lerp(rightPos, leftPos, part);
-            direction = (rightDir + leftDir) / 2;
-        }
-        void GetEdgePosition(MarkupPoint.Type pointType, out Vector3 position, out Vector3 direction)
-        {
-            float lineShift;
-            switch (pointType)
-            {
-                case MarkupPoint.Type.LeftEdge:
-                    LeftLane.NetLane.CalculatePositionAndDirection(Point, out position, out direction);
-                    lineShift = -LeftLane.HalfWidth;
-                    break;
-                case MarkupPoint.Type.RightEdge:
-                    RightLane.NetLane.CalculatePositionAndDirection(Point, out position, out direction);
-                    lineShift = RightLane.HalfWidth;
-                    break;
-                default:
-                    throw new Exception();
-            }
-            direction = SegmentEnter.IsStartSide ? -direction : direction;
-
-            var angle = Vector3.Angle(direction, SegmentEnter.CornerDir);
-            angle = (angle > 90 ? 180 - angle : angle);
-            lineShift /= Mathf.Sin(angle * Mathf.Deg2Rad);
-
-            direction.Normalize();
-            position += SegmentEnter.CornerDir * lineShift;
-        }
-    }
-
-    public class MarkupPoint
-    {
-        public Vector3 Position { get; private set; }
-        public Vector3 Direction { get; private set; }
-        public Type PointType { get; private set; }
-
-        SegmentMarkupLine MarkupLine { get; }
-
-        public MarkupPoint(SegmentMarkupLine markupLine, Type pointType)
-        {
-            MarkupLine = markupLine;
-            PointType = pointType;
-
-            Update();
-        }
-
-        public void Update()
-        {
-            MarkupLine.GetPositionAndDirection(PointType, out Vector3 position, out Vector3 direction);
-            Position = position;
-            Direction = direction;
-        }
-
-        public enum Type
-        {
-            None = 0,
-            Edge = 1,
-            LeftEdge = 2 + Edge,
-            RightEdge = 4 + Edge,
-            Between = 8,
-            BetweenSomeDir = 16 + Between,
-            BetweenDiffDir = 32 + Between,
+            SelectNode,
+            ConnectLine
         }
     }
 }
