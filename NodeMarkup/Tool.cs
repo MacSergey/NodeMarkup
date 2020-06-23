@@ -300,7 +300,7 @@ namespace NodeMarkup
             {
                 var markup = NodeMarkupManager.Get(_selectNodeId);
                 var pointPair = new MarkupPointPair(_selectPoint, _hoverPoint);
-                color = markup.ExistConnection(pointPair) ? Color.red : Color.white;
+                color = markup.ExistConnection(pointPair) ? Color.red : Color.green;
 
                 bezier.a = _selectPoint.Position;
                 bezier.b = _selectPoint.Direction;
