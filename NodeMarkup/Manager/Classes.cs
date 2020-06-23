@@ -14,6 +14,8 @@ namespace NodeMarkup.Manager
         public ushort NodeId { get; }
         Dictionary<ushort, SegmentEnter> EntersDic { get; } = new Dictionary<ushort, SegmentEnter>();
         Dictionary<MarkupPointPair, MarkupLine> LinesDic { get; } = new Dictionary<MarkupPointPair, MarkupLine>(new MarkupPointPairComparer());
+        public RenderBatch[] RenderBatchs { get; private set; }
+
 
         public IEnumerable<MarkupLine> Lines
         {
@@ -42,6 +44,14 @@ namespace NodeMarkup.Manager
                 var enter = new SegmentEnter(NodeId, segmentId);
                 EntersDic[segmentId] = enter;
             }
+
+            Update();
+        }
+
+        public void Update()
+        {
+            var dashes = Lines.SelectMany(l => l.Dashes).ToArray();
+            RenderBatchs = RenderBatch.FromDashes(dashes);
         }
 
         public void AddConnect(MarkupPointPair pointPair)
@@ -60,6 +70,8 @@ namespace NodeMarkup.Manager
                 AddConnect(pointPair);
             else
                 RemoveConnect(pointPair);
+
+            Update();
         }
     }
     public struct MarkupPointPair
@@ -141,7 +153,7 @@ namespace NodeMarkup.Manager
     }
     public class SegmentLane
     {
-        private SegmentEnter Enter {get;}
+        private SegmentEnter Enter { get; }
 
         public uint LaneId { get; }
         public NetInfo.Lane Info { get; }
@@ -290,6 +302,9 @@ namespace NodeMarkup.Manager
     }
     public class MarkupLine
     {
+        public static float Dash => 1.5f;
+        public static float DashSpace => 1.5f;
+
         float _startOffset = 0;
         float _endOffset = 0;
 
@@ -298,6 +313,8 @@ namespace NodeMarkup.Manager
         public MarkupPoint End => PointPair.Second;
 
         public Bezier3 Trajectory { get; private set; }
+        public float Length { get; private set; }
+        public MarkupDash[] Dashes { get; private set; }
         public float StartOffset
         {
             get => _startOffset;
@@ -334,6 +351,32 @@ namespace NodeMarkup.Manager
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
             Trajectory = trajectory;
+            Length = trajectory.Length();
+
+            CalcDashes();
+        }
+        private void CalcDashes()
+        {
+            var dashCount = (int)((Length - DashSpace) / (Dash + DashSpace));
+            Dashes = new MarkupDash[dashCount];
+
+            var startSpace = (1 - ((Dash + DashSpace) * dashCount - DashSpace) / Length) / 2;
+            var dashT = Dash / Length;
+            var spaceT = DashSpace / Length;
+            for (var i = 0; i < dashCount; i += 1)
+            {
+                var startT = startSpace + (dashT + spaceT) * i;
+                var endT = startT + dashT;
+
+                var startPos = Trajectory.Position(startT);
+                var endPos = Trajectory.Position(endT);
+                var pos = (startPos + endPos) / 2;
+                var dir = Trajectory.Tangent((startT + endT) / 2);
+                var angle = Mathf.Atan2(dir.z, dir.x);
+
+                var dash = new MarkupDash(pos, angle);
+                Dashes[i] = dash;
+            }
         }
 
         public enum Type
@@ -342,6 +385,49 @@ namespace NodeMarkup.Manager
             Dash,
             DoubleSolid,
             DoubleDash
+        }
+    }
+    public struct MarkupDash
+    {
+        public Vector3 Position { get; }
+        public float Angle { get; }
+        public MarkupDash(Vector3 position, float angle)
+        {
+            Position = position;
+            Angle = angle;
+        }
+    }
+
+    public class RenderBatch
+    {
+        public Vector4[] Locations { get; }
+        public Vector4[] Indices { get; }
+        public Vector4[] Colors { get; }
+
+        public RenderBatch(MarkupDash[] dashes, int from = 0)
+        {
+            var count = Math.Min(16, dashes.Length - from);
+            Locations = new Vector4[count];
+            Indices = new Vector4[count];
+            Colors = new Vector4[count];
+
+            for (var i = 0; i < count; i += 1)
+            {
+                Locations[i] = dashes[i + from].Position;
+                Locations[i].w = dashes[i + from].Angle;
+                Indices[i] = new Vector4(0f, 0f, 0f, 1f);
+                Colors[i] = new Vector4(1f, 1f, 1f, 0.2f);
+            }
+        }
+
+        public static RenderBatch[] FromDashes(MarkupDash[] dashes)
+        {
+            var batches = new List<RenderBatch>();
+            for (var i = 0; i < dashes.Length; i += 16)
+            {
+                batches.Add(new RenderBatch(dashes, i));
+            }
+            return batches.ToArray();
         }
     }
 }

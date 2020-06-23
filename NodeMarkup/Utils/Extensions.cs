@@ -1,4 +1,6 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Math;
+using ColossalFramework.PlatformServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +47,7 @@ namespace NodeMarkup.Utils
                 yield return laneId;
             }
         }
+
         public static bool IsInvert(this NetSegment segment) => (segment.m_flags & NetSegment.Flags.Invert) == NetSegment.Flags.Invert;
         public static bool IsDriveLane(this NetInfo.Lane info) => (info.m_vehicleType & VehicleInfo.VehicleType.Car) == VehicleInfo.VehicleType.Car && (info.m_laneType & NetInfo.LaneType.Parking) == NetInfo.LaneType.None;
 
@@ -61,5 +64,22 @@ namespace NodeMarkup.Utils
         public static NetNode GetNode(ushort nodeId) => NetManager.m_nodes.m_buffer[nodeId];
         public static NetSegment GetSegment(ushort segmentId) => NetManager.m_segments.m_buffer[segmentId];
         public static NetLane GetLane(uint laneId) => NetManager.m_lanes.m_buffer[laneId];
+
+        public static float Length(this Bezier3 bezier, float minAngleDelta = 10)
+        {
+            var angle = Vector3.Angle(bezier.b - bezier.a, bezier.c - bezier.d);
+            if (180 - angle > minAngleDelta)
+            {
+                bezier.Divide(out Bezier3 first, out Bezier3 second);
+                var firstLength = first.Length();
+                var secondLength = second.Length();
+                return firstLength + secondLength;
+            }
+            else
+            {
+                var length = (bezier.d - bezier.a).magnitude;
+                return length;
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace NodeMarkup.Manager
         static NodeMarkupManager()
         {
             Material = CreateMaterial();
-            Mesh = CreateMesh();
+            Mesh = CreateMesh(16);
         }
         private static Texture2D CreateTexture()
         {
@@ -82,15 +82,15 @@ namespace NodeMarkup.Manager
             };
             material.EnableKeyword("MULTI_INSTANCE");
 
-            //var size = new Vector2(3.0f, 6.0f);
-            //var tile = new Vector3(1.0f, 1.0f);
-            //var slopeTolerance = Mathf.Clamp((size.x + size.y) / 4f, 2f, 32f);
+            var size = new Vector2(MarkupLine.Dash, 0.15f);
+            var tile = new Vector3(1.0f, 1.0f);
+            var slopeTolerance = Mathf.Clamp((size.x + size.y) / 4f, 2f, 32f);
 
-            //var scale = new Vector4(size.x, slopeTolerance, size.y, 0);
-            //var tiling = new Vector4(tile.x, 0, tile.y, 0);
+            var scale = new Vector4(size.x, slopeTolerance, size.y, 0);
+            var tiling = new Vector4(tile.x, 0, tile.y, 0);
 
-            //material.SetVector("_DecalSize", scale);
-            //material.SetVector("_DecalTiling", tiling);
+            material.SetVector("_DecalSize", scale);
+            material.SetVector("_DecalTiling", tiling);
 
             return material;
         }
@@ -167,51 +167,52 @@ namespace NodeMarkup.Manager
 
             var markup = NodesMarkup[nodeID];
             var instance = PropManager;
+            var materialBlock = instance.m_materialBlock;
 
-            foreach (var line in markup.Lines)
+            foreach(var batch in markup.RenderBatchs)
             {
-                var propinfo = PrefabCollection<PropInfo>.FindLoaded("Road Arrow F");
-
-                var materialBlock = instance.m_materialBlock;
                 materialBlock.Clear();
+                materialBlock.SetVectorArray(instance.ID_PropLocation, batch.Locations);
+                materialBlock.SetVectorArray(instance.ID_PropObjectIndex, batch.Indices);
+                materialBlock.SetVectorArray(instance.ID_PropColor, batch.Colors);
 
-                var pos1 = line.Trajectory.Position(0.25f);
-                var pos2 = line.Trajectory.Position(0.75f);
-
-                var loc = new Vector4[16];
-                loc[0] = pos1;
-                loc[1] = pos2;
-                materialBlock.SetVectorArray(instance.ID_PropLocation, loc);
-
-                var index = new Vector4[16];
-                index[0] = new Vector4(0f, 0f, 0f, 1f);
-                index[1] = new Vector4(0f, 0f, 0f, 1f);
-                materialBlock.SetVectorArray(instance.ID_PropObjectIndex, index);
-
-                var color = new Vector4[16];
-                color[0] = new Vector4(1f, 1f, 1f, 0.5f);
-                color[1] = new Vector4(1f, 1f, 1f, 0.5f);
-                materialBlock.SetVectorArray(instance.ID_PropColor, color);
-
-                var decalSize = new Vector4[16];
-                decalSize[0] = new Vector4(3, 0, 6, 0);
-                decalSize[1] = new Vector4(6, 0, 3, 0);
-                for (var i = 0; i < decalSize.Length; i += 1 )
-                {
-                    decalSize[i].y = Mathf.Clamp((decalSize[i].x + decalSize[i].y) / 4f, 2f, 32f);
-                }
-                materialBlock.SetVectorArray(ID_DecalSize, decalSize);
-
-                var decalTile = new Vector4[16];
-                decalTile[0] = new Vector4(1, 0, 1, 0);
-                decalTile[1] = new Vector4(1, 0, 1, 0);
-                materialBlock.SetVectorArray(ID_DecalTiling, decalTile);
-
-                var mesh = CreateMesh(2);
+                var mesh = Mesh;
                 var material = Material;
 
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
-            }
+            }    
+
+
+            //foreach (var line in markup.Lines)
+            //{
+            //    var propinfo = PrefabCollection<PropInfo>.FindLoaded("Road Arrow F");
+
+            //    var materialBlock = instance.m_materialBlock;
+            //    materialBlock.Clear();
+
+            //    var pos1 = line.Trajectory.Position(0.25f);
+            //    var pos2 = line.Trajectory.Position(0.75f);
+
+            //    var loc = new Vector4[16];
+            //    loc[0] = pos1;
+            //    loc[1] = pos2;
+            //    materialBlock.SetVectorArray(instance.ID_PropLocation, loc);
+
+            //    var index = new Vector4[16];
+            //    index[0] = new Vector4(0f, 0f, 0f, 1f);
+            //    index[1] = new Vector4(0f, 0f, 0f, 1f);
+            //    materialBlock.SetVectorArray(instance.ID_PropObjectIndex, index);
+
+            //    var color = new Vector4[16];
+            //    color[0] = new Vector4(1f, 1f, 1f, 0.5f);
+            //    color[1] = new Vector4(1f, 1f, 1f, 0.5f);
+            //    materialBlock.SetVectorArray(instance.ID_PropColor, color);
+
+            //    var mesh = CreateMesh(2);
+            //    var material = Material;
+
+            //    Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
+            //}
         }
     }
 }

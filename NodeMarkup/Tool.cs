@@ -263,7 +263,7 @@ namespace NodeMarkup
                         RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, _hoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
                     RenderPointOverlay(cameraInfo, _selectPoint?.Enter);
-                    RenderLineOverlay(cameraInfo);
+                    //RenderLineOverlay(cameraInfo);
                     RenderConnectLineOverlay(cameraInfo);
                     break;
             }
