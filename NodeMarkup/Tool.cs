@@ -294,7 +294,7 @@ namespace NodeMarkup
                 return;
 
             var bezier = new Bezier3();
-            var color = default(Color);
+            Color color;
 
             if (IsHoverPoint)
             {
@@ -323,20 +323,6 @@ namespace NodeMarkup
                 bezier.c = v >= 0 ? bezier.c : -bezier.c;
             }
 
-            //RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength);
-            //RayCast(input, out RaycastOutput output);
-
-            //var bezier = new Bezier3
-            //{
-            //    a = _selectPoint.Position,
-            //    d = _hoverPoint?.Position ?? output.m_hitPos
-            //};
-
-            //var endDir = _selectPoint.Direction.Turn90(true);
-            //Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + _selectPoint.Direction), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + endDir), out float u, out float v);
-            //endDir = v >= 0 ? endDir : -endDir;
-
-            //NetSegment.CalculateMiddlePoints(bezier.a, _selectPoint.Direction, bezier.d, _hoverPoint?.Direction ?? endDir, true, true, out bezier.b, out bezier.c);
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0.5f, 0.5f, -1f, 1280f, false, true);
         }

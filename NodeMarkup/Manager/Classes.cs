@@ -111,7 +111,7 @@ namespace NodeMarkup.Manager
             if (!IsLaneInvert)
                 driveLanesIdxs = driveLanesIdxs.Reverse();
 
-            var driveLanes = driveLanesIdxs.Select(d => new SegmentLane(lanes[d], info.m_lanes[d])).ToArray();
+            var driveLanes = driveLanesIdxs.Select(d => new SegmentLane(this, lanes[d], info.m_lanes[d])).ToArray();
 
             var markupLines = new SegmentMarkupLine[driveLanes.Length + 1];
 
@@ -133,7 +133,7 @@ namespace NodeMarkup.Manager
         public void Update()
         {
             var cornerAngle = IsStartSide ? Segment.m_cornerAngleStart : Segment.m_cornerAngleEnd;
-            CornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? 1 : -1);
+            CornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? -1 : 1);
         }
 
         public IEnumerator<MarkupPoint> GetEnumerator() => Points.GetEnumerator();
@@ -141,16 +141,19 @@ namespace NodeMarkup.Manager
     }
     public class SegmentLane
     {
+        private SegmentEnter Enter {get;}
+
         public uint LaneId { get; }
         public NetInfo.Lane Info { get; }
         public NetLane NetLane => Utilities.GetLane(LaneId);
         public float Position => Info.m_position;
         public float HalfWidth => Info.m_width / 2;
-        public float LeftSidePos => Position - HalfWidth;
-        public float RightSidePos => Position + HalfWidth;
+        public float LeftSidePos => Position + (Enter.IsLaneInvert ? -HalfWidth : HalfWidth);
+        public float RightSidePos => Position + (Enter.IsLaneInvert ? HalfWidth : -HalfWidth);
 
-        public SegmentLane(uint laneId, NetInfo.Lane info)
+        public SegmentLane(SegmentEnter enter, uint laneId, NetInfo.Lane info)
         {
+            Enter = enter;
             LaneId = laneId;
             Info = info;
         }
@@ -163,13 +166,13 @@ namespace NodeMarkup.Manager
         SegmentLane RightLane { get; }
         float Point => SegmentEnter.IsStartSide ? 0f : 1f;
 
-        public bool IsRightEdge => LeftLane == null;
-        public bool IsLeftEdge => RightLane == null;
+        public bool IsRightEdge => RightLane == null;
+        public bool IsLeftEdge => LeftLane == null;
         public bool IsEdge => IsRightEdge ^ IsLeftEdge;
         public bool NeedSplit => !IsEdge && SideDelta >= (RightLane.HalfWidth + LeftLane.HalfWidth) / 2;
 
-        public float CenterDelte => IsEdge ? 0f : RightLane.Position - LeftLane.Position;
-        public float SideDelta => IsEdge ? 0f : RightLane.LeftSidePos - LeftLane.RightSidePos;
+        public float CenterDelte => IsEdge ? 0f : Mathf.Abs(RightLane.Position - LeftLane.Position);
+        public float SideDelta => IsEdge ? 0f : Mathf.Abs(RightLane.LeftSidePos - LeftLane.RightSidePos);
         public float HalfSideDelta => SideDelta / 2;
 
         public SegmentMarkupLine(SegmentEnter segmentEnter, SegmentLane leftLane, SegmentLane rightLane)
@@ -190,7 +193,7 @@ namespace NodeMarkup.Manager
             {
                 var pointLeft = new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
                 var pointRight = new MarkupPoint(this, MarkupPoint.Type.RightEdge);
-                return new MarkupPoint[] { pointLeft, pointRight };
+                return new MarkupPoint[] { pointRight, pointLeft };
             }
             else
             {
@@ -226,12 +229,12 @@ namespace NodeMarkup.Manager
             switch (pointType)
             {
                 case MarkupPoint.Type.LeftEdge:
-                    LeftLane.NetLane.CalculatePositionAndDirection(Point, out position, out direction);
-                    lineShift = -LeftLane.HalfWidth;
+                    RightLane.NetLane.CalculatePositionAndDirection(Point, out position, out direction);
+                    lineShift = -RightLane.HalfWidth;
                     break;
                 case MarkupPoint.Type.RightEdge:
-                    RightLane.NetLane.CalculatePositionAndDirection(Point, out position, out direction);
-                    lineShift = RightLane.HalfWidth;
+                    LeftLane.NetLane.CalculatePositionAndDirection(Point, out position, out direction);
+                    lineShift = LeftLane.HalfWidth;
                     break;
                 default:
                     throw new Exception();
@@ -291,6 +294,8 @@ namespace NodeMarkup.Manager
         float _endOffset = 0;
 
         public MarkupPointPair PointPair { get; }
+        public MarkupPoint Start => PointPair.First;
+        public MarkupPoint End => PointPair.Second;
 
         public Bezier3 Trajectory { get; private set; }
         public float StartOffset

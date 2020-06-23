@@ -16,19 +16,19 @@ namespace NodeMarkup
         public void OnEnabled()
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
-            if (CheckGameMode(AppMode.Game))
-                NodeMarkupTool.Create();
+            Patcher.Patch();
         }
         public void OnDisabled()
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnDisabled)}");
+            Patcher.Unpatch();
             NodeMarkupTool.Remove();
         }
 
         public override void OnLevelLoaded(LoadMode mode)
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelLoaded)}");
-            if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame || mode == LoadMode.NewGameFromScenario)
+            if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame || mode == LoadMode.NewGameFromScenario || mode == LoadMode.NewAsset)
                 NodeMarkupTool.Create();
         }
 
