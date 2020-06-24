@@ -4,6 +4,7 @@ using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace NodeMarkup
@@ -33,16 +34,69 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Patcher)}.{nameof(Begin)}");
 
-
-            Logger.LogDebug($"Patch NetNode.RenderInstance");
             var harmony = new Harmony(HarmonyId);
+            PatchNetNodeRenderInstance(harmony);
+            PatchNetManagerReleaseNodeImplementation(harmony);
+            PatchNetManagerUpdateNode(harmony);
+            PatchNetSegmentUpdateLanes(harmony);
+            PatchNetManagerSimulationStepImpl(harmony);
+        }
 
-            var original = AccessTools.Method(typeof(NetNode), "RenderInstance", new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
-            var postfix = AccessTools.Method(typeof(NodeMarkupManager), nameof(NodeMarkupManager.NetNodeRenderPostfix));
+        private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
+        {
+            var methodName = $"{original.DeclaringType.Name}.{original.Name}";
 
+            Logger.LogDebug($"Patch {methodName}");
+            harmony.Patch(original, prefix: new HarmonyMethod(prefix));
+            Logger.LogDebug($"Patched {methodName}");
+        }
+        private static void AddPostfix(Harmony harmony, MethodInfo original, MethodInfo postfix)
+        {
+            var methodName = $"{original.DeclaringType.Name}.{original.Name}";
+
+            Logger.LogDebug($"Patch {methodName}");
             harmony.Patch(original, postfix: new HarmonyMethod(postfix));
+            Logger.LogDebug($"Patched {methodName}");
+        }
 
-            Logger.LogDebug($"Patched");
+        private static void PatchNetNodeRenderInstance(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetNode), "RenderInstance", new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
+            var postfix = AccessTools.Method(typeof(NodeMarkupManager), nameof(NodeMarkupManager.NetNodeRenderInstancePostfix));
+
+            AddPostfix(harmony, original, postfix);
+        }
+
+        private static void PatchNetManagerUpdateNode(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetManager), nameof(NetManager.UpdateNode), new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
+            var postfix = AccessTools.Method(typeof(NodeMarkupManager), nameof(NodeMarkupManager.NetManagerUpdateNodePostfix));
+
+            AddPostfix(harmony, original, postfix);
+        }
+
+        private static void PatchNetManagerReleaseNodeImplementation(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetManager), "ReleaseNodeImplementation", new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() });
+            var prefix = AccessTools.Method(typeof(NodeMarkupManager), nameof(NodeMarkupManager.NetManagerReleaseNodeImplementationPrefix));
+
+            AddPrefix(harmony, original, prefix);
+        }
+
+        private static void PatchNetSegmentUpdateLanes(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetSegment), nameof(NetSegment.UpdateLanes));
+            var postfix = AccessTools.Method(typeof(NodeMarkupManager), nameof(NodeMarkupManager.NetSegmentUpdateLanesPostfix));
+
+            AddPostfix(harmony, original, postfix);
+        }
+
+        private static void PatchNetManagerSimulationStepImpl(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetManager), "SimulationStepImpl");
+            var postfix = AccessTools.Method(typeof(NodeMarkupManager), nameof(NodeMarkupManager.NetManagerSimulationStepImplPostfix));
+
+            AddPostfix(harmony, original, postfix);
         }
     }
 }

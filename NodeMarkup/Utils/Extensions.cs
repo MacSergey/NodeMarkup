@@ -81,5 +81,6 @@ namespace NodeMarkup.Utils
                 return length;
             }
         }
+        public static Vector4 ToVector(this Color c) => new Vector4(c.r, c.g, c.b, c.a);
     }
 }

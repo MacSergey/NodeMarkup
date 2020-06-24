@@ -97,20 +97,25 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
             base.OnEnable();
             Button?.Activate();
-            _hoverNodeId = 0;
+            Reset();
         }
         protected override void OnDisable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
             base.OnDisable();
             Button?.Deactivate();
+            Reset();
+        }
+        private void Reset()
+        {
             _hoverNodeId = 0;
             _selectNodeId = 0;
+            ToolMode = Mode.SelectNode;
         }
 
         protected override void OnToolUpdate()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnToolUpdate)}");
+            //Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnToolUpdate)}");
 
             switch (ToolMode)
             {
@@ -174,7 +179,7 @@ namespace NodeMarkup
                 var markup = NodeMarkupManager.Get(_selectNodeId);
                 foreach (var enter in markup.Enters)
                 {
-                    foreach (var point in enter)
+                    foreach (var point in enter.Points)
                     {
                         if (point.IsIntersect(ray) && (!IsSelectPoint || point.Enter != _selectPoint.Enter))
                         {
@@ -248,7 +253,7 @@ namespace NodeMarkup
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(RenderOverlay)}");
+            //Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(RenderOverlay)}");
 
             base.RenderOverlay(cameraInfo);
 
@@ -263,7 +268,6 @@ namespace NodeMarkup
                         RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, _hoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
                     RenderPointOverlay(cameraInfo, _selectPoint?.Enter);
-                    //RenderLineOverlay(cameraInfo);
                     RenderConnectLineOverlay(cameraInfo);
                     break;
             }
@@ -273,19 +277,11 @@ namespace NodeMarkup
             var markup = NodeMarkupManager.Get(_selectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
-                var points = enter.ToArray();
-                for (var i = 0; i < points.Length; i += 1)
+                
+                for (var i = 0; i < enter.Points.Length; i += 1)
                 {
-                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, linePointColors[i % linePointColors.Length], points[i].Position, 1f, -1f, 1280f, false, true);
+                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, linePointColors[i % linePointColors.Length], enter.Points[i].Position, 1f, -1f, 1280f, false, true);
                 }
-            }
-        }
-        private void RenderLineOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            var markup = NodeMarkupManager.Get(_selectNodeId);
-            foreach(var line in markup.Lines)
-            {
-                RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, line.Trajectory, 0.1f, 0.1f, 0.1f, -1f, 1280f, false, true);
             }
         }
         private void RenderConnectLineOverlay(RenderManager.CameraInfo cameraInfo)
