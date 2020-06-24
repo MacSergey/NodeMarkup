@@ -14,7 +14,7 @@ namespace NodeMarkup.Manager
         public ushort NodeId { get; }
         Dictionary<ushort, SegmentEnter> EntersDictionary { get; set; } = new Dictionary<ushort, SegmentEnter>();
         Dictionary<MarkupPointPair, MarkupLine> LinesDictionary { get; } = new Dictionary<MarkupPointPair, MarkupLine>(new MarkupPointPairComparer());
-        public RenderBatch[] RenderBatchs { get; private set; }
+        public RenderBatch[] RenderBatches { get; private set; }
 
 
         public IEnumerable<MarkupLine> Lines
@@ -43,33 +43,44 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            var node = Utilities.GetNode(NodeId);
-
-            var enters = new Dictionary<ushort, SegmentEnter>();
-
-            foreach (var segmentId in node.SegmentsId())
+            try
             {
-                if(!EntersDictionary.TryGetValue(segmentId, out SegmentEnter enter))
-                    enter = new SegmentEnter(NodeId, segmentId);
+                Logger.LogDebug($"End update node #{NodeId}");
 
-                enter.Update();
+                var node = Utilities.GetNode(NodeId);
 
-                enters.Add(segmentId, enter);
+                var enters = new Dictionary<ushort, SegmentEnter>();
+
+                foreach (var segmentId in node.SegmentsId())
+                {
+                    if (!EntersDictionary.TryGetValue(segmentId, out SegmentEnter enter))
+                        enter = new SegmentEnter(NodeId, segmentId);
+
+                    enter.Update();
+
+                    enters.Add(segmentId, enter);
+                }
+
+                EntersDictionary = enters;
+
+                var pointPairs = LinesDictionary.Keys.ToArray();
+                foreach (var pointPair in pointPairs)
+                {
+                    if (EntersDictionary.ContainsKey(pointPair.First.Enter.SegmentId) && EntersDictionary.ContainsKey(pointPair.Second.Enter.SegmentId))
+                        LinesDictionary[pointPair].Update();
+                    else
+                        LinesDictionary.Remove(pointPair);
+                }
+
+                var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes).ToArray();
+                RenderBatches = RenderBatch.FromDashes(dashes);
+
+                Logger.LogDebug($"End update node #{NodeId}");
             }
-
-            EntersDictionary = enters;
-
-            var pointPairs = LinesDictionary.Keys.ToArray();
-            foreach (var pointPair in pointPairs)
+            catch (Exception error)
             {
-                if (EntersDictionary.ContainsKey(pointPair.First.Enter.SegmentId) && EntersDictionary.ContainsKey(pointPair.Second.Enter.SegmentId))
-                    LinesDictionary[pointPair].Update();
-                else
-                    LinesDictionary.Remove(pointPair);
+                Logger.LogError(error: error);
             }
-
-            var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes).ToArray();
-            RenderBatchs = RenderBatch.FromDashes(dashes);
         }
 
         public void AddConnect(MarkupPointPair pointPair)
@@ -113,15 +124,14 @@ namespace NodeMarkup.Manager
     public class SegmentEnter
     {
         public ushort SegmentId { get; }
-        public NetSegment Segment { get; }
         public bool IsStartSide { get; }
-        public bool IsLaneInvert => IsStartSide ^ Segment.IsInvert();
+        public bool IsLaneInvert { get; } 
 
         SegmentDriveLane[] DriveLanes { get; set; } = new SegmentDriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
         public MarkupPoint[] Points { get; set; } = new MarkupPoint[0];
 
-        public Vector3 CornerDir { get; private set; }
+        public Vector3 cornerDir;
 
         public int PointCount => Points.Length;
         public MarkupPoint this[int index] => Points[index];
@@ -130,17 +140,18 @@ namespace NodeMarkup.Manager
         public SegmentEnter(ushort nodeId, ushort segmentId)
         {
             SegmentId = segmentId;
-            Segment = Utilities.GetSegment(SegmentId);
-            IsStartSide = Segment.m_startNode == nodeId;
+            var segment = Utilities.GetSegment(SegmentId);
+            IsStartSide = segment.m_startNode == nodeId;
+            IsLaneInvert = IsStartSide ^ segment.IsInvert();
 
             Update();
 
-            CreatePoints();
+            CreatePoints(segment);
         }
-        private void CreatePoints()
+        private void CreatePoints(NetSegment segment)
         {
-            var info = Segment.Info;
-            var lanes = Segment.GetLanesId().ToArray();
+            var info = segment.Info;
+            var lanes = segment.GetLanesId().ToArray();
             var driveLanesIdxs = info.m_sortedLanes.Where(s => Utilities.IsDriveLane(info.m_lanes[s]));
             if (!IsLaneInvert)
                 driveLanesIdxs = driveLanesIdxs.Reverse();
@@ -168,8 +179,9 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            var cornerAngle = IsStartSide ? Segment.m_cornerAngleStart : Segment.m_cornerAngleEnd;
-            CornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? -1 : 1);
+            var segment = Utilities.GetSegment(SegmentId);
+            var cornerAngle = IsStartSide ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd;
+            cornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? -1 : 1);
 
             foreach (var point in Points)
             {
@@ -279,12 +291,12 @@ namespace NodeMarkup.Manager
             }
             direction = SegmentEnter.IsStartSide ? -direction : direction;
 
-            var angle = Vector3.Angle(direction, SegmentEnter.CornerDir);
+            var angle = Vector3.Angle(direction, SegmentEnter.cornerDir);
             angle = (angle > 90 ? 180 - angle : angle);
             lineShift /= Mathf.Sin(angle * Mathf.Deg2Rad);
 
             direction.Normalize();
-            position += SegmentEnter.CornerDir * lineShift;
+            position += SegmentEnter.cornerDir * lineShift;
         }
     }
     public class MarkupPoint
@@ -370,7 +382,7 @@ namespace NodeMarkup.Manager
         public MarkupLine(MarkupPointPair pointPair)
         {
             PointPair = pointPair;
-            if ((pointPair.First.PointType & MarkupPoint.Type.Edge) == MarkupPoint.Type.Edge || (pointPair.Second.PointType & MarkupPoint.Type.Edge) == MarkupPoint.Type.Edge)
+            if ((pointPair.First.PointType & MarkupPoint.Type.Edge) == MarkupPoint.Type.Edge && (pointPair.Second.PointType & MarkupPoint.Type.Edge) == MarkupPoint.Type.Edge)
                 LineType = Type.Solid;
             else
                 LineType = Type.Dash;

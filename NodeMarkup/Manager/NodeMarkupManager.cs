@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
         {
             Material = RenderHelper.CreateMaterial();
         }
-        public static bool HasMarkup(ushort nodeId) => NodesMarkup.ContainsKey(nodeId);
+        public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
 
         public static Markup Get(ushort nodeId)
         {
@@ -37,17 +37,19 @@ namespace NodeMarkup.Manager
 
         public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data)
         {
-            if (!HasMarkup(nodeID))
+            if (!TryGetMarkup(nodeID, out Markup markup))
                 return;
 
             if (!cameraInfo.CheckRenderDistance(data.m_position, RenderDistance))
                 return;
 
-            var markup = NodesMarkup[nodeID];
             var instance = PropManager;
             var materialBlock = instance.m_materialBlock;
 
-            foreach (var batch in markup.RenderBatchs)
+            var renderBatches = markup.RenderBatches;
+
+            Logger.LogDebug($"Start render node {nodeID} markup: {renderBatches.Length} batches");
+            foreach (var batch in renderBatches)
             {
                 materialBlock.Clear();
                 materialBlock.SetVectorArray(instance.ID_PropLocation, batch.Locations);
@@ -59,6 +61,7 @@ namespace NodeMarkup.Manager
 
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
             }
+            Logger.LogDebug($"End render node {nodeID} markup success");
         }
 
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node)

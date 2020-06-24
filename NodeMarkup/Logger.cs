@@ -23,6 +23,8 @@ namespace NodeMarkup
         }
         public static void LogInfo(Func<string> message) => Log(Debug.Log, message);
         public static void LogWarning(Func<string> message) => Log(Debug.LogWarning, message);
+
+
         public static void LogError(Func<string> message = null, Exception error = null) => Log(Debug.LogError, error == null ? message : () => $"{message?.Invoke()}\n{error.Message}\n{error.StackTrace}");
 
         private static void Log(Action<string> logFunc, Func<string> message)
