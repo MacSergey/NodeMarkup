@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class NodeMarkupButton : UIButton
+    public class Button : UIButton
     {
         const string CONTAINING_PANEL_NAME = "RoadsOptionPanel";
         const string nodeMarkupButtonBg = "NodeControllerButtonBg";
@@ -18,8 +18,8 @@ namespace NodeMarkup.UI
         const string nodeMarkupIconActive = "NodeControllerIconPressed";
         const int buttonSize = 31;
         readonly static Vector2 buttonPosition = new Vector3(64, 38);
-        public static string AtlasName = nameof(NodeMarkupButton);
-        public static NodeMarkupButton Instace { get; private set; }
+        public static string AtlasName = nameof(Button);
+        public static Button Instace { get; private set; }
 
         static UIComponent GetContainingPanel()
         {
@@ -29,10 +29,10 @@ namespace NodeMarkup.UI
 
         public override void Start()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Start)}");
+            Logger.LogDebug($"{nameof(Button)}.{nameof(Start)}");
 
             base.Start();
-            name = nameof(NodeMarkupButton);
+            name = nameof(Button);
             playAudioEvents = true;
             tooltip = "Node Markup";
 
@@ -68,7 +68,7 @@ namespace NodeMarkup.UI
 
         public void Activate()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Activate)}");
+            Logger.LogDebug($"{nameof(Button)}.{nameof(Activate)}");
 
             focusedFgSprite = normalBgSprite = pressedBgSprite = disabledBgSprite = nodeMarkupButtonBgActive;
             normalFgSprite = focusedFgSprite = nodeMarkupIconActive;
@@ -76,24 +76,24 @@ namespace NodeMarkup.UI
         }
         public void Deactivate()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Deactivate)}");
+            Logger.LogDebug($"{nameof(Button)}.{nameof(Deactivate)}");
 
             focusedFgSprite = normalBgSprite = pressedBgSprite = disabledBgSprite = nodeMarkupButtonBg;
             normalFgSprite = focusedFgSprite = nodeMarkupIcon;
             Invalidate();
         }
 
-        public static NodeMarkupButton CreateButton()
+        public static Button CreateButton()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
+            Logger.LogDebug($"{nameof(Button)}.{nameof(CreateButton)}");
 
-            var button = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
+            var button = GetContainingPanel().AddUIComponent<Button>();
             return button;
         }
 
         protected override void OnClick(UIMouseEventParameter p)
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(OnClick)}");
+            Logger.LogDebug($"{nameof(Button)}.{nameof(OnClick)}");
 
             base.OnClick(p);
             NodeMarkupTool.Instance.ToggleTool();

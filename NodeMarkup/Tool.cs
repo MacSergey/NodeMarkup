@@ -23,14 +23,19 @@ namespace NodeMarkup
         private bool _mouseRayValid;
         private Vector3 _mousePosition;
 
-        ushort _hoverNodeId = 0;
-        ushort _selectNodeId = 0;
-        MarkupPoint _hoverPoint = null;
-        MarkupPoint _selectPoint = null;
+        ushort HoverNodeId { get; set; } = 0;
+        ushort SelectNodeId { get; set; } = 0;
+        MarkupPoint HoverPoint { get; set; } = null;
+        MarkupPoint SelectPoint { get; set; } = null;
+
+        bool IsHoverNode => HoverNodeId != 0;
+        bool IsSelectNode => SelectNodeId != 0;
+        bool IsHoverPoint => HoverPoint != null;
+        bool IsSelectPoint => SelectPoint != null;
 
         Color32 hoverColor = new Color32(51, 181, 229, 224);
         Color32 whiteColor = new Color32(255, 255, 255, 128);
-        Color32[] linePointColors = new Color32[]
+        Color32[] LinePointColors { get; } = new Color32[]
         {
             new Color32(204, 0, 0, 224),
             new Color32(0, 204, 0, 224),
@@ -43,17 +48,14 @@ namespace NodeMarkup
             new Color32(255, 0, 204, 224),
         };
 
-        bool IsHoverNode => _hoverNodeId != 0;
-        bool IsSelectNode => _selectNodeId != 0;
-        bool IsHoverPoint => _hoverPoint != null;
-        bool IsSelectPoint => _selectPoint != null;
-
         private NetManager NetManager => Singleton<NetManager>.instance;
         private RenderManager RenderManager => Singleton<RenderManager>.instance;
 
         public ToolBase CurrentTool => ToolsModifierControl.toolController?.CurrentTool;
         public bool ToolEnabled => CurrentTool == this;
-        NodeMarkupButton Button => NodeMarkupButton.Instace;
+
+        Button Button => Button.Instace;
+        NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
 
         public static NodeMarkupTool Instance
         {
@@ -66,7 +68,8 @@ namespace NodeMarkup
         protected override void Awake()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
-            NodeMarkupButton.CreateButton();
+            Button.CreateButton();
+            NodeMarkupPanel.CreatePanel();
 
             base.Awake();
         }
@@ -90,6 +93,8 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
             Button?.Hide();
             Destroy(Button);
+            Panel?.Hide();
+            Destroy(Panel);
             base.OnDestroy();
         }
         protected override void OnEnable()
@@ -97,6 +102,7 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
             base.OnEnable();
             Button?.Activate();
+            Panel?.Hide();
             Reset();
         }
         protected override void OnDisable()
@@ -104,12 +110,13 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
             base.OnDisable();
             Button?.Deactivate();
+            Panel?.Hide();
             Reset();
         }
         private void Reset()
         {
-            _hoverNodeId = 0;
-            _selectNodeId = 0;
+            HoverNodeId = 0;
+            SelectNodeId = 0;
             ToolMode = Mode.SelectNode;
         }
 
@@ -163,12 +170,12 @@ namespace NodeMarkup
 
                 if (RayCast(input, out RaycastOutput output))
                 {
-                    _hoverNodeId = output.m_netNode;
+                    HoverNodeId = output.m_netNode;
                     return;
                 }
             }
 
-            _hoverNodeId = 0;
+            HoverNodeId = 0;
         }
         private void GetHoverPoint()
         {
@@ -176,21 +183,21 @@ namespace NodeMarkup
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                var markup = NodeMarkupManager.Get(_selectNodeId);
+                var markup = NodeMarkupManager.Get(SelectNodeId);
                 foreach (var enter in markup.Enters)
                 {
                     foreach (var point in enter.Points)
                     {
-                        if (point.IsIntersect(ray) && (!IsSelectPoint || point.Enter != _selectPoint.Enter))
+                        if (point.IsIntersect(ray) && (!IsSelectPoint || point.Enter != SelectPoint.Enter))
                         {
-                            _hoverPoint = point;
+                            HoverPoint = point;
                             return;
                         }
                     }
                 }
             }
 
-            _hoverPoint = null;
+            HoverPoint = null;
         }
         protected override void OnToolGUI(Event e)
         {
@@ -218,16 +225,17 @@ namespace NodeMarkup
             switch (ToolMode)
             {
                 case Mode.SelectNode when IsHoverNode:
-                    _selectNodeId = _hoverNodeId;
+                    SelectNodeId = HoverNodeId;
                     ToolMode = Mode.ConnectLine;
+                    Panel.SetNode(SelectNodeId);
                     break;
                 case Mode.ConnectLine when IsHoverPoint && !IsSelectPoint:
-                    _selectPoint = _hoverPoint;
+                    SelectPoint = HoverPoint;
                     break;
                 case Mode.ConnectLine when IsHoverPoint && IsSelectPoint:
-                    var markup = NodeMarkupManager.Get(_selectNodeId);
-                    markup.ToggleConnection(new MarkupPointPair(_selectPoint, _hoverPoint));
-                    _selectPoint = null;
+                    var markup = NodeMarkupManager.Get(SelectNodeId);
+                    markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint));
+                    SelectPoint = null;
                     break;
             }
         }
@@ -238,11 +246,12 @@ namespace NodeMarkup
             switch (ToolMode)
             {
                 case Mode.ConnectLine when IsSelectPoint:
-                    _selectPoint = null;
+                    SelectPoint = null;
                     break;
                 case Mode.ConnectLine when !IsSelectPoint:
                     ToolMode = Mode.SelectNode;
-                    _selectNodeId = 0;
+                    SelectNodeId = 0;
+                    Panel?.Hide();
                     break;
                 case Mode.SelectNode:
                     DisableTool();
@@ -260,27 +269,27 @@ namespace NodeMarkup
             switch (ToolMode)
             {
                 case Mode.SelectNode when IsHoverNode:
-                    var node = Utilities.GetNode(_hoverNodeId);
+                    var node = Utilities.GetNode(HoverNodeId);
                     RenderManager.OverlayEffect.DrawCircle(cameraInfo, hoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
                     break;
                 case Mode.ConnectLine:
                     if (IsHoverPoint)
-                        RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, _hoverPoint.Position, 0.5f, -1f, 1280f, false, true);
+                        RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
-                    RenderPointOverlay(cameraInfo, _selectPoint?.Enter);
+                    RenderPointOverlay(cameraInfo, SelectPoint?.Enter);
                     RenderConnectLineOverlay(cameraInfo);
                     break;
             }
         }
         private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, SegmentEnter ignore = null)
         {
-            var markup = NodeMarkupManager.Get(_selectNodeId);
+            var markup = NodeMarkupManager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
                 
                 for (var i = 0; i < enter.Points.Length; i += 1)
                 {
-                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, linePointColors[i % linePointColors.Length], enter.Points[i].Position, 1f, -1f, 1280f, false, true);
+                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, LinePointColors[i % LinePointColors.Length], enter.Points[i].Position, 1f, -1f, 1280f, false, true);
                 }
             }
         }
@@ -294,14 +303,14 @@ namespace NodeMarkup
 
             if (IsHoverPoint)
             {
-                var markup = NodeMarkupManager.Get(_selectNodeId);
-                var pointPair = new MarkupPointPair(_selectPoint, _hoverPoint);
+                var markup = NodeMarkupManager.Get(SelectNodeId);
+                var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                 color = markup.ExistConnection(pointPair) ? Color.red : Color.green;
 
-                bezier.a = _selectPoint.Position;
-                bezier.b = _selectPoint.Direction;
-                bezier.c = _hoverPoint.Direction;
-                bezier.d = _hoverPoint.Position;
+                bezier.a = SelectPoint.Position;
+                bezier.b = SelectPoint.Direction;
+                bezier.c = HoverPoint.Direction;
+                bezier.d = HoverPoint.Position;
             }
             else
             {
@@ -310,9 +319,9 @@ namespace NodeMarkup
                 RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength);
                 RayCast(input, out RaycastOutput output);
 
-                bezier.a = _selectPoint.Position;
-                bezier.b = _selectPoint.Direction;
-                bezier.c = _selectPoint.Direction.Turn90(true);
+                bezier.a = SelectPoint.Position;
+                bezier.b = SelectPoint.Direction;
+                bezier.c = SelectPoint.Direction.Turn90(true);
                 bezier.d = output.m_hitPos;
 
                 Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);

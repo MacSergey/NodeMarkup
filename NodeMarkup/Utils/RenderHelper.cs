@@ -52,7 +52,7 @@ namespace NodeMarkup.Utils
             }
 
             Bounds bounds = default;
-            bounds.SetMinMax(new Vector3(-1000f, -1000f, -1000f), new Vector3(1000f, 1000f, 1000f));
+            bounds.SetMinMax(new Vector3(-100000f, -100000f, -100000f), new Vector3(100000f, 100000f, 100000f));
 
             var mesh = new Mesh()
             {
