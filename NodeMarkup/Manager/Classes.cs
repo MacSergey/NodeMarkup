@@ -113,6 +113,8 @@ namespace NodeMarkup.Manager
             First = first;
             Second = second;
         }
+
+        public override string ToString() => $"{First}—{Second}";
     }
     public class MarkupPointPairComparer : IEqualityComparer<MarkupPointPair>
     {
@@ -125,7 +127,7 @@ namespace NodeMarkup.Manager
     {
         public ushort SegmentId { get; }
         public bool IsStartSide { get; }
-        public bool IsLaneInvert { get; } 
+        public bool IsLaneInvert { get; }
 
         SegmentDriveLane[] DriveLanes { get; set; } = new SegmentDriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
@@ -172,7 +174,11 @@ namespace NodeMarkup.Manager
             foreach (var markupLine in Lines)
             {
                 var linePoints = markupLine.GetMarkupPoints();
-                points.AddRange(linePoints);
+                foreach (var point in linePoints)
+                {
+                    point.Id = (ushort)(points.Count + 1);
+                    points.Add(point);
+                }
             }
             Points = points.ToArray();
         }
@@ -188,6 +194,8 @@ namespace NodeMarkup.Manager
                 point.Update();
             }
         }
+
+        public override string ToString() => SegmentId.ToString();
     }
     public class SegmentDriveLane
     {
@@ -301,6 +309,22 @@ namespace NodeMarkup.Manager
     }
     public class MarkupPoint
     {
+        static Color32[] LinePointColors { get; } = new Color32[]
+        {
+            new Color32(204, 0, 0, 224),
+            new Color32(0, 204, 0, 224),
+            new Color32(0, 0, 204, 224),
+            new Color32(204, 0, 255, 224),
+            new Color32(255, 204, 0, 224),
+            new Color32(0, 255, 204, 224),
+            new Color32(204, 255, 0, 224),
+            new Color32(0, 204, 255, 224),
+            new Color32(255, 0, 204, 224),
+        };
+
+        public ushort Id { get; set; }
+        public Color32 Color => LinePointColors[(Id - 1) % LinePointColors.Length];
+
         public static Vector3 MarkerSize { get; } = Vector3.one * 1f;
         public Vector3 Position { get; private set; }
         public Vector3 Direction { get; private set; }
@@ -337,6 +361,8 @@ namespace NodeMarkup.Manager
             BetweenSomeDir = 16 + Between,
             BetweenDiffDir = 32 + Between,
         }
+
+        public override string ToString() => $"{Enter}-{Id}";
     }
     public class MarkupLine
     {

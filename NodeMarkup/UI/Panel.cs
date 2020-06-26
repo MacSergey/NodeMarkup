@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -15,7 +16,7 @@ namespace NodeMarkup.UI
         private UIDragHandle Handle { get; set; }
         private UILabel Caption { get; set; }
         private UITabPanel TabPanel { get; set; }
-        private List<EditorPanel> EditorPanels { get; } = new List<EditorPanel>();
+        private List<Editor> Editors { get; } = new List<Editor>();
 
         private static readonly string kTabstripButton = "RoadEditorTabstripButton";
         private static float TabStripHeight => 20;
@@ -73,14 +74,20 @@ namespace NodeMarkup.UI
             TabPanel.anchor = UIAnchorStyle.Top;
             TabPanel.size = new Vector2(500, 400);
 
-            TabPanel.AddTab<PointsEditorPanel>("Points");
-            TabPanel.AddTab<LinesEditorPanel>("Lines");
+            Editors.Add(TabPanel.AddTab<PointsEditorPanel>("Points"));
+            Editors.Add(TabPanel.AddTab<LinesEditorPanel>("Lines"));
         }
 
         public void SetNode(ushort nodeId)
         {
             Show();
             Caption.text = $"Edit node #{nodeId} markup";
+
+            var markup = NodeMarkupManager.Get(nodeId);
+            foreach(var editor in Editors)
+            {
+                editor.SetMarkup(markup);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace NodeMarkup.UI
             tabButton.textPadding = new RectOffset(10, 10, 1, 1);
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             tabButton.verticalAlignment = UIVerticalAlignment.Middle;
+
+            tabButton.atlas = TextureUtil.GetAtlas("Ingame");
 
             tabButton.normalBgSprite = "SubBarButtonBase";
             tabButton.disabledBgSprite = "SubBarButtonBaseDisabled";

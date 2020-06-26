@@ -34,19 +34,6 @@ namespace NodeMarkup
         bool IsSelectPoint => SelectPoint != null;
 
         Color32 hoverColor = new Color32(51, 181, 229, 224);
-        Color32 whiteColor = new Color32(255, 255, 255, 128);
-        Color32[] LinePointColors { get; } = new Color32[]
-        {
-            new Color32(204, 0, 0, 224),
-            new Color32(0, 204, 0, 224),
-            new Color32(0, 0, 204, 224),
-            new Color32(204, 0, 255, 224),
-            new Color32(255, 204, 0, 224),
-            new Color32(0, 255, 204, 224),
-            new Color32(204, 255, 0, 224),
-            new Color32(0, 204, 255, 224),
-            new Color32(255, 0, 204, 224),
-        };
 
         private NetManager NetManager => Singleton<NetManager>.instance;
         private RenderManager RenderManager => Singleton<RenderManager>.instance;
@@ -286,10 +273,9 @@ namespace NodeMarkup
             var markup = NodeMarkupManager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
-                
-                for (var i = 0; i < enter.Points.Length; i += 1)
+                foreach(var point in enter.Points)
                 {
-                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, LinePointColors[i % LinePointColors.Length], enter.Points[i].Position, 1f, -1f, 1280f, false, true);
+                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, point.Color, point.Position, 1f, -1f, 1280f, false, true);
                 }
             }
         }
