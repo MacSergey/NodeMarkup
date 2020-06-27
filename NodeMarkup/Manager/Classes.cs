@@ -260,28 +260,28 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public void GetPositionAndDirection(MarkupPoint.Type pointType, out Vector3 position, out Vector3 direction)
+        public void GetPositionAndDirection(MarkupPoint.Type pointType, float offset, out Vector3 position, out Vector3 direction)
         {
             if ((pointType & MarkupPoint.Type.Between) != MarkupPoint.Type.None)
-                GetMiddlePosition(out position, out direction);
+                GetMiddlePosition(offset, out position, out direction);
 
             else if ((pointType & MarkupPoint.Type.Edge) != MarkupPoint.Type.None)
-                GetEdgePosition(pointType, out position, out direction);
+                GetEdgePosition(pointType, offset, out position, out direction);
 
             else
                 throw new Exception();
         }
-        void GetMiddlePosition(out Vector3 position, out Vector3 direction)
+        void GetMiddlePosition(float offset, out Vector3 position, out Vector3 direction)
         {
             RightLane.NetLane.CalculatePositionAndDirection(Point, out Vector3 rightPos, out Vector3 rightDir);
             LeftLane.NetLane.CalculatePositionAndDirection(Point, out Vector3 leftPos, out Vector3 leftDir);
 
             var part = (RightLane.HalfWidth + HalfSideDelta) / CenterDelte;
-            position = Vector3.Lerp(rightPos, leftPos, part);
+            position = Vector3.Lerp(rightPos, leftPos, part) + SegmentEnter.cornerDir * offset;
             direction = (rightDir + leftDir) / (SegmentEnter.IsStartSide ? -2 : 2);
             direction.Normalize();
         }
-        void GetEdgePosition(MarkupPoint.Type pointType, out Vector3 position, out Vector3 direction)
+        void GetEdgePosition(MarkupPoint.Type pointType, float offset, out Vector3 position, out Vector3 direction)
         {
             float lineShift;
             switch (pointType)
@@ -304,7 +304,7 @@ namespace NodeMarkup.Manager
             lineShift /= Mathf.Sin(angle * Mathf.Deg2Rad);
 
             direction.Normalize();
-            position += SegmentEnter.cornerDir * lineShift;
+            position += SegmentEnter.cornerDir * (lineShift + offset);
         }
     }
     public class MarkupPoint
@@ -322,6 +322,8 @@ namespace NodeMarkup.Manager
             new Color32(255, 0, 204, 224),
         };
 
+        float _offset = 0;
+
         public ushort Id { get; set; }
         public Color32 Color => LinePointColors[(Id - 1) % LinePointColors.Length];
 
@@ -334,6 +336,16 @@ namespace NodeMarkup.Manager
         SegmentMarkupLine MarkupLine { get; }
         public SegmentEnter Enter => MarkupLine.SegmentEnter;
 
+        public float Offset
+        {
+            get => _offset;
+            set
+            {
+                _offset = value;
+                Update();
+            }
+        }
+
         public MarkupPoint(SegmentMarkupLine markupLine, Type pointType)
         {
             MarkupLine = markupLine;
@@ -344,7 +356,7 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            MarkupLine.GetPositionAndDirection(PointType, out Vector3 position, out Vector3 direction);
+            MarkupLine.GetPositionAndDirection(PointType, Offset, out Vector3 position, out Vector3 direction);
             Position = position;
             Direction = direction;
             Bounds = new Bounds(Position, MarkerSize);
@@ -374,9 +386,6 @@ namespace NodeMarkup.Manager
         public static float MinLength { get; } = 1f;
         public static Color DashColor { get; } = new Color(0.1f, 0.1f, 0.1f, 0.5f);
 
-        float _startOffset = 0;
-        float _endOffset = 0;
-
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
@@ -386,24 +395,7 @@ namespace NodeMarkup.Manager
         public Bezier3 Trajectory { get; private set; }
         public float Length { get; private set; }
         public MarkupDash[] Dashes { get; private set; }
-        public float StartOffset
-        {
-            get => _startOffset;
-            set
-            {
-                _startOffset = value;
-                Update();
-            }
-        }
-        public float EndOffset
-        {
-            get => _endOffset;
-            set
-            {
-                _endOffset = value;
-                Update();
-            }
-        }
+
 
         public MarkupLine(MarkupPointPair pointPair)
         {

@@ -45,9 +45,6 @@ namespace NodeMarkup.UI.Editors
             clipChildren = true;
 
             AddPanels();
-
-            var lable = SettingsPanel.AddUIComponent<UILabel>();
-            lable.text = name;
         }
         private void AddPanels()
         {
@@ -129,7 +126,6 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel = AddUIComponent<UIPanel>();
             SettingsPanel.autoLayout = true;
             SettingsPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            SettingsPanel.backgroundSprite = "GenericPanel";
         }
         protected override void OnSizeChanged()
         {

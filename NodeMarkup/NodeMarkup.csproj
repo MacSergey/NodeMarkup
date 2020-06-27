@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool.cs" />
     <Compile Include="UI\Editors\BaseEditor.cs" />
+    <Compile Include="UI\Editors\EditorPropertyPanel.cs" />
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Button.cs" />

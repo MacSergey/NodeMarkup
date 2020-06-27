@@ -1,4 +1,6 @@
 ﻿using CitiesHarmony.API;
+using ColossalFramework.PlatformServices;
+using ColossalFramework.UI;
 using HarmonyLib;
 using NodeMarkup.Manager;
 using System;
@@ -40,6 +42,7 @@ namespace NodeMarkup
             PatchNetManagerUpdateNode(harmony);
             PatchNetSegmentUpdateLanes(harmony);
             PatchNetManagerSimulationStepImpl(harmony);
+            //PatchUIAnchorLayoutResetLayoutAbsolute(harmony);
         }
 
         private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
@@ -98,5 +101,21 @@ namespace NodeMarkup
 
             AddPostfix(harmony, original, postfix);
         }
+
+        //private static void PatchUIAnchorLayoutResetLayoutAbsolute(Harmony harmony)
+        //{
+        //    var original = AccessTools.Method(typeof(UIAnchorLayout), "ResetLayoutAbsolute");
+        //    var postfix = AccessTools.Method(typeof(Patcher), nameof(ResetLayoutAbsolute));
+
+        //    AddPostfix(harmony, original, postfix);
+        //}
+
+        //private static void ResetLayoutAbsolute(ref UIAnchorMargins ___m_Margins)
+        //{
+        //    ___m_Margins.left = 0;
+        //    ___m_Margins.right = 0;
+        //    ___m_Margins.top = 0;
+        //    ___m_Margins.bottom = 0;
+        //}
     }
 }
