@@ -11,18 +11,18 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class Editor : UIPanel
     {
-        protected Markup Markup { get; set; }
+        public NodeMarkupPanel NodeMarkupPanel { get; set; }
+        protected Markup Markup => NodeMarkupPanel.Markup;
 
-        public abstract string PanelName { get; }
+        public abstract string Name { get; }
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollbar Scrollbar { get; set; }
         protected UIPanel SettingsPanel { get; set; }
 
-        public virtual void SetMarkup(Markup markup)
+        public virtual void UpdateEditor()
         {
             Clear();
-
-            Markup = markup;
+            Fill();
         }
         protected void Clear()
         {
@@ -34,15 +34,34 @@ namespace NodeMarkup.UI.Editors
                 Destroy(item.gameObject);
             }
         }
+        protected virtual void Fill()
+        {
+
+        }
+        public virtual void Select(int index)
+        {
+
+        }
+        public virtual void Render()
+        {
+
+        }
+
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
     }
-    public abstract class Editor<ItemType> : Editor where ItemType : EditableItem
+    public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
+        where EditableItemType : EditableItem<EditableObject, ItemIcon>
+        where ItemIcon : UIComponent
     {
-        public Editor(string name)
+        protected EditableObject EditObject { get; set; }
+
+        public Editor()
         {
             autoLayout = true;
             autoLayoutDirection = LayoutDirection.Horizontal;
             clipChildren = true;
+            atlas = TextureUtil.GetAtlas("Ingame");
+            backgroundSprite = "UnlockingItemBackground";
 
             AddPanels();
         }
@@ -62,6 +81,8 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.builtinKeyNavigation = true;
             ItemsPanel.clipChildren = true;
             ItemsPanel.eventSizeChanged += ItemsPanelSizeChanged;
+            ItemsPanel.atlas = TextureUtil.GetAtlas("Ingame");
+            ItemsPanel.backgroundSprite = "ScrollbarTrack";
         }
 
         private void ItemsPanelSizeChanged(UIComponent component, Vector2 value)
@@ -102,11 +123,12 @@ namespace NodeMarkup.UI.Editors
 
             Scrollbar.eventValueChanged += (component, value) => ItemsPanel.scrollPosition = new Vector2(0, value);
 
-            eventMouseWheel += (component, eventParam) => {
+            eventMouseWheel += (component, eventParam) =>
+            {
                 Scrollbar.value -= (int)eventParam.wheelDelta * Scrollbar.incrementAmount;
             };
 
-            ItemsPanel.eventMouseWheel += (component, eventParam) => 
+            ItemsPanel.eventMouseWheel += (component, eventParam) =>
             {
                 Scrollbar.value -= (int)eventParam.wheelDelta * Scrollbar.incrementAmount;
             };
@@ -126,6 +148,8 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel = AddUIComponent<UIPanel>();
             SettingsPanel.autoLayout = true;
             SettingsPanel.autoLayoutDirection = LayoutDirection.Vertical;
+            SettingsPanel.atlas = TextureUtil.GetAtlas("Ingame");
+            SettingsPanel.backgroundSprite = "UnlockingItemBackground";
         }
         protected override void OnSizeChanged()
         {
@@ -138,17 +162,47 @@ namespace NodeMarkup.UI.Editors
             Scrollbar.height = size.y;
         }
 
-        public ItemType AddItem(string name)
+        public EditableItemType AddItem(EditableObject editableObject)
         {
-            var item = ItemsPanel.AddUIComponent<ItemType>();
+            var item = ItemsPanel.AddUIComponent<EditableItemType>();
+            item.name = editableObject.ToString();
             item.width = ItemsPanel.width;
-            item.Text = name;
+            item.Object = editableObject;
             item.eventClick += ItemClick;
 
             return item;
         }
-        protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((ItemType)component);
-        protected abstract void ItemClick(ItemType item);
+        protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
+        protected virtual void ItemClick(EditableItemType item)
+        {
+            EditObject = item.Object;
+            OnObjectSelect();
+        }
+        protected virtual void OnObjectSelect()
+        {
+
+        }
+        protected override void OnVisibilityChanged()
+        {
+            if (isVisible)
+                Select(0);
+        }
+        public override void Select(int index)
+        {
+            if (ItemsPanel.components.Count > index && ItemsPanel.components[index] is EditableItemType item)
+                Select(item);
+        }
+        public void Select(EditableItemType item)
+        {
+            item.SimulateClick();
+            item.Focus();
+            ItemsPanel.ScrollIntoView(item);
+        }
+        public void Select(EditableObject editableObject)
+        {
+            if (ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => System.Object.ReferenceEquals(c.Object, editableObject)) is EditableItemType item)
+                Select(item);
+        }
     }
     public abstract class EditableItem : UIButton
     {
@@ -160,9 +214,20 @@ namespace NodeMarkup.UI.Editors
             set => Label.text = value;
         }
     }
-    public abstract class EditableItem<UIType> : EditableItem where UIType : UIComponent
+    public abstract class EditableItem<EditableObject, IconType> : EditableItem where IconType : UIComponent
     {
-        public UIType Icon { get; }
+        EditableObject _object;
+        public EditableObject Object
+        {
+            get => _object;
+            set
+            {
+                _object = value;
+                Text = value.ToString();
+                OnObjectSet();
+            }
+        }
+        public IconType Icon { get; }
 
         public EditableItem()
         {
@@ -174,7 +239,7 @@ namespace NodeMarkup.UI.Editors
             hoveredBgSprite = "ButtonSmallHovered";
             pressedBgSprite = "ButtonSmallPressed";
 
-            Icon = AddUIComponent<UIType>();
+            Icon = AddUIComponent<IconType>();
 
             Label = AddUIComponent<UILabel>();
             Label.textAlignment = UIHorizontalAlignment.Left;
@@ -186,6 +251,10 @@ namespace NodeMarkup.UI.Editors
             height = 25;
         }
 
+        protected virtual void OnObjectSet()
+        {
+
+        }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();

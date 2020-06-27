@@ -34,7 +34,7 @@ namespace NodeMarkup
             if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame || mode == LoadMode.NewGameFromScenario || mode == LoadMode.NewAsset)
             {
                 NodeMarkupTool.Create();
-                NodeMarkupManager.Init();
+                Manager.Manager.Init();
             }
         }
 

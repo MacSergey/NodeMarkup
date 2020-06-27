@@ -9,15 +9,13 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class PointsEditorPanel : Editor<PointItem>
+    public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
-        public override string PanelName { get; } = "Points";
-
-        MarkupPoint Point { get; set; }
+        public override string Name { get; } = "Points";
 
         FloatPropertyPanel Offset { get; set; }
 
-        public PointsEditorPanel() : base(nameof(PointsEditorPanel))
+        public PointsEditor()
         {
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
@@ -25,31 +23,21 @@ namespace NodeMarkup.UI.Editors
             Offset.Text = "Offset";
             Offset.OnValueChanged += OffsetChanged;
         }
-        private void OffsetChanged(float value) => Point.Offset = value;
+        private void OffsetChanged(float value) => EditObject.Offset = value;
 
-        public override void SetMarkup(Markup markup)
+        protected override void Fill()
         {
-            base.SetMarkup(markup);
-
-            foreach (var enter in markup.Enters)
+            foreach (var enter in Markup.Enters)
             {
                 foreach (var point in enter.Points)
                 {
-                    var item = AddItem(point.ToString());
-                    item.Point = point;
-                    item.Icon.Color = point.Color;
+                    AddItem(point);
                 }
             }
         }
-        protected override void ItemClick(PointItem item)
+        protected override void OnObjectSelect()
         {
-            Point = item.Point;
-
-            SetPoint();
-        }
-        private void SetPoint()
-        {
-            Offset.Value = Point.Offset;
+            Offset.Value = EditObject.Offset;
         }
         private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
         {
@@ -59,8 +47,11 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class PointItem : EditableItem<ColorIcon>
+    public class PointItem : EditableItem<MarkupPoint, ColorIcon> 
     {
-        public MarkupPoint Point { get; set; }
+        protected override void OnObjectSet()
+        {
+            Icon.Color = Object.Color;
+        }
     }
 }

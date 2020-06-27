@@ -170,7 +170,7 @@ namespace NodeMarkup
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                var markup = NodeMarkupManager.Get(SelectNodeId);
+                var markup = Manager.Manager.Get(SelectNodeId);
                 foreach (var enter in markup.Enters)
                 {
                     foreach (var point in enter.Points)
@@ -192,7 +192,7 @@ namespace NodeMarkup
             if (e.type == EventType.MouseUp && _mouseRayValid)
             {
                 if (e.button == 0)
-                    OnPrimaryMouseClicked();
+                    OnPrimaryMouseClicked(e);
                 else if (e.button == 1)
                     OnSecondaryMouseClicked();
             }
@@ -205,26 +205,42 @@ namespace NodeMarkup
             _mouseRayLength = Camera.main.farClipPlane;
             _mouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
         }
-        private void OnPrimaryMouseClicked()
+        private void OnPrimaryMouseClicked(Event e)
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnPrimaryMouseClicked)}");
 
             switch (ToolMode)
             {
                 case Mode.SelectNode when IsHoverNode:
-                    SelectNodeId = HoverNodeId;
-                    ToolMode = Mode.ConnectLine;
-                    Panel.SetNode(SelectNodeId);
+                    OnSelectNode();
                     break;
                 case Mode.ConnectLine when IsHoverPoint && !IsSelectPoint:
-                    SelectPoint = HoverPoint;
+                    OnSelectPoint(e);
                     break;
                 case Mode.ConnectLine when IsHoverPoint && IsSelectPoint:
-                    var markup = NodeMarkupManager.Get(SelectNodeId);
-                    markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint));
-                    SelectPoint = null;
+                    OnMakeLine(e);
                     break;
             }
+        }
+        private void OnSelectNode()
+        {
+            SelectNodeId = HoverNodeId;
+            ToolMode = Mode.ConnectLine;
+            Panel.SetNode(SelectNodeId);
+        }
+        private void OnSelectPoint(Event e)
+        {
+            if (e.shift)
+                Panel.EditPoint(HoverPoint);
+            else
+                SelectPoint = HoverPoint;
+        }
+        private void OnMakeLine(Event e)
+        {
+            var markup = Manager.Manager.Get(SelectNodeId);
+            var lineType = e.shift ? MarkupLine.Type.Solid : MarkupLine.Type.Dash;
+            markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
+            SelectPoint = null;
         }
         private void OnSecondaryMouseClicked()
         {
@@ -270,7 +286,7 @@ namespace NodeMarkup
         }
         private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, SegmentEnter ignore = null)
         {
-            var markup = NodeMarkupManager.Get(SelectNodeId);
+            var markup = Manager.Manager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
                 foreach(var point in enter.Points)
@@ -289,7 +305,7 @@ namespace NodeMarkup
 
             if (IsHoverPoint)
             {
-                var markup = NodeMarkupManager.Get(SelectNodeId);
+                var markup = Manager.Manager.Get(SelectNodeId);
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                 color = markup.ExistConnection(pointPair) ? Color.red : Color.green;
 

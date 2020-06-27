@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,22 +9,16 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class UITabPanel : UIPanel
+    public class CustomUITabstrip : UITabstrip
     {
-        private UITabstrip TabStrip { get; set; }
-        List<UIPanel> TabPanels { get; } = new List<UIPanel>();
-
-        private Vector2 TabPanelSize => new Vector2(width, height - TabStrip.height);
-        private Vector2 TabPanelPosition => new Vector2(0, TabStrip.height);
-        public UITabPanel()
+        public CustomUITabstrip()
         {
-            TabStrip = AddUIComponent<UITabstrip>();
-            TabStrip.anchor = UIAnchorStyle.Top;
-            TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
+            atlas = TextureUtil.GetAtlas("Ingame");
+            backgroundSprite = "";
         }
-        public PanelType AddTab<PanelType>(string name) where PanelType : UIPanel
+        public void AddTab<PanelType>(string name) where PanelType : Editor
         {
-            var tabButton = TabStrip.AddTab(name);
+            var tabButton = AddTab(name);
             tabButton.autoSize = true;
             tabButton.textPadding = new RectOffset(10, 10, 1, 1);
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
@@ -39,36 +34,8 @@ namespace NodeMarkup.UI
 
             tabButton.Invalidate();
 
-            TabStrip.FitChildrenVertically();
-
-            var tabPanel = AddUIComponent<PanelType>();
-            tabPanel.isVisible = false;
-            tabPanel.size = TabPanelSize;
-            tabPanel.relativePosition = TabPanelPosition;
-
-            TabPanels.Add(tabPanel);
-
-            return tabPanel;
+            FitChildrenVertically();
         }
-
-        protected override void OnSizeChanged()
-        {
-            TabStrip.width = width;
-            TabStrip.FitChildrenVertically();
-
-            foreach (var tab in TabPanels)
-            {
-                tab.size = TabPanelSize;
-            }
-        }
-        private void TabStripSelectedIndexChanged(UIComponent component, int index)
-        {
-            foreach (var tab in TabPanels)
-            {
-                tab.isVisible = false;
-            }
-            if (TabPanels.Count > index)
-                TabPanels[index].isVisible = true;
-        }
+        protected override void OnSizeChanged() => FitChildrenVertically();
     }
 }

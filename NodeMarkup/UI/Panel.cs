@@ -13,10 +13,16 @@ namespace NodeMarkup.UI
     public class NodeMarkupPanel : UIPanel
     {
         public static NodeMarkupPanel Instance { get; private set; }
+
+        public Markup Markup { get; private set; }
+
         private UIDragHandle Handle { get; set; }
         private UILabel Caption { get; set; }
-        private UITabPanel TabPanel { get; set; }
-        private List<Editor> Editors { get; } = new List<Editor>();
+        private CustomUITabstrip TabStrip { get; set; }
+        public List<Editor> Editors { get; } = new List<Editor>();
+
+        private Vector2 EditorSize => new Vector2(500, 400);
+        private Vector2 EditorPosition => new Vector2(0, TabStrip.height);
 
         private static readonly string kTabstripButton = "RoadEditorTabstripButton";
         private static float TabStripHeight => 20;
@@ -34,6 +40,7 @@ namespace NodeMarkup.UI
 
             CreateHandle();
             CreateTabStrip();
+            CreateEditors();
 
             eventSizeChanged += ((component, size) => Handle.width = size.x);
         }
@@ -70,12 +77,29 @@ namespace NodeMarkup.UI
 
         private void CreateTabStrip()
         {
-            TabPanel = AddUIComponent<UITabPanel>();
-            TabPanel.anchor = UIAnchorStyle.Top;
-            TabPanel.size = new Vector2(500, 400);
+            TabStrip = AddUIComponent<CustomUITabstrip>();
+            TabStrip.anchor = UIAnchorStyle.Top;
+            TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
+            TabStrip.selectedIndex = -1;
+        }
 
-            Editors.Add(TabPanel.AddTab<PointsEditorPanel>("Points"));
-            Editors.Add(TabPanel.AddTab<LinesEditorPanel>("Lines"));
+        private void CreateEditors()
+        {
+            CreateEditor<PointsEditor>();
+            CreateEditor<LinesEditor>();
+        }
+        private void CreateEditor<EditorType>() where EditorType : Editor
+        {
+            var editor = AddUIComponent<EditorType>();
+            editor.anchor = UIAnchorStyle.Top;
+            editor.isVisible = false;
+            editor.size = EditorSize;
+            editor.relativePosition = EditorPosition;
+            editor.NodeMarkupPanel = this;
+
+            Editors.Add(editor);
+
+            TabStrip.AddTab<PointsEditor>(editor.Name);
         }
 
         public void SetNode(ushort nodeId)
@@ -83,11 +107,46 @@ namespace NodeMarkup.UI
             Show();
             Caption.text = $"Edit node #{nodeId} markup";
 
-            var markup = NodeMarkupManager.Get(nodeId);
-            foreach(var editor in Editors)
+            Markup = Manager.Manager.Get(nodeId);
+            foreach (var editor in Editors)
             {
-                editor.SetMarkup(markup);
+                editor.UpdateEditor();
             }
+
+            TabStrip.selectedIndex = 0;
         }
+        private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
+        private void TabStripSelectedIndexChanged(UIComponent component, int index) => SelectEditor(index);
+        private Editor SelectEditor(int index)
+        {
+            if (index >= 0 && Editors.Count > index)
+            {
+                foreach (var editor in Editors)
+                {
+                    editor.isVisible = false;
+                }
+
+                Editors[index].isVisible = true;
+                return Editors[index];
+            }
+            else
+                return null;
+        }
+        private EditorType SelectEditor<EditorType>() where EditorType : Editor
+        {
+            var editorIndex = GetEditor(typeof(PointsEditor));
+            return SelectEditor(editorIndex) as EditorType;
+        }
+
+        public void EditPoint(MarkupPoint point)
+        {
+            var editor = SelectEditor<PointsEditor>();
+            editor?.Select(point);
+        }
+
+        //public EditorType GetEditor<EditorType>() where EditorType : Editor
+        //{
+        //    return (EditorType)Editors[typeof(EditorType)];
+        //}
     }
 }

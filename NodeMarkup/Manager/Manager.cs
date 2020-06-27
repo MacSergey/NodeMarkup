@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public static class NodeMarkupManager
+    public static class Manager
     {
         static Dictionary<ushort, Markup> NodesMarkup { get; } = new Dictionary<ushort, Markup>();
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
@@ -48,7 +48,7 @@ namespace NodeMarkup.Manager
 
             var renderBatches = markup.RenderBatches;
 
-            Logger.LogDebug($"Start render node {nodeID} markup: {renderBatches.Length} batches");
+            //Logger.LogDebug($"Start render node {nodeID} markup: {renderBatches.Length} batches");
             foreach (var batch in renderBatches)
             {
                 materialBlock.Clear();
@@ -61,7 +61,7 @@ namespace NodeMarkup.Manager
 
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
             }
-            Logger.LogDebug($"End render node {nodeID} markup success");
+            //Logger.LogDebug($"End render node {nodeID} markup success");
         }
 
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node)

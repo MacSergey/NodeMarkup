@@ -43,49 +43,60 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            try
+            //Logger.LogDebug($"End update node #{NodeId}");
+
+            var node = Utilities.GetNode(NodeId);
+
+            var enters = new Dictionary<ushort, SegmentEnter>();
+
+            foreach (var segmentId in node.SegmentsId())
             {
-                Logger.LogDebug($"End update node #{NodeId}");
+                if (!EntersDictionary.TryGetValue(segmentId, out SegmentEnter enter))
+                    enter = new SegmentEnter(this, segmentId);
 
-                var node = Utilities.GetNode(NodeId);
+                enter.Update();
 
-                var enters = new Dictionary<ushort, SegmentEnter>();
-
-                foreach (var segmentId in node.SegmentsId())
-                {
-                    if (!EntersDictionary.TryGetValue(segmentId, out SegmentEnter enter))
-                        enter = new SegmentEnter(NodeId, segmentId);
-
-                    enter.Update();
-
-                    enters.Add(segmentId, enter);
-                }
-
-                EntersDictionary = enters;
-
-                var pointPairs = LinesDictionary.Keys.ToArray();
-                foreach (var pointPair in pointPairs)
-                {
-                    if (EntersDictionary.ContainsKey(pointPair.First.Enter.SegmentId) && EntersDictionary.ContainsKey(pointPair.Second.Enter.SegmentId))
-                        LinesDictionary[pointPair].Update();
-                    else
-                        LinesDictionary.Remove(pointPair);
-                }
-
-                var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes).ToArray();
-                RenderBatches = RenderBatch.FromDashes(dashes);
-
-                Logger.LogDebug($"End update node #{NodeId}");
+                enters.Add(segmentId, enter);
             }
-            catch (Exception error)
+
+            EntersDictionary = enters;
+
+            var pointPairs = LinesDictionary.Keys.ToArray();
+            foreach (var pointPair in pointPairs)
             {
-                Logger.LogError(error: error);
+                if (EntersDictionary.ContainsKey(pointPair.First.Enter.SegmentId) && EntersDictionary.ContainsKey(pointPair.Second.Enter.SegmentId))
+                    LinesDictionary[pointPair].Update();
+                else
+                    LinesDictionary.Remove(pointPair);
             }
+
+            Recalculate();
+
+                //Logger.LogDebug($"End update node #{NodeId}");
+        }
+        public void Update(MarkupPoint point)
+        {
+            point.Update();
+            foreach(var line in Lines.Where(l => l.ContainPoint(point)))
+            {
+                line.Update();
+            }
+            Recalculate();
+        }
+        public void Update(MarkupLine line)
+        {
+            line.Update();
+            Recalculate();
+        }
+        public void Recalculate()
+        {
+            var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes).ToArray();
+            RenderBatches = RenderBatch.FromDashes(dashes);
         }
 
-        public void AddConnect(MarkupPointPair pointPair)
+        public void AddConnect(MarkupPointPair pointPair, MarkupLine.Type lineType)
         {
-            var line = new MarkupLine(pointPair);
+            var line = new MarkupLine(this, pointPair, lineType);
             LinesDictionary[pointPair] = line;
         }
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair);
@@ -93,10 +104,10 @@ namespace NodeMarkup.Manager
         {
             LinesDictionary.Remove(pointPair);
         }
-        public void ToggleConnection(MarkupPointPair pointPair)
+        public void ToggleConnection(MarkupPointPair pointPair, MarkupLine.Type lineType)
         {
             if (!ExistConnection(pointPair))
-                AddConnect(pointPair);
+                AddConnect(pointPair, lineType);
             else
                 RemoveConnect(pointPair);
 
@@ -113,6 +124,7 @@ namespace NodeMarkup.Manager
             First = first;
             Second = second;
         }
+        public bool ContainPoint(MarkupPoint point) => First == point || Second == point;
 
         public override string ToString() => $"{First}—{Second}";
     }
@@ -125,6 +137,7 @@ namespace NodeMarkup.Manager
 
     public class SegmentEnter
     {
+        public Markup Markup { get; private set; }
         public ushort SegmentId { get; }
         public bool IsStartSide { get; }
         public bool IsLaneInvert { get; }
@@ -139,11 +152,12 @@ namespace NodeMarkup.Manager
         public MarkupPoint this[int index] => Points[index];
 
 
-        public SegmentEnter(ushort nodeId, ushort segmentId)
+        public SegmentEnter(Markup markup, ushort segmentId)
         {
+            Markup = markup;
             SegmentId = segmentId;
             var segment = Utilities.GetSegment(SegmentId);
-            IsStartSide = segment.m_startNode == nodeId;
+            IsStartSide = segment.m_startNode == markup.NodeId;
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
 
             Update();
@@ -194,6 +208,7 @@ namespace NodeMarkup.Manager
                 point.Update();
             }
         }
+        public void Recalculate() => Markup.Recalculate();
 
         public override string ToString() => SegmentId.ToString();
     }
@@ -335,6 +350,7 @@ namespace NodeMarkup.Manager
 
         SegmentMarkupLine MarkupLine { get; }
         public SegmentEnter Enter => MarkupLine.SegmentEnter;
+        public Markup Markup => Enter.Markup;
 
         public float Offset
         {
@@ -342,7 +358,7 @@ namespace NodeMarkup.Manager
             set
             {
                 _offset = value;
-                Update();
+                Markup.Update(this);
             }
         }
 
@@ -386,6 +402,8 @@ namespace NodeMarkup.Manager
         public static float MinLength { get; } = 1f;
         public static Color DashColor { get; } = new Color(0.1f, 0.1f, 0.1f, 0.5f);
 
+        public Markup Markup { get; private set; }
+
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
@@ -397,13 +415,11 @@ namespace NodeMarkup.Manager
         public MarkupDash[] Dashes { get; private set; }
 
 
-        public MarkupLine(MarkupPointPair pointPair)
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, MarkupLine.Type lineType)
         {
+            Markup = markup;
             PointPair = pointPair;
-            if ((pointPair.First.PointType & MarkupPoint.Type.Edge) == MarkupPoint.Type.Edge && (pointPair.Second.PointType & MarkupPoint.Type.Edge) == MarkupPoint.Type.Edge)
-                LineType = Type.Solid;
-            else
-                LineType = Type.Dash;
+            LineType = lineType;
 
             Update();
         }
@@ -423,14 +439,14 @@ namespace NodeMarkup.Manager
             switch (LineType)
             {
                 case Type.Dash:
-                    Dashes = CalcDashes(Trajectory);
+                    Dashes = CalcucalteDashes(Trajectory);
                     break;
                 case Type.Solid:
-                    Dashes = CalcSolid(Trajectory);
+                    Dashes = CalculateSolid(Trajectory);
                     break;
             }
         }
-        private MarkupDash[] CalcDashes(Bezier3 trajectory)
+        private MarkupDash[] CalcucalteDashes(Bezier3 trajectory)
         {
             var dashCount = (int)((Length - DashSpace) / (DashLength + DashSpace));
             var dashes = new MarkupDash[dashCount];
@@ -455,7 +471,7 @@ namespace NodeMarkup.Manager
 
             return dashes;
         }
-        private MarkupDash[] CalcSolid(Bezier3 trajectory)
+        private MarkupDash[] CalculateSolid(Bezier3 trajectory)
         {
             var deltaAngle = Vector3.Angle(trajectory.b - trajectory.a, trajectory.c - trajectory.d);
             var dir = trajectory.d - trajectory.a;
@@ -464,8 +480,8 @@ namespace NodeMarkup.Manager
             if ((180 - deltaAngle > MinAngleDelta || length > MaxLength) && length >= MinLength)
             {
                 trajectory.Divide(out Bezier3 first, out Bezier3 second);
-                var firstPart = CalcSolid(first);
-                var secondPart = CalcSolid(second);
+                var firstPart = CalculateSolid(first);
+                var secondPart = CalculateSolid(second);
                 var dashes = firstPart.Concat(secondPart).ToArray();
                 return dashes;
             }
@@ -477,6 +493,9 @@ namespace NodeMarkup.Manager
                 return new MarkupDash[] { dash };
             }
         }
+        public override string ToString() => PointPair.ToString();
+
+        public bool ContainPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
         public enum Type
         {

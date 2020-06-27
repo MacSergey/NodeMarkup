@@ -7,22 +7,19 @@ using System.Text;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class LinesEditorPanel : Editor<LineItem>
+    public class LinesEditor : Editor<LineItem, MarkupLine, UIPanel>
     {
-        public override string PanelName { get; } = "Lines";
+        public override string Name { get; } = "Lines";
 
-        public LinesEditorPanel() : base(nameof(LinesEditorPanel))
+        public LinesEditor()
         {
 
         }
-        public override void SetMarkup(Markup markup)
+        protected override void Fill()
         {
-            base.SetMarkup(markup);
-
-            foreach(var line in markup.Lines)
+            foreach (var line in Markup.Lines)
             {
-                var item = AddItem(line.PointPair.ToString());
-                item.Line = line;
+                AddItem(line);
             }
         }
         protected override void ItemClick(LineItem item)
@@ -31,8 +28,5 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class LineItem : EditableItem<UIPanel>
-    {
-        public MarkupLine Line { get; set; }
-    }
+    public class LineItem : EditableItem<MarkupLine, UIPanel> { }
 }
