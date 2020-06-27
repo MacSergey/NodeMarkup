@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="Manager\LineRule.cs" />
+    <Compile Include="Manager\LineStyle.cs" />
     <Compile Include="Manager\Markup.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Manager\Manager.cs" />

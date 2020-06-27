@@ -238,7 +238,7 @@ namespace NodeMarkup
         private void OnMakeLine(Event e)
         {
             var markup = Manager.Manager.Get(SelectNodeId);
-            var lineType = e.shift ? MarkupLine.Type.Solid : MarkupLine.Type.Dash;
+            var lineType = e.shift ? (e.control ? LineStyle.Type.DoubleSolid : LineStyle.Type.Solid) : (e.control ? LineStyle.Type.DoubleDash : LineStyle.Type.Dash);
             markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
             SelectPoint = null;
         }
@@ -289,7 +289,7 @@ namespace NodeMarkup
             var markup = Manager.Manager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
-                foreach(var point in enter.Points)
+                foreach (var point in enter.Points)
                 {
                     RenderManager.OverlayEffect.DrawCircle(cameraInfo, point.Color, point.Position, 1f, -1f, 1280f, false, true);
                 }

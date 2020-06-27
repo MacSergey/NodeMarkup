@@ -124,7 +124,7 @@ namespace NodeMarkup.Manager
                 Colors[i] = dash.Color.ToVector();
 
                 lengths[i] = dash.Length;
-                widths[i] = dash.Width;
+                widths[i] = 0.15f;
                 heights[i] = 0.1f;
             }
 

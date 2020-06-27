@@ -90,11 +90,11 @@ namespace NodeMarkup.Manager
         }
         public void Recalculate()
         {
-            var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes).ToArray();
+            var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
             RenderBatches = RenderBatch.FromDashes(dashes);
         }
 
-        public void AddConnect(MarkupPointPair pointPair, MarkupLine.Type lineType)
+        public void AddConnect(MarkupPointPair pointPair, LineStyle.Type lineType)
         {
             var line = new MarkupLine(this, pointPair, lineType);
             LinesDictionary[pointPair] = line;
@@ -104,14 +104,14 @@ namespace NodeMarkup.Manager
         {
             LinesDictionary.Remove(pointPair);
         }
-        public void ToggleConnection(MarkupPointPair pointPair, MarkupLine.Type lineType)
+        public void ToggleConnection(MarkupPointPair pointPair, LineStyle.Type lineType)
         {
             if (!ExistConnection(pointPair))
                 AddConnect(pointPair, lineType);
             else
                 RemoveConnect(pointPair);
 
-            Update();
+            Recalculate();
         }
     }
     public struct MarkupPointPair
@@ -394,32 +394,25 @@ namespace NodeMarkup.Manager
     }
     public class MarkupLine
     {
-        public static float DashLength { get; } = 1.5f;
-        public static float DashSpace { get; } = 1.5f;
-        public static float DashWidth { get; } = 0.15f;
-        public static float MinAngleDelta { get; } = 5f;
-        public static float MaxLength { get; } = 10f;
-        public static float MinLength { get; } = 1f;
-        public static Color DashColor { get; } = new Color(0.1f, 0.1f, 0.1f, 0.5f);
-
         public Markup Markup { get; private set; }
 
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
 
-        public Type LineType { get; }
+        public List<MarkupLineRawRule> RawRules { get; } = new List<MarkupLineRawRule>();
 
         public Bezier3 Trajectory { get; private set; }
-        public float Length { get; private set; }
         public MarkupDash[] Dashes { get; private set; }
 
-
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, MarkupLine.Type lineType)
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.Type lineType) : this(markup, pointPair, LineStyle.GetDefault(lineType)) { }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle)
         {
             Markup = markup;
             PointPair = pointPair;
-            LineType = lineType;
+
+            var rule = new MarkupLineRawRule(lineStyle);
+            RawRules.Add(rule);
 
             Update();
         }
@@ -434,92 +427,17 @@ namespace NodeMarkup.Manager
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
             Trajectory = trajectory;
-            Length = trajectory.Length(MinAngleDelta);
 
-            switch (LineType)
-            {
-                case Type.Dash:
-                    Dashes = CalcucalteDashes(Trajectory);
-                    break;
-                case Type.Solid:
-                    Dashes = CalculateSolid(Trajectory);
-                    break;
-            }
-        }
-        private MarkupDash[] CalcucalteDashes(Bezier3 trajectory)
-        {
-            var dashCount = (int)((Length - DashSpace) / (DashLength + DashSpace));
-            var dashes = new MarkupDash[dashCount];
-
-            var startSpace = (1 - ((DashLength + DashSpace) * dashCount - DashSpace) / Length) / 2;
-            var dashT = DashLength / Length;
-            var spaceT = DashSpace / Length;
-            for (var i = 0; i < dashCount; i += 1)
-            {
-                var startT = startSpace + (dashT + spaceT) * i;
-                var endT = startT + dashT;
-
-                var startPos = trajectory.Position(startT);
-                var endPos = trajectory.Position(endT);
-                var pos = (startPos + endPos) / 2;
-                var dir = trajectory.Tangent((startT + endT) / 2);
-                var angle = Mathf.Atan2(dir.z, dir.x);
-
-                var dash = new MarkupDash(pos, angle, DashLength, DashWidth, DashColor);
-                dashes[i] = dash;
-            }
-
-            return dashes;
-        }
-        private MarkupDash[] CalculateSolid(Bezier3 trajectory)
-        {
-            var deltaAngle = Vector3.Angle(trajectory.b - trajectory.a, trajectory.c - trajectory.d);
-            var dir = trajectory.d - trajectory.a;
-            var length = dir.magnitude;
-
-            if ((180 - deltaAngle > MinAngleDelta || length > MaxLength) && length >= MinLength)
-            {
-                trajectory.Divide(out Bezier3 first, out Bezier3 second);
-                var firstPart = CalculateSolid(first);
-                var secondPart = CalculateSolid(second);
-                var dashes = firstPart.Concat(secondPart).ToArray();
-                return dashes;
-            }
-            else
-            {
-                var pos = (trajectory.d + trajectory.a) / 2;
-                var angle = Mathf.Atan2(dir.z, dir.x);
-                var dash = new MarkupDash(pos, angle, length, DashWidth, DashColor);
-                return new MarkupDash[] { dash };
-            }
+            var rules = MarkupLineRawRule.GetRules(this, RawRules);
+            Dashes = rules.SelectMany(r => r.LineStyle.Calculate(Trajectory.Cut(r.Start, r.End))).ToArray();
         }
         public override string ToString() => PointPair.ToString();
 
         public bool ContainPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
-        public enum Type
+        public float Intersection(MarkupLine line)
         {
-            Solid,
-            Dash,
-            DoubleSolid,
-            DoubleDash
-        }
-    }
-    public class MarkupDash
-    {
-        public Vector3 Position { get; }
-        public float Angle { get; }
-        public float Length { get; }
-        public float Width { get; }
-        public Color Color { get; }
-
-        public MarkupDash(Vector3 position, float angle, float length, float width, Color color)
-        {
-            Position = position;
-            Angle = angle;
-            Length = length;
-            Width = width;
-            Color = color;
+            throw new NotImplementedException();
         }
     }
 }
