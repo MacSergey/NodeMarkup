@@ -17,30 +17,8 @@ namespace NodeMarkup.Utils
         {
             intersect = new LineIntersect() { Pair = pair, FirstT = -1, SecondT = -1 };
 
-            if (pair.First.Start == pair.Second.Start)
-            {
-                intersect.FirstT = 0;
-                intersect.SecondT = 0;
-                return true;
-            }
-            else if (pair.First.Start == pair.Second.End)
-            {
-                intersect.FirstT = 0;
-                intersect.SecondT = 1;
-                return true;
-            }
-            else if (pair.First.End == pair.Second.Start)
-            {
-                intersect.FirstT = 1;
-                intersect.SecondT = 0;
-                return true;
-            }
-            else if (pair.First.End == pair.Second.End)
-            {
-                intersect.FirstT = 1;
-                intersect.SecondT = 1;
-                return true;
-            }
+            if (pair.First.Start == pair.Second.Start || pair.First.Start == pair.Second.End || pair.First.End == pair.Second.Start || pair.First.End == pair.Second.End)
+                return false;
             else
             {
                 var isIntersect = Intersect(pair.First.Trajectory, pair.Second.Trajectory, out intersect);

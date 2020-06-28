@@ -64,9 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="Manager\Line.cs" />
     <Compile Include="Manager\LineRule.cs" />
     <Compile Include="Manager\LineStyle.cs" />
     <Compile Include="Manager\Markup.cs" />
+    <Compile Include="Manager\Point.cs" />
+    <Compile Include="Manager\Segment.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Manager\Manager.cs" />
     <Compile Include="Patcher.cs" />

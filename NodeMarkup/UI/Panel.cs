@@ -20,6 +20,7 @@ namespace NodeMarkup.UI
         private UILabel Caption { get; set; }
         private CustomUITabstrip TabStrip { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
+        public Editor CurrentEditor { get; set; }
 
         private Vector2 EditorSize => new Vector2(500, 400);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
@@ -108,7 +109,7 @@ namespace NodeMarkup.UI
             TabStrip.selectedIndex = 0;
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
-        private void TabStripSelectedIndexChanged(UIComponent component, int index) => SelectEditor(index);
+        private void TabStripSelectedIndexChanged(UIComponent component, int index) => CurrentEditor = SelectEditor(index);
         private Editor SelectEditor(int index)
         {
             if (index >= 0 && Editors.Count > index)
@@ -142,5 +143,6 @@ namespace NodeMarkup.UI
             editor?.UpdateEditor();
             editor?.Select(line);
         }
+        public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
     }
 }

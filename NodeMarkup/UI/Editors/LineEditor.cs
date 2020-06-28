@@ -26,10 +26,47 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
+            FillRules();
+            AddButton();
+        }
+
+        private void FillRules()
+        {
+            var intersectWith = EditObject.IntersectWith();
             foreach (var rule in EditObject.RawRules)
             {
                 var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
-                rulePanel.Init(rule);
+                rulePanel.Init(EditObject, rule, intersectWith);
+                rulePanel.OnDeleteRule += OnDeleteRule;
+            }
+        }
+
+        private void AddButton()
+        {
+            var button = SettingsPanel.AddUIComponent<ButtonPanel>();
+            button.Text = "Add Rule";
+            button.Init();
+            button.OnButtonClick += AddButtonClick;
+        }
+
+        private void AddButtonClick()
+        {
+            EditObject.AddRule();
+            ClearSettings();
+            OnObjectSelect();
+        }
+        private void OnDeleteRule(RulePanel rulePanel)
+        {
+            EditObject.RemoveRule(rulePanel.Rule);
+            SettingsPanel.RemoveUIComponent(rulePanel);
+            Destroy(rulePanel);
+        }
+
+        public override void Render(RenderManager.CameraInfo cameraInfo)
+        {           
+            if(HoverItem != null)
+            {
+                NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f, 0f, 0f, -1f, 1280f, false, true);
             }
         }
     }
@@ -38,9 +75,11 @@ namespace NodeMarkup.UI.Editors
 
     public class RulePanel : UIPanel
     {
+        public event Action<RulePanel> OnDeleteRule;
+
         public MarkupLineRawRule Rule { get; private set; }
 
-        private List<UIComponent> StyleProperties { get;} = new List<UIComponent>();
+        private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
 
         public RulePanel()
         {
@@ -52,7 +91,7 @@ namespace NodeMarkup.UI.Editors
             autoLayoutPadding = new RectOffset(5, 5, 0, 0);
         }
 
-        public void Init(MarkupLineRawRule rule)
+        public void Init(MarkupLine line, MarkupLineRawRule rule, MarkupLine[] intersectWith)
         {
             Rule = rule;
 
@@ -63,11 +102,16 @@ namespace NodeMarkup.UI.Editors
             else
                 width = parent.width;
 
+            var deleteButton = AddUIComponent<CloseButtonPanel>();
+            deleteButton.Text = line.ToString();
+            deleteButton.Init();
+            deleteButton.OnButtonClick += DeleteButtonClick;
+
             var fromProperty = AddUIComponent<MarkupLineListPropertyPanel>();
             fromProperty.Text = "From";
             fromProperty.NullText = "Begin";
             fromProperty.Init();
-            fromProperty.AddRange(editob)
+            fromProperty.AddRange(intersectWith);
             fromProperty.SelectedObject = Rule.From;
             fromProperty.OnSelectObjectChanged += FromChanged; ;
 
@@ -75,6 +119,7 @@ namespace NodeMarkup.UI.Editors
             toProperty.Text = "To";
             toProperty.NullText = "End";
             toProperty.Init();
+            toProperty.AddRange(intersectWith);
             toProperty.SelectedObject = Rule.To;
             toProperty.OnSelectObjectChanged += ToChanged;
 
@@ -92,6 +137,9 @@ namespace NodeMarkup.UI.Editors
 
             FillStyleProperties();
         }
+
+        private void DeleteButtonClick() => OnDeleteRule?.Invoke(this);
+
         private void FillStyleProperties()
         {
             if (Rule.Style is IDashedLine dashedStyle)
@@ -122,7 +170,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ClearStyleProperties()
         {
-            foreach(var property in StyleProperties)
+            foreach (var property in StyleProperties)
             {
                 RemoveUIComponent(property);
                 Destroy(property);

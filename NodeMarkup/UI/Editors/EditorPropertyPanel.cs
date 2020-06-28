@@ -10,7 +10,21 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class EditorPropertyPanel : UIPanel
+    public abstract class EditorItem : UIPanel
+    {
+        public virtual void Init()
+        {
+            if (parent is UIScrollablePanel scrollablePanel)
+                width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
+            else if (parent is UIPanel panel)
+                width = panel.width - panel.autoLayoutPadding.horizontal;
+            else
+                width = parent.width;
+
+            height = 30;
+        }
+    }
+    public abstract class EditorPropertyPanel : EditorItem
     {
         private UILabel Label { get; set; }
         protected UIPanel Control { get; set; }
@@ -31,19 +45,11 @@ namespace NodeMarkup.UI.Editors
             Control.autoLayoutDirection = LayoutDirection.Horizontal;
             Control.autoLayoutStart = LayoutStart.TopRight;
             Control.autoLayoutPadding = new RectOffset(5, 0, 0, 0);
-            //Control.eventSizeChanged += ControlSizeChanged;
         }
 
-        public virtual void Init()
+        public override void Init()
         {
-            if (parent is UIScrollablePanel scrollablePanel)
-                width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
-            else if (parent is UIPanel panel)
-                width = panel.width - panel.autoLayoutPadding.horizontal;
-            else
-                width = parent.width;
-
-            height = 30;
+            base.Init();
 
             Label.relativePosition = new Vector2(0, (height - Label.height) / 2);
             Control.size = size;
@@ -55,28 +61,60 @@ namespace NodeMarkup.UI.Editors
                 item.relativePosition = pos;
             }
         }
-        //protected override void OnSizeChanged()
-        //{
-        //    base.OnSizeChanged();
+    }
+    public class ButtonPanel : EditorItem
+    {
+        protected UIButton Button { get; set; }
 
-        //    if(Label != null)
-        //    {
-        //        Label.relativePosition = new Vector2(0, (height - Label.height) / 2);
-        //    }
-        //    if(Control != null)
-        //    {
-        //        Control.size = size;
-        //    }
-        //}
-        //private void ControlSizeChanged(UIComponent component, Vector2 value)
-        //{
-        //    foreach(var item in component.components)
-        //    {
-        //        var pos = item.relativePosition;
-        //        pos.y = (component.height - item.height) / 2;
-        //        item.relativePosition = pos;
-        //    }
-        //}
+        public string Text
+        {
+            get => Button.text;
+            set => Button.text = value;
+        }
+
+        public event Action OnButtonClick;
+
+        public ButtonPanel()
+        {
+            Button = AddUIComponent<UIButton>();
+
+            Button.atlas = TextureUtil.GetAtlas("Ingame");
+            Button.normalBgSprite = "ButtonWhite";
+            Button.disabledBgSprite = "ButtonWhiteDisabled";
+            Button.focusedBgSprite = "ButtonWhiteFocused";
+            Button.hoveredBgSprite = "ButtonWhiteHovered";
+            Button.pressedBgSprite = "ButtonWhitePressed";
+            Button.textColor = Color.black;
+
+            Button.eventClick += ButtonClick;
+        }
+
+        private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
+
+        public override void Init()
+        {
+            base.Init();
+
+            Button.size = size;
+        }
+    }
+    public class CloseButtonPanel : EditorPropertyPanel
+    {
+        public event Action OnButtonClick;
+        public CloseButtonPanel()
+        {
+            var button = Control.AddUIComponent<UIButton>();
+
+            button.atlas = TextureUtil.GetAtlas("Ingame");
+            button.normalBgSprite = "buttonclose";
+            button.hoveredBgSprite = "buttonclosehover";
+            button.pressedBgSprite = "buttonclosepressed";
+
+            button.size = new Vector2(20, 20);
+
+            button.eventClick += ButtonClick;
+        }
+        private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
     }
 
     public class FieldPropertyPanel<ValueType> : EditorPropertyPanel

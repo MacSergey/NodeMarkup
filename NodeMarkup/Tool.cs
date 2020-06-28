@@ -36,7 +36,7 @@ namespace NodeMarkup
         Color32 hoverColor = new Color32(51, 181, 229, 224);
 
         private NetManager NetManager => Singleton<NetManager>.instance;
-        private RenderManager RenderManager => Singleton<RenderManager>.instance;
+        public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
         public ToolBase CurrentTool => ToolsModifierControl.toolController?.CurrentTool;
         public bool ToolEnabled => CurrentTool == this;
@@ -282,6 +282,7 @@ namespace NodeMarkup
 
                     RenderPointOverlay(cameraInfo, SelectPoint?.Enter);
                     RenderConnectLineOverlay(cameraInfo);
+                    Panel.Render(cameraInfo);
                     break;
             }
         }
@@ -332,7 +333,7 @@ namespace NodeMarkup
             }
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0.5f, 0.5f, -1f, 1280f, false, true);
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
         }
 
         enum Mode

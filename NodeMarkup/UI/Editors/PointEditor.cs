@@ -37,6 +37,13 @@ namespace NodeMarkup.UI.Editors
         }
         private void OffsetChanged(float value) => EditObject.Offset = value;
 
+        public override void Render(RenderManager.CameraInfo cameraInfo)
+        {
+            if (HoverItem != null)
+            {
+                NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverItem.Object.Position, 2f, -1f, 1280f, false, true);
+            }
+        }
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon> 
     {

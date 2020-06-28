@@ -36,6 +36,8 @@ namespace NodeMarkup.UI.Editors
             foreach (var item in componets)
             {
                 item.eventClick -= ItemClick;
+                item.eventMouseEnter -= ItemHover;
+                item.eventMouseLeave -= ItemLeave;
                 ItemsPanel.RemoveUIComponent(item);
                 Destroy(item.gameObject);
             }
@@ -57,18 +59,21 @@ namespace NodeMarkup.UI.Editors
         {
 
         }
-        public virtual void Render()
+        public virtual void Render(RenderManager.CameraInfo cameraInfo)
         {
 
         }
 
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
+        protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
+        protected abstract void ItemLeave(UIComponent component, UIMouseEventParameter eventParam);
     }
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
     {
         protected EditableObject EditObject { get; set; }
+        protected EditableItemType HoverItem { get; set; }
 
         public Editor()
         {
@@ -207,9 +212,12 @@ namespace NodeMarkup.UI.Editors
             item.width = ItemsPanel.width;
             item.Object = editableObject;
             item.eventClick += ItemClick;
+            item.eventMouseEnter += ItemHover;
+            item.eventMouseLeave += ItemLeave;
 
             return item;
         }
+
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
         protected virtual void ItemClick(EditableItemType item)
         {
@@ -217,6 +225,8 @@ namespace NodeMarkup.UI.Editors
             EditObject = item.Object;
             OnObjectSelect();
         }
+        protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as EditableItemType;
+        protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = null;
         protected virtual void OnObjectSelect()
         {
 
