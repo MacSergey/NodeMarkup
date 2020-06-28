@@ -20,6 +20,11 @@ namespace NodeMarkup.UI.Editors
         protected UIScrollablePanel SettingsPanel { get; set; }
         protected UIScrollbar SettingsScrollbar { get; set; }
 
+        public virtual void Init()
+        {
+
+        }
+
         public virtual void UpdateEditor()
         {
             ClearItems();
@@ -133,7 +138,7 @@ namespace NodeMarkup.UI.Editors
         {
             foreach (var item in SettingsPanel.components)
             {
-                item.width = SettingsPanel.width - SettingsPanel.autoLayoutPadding.vertical;
+                item.width = SettingsPanel.width - SettingsPanel.autoLayoutPadding.horizontal;
             }
         }
         private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
@@ -208,6 +213,7 @@ namespace NodeMarkup.UI.Editors
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
         protected virtual void ItemClick(EditableItemType item)
         {
+            ClearSettings();
             EditObject = item.Object;
             OnObjectSelect();
         }

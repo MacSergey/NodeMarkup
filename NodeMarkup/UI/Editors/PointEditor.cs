@@ -13,18 +13,10 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name { get; } = "Points";
 
-        FloatPropertyPanel Offset { get; set; }
-
         public PointsEditor()
         {
-            SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
-            Offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-            Offset.Text = "Offset";
-            Offset.OnValueChanged += OffsetChanged;
         }
-        private void OffsetChanged(float value) => EditObject.Offset = value;
-
         protected override void FillItems()
         {
             foreach (var enter in Markup.Enters)
@@ -37,15 +29,14 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
-            Offset.Value = EditObject.Offset;
+            var offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+            offset.Text = "Offset";
+            offset.Init();
+            offset.Value = EditObject.Offset;
+            offset.OnValueChanged += OffsetChanged;
         }
-        private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
-        {
-            foreach (var item in component.components)
-            {
-                item.width = value.x;
-            }
-        }
+        private void OffsetChanged(float value) => EditObject.Offset = value;
+
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon> 
     {

@@ -22,7 +22,7 @@ namespace NodeMarkup.UI
         public List<Editor> Editors { get; } = new List<Editor>();
 
         private Vector2 EditorSize => new Vector2(500, 400);
-        private Vector2 EditorPosition => new Vector2(0, TabStrip.height);
+        private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
         private static readonly string kTabstripButton = "RoadEditorTabstripButton";
         private static float TabStripHeight => 20;
@@ -31,36 +31,28 @@ namespace NodeMarkup.UI
         {
             var uiView = UIView.GetAView();
             Instance = uiView.AddUIComponent(typeof(NodeMarkupPanel)) as NodeMarkupPanel;
+            Instance.Init();
             return Instance;
         }
-
-        public NodeMarkupPanel()
+        public void Init()
         {
-            Init();
+            atlas = TextureUtil.GetAtlas("Ingame");
+            backgroundSprite = "MenuPanel2";
+            absolutePosition = new Vector3(200, 200);
+            name = "NodeMarkupPanel";
 
             CreateHandle();
             CreateTabStrip();
             CreateEditors();
 
-            eventSizeChanged += ((component, size) => Handle.width = size.x);
-        }
-        private void Init()
-        {
-            atlas = TextureUtil.GetAtlas("Ingame");
-            backgroundSprite = "MenuPanel2";
-            absolutePosition = new Vector3(200, 200);
-            autoLayout = true;
-            autoLayoutDirection = LayoutDirection.Vertical;
-            autoFitChildrenHorizontally = true;
-            autoFitChildrenVertically = true;
-            name = "NodeMarkupPanel";
+            size = new Vector2(500, Handle.height + TabStrip.height + EditorSize.y);
         }
         private void CreateHandle()
         {
             Handle = AddUIComponent<UIDragHandle>();
-            Handle.height = 42;
+            Handle.size = new Vector2(500, 42);
+            Handle.relativePosition = new Vector2(0, 0);
             Handle.target = parent;
-            Handle.anchor = UIAnchorStyle.Top;
             Handle.eventSizeChanged += ((component, size) =>
             {
                 Caption.size = size;
@@ -78,7 +70,7 @@ namespace NodeMarkup.UI
         private void CreateTabStrip()
         {
             TabStrip = AddUIComponent<CustomUITabstrip>();
-            TabStrip.anchor = UIAnchorStyle.Top;
+            TabStrip.relativePosition = new Vector3(0, Handle.height);
             TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
             TabStrip.selectedIndex = -1;
         }
@@ -91,15 +83,15 @@ namespace NodeMarkup.UI
         private void CreateEditor<EditorType>() where EditorType : Editor
         {
             var editor = AddUIComponent<EditorType>();
-            editor.anchor = UIAnchorStyle.Top;
+            editor.Init();
+            TabStrip.AddTab<PointsEditor>(editor.Name);
+
             editor.isVisible = false;
             editor.size = EditorSize;
             editor.relativePosition = EditorPosition;
             editor.NodeMarkupPanel = this;
 
             Editors.Add(editor);
-
-            TabStrip.AddTab<PointsEditor>(editor.Name);
         }
 
         public void SetNode(ushort nodeId)
@@ -150,10 +142,5 @@ namespace NodeMarkup.UI
             editor?.UpdateEditor();
             editor?.Select(line);
         }
-
-        //public EditorType GetEditor<EditorType>() where EditorType : Editor
-        //{
-        //    return (EditorType)Editors[typeof(EditorType)];
-        //}
     }
 }

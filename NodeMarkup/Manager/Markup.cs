@@ -129,7 +129,7 @@ namespace NodeMarkup.Manager
         {
             var line = LinesDictionary[pointPair];
 
-            var intersects = GetIntersects(line);
+            var intersects = GetExistIntersects(line);
             foreach(var intersect in intersects)
             {
                 LineIntersects.Remove(intersect.Pair);
@@ -149,11 +149,17 @@ namespace NodeMarkup.Manager
                 return null;
             }
         }
-        public LineIntersect[] GetIntersects(MarkupLine line)
+        public LineIntersect[] GetExistIntersects(MarkupLine line)
         {
             var intersects = LineIntersects.Values.Where(i => i.Pair.ContainLine(line)).ToArray();
             return intersects;
         }
+        public LineIntersect[] GetIntersects(MarkupLine line)
+        {
+            var intersects = Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l))).ToArray();
+            return intersects;
+        }
+
         public LineIntersect GetIntersect(MarkupLinePair linePair)
         {
             if(!LineIntersects.TryGetValue(linePair, out LineIntersect intersect))
@@ -462,12 +468,13 @@ namespace NodeMarkup.Manager
             PointPair = pointPair;
 
             var rule = new MarkupLineRawRule(lineStyle);
+            rule.OnRuleChanged = RuleChanged;
             RawRules.Add(rule);
 
             Update();
             RecalculateDashes();
         }
-
+        private void RuleChanged() => Markup.Update(this);
         public void Update()
         {
             var trajectory = new Bezier3
@@ -492,6 +499,8 @@ namespace NodeMarkup.Manager
     {
         public MarkupLine First;
         public MarkupLine Second;
+
+        public bool IsSelf => First == Second;
 
         public MarkupLinePair(MarkupLine first, MarkupLine second)
         {

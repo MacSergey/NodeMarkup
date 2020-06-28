@@ -46,7 +46,19 @@ namespace NodeMarkup.Manager
             }    
         }
 
-        public Color Color { get; set; }
+
+        Color _color;
+
+        public Color Color
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                StyleChanged();
+            }
+        }
+        public Action OnStyleChanged { private get; set; }
         public abstract Type LineType { get; }
 
         public LineStyle(Color color)
@@ -55,6 +67,7 @@ namespace NodeMarkup.Manager
         }
 
         public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory);
+        protected void StyleChanged() => OnStyleChanged?.Invoke();
 
         public enum Type
         {
@@ -107,7 +120,17 @@ namespace NodeMarkup.Manager
     public class DoubleSolidLineStyle : SolidLineStyle, IDoubleLine
     {
         public override Type LineType { get; } = Type.DoubleSolid;
-        public float Offset { get; set; }
+
+        float _offset;
+        public float Offset
+        {
+            get => _offset;
+            set
+            {
+                _offset = value;
+                StyleChanged();
+            }
+        }
 
         public DoubleSolidLineStyle(Color color, float offset) : base(color) 
         {
@@ -139,8 +162,27 @@ namespace NodeMarkup.Manager
     public class DashedLineStyle : LineStyle, IDashedLine
     {
         public override Type LineType { get; } = Type.Dash;
-        public float DashLength { get; set; }
-        public float SpaceLength { get; set; }
+
+        float _dashLength;
+        float _spaceLength;
+        public float DashLength
+        {
+            get => _dashLength;
+            set
+            {
+                _dashLength = value;
+                StyleChanged();
+            }
+        }
+        public float SpaceLength
+        {
+            get => _spaceLength;
+            set
+            {
+                _spaceLength = value;
+                StyleChanged();
+            }
+        }
 
         public DashedLineStyle(Color color, float dashLength, float spaceLength) : base(color)
         {
@@ -155,7 +197,7 @@ namespace NodeMarkup.Manager
 
             var startSpaceT = (1 - ((DashLength + SpaceLength) * dashCount - SpaceLength) / length) / 2;
             var dashT = DashLength / length;
-            var spaceT = DashLength / length;
+            var spaceT = SpaceLength / length;
 
             int index = 0;
             while(true)
@@ -190,7 +232,18 @@ namespace NodeMarkup.Manager
     public class DoubleDashedStyle : DashedLineStyle, IDoubleLine
     {
         public override Type LineType { get; } = Type.DoubleDash;
-        public float Offset { get; set; }
+
+        float _offset;
+        public float Offset
+        {
+            get => _offset;
+            set
+            {
+                _offset = value;
+                StyleChanged();
+            }
+        }
+
         public DoubleDashedStyle(Color color, float dashLength, float spaceLength, float offset) : base(color, dashLength, spaceLength)
         {
             Offset = offset;

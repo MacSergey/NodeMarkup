@@ -9,16 +9,49 @@ namespace NodeMarkup.Manager
 {
     public class MarkupLineRawRule
     {
-        MarkupLine From { get; }
-        MarkupLine To { get; }
-        LineStyle LineStyle { get; }
+        MarkupLine _from;
+        MarkupLine _to;
+        LineStyle _style;
 
-        public MarkupLineRawRule(LineStyle lineStyle, MarkupLine from = null, MarkupLine to = null)
+        public MarkupLine From
         {
-            LineStyle = lineStyle;
+            get => _from;
+            set
+            {
+                _from = value;
+                RuleChanged();
+            }
+        }
+        public MarkupLine To
+        {
+            get => _to;
+            set
+            {
+                _to = value;
+                RuleChanged();
+            }
+        }
+        public LineStyle Style
+        {
+            get => _style;
+            set
+            {
+                _style = value;
+                _style.OnStyleChanged = RuleChanged;
+                RuleChanged();
+            }
+        }
+
+        public Action OnRuleChanged { private get; set; }
+
+        public MarkupLineRawRule(LineStyle style, MarkupLine from = null, MarkupLine to = null)
+        {
+            Style = style;
             From = from;
             To = to;
         }
+
+        private void RuleChanged() => OnRuleChanged?.Invoke();
 
         public static MarkupLineRule[] GetRules(MarkupLine line, List<MarkupLineRawRule> rawRules)
         {
@@ -27,7 +60,7 @@ namespace NodeMarkup.Manager
 
             foreach (var rawRule in rawRules)
             {
-                var rule = new MarkupLineRule(rawRule.LineStyle);
+                var rule = new MarkupLineRule(rawRule.Style);
 
                 if(rawRule.From != null)
                 {
