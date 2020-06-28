@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace NodeMarkup.UI.Editors
         {
 
         }
-        protected override void Fill()
+        protected override void FillItems()
         {
             foreach (var line in Markup.Lines)
             {
@@ -24,9 +25,33 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void ItemClick(LineItem item)
         {
-            
+            ClearSettings();
+
+            foreach (var rule in item.Object.RawRules)
+            {
+                var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
+                rulePanel.Init();
+            }
         }
     }
 
     public class LineItem : EditableItem<MarkupLine, UIPanel> { }
+
+    public class RulePanel : UIPanel
+    {
+        public RulePanel()
+        {
+            atlas = TextureUtil.GetAtlas("Ingame");
+            backgroundSprite = "GenericPanel";
+            autoLayout = true;
+            autoFitChildrenVertically = true;
+            autoLayoutDirection = LayoutDirection.Vertical;
+            height = 100;
+        }
+
+        public void Init()
+        {
+
+        }
+    }
 }

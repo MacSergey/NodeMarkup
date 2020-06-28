@@ -239,7 +239,8 @@ namespace NodeMarkup
         {
             var markup = Manager.Manager.Get(SelectNodeId);
             var lineType = e.shift ? (e.control ? LineStyle.Type.DoubleSolid : LineStyle.Type.Solid) : (e.control ? LineStyle.Type.DoubleDash : LineStyle.Type.Dash);
-            markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
+            var newLine = markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
+            Panel.EditLine(newLine);
             SelectPoint = null;
         }
         private void OnSecondaryMouseClicked()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodeMarkup.Utils;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,13 +22,33 @@ namespace NodeMarkup.Manager
 
         public static MarkupLineRule[] GetRules(MarkupLine line, List<MarkupLineRawRule> rawRules)
         {
+            var markup = line.Markup;
             var rules = new List<MarkupLineRule>();
 
-            foreach(var rawRule in rawRules)
+            foreach (var rawRule in rawRules)
             {
-                var start = rawRule.From == null ? 0 : line.Intersection(rawRule.From);
-                var end = rawRule.To == null ? 1 : line.Intersection(rawRule.To);
-                var rule = new MarkupLineRule(start, end, rawRule.LineStyle);
+                var rule = new MarkupLineRule(rawRule.LineStyle);
+
+                if(rawRule.From != null)
+                {
+                    var pair = new MarkupLinePair(line, rawRule.From);
+                    var intersect = markup.GetIntersect(pair);
+                    if (intersect.IsIntersect)
+                        rule.Start = intersect[line];
+                    else
+                        continue;
+                }
+
+                if (rawRule.To != null)
+                {
+                    var pair = new MarkupLinePair(line, rawRule.To);
+                    var intersect = markup.GetIntersect(pair);
+                    if (intersect.IsIntersect)
+                        rule.End = intersect[line];
+                    else
+                        continue;
+                }
+
                 Add(rules, rule);
             }
 
@@ -36,7 +57,7 @@ namespace NodeMarkup.Manager
         private static void Add(List<MarkupLineRule> rules, MarkupLineRule newRule)
         {
             var i = 0;
-            while(i < rules.Count)
+            while (i < rules.Count)
             {
                 var rule = rules[i];
                 if (newRule.End <= rule.Start)
@@ -84,9 +105,16 @@ namespace NodeMarkup.Manager
 
     public struct MarkupLineRule
     {
-        public float Start { get; set; }
-        public float End { get; set; }
-        public LineStyle LineStyle { get; }
+        public float Start;
+        public float End;
+        public LineStyle LineStyle;
+
+        public MarkupLineRule(LineStyle lineStyle)
+        {
+            LineStyle = lineStyle;
+            Start = 0;
+            End = 1;
+        }
 
         public MarkupLineRule(float start, float end, LineStyle lineStyle)
         {

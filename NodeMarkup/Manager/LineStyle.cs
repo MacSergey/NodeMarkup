@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
             var direction = trajectory.d - trajectory.a;
             var length = direction.magnitude;
 
-            if ((180 - deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
+            if ((deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
             {
                 trajectory.Divide(out Bezier3 first, out Bezier3 second);
                 foreach (var dash in Calculate(first))

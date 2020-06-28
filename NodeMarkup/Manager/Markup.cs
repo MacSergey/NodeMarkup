@@ -14,6 +14,8 @@ namespace NodeMarkup.Manager
         public ushort NodeId { get; }
         Dictionary<ushort, SegmentEnter> EntersDictionary { get; set; } = new Dictionary<ushort, SegmentEnter>();
         Dictionary<MarkupPointPair, MarkupLine> LinesDictionary { get; } = new Dictionary<MarkupPointPair, MarkupLine>(new MarkupPointPairComparer());
+        Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(new MarkupLinePairComparer());
+
         public RenderBatch[] RenderBatches { get; private set; }
 
 
@@ -45,6 +47,15 @@ namespace NodeMarkup.Manager
         {
             //Logger.LogDebug($"End update node #{NodeId}");
 
+            UpdateEnters();
+            UpdateLines();
+
+            RecalculateDashes();
+
+            //Logger.LogDebug($"End update node #{NodeId}");
+        }
+        private void UpdateEnters()
+        {
             var node = Utilities.GetNode(NodeId);
 
             var enters = new Dictionary<ushort, SegmentEnter>();
@@ -60,7 +71,9 @@ namespace NodeMarkup.Manager
             }
 
             EntersDictionary = enters;
-
+        }
+        private void UpdateLines()
+        {
             var pointPairs = LinesDictionary.Keys.ToArray();
             foreach (var pointPair in pointPairs)
             {
@@ -69,49 +82,87 @@ namespace NodeMarkup.Manager
                 else
                     LinesDictionary.Remove(pointPair);
             }
-
-            Recalculate();
-
-                //Logger.LogDebug($"End update node #{NodeId}");
         }
+
         public void Update(MarkupPoint point)
         {
             point.Update();
-            foreach(var line in Lines.Where(l => l.ContainPoint(point)))
+            foreach (var line in Lines.Where(l => l.ContainPoint(point)))
             {
                 line.Update();
             }
-            Recalculate();
+            RecalculateDashes();
         }
         public void Update(MarkupLine line)
         {
             line.Update();
-            Recalculate();
+            line.RecalculateDashes();
+            RecalculateBatches();
         }
-        public void Recalculate()
+
+        public void RecalculateDashes()
+        {
+            LineIntersects.Clear();
+            foreach (var line in Lines)
+            {
+                line.RecalculateDashes();
+            }
+            RecalculateBatches();
+        }
+        public void RecalculateBatches()
         {
             var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
             RenderBatches = RenderBatch.FromDashes(dashes);
         }
 
-        public void AddConnect(MarkupPointPair pointPair, LineStyle.Type lineType)
+        public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.Type lineType)
         {
-            var line = new MarkupLine(this, pointPair, lineType);
-            LinesDictionary[pointPair] = line;
+            var newLine = new MarkupLine(this, pointPair, lineType);
+            LinesDictionary[pointPair] = newLine;
+
+            RecalculateBatches();
+
+            return newLine;
         }
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair);
         public void RemoveConnect(MarkupPointPair pointPair)
         {
+            var line = LinesDictionary[pointPair];
+
+            var intersects = GetIntersects(line);
+            foreach(var intersect in intersects)
+            {
+                LineIntersects.Remove(intersect.Pair);
+            }
+
             LinesDictionary.Remove(pointPair);
+
+            RecalculateDashes();
         }
-        public void ToggleConnection(MarkupPointPair pointPair, LineStyle.Type lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.Type lineType)
         {
             if (!ExistConnection(pointPair))
-                AddConnect(pointPair, lineType);
+                return AddConnect(pointPair, lineType);
             else
+            {
                 RemoveConnect(pointPair);
+                return null;
+            }
+        }
+        public LineIntersect[] GetIntersects(MarkupLine line)
+        {
+            var intersects = LineIntersects.Values.Where(i => i.Pair.ContainLine(line)).ToArray();
+            return intersects;
+        }
+        public LineIntersect GetIntersect(MarkupLinePair linePair)
+        {
+            if(!LineIntersects.TryGetValue(linePair, out LineIntersect intersect))
+            {
+                MarkupLineIntersect.Calculate(linePair, out intersect);
+                LineIntersects.Add(linePair, intersect);
+            }
 
-            Recalculate();
+            return intersect;
         }
     }
     public struct MarkupPointPair
@@ -208,7 +259,6 @@ namespace NodeMarkup.Manager
                 point.Update();
             }
         }
-        public void Recalculate() => Markup.Recalculate();
 
         public override string ToString() => SegmentId.ToString();
     }
@@ -415,6 +465,7 @@ namespace NodeMarkup.Manager
             RawRules.Add(rule);
 
             Update();
+            RecalculateDashes();
         }
 
         public void Update()
@@ -427,17 +478,34 @@ namespace NodeMarkup.Manager
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
             Trajectory = trajectory;
-
+        }
+        public void RecalculateDashes()
+        {
             var rules = MarkupLineRawRule.GetRules(this, RawRules);
             Dashes = rules.SelectMany(r => r.LineStyle.Calculate(Trajectory.Cut(r.Start, r.End))).ToArray();
         }
         public override string ToString() => PointPair.ToString();
 
         public bool ContainPoint(MarkupPoint point) => PointPair.ContainPoint(point);
+    }
+    public struct MarkupLinePair
+    {
+        public MarkupLine First;
+        public MarkupLine Second;
 
-        public float Intersection(MarkupLine line)
+        public MarkupLinePair(MarkupLine first, MarkupLine second)
         {
-            throw new NotImplementedException();
+            First = first;
+            Second = second;
         }
+        public bool ContainLine(MarkupLine line) => First == line || Second == line;
+
+        public override string ToString() => $"{First}—{Second}";
+    }
+    public class MarkupLinePairComparer : IEqualityComparer<MarkupLinePair>
+    {
+        public bool Equals(MarkupLinePair x, MarkupLinePair y) => (x.First == y.First && x.Second == y.Second) || (x.First == y.Second && x.Second == y.First);
+
+        public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
     }
 }

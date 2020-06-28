@@ -80,6 +80,7 @@
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\TabPanel.cs" />
     <Compile Include="UI\Utils.cs" />
+    <Compile Include="Utils\BezierIntersect.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\RenderHelper.cs" />
     <Compile Include="Utils\TextureUtil.cs" />

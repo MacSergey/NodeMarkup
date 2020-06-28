@@ -16,15 +16,16 @@ namespace NodeMarkup.UI.Editors
 
         public abstract string Name { get; }
         protected UIScrollablePanel ItemsPanel { get; set; }
-        protected UIScrollbar Scrollbar { get; set; }
-        protected UIPanel SettingsPanel { get; set; }
+        protected UIScrollbar ItemsScrollbar { get; set; }
+        protected UIScrollablePanel SettingsPanel { get; set; }
+        protected UIScrollbar SettingsScrollbar { get; set; }
 
         public virtual void UpdateEditor()
         {
-            Clear();
-            Fill();
+            ClearItems();
+            FillItems();
         }
-        protected void Clear()
+        protected void ClearItems()
         {
             var componets = ItemsPanel.components.ToArray();
             foreach (var item in componets)
@@ -34,7 +35,16 @@ namespace NodeMarkup.UI.Editors
                 Destroy(item.gameObject);
             }
         }
-        protected virtual void Fill()
+        protected void ClearSettings()
+        {
+            var componets = SettingsPanel.components.ToArray();
+            foreach (var item in componets)
+            {
+                SettingsPanel.RemoveUIComponent(item);
+                Destroy(item.gameObject);
+            }
+        }
+        protected virtual void FillItems()
         {
 
         }
@@ -68,7 +78,6 @@ namespace NodeMarkup.UI.Editors
         private void AddPanels()
         {
             AddItemsPanel();
-            AddScrollbar();
             AddSettingPanel();
         }
         private void AddItemsPanel()
@@ -83,6 +92,11 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.eventSizeChanged += ItemsPanelSizeChanged;
             ItemsPanel.atlas = TextureUtil.GetAtlas("Ingame");
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
+
+            ItemsScrollbar = AddScrollbar();
+            ItemsPanel.verticalScrollbar = ItemsScrollbar;
+
+            ItemsScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
         }
 
         private void ItemsPanelSizeChanged(UIComponent component, Vector2 value)
@@ -92,26 +106,60 @@ namespace NodeMarkup.UI.Editors
                 item.width = ItemsPanel.width;
             }
         }
-
-        private void AddScrollbar()
+        private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
-            Scrollbar = AddUIComponent<UIScrollbar>();
-            Scrollbar.orientation = UIOrientation.Vertical;
-            Scrollbar.pivot = UIPivotPoint.TopLeft;
-            Scrollbar.minValue = 0;
-            Scrollbar.value = 0;
-            Scrollbar.incrementAmount = 50;
-            Scrollbar.autoHide = true;
-            Scrollbar.width = 10;
+            ItemsPanel.width = size.x / 10 * 3 - (ItemsScrollbar.isVisible ? ItemsScrollbar.width : 0);
+        }
 
-            UISlicedSprite trackSprite = Scrollbar.AddUIComponent<UISlicedSprite>();
+        private void AddSettingPanel()
+        {
+            SettingsPanel = AddUIComponent<UIScrollablePanel>();
+            SettingsPanel.autoLayout = true;
+            SettingsPanel.autoLayoutDirection = LayoutDirection.Vertical;
+            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
+            SettingsPanel.builtinKeyNavigation = true;
+            SettingsPanel.clipChildren = true;
+            SettingsPanel.atlas = TextureUtil.GetAtlas("Ingame");
+            SettingsPanel.backgroundSprite = "UnlockingItemBackground";
+            SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
+
+            SettingsScrollbar = AddScrollbar();
+            SettingsPanel.verticalScrollbar = SettingsScrollbar;
+
+            SettingsScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
+        }
+        private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
+        {
+            foreach (var item in SettingsPanel.components)
+            {
+                item.width = SettingsPanel.width - SettingsPanel.autoLayoutPadding.vertical;
+            }
+        }
+        private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
+        {
+            SettingsPanel.width = size.x / 10 * 7 - (SettingsScrollbar.isVisible ? SettingsScrollbar.width : 0);
+        }
+
+        private UIScrollbar AddScrollbar()
+        {
+            var scrollbar = AddUIComponent<UIScrollbar>();
+            scrollbar.orientation = UIOrientation.Vertical;
+            scrollbar.pivot = UIPivotPoint.TopLeft;
+            scrollbar.minValue = 0;
+            scrollbar.value = 0;
+            scrollbar.incrementAmount = 50;
+            scrollbar.autoHide = true;
+            scrollbar.width = 10;
+
+            UISlicedSprite trackSprite = scrollbar.AddUIComponent<UISlicedSprite>();
             trackSprite.relativePosition = Vector2.zero;
             trackSprite.autoSize = true;
             trackSprite.anchor = UIAnchorStyle.All;
             trackSprite.size = trackSprite.parent.size;
             trackSprite.fillDirection = UIFillDirection.Vertical;
             trackSprite.spriteName = "ScrollbarTrack";
-            Scrollbar.trackObject = trackSprite;
+            scrollbar.trackObject = trackSprite;
 
             UISlicedSprite thumbSprite = trackSprite.AddUIComponent<UISlicedSprite>();
             thumbSprite.relativePosition = Vector2.zero;
@@ -119,47 +167,32 @@ namespace NodeMarkup.UI.Editors
             thumbSprite.autoSize = true;
             thumbSprite.width = thumbSprite.parent.width;
             thumbSprite.spriteName = "ScrollbarThumb";
-            Scrollbar.thumbObject = thumbSprite;
+            scrollbar.thumbObject = thumbSprite;
 
-            Scrollbar.eventValueChanged += (component, value) => ItemsPanel.scrollPosition = new Vector2(0, value);
+            scrollbar.eventValueChanged += (component, value) => ItemsPanel.scrollPosition = new Vector2(0, value);
 
             eventMouseWheel += (component, eventParam) =>
             {
-                Scrollbar.value -= (int)eventParam.wheelDelta * Scrollbar.incrementAmount;
+                scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
             };
 
             ItemsPanel.eventMouseWheel += (component, eventParam) =>
             {
-                Scrollbar.value -= (int)eventParam.wheelDelta * Scrollbar.incrementAmount;
+                scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
             };
 
-            ItemsPanel.verticalScrollbar = Scrollbar;
-
-            Scrollbar.eventVisibilityChanged += ScrollbarVisibilityChanged;
-        }
-
-        private void ScrollbarVisibilityChanged(UIComponent component, bool value)
-        {
-            ItemsPanel.width = size.x / 10 * 3 - (Scrollbar.isVisible ? Scrollbar.width : 0);
-        }
-
-        private void AddSettingPanel()
-        {
-            SettingsPanel = AddUIComponent<UIPanel>();
-            SettingsPanel.autoLayout = true;
-            SettingsPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            SettingsPanel.atlas = TextureUtil.GetAtlas("Ingame");
-            SettingsPanel.backgroundSprite = "UnlockingItemBackground";
+            return scrollbar;
         }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
-            ItemsPanel.width = size.x / 10 * 3 - (Scrollbar.isVisible ? Scrollbar.width : 0);
-            SettingsPanel.width = size.x / 10 * 7;
+            ItemsPanel.width = size.x / 10 * 3 - (ItemsScrollbar.isVisible ? ItemsScrollbar.width : 0);
+            SettingsPanel.width = size.x / 10 * 7 - (SettingsScrollbar.isVisible ? SettingsScrollbar.width : 0);
             ItemsPanel.height = size.y;
             SettingsPanel.height = size.y;
-            Scrollbar.height = size.y;
+            ItemsScrollbar.height = size.y;
+            SettingsScrollbar.height = size.y;
         }
 
         public EditableItemType AddItem(EditableObject editableObject)

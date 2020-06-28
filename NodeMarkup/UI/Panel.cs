@@ -134,14 +134,21 @@ namespace NodeMarkup.UI
         }
         private EditorType SelectEditor<EditorType>() where EditorType : Editor
         {
-            var editorIndex = GetEditor(typeof(PointsEditor));
-            return SelectEditor(editorIndex) as EditorType;
+            var editorIndex = GetEditor(typeof(EditorType));
+            TabStrip.selectedIndex = editorIndex;
+            return Editors[editorIndex] as EditorType;
         }
 
         public void EditPoint(MarkupPoint point)
         {
             var editor = SelectEditor<PointsEditor>();
             editor?.Select(point);
+        }
+        public void EditLine(MarkupLine line)
+        {
+            var editor = SelectEditor<LinesEditor>();
+            editor?.UpdateEditor();
+            editor?.Select(line);
         }
 
         //public EditorType GetEditor<EditorType>() where EditorType : Editor

@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void OffsetChanged(float value) => EditObject.Offset = value;
 
-        protected override void Fill()
+        protected override void FillItems()
         {
             foreach (var enter in Markup.Enters)
             {
