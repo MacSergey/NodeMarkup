@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
                     rules.Insert(i, newRule);
                     return;
                 }
-                else if (newRule.Start < rule.Start && newRule.End < rule.End)
+                else if (newRule.Start < rule.Start && newRule.End < rule.End && rule.Start <= newRule.End)
                 {
                     var middle = (rule.Start + newRule.End) / 2;
                     rule.Start = middle;
@@ -120,7 +120,7 @@ namespace NodeMarkup.Manager
                     rules.RemoveAt(i);
                     continue;
                 }
-                else if (rule.Start < newRule.Start && rule.End < newRule.End)
+                else if (rule.Start < newRule.Start && rule.End < newRule.End && newRule.Start <= rule.End)
                 {
                     var middle = (newRule.Start + rule.End) / 2;
                     rule.End = middle;
