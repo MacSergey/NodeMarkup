@@ -34,8 +34,9 @@ namespace NodeMarkup.Utils
             var vertices = new Vector3[VCount * count];
             var triangles = new int[TCount * count];
             var colors32 = new Color32[VCount * count];
+            var uv = new Vector2[VCount * count];
 
-            for(var i = 0; i < count; i += 1)
+            for (var i = 0; i < count; i += 1)
             {
                 CreateTemp(lengths[i], widths[i], heights[i], out Vector3[] tempV, out int[] tempT);
                 var tempColor = VerticesColor(i);
@@ -44,6 +45,7 @@ namespace NodeMarkup.Utils
                 {
                     vertices[i * VCount + j] = tempV[j];
                     colors32[i * VCount + j] = tempColor;
+                    uv[i * VCount + j] = Vector2.zero;
                 }
                 for (var j = 0; j < TCount; j += 1)
                 {
@@ -54,13 +56,14 @@ namespace NodeMarkup.Utils
             Bounds bounds = default;
             bounds.SetMinMax(new Vector3(-100000f, -100000f, -100000f), new Vector3(100000f, 100000f, 100000f));
 
-            var mesh = new Mesh()
-            {
-                vertices = vertices,
-                triangles = triangles,
-                colors32 = colors32,
-                bounds = bounds,
-            };
+            var mesh = new Mesh();
+            mesh.Clear();
+
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+            mesh.colors32 = colors32;
+            mesh.bounds = bounds;
+            mesh.uv = uv;
 
             return mesh;
         }
@@ -149,7 +152,7 @@ namespace NodeMarkup.Utils
             {
                 name = "Markup",
             };
-                texture.SetPixel(0, 0, color);
+            texture.SetPixel(0, 0, color);
 
             texture.Apply();
             return texture;

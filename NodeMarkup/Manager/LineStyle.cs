@@ -193,6 +193,9 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
         {
             var length = trajectory.Length();
+            if (length == 0)
+                yield break;
+
             var dashCount = (int)((length - SpaceLength) / (DashLength + SpaceLength));
 
             var startSpaceT = (1 - ((DashLength + SpaceLength) * dashCount - SpaceLength) / length) / 2;

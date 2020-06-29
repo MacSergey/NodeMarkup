@@ -45,7 +45,17 @@ namespace NodeMarkup.Manager
         public void RecalculateDashes()
         {
             var rules = MarkupLineRawRule.GetRules(this, RawRules);
-            Dashes = rules.SelectMany(r => r.LineStyle.Calculate(Trajectory.Cut(r.Start, r.End))).ToArray();
+
+            var dashes = new List<MarkupDash>();
+            foreach (var rule in rules)
+            {
+                var trajectoryPart = Trajectory.Cut(rule.Start, rule.End);
+                var ruleDashes = rule.LineStyle.Calculate(trajectoryPart).ToArray();
+
+                dashes.AddRange(ruleDashes);
+            }
+
+            Dashes = dashes.ToArray();
         }
         public override string ToString() => PointPair.ToString();
 

@@ -67,7 +67,12 @@ namespace NodeMarkup.Utils
 
         public static float Length(this Bezier3 bezier, float minAngleDelta = 10)
         {
-            var angle = Vector3.Angle(bezier.b - bezier.a, bezier.c - bezier.d);
+            var start = bezier.b - bezier.a;
+            var end = bezier.c - bezier.d;
+            if (start.magnitude < Vector3.kEpsilon || end.magnitude < Vector3.kEpsilon)
+                return 0;
+
+            var angle = Vector3.Angle(start, end);
             if (180 - angle > minAngleDelta)
             {
                 bezier.Divide(out Bezier3 first, out Bezier3 second);
