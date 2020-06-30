@@ -67,10 +67,13 @@ namespace NodeMarkup.UI.Editors
 
         private void AddAddButton()
         {
-            var button = SettingsPanel.AddUIComponent<ButtonPanel>();
-            button.Text = "Add Rule";
-            button.Init();
-            button.OnButtonClick += AddButtonClick;
+            if (RuleEdges.Count > 2)
+            {
+                var button = SettingsPanel.AddUIComponent<ButtonPanel>();
+                button.Text = "Add Rule";
+                button.Init();
+                button.OnButtonClick += AddButtonClick;
+            }
         }
 
         private void AddButtonClick()
@@ -194,9 +197,9 @@ namespace NodeMarkup.UI.Editors
             Rule = rule;
 
             SetSize();
-            AddDeleteButton();
             if (Editor.RuleEdges.Count > 2)
             {
+                AddDeleteButton();
                 AddFromProperty();
                 AddToProperty();
             }
@@ -266,6 +269,8 @@ namespace NodeMarkup.UI.Editors
             {
                 var dashLengthProperty = AddUIComponent<FloatPropertyPanel>();
                 dashLengthProperty.Text = "Dashed lenght";
+                dashLengthProperty.UseWheel = true;
+                dashLengthProperty.Step = 0.1f;
                 dashLengthProperty.Init();
                 dashLengthProperty.Value = dashedStyle.DashLength;
                 dashLengthProperty.OnValueChanged += DashLengthChanged;
@@ -273,6 +278,8 @@ namespace NodeMarkup.UI.Editors
 
                 var spaceLengthProperty = AddUIComponent<FloatPropertyPanel>();
                 spaceLengthProperty.Text = "Space lenght";
+                spaceLengthProperty.UseWheel = true;
+                spaceLengthProperty.Step = 0.1f;
                 spaceLengthProperty.Init();
                 spaceLengthProperty.Value = dashedStyle.SpaceLength;
                 spaceLengthProperty.OnValueChanged += SpaceLengthChanged;
@@ -282,6 +289,8 @@ namespace NodeMarkup.UI.Editors
             {
                 var offsetProperty = AddUIComponent<FloatPropertyPanel>();
                 offsetProperty.Text = "Offset";
+                offsetProperty.UseWheel = true;
+                offsetProperty.Step = 0.1f;
                 offsetProperty.Init();
                 offsetProperty.Value = doubleStyle.Offset;
                 offsetProperty.OnValueChanged += OffsetChanged;

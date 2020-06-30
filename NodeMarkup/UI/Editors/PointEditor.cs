@@ -31,6 +31,8 @@ namespace NodeMarkup.UI.Editors
         {
             var offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
             offset.Text = "Offset";
+            offset.UseWheel = true;
+            offset.Step = 0.1f;
             offset.Init();
             offset.Value = EditObject.Offset;
             offset.OnValueChanged += OffsetChanged;

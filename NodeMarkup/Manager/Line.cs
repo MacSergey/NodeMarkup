@@ -25,7 +25,7 @@ namespace NodeMarkup.Manager
             Markup = markup;
             PointPair = pointPair;
 
-            AddRule(lineStyle);
+            AddRule(lineStyle, false, false);
 
             Update();
             RecalculateDashes();
@@ -66,11 +66,14 @@ namespace NodeMarkup.Manager
             var intersectWith = Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
             return intersectWith;
         }
-        public MarkupLineRawRule AddRule(LineStyle lineStyle)
+        public MarkupLineRawRule AddRule(LineStyle lineStyle, bool empty = true, bool update = true)
         {
-            var newRule = new MarkupLineRawRule(lineStyle, new SelfPointRawRuleEdge(Start), new SelfPointRawRuleEdge(End));
+            var newRule = new MarkupLineRawRule(lineStyle, empty ? null : new SelfPointRawRuleEdge(Start), empty ? null : new SelfPointRawRuleEdge(End));
             newRule.OnRuleChanged = RuleChanged;
             RawRules.Add(newRule);
+
+            if(update)
+                RuleChanged();
 
             return newRule;
         }
@@ -81,10 +84,10 @@ namespace NodeMarkup.Manager
             RuleChanged();
         }
 
-        public void RemoveRules(MarkupLine line)
+        public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(IMarkupLineRawRuleEdge ruleEdge) => ruleEdge is LineRawRuleEdge lineRuleEdge && lineRuleEdge.Line == line;
+            bool Match(IMarkupLineRawRuleEdge ruleEdge) => ruleEdge is LineRawRuleEdge lineRuleEdge && lineRuleEdge.Line == intersectLine;
 
             if (!RawRules.Any())
                 AddRule();

@@ -127,11 +127,15 @@ namespace NodeMarkup.UI.Editors
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
     }
 
-    public class FieldPropertyPanel<ValueType> : EditorPropertyPanel
+    public abstract class FieldPropertyPanel<ValueType> : EditorPropertyPanel
     {
         private UITextField Field { get; set; }
 
         public event Action<ValueType> OnValueChanged;
+
+        protected abstract bool CanUseWheel { get; }
+        public bool UseWheel { get; set; }
+        public ValueType Step { get; set; }
 
         public ValueType Value
         {
@@ -166,12 +170,34 @@ namespace NodeMarkup.UI.Editors
             Field.cursorBlinkTime = 0.45f;
             Field.selectOnFocus = true;
             Field.eventTextChanged += FieldTextChanged;
+            Field.eventMouseWheel += FieldMouseWheel;
             Field.textScale = 0.7f;
+
         }
+
+        private void FieldMouseWheel(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if(CanUseWheel && UseWheel)
+            {
+                if (eventParam.wheelDelta < 0)
+                    Value = Increment(Value, Step);
+                else
+                    Value = Decrement(Value, Step);
+            }
+        }
+
+        protected abstract ValueType Increment(ValueType value, ValueType step);
+        protected abstract ValueType Decrement(ValueType value, ValueType step);
 
         protected virtual void FieldTextChanged(UIComponent component, string text) => OnValueChanged?.Invoke(Value);
     }
-    public class FloatPropertyPanel : FieldPropertyPanel<float> { }
+    public class FloatPropertyPanel : FieldPropertyPanel<float>
+    {
+        protected override bool CanUseWheel => true;
+
+        protected override float Decrement(float value, float step) => value + step;
+        protected override float Increment(float value, float step) => value - step;
+    }
 
     public class ColorPropertyPanel : EditorPropertyPanel
     {
@@ -267,14 +293,14 @@ namespace NodeMarkup.UI.Editors
 
             DropDown.atlas = TextureUtil.GetAtlas("Ingame");
             DropDown.height = 20;
-            DropDown.width = 200;
+            DropDown.width = 230;
             DropDown.listBackground = "TextFieldPanel";
             DropDown.itemHeight = 20;
             DropDown.itemHover = "TextFieldPanelHovered";
             DropDown.itemHighlight = "ListItemHighlight";
             DropDown.normalBgSprite = "TextFieldPanel";
             DropDown.hoveredBgSprite = "TextFieldPanelHovered";
-            DropDown.listWidth = 200;
+            DropDown.listWidth = 230;
             DropDown.listHeight = 700;
             DropDown.listPosition = UIDropDown.PopupListPosition.Below;
             DropDown.clampListToScreen = true;
@@ -404,7 +430,8 @@ namespace NodeMarkup.UI.Editors
         UILabel Label { get; set; }
         UIButton Button { get; set; }
 
-        int SelectIndex {
+        int SelectIndex
+        {
             get => _selectIndex;
             set
             {
@@ -412,7 +439,7 @@ namespace NodeMarkup.UI.Editors
                 {
                     _selectIndex = value;
                     OnSelectChanged?.Invoke(SelectedObject);
-                    Label.text = SelectedObject?.ToString() ?? "NotSet";
+                    Label.text = SelectedObject?.ToString() ?? "Not set";
                 }
             }
         }
@@ -431,6 +458,7 @@ namespace NodeMarkup.UI.Editors
         private void AddLable()
         {
             Label = Control.AddUIComponent<UILabel>();
+            Label.text = "Not set";
             Label.atlas = TextureUtil.GetAtlas("Ingame");
             Label.backgroundSprite = "TextFieldPanel";
             Label.isInteractive = true;
@@ -439,7 +467,7 @@ namespace NodeMarkup.UI.Editors
             Label.textAlignment = UIHorizontalAlignment.Left;
             Label.verticalAlignment = UIVerticalAlignment.Middle;
             Label.height = 20;
-            Label.width = 200;
+            Label.width = 230;
             Label.textScale = 0.7f;
         }
 
@@ -494,6 +522,6 @@ namespace NodeMarkup.UI.Editors
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
 
-        protected override bool IsEqual(IMarkupLineRawRuleEdge first, IMarkupLineRawRuleEdge second) => first.Equals(second);
+        protected override bool IsEqual(IMarkupLineRawRuleEdge first, IMarkupLineRawRuleEdge second) => (first == null && second == null) || first?.Equals(second) == true;
     }
 }

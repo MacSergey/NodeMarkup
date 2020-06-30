@@ -111,6 +111,12 @@ namespace NodeMarkup
         protected override void OnToolUpdate()
         {
             //Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnToolUpdate)}");
+            base.OnToolUpdate();
+
+            _mousePosition = Input.mousePosition;
+            _mouseRay = Camera.main.ScreenPointToRay(_mousePosition);
+            _mouseRayLength = Camera.main.farClipPlane;
+            _mouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
 
             switch (ToolMode)
             {
@@ -164,10 +170,9 @@ namespace NodeMarkup
         }
         private void GetHoveredNode()
         {
-            if (!UIView.IsInsideUI() && Cursor.visible)
+            if (_mouseRayValid)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastInput input = new RaycastInput(ray, Camera.main.farClipPlane)
+                RaycastInput input = new RaycastInput(_mouseRay, Camera.main.farClipPlane)
                 {
                     m_ignoreTerrain = true,
                     m_ignoreNodeFlags = NetNode.Flags.None,
@@ -187,16 +192,14 @@ namespace NodeMarkup
         }
         private void GetHoverPoint()
         {
-            if (!UIView.IsInsideUI() && Cursor.visible)
+            if (_mouseRayValid)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
                 var markup = Manager.Manager.Get(SelectNodeId);
                 foreach (var enter in markup.Enters)
                 {
                     foreach (var point in enter.Points)
                     {
-                        if (point.IsIntersect(ray) && (!IsSelectPoint || point.Enter != SelectPoint.Enter))
+                        if (point.IsIntersect(_mouseRay) && (!IsSelectPoint || point.Enter != SelectPoint.Enter))
                         {
                             HoverPoint = point;
                             return;
@@ -217,14 +220,6 @@ namespace NodeMarkup
                 else if (e.button == 1)
                     OnSecondaryMouseClicked();
             }
-        }
-        protected override void OnToolLateUpdate()
-        {
-            base.OnToolUpdate();
-            _mousePosition = Input.mousePosition;
-            _mouseRay = Camera.main.ScreenPointToRay(_mousePosition);
-            _mouseRayLength = Camera.main.farClipPlane;
-            _mouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
         }
         private void OnPrimaryMouseClicked(Event e)
         {

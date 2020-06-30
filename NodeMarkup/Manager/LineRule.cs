@@ -35,7 +35,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public override string ToString() => Line.ToString();
+        public override string ToString() => $"Intersect with {Line}";
 
         public bool Equals(IMarkupLineRawRuleEdge other) => other is LineRawRuleEdge otherLine && otherLine.Line == Line;
     }
@@ -59,7 +59,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public override string ToString() => Point.ToString();
+        public override string ToString() => $"Self edge point {Point}";
 
         public bool Equals(IMarkupLineRawRuleEdge other) => other is SelfPointRawRuleEdge otherPoint && otherPoint.Point == Point;
     }
@@ -119,7 +119,7 @@ namespace NodeMarkup.Manager
 
         public Action OnRuleChanged { private get; set; }
 
-        public MarkupLineRawRule(LineStyle style, IMarkupLineRawRuleEdge from, IMarkupLineRawRuleEdge to)
+        public MarkupLineRawRule(LineStyle style, IMarkupLineRawRuleEdge from = null, IMarkupLineRawRuleEdge to = null)
         {
             Style = style;
             From = from;
@@ -136,10 +136,12 @@ namespace NodeMarkup.Manager
             {
                 var rule = new MarkupLineRule(rawRule.Style);
 
-                if (!rawRule.From.GetT(line, out float first))
+                var first = 0f;
+                if (rawRule.From?.GetT(line, out first) != true)
                     continue;
 
-                if (!rawRule.To.GetT(line, out float second))
+                var second = 0f;
+                if (rawRule.To?.GetT(line, out second) != true)
                     continue;
 
                 if (first == second)
