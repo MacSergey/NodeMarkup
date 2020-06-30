@@ -4,16 +4,91 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
+    public interface IMarkupLineRawRuleEdge : IEquatable<IMarkupLineRawRuleEdge>
+    {
+        bool GetT(MarkupLine line, out float t);
+    }
+    public class LineRawRuleEdge : IMarkupLineRawRuleEdge
+    {
+        public MarkupLine Line { get; }
+        public LineRawRuleEdge(MarkupLine line)
+        {
+            Line = line;
+        }
+        public bool GetT(MarkupLine line, out float t)
+        {
+            var pair = new MarkupLinePair(line, Line);
+            var intersect = line.Markup.GetIntersect(pair);
+
+            if (intersect.IsIntersect)
+            {
+                t = intersect[line];
+                return true;
+            }
+            else
+            {
+                t = default;
+                return false;
+            }
+        }
+        public override string ToString() => Line.ToString();
+
+        public bool Equals(IMarkupLineRawRuleEdge other) => other is LineRawRuleEdge otherLine && otherLine.Line == Line;
+    }
+    public class SelfPointRawRuleEdge : IMarkupLineRawRuleEdge
+    {
+        public MarkupPoint Point { get; }
+        public SelfPointRawRuleEdge(MarkupPoint point)
+        {
+            Point = point;
+        }
+        public bool GetT(MarkupLine line, out float t)
+        {
+            if (line.ContainPoint(Point))
+            {
+                t = line.PointPair.First == Point ? 0 : 1;
+                return true;
+            }
+            else
+            {
+                t = default;
+                return false;
+            }
+        }
+        public override string ToString() => Point.ToString();
+
+        public bool Equals(IMarkupLineRawRuleEdge other) => other is SelfPointRawRuleEdge otherPoint && otherPoint.Point == Point;
+    }
+    public class LineRawRuleEdgeBound
+    {
+        public static Vector3 MarkerSize { get; } = Vector3.one * 0.5f;
+
+        public IMarkupLineRawRuleEdge LineRawRuleEdge { get; private set; }
+        Bounds Bounds { get; set; }
+        public Vector3 Position => Bounds.center;
+
+        public LineRawRuleEdgeBound(MarkupLine line, IMarkupLineRawRuleEdge lineRawRuleEdge)
+        {
+            LineRawRuleEdge = lineRawRuleEdge;
+            LineRawRuleEdge.GetT(line, out float t);
+            var position = line.Trajectory.Position(t);
+            Bounds = new Bounds(position, MarkerSize);
+        }
+
+        public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
+    }
+
     public class MarkupLineRawRule
     {
-        MarkupLine _from;
-        MarkupLine _to;
+        IMarkupLineRawRuleEdge _from;
+        IMarkupLineRawRuleEdge _to;
         LineStyle _style;
 
-        public MarkupLine From
+        public IMarkupLineRawRuleEdge From
         {
             get => _from;
             set
@@ -22,7 +97,7 @@ namespace NodeMarkup.Manager
                 RuleChanged();
             }
         }
-        public MarkupLine To
+        public IMarkupLineRawRuleEdge To
         {
             get => _to;
             set
@@ -44,7 +119,7 @@ namespace NodeMarkup.Manager
 
         public Action OnRuleChanged { private get; set; }
 
-        public MarkupLineRawRule(LineStyle style, MarkupLine from = null, MarkupLine to = null)
+        public MarkupLineRawRule(LineStyle style, IMarkupLineRawRuleEdge from, IMarkupLineRawRuleEdge to)
         {
             Style = style;
             From = from;
@@ -55,31 +130,30 @@ namespace NodeMarkup.Manager
 
         public static MarkupLineRule[] GetRules(MarkupLine line, List<MarkupLineRawRule> rawRules)
         {
-            var markup = line.Markup;
             var rules = new List<MarkupLineRule>();
 
             foreach (var rawRule in rawRules)
             {
                 var rule = new MarkupLineRule(rawRule.Style);
 
-                if(rawRule.From != null)
-                {
-                    var pair = new MarkupLinePair(line, rawRule.From);
-                    var intersect = markup.GetIntersect(pair);
-                    if (intersect.IsIntersect)
-                        rule.Start = intersect[line];
-                    else
-                        continue;
-                }
+                if (!rawRule.From.GetT(line, out float first))
+                    continue;
 
-                if (rawRule.To != null)
+                if (!rawRule.To.GetT(line, out float second))
+                    continue;
+
+                if (first == second)
+                    continue;
+
+                if (first < second)
                 {
-                    var pair = new MarkupLinePair(line, rawRule.To);
-                    var intersect = markup.GetIntersect(pair);
-                    if (intersect.IsIntersect)
-                        rule.End = intersect[line];
-                    else
-                        continue;
+                    rule.Start = first;
+                    rule.End = second;
+                }
+                else
+                {
+                    rule.Start = second;
+                    rule.End = first;
                 }
 
                 Add(rules, rule);

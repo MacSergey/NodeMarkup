@@ -68,7 +68,7 @@ namespace NodeMarkup.Manager
         }
         public MarkupLineRawRule AddRule(LineStyle lineStyle)
         {
-            var newRule = new MarkupLineRawRule(lineStyle);
+            var newRule = new MarkupLineRawRule(lineStyle, new SelfPointRawRuleEdge(Start), new SelfPointRawRuleEdge(End));
             newRule.OnRuleChanged = RuleChanged;
             RawRules.Add(newRule);
 
@@ -79,6 +79,15 @@ namespace NodeMarkup.Manager
         {
             RawRules.Remove(rule);
             RuleChanged();
+        }
+
+        public void RemoveRules(MarkupLine line)
+        {
+            RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
+            bool Match(IMarkupLineRawRuleEdge ruleEdge) => ruleEdge is LineRawRuleEdge lineRuleEdge && lineRuleEdge.Line == line;
+
+            if (!RawRules.Any())
+                AddRule();
         }
     }
     public struct MarkupLinePair

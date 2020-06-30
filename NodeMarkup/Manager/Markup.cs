@@ -11,6 +11,19 @@ namespace NodeMarkup.Manager
 {
     public class Markup
     {
+        public static Color32[] OverlayColors { get; } = new Color32[]
+        {
+            new Color32(204, 0, 0, 224),
+            new Color32(0, 204, 0, 224),
+            new Color32(0, 0, 204, 224),
+            new Color32(204, 0, 255, 224),
+            new Color32(255, 204, 0, 224),
+            new Color32(0, 255, 204, 224),
+            new Color32(204, 255, 0, 224),
+            new Color32(0, 204, 255, 224),
+            new Color32(255, 0, 204, 224),
+        };
+
         public ushort NodeId { get; }
         Dictionary<ushort, SegmentEnter> EntersDictionary { get; set; } = new Dictionary<ushort, SegmentEnter>();
         Dictionary<MarkupPointPair, MarkupLine> LinesDictionary { get; } = new Dictionary<MarkupPointPair, MarkupLine>(new MarkupPointPairComparer());
@@ -130,8 +143,10 @@ namespace NodeMarkup.Manager
             var line = LinesDictionary[pointPair];
 
             var intersects = GetExistIntersects(line);
-            foreach(var intersect in intersects)
+            foreach (var intersect in intersects)
             {
+                var intersectLine = intersect.Pair.GetOther(line);
+                intersectLine.RemoveRules(line);
                 LineIntersects.Remove(intersect.Pair);
             }
 
@@ -162,7 +177,7 @@ namespace NodeMarkup.Manager
 
         public LineIntersect GetIntersect(MarkupLinePair linePair)
         {
-            if(!LineIntersects.TryGetValue(linePair, out LineIntersect intersect))
+            if (!LineIntersects.TryGetValue(linePair, out LineIntersect intersect))
             {
                 MarkupLineIntersect.Calculate(linePair, out intersect);
                 LineIntersects.Add(linePair, intersect);

@@ -11,7 +11,7 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class Editor : UIPanel
     {
-        public NodeMarkupPanel NodeMarkupPanel { get; set; }
+        public NodeMarkupPanel NodeMarkupPanel { get; private set; }
         protected Markup Markup => NodeMarkupPanel.Markup;
 
         public abstract string Name { get; }
@@ -20,15 +20,18 @@ namespace NodeMarkup.UI.Editors
         protected UIScrollablePanel SettingsPanel { get; set; }
         protected UIScrollbar SettingsScrollbar { get; set; }
 
-        public virtual void Init()
+        public virtual void Init(NodeMarkupPanel panel)
         {
-
+            NodeMarkupPanel = panel;
         }
 
         public virtual void UpdateEditor()
         {
             ClearItems();
-            FillItems();
+            if(Markup != null)
+                FillItems();
+            ClearSettings();
+            Select(0);
         }
         protected void ClearItems()
         {
@@ -63,6 +66,24 @@ namespace NodeMarkup.UI.Editors
         {
 
         }
+        public virtual void OnUpdate()
+        {
+
+        }
+        public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
+        {
+            isDone = true;
+            NodeMarkupPanel.EndEditorAction();
+        }
+        public virtual void OnSecondaryMouseClicked(out bool isDone)
+        {
+            isDone = true;
+            NodeMarkupPanel.EndEditorAction();
+        }
+        public virtual void EndEditorAction()
+        {
+
+        }
 
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
@@ -72,8 +93,23 @@ namespace NodeMarkup.UI.Editors
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
     {
-        protected EditableObject EditObject { get; set; }
+        EditableItemType _selectItem;
+
         protected EditableItemType HoverItem { get; set; }
+        protected bool IsHoverItem => HoverItem != null;
+        protected EditableItemType SelectItem
+        {
+            get => _selectItem;
+            private set
+            {
+                if (_selectItem != null)
+                    _selectItem.isEnabled = true;
+
+                _selectItem = value;
+                _selectItem.isEnabled = false;
+            }
+        }
+        protected EditableObject EditObject => SelectItem.Object;
 
         public Editor()
         {
@@ -215,6 +251,7 @@ namespace NodeMarkup.UI.Editors
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
 
+
             return item;
         }
 
@@ -222,7 +259,7 @@ namespace NodeMarkup.UI.Editors
         protected virtual void ItemClick(EditableItemType item)
         {
             ClearSettings();
-            EditObject = item.Object;
+            SelectItem = item;
             OnObjectSelect();
         }
         protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as EditableItemType;
@@ -283,7 +320,7 @@ namespace NodeMarkup.UI.Editors
             atlas = TextureUtil.GetAtlas("Ingame");
 
             normalBgSprite = "ButtonSmall";
-            disabledBgSprite = "ButtonSmallDisabled";
+            disabledBgSprite = "ButtonSmallPressed";
             focusedBgSprite = "ButtonSmallPressed";
             hoveredBgSprite = "ButtonSmallHovered";
             pressedBgSprite = "ButtonSmallPressed";
@@ -328,12 +365,17 @@ namespace NodeMarkup.UI.Editors
         public Color32 Color
         {
             get => ColorCircule.color;
-            set => ColorCircule.color = value;
+            set
+            {
+                ColorCircule.color = value;
+                ColorCircule.disabledColor = value;
+            }
         }
         public ColorIcon()
         {
             atlas = TextureUtil.GetAtlas("Ingame");
             normalBgSprite = "PieChartWhiteBg";
+            disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
             color = UnityEngine.Color.white;
 
@@ -341,6 +383,8 @@ namespace NodeMarkup.UI.Editors
             ColorCircule.atlas = TextureUtil.GetAtlas("Ingame");
             ColorCircule.normalBgSprite = "PieChartWhiteBg";
             ColorCircule.normalFgSprite = "PieChartWhiteFg";
+            ColorCircule.disabledBgSprite = "PieChartWhiteBg";
+            ColorCircule.disabledFgSprite = "PieChartWhiteFg";
             ColorCircule.isInteractive = false;
             ColorCircule.relativePosition = new Vector3(2, 2);
         }

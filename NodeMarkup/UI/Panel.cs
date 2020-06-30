@@ -84,13 +84,12 @@ namespace NodeMarkup.UI
         private void CreateEditor<EditorType>() where EditorType : Editor
         {
             var editor = AddUIComponent<EditorType>();
-            editor.Init();
+            editor.Init(this);
             TabStrip.AddTab<PointsEditor>(editor.Name);
 
             editor.isVisible = false;
             editor.size = EditorSize;
             editor.relativePosition = EditorPosition;
-            editor.NodeMarkupPanel = this;
 
             Editors.Add(editor);
         }
@@ -101,15 +100,15 @@ namespace NodeMarkup.UI
             Caption.text = $"Edit node #{nodeId} markup";
 
             Markup = Manager.Manager.Get(nodeId);
-            foreach (var editor in Editors)
-            {
-                editor.UpdateEditor();
-            }
-
+            TabStrip.selectedIndex = -1;
             TabStrip.selectedIndex = 0;
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
-        private void TabStripSelectedIndexChanged(UIComponent component, int index) => CurrentEditor = SelectEditor(index);
+        private void TabStripSelectedIndexChanged(UIComponent component, int index)
+        {
+            CurrentEditor = SelectEditor(index);
+            CurrentEditor?.UpdateEditor();
+        }
         private Editor SelectEditor(int index)
         {
             if (index >= 0 && Editors.Count > index)
@@ -144,5 +143,29 @@ namespace NodeMarkup.UI
             editor?.Select(line);
         }
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
+        public void OnUpdate() => CurrentEditor?.OnUpdate();
+        public void OnPrimaryMouseClicked(Event e, out bool isDone)
+        {
+            if (CurrentEditor is Editor editor)
+                editor.OnPrimaryMouseClicked(e, out isDone);
+            else
+                isDone = true;
+        }
+        public void OnSecondaryMouseClicked(out bool isDone)
+        {
+            if (CurrentEditor is Editor editor)
+                editor.OnSecondaryMouseClicked(out isDone);
+            else
+                isDone = true;
+        }
+        public void StartEditorAction(Editor editor, out bool isAccept)
+        {
+            isAccept = false;
+            if (CurrentEditor == editor)
+                NodeMarkupTool.Instance?.StartPanelAction(out isAccept);
+        }
+        public void EndEditorAction() => NodeMarkupTool.Instance?.EndPanelAction();
+
+        public void EndPanelAction() => CurrentEditor?.EndEditorAction();
     }
 }

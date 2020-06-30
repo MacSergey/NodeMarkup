@@ -8,23 +8,10 @@ namespace NodeMarkup.Manager
 {
     public class MarkupPoint
     {
-        static Color32[] LinePointColors { get; } = new Color32[]
-        {
-            new Color32(204, 0, 0, 224),
-            new Color32(0, 204, 0, 224),
-            new Color32(0, 0, 204, 224),
-            new Color32(204, 0, 255, 224),
-            new Color32(255, 204, 0, 224),
-            new Color32(0, 255, 204, 224),
-            new Color32(204, 255, 0, 224),
-            new Color32(0, 204, 255, 224),
-            new Color32(255, 0, 204, 224),
-        };
-
         float _offset = 0;
 
         public ushort Id { get; set; }
-        public Color32 Color => LinePointColors[(Id - 1) % LinePointColors.Length];
+        public Color32 Color => Markup.OverlayColors[(Id - 1) % Markup.OverlayColors.Length];
 
         public static Vector3 MarkerSize { get; } = Vector3.one * 1f;
         public Vector3 Position { get; private set; }

@@ -69,7 +69,7 @@
     <Compile Include="Manager\LineStyle.cs" />
     <Compile Include="Manager\Markup.cs" />
     <Compile Include="Manager\Point.cs" />
-    <Compile Include="Manager\Segment.cs" />
+    <Compile Include="Manager\Enter.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Manager\Manager.cs" />
     <Compile Include="Patcher.cs" />

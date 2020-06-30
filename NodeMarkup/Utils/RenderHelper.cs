@@ -98,7 +98,6 @@ namespace NodeMarkup.Utils
         public static Material CreateMaterial()
         {
             var texture = CreateDotTexture(Color.white);
-
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
                 mainTexture = texture,

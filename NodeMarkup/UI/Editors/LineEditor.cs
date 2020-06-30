@@ -13,6 +13,18 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name { get; } = "Lines";
 
+        public List<IMarkupLineRawRuleEdge> RuleEdges { get; } = new List<IMarkupLineRawRuleEdge>();
+        private List<LineRawRuleEdgeBound> RuleEdgeBounds { get; } = new List<LineRawRuleEdgeBound>();
+
+        private LineRawRuleEdgeBound HoverRuleEdgeBounds { get; set; }
+        private bool IsHoverRuleEdgeBounds => IsSelectRuleEdgeMode && HoverRuleEdgeBounds != null;
+
+        private MarkupLineSelectPropertyPanel SelectRuleEdgePanel { get; set; }
+        private bool IsSelectRuleEdgeMode => SelectRuleEdgePanel != null;
+
+        private MarkupLineSelectPropertyPanel HoverRuleEdgePanel { get; set; }
+        private bool IsHoverRuleEdgePanel => HoverRuleEdgePanel != null;
+
         public LinesEditor()
         {
 
@@ -26,22 +38,34 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
-            FillRules();
-            AddButton();
+            GetRuleEdges();
+            AddAddButton();
+            AddRulePanels();
         }
-
-        private void FillRules()
+        private void GetRuleEdges()
         {
             var intersectWith = EditObject.IntersectWith();
+
+            RuleEdges.Clear();
+            RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.Start));
+            RuleEdges.AddRange(intersectWith.Select(i => new LineRawRuleEdge(i) as IMarkupLineRawRuleEdge));
+            RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.End));
+
+            RuleEdgeBounds.Clear();
+            RuleEdgeBounds.AddRange(RuleEdges.Select(r => new LineRawRuleEdgeBound(EditObject, r)));
+        }
+        private void AddRulePanels()
+        {
             foreach (var rule in EditObject.RawRules)
-            {
-                var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
-                rulePanel.Init(EditObject, rule, intersectWith);
-                rulePanel.OnDeleteRule += OnDeleteRule;
-            }
+                AddRulePanel(rule);
+        }
+        private void AddRulePanel(MarkupLineRawRule rule)
+        {
+            var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
+            rulePanel.Init(this, rule);
         }
 
-        private void AddButton()
+        private void AddAddButton()
         {
             var button = SettingsPanel.AddUIComponent<ButtonPanel>();
             button.Text = "Add Rule";
@@ -51,22 +75,95 @@ namespace NodeMarkup.UI.Editors
 
         private void AddButtonClick()
         {
-            EditObject.AddRule();
-            ClearSettings();
-            OnObjectSelect();
+            var newRule = EditObject.AddRule();
+            AddRulePanel(newRule);
         }
-        private void OnDeleteRule(RulePanel rulePanel)
+        public void DeleteRule(RulePanel rulePanel)
         {
             EditObject.RemoveRule(rulePanel.Rule);
             SettingsPanel.RemoveUIComponent(rulePanel);
             Destroy(rulePanel);
         }
-
-        public override void Render(RenderManager.CameraInfo cameraInfo)
-        {           
-            if(HoverItem != null)
+        public void SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel)
+        {
+            if (IsSelectRuleEdgeMode)
             {
-                NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f, 0f, 0f, -1f, 1280f, false, true);
+                var isToggle = SelectRuleEdgePanel == selectPanel;
+                NodeMarkupPanel.EndEditorAction();
+                if (isToggle)
+                    return;
+            }
+            NodeMarkupPanel.StartEditorAction(this, out bool isAccept);
+            if (isAccept)
+            {
+                SelectRuleEdgePanel = selectPanel;
+                SelectRuleEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
+                SelectRuleEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
+            }
+        }
+        public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverRuleEdgePanel = selectPanel;
+        public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverRuleEdgePanel = null;
+
+        private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
+
+        public override void OnUpdate()
+        {
+            if (!UIView.IsInsideUI() && Cursor.visible)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                foreach (var ruleEdgeBound in RuleEdgeBounds)
+                {
+                    if (ruleEdgeBound.IsIntersect(ray))
+                    {
+                        HoverRuleEdgeBounds = ruleEdgeBound;
+                        return;
+                    }
+                }
+            }
+
+            HoverRuleEdgeBounds = null;
+        }
+        public override void OnPrimaryMouseClicked(Event e, out bool isDone)
+        {
+            if (IsHoverRuleEdgeBounds)
+            {
+                SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.LineRawRuleEdge;
+                isDone = true;
+                NodeMarkupPanel.EndEditorAction();
+            }
+            else
+                isDone = false;
+        }
+        public override void Render(RenderManager.CameraInfo cameraInfo)
+        {
+            if (IsSelectRuleEdgeMode)
+            {
+                foreach (var bounds in RuleEdgeBounds)
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Markup.OverlayColors[0], bounds.Position, 0.5f, -1f, 1280f, false, true);
+
+                if (IsHoverRuleEdgeBounds)
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverRuleEdgeBounds.Position, 1f, -1f, 1280f, false, true);
+            }
+            else
+            {
+                if (IsHoverItem)
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f, 0f, 0f, -1f, 1280f, false, true);
+                if (IsHoverRuleEdgePanel && 
+                    HoverRuleEdgePanel.SelectedObject is IMarkupLineRawRuleEdge lineRawRuleEdge && 
+                    RuleEdgeBounds.FirstOrDefault(b => b.LineRawRuleEdge == lineRawRuleEdge) is LineRawRuleEdgeBound bounds)
+                {
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, bounds.Position, 0.5f, -1f, 1280f, false, true);
+                }
+            }
+        }
+        public override void EndEditorAction()
+        {
+            if (IsSelectRuleEdgeMode)
+            {
+                SelectRuleEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
+                SelectRuleEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
+                SelectRuleEdgePanel = null;
             }
         }
     }
@@ -75,9 +172,9 @@ namespace NodeMarkup.UI.Editors
 
     public class RulePanel : UIPanel
     {
-        public event Action<RulePanel> OnDeleteRule;
-
+        private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
+
 
         private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
 
@@ -91,56 +188,79 @@ namespace NodeMarkup.UI.Editors
             autoLayoutPadding = new RectOffset(5, 5, 0, 0);
         }
 
-        public void Init(MarkupLine line, MarkupLineRawRule rule, MarkupLine[] intersectWith)
+        public void Init(LinesEditor editor, MarkupLineRawRule rule)
         {
+            Editor = editor;
             Rule = rule;
 
+            SetSize();
+            AddDeleteButton();
+            if (Editor.RuleEdges.Count > 2)
+            {
+                AddFromProperty();
+                AddToProperty();
+            }
+            AddColorProperty();
+            AddStyleProperty();
+            AddStyleProperties();
+        }
+        private void SetSize()
+        {
             if (parent is UIScrollablePanel scrollablePanel)
                 width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
             else if (parent is UIPanel panel)
                 width = panel.width - panel.autoLayoutPadding.horizontal;
             else
                 width = parent.width;
-
+        }
+        private void AddDeleteButton()
+        {
             var deleteButton = AddUIComponent<CloseButtonPanel>();
-            deleteButton.Text = line.ToString();
             deleteButton.Init();
-            deleteButton.OnButtonClick += DeleteButtonClick;
-
-            var fromProperty = AddUIComponent<MarkupLineListPropertyPanel>();
+            deleteButton.OnButtonClick += () => Editor.DeleteRule(this);
+        }
+        private void AddFromProperty()
+        {
+            var fromProperty = AddUIComponent<MarkupLineSelectPropertyPanel>();
             fromProperty.Text = "From";
-            fromProperty.NullText = "Begin";
             fromProperty.Init();
-            fromProperty.AddRange(intersectWith);
+            fromProperty.AddRange(Editor.RuleEdges);
             fromProperty.SelectedObject = Rule.From;
-            fromProperty.OnSelectObjectChanged += FromChanged; ;
+            fromProperty.OnSelectChanged += FromChanged;
+            fromProperty.OnSelect += Editor.SelectRuleEdge;
+            fromProperty.OnHover += Editor.HoverRuleEdge;
+            fromProperty.OnLeave += Editor.LeaveRuleEdge;
+        }
 
-            var toProperty = AddUIComponent<MarkupLineListPropertyPanel>();
+        private void AddToProperty()
+        {
+            var toProperty = AddUIComponent<MarkupLineSelectPropertyPanel>();
             toProperty.Text = "To";
-            toProperty.NullText = "End";
             toProperty.Init();
-            toProperty.AddRange(intersectWith);
+            toProperty.AddRange(Editor.RuleEdges);
             toProperty.SelectedObject = Rule.To;
-            toProperty.OnSelectObjectChanged += ToChanged;
-
+            toProperty.OnSelectChanged += ToChanged;
+            toProperty.OnSelect += Editor.SelectRuleEdge;
+            toProperty.OnHover += Editor.HoverRuleEdge;
+            toProperty.OnLeave += Editor.LeaveRuleEdge;
+        }
+        private void AddColorProperty()
+        {
             var colorProperty = AddUIComponent<ColorPropertyPanel>();
             colorProperty.Text = "Color";
             colorProperty.Init();
             colorProperty.Value = Rule.Style.Color;
             colorProperty.OnValueChanged += ColorChanged;
-
+        }
+        private void AddStyleProperty()
+        {
             var styleProperty = AddUIComponent<StylePropertyPanel>();
             styleProperty.Text = "Style";
             styleProperty.Init();
-            styleProperty.SelectedObject = rule.Style.LineType;
+            styleProperty.SelectedObject = Rule.Style.LineType;
             styleProperty.OnSelectObjectChanged += StyleChanged;
-
-            FillStyleProperties();
         }
-
-        private void DeleteButtonClick() => OnDeleteRule?.Invoke(this);
-
-        private void FillStyleProperties()
+        private void AddStyleProperties()
         {
             if (Rule.Style is IDashedLine dashedStyle)
             {
@@ -180,8 +300,8 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
-        private void FromChanged(MarkupLine from) => Rule.From = from;
-        private void ToChanged(MarkupLine to) => Rule.To = to;
+        private void FromChanged(IMarkupLineRawRuleEdge from) => Rule.From = from;
+        private void ToChanged(IMarkupLineRawRuleEdge to) => Rule.To = to;
         private void StyleChanged(LineStyle.Type style)
         {
             var newStyle = LineStyle.GetDefault(style);
@@ -197,7 +317,7 @@ namespace NodeMarkup.UI.Editors
             Rule.Style = newStyle;
 
             ClearStyleProperties();
-            FillStyleProperties();
+            AddStyleProperties();
         }
         private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
         private void SpaceLengthChanged(float value) => (Rule.Style as IDashedLine).SpaceLength = value;
