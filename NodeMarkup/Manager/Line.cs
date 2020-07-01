@@ -1,14 +1,19 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupLine
+    public class MarkupLine : IToXml
     {
+        public static string XmlName { get; } = "L";
+
         public Markup Markup { get; private set; }
+        public ulong Id => PointPair.Hash;
 
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
@@ -19,17 +24,21 @@ namespace NodeMarkup.Manager
         public Bezier3 Trajectory { get; private set; }
         public MarkupDash[] Dashes { get; private set; }
 
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.Type lineType) : this(markup, pointPair, LineStyle.GetDefault(lineType)) { }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle)
+        public string XmlSection => XmlName;
+
+        public MarkupLine(Markup markup, MarkupPointPair pointPair)
         {
             Markup = markup;
             PointPair = pointPair;
-
+        }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : this(markup, pointPair)
+        {
             AddRule(lineStyle, false, false);
 
             Update();
             RecalculateDashes();
         }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.LineType lineType) : this(markup, pointPair, LineStyle.GetDefault(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
         public void Update()
         {
@@ -66,15 +75,18 @@ namespace NodeMarkup.Manager
             var intersectWith = Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
             return intersectWith;
         }
+        private void AddRule(MarkupLineRawRule rule, bool empty = true, bool update = true)
+        {
+            rule.OnRuleChanged = RuleChanged;
+            RawRules.Add(rule);
+
+            if (update)
+                RuleChanged();
+        }
         public MarkupLineRawRule AddRule(LineStyle lineStyle, bool empty = true, bool update = true)
         {
             var newRule = new MarkupLineRawRule(lineStyle, empty ? null : new SelfPointRawRuleEdge(Start), empty ? null : new SelfPointRawRuleEdge(End));
-            newRule.OnRuleChanged = RuleChanged;
-            RawRules.Add(newRule);
-
-            if(update)
-                RuleChanged();
-
+            AddRule(newRule, empty, update);
             return newRule;
         }
         public MarkupLineRawRule AddRule() => AddRule(LineStyle.DefaultDashed);
@@ -87,10 +99,44 @@ namespace NodeMarkup.Manager
         public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(IMarkupLineRawRuleEdge ruleEdge) => ruleEdge is LineRawRuleEdge lineRuleEdge && lineRuleEdge.Line == intersectLine;
+            bool Match(LineRawRuleEdgeBase ruleEdge) => ruleEdge is LineRawRuleEdge lineRuleEdge && lineRuleEdge.Line == intersectLine;
 
             if (!RawRules.Any())
                 AddRule();
+        }
+
+        public XElement ToXml()
+        {
+            var config = new XElement(XmlSection,
+                new XAttribute(nameof(Id), Id)
+            );
+
+            foreach (var rule in RawRules)
+            {
+                var ruleConfig = rule.ToXml();
+                config.Add(ruleConfig);
+            }
+
+            return config;
+        }
+        public static bool FromXml(XElement config, Markup makrup, out MarkupLine line)
+        {
+            var lineId = config.GetAttrValue<ulong>(nameof(Id));
+            if (!makrup.TryGetLine(lineId, out line) && MarkupPointPair.FromHash(lineId, makrup, out MarkupPointPair pointPair))
+            {
+                line = new MarkupLine(makrup, pointPair);
+                return true;
+            }
+            else
+                return false;
+        }
+        public void FromXml(XElement config)
+        {
+            foreach (var ruleConfig in config.Elements(MarkupLineRawRule.XmlName))
+            {
+                if(MarkupLineRawRule.FromXml(ruleConfig, Markup, out MarkupLineRawRule rule))
+                    AddRule(rule, true, false);
+            }
         }
     }
     public struct MarkupLinePair

@@ -13,7 +13,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name { get; } = "Lines";
 
-        public List<IMarkupLineRawRuleEdge> RuleEdges { get; } = new List<IMarkupLineRawRuleEdge>();
+        public List<LineRawRuleEdgeBase> RuleEdges { get; } = new List<LineRawRuleEdgeBase>();
         private List<LineRawRuleEdgeBound> RuleEdgeBounds { get; } = new List<LineRawRuleEdgeBound>();
 
         private LineRawRuleEdgeBound HoverRuleEdgeBounds { get; set; }
@@ -48,7 +48,7 @@ namespace NodeMarkup.UI.Editors
 
             RuleEdges.Clear();
             RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.Start));
-            RuleEdges.AddRange(intersectWith.Select(i => new LineRawRuleEdge(i) as IMarkupLineRawRuleEdge));
+            RuleEdges.AddRange(intersectWith.Select(i => new LineRawRuleEdge(i) as LineRawRuleEdgeBase));
             RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.End));
 
             RuleEdgeBounds.Clear();
@@ -153,7 +153,7 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverItem)
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f, 0f, 0f, -1f, 1280f, false, true);
                 if (IsHoverRuleEdgePanel && 
-                    HoverRuleEdgePanel.SelectedObject is IMarkupLineRawRuleEdge lineRawRuleEdge && 
+                    HoverRuleEdgePanel.SelectedObject is LineRawRuleEdgeBase lineRawRuleEdge && 
                     RuleEdgeBounds.FirstOrDefault(b => b.LineRawRuleEdge == lineRawRuleEdge) is LineRawRuleEdgeBound bounds)
                 {
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, bounds.Position, 0.5f, -1f, 1280f, false, true);
@@ -260,7 +260,7 @@ namespace NodeMarkup.UI.Editors
             var styleProperty = AddUIComponent<StylePropertyPanel>();
             styleProperty.Text = "Style";
             styleProperty.Init();
-            styleProperty.SelectedObject = Rule.Style.LineType;
+            styleProperty.SelectedObject = Rule.Style.Type;
             styleProperty.OnSelectObjectChanged += StyleChanged;
         }
         private void AddStyleProperties()
@@ -309,9 +309,9 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
-        private void FromChanged(IMarkupLineRawRuleEdge from) => Rule.From = from;
-        private void ToChanged(IMarkupLineRawRuleEdge to) => Rule.To = to;
-        private void StyleChanged(LineStyle.Type style)
+        private void FromChanged(LineRawRuleEdgeBase from) => Rule.From = from;
+        private void ToChanged(LineRawRuleEdgeBase to) => Rule.To = to;
+        private void StyleChanged(LineStyle.LineType style)
         {
             var newStyle = LineStyle.GetDefault(style);
             newStyle.Color = Rule.Style.Color;

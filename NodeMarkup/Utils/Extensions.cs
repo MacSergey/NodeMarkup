@@ -3,12 +3,44 @@ using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Utils
 {
+    public static class XmlExtension
+    {
+        public static T GetAttrValue<T>(this XElement element, string attrName, T defaultValue = default, Func<T, bool> predicate = null) => Convert(element.Attribute(attrName)?.Value, defaultValue, predicate);
+        public static object GetAttrValue(this XElement element, string attrName, Type type) => Convert(element.Attribute(attrName)?.Value, type);
+        public static T GetValue<T>(this XElement element, T defaultValue = default, Func<T, bool> predicate = null) => Convert(element.Value, defaultValue, predicate);
+        private static T Convert<T>(string str, T defaultValue = default, Func<T, bool> predicate = null)
+        {
+            try
+            {
+                var value = Convert(str, typeof(T));
+                return value is T tValue && predicate?.Invoke(tValue) != false ? tValue : defaultValue;
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+        private static object Convert(string str, Type type)
+        {
+            try
+            {
+                return TypeDescriptor.GetConverter(type).ConvertFromString(str);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+
     public static class Utilities
     {
         private static NetManager NetManager => Singleton<NetManager>.instance;

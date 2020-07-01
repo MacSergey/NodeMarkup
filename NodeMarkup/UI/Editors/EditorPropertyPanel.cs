@@ -407,9 +407,9 @@ namespace NodeMarkup.UI.Editors
         }
         public abstract class EnumDropDown : CustomUIDropDown { }
     }
-    public class StylePropertyPanel : EnumPropertyPanel<LineStyle.Type, StylePropertyPanel.StyleDropDown>
+    public class StylePropertyPanel : EnumPropertyPanel<LineStyle.LineType, StylePropertyPanel.StyleDropDown>
     {
-        protected override bool IsEqual(LineStyle.Type first, LineStyle.Type second) => first == second;
+        protected override bool IsEqual(LineStyle.LineType first, LineStyle.LineType second) => first == second;
         public class StyleDropDown : EnumDropDown { }
     }
     public class MarkupLineListPropertyPanel : ListPropertyPanel<MarkupLine, MarkupLineListPropertyPanel.MarkupLineDropDown>
@@ -512,7 +512,7 @@ namespace NodeMarkup.UI.Editors
         protected abstract bool IsEqual(Type first, Type second);
     }
 
-    public class MarkupLineSelectPropertyPanel : SelectPropertyPanel<IMarkupLineRawRuleEdge>
+    public class MarkupLineSelectPropertyPanel : SelectPropertyPanel<LineRawRuleEdgeBase>
     {
         public new event Action<MarkupLineSelectPropertyPanel> OnSelect;
         public new event Action<MarkupLineSelectPropertyPanel> OnHover;
@@ -522,6 +522,6 @@ namespace NodeMarkup.UI.Editors
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
 
-        protected override bool IsEqual(IMarkupLineRawRuleEdge first, IMarkupLineRawRuleEdge second) => (first == null && second == null) || first?.Equals(second) == true;
+        protected override bool IsEqual(LineRawRuleEdgeBase first, LineRawRuleEdgeBase second) => (first == null && second == null) || first?.Equals(second) == true;
     }
 }

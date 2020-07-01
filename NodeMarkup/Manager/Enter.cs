@@ -3,33 +3,50 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class SegmentEnter
+    public class Enter : IToXml, IFromXml
     {
+        byte _pointNum;
+        public static string XmlName { get; } = "E";
+
         public Markup Markup { get; private set; }
-        public ushort SegmentId { get; }
+        public ushort Id { get; }
         public bool IsStartSide { get; }
         public bool IsLaneInvert { get; }
 
-        SegmentDriveLane[] DriveLanes { get; set; } = new SegmentDriveLane[0];
+        DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
-        public MarkupPoint[] Points { get; set; } = new MarkupPoint[0];
+        Dictionary<byte, MarkupPoint> PointsDictionary { get; set; } = new Dictionary<byte, MarkupPoint>();
+
+        public byte PointNum => ++_pointNum;
 
         public Vector3 cornerDir;
 
-        public int PointCount => Points.Length;
-        public MarkupPoint this[int index] => Points[index];
+        public int PointCount => PointsDictionary.Count;
+        public IEnumerable<MarkupPoint> Points
+        {
+            get
+            {
+                foreach (var line in PointsDictionary.Values)
+                    yield return line;
+            }
+        }
+        public bool TryGetPoint(byte pointNum, out MarkupPoint point) => PointsDictionary.TryGetValue(pointNum, out point);
 
 
-        public SegmentEnter(Markup markup, ushort segmentId)
+        public string XmlSection => XmlName;
+
+
+        public Enter(Markup markup, ushort segmentId)
         {
             Markup = markup;
-            SegmentId = segmentId;
-            var segment = Utilities.GetSegment(SegmentId);
-            IsStartSide = segment.m_startNode == markup.NodeId;
+            Id = segmentId;
+            var segment = Utilities.GetSegment(Id);
+            IsStartSide = segment.m_startNode == markup.Id;
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
 
             Update();
@@ -44,7 +61,7 @@ namespace NodeMarkup.Manager
             if (!IsLaneInvert)
                 driveLanesIdxs = driveLanesIdxs.Reverse();
 
-            DriveLanes = driveLanesIdxs.Select(d => new SegmentDriveLane(this, lanes[d], info.m_lanes[d])).ToArray();
+            DriveLanes = driveLanesIdxs.Select(d => new DriveLane(this, lanes[d], info.m_lanes[d])).ToArray();
 
             Lines = new SegmentMarkupLine[DriveLanes.Length + 1];
 
@@ -56,36 +73,53 @@ namespace NodeMarkup.Manager
                 Lines[i] = markupLine;
             }
 
-            var points = new List<MarkupPoint>();
             foreach (var markupLine in Lines)
             {
-                var linePoints = markupLine.GetMarkupPoints();
-                foreach (var point in linePoints)
+                foreach(var point in markupLine.GetMarkupPoints())
                 {
-                    point.Id = (ushort)(points.Count + 1);
-                    points.Add(point);
+                    PointsDictionary.Add(point.Num, point);
                 }
             }
-            Points = points.ToArray();
         }
 
         public void Update()
         {
-            var segment = Utilities.GetSegment(SegmentId);
+            var segment = Utilities.GetSegment(Id);
             var cornerAngle = IsStartSide ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd;
             cornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? -1 : 1);
 
-            foreach (var point in Points)
+            foreach (var point in PointsDictionary.Values)
             {
                 point.Update();
             }
         }
 
-        public override string ToString() => SegmentId.ToString();
+        public override string ToString() => Id.ToString();
+
+        public XElement ToXml()
+        {
+            var confix = new XElement(XmlSection,
+                new XAttribute(nameof(Id), Id)
+            );
+            foreach(var point in PointsDictionary.Values)
+            {
+                var pointConfig = point.ToXml();
+                confix.Add(pointConfig);
+            }
+
+            return confix;
+        }
+        public void FromXml(XElement config)
+        {
+            foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
+            {
+                MarkupPoint.FromXml(pointConfig, this);
+            }
+        }
     }
-    public class SegmentDriveLane
+    public class DriveLane
     {
-        private SegmentEnter Enter { get; }
+        private Enter Enter { get; }
 
         public uint LaneId { get; }
         public NetInfo.Lane Info { get; }
@@ -95,7 +129,7 @@ namespace NodeMarkup.Manager
         public float LeftSidePos => Position + (Enter.IsLaneInvert ? -HalfWidth : HalfWidth);
         public float RightSidePos => Position + (Enter.IsLaneInvert ? HalfWidth : -HalfWidth);
 
-        public SegmentDriveLane(SegmentEnter enter, uint laneId, NetInfo.Lane info)
+        public DriveLane(Enter enter, uint laneId, NetInfo.Lane info)
         {
             Enter = enter;
             LaneId = laneId;
@@ -104,10 +138,10 @@ namespace NodeMarkup.Manager
     }
     public class SegmentMarkupLine
     {
-        public SegmentEnter SegmentEnter { get; }
+        public Enter SegmentEnter { get; }
 
-        SegmentDriveLane LeftLane { get; }
-        SegmentDriveLane RightLane { get; }
+        DriveLane LeftLane { get; }
+        DriveLane RightLane { get; }
         float Point => SegmentEnter.IsStartSide ? 0f : 1f;
 
         public bool IsRightEdge => RightLane == null;
@@ -119,30 +153,27 @@ namespace NodeMarkup.Manager
         public float SideDelta => IsEdge ? 0f : Mathf.Abs(RightLane.LeftSidePos - LeftLane.RightSidePos);
         public float HalfSideDelta => SideDelta / 2;
 
-        public SegmentMarkupLine(SegmentEnter segmentEnter, SegmentDriveLane leftLane, SegmentDriveLane rightLane)
+        public SegmentMarkupLine(Enter segmentEnter, DriveLane leftLane, DriveLane rightLane)
         {
             SegmentEnter = segmentEnter;
             LeftLane = leftLane;
             RightLane = rightLane;
         }
 
-        public MarkupPoint[] GetMarkupPoints()
+        public IEnumerable<MarkupPoint> GetMarkupPoints()
         {
             if (IsEdge)
             {
-                var point = new MarkupPoint(this, IsRightEdge ? MarkupPoint.Type.RightEdge : MarkupPoint.Type.LeftEdge);
-                return new MarkupPoint[] { point };
+                yield return new MarkupPoint(this, IsRightEdge ? MarkupPoint.Type.RightEdge : MarkupPoint.Type.LeftEdge);
             }
             else if (NeedSplit)
             {
-                var pointLeft = new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
-                var pointRight = new MarkupPoint(this, MarkupPoint.Type.RightEdge);
-                return new MarkupPoint[] { pointRight, pointLeft };
+                yield return new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
+                yield return new MarkupPoint(this, MarkupPoint.Type.RightEdge);
             }
             else
             {
-                var point = new MarkupPoint(this, MarkupPoint.Type.Between);
-                return new MarkupPoint[] { point };
+                yield return new MarkupPoint(this, MarkupPoint.Type.Between);
             }
         }
 

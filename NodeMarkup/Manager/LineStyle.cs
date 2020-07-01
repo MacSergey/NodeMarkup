@@ -1,9 +1,11 @@
 ﻿using ColossalFramework.Math;
+using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -18,8 +20,10 @@ namespace NodeMarkup.Manager
         float Offset { get; set; }
     }
 
-    public abstract class LineStyle
+    public abstract class LineStyle : IToXml
     {
+        public static string XmlName { get; } = "S";
+
         public static Color DefaultColor { get; } = new Color(0.1f, 0.1f, 0.1f, 0.5f);
         public static float DefaultDashLength { get; } = 1.5f;
         public static float DefaultSpaceLength { get; } = 1.5f;
@@ -34,16 +38,16 @@ namespace NodeMarkup.Manager
         public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultOffser);
         public static DoubleDashedStyle DefaultDoubleDashed => new DoubleDashedStyle(DefaultColor, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
 
-        public static LineStyle GetDefault(Type type)
+        public static LineStyle GetDefault(LineType type)
         {
-            switch(type)
+            switch (type)
             {
-                case Type.Solid: return DefaultSolid;
-                case Type.Dash: return DefaultDashed;
-                case Type.DoubleSolid: return DefaultDoubleSolid;
-                case Type.DoubleDash: return DefaultDoubleDashed;
+                case LineType.Solid: return DefaultSolid;
+                case LineType.Dash: return DefaultDashed;
+                case LineType.DoubleSolid: return DefaultDoubleSolid;
+                case LineType.DoubleDash: return DefaultDoubleDashed;
                 default: return null;
-            }    
+            }
         }
 
 
@@ -59,7 +63,8 @@ namespace NodeMarkup.Manager
             }
         }
         public Action OnStyleChanged { private get; set; }
-        public abstract Type LineType { get; }
+        public abstract LineType Type { get; }
+        public string XmlSection => XmlName;
 
         public LineStyle(Color color)
         {
@@ -68,8 +73,54 @@ namespace NodeMarkup.Manager
 
         public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory);
         protected void StyleChanged() => OnStyleChanged?.Invoke();
+        public virtual XElement ToXml()
+        {
+            var config = new XElement(XmlSection,
+                new XAttribute("T", (int)Type),
+                new XElement("C",
+                    new XAttribute("R", Color.r.ToString("0.00")),
+                    new XAttribute("G", Color.g.ToString("0.00")),
+                    new XAttribute("B", Color.b.ToString("0.00")),
+                    new XAttribute("A", Color.a.ToString("0.00"))
+            )
+            );
+            return config;
+        }
 
-        public enum Type
+        public static bool FromXml(XElement config, out LineStyle style)
+        {
+            var type = (LineType)config.GetAttrValue<int>("T");
+
+            if(GetDefault(type) is LineStyle defaultStyle)
+            {
+                style = defaultStyle;
+                style.FromXml(config);
+                return true;
+            }
+            else
+            {
+                style = default;
+                return false;
+            }
+        }
+
+        public virtual void FromXml(XElement config)
+        {
+            if (config.Element("C") is XElement colorConfig)
+            {
+                Color = new Color
+                {
+                    r = colorConfig.GetAttrValue<float>("R"),
+                    g = colorConfig.GetAttrValue<float>("G"),
+                    b = colorConfig.GetAttrValue<float>("B"),
+                    a = colorConfig.GetAttrValue<float>("A")
+                };
+            }
+            else
+                Color = DefaultColor;
+        }
+
+        public enum LineType
         {
             Solid,
             Dash,
@@ -79,7 +130,7 @@ namespace NodeMarkup.Manager
     }
     public class SolidLineStyle : LineStyle
     {
-        public override Type LineType { get; } = Type.Solid;
+        public override LineType Type { get; } = LineType.Solid;
 
         public SolidLineStyle(Color color) : base(color) { }
 
@@ -103,7 +154,7 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                foreach(var dash in CalculateDashes(trajectory, direction, length))
+                foreach (var dash in CalculateDashes(trajectory, direction, length))
                 {
                     yield return dash;
                 }
@@ -119,7 +170,7 @@ namespace NodeMarkup.Manager
     }
     public class DoubleSolidLineStyle : SolidLineStyle, IDoubleLine
     {
-        public override Type LineType { get; } = Type.DoubleSolid;
+        public override LineType Type { get; } = LineType.DoubleSolid;
 
         float _offset;
         public float Offset
@@ -132,7 +183,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public DoubleSolidLineStyle(Color color, float offset) : base(color) 
+        public DoubleSolidLineStyle(Color color, float offset) : base(color)
         {
             Offset = offset;
         }
@@ -158,10 +209,21 @@ namespace NodeMarkup.Manager
 
             return dash;
         }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("O", Offset));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            Offset = config.GetAttrValue("O", DefaultOffser);
+        }
     }
     public class DashedLineStyle : LineStyle, IDashedLine
     {
-        public override Type LineType { get; } = Type.Dash;
+        public override LineType Type { get; } = LineType.Dash;
 
         float _dashLength;
         float _spaceLength;
@@ -203,7 +265,7 @@ namespace NodeMarkup.Manager
             var spaceT = SpaceLength / length;
 
             int index = 0;
-            while(true)
+            while (true)
             {
                 var startT = startSpaceT + (dashT + spaceT) * index;
                 var endT = startT + dashT;
@@ -231,10 +293,24 @@ namespace NodeMarkup.Manager
             var dash = new MarkupDash(position, angle, DashLength, Color);
             yield return dash;
         }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("DL", DashLength));
+            config.Add(new XAttribute("SL", SpaceLength));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            DashLength = config.GetAttrValue("DL", DefaultDashLength);
+            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
+        }
     }
     public class DoubleDashedStyle : DashedLineStyle, IDoubleLine
     {
-        public override Type LineType { get; } = Type.DoubleDash;
+        public override LineType Type { get; } = LineType.DoubleDash;
 
         float _offset;
         public float Offset
@@ -275,6 +351,17 @@ namespace NodeMarkup.Manager
 
             var dash = new MarkupDash(position, angle, DashLength, Color);
             return dash;
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("O", Offset));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            Offset = config.GetAttrValue("O", DefaultOffser);
         }
     }
 

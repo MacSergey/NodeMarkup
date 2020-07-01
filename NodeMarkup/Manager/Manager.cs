@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -22,6 +23,7 @@ namespace NodeMarkup.Manager
         {
             Material = RenderHelper.CreateMaterial();
         }
+
         public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
 
         public static Markup Get(ushort nodeId)
@@ -94,6 +96,27 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
             NeedUpdate.Clear();
+        }
+
+        public static XElement ToXml()
+        {
+            var confix = new XElement(nameof(NodeMarkup));
+            foreach(var markup in NodesMarkup.Values)
+            {
+                var markupConfig = markup.ToXml();
+                confix.Add(markupConfig);
+            }
+            return confix;
+        }
+        public static void FromXml(XElement config)
+        {
+            NodesMarkup.Clear();
+
+            foreach (var markupConfig in config.Elements(Markup.XmlName))
+            {
+                if(Markup.FromXml(markupConfig, out Markup markup))
+                    NeedUpdate.Add(markup.Id);
+            }
         }
     }
 

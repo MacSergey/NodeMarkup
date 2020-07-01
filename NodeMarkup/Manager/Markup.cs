@@ -1,16 +1,20 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.UI;
 using NodeMarkup.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class Markup
+    public class Markup : IToXml
     {
+        public static string XmlName { get; } = "M";
+
         public static Color32[] OverlayColors { get; } = new Color32[]
         {
             new Color32(204, 0, 0, 224),
@@ -24,9 +28,9 @@ namespace NodeMarkup.Manager
             new Color32(255, 0, 204, 224),
         };
 
-        public ushort NodeId { get; }
-        Dictionary<ushort, SegmentEnter> EntersDictionary { get; set; } = new Dictionary<ushort, SegmentEnter>();
-        Dictionary<MarkupPointPair, MarkupLine> LinesDictionary { get; } = new Dictionary<MarkupPointPair, MarkupLine>(new MarkupPointPairComparer());
+        public ushort Id { get; }
+        Dictionary<ushort, Enter> EntersDictionary { get; set; } = new Dictionary<ushort, Enter>();
+        Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(new MarkupLinePairComparer());
 
         public RenderBatch[] RenderBatches { get; private set; }
@@ -40,7 +44,7 @@ namespace NodeMarkup.Manager
                     yield return line;
             }
         }
-        public IEnumerable<SegmentEnter> Enters
+        public IEnumerable<Enter> Enters
         {
             get
             {
@@ -48,10 +52,14 @@ namespace NodeMarkup.Manager
                     yield return enter;
             }
         }
+        public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
+        public bool TryGetEnter(ushort enterId, out Enter enter) => EntersDictionary.TryGetValue(enterId, out enter);
+
+        public string XmlSection => XmlName;
 
         public Markup(ushort nodeId)
         {
-            NodeId = nodeId;
+            Id = nodeId;
 
             Update();
         }
@@ -69,14 +77,14 @@ namespace NodeMarkup.Manager
         }
         private void UpdateEnters()
         {
-            var node = Utilities.GetNode(NodeId);
+            var node = Utilities.GetNode(Id);
 
-            var enters = new Dictionary<ushort, SegmentEnter>();
+            var enters = new Dictionary<ushort, Enter>();
 
             foreach (var segmentId in node.SegmentsId())
             {
-                if (!EntersDictionary.TryGetValue(segmentId, out SegmentEnter enter))
-                    enter = new SegmentEnter(this, segmentId);
+                if (!EntersDictionary.TryGetValue(segmentId, out Enter enter))
+                    enter = new Enter(this, segmentId);
 
                 enter.Update();
 
@@ -87,13 +95,13 @@ namespace NodeMarkup.Manager
         }
         private void UpdateLines()
         {
-            var pointPairs = LinesDictionary.Keys.ToArray();
-            foreach (var pointPair in pointPairs)
+            var lines = LinesDictionary.Values.ToArray();
+            foreach (var line in lines)
             {
-                if (EntersDictionary.ContainsKey(pointPair.First.Enter.SegmentId) && EntersDictionary.ContainsKey(pointPair.Second.Enter.SegmentId))
-                    LinesDictionary[pointPair].Update();
+                if (EntersDictionary.ContainsKey(line.Start.Enter.Id) && EntersDictionary.ContainsKey(line.End.Enter.Id))
+                    LinesDictionary[line.PointPair.Hash].Update();
                 else
-                    LinesDictionary.Remove(pointPair);
+                    LinesDictionary.Remove(line.PointPair.Hash);
             }
         }
 
@@ -122,25 +130,26 @@ namespace NodeMarkup.Manager
             }
             RecalculateBatches();
         }
+
         public void RecalculateBatches()
         {
             var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
             RenderBatches = RenderBatch.FromDashes(dashes);
         }
 
-        public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.Type lineType)
+        public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.LineType lineType)
         {
             var newLine = new MarkupLine(this, pointPair, lineType);
-            LinesDictionary[pointPair] = newLine;
+            LinesDictionary[pointPair.Hash] = newLine;
 
             RecalculateBatches();
 
             return newLine;
         }
-        public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair);
+        public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
         public void RemoveConnect(MarkupPointPair pointPair)
         {
-            var line = LinesDictionary[pointPair];
+            var line = LinesDictionary[pointPair.Hash];
 
             var intersects = GetExistIntersects(line);
             foreach (var intersect in intersects)
@@ -150,11 +159,11 @@ namespace NodeMarkup.Manager
                 LineIntersects.Remove(intersect.Pair);
             }
 
-            LinesDictionary.Remove(pointPair);
+            LinesDictionary.Remove(pointPair.Hash);
 
             RecalculateDashes();
         }
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.Type lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.LineType lineType)
         {
             if (!ExistConnection(pointPair))
                 return AddConnect(pointPair, lineType);
@@ -184,6 +193,58 @@ namespace NodeMarkup.Manager
             }
 
             return intersect;
+        }
+
+        public XElement ToXml()
+        {
+            var config = new XElement(XmlSection,
+                new XAttribute(nameof(Id), Id.ToString())
+            );
+
+            foreach(var enter in Enters)
+            {
+                var enterConfig = enter.ToXml();
+                config.Add(enterConfig);
+            }
+            foreach(var line in Lines)
+            {
+                var lineConfig = line.ToXml();
+                config.Add(lineConfig);
+            }
+
+            return config;
+        }
+        public static bool FromXml(XElement config, out Markup markup)
+        {
+            var nodeId = config.GetAttrValue<ushort>(nameof(Id));
+            markup = Manager.Get(nodeId);
+            markup.FromXml(config);
+            return true;
+        }
+        public void FromXml(XElement config)
+        {
+            var nodeId = config.GetAttrValue<ushort>(nameof(Id));
+            var markup = Manager.Get(nodeId);
+
+            foreach (var enterConfig in config.Elements(Enter.XmlName))
+            {
+                var enterId = enterConfig.GetAttrValue<ushort>(nameof(Enter.Id));
+                if(markup.TryGetEnter(enterId, out Enter enter))
+                    enter.FromXml(enterConfig);
+            }
+
+            foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
+            {
+                if(MarkupLine.FromXml(lineConfig, this, out MarkupLine line))
+                    LinesDictionary.Add(line.Id, line);
+            }
+
+            foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
+            {
+                var lineId = lineConfig.GetAttrValue<ulong>(nameof(MarkupLine.Id));
+                if (TryGetLine(lineId, out MarkupLine line))
+                    line.FromXml(lineConfig);
+            }
         }
     }
 }

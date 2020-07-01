@@ -257,7 +257,7 @@ namespace NodeMarkup
         private void OnMakeLine(Event e)
         {
             var markup = Manager.Manager.Get(SelectNodeId);
-            var lineType = e.shift ? (e.control ? LineStyle.Type.DoubleSolid : LineStyle.Type.Solid) : (e.control ? LineStyle.Type.DoubleDash : LineStyle.Type.Dash);
+            var lineType = e.shift ? (e.control ? LineStyle.LineType.DoubleSolid : LineStyle.LineType.Solid) : (e.control ? LineStyle.LineType.DoubleDash : LineStyle.LineType.Dash);
             var newLine = markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;
@@ -328,7 +328,7 @@ namespace NodeMarkup
                     break;
             }
         }
-        private void RenderSegmentEnterOverlay(RenderManager.CameraInfo cameraInfo, SegmentEnter ignore = null)
+        private void RenderSegmentEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter ignore = null)
         {
             var markup = Manager.Manager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
@@ -346,12 +346,12 @@ namespace NodeMarkup
                     //RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 1.25f, 0f, 0f, -1f, 1280f, false, true);
                 }
 
-                RenderPointOverlay(cameraInfo, enter.Points);
+                RenderPointOverlay(cameraInfo, enter);
             }
         }
-        private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint[] points)
+        private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
         {
-            foreach (var point in points)
+            foreach (var point in enter.Points)
             {
                 RenderManager.OverlayEffect.DrawCircle(cameraInfo, point.Color, point.Position, 1f, -1f, 1280f, false, true);
             }
