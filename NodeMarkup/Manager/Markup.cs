@@ -33,7 +33,8 @@ namespace NodeMarkup.Manager
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(new MarkupLinePairComparer());
 
-        public RenderBatch[] RenderBatches { get; private set; }
+        public bool NeedRecalculate { get; set; }
+        public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
 
 
         public IEnumerable<MarkupLine> Lines
@@ -66,17 +67,19 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            //Logger.LogDebug($"End update node #{NodeId}");
+            Logger.LogDebug($"Start update node #{Id}");
 
             UpdateEnters();
             UpdateLines();
 
             RecalculateDashes();
 
-            //Logger.LogDebug($"End update node #{NodeId}");
+            Logger.LogDebug($"End update node #{Id}");
         }
         private void UpdateEnters()
         {
+            //Logger.LogDebug($"Start update enters");
+
             var node = Utilities.GetNode(Id);
 
             var enters = new Dictionary<ushort, Enter>();
@@ -92,9 +95,13 @@ namespace NodeMarkup.Manager
             }
 
             EntersDictionary = enters;
+
+            //Logger.LogDebug($"End update enters");
         }
         private void UpdateLines()
         {
+            //Logger.LogDebug($"Start update lines");
+
             var lines = LinesDictionary.Values.ToArray();
             foreach (var line in lines)
             {
@@ -103,6 +110,8 @@ namespace NodeMarkup.Manager
                 else
                     LinesDictionary.Remove(line.PointPair.Hash);
             }
+
+            //Logger.LogDebug($"End update lines");
         }
 
         public void Update(MarkupPoint point)
@@ -118,23 +127,31 @@ namespace NodeMarkup.Manager
         {
             line.Update();
             line.RecalculateDashes();
-            RecalculateBatches();
+            NeedRecalculate = true;
         }
 
         public void RecalculateDashes()
         {
+            //Logger.LogDebug($"Start recalculate dashes");
+
             LineIntersects.Clear();
             foreach (var line in Lines)
             {
                 line.RecalculateDashes();
             }
-            RecalculateBatches();
+            NeedRecalculate = true;
+
+            //Logger.LogDebug($"End recalculate dashes");
         }
 
         public void RecalculateBatches()
         {
+            Logger.LogDebug($"Start recalculate batches");
+
             var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
             RenderBatches = RenderBatch.FromDashes(dashes);
+
+            Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}");
         }
 
         public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.LineType lineType)
@@ -142,7 +159,7 @@ namespace NodeMarkup.Manager
             var newLine = new MarkupLine(this, pointPair, lineType);
             LinesDictionary[pointPair.Hash] = newLine;
 
-            RecalculateBatches();
+            NeedRecalculate = true;
 
             return newLine;
         }

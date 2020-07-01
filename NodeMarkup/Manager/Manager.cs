@@ -45,6 +45,12 @@ namespace NodeMarkup.Manager
             if (!cameraInfo.CheckRenderDistance(data.m_position, RenderDistance))
                 return;
 
+            if(markup.NeedRecalculate)
+            {
+                markup.NeedRecalculate = false;
+                markup.RecalculateBatches();
+            }    
+
             var instance = PropManager;
             var materialBlock = instance.m_materialBlock;
 

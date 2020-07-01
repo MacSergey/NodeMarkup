@@ -26,7 +26,7 @@ namespace NodeMarkup.Utils
                 return isIntersect;
             }
         }
-        private static bool Intersect(Bezier3 first, Bezier3 second, out LineIntersect intersect)
+        private static bool Intersect(Bezier3 first, Bezier3 second, out LineIntersect intersect, int depth = 0)
         {
             intersect = new LineIntersect() {FirstT = -1, SecondT = -1 };
 
@@ -47,27 +47,27 @@ namespace NodeMarkup.Utils
             var firstAngle = first.DeltaAngle();
             var secondAngle = second.DeltaAngle();
 
-            if ((firstAngle <= DeltaAngle && secondAngle <= DeltaAngle) || intersect.IsDelta)
+            if ((firstAngle <= DeltaAngle && secondAngle <= DeltaAngle) || intersect.IsDelta || depth >= 5)
                 return true;
 
             first.Divide(out Bezier3 firstA, out Bezier3 firstB, intersect.FirstT);
             second.Divide(out Bezier3 secondA, out Bezier3 secondB, intersect.SecondT);
 
-            if (Intersect(firstA, secondA, true, true, ref intersect))
+            if (Intersect(firstA, secondA, true, true, ref intersect, depth))
                 return true;
-            else if (Intersect(firstA, secondB, true, false, ref intersect))
+            else if (Intersect(firstA, secondB, true, false, ref intersect, depth))
                 return true;
-            else if (Intersect(firstB, secondA, false, true, ref intersect))
+            else if (Intersect(firstB, secondA, false, true, ref intersect, depth))
                 return true;
-            else if (Intersect(firstB, secondB, false, false, ref intersect))
+            else if (Intersect(firstB, secondB, false, false, ref intersect, depth))
                 return true;
             else
                 return false;
         }
 
-        private static bool Intersect(Bezier3 first, Bezier3 second, bool IsFirstStart, bool IsSecondStart, ref LineIntersect intersect)
+        private static bool Intersect(Bezier3 first, Bezier3 second, bool IsFirstStart, bool IsSecondStart, ref LineIntersect intersect, int depth)
         {
-            if (Intersect(first, second, out LineIntersect partIntersect))
+            if (Intersect(first, second, out LineIntersect partIntersect, depth + 1))
             {
                 intersect.FirstT = CalculateT(intersect.FirstT, partIntersect.FirstT, IsFirstStart);
                 intersect.SecondT = CalculateT(intersect.SecondT, partIntersect.SecondT, IsSecondStart);

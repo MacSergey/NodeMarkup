@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -8,6 +9,19 @@ namespace NodeMarkup
 {
     public static class Logger
     {
+        static string LogFile { get; } = Path.Combine(Application.dataPath, $"{nameof(NodeMarkup)}.log");
+        static Logger()
+        {
+            try
+            {
+                if (File.Exists(LogFile))
+                {
+                    File.Delete(LogFile);
+                }
+                File.Create(LogFile);
+            }
+            catch { }
+        }
         public static bool Enable { get; set; } = true;
         public static bool EnableDebug { get; set; } = true;
 
@@ -32,6 +46,18 @@ namespace NodeMarkup
             if (Enable)
                 Log(logFunc, message?.Invoke());
         }
-        private static void Log(Action<string> logFunc, string message) => logFunc?.Invoke($"[{nameof(NodeMarkup)}] {message}");
+        private static void Log(Action<string> logFunc, string message)
+        {
+            //try
+            //{
+            //    using (StreamWriter w = File.AppendText(LogFile))
+            //    {
+            //        w.WriteLine(message);
+            //    }
+            //}
+            //catch { }
+
+            logFunc?.Invoke($"[{nameof(NodeMarkup)}] {message}");
+        }
     }
 }

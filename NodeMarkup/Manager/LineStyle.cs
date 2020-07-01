@@ -71,7 +71,7 @@ namespace NodeMarkup.Manager
             Color = color;
         }
 
-        public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory);
+        public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0);
         protected void StyleChanged() => OnStyleChanged?.Invoke();
         public virtual XElement ToXml()
         {
@@ -134,20 +134,20 @@ namespace NodeMarkup.Manager
 
         public SolidLineStyle(Color color) : base(color) { }
 
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
+        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0)
         {
             var deltaAngle = trajectory.DeltaAngle();
             var direction = trajectory.d - trajectory.a;
             var length = direction.magnitude;
 
-            if ((deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
+            if (depth < 5 && (deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
             {
                 trajectory.Divide(out Bezier3 first, out Bezier3 second);
-                foreach (var dash in Calculate(first))
+                foreach (var dash in Calculate(first, depth + 1))
                 {
                     yield return dash;
                 }
-                foreach (var dash in Calculate(second))
+                foreach (var dash in Calculate(second, depth + 1))
                 {
                     yield return dash;
                 }
@@ -252,7 +252,7 @@ namespace NodeMarkup.Manager
             SpaceLength = spaceLength;
         }
 
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
+        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0)
         {
             var length = trajectory.Length();
             if (length == 0)
@@ -370,15 +370,13 @@ namespace NodeMarkup.Manager
         public Vector3 Position { get; }
         public float Angle { get; }
         public float Length { get; }
-        //public float Width { get; }
         public Color Color { get; }
 
-        public MarkupDash(Vector3 position, float angle, float length, /*float width, */Color color)
+        public MarkupDash(Vector3 position, float angle, float length, Color color)
         {
             Position = position;
             Angle = angle;
             Length = length;
-            //Width = width;
             Color = color;
         }
     }

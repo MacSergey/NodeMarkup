@@ -134,7 +134,7 @@ namespace NodeMarkup.Manager
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule.XmlName))
             {
-                if(MarkupLineRawRule.FromXml(ruleConfig, Markup, out MarkupLineRawRule rule))
+                if (MarkupLineRawRule.FromXml(ruleConfig, Markup, out MarkupLineRawRule rule))
                     AddRule(rule, true, false);
             }
         }

@@ -42,7 +42,7 @@ namespace NodeMarkup.Utils
                 Manager.Manager.FromXml(config);
 
                 sw.Stop();
-                Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}");
+                Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms");
             }
             else
             {
