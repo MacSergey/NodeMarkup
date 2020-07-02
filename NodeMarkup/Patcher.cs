@@ -65,7 +65,7 @@ namespace NodeMarkup
         private static void PatchNetNodeRenderInstance(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetNode), "RenderInstance", new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
-            var postfix = AccessTools.Method(typeof(Manager.Manager), nameof(Manager.Manager.NetNodeRenderInstancePostfix));
+            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetNodeRenderInstancePostfix));
 
             AddPostfix(harmony, original, postfix);
         }
@@ -73,7 +73,7 @@ namespace NodeMarkup
         private static void PatchNetManagerUpdateNode(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetManager), nameof(NetManager.UpdateNode), new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
-            var postfix = AccessTools.Method(typeof(Manager.Manager), nameof(Manager.Manager.NetManagerUpdateNodePostfix));
+            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetManagerUpdateNodePostfix));
 
             AddPostfix(harmony, original, postfix);
         }
@@ -81,7 +81,7 @@ namespace NodeMarkup
         private static void PatchNetManagerReleaseNodeImplementation(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetManager), "ReleaseNodeImplementation", new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() });
-            var prefix = AccessTools.Method(typeof(Manager.Manager), nameof(Manager.Manager.NetManagerReleaseNodeImplementationPrefix));
+            var prefix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetManagerReleaseNodeImplementationPrefix));
 
             AddPrefix(harmony, original, prefix);
         }
@@ -89,7 +89,7 @@ namespace NodeMarkup
         private static void PatchNetSegmentUpdateLanes(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetSegment), nameof(NetSegment.UpdateLanes));
-            var postfix = AccessTools.Method(typeof(Manager.Manager), nameof(Manager.Manager.NetSegmentUpdateLanesPostfix));
+            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetSegmentUpdateLanesPostfix));
 
             AddPostfix(harmony, original, postfix);
         }
@@ -97,7 +97,7 @@ namespace NodeMarkup
         private static void PatchNetManagerSimulationStepImpl(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetManager), "SimulationStepImpl");
-            var postfix = AccessTools.Method(typeof(Manager.Manager), nameof(Manager.Manager.NetManagerSimulationStepImplPostfix));
+            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetManagerSimulationStepImplPostfix));
 
             AddPostfix(harmony, original, postfix);
         }

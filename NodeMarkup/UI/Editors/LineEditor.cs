@@ -197,14 +197,14 @@ namespace NodeMarkup.UI.Editors
             Rule = rule;
 
             SetSize();
-            if (Editor.RuleEdges.Count > 2)
+
+            var manyRules = Editor.RuleEdges.Count > 2;
+            AddHeader(manyRules);
+            if (manyRules)
             {
-                AddDeleteButton();
                 AddFromProperty();
                 AddToProperty();
             }
-            AddColorProperty();
-            AddStyleProperty();
             AddStyleProperties();
         }
         private void SetSize()
@@ -216,11 +216,21 @@ namespace NodeMarkup.UI.Editors
             else
                 width = parent.width;
         }
-        private void AddDeleteButton()
+        private void AddHeader(bool isDeletable)
         {
-            var deleteButton = AddUIComponent<CloseButtonPanel>();
-            deleteButton.Init();
-            deleteButton.OnButtonClick += () => Editor.DeleteRule(this);
+            var header = AddUIComponent<RuleHeaderPanel>();
+            header.AddRange(MarkupManager.Settings.Templates);
+            header.Init(isDeletable);
+            header.OnDelete += () => Editor.DeleteRule(this);
+            header.OnSaveTemplate += OnSaveTemplate;
+            header.OnSelectTemplate += OnSelectTemplate;
+        }
+
+        private void AddStyleProperties()
+        {
+            AddColorProperty();
+            AddStyleTypeProperty();
+            AddStyleAdditionalProperties();
         }
         private void AddFromProperty()
         {
@@ -254,16 +264,18 @@ namespace NodeMarkup.UI.Editors
             colorProperty.Init();
             colorProperty.Value = Rule.Style.Color;
             colorProperty.OnValueChanged += ColorChanged;
+            StyleProperties.Add(colorProperty);
         }
-        private void AddStyleProperty()
+        private void AddStyleTypeProperty()
         {
             var styleProperty = AddUIComponent<StylePropertyPanel>();
             styleProperty.Text = "Style";
             styleProperty.Init();
             styleProperty.SelectedObject = Rule.Style.Type;
             styleProperty.OnSelectObjectChanged += StyleChanged;
+            StyleProperties.Add(styleProperty);
         }
-        private void AddStyleProperties()
+        private void AddStyleAdditionalProperties()
         {
             if (Rule.Style is IDashedLine dashedStyle)
             {
@@ -306,6 +318,18 @@ namespace NodeMarkup.UI.Editors
             }
 
             StyleProperties.Clear();
+        }
+
+        private void OnSaveTemplate()
+        {
+            var template = MarkupManager.Settings.AddTemplate(Rule.Style);
+            Editor.NodeMarkupPanel.EditTemplate(template);
+        }
+        private void OnSelectTemplate(LineStyleTemplate template)
+        {
+            Rule.Style = template.Style.Copy();
+            ClearStyleProperties();
+            AddStyleProperties();
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;

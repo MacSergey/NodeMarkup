@@ -237,14 +237,14 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, out Markup markup)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            markup = Manager.Get(nodeId);
+            markup = MarkupManager.Get(nodeId);
             markup.FromXml(config);
             return true;
         }
         public void FromXml(XElement config)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            var markup = Manager.Get(nodeId);
+            var markup = MarkupManager.Get(nodeId);
 
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
             {

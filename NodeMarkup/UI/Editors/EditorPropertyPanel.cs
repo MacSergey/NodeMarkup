@@ -108,23 +108,150 @@ namespace NodeMarkup.UI.Editors
             Button.size = size;
         }
     }
-    public class CloseButtonPanel : EditorPropertyPanel
+    public class RuleHeaderPanel : EditorItem
     {
-        public event Action OnButtonClick;
-        public CloseButtonPanel()
+        public event Action OnDelete;
+        public event Action OnSaveTemplate;
+        public event Action<LineStyleTemplate> OnSelectTemplate;
+
+        UIButton DeleteButton { get; set; }
+        UIButton SaveTemplateButton { get; set; }
+        TemplateDropDown SelectTemplate { get; set; }
+
+        public RuleHeaderPanel()
         {
-            var button = Control.AddUIComponent<UIButton>();
-
-            button.atlas = TextureUtil.GetAtlas("Ingame");
-            button.normalBgSprite = "buttonclose";
-            button.hoveredBgSprite = "buttonclosehover";
-            button.pressedBgSprite = "buttonclosepressed";
-
-            button.size = new Vector2(20, 20);
-
-            button.eventClick += ButtonClick;
+            AddDeleteButton();
+            AddSaveTemplate();
+            AddApplyTemplate();
         }
-        private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
+
+        public void Init(bool isDeletable = true)
+        {
+            base.Init();
+            DeleteButton.enabled = isDeletable;
+            SelectTemplate.selectedIndex = 0;
+
+            OnSizeChanged();
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            DeleteButton.relativePosition = new Vector2(width- DeleteButton.width - 5, (height - DeleteButton.height) / 2);
+            SaveTemplateButton.relativePosition = new Vector2(5, (height - SaveTemplateButton.height) / 2);
+            SelectTemplate.relativePosition = new Vector2(SaveTemplateButton.relativePosition.x + SaveTemplateButton.width + 5, (height - SelectTemplate.height) / 2);
+        }
+
+        private void AddDeleteButton()
+        {
+            DeleteButton = AddUIComponent<UIButton>();
+            DeleteButton.atlas = TextureUtil.GetAtlas("Ingame");
+            DeleteButton.normalBgSprite = "buttonclose";
+            DeleteButton.hoveredBgSprite = "buttonclosehover";
+            DeleteButton.pressedBgSprite = "buttonclosepressed";
+            DeleteButton.size = new Vector2(20, 20);
+            DeleteButton.eventClick += DeleteClick;
+        }
+        private void AddSaveTemplate()
+        {
+            SaveTemplateButton = AddUIComponent<UIButton>();
+            SaveTemplateButton.atlas = TextureUtil.GetAtlas("InMapEditor");
+            SaveTemplateButton.normalBgSprite = "InfoDisplay";
+            SaveTemplateButton.hoveredBgSprite = "InfoDisplayHover";
+            SaveTemplateButton.pressedBgSprite = "InfoDisplayFocused";
+            SaveTemplateButton.text = "Save as template";
+            SaveTemplateButton.textScale = 0.7f;
+            SaveTemplateButton.size = new Vector2(120, 20);
+            SaveTemplateButton.textColor = Color.black;
+            SaveTemplateButton.hoveredTextColor = Color.black;
+            SaveTemplateButton.pressedTextColor = Color.black;
+            SaveTemplateButton.focusedTextColor = Color.black;
+            SaveTemplateButton.eventClick += SaveTemplateClick;
+        }
+        private void AddApplyTemplate()
+        {
+            SelectTemplate = AddUIComponent<TemplateDropDown>();
+
+            SelectTemplate.atlas = TextureUtil.GetAtlas("InMapEditor");
+            SelectTemplate.height = 20;
+            SelectTemplate.width = 150;
+            SelectTemplate.listBackground = "TextFieldPanel";
+            SelectTemplate.itemHeight = 20;
+            SelectTemplate.itemHover = "TextFieldPanelHovered";
+            SelectTemplate.itemHighlight = "ListItemHighlight";
+            SelectTemplate.normalBgSprite = "InfoDisplay";
+            SelectTemplate.hoveredBgSprite = "InfoDisplayHover";
+            SelectTemplate.listWidth = 150;
+            SelectTemplate.listHeight = 700;
+            SelectTemplate.listPosition = UIDropDown.PopupListPosition.Below;
+            SelectTemplate.clampListToScreen = true;
+            SelectTemplate.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            SelectTemplate.popupColor = new Color32(45, 52, 61, 255);
+            SelectTemplate.popupTextColor = new Color32(170, 170, 170, 255);
+            SelectTemplate.textScale = 0.7f;
+            SelectTemplate.textColor = Color.black;
+            SelectTemplate.verticalAlignment = UIVerticalAlignment.Middle;
+            SelectTemplate.horizontalAlignment = UIHorizontalAlignment.Left;
+            SelectTemplate.textFieldPadding = new RectOffset(8, 0, 8, 0);
+            SelectTemplate.itemPadding = new RectOffset(14, 0, 8, 0);
+            SelectTemplate.filteredItems = new int[] { 0 };
+            SelectTemplate.eventDropdownOpen += DropdownOpen;
+            SelectTemplate.eventDropdownClose += DropdownClose;
+
+            var button = SelectTemplate.AddUIComponent<UIButton>();
+            button.atlas = TextureUtil.GetAtlas("Ingame");
+            button.text = string.Empty;
+            button.size = SelectTemplate.size;
+            button.relativePosition = new Vector3(0f, 0f);
+            button.textVerticalAlignment = UIVerticalAlignment.Middle;
+            button.textHorizontalAlignment = UIHorizontalAlignment.Left;
+            button.normalFgSprite = "IconDownArrow";
+            button.hoveredFgSprite = "IconDownArrowHovered";
+            button.pressedFgSprite = "IconDownArrowPressed";
+            button.focusedFgSprite = "IconDownArrowFocused";
+            button.disabledFgSprite = "IconDownArrowDisabled";
+            button.foregroundSpriteMode = UIForegroundSpriteMode.Scale;
+            button.horizontalAlignment = UIHorizontalAlignment.Right;
+            button.verticalAlignment = UIVerticalAlignment.Middle;
+            button.textScale = 0.8f;
+
+            SelectTemplate.triggerButton = button;
+
+            Add(new LineStyleTemplate("Select template", LineStyle.DefaultSolid));
+        }
+
+        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
+        private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
+        private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
+        {
+            popup.items = popup.items.ToArray();
+            popup.items[0] = string.Empty;
+            SelectTemplate.eventSelectedIndexChanged += DropDownIndexChanged;
+        }
+        private void DropDownIndexChanged(UIComponent component, int value)
+        {
+            if(value != -1)
+                OnSelectTemplate?.Invoke(SelectTemplate.SelectedObject);
+        }
+        private void DropdownClose(UIDropDown dropdown, UIListBox popup, ref bool overridden)
+        {
+            SelectTemplate.eventSelectedIndexChanged -= DropDownIndexChanged;
+            SelectTemplate.selectedIndex = 0;
+        }
+
+        public void Add(LineStyleTemplate item)
+        {
+            SelectTemplate.AddItem(item);
+        }
+        public void AddRange(IEnumerable<LineStyleTemplate> items)
+        {
+            foreach (var item in items)
+            {
+                SelectTemplate.AddItem(item);
+            }
+        }
+
+        public class TemplateDropDown : CustomUIDropDown<LineStyleTemplate> { }
     }
 
     public abstract class FieldPropertyPanel<ValueType> : EditorPropertyPanel
@@ -198,6 +325,13 @@ namespace NodeMarkup.UI.Editors
         protected override float Decrement(float value, float step) => value + step;
         protected override float Increment(float value, float step) => value - step;
     }
+    public class StringPropertyPanel : FieldPropertyPanel<string>
+    {
+        protected override bool CanUseWheel => false;
+
+        protected override string Decrement(string value, string step) => throw new NotSupportedException();
+        protected override string Increment(string value, string step) => throw new NotSupportedException();
+    }
 
     public class ColorPropertyPanel : EditorPropertyPanel
     {
@@ -265,7 +399,7 @@ namespace NodeMarkup.UI.Editors
     }
 
     public abstract class ListPropertyPanel<Type, DropDownType> : EditorPropertyPanel
-        where DropDownType : ListPropertyPanel<Type, DropDownType>.CustomUIDropDown
+        where DropDownType : CustomUIDropDown<Type>
     {
         public event Action<Type> OnSelectObjectChanged;
         public event Action<bool> OnDropDownStateChange;
@@ -304,7 +438,6 @@ namespace NodeMarkup.UI.Editors
             DropDown.listHeight = 700;
             DropDown.listPosition = UIDropDown.PopupListPosition.Below;
             DropDown.clampListToScreen = true;
-            //DropDown.builtinKeyNavigation = true;
             DropDown.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
             DropDown.popupColor = new Color32(45, 52, 61, 255);
             DropDown.popupTextColor = new Color32(170, 170, 170, 255);
@@ -370,26 +503,28 @@ namespace NodeMarkup.UI.Editors
         }
         protected abstract bool IsEqual(Type first, Type second);
 
-        public abstract class CustomUIDropDown : UIDropDown
-        {
-            public Func<Type, Type, bool> IsEqualDelegate { get; set; }
-            List<Type> Objects { get; } = new List<Type>();
-            public Type SelectedObject
-            {
-                get => selectedIndex >= 0 ? Objects[selectedIndex] : default;
-                set => selectedIndex = Objects.FindIndex(o => IsEqualDelegate?.Invoke(o, value) ?? ReferenceEquals(o, value) || o.Equals(value));
-            }
 
-            public void AddItem(Type item, string label = null)
-            {
-                Objects.Add(item);
-                AddItem(label ?? item.ToString());
-            }
+    }
+    public abstract class CustomUIDropDown<ValueType> : UIDropDown
+    {
+        public Func<ValueType, ValueType, bool> IsEqualDelegate { get; set; }
+        List<ValueType> Objects { get; } = new List<ValueType>();
+        public ValueType SelectedObject
+        {
+            get => selectedIndex >= 0 ? Objects[selectedIndex] : default;
+            set => selectedIndex = Objects.FindIndex(o => IsEqualDelegate?.Invoke(o, value) ?? ReferenceEquals(o, value) || o.Equals(value));
+        }
+
+        public void AddItem(ValueType item, string label = null)
+        {
+            Objects.Add(item);
+            AddItem(label ?? item.ToString());
         }
     }
+
     public abstract class EnumPropertyPanel<EnumType, DropDownType> : ListPropertyPanel<EnumType, DropDownType>
         where EnumType : Enum
-        where DropDownType : EnumPropertyPanel<EnumType, DropDownType>.EnumDropDown
+        where DropDownType : CustomUIDropDown<EnumType>
     {
         private new bool AllowNull
         {
@@ -405,17 +540,16 @@ namespace NodeMarkup.UI.Editors
                 DropDown.AddItem(value);
             }
         }
-        public abstract class EnumDropDown : CustomUIDropDown { }
     }
     public class StylePropertyPanel : EnumPropertyPanel<LineStyle.LineType, StylePropertyPanel.StyleDropDown>
     {
         protected override bool IsEqual(LineStyle.LineType first, LineStyle.LineType second) => first == second;
-        public class StyleDropDown : EnumDropDown { }
+        public class StyleDropDown : CustomUIDropDown<LineStyle.LineType> { }
     }
     public class MarkupLineListPropertyPanel : ListPropertyPanel<MarkupLine, MarkupLineListPropertyPanel.MarkupLineDropDown>
     {
         protected override bool IsEqual(MarkupLine first, MarkupLine second) => System.Object.ReferenceEquals(first, second);
-        public class MarkupLineDropDown : CustomUIDropDown { }
+        public class MarkupLineDropDown : CustomUIDropDown<MarkupLine> { }
     }
 
     public abstract class SelectPropertyPanel<Type> : EditorPropertyPanel

@@ -44,7 +44,7 @@ namespace NodeMarkup.Utils
                     Logger.LogDebug(decompress);
 
                     var config = Parse(decompress);
-                    Manager.Manager.FromXml(config);
+                    Manager.MarkupManager.FromXml(config);
 
                     sw.Stop();
                     Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
@@ -64,7 +64,7 @@ namespace NodeMarkup.Utils
 
             var sw = Stopwatch.StartNew();
 
-            var config = Manager.Manager.ToXml();
+            var config = Manager.MarkupManager.ToXml();
             var xml = config.ToString(SaveOptions.DisableFormatting);
             Logger.LogDebug(xml);
 

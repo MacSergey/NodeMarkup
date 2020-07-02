@@ -82,12 +82,13 @@
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\Editors\TemplateEditor.cs" />
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\TabPanel.cs" />
     <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\BezierIntersect.cs" />
     <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\RenderHelper.cs" />
+    <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
   </ItemGroup>

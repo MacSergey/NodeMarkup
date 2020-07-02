@@ -80,6 +80,7 @@ namespace NodeMarkup.UI
         {
             CreateEditor<PointsEditor>();
             CreateEditor<LinesEditor>();
+            CreateEditor<TemplateEditor>();
         }
         private void CreateEditor<EditorType>() where EditorType : Editor
         {
@@ -99,7 +100,7 @@ namespace NodeMarkup.UI
             Show();
             Caption.text = $"Edit node #{nodeId} markup";
 
-            Markup = Manager.Manager.Get(nodeId);
+            Markup = Manager.MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;
             TabStrip.selectedIndex = 0;
         }
@@ -141,6 +142,12 @@ namespace NodeMarkup.UI
             var editor = SelectEditor<LinesEditor>();
             editor?.UpdateEditor();
             editor?.Select(line);
+        }
+        public void EditTemplate(LineStyleTemplate template)
+        {
+            var editor = SelectEditor<TemplateEditor>();
+            editor?.UpdateEditor();
+            editor?.Select(template);
         }
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
         public void OnUpdate() => CurrentEditor?.OnUpdate();

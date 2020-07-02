@@ -72,6 +72,7 @@ namespace NodeMarkup.Manager
         }
 
         public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0);
+        public abstract LineStyle Copy();
         protected void StyleChanged() => OnStyleChanged?.Invoke();
         public virtual XElement ToXml()
         {
@@ -152,6 +153,8 @@ namespace NodeMarkup.Manager
             var dash = new MarkupDash(position, angle, length, Color);
             yield return dash;
         }
+
+        public override LineStyle Copy() => new SolidLineStyle(Color);
     }
     public class DoubleSolidLineStyle : SolidLineStyle, IDoubleLine
     {
@@ -205,6 +208,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
+        public override LineStyle Copy() => new DoubleSolidLineStyle(Color, Offset);
     }
     public class DashedLineStyle : LineStyle, IDashedLine
     {
@@ -292,6 +296,8 @@ namespace NodeMarkup.Manager
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
+
+        public override LineStyle Copy() => new DashedLineStyle(Color, DashLength, SpaceLength);
     }
     public class DoubleDashedStyle : DashedLineStyle, IDoubleLine
     {
@@ -348,6 +354,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
+        public override LineStyle Copy() => new DoubleDashedStyle(Color, DashLength, SpaceLength, Offset);
     }
 
     public class MarkupDash
@@ -364,5 +371,19 @@ namespace NodeMarkup.Manager
             Length = length;
             Color = color;
         }
+    }
+
+    public class LineStyleTemplate
+    {
+        public string Name { get; set; }
+        public LineStyle Style { get; set; }
+
+        public LineStyleTemplate(string name, LineStyle style)
+        {
+            Name = name;
+            Style = style.Copy();
+        }
+
+        public override string ToString() => Name;
     }
 }

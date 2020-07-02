@@ -194,7 +194,7 @@ namespace NodeMarkup
         {
             if (_mouseRayValid)
             {
-                var markup = Manager.Manager.Get(SelectNodeId);
+                var markup = Manager.MarkupManager.Get(SelectNodeId);
                 foreach (var enter in markup.Enters)
                 {
                     foreach (var point in enter.Points)
@@ -256,7 +256,7 @@ namespace NodeMarkup
         }
         private void OnMakeLine(Event e)
         {
-            var markup = Manager.Manager.Get(SelectNodeId);
+            var markup = Manager.MarkupManager.Get(SelectNodeId);
             var lineType = e.shift ? (e.control ? LineStyle.LineType.DoubleSolid : LineStyle.LineType.Solid) : (e.control ? LineStyle.LineType.DoubleDash : LineStyle.LineType.Dash);
             var newLine = markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
             Panel.EditLine(newLine);
@@ -330,7 +330,7 @@ namespace NodeMarkup
         }
         private void RenderSegmentEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter ignore = null)
         {
-            var markup = Manager.Manager.Get(SelectNodeId);
+            var markup = Manager.MarkupManager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
                 if (enter.Points.FirstOrDefault() is MarkupPoint first && enter.Points.LastOrDefault() is MarkupPoint last)
@@ -366,7 +366,7 @@ namespace NodeMarkup
 
             if (IsHoverPoint)
             {
-                var markup = Manager.Manager.Get(SelectNodeId);
+                var markup = Manager.MarkupManager.Get(SelectNodeId);
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                 color = markup.ExistConnection(pointPair) ? Color.red : Color.green;
 

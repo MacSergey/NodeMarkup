@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodeMarkup.Manager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Utils
 {
-    public static class RenderHelper
+    public static class Render
     {
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         static int[] VerticesIdxs { get; } = new int[]
@@ -159,6 +160,71 @@ namespace NodeMarkup.Utils
 
             texture.Apply();
             return texture;
+        }
+    }
+
+    public class RenderBatch
+    {
+        public Vector4[] Locations { get; }
+        public Vector4[] Indices { get; }
+        public Vector4[] Colors { get; }
+        public Mesh Mesh { get; }
+
+        public Vector4 Size { get; }
+
+        public RenderBatch(MarkupDash[] dashes, int count, float length)
+        {
+            Locations = new Vector4[count];
+            Indices = new Vector4[count];
+            Colors = new Vector4[count];
+            Size = new Vector4(length, 3f, 0.15f);
+
+            for (var i = 0; i < count; i += 1)
+            {
+                var dash = dashes[i];
+                Locations[i] = dash.Position;
+                Locations[i].w = dash.Angle;
+                Indices[i] = new Vector4(0f, 0f, 0f, 1f);
+                Colors[i] = dash.Color.ToVector();
+            }
+
+            Mesh = Render.CreateMesh(count, Size);
+        }
+
+        public static IEnumerable<RenderBatch> FromDashes(MarkupDash[] dashes)
+        {
+            var groups = dashes.GroupBy(d => Round(d.Length));
+
+            foreach (var group in groups)
+            {
+                var length = group.Key;
+                var groupEnumerator = group.GetEnumerator();
+
+                var buffer = new MarkupDash[16];
+                var count = 0;
+
+                bool isEnd = groupEnumerator.MoveNext();
+                do
+                {
+                    buffer[count] = groupEnumerator.Current;
+                    count += 1;
+                    isEnd = !groupEnumerator.MoveNext();
+                    if (isEnd || count == 16)
+                    {
+                        var batch = new RenderBatch(buffer, count, length);
+                        yield return batch;
+                        count = 0;
+                    }
+                }
+                while (!isEnd);
+            }
+
+            float Round(float value)
+            {
+                var temp = (int)(value * 100);
+                var mod = temp % 10;
+                return (mod == 0 ? temp : temp - mod + 10) / 100f;
+            }
         }
     }
 }
