@@ -91,15 +91,15 @@ namespace NodeMarkup.Manager
         public XElement ToXml()
         {
             var config = new XElement(XmlSection,
-                new XAttribute("N", Num),
+                new XAttribute(nameof(Id), Id),
                 new XAttribute("O", Offset)
             );
             return config;
         }
-        public static void FromXml(XElement config, Enter enter)
+        public static void FromXml(XElement config, Markup markup)
         {
-            var num = config.GetAttrValue<byte>("N");
-            if (enter.TryGetPoint(num, out MarkupPoint point))
+            var id = config.GetAttrValue<int>(nameof(Id));
+            if(FromId(id, markup, out MarkupPoint point))
                 point.FromXml(config);
         }
         public void FromXml(XElement config)

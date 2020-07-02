@@ -220,8 +220,11 @@ namespace NodeMarkup.Manager
 
             foreach(var enter in Enters)
             {
-                var enterConfig = enter.ToXml();
-                config.Add(enterConfig);
+                foreach(var point in enter.Points)
+                {
+                    var pointConfig = point.ToXml();
+                    config.Add(pointConfig);
+                }
             }
             foreach(var line in Lines)
             {
@@ -243,11 +246,9 @@ namespace NodeMarkup.Manager
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
             var markup = Manager.Get(nodeId);
 
-            foreach (var enterConfig in config.Elements(Enter.XmlName))
+            foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
             {
-                var enterId = enterConfig.GetAttrValue<ushort>(nameof(Enter.Id));
-                if(markup.TryGetEnter(enterId, out Enter enter))
-                    enter.FromXml(enterConfig);
+                MarkupPoint.FromXml(pointConfig, this);
             }
 
             foreach (var lineConfig in config.Elements(MarkupLine.XmlName))

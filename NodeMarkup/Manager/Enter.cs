@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class Enter : IToXml, IFromXml
+    public class Enter/* : IToXml, IFromXml*/
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -96,26 +96,26 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => Id.ToString();
 
-        public XElement ToXml()
-        {
-            var confix = new XElement(XmlSection,
-                new XAttribute(nameof(Id), Id)
-            );
-            foreach(var point in PointsDictionary.Values)
-            {
-                var pointConfig = point.ToXml();
-                confix.Add(pointConfig);
-            }
+        //public XElement ToXml()
+        //{
+        //    var confix = new XElement(XmlSection,
+        //        new XAttribute(nameof(Id), Id)
+        //    );
+        //    foreach(var point in PointsDictionary.Values)
+        //    {
+        //        var pointConfig = point.ToXml();
+        //        confix.Add(pointConfig);
+        //    }
 
-            return confix;
-        }
-        public void FromXml(XElement config)
-        {
-            foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
-            {
-                MarkupPoint.FromXml(pointConfig, this);
-            }
-        }
+        //    return confix;
+        //}
+        //public void FromXml(XElement config)
+        //{
+        //    foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
+        //    {
+        //        MarkupPoint.FromXml(pointConfig, this);
+        //    }
+        //}
     }
     public class DriveLane
     {

@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "S";
 
-        public static Color DefaultColor { get; } = new Color(0.1f, 0.1f, 0.1f, 0.5f);
+        public static Color32 DefaultColor { get; } = new Color32(25, 25, 25, 127);
         public static float DefaultDashLength { get; } = 1.5f;
         public static float DefaultSpaceLength { get; } = 1.5f;
         public static float DefaultOffser { get; } = 0.15f;
@@ -51,9 +51,9 @@ namespace NodeMarkup.Manager
         }
 
 
-        Color _color;
+        Color32 _color;
 
-        public Color Color
+        public Color32 Color
         {
             get => _color;
             set
@@ -66,7 +66,7 @@ namespace NodeMarkup.Manager
         public abstract LineType Type { get; }
         public string XmlSection => XmlName;
 
-        public LineStyle(Color color)
+        public LineStyle(Color32 color)
         {
             Color = color;
         }
@@ -77,12 +77,7 @@ namespace NodeMarkup.Manager
         {
             var config = new XElement(XmlSection,
                 new XAttribute("T", (int)Type),
-                new XElement("C",
-                    new XAttribute("R", Color.r.ToString("0.00")),
-                    new XAttribute("G", Color.g.ToString("0.00")),
-                    new XAttribute("B", Color.b.ToString("0.00")),
-                    new XAttribute("A", Color.a.ToString("0.00"))
-            )
+                new XAttribute("C", Color.ToInt())
             );
             return config;
         }
@@ -106,18 +101,8 @@ namespace NodeMarkup.Manager
 
         public virtual void FromXml(XElement config)
         {
-            if (config.Element("C") is XElement colorConfig)
-            {
-                Color = new Color
-                {
-                    r = colorConfig.GetAttrValue<float>("R"),
-                    g = colorConfig.GetAttrValue<float>("G"),
-                    b = colorConfig.GetAttrValue<float>("B"),
-                    a = colorConfig.GetAttrValue<float>("A")
-                };
-            }
-            else
-                Color = DefaultColor;
+            var colorInt = config.GetAttrValue<int>("C");
+            Color = colorInt != 0 ? colorInt.ToColor() : DefaultColor;  
         }
 
         public enum LineType
