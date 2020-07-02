@@ -45,11 +45,11 @@ namespace NodeMarkup.Manager
             if (!cameraInfo.CheckRenderDistance(data.m_position, RenderDistance))
                 return;
 
-            if(markup.NeedRecalculate)
+            if (markup.NeedRecalculate)
             {
                 markup.NeedRecalculate = false;
                 markup.RecalculateBatches();
-            }    
+            }
 
             var instance = PropManager;
             var materialBlock = instance.m_materialBlock;
@@ -63,6 +63,7 @@ namespace NodeMarkup.Manager
                 materialBlock.SetVectorArray(instance.ID_PropLocation, batch.Locations);
                 materialBlock.SetVectorArray(instance.ID_PropObjectIndex, batch.Indices);
                 materialBlock.SetVectorArray(instance.ID_PropColor, batch.Colors);
+                materialBlock.SetVector(RenderHelper.ID_DecalSize, batch.Size);
 
                 var mesh = batch.Mesh;
                 var material = Material;
@@ -107,7 +108,7 @@ namespace NodeMarkup.Manager
         public static XElement ToXml()
         {
             var confix = new XElement(nameof(NodeMarkup));
-            foreach(var markup in NodesMarkup.Values)
+            foreach (var markup in NodesMarkup.Values)
             {
                 var markupConfig = markup.ToXml();
                 confix.Add(markupConfig);
@@ -120,7 +121,7 @@ namespace NodeMarkup.Manager
 
             foreach (var markupConfig in config.Elements(Markup.XmlName))
             {
-                if(Markup.FromXml(markupConfig, out Markup markup))
+                if (Markup.FromXml(markupConfig, out Markup markup))
                     NeedUpdate.Add(markup.Id);
             }
         }
@@ -128,46 +129,67 @@ namespace NodeMarkup.Manager
 
     public class RenderBatch
     {
+        static int ToBatch => 4;
         public Vector4[] Locations { get; }
         public Vector4[] Indices { get; }
         public Vector4[] Colors { get; }
         public Mesh Mesh { get; }
 
-        public RenderBatch(MarkupDash[] dashes, int from = 0)
+        public Vector4 Size { get; }
+
+        public RenderBatch(MarkupDash[] dashes, int count, float length)
         {
-            var count = Math.Min(16, dashes.Length - from);
             Locations = new Vector4[count];
             Indices = new Vector4[count];
             Colors = new Vector4[count];
-
-            var lengths = new float[count];
-            var widths = new float[count];
-            var heights = new float[count];
+            Size = new Vector4(length, 3f, 0.15f);
 
             for (var i = 0; i < count; i += 1)
             {
-                var dash = dashes[i + from];
+                var dash = dashes[i];
                 Locations[i] = dash.Position;
                 Locations[i].w = dash.Angle;
                 Indices[i] = new Vector4(0f, 0f, 0f, 1f);
                 Colors[i] = dash.Color.ToVector();
-
-                lengths[i] = dash.Length;
-                widths[i] = 0.15f;
-                heights[i] = 0.1f;
             }
 
-            Mesh = RenderHelper.CreateMesh(count, lengths, widths, heights);
+            Mesh = RenderHelper.CreateMesh(count, Size);
         }
 
-        public static RenderBatch[] FromDashes(MarkupDash[] dashes)
+        public static IEnumerable<RenderBatch> FromDashes(MarkupDash[] dashes)
         {
-            var batches = new List<RenderBatch>();
-            for (var i = 0; i < dashes.Length; i += 16)
+            var groups = dashes.GroupBy(d => Round(d.Length));
+
+            foreach(var group in groups)
             {
-                batches.Add(new RenderBatch(dashes, i));
+                var length = group.Key;
+                var groupEnumerator = group.GetEnumerator();
+
+                var buffer = new MarkupDash[16];
+                var count = 0;
+
+                bool isEnd = groupEnumerator.MoveNext();
+                do
+                {
+                    buffer[count] = groupEnumerator.Current;
+                    count += 1;
+                    isEnd = !groupEnumerator.MoveNext();
+                    if (isEnd || count == 16)
+                    {
+                        var batch = new RenderBatch(buffer, count, length);
+                        yield return batch;
+                        count = 0;
+                    }
+                }
+                while (!isEnd);
             }
-            return batches.ToArray();
+
+            float Round(float value)
+            {
+                var temp = (int)(value * 100);
+                var mod = temp % 10;
+                return (mod == 0 ? temp : temp - mod + 10) / 100f;
+            }
         }
     }
 }

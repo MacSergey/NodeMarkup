@@ -8,6 +8,7 @@ namespace NodeMarkup.Utils
 {
     public static class RenderHelper
     {
+        public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         static int[] VerticesIdxs { get; } = new int[]
 {
             1,3,2,0,// Bottom
@@ -29,16 +30,17 @@ namespace NodeMarkup.Utils
         static int VCount { get; } = 24;
         static int TCount { get; } = 36;
 
-        public static Mesh CreateMesh(int count, float[] lengths, float[] widths, float[] heights)
+        public static Mesh CreateMesh(int count, Vector3 size)
         {
             var vertices = new Vector3[VCount * count];
             var triangles = new int[TCount * count];
             var colors32 = new Color32[VCount * count];
             var uv = new Vector2[VCount * count];
 
+            CreateTemp(size.x, size.y, size.z, out Vector3[] tempV, out int[] tempT);
+
             for (var i = 0; i < count; i += 1)
             {
-                CreateTemp(lengths[i], widths[i], heights[i], out Vector3[] tempV, out int[] tempT);
                 var tempColor = VerticesColor(i);
 
                 for (var j = 0; j < VCount; j += 1)
@@ -67,7 +69,9 @@ namespace NodeMarkup.Utils
 
             return mesh;
         }
-        private static void CreateTemp(float length, float width, float height, out Vector3[] vertices, out int[] triangles)
+
+
+        private static void CreateTemp(float length, float height, float width, out Vector3[] vertices, out int[] triangles)
         {
             Vector3[] c = new Vector3[8];
 
@@ -109,9 +113,9 @@ namespace NodeMarkup.Utils
             };
             material.EnableKeyword("MULTI_INSTANCE");
 
-            var size = new Vector2(10f, 0.15f);
+            var size = new Vector2(1.5f, 0.15f * 8);
             var tile = new Vector3(1.0f, 1.0f);
-            var slopeTolerance = Mathf.Clamp((size.x + size.y) / 4f, 2f, 32f);
+            var slopeTolerance = 3f;
 
             var scale = new Vector4(size.x, slopeTolerance, size.y, 0);
             var tiling = new Vector4(tile.x, 0, tile.y, 0);

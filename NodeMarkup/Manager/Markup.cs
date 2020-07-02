@@ -149,9 +149,9 @@ namespace NodeMarkup.Manager
             Logger.LogDebug($"Start recalculate batches");
 
             var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
-            RenderBatches = RenderBatch.FromDashes(dashes);
+            RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
 
-            Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}");
+            Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}; dashes: {dashes.Length}");
         }
 
         public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.LineType lineType)
