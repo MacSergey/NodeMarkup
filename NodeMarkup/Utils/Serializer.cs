@@ -8,6 +8,9 @@ using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using System.IO.Compression;
+using ColossalFramework.IO;
+using System.Linq.Expressions;
 
 namespace NodeMarkup.Utils
 {
@@ -33,35 +36,43 @@ namespace NodeMarkup.Utils
 
             if (serializableDataManager.LoadData(Id) is byte[] data)
             {
-                var sw = Stopwatch.StartNew();
+                try
+                {
+                    var sw = Stopwatch.StartNew();
 
-                var xml = Encoding.UTF8.GetString(data);
-                Logger.LogDebug(xml);
+                    var decompress = Decompress(data);
+                    Logger.LogDebug(decompress);
 
-                var config = Parse(xml);
-                Manager.Manager.FromXml(config);
+                    var config = Parse(decompress);
+                    Manager.Manager.FromXml(config);
 
-                sw.Stop();
-                Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms");
+                    sw.Stop();
+                    Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
+                }
+                catch(Exception error)
+                {
+                    Logger.LogError(() => "Could load data", error);
+                }
             }
             else
-            {
                 Logger.LogDebug($"Saved data not founded");
-            }
         }
 
         public override void OnSaveData()
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnSaveData)}");
 
+            var sw = Stopwatch.StartNew();
+
             var config = Manager.Manager.ToXml();
-            var xml = config.ToString();
+            var xml = config.ToString(SaveOptions.DisableFormatting);
             Logger.LogDebug(xml);
 
-            var data = Encoding.UTF8.GetBytes(xml);
-            serializableDataManager.SaveData(Id, data);
+            var compress = Compress(xml);
+            serializableDataManager.SaveData(Id, compress);
 
-            Logger.LogDebug($"Data saved; Size = {data.Length} bytes");
+            sw.Stop();
+            Logger.LogDebug($"Data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
         }
 
         XElement Parse(string text, LoadOptions options = LoadOptions.None)
@@ -85,6 +96,40 @@ namespace NodeMarkup.Utils
             xmlReaderSettings.ProhibitDtd = false;
             xmlReaderSettings.XmlResolver = null;
             return xmlReaderSettings;
+        }
+
+        static byte[] Compress(string xml)
+        {
+            var buffer = Encoding.UTF8.GetBytes(xml);
+
+            using (var outStream = new MemoryStream())
+            {
+                using (var zipStream = new GZipStream(outStream, CompressionMode.Compress))
+                {
+                    zipStream.Write(buffer, 0, buffer.Length);
+                }
+                var compresed = outStream.ToArray();
+                return compresed;
+            }
+        }
+
+        static string Decompress(byte[] data)
+        {
+            using (var inStream = new MemoryStream(data))
+            using (var zipStream = new GZipStream(inStream, CompressionMode.Decompress))
+            using (var outStream = new MemoryStream())
+            {
+                byte[] buffer = new byte[1000000];
+                int readed;
+                while ((readed = zipStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    outStream.Write(buffer, 0, readed);
+                }
+
+                var decompressed = outStream.ToArray();
+                var xml = Encoding.UTF8.GetString(decompressed);
+                return xml;
+            }
         }
     }
 }

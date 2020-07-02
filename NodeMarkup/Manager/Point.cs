@@ -99,7 +99,7 @@ namespace NodeMarkup.Manager
         public static void FromXml(XElement config, Markup markup)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
-            if(FromId(id, markup, out MarkupPoint point))
+            if (FromId(id, markup, out MarkupPoint point))
                 point.FromXml(config);
         }
         public void FromXml(XElement config)
@@ -115,7 +115,7 @@ namespace NodeMarkup.Manager
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);
 
-            if (MarkupPoint.FromId(firstId, markup, out MarkupPoint first)&& MarkupPoint.FromId(secondId, markup, out MarkupPoint second))
+            if (MarkupPoint.FromId(firstId, markup, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, out MarkupPoint second))
             {
                 pair = new MarkupPointPair(first, second);
                 return true;
@@ -144,7 +144,7 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => $"{First}—{Second}";
 
-        
+
     }
     public class MarkupPointPairComparer : IEqualityComparer<MarkupPointPair>
     {
