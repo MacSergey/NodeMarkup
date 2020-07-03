@@ -98,38 +98,28 @@ namespace NodeMarkup.UI.Editors
             Button.size = size;
         }
     }
-    public class RuleHeaderPanel : EditorItem
+
+    public abstract class HeaderPanel : EditorItem
     {
         public event Action OnDelete;
-        public event Action OnSaveTemplate;
-        public event Action<LineStyleTemplate> OnSelectTemplate;
 
-        UIButton DeleteButton { get; set; }
-        UIButton SaveTemplateButton { get; set; }
-        TemplateDropDown SelectTemplate { get; set; }
+        protected UIButton DeleteButton { get; set; }
 
-        public RuleHeaderPanel()
+        public HeaderPanel()
         {
             AddDeleteButton();
-            AddSaveTemplate();
-            AddApplyTemplate();
         }
 
-        public void Init(bool isDeletable = true)
+        public virtual void Init(bool isDeletable = true)
         {
             base.Init();
             DeleteButton.enabled = isDeletable;
-            SelectTemplate.selectedIndex = 0;
-
-            //OnSizeChanged();
         }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
-            DeleteButton.relativePosition = new Vector2(width- DeleteButton.width - 5, (height - DeleteButton.height) / 2);
-            SaveTemplateButton.relativePosition = new Vector2(5, (height - SaveTemplateButton.height) / 2);
-            SelectTemplate.relativePosition = new Vector2(SaveTemplateButton.relativePosition.x + SaveTemplateButton.width + 5, (height - SelectTemplate.height) / 2);
+            DeleteButton.relativePosition = new Vector2(width - DeleteButton.width - 5, (height - DeleteButton.height) / 2);
         }
 
         private void AddDeleteButton()
@@ -142,6 +132,37 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }
+        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
+    }
+    public class RuleHeaderPanel : HeaderPanel
+    {
+        public event Action OnSaveTemplate;
+        public event Action<LineStyleTemplate> OnSelectTemplate;
+
+
+        UIButton SaveTemplateButton { get; set; }
+        TemplateDropDown SelectTemplate { get; set; }
+
+        public RuleHeaderPanel()
+        {
+            AddSaveTemplate();
+            AddApplyTemplate();
+        }
+
+        public override void Init(bool isDeletable = true)
+        {
+            base.Init(isDeletable);
+            SelectTemplate.selectedIndex = 0;
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            SaveTemplateButton.relativePosition = new Vector2(5, (height - SaveTemplateButton.height) / 2);
+            SelectTemplate.relativePosition = new Vector2(SaveTemplateButton.relativePosition.x + SaveTemplateButton.width + 5, (height - SelectTemplate.height) / 2);
+        }
+
+
         private void AddSaveTemplate()
         {
             SaveTemplateButton = AddUIComponent<UIButton>();
@@ -209,10 +230,8 @@ namespace NodeMarkup.UI.Editors
 
             SelectTemplate.triggerButton = button;
 
-            Add(new LineStyleTemplate("Select template", LineStyle.DefaultSolid));
+            Add(new LineStyleTemplate("Apply template", LineStyle.DefaultSolid) { IsEmpty = true });
         }
-
-        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
         private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
         {
@@ -244,6 +263,47 @@ namespace NodeMarkup.UI.Editors
         }
 
         public class TemplateDropDown : CustomUIDropDown<LineStyleTemplate> { }
+    }
+    public class TemplateHeaderPanel : HeaderPanel
+    {
+        public event Action OnSetAsDefault;
+
+        UIButton SetAsDefaultButton { get; set; }
+
+        public TemplateHeaderPanel()
+        {
+            AddSetAsDefault();
+        }
+        public new void Init(bool isDefault)
+        {
+            base.Init(true);
+
+            SetAsDefaultButton.text = $"{(isDefault ? "Unset" : "Set")} as default";
+        }
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
+        }
+
+        private void AddSetAsDefault()
+        {
+            SetAsDefaultButton = AddUIComponent<UIButton>();
+            SetAsDefaultButton.atlas = TextureUtil.GetAtlas("InMapEditor");
+            SetAsDefaultButton.normalBgSprite = "InfoDisplay";
+            SetAsDefaultButton.hoveredBgSprite = "InfoDisplayHover";
+            SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";         
+            SetAsDefaultButton.textScale = 0.7f;
+            SetAsDefaultButton.size = new Vector2(120, 20);
+            SetAsDefaultButton.textColor = Color.black;
+            SetAsDefaultButton.hoveredTextColor = Color.black;
+            SetAsDefaultButton.pressedTextColor = Color.black;
+            SetAsDefaultButton.focusedTextColor = Color.black;
+            SetAsDefaultButton.eventClick += SetAsDefaultClick;
+        }
+        private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
     }
 
     public abstract class FieldPropertyPanel<ValueType> : EditorPropertyPanel

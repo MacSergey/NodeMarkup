@@ -30,6 +30,7 @@ namespace NodeMarkup.UI.Editors
             ClearSettings();
             Select(0);
         }
+        protected virtual void RefreshItems() { }
         protected virtual void ClearItems() { }
         protected virtual void ClearSettings() { }
         protected virtual void FillItems() { }
@@ -230,6 +231,13 @@ namespace NodeMarkup.UI.Editors
                 Destroy(item.gameObject);
             }
         }
+        protected override void RefreshItems()
+        {
+            foreach (EditableItemType item in ItemsPanel.components)
+            {
+                item.Refresh();
+            }
+        }
         protected override void ClearSettings()
         {
             var componets = SettingsPanel.components.ToArray();
@@ -342,7 +350,7 @@ namespace NodeMarkup.UI.Editors
                 Label.relativePosition = new Vector3(size.y, 0);
             }
         }
-        public void Refresh()
+        public virtual void Refresh()
         {
             Text = Object.ToString();
         }

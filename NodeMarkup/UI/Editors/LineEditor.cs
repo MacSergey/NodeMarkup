@@ -219,7 +219,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader(bool isDeletable)
         {
             var header = AddUIComponent<RuleHeaderPanel>();
-            header.AddRange(Settings.Templates);
+            header.AddRange(TemplateManager.Templates);
             header.Init(isDeletable);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
@@ -322,8 +322,8 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            var template = Settings.AddTemplate(Rule.Style);
-            Editor.NodeMarkupPanel.EditTemplate(template);
+            if(TemplateManager.AddTemplate(Rule.Style, out LineStyleTemplate template));
+                Editor.NodeMarkupPanel.EditTemplate(template);
         }
         private void OnSelectTemplate(LineStyleTemplate template)
         {

@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
             Update();
             RecalculateDashes();
         }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.LineType lineType) : this(markup, pointPair, LineStyle.GetDefault(lineType)) { }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.LineType lineType) : this(markup, pointPair, TemplateManager.GetDefault(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
         public void Update()
         {

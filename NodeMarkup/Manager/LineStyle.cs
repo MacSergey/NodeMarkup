@@ -49,6 +49,17 @@ namespace NodeMarkup.Manager
                 default: return null;
             }
         }
+        public static string GetShortName(LineType type)
+        {
+            switch (type)
+            {
+                case LineType.Solid: return "S";
+                case LineType.Dash: return "D";
+                case LineType.DoubleSolid: return "DS";
+                case LineType.DoubleDash: return "DD";
+                default: return null;
+            }
+        }
 
 
         Color32 _color;
@@ -87,7 +98,7 @@ namespace NodeMarkup.Manager
         {
             var type = (LineType)config.GetAttrValue<int>("T");
 
-            if(GetDefault(type) is LineStyle defaultStyle)
+            if (GetDefault(type) is LineStyle defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config);
@@ -103,7 +114,7 @@ namespace NodeMarkup.Manager
         public virtual void FromXml(XElement config)
         {
             var colorInt = config.GetAttrValue<int>("C");
-            Color = colorInt != 0 ? colorInt.ToColor() : DefaultColor;  
+            Color = colorInt != 0 ? colorInt.ToColor() : DefaultColor;
         }
 
         public enum LineType
@@ -114,6 +125,7 @@ namespace NodeMarkup.Manager
             DoubleDash
         }
     }
+
     public class SolidLineStyle : LineStyle
     {
         public override LineType Type { get; } = LineType.Solid;
@@ -373,17 +385,75 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class LineStyleTemplate
+    public class LineStyleTemplate : IToXml
     {
-        public string Name { get; set; }
-        public LineStyle Style { get; set; }
+        public static string XmlName { get; } = "T";
+
+        string _name;
+        LineStyle _style;
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (OnNameChanged?.Invoke(this, value) == true)
+                {
+                    _name = value;
+                    TemplateChanged();
+                }
+            }
+        }
+        public LineStyle Style
+        {
+            get => _style;
+            set
+            {
+                OnStyleChanged?.Invoke(this, value);
+                _style = value;
+                TemplateChanged();
+            }
+        }
+        public bool IsEmpty { get; set; } = false;
+
+        public Action OnTemplateChanged { private get; set; }
+        public Action<LineStyleTemplate, LineStyle> OnStyleChanged { private get; set; }
+        public Func<LineStyleTemplate, string, bool> OnNameChanged { private get; set; }
+
+        public string XmlSection => XmlName;
 
         public LineStyleTemplate(string name, LineStyle style)
         {
-            Name = name;
-            Style = style.Copy();
+            _name = name;
+            _style = style.Copy();
+            Style.OnStyleChanged = TemplateChanged;
+        }
+        private void TemplateChanged() => OnTemplateChanged?.Invoke();
+
+        public override string ToString() => IsEmpty ? Name : $"{LineStyle.GetShortName(Style.Type)}-{Name}";
+
+        public static bool FromXml(XElement config, out LineStyleTemplate template)
+        {
+            var name = config.GetAttrValue<string>("N");
+            if (!string.IsNullOrEmpty(name) && config.Element(LineStyle.XmlName) is XElement styleConfig && LineStyle.FromXml(styleConfig, out LineStyle style))
+            {
+                template = new LineStyleTemplate(name, style);
+                return true;
+            }
+            else
+            {
+                template = default;
+                return false;
+            }
         }
 
-        public override string ToString() => Name;
+        public XElement ToXml()
+        {
+            var config = new XElement(XmlName,
+                new XAttribute("N", Name),
+                Style.ToXml()
+                );
+            return config;
+        }
     }
 }

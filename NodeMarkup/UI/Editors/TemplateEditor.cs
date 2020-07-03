@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,12 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class TemplateEditor : Editor<TemplateItem, LineStyleTemplate, UIPanel>
+    public class TemplateEditor : Editor<TemplateItem, LineStyleTemplate, DefaultTemplateIcon>
     {
         public override string Name => "Templates";
         private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
         private StringPropertyPanel NameProperty { get; set; }
+        private TemplateHeaderPanel HeaderPanel { get; set; }
 
         public TemplateEditor()
         {
@@ -21,7 +23,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var templates in Settings.Templates)
+            foreach (var templates in TemplateManager.Templates)
             {
                 AddItem(templates);
             }
@@ -29,10 +31,18 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnObjectSelect()
         {
+            AddHeader();
             AddTemplateName();
             AddColorProperty();
             AddStyleProperty();
             AddStyleProperties();
+        }
+        private void AddHeader()
+        {
+            HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
+            HeaderPanel.Init(EditObject.IsDefault());
+            HeaderPanel.OnDelete += DeleteTemplate;
+            HeaderPanel.OnSetAsDefault += ToggleAsDefault;
         }
         private void AddTemplateName()
         {
@@ -106,15 +116,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void NameSubmitted(string value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                NameProperty.Value = EditObject.Name;
-            }
-            else
-            {
-                EditObject.Name = value;
-                SelectItem.Refresh();
-            }
+            EditObject.Name = value;
+            NameProperty.Value = EditObject.Name;
+            SelectItem.Refresh();
         }
         private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
         private void StyleChanged(LineStyle.LineType style)
@@ -133,19 +137,49 @@ namespace NodeMarkup.UI.Editors
 
             ClearStyleProperties();
             AddStyleProperties();
+
+            AsDefaultRefresh();
         }
         private void DashLengthChanged(float value) => (EditObject.Style as IDashedLine).DashLength = value;
         private void SpaceLengthChanged(float value) => (EditObject.Style as IDashedLine).SpaceLength = value;
         private void OffsetChanged(float value) => (EditObject.Style as IDoubleLine).Offset = value;
+
+
+        private void ToggleAsDefault()
+        {
+            TemplateManager.ToggleAsDefaultTemplate(EditObject);
+            AsDefaultRefresh();
+        }
+        private void AsDefaultRefresh()
+        {
+            RefreshItems();
+            HeaderPanel.Init(EditObject.IsDefault());
+        }
+
+        private void DeleteTemplate()
+        {
+            TemplateManager.DeleteTemplate(EditObject);
+            UpdateEditor();
+        }
     }
 
-    public class TemplateItem : EditableItem<LineStyleTemplate, UIPanel> 
+    public class TemplateItem : EditableItem<LineStyleTemplate, DefaultTemplateIcon> 
     {
-        
+        protected override void OnObjectSet() => SetIsDefault();
+        public override void Refresh()
+        {
+            base.Refresh();
+            SetIsDefault();
+        }
+        private void SetIsDefault() => Icon.IsDefault = Object.IsDefault();
     }
-
-    public class TemplatePanel : UIPanel
+    public class DefaultTemplateIcon : UIPanel
     {
-
+        public bool IsDefault { set => isVisible = value; }
+        public DefaultTemplateIcon()
+        {
+            atlas = TextureUtil.GetAtlas("Ingame");
+            backgroundSprite = "ParkLevelStar";
+        }
     }
 }

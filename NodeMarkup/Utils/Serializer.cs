@@ -75,7 +75,7 @@ namespace NodeMarkup.Utils
             Logger.LogDebug($"Data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
         }
 
-        XElement Parse(string text, LoadOptions options = LoadOptions.None)
+        public static XElement Parse(string text, LoadOptions options = LoadOptions.None)
         {
             using (StringReader input = new StringReader(text))
             {
@@ -86,7 +86,7 @@ namespace NodeMarkup.Utils
                 }
             }
         }
-        XmlReaderSettings GetXmlReaderSettings(LoadOptions o)
+        static XmlReaderSettings GetXmlReaderSettings(LoadOptions o)
         {
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             if ((o & LoadOptions.PreserveWhitespace) == 0)

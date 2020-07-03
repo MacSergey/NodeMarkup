@@ -14,11 +14,8 @@ namespace NodeMarkup.UI
         public static string SettingsFile => $"{Mod.StaticName}{nameof(SettingsFile)}";
 
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
-        public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true);
-
-        static List<LineStyleTemplate> TemplatesList { get; } = new List<LineStyleTemplate>();
-        public static IEnumerable<LineStyleTemplate> Templates => TemplatesList;
-
+        public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
+        public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
         {
@@ -74,16 +71,6 @@ namespace NodeMarkup.UI
             var showCheckBox = group.AddCheckbox("Show tooltips", true, OnShowToolTipsChanged) as UICheckBox;
 
             void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
-        }
-
-
-
-
-        public static LineStyleTemplate AddTemplate(LineStyle style, string name = null)
-        {
-            var template = new LineStyleTemplate(name ?? "New template", style);
-            TemplatesList.Add(template);
-            return template;
         }
     }
 }
