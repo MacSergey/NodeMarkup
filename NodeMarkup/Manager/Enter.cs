@@ -62,6 +62,8 @@ namespace NodeMarkup.Manager
                 driveLanesIdxs = driveLanesIdxs.Reverse();
 
             DriveLanes = driveLanesIdxs.Select(d => new DriveLane(this, lanes[d], info.m_lanes[d])).ToArray();
+            if (!DriveLanes.Any())
+                return;
 
             Lines = new SegmentMarkupLine[DriveLanes.Length + 1];
 

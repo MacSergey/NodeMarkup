@@ -180,6 +180,12 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
+        public void Clear()
+        {
+            LinesDictionary.Clear();
+
+            RecalculateDashes();
+        }
         public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.LineType lineType)
         {
             if (!ExistConnection(pointPair))

@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using NodeMarkup.UI;
 
 namespace NodeMarkup
 {
     public class Mod : LoadingExtensionBase, IUserMod
     {
+        public static string StaticName => nameof(NodeMarkup);
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
-        public string Name { get; } = $"{nameof(NodeMarkup)} {Version} [ALPHA]";
+        public string Name { get; } = $"{StaticName} {Version} [ALPHA]";
         public string Description => "Marking on nodes";
 
         static AppMode CurrentMode => SimulationManager.instance.m_ManagersWrapper.loading.currentMode;
@@ -44,17 +46,6 @@ namespace NodeMarkup
             NodeMarkupTool.Remove();
         }
 
-        static bool CheckGameMode(AppMode mode)
-        {
-            try
-            {
-                return CurrentMode == mode;
-            }
-            catch
-            {
-                return false;
-            }
-
-        }
+        public void OnSettingsUI(UIHelperBase helper) => UI.Settings.OnSettingsUI(helper);
     }
 }

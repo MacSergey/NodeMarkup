@@ -3,6 +3,7 @@ using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -15,10 +16,6 @@ namespace NodeMarkup.UI.Editors
         protected Markup Markup => NodeMarkupPanel.Markup;
 
         public abstract string Name { get; }
-        protected UIScrollablePanel ItemsPanel { get; set; }
-        protected UIScrollbar ItemsScrollbar { get; set; }
-        protected UIScrollablePanel SettingsPanel { get; set; }
-        protected UIScrollbar SettingsScrollbar { get; set; }
 
         public virtual void Init(NodeMarkupPanel panel)
         {
@@ -33,43 +30,12 @@ namespace NodeMarkup.UI.Editors
             ClearSettings();
             Select(0);
         }
-        protected void ClearItems()
-        {
-            var componets = ItemsPanel.components.ToArray();
-            foreach (var item in componets)
-            {
-                item.eventClick -= ItemClick;
-                item.eventMouseEnter -= ItemHover;
-                item.eventMouseLeave -= ItemLeave;
-                ItemsPanel.RemoveUIComponent(item);
-                Destroy(item.gameObject);
-            }
-        }
-        protected void ClearSettings()
-        {
-            var componets = SettingsPanel.components.ToArray();
-            foreach (var item in componets)
-            {
-                SettingsPanel.RemoveUIComponent(item);
-                Destroy(item.gameObject);
-            }
-        }
-        protected virtual void FillItems()
-        {
-
-        }
-        public virtual void Select(int index)
-        {
-
-        }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo)
-        {
-
-        }
-        public virtual void OnUpdate()
-        {
-
-        }
+        protected virtual void ClearItems() { }
+        protected virtual void ClearSettings() { }
+        protected virtual void FillItems() { }
+        public virtual void Select(int index) { }
+        public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
+        public virtual void OnUpdate() { }
         public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
             isDone = true;
@@ -80,10 +46,7 @@ namespace NodeMarkup.UI.Editors
             isDone = true;
             NodeMarkupPanel.EndEditorAction();
         }
-        public virtual void EndEditorAction()
-        {
-
-        }
+        public virtual void EndEditorAction() { }
 
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
@@ -94,6 +57,11 @@ namespace NodeMarkup.UI.Editors
         where ItemIcon : UIComponent
     {
         EditableItemType _selectItem;
+
+        protected UIScrollablePanel ItemsPanel { get; set; }
+        protected UIScrollbar ItemsScrollbar { get; set; }
+        protected UIScrollablePanel SettingsPanel { get; set; }
+        protected UIScrollbar SettingsScrollbar { get; set; }
 
         protected EditableItemType HoverItem { get; set; }
         protected bool IsHoverItem => HoverItem != null;
@@ -119,10 +87,6 @@ namespace NodeMarkup.UI.Editors
             atlas = TextureUtil.GetAtlas("Ingame");
             backgroundSprite = "UnlockingItemBackground";
 
-            AddPanels();
-        }
-        private void AddPanels()
-        {
             AddItemsPanel();
             AddSettingPanel();
         }
@@ -254,6 +218,27 @@ namespace NodeMarkup.UI.Editors
 
             return item;
         }
+        protected override void ClearItems()
+        {
+            var componets = ItemsPanel.components.ToArray();
+            foreach (var item in componets)
+            {
+                item.eventClick -= ItemClick;
+                item.eventMouseEnter -= ItemHover;
+                item.eventMouseLeave -= ItemLeave;
+                ItemsPanel.RemoveUIComponent(item);
+                Destroy(item.gameObject);
+            }
+        }
+        protected override void ClearSettings()
+        {
+            var componets = SettingsPanel.components.ToArray();
+            foreach (var item in componets)
+            {
+                SettingsPanel.RemoveUIComponent(item);
+                Destroy(item.gameObject);
+            }
+        }
 
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
         protected virtual void ItemClick(EditableItemType item)
@@ -309,7 +294,7 @@ namespace NodeMarkup.UI.Editors
             set
             {
                 _object = value;
-                Text = value.ToString();
+                Refresh();
                 OnObjectSet();
             }
         }
@@ -356,6 +341,10 @@ namespace NodeMarkup.UI.Editors
                 Label.size = new Vector2(size.x - size.y, size.y);
                 Label.relativePosition = new Vector3(size.y, 0);
             }
+        }
+        public void Refresh()
+        {
+            Text = Object.ToString();
         }
     }
 

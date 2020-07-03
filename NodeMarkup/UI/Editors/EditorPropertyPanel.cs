@@ -47,24 +47,18 @@ namespace NodeMarkup.UI.Editors
             Control.autoLayoutPadding = new RectOffset(5, 0, 0, 0);
         }
 
-        public override void Init()
-        {
-            base.Init();
-
-            OnSizeChanged();
-        }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
             Label.relativePosition = new Vector2(0, (height - Label.height) / 2);
             Control.size = size;
+            Control.autoLayout = true;
+            Control.autoLayout = false;
 
             foreach (var item in Control.components)
             {
-                var pos = item.relativePosition;
-                pos.y = (Control.height - item.height) / 2;
-                item.relativePosition = pos;
+                item.relativePosition = new Vector3(item.relativePosition.x, (Control.size.y - item.size.y) / 2);
             }
         }
     }
@@ -97,10 +91,6 @@ namespace NodeMarkup.UI.Editors
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
 
-        //public override void Init()
-        //{
-        //    base.Init();
-        //}
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -131,7 +121,7 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.enabled = isDeletable;
             SelectTemplate.selectedIndex = 0;
 
-            OnSizeChanged();
+            //OnSizeChanged();
         }
         protected override void OnSizeChanged()
         {
@@ -190,6 +180,8 @@ namespace NodeMarkup.UI.Editors
             SelectTemplate.popupTextColor = new Color32(170, 170, 170, 255);
             SelectTemplate.textScale = 0.7f;
             SelectTemplate.textColor = Color.black;
+            SelectTemplate.popupColor = Color.white;
+            SelectTemplate.popupTextColor = Color.black;
             SelectTemplate.verticalAlignment = UIVerticalAlignment.Middle;
             SelectTemplate.horizontalAlignment = UIHorizontalAlignment.Left;
             SelectTemplate.textFieldPadding = new RectOffset(8, 0, 8, 0);
@@ -256,13 +248,19 @@ namespace NodeMarkup.UI.Editors
 
     public abstract class FieldPropertyPanel<ValueType> : EditorPropertyPanel
     {
-        private UITextField Field { get; set; }
+        protected UITextField Field { get; set; }
 
         public event Action<ValueType> OnValueChanged;
+        public event Action<ValueType> OnValueSubmitted;
 
         protected abstract bool CanUseWheel { get; }
         public bool UseWheel { get; set; }
         public ValueType Step { get; set; }
+        public float FieldWidth
+        {
+            get => Field.width;
+            set => Field.width = value;
+        }
 
         public ValueType Value
         {
@@ -298,13 +296,19 @@ namespace NodeMarkup.UI.Editors
             Field.selectOnFocus = true;
             Field.eventTextChanged += FieldTextChanged;
             Field.eventMouseWheel += FieldMouseWheel;
+            Field.eventTextSubmitted += FieldTextSubmitted;
             Field.textScale = 0.7f;
+            Field.verticalAlignment = UIVerticalAlignment.Middle;
 
         }
+        protected abstract ValueType Increment(ValueType value, ValueType step);
+        protected abstract ValueType Decrement(ValueType value, ValueType step);
 
+        protected virtual void FieldTextChanged(UIComponent component, string text) => OnValueChanged?.Invoke(Value);
+        protected virtual void FieldTextSubmitted(UIComponent component, string value) => OnValueSubmitted?.Invoke(Value);
         private void FieldMouseWheel(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if(CanUseWheel && UseWheel)
+            if (CanUseWheel && UseWheel)
             {
                 if (eventParam.wheelDelta < 0)
                     Value = Increment(Value, Step);
@@ -312,11 +316,6 @@ namespace NodeMarkup.UI.Editors
                     Value = Decrement(Value, Step);
             }
         }
-
-        protected abstract ValueType Increment(ValueType value, ValueType step);
-        protected abstract ValueType Decrement(ValueType value, ValueType step);
-
-        protected virtual void FieldTextChanged(UIComponent component, string text) => OnValueChanged?.Invoke(Value);
     }
     public class FloatPropertyPanel : FieldPropertyPanel<float>
     {
@@ -391,6 +390,7 @@ namespace NodeMarkup.UI.Editors
             field.textScale = 0.7f;
             field.text = 0.ToString();
             field.selectOnFocus = true;
+            field.verticalAlignment = UIVerticalAlignment.Middle;
 
             return field;
         }
@@ -442,6 +442,8 @@ namespace NodeMarkup.UI.Editors
             DropDown.popupColor = new Color32(45, 52, 61, 255);
             DropDown.popupTextColor = new Color32(170, 170, 170, 255);
             DropDown.textScale = 0.7f;
+            DropDown.popupColor = Color.white;
+            DropDown.popupTextColor = Color.black;
             DropDown.verticalAlignment = UIVerticalAlignment.Middle;
             DropDown.horizontalAlignment = UIHorizontalAlignment.Left;
             DropDown.textFieldPadding = new RectOffset(8, 0, 8, 0);
@@ -449,6 +451,7 @@ namespace NodeMarkup.UI.Editors
             DropDown.eventSelectedIndexChanged += DropDownIndexChanged;
             DropDown.eventDropdownOpen += DropDownOpen;
             DropDown.eventDropdownClose += DropDownClose;
+            DropDown.verticalAlignment = UIVerticalAlignment.Middle;
 
             var button = DropDown.AddUIComponent<UIButton>();
             button.atlas = TextureUtil.GetAtlas("Ingame");

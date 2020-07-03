@@ -39,7 +39,7 @@ namespace NodeMarkup.UI
         {
             atlas = TextureUtil.GetAtlas("Ingame");
             backgroundSprite = "MenuPanel2";
-            absolutePosition = new Vector3(200, 200);
+            absolutePosition = new Vector3(100, 100);
             name = "NodeMarkupPanel";
 
             CreateHandle();
@@ -95,6 +95,7 @@ namespace NodeMarkup.UI
             Editors.Add(editor);
         }
 
+        public void UpdatePanel() => CurrentEditor?.UpdateEditor();
         public void SetNode(ushort nodeId)
         {
             Show();

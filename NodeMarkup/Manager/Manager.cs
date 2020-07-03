@@ -13,8 +13,6 @@ namespace NodeMarkup.Manager
 {
     public static class MarkupManager
     {
-        public static Settings Settings { get; } = new Settings();
-
         static Dictionary<ushort, Markup> NodesMarkup { get; } = new Dictionary<ushort, Markup>();
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
 
@@ -44,7 +42,7 @@ namespace NodeMarkup.Manager
             if (!TryGetMarkup(nodeID, out Markup markup))
                 return;
 
-            if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
+            if (!cameraInfo.CheckRenderDistance(data.m_position, UI.Settings.RenderDistance))
                 return;
 
             if (markup.NeedRecalculate)
@@ -123,18 +121,18 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class Settings
-    {
-        public float RenderDistance { get; } = 300f;
-        List<LineStyleTemplate> TemplatesList { get; } = new List<LineStyleTemplate>();
+    //public class Settings
+    //{
+    //    public float RenderDistance { get; } = 300f;
+    //    List<LineStyleTemplate> TemplatesList { get; } = new List<LineStyleTemplate>();
 
-        public IEnumerable<LineStyleTemplate> Templates => TemplatesList;
+    //    public IEnumerable<LineStyleTemplate> Templates => TemplatesList;
 
-        public LineStyleTemplate AddTemplate(LineStyle style, string name = null)
-        {
-            var template = new LineStyleTemplate(name ?? "New template", style);
-            TemplatesList.Add(template);
-            return template;
-        }
-    }
+    //    public LineStyleTemplate AddTemplate(LineStyle style, string name = null)
+    //    {
+    //        var template = new LineStyleTemplate(name ?? "New template", style);
+    //        TemplatesList.Add(template);
+    //        return template;
+    //    }
+    //}
 }

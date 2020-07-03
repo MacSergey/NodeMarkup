@@ -11,11 +11,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using NodeMarkup.Manager;
+using ICities;
 
 namespace NodeMarkup
 {
     public class NodeMarkupTool : ToolBase
     {
+        public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
+        public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.Backspace, true, false, false), true);
+
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
         private Ray _mouseRay;
@@ -44,6 +48,8 @@ namespace NodeMarkup
         Button Button => Button.Instace;
         NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
 
+
+        #region BASIC
         public static NodeMarkupTool Instance
         {
             get
@@ -60,7 +66,6 @@ namespace NodeMarkup
 
             base.Awake();
         }
-
         public static NodeMarkupTool Create()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
@@ -108,6 +113,47 @@ namespace NodeMarkup
             Panel?.EndPanelAction();
         }
 
+        public void ToggleTool()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}");
+            if (!ToolEnabled)
+                EnableTool();
+            else
+                DisableTool();
+        }
+        public void EnableTool()
+        {
+            ToolsModifierControl.toolController.CurrentTool = this;
+        }
+        public void DisableTool()
+        {
+            if (CurrentTool == this)
+                ToolsModifierControl.SetTool<DefaultTool>();
+        }
+
+        public void StartPanelAction(out bool isAccept)
+        {
+            if (ToolMode == Mode.ConnectLine)
+            {
+                ToolMode = Mode.PanelAction;
+                isAccept = true;
+            }
+            else
+                isAccept = false;
+        }
+        public void EndPanelAction()
+        {
+            if (ToolMode == Mode.PanelAction)
+            {
+                Panel.EndPanelAction();
+                ToolMode = Mode.ConnectLine;
+            }
+        }
+
+        #endregion
+
+        #region UPDATE
+
         protected override void OnToolUpdate()
         {
             //Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnToolUpdate)}");
@@ -130,44 +176,11 @@ namespace NodeMarkup
                     Panel.OnUpdate();
                     break;
             }
-        }
-        public void ToggleTool()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}");
-            if (!ToolEnabled)
-                EnableTool();
-            else
-                DisableTool();
+
+            if(UI.Settings.ShowToolTip)
+                Info();
         }
 
-        public void EnableTool()
-        {
-            ToolsModifierControl.toolController.CurrentTool = this;
-        }
-
-        public void DisableTool()
-        {
-            if (CurrentTool == this)
-                ToolsModifierControl.SetTool<DefaultTool>();
-        }
-        public void StartPanelAction(out bool isAccept)
-        {
-            if (ToolMode == Mode.ConnectLine)
-            {
-                ToolMode = Mode.PanelAction;
-                isAccept = true;
-            }
-            else
-                isAccept = false;
-        }
-        public void EndPanelAction()
-        {
-            if(ToolMode == Mode.PanelAction)
-            {
-                Panel.EndPanelAction();
-                ToolMode = Mode.ConnectLine;
-            }
-        }
         private void GetHoveredNode()
         {
             if (_mouseRayValid)
@@ -210,9 +223,94 @@ namespace NodeMarkup
 
             HoverPoint = null;
         }
+
+        private void Info()
+        {
+            var position = GetInfoPosition();
+
+            if (position.x > +Panel.relativePosition.x &&
+                position.x <= Panel.relativePosition.x + Panel.width &&
+                position.y >= Panel.relativePosition.y &&
+                position.y <= Panel.relativePosition.y + Panel.height
+                )
+            {
+                cursorInfoLabel.isVisible = false;
+                return;
+            }
+
+            switch (ToolMode)
+            {
+                case Mode.SelectNode when IsHoverNode:
+                    ShowToolInfo($"Node #{HoverNodeId}\nClick for edit marking", position);
+                    break;
+                case Mode.SelectNode:
+                    ShowToolInfo("Select node for change marking", position);
+                    break;
+                case Mode.ConnectLine when IsSelectPoint && IsHoverPoint:
+                    var markup = MarkupManager.Get(SelectNodeId);
+                    var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+                    if (markup.ExistConnection(pointPair))
+                        ShowToolInfo($"Click for delete line", position);
+                    else
+                        ShowToolInfo($"Click for create line\n+Shift - Solid\n+Ctrl - Double", position);
+                    break;
+                case Mode.ConnectLine when IsSelectPoint:
+                    ShowToolInfo("Select end point", position);
+                    break;
+                case Mode.ConnectLine:
+                    ShowToolInfo("Select point for start\ncreate or delete line", position);
+                    break;
+                default:
+                    cursorInfoLabel.isVisible = false;
+                    break;
+            }
+        }
+        private void ShowToolInfo(string text, Vector3 relativePosition)
+        {
+            if (cursorInfoLabel == null)
+                return;
+
+            cursorInfoLabel.isVisible = true;
+            cursorInfoLabel.text = text ?? string.Empty;
+
+            UIView uIView = cursorInfoLabel.GetUIView();
+
+            var cursorPosition = cursorInfoLabel.pivot.UpperLeftToTransform(cursorInfoLabel.size, cursorInfoLabel.arbitraryPivotOffset);
+            relativePosition += new Vector3(cursorPosition.x, cursorPosition.y);
+
+            var screenSize = fullscreenContainer?.size ?? uIView.GetScreenResolution();
+            relativePosition.x = MathPos(relativePosition.x, cursorInfoLabel.width, screenSize.x);
+            relativePosition.y = MathPos(relativePosition.y, cursorInfoLabel.height, screenSize.y);
+
+            cursorInfoLabel.relativePosition = relativePosition;
+
+            float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : pos;
+        }
+        private Vector3 GetInfoPosition()
+        {
+            RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength)
+            {
+                m_ignoreTerrain = false,
+                m_ignoreNodeFlags = NetNode.Flags.None
+            };
+            RayCast(input, out RaycastOutput output);
+
+            UIView uIView = cursorInfoLabel.GetUIView();
+            var screenPoint = Camera.main.WorldToScreenPoint(output.m_hitPos) / uIView.inputScale;
+            var relativePosition = uIView.ScreenPointToGUI(screenPoint);
+
+            return relativePosition;
+        }
+
+
+        #endregion
+
+        #region GUI
+
         protected override void OnToolGUI(Event e)
         {
             base.OnToolGUI(e);
+
             if (e.type == EventType.MouseUp && _mouseRayValid)
             {
                 if (e.button == 0)
@@ -220,6 +318,9 @@ namespace NodeMarkup
                 else if (e.button == 1)
                     OnSecondaryMouseClicked();
             }
+
+            if (DeleteAllShortcut.IsPressed(e))
+                DeleteAllLines();
         }
         private void OnPrimaryMouseClicked(Event e)
         {
@@ -291,7 +392,7 @@ namespace NodeMarkup
         private void OnPanelActionSecondaryClick()
         {
             Panel.OnSecondaryMouseClicked(out bool isDone);
-            if(isDone)
+            if (isDone)
                 ToolMode = Mode.ConnectLine;
         }
         private void OnUnselectPoint() => SelectPoint = null;
@@ -301,7 +402,20 @@ namespace NodeMarkup
             SelectNodeId = 0;
             Panel?.Hide();
         }
+        private void DeleteAllLines()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllLines)}");
 
+            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && MarkupManager.TryGetMarkup(SelectNodeId, out Markup markup))
+            {
+                markup.Clear();
+                Panel.UpdatePanel();
+            }
+        }
+
+        #endregion
+
+        #region Overlay
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
@@ -343,7 +457,6 @@ namespace NodeMarkup
                         d = last.Position
                     };
                     NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-                    //RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 1.25f, 0f, 0f, -1f, 1280f, false, true);
                 }
 
                 RenderPointOverlay(cameraInfo, enter);
@@ -395,11 +508,26 @@ namespace NodeMarkup
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
         }
 
+        #endregion
+
         enum Mode
         {
             SelectNode,
             ConnectLine,
             PanelAction
+        }
+    }
+    public class ThreadingExtension : ThreadingExtensionBase
+    {
+        public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
+        {
+            var tool = ToolsModifierControl.toolController?.CurrentTool;
+            bool flag = tool == null || tool is NodeMarkupTool ||
+                tool.GetType() == typeof(DefaultTool) || tool is NetTool || tool is BuildingTool;
+            if (flag && NodeMarkupTool.ActivationShortcut.IsKeyUp())
+            {
+                NodeMarkupTool.Instance.ToggleTool();
+            }
         }
     }
 }

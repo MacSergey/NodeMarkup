@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "S";
 
-        public static Color32 DefaultColor { get; } = new Color32(25, 25, 25, 127);
+        public static Color32 DefaultColor { get; } = new Color32(32, 32, 32, 224);
         public static float DefaultDashLength { get; } = 1.5f;
         public static float DefaultSpaceLength { get; } = 1.5f;
         public static float DefaultOffser { get; } = 0.15f;

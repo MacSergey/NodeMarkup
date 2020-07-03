@@ -12,11 +12,16 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => "Templates";
         private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
+        private StringPropertyPanel NameProperty { get; set; }
+
+        public TemplateEditor()
+        {
+            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
+        }
 
         protected override void FillItems()
         {
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-            foreach (var templates in MarkupManager.Settings.Templates)
+            foreach (var templates in Settings.Templates)
             {
                 AddItem(templates);
             }
@@ -31,12 +36,13 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddTemplateName()
         {
-            var name = SettingsPanel.AddUIComponent<StringPropertyPanel>();
-            name.Text = "Name";
-            name.UseWheel = false;
-            name.Init();
-            name.Value = EditObject.Name;
-            name.OnValueChanged += NameChanged;
+            NameProperty = SettingsPanel.AddUIComponent<StringPropertyPanel>();
+            NameProperty.Text = "Name";
+            NameProperty.FieldWidth = 230;
+            NameProperty.UseWheel = false;
+            NameProperty.Init();
+            NameProperty.Value = EditObject.Name;
+            NameProperty.OnValueSubmitted += NameSubmitted;
         }
         private void AddColorProperty()
         {
@@ -98,7 +104,18 @@ namespace NodeMarkup.UI.Editors
 
             StyleProperties.Clear();
         }
-        private void NameChanged(string value) => EditObject.Name = value;
+        private void NameSubmitted(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                NameProperty.Value = EditObject.Name;
+            }
+            else
+            {
+                EditObject.Name = value;
+                SelectItem.Refresh();
+            }
+        }
         private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
         private void StyleChanged(LineStyle.LineType style)
         {

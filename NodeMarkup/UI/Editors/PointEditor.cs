@@ -15,7 +15,7 @@ namespace NodeMarkup.UI.Editors
 
         public PointsEditor()
         {
-
+            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
         }
         protected override void FillItems()
         {
@@ -47,7 +47,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class PointItem : EditableItem<MarkupPoint, ColorIcon> 
+    public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
         protected override void OnObjectSet()
         {

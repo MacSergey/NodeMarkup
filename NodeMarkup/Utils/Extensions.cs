@@ -81,7 +81,14 @@ namespace NodeMarkup.Utils
         }
 
         public static bool IsInvert(this NetSegment segment) => (segment.m_flags & NetSegment.Flags.Invert) == NetSegment.Flags.Invert;
-        public static bool IsDriveLane(this NetInfo.Lane info) => (info.m_vehicleType & VehicleInfo.VehicleType.Car) == VehicleInfo.VehicleType.Car && (info.m_laneType & NetInfo.LaneType.Parking) == NetInfo.LaneType.None;
+
+        public static VehicleInfo.VehicleType DriveType { get; } =
+            VehicleInfo.VehicleType.Car |
+            VehicleInfo.VehicleType.Bicycle |
+            VehicleInfo.VehicleType.Tram |
+            VehicleInfo.VehicleType.Trolleybus |
+            VehicleInfo.VehicleType.Plane;
+        public static bool IsDriveLane(this NetInfo.Lane info) => (info.m_vehicleType & DriveType) != VehicleInfo.VehicleType.None;
 
         public static Vector3 Turn90(this Vector3 v, bool isClockWise) => isClockWise ? new Vector3(v.z, v.y, -v.x) : new Vector3(-v.z, v.y, v.x);
         public static Vector3 TurnDeg(this Vector3 vector, float turnAngle, bool isClockWise) => vector.Turn(turnAngle * Mathf.Deg2Rad, isClockWise);
