@@ -109,6 +109,8 @@ namespace NodeMarkup
         {
             HoverNodeId = 0;
             SelectNodeId = 0;
+            HoverPoint = null;
+            SelectPoint = null;
             ToolMode = Mode.SelectNode;
             Panel?.EndPanelAction();
         }
@@ -124,11 +126,15 @@ namespace NodeMarkup
         public void EnableTool()
         {
             ToolsModifierControl.toolController.CurrentTool = this;
+
+            Reset();
         }
         public void DisableTool()
         {
             if (CurrentTool == this)
                 ToolsModifierControl.SetTool<DefaultTool>();
+
+            Reset();
         }
 
         public void StartPanelAction(out bool isAccept)
