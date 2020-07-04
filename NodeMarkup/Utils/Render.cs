@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace NodeMarkup.Utils
 {
@@ -102,12 +103,12 @@ namespace NodeMarkup.Utils
 
         public static Material CreateMaterial()
         {
-            var texture = CreateDotTexture(Color.white);
+            var texture = CreateDotTexture(Color.white/*new Color32(127,127,127,255)*/);
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
                 mainTexture = texture,
                 name = "NodeMarkup",
-                color = new Color(1f, 1f, 1f, 0.1960784f),
+                color = new Color(1f, 1f, 1f, 1f),
                 doubleSidedGI = false,
                 enableInstancing = false,
                 globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
@@ -121,12 +122,13 @@ namespace NodeMarkup.Utils
             var scale = new Vector4(size.x, slopeTolerance, size.y, 0);
             var tiling = new Vector4(tile.x, 0, tile.y, 0);
 
+            
             material.SetVector("_DecalSize", scale);
             material.SetVector("_DecalTiling", tiling);
 
             return material;
         }
-        private static Texture2D CreateChessBoardTexture()
+        public static Texture2D CreateChessBoardTexture()
         {
             var height = 256;
             var width = 256;
@@ -148,7 +150,7 @@ namespace NodeMarkup.Utils
             texture.Apply();
             return texture;
         }
-        private static Texture2D CreateDotTexture(Color color)
+        public static Texture2D CreateDotTexture(Color color)
         {
             var height = 1;
             var width = 1;
@@ -157,7 +159,6 @@ namespace NodeMarkup.Utils
                 name = "Markup",
             };
             texture.SetPixel(0, 0, color);
-
             texture.Apply();
             return texture;
         }
@@ -185,7 +186,7 @@ namespace NodeMarkup.Utils
                 Locations[i] = dash.Position;
                 Locations[i].w = dash.Angle;
                 Indices[i] = new Vector4(0f, 0f, 0f, 1f);
-                Colors[i] = dash.Color.ToVector();
+                Colors[i] = dash.Color.ToX3Vector();
             }
 
             Mesh = Render.CreateMesh(count, Size);

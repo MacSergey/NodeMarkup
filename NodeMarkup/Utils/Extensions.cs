@@ -126,6 +126,7 @@ namespace NodeMarkup.Utils
             }
         }
         public static Vector4 ToVector(this Color c) => new Vector4(c.r, c.g, c.b, c.a);
+        public static Vector4 ToX3Vector(this Color c) => new Vector4(Mathf.Pow(c.r/2, 3), Mathf.Pow(c.g/2, 3), Mathf.Pow(c.b/2, 3), c.a);
 
         public static float DeltaAngle(this Bezier3 bezier) => 180 - Vector3.Angle(bezier.b - bezier.a, bezier.c - bezier.d);
 

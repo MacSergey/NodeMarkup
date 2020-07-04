@@ -13,6 +13,9 @@ namespace NodeMarkup.Manager
 {
     public static class MarkupManager
     {
+        static Color aciColor = Color.white;
+        static Color textureColor = Color.white;
+        static Color materialColor = Color.white;
         static Dictionary<ushort, Markup> NodesMarkup { get; } = new Dictionary<ushort, Markup>();
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
 
@@ -73,6 +76,7 @@ namespace NodeMarkup.Manager
             //Logger.LogDebug($"End render node {nodeID} markup success");
         }
 
+
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => NodesMarkup.Remove(node);
         public static void NetManagerUpdateNodePostfix(ushort node, ushort fromSegment, int level) => AddToUpdate(node);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
@@ -120,19 +124,4 @@ namespace NodeMarkup.Manager
             }
         }
     }
-
-    //public class Settings
-    //{
-    //    public float RenderDistance { get; } = 300f;
-    //    List<LineStyleTemplate> TemplatesList { get; } = new List<LineStyleTemplate>();
-
-    //    public IEnumerable<LineStyleTemplate> Templates => TemplatesList;
-
-    //    public LineStyleTemplate AddTemplate(LineStyle style, string name = null)
-    //    {
-    //        var template = new LineStyleTemplate(name ?? "New template", style);
-    //        TemplatesList.Add(template);
-    //        return template;
-    //    }
-    //}
 }

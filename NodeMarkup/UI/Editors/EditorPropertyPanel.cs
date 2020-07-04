@@ -241,7 +241,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void DropDownIndexChanged(UIComponent component, int value)
         {
-            if(value != -1)
+            if (value != -1)
                 OnSelectTemplate?.Invoke(SelectTemplate.SelectedObject);
         }
         private void DropdownClose(UIDropDown dropdown, UIListBox popup, ref bool overridden)
@@ -294,7 +294,7 @@ namespace NodeMarkup.UI.Editors
             SetAsDefaultButton.atlas = TextureUtil.GetAtlas("InMapEditor");
             SetAsDefaultButton.normalBgSprite = "InfoDisplay";
             SetAsDefaultButton.hoveredBgSprite = "InfoDisplayHover";
-            SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";         
+            SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";
             SetAsDefaultButton.textScale = 0.7f;
             SetAsDefaultButton.size = new Vector2(120, 20);
             SetAsDefaultButton.textColor = Color.black;
@@ -400,6 +400,8 @@ namespace NodeMarkup.UI.Editors
         private UITextField G { get; set; }
         private UITextField B { get; set; }
         private UITextField A { get; set; }
+        //private UIPanel ColorSample { get; set; }
+        private UIColorField ColorSample { get; set; }
 
         public Color32 Value
         {
@@ -414,6 +416,8 @@ namespace NodeMarkup.UI.Editors
                 G.text = value.g.ToString();
                 B.text = value.b.ToString();
                 A.text = value.a.ToString();
+
+                SetSampleColor();
             }
         }
         private byte CetComponent(string text) => byte.TryParse(text, out byte value) ? value : byte.MaxValue;
@@ -424,6 +428,8 @@ namespace NodeMarkup.UI.Editors
             G = AddField(nameof(G));
             B = AddField(nameof(B));
             A = AddField(nameof(A));
+
+            AddColorSample();
         }
 
         private UITextField AddField(string name)
@@ -448,14 +454,35 @@ namespace NodeMarkup.UI.Editors
             field.eventTextChanged += FieldTextChanged;
             field.width = 30;
             field.textScale = 0.7f;
-            field.text = 0.ToString();
+            //field.text = 0.ToString();
             field.selectOnFocus = true;
             field.verticalAlignment = UIVerticalAlignment.Middle;
 
             return field;
         }
+        private void AddColorSample()
+        {
+            ColorSample = Control.AddUIComponent<UIColorField>();
+            ColorSample.size = new Vector2(26, 28);
+            ColorSample.normalBgSprite = "ColorPickerOutlineHovered";
+            ColorSample.normalFgSprite = "ColorPickerColor";
+            ColorSample.hoveredBgSprite = "ColorPickerOutline";
 
-        protected virtual void FieldTextChanged(UIComponent component, string text) => OnValueChanged?.Invoke(Value);
+            var button = ColorSample.AddUIComponent<UIButton>();
+            button.size = ColorSample.size;
+            button.relativePosition = new Vector3(0, 0);
+
+            ColorSample.triggerButton = button;
+        }
+        private void SetSampleColor()
+        {
+            ColorSample.selectedColor = Value;
+        }
+        protected virtual void FieldTextChanged(UIComponent component, string text)
+        {
+            SetSampleColor();
+            OnValueChanged?.Invoke(Value);
+        }
     }
 
     public abstract class ListPropertyPanel<Type, DropDownType> : EditorPropertyPanel
