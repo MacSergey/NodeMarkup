@@ -64,6 +64,7 @@ namespace NodeMarkup
             Button.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
+            DisableTool();
             base.Awake();
         }
         public static NodeMarkupTool Create()
@@ -95,7 +96,6 @@ namespace NodeMarkup
             base.OnEnable();
             Button?.Activate();
             Panel?.Hide();
-            Reset();
         }
         protected override void OnDisable()
         {
@@ -103,7 +103,6 @@ namespace NodeMarkup
             base.OnDisable();
             Button?.Deactivate();
             Panel?.Hide();
-            Reset();
         }
         private void Reset()
         {

@@ -35,8 +35,9 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelLoaded)}");
             if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame || mode == LoadMode.NewGameFromScenario || mode == LoadMode.NewAsset)
             {
-                NodeMarkupTool.Create();
-                Manager.MarkupManager.Init();
+                
+                MarkupManager.Init();
+                NodeMarkupTool.Instance.DisableTool();
             }
         }
 
