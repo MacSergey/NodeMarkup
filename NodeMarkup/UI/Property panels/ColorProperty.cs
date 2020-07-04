@@ -12,6 +12,8 @@ namespace NodeMarkup.UI.Editors
     {
         public event Action<Color32> OnValueChanged;
 
+        private bool InProcess { get; set; } = false;
+
         private UITextField R { get; set; }
         private UITextField G { get; set; }
         private UITextField B { get; set; }
@@ -32,7 +34,8 @@ namespace NodeMarkup.UI.Editors
                 B.text = value.b.ToString();
                 A.text = value.a.ToString();
 
-                SetSampleColor();
+                ColorSample.selectedColor = value;
+                OnValueChanged?.Invoke(value);
             }
         }
         private byte CetComponent(string text) => byte.TryParse(text, out byte value) ? value : byte.MaxValue;
@@ -69,7 +72,6 @@ namespace NodeMarkup.UI.Editors
             field.eventTextChanged += FieldTextChanged;
             field.width = 30;
             field.textScale = 0.7f;
-            //field.text = 0.ToString();
             field.selectOnFocus = true;
             field.verticalAlignment = UIVerticalAlignment.Middle;
 
@@ -77,26 +79,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddColorSample()
         {
-            ColorSample = Control.AddUIComponent<UIColorField>();
-            ColorSample.size = new Vector2(26, 28);
-            ColorSample.normalBgSprite = "ColorPickerOutlineHovered";
-            ColorSample.normalFgSprite = "ColorPickerColor";
-            ColorSample.hoveredBgSprite = "ColorPickerOutline";
-
-            var button = ColorSample.AddUIComponent<UIButton>();
-            button.size = ColorSample.size;
-            button.relativePosition = new Vector3(0, 0);
-
-            ColorSample.triggerButton = button;
-
-
-            GameObject gameObject = new GameObject(typeof(UIColorPicker).Name);
-            gameObject.transform.parent = cachedTransform;
-            gameObject.layer = base.gameObject.layer;
-            var colorPicker = gameObject.AddComponent<UIColorPicker>();
-
-            ColorSample.colorPicker = colorPicker;
-
             if (!(UITemplateManager.Get("LineTemplate") is UIComponent template))
                 return;
 
@@ -104,28 +86,81 @@ namespace NodeMarkup.UI.Editors
 
             ColorSample = Instantiate(colorFieldTemplate.gameObject).GetComponent<UIColorField>();
             Control.AttachUIComponent(ColorSample.gameObject);
+            ColorSample.anchor = UIAnchorStyle.None;
             ColorSample.size = new Vector2(26f, 28f);
+
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
-
-            //if (!(UITemplateManager.Get("LineTemplate") is UIComponent template))
-            //    return;
-
-            //var colorFieldTemplate = template.Find<UIColorField>("LineColor");
+            ColorSample.eventColorPickerOpen += ColorPickerOpen;
         }
 
+        private void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
+        {
+            popup.component.width += 31;
+            popup.component.relativePosition -= new Vector3(31, 0);
+            var slider = AddOpacitySlider(popup.component);
+            slider.value = Value.a;
+        }
+        private UISlider AddOpacitySlider(UIComponent parent)
+        {
+            var opacitySlider = parent.AddUIComponent<UISlider>();
+
+            opacitySlider.atlas = TextureUtil.GetAtlas("Ingame");
+            opacitySlider.size = new Vector2(18, 200);
+            opacitySlider.relativePosition = new Vector3(254, 12);
+            opacitySlider.orientation = UIOrientation.Vertical;
+            opacitySlider.minValue = 0f;
+            opacitySlider.maxValue = 255f;
+            opacitySlider.stepSize = 1f;
+            opacitySlider.eventValueChanged += OpacityChanged;
+
+            var opacity = opacitySlider.AddUIComponent<UITextureSprite>();
+            opacity.relativePosition = Vector2.zero;
+            opacity.material = new Material(Shader.Find("UI/ColorPicker Hue"));
+            opacity.size = opacitySlider.size;
+
+            UISlicedSprite thumbSprite = opacitySlider.AddUIComponent<UISlicedSprite>();
+            thumbSprite.relativePosition = Vector2.zero;
+            thumbSprite.fillDirection = UIFillDirection.Horizontal;
+            thumbSprite.size = new Vector2(29, 7);
+            thumbSprite.spriteName = "ScrollbarThumb";
+
+            opacitySlider.thumbObject = thumbSprite;
+
+            return opacitySlider;
+        }
         private void SelectedColorChanged(UIComponent component, Color value)
         {
-            value.a = Value.a;
-            Value = value;
+            Process(() =>
+            {
+                value.a = Value.a;
+                Value = value;
+            });
         }
-        private void SetSampleColor()
+        private void OpacityChanged(UIComponent component, float value)
         {
-            ColorSample.selectedColor = Value;
+            Process(() =>
+            {
+                var color = Value;
+                color.a = (byte)value;
+                Value = color;
+            });
         }
         protected virtual void FieldTextChanged(UIComponent component, string text)
         {
-            SetSampleColor();
-            OnValueChanged?.Invoke(Value);
+            Process(() =>
+            {
+                Value = Value;
+            });
+        }
+
+        private void Process(Action action)
+        {
+            if (!InProcess)
+            {
+                InProcess = true;
+                action?.Invoke();
+                InProcess = false;
+            }
         }
     }
 }
