@@ -67,19 +67,22 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
+#if DEBUG
             Logger.LogDebug($"Start update node #{Id}");
-
+#endif
             UpdateEnters();
             UpdateLines();
 
             RecalculateDashes();
-
+#if DEBUG
             Logger.LogDebug($"End update node #{Id}");
+#endif
         }
         private void UpdateEnters()
         {
-            //Logger.LogDebug($"Start update enters");
-
+#if DEBUG
+            Logger.LogDebug($"Start update enters");
+#endif
             var node = Utilities.GetNode(Id);
 
             var enters = new Dictionary<ushort, Enter>();
@@ -96,12 +99,15 @@ namespace NodeMarkup.Manager
 
             EntersDictionary = enters;
 
-            //Logger.LogDebug($"End update enters");
+#if DEBUG
+            Logger.LogDebug($"End update enters");
+#endif
         }
         private void UpdateLines()
         {
-            //Logger.LogDebug($"Start update lines");
-
+#if DEBUG
+            Logger.LogDebug($"Start update lines");
+#endif
             var lines = LinesDictionary.Values.ToArray();
             foreach (var line in lines)
             {
@@ -110,8 +116,9 @@ namespace NodeMarkup.Manager
                 else
                     LinesDictionary.Remove(line.PointPair.Hash);
             }
-
-            //Logger.LogDebug($"End update lines");
+#if DEBUG
+            Logger.LogDebug($"End update lines");
+#endif
         }
 
         public void Update(MarkupPoint point)
@@ -132,26 +139,30 @@ namespace NodeMarkup.Manager
 
         public void RecalculateDashes()
         {
-            //Logger.LogDebug($"Start recalculate dashes");
-
+#if DEBUG
+            Logger.LogDebug($"Start recalculate dashes");
+#endif
             LineIntersects.Clear();
             foreach (var line in Lines)
             {
                 line.RecalculateDashes();
             }
             NeedRecalculate = true;
-
-            //Logger.LogDebug($"End recalculate dashes");
+#if DEBUG
+            Logger.LogDebug($"End recalculate dashes");
+#endif
         }
 
         public void RecalculateBatches()
         {
+#if DEBUG
             Logger.LogDebug($"Start recalculate batches");
-
+#endif
             var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
             RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
-
+#if DEBUG
             Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}; dashes: {dashes.Length}");
+#endif
         }
 
         public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.LineType lineType)

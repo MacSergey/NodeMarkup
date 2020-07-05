@@ -14,6 +14,8 @@ namespace NodeMarkup.UI.Editors
 
         private bool InProcess { get; set; } = false;
 
+        private static UITextureAtlas OpacityAtlas { get; } = GetAtlas();
+
         private UITextField R { get; set; }
         private UITextField G { get; set; }
         private UITextField B { get; set; }
@@ -124,10 +126,12 @@ namespace NodeMarkup.UI.Editors
             opacitySlider.stepSize = 1f;
             opacitySlider.eventValueChanged += OpacityChanged;
 
-            var opacity = opacitySlider.AddUIComponent<UITextureSprite>();
+            var opacity = opacitySlider.AddUIComponent<UISlicedSprite>();
+            opacity.atlas = OpacityAtlas;
+            opacity.spriteName = "OpacitySlider";
             opacity.relativePosition = Vector2.zero;
-            opacity.material = new Material(Shader.Find("UI/ColorPicker Hue"));
             opacity.size = opacitySlider.size;
+            opacity.fillDirection = UIFillDirection.Vertical;
 
             UISlicedSprite thumbSprite = opacitySlider.AddUIComponent<UISlicedSprite>();
             thumbSprite.relativePosition = Vector2.zero;
@@ -153,6 +157,12 @@ namespace NodeMarkup.UI.Editors
         protected virtual void FieldTextSubmitted(UIComponent component, string text)
         {
                 Value = Value;
+        }
+
+        private static UITextureAtlas GetAtlas()
+        {
+            var atlas = TextureUtil.CreateTextureAtlas("slider.png", nameof(ColorPropertyPanel), 18, 200, new string[] { "OpacitySlider" });
+            return atlas;
         }
     }
 }

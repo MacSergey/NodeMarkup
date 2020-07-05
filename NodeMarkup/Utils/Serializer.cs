@@ -41,8 +41,9 @@ namespace NodeMarkup.Utils
                     var sw = Stopwatch.StartNew();
 
                     var decompress = Decompress(data);
+#if DEBUG
                     Logger.LogDebug(decompress);
-
+#endif
                     var config = Parse(decompress);
                     Manager.MarkupManager.FromXml(config);
 
@@ -66,8 +67,9 @@ namespace NodeMarkup.Utils
 
             var config = Manager.MarkupManager.ToXml();
             var xml = config.ToString(SaveOptions.DisableFormatting);
+#if DEBUG
             Logger.LogDebug(xml);
-
+#endif
             var compress = Compress(xml);
             serializableDataManager.SaveData(Id, compress);
 
