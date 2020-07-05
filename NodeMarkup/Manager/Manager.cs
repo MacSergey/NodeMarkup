@@ -95,12 +95,13 @@ namespace NodeMarkup.Manager
         }
         public static void NetManagerSimulationStepImplPostfix()
         {
-            foreach (var nodeId in NeedUpdate)
+            var needUpdate = NeedUpdate.ToArray();
+            NeedUpdate.Clear();
+            foreach (var nodeId in needUpdate)
             {
                 if (NodesMarkup.TryGetValue(nodeId, out Markup markup))
                     markup.Update();
             }
-            NeedUpdate.Clear();
         }
 
         public static XElement ToXml()

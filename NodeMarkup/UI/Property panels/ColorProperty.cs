@@ -29,13 +29,22 @@ namespace NodeMarkup.UI.Editors
             }
             set
             {
-                R.text = value.r.ToString();
-                G.text = value.g.ToString();
-                B.text = value.b.ToString();
-                A.text = value.a.ToString();
+                if (!InProcess)
+                {
+                    InProcess = true;
 
-                ColorSample.selectedColor = value;
-                OnValueChanged?.Invoke(value);
+                    R.text = value.r.ToString();
+                    G.text = value.g.ToString();
+                    B.text = value.b.ToString();
+                    A.text = value.a.ToString();
+
+                    if (ColorSample != null)
+                        ColorSample.selectedColor = value;
+
+                    OnValueChanged?.Invoke(value);
+
+                    InProcess = false;
+                }
             }
         }
         private byte CetComponent(string text) => byte.TryParse(text, out byte value) ? value : byte.MaxValue;
@@ -69,7 +78,7 @@ namespace NodeMarkup.UI.Editors
             field.builtinKeyNavigation = true;
             field.cursorWidth = 1;
             field.cursorBlinkTime = 0.45f;
-            field.eventTextChanged += FieldTextChanged;
+            field.eventTextSubmitted += FieldTextSubmitted;
             field.width = 30;
             field.textScale = 0.7f;
             field.selectOnFocus = true;
@@ -77,6 +86,7 @@ namespace NodeMarkup.UI.Editors
 
             return field;
         }
+
         private void AddColorSample()
         {
             if (!(UITemplateManager.Get("LineTemplate") is UIComponent template))
@@ -130,37 +140,19 @@ namespace NodeMarkup.UI.Editors
         }
         private void SelectedColorChanged(UIComponent component, Color value)
         {
-            Process(() =>
-            {
-                value.a = Value.a;
-                Value = value;
-            });
+            value.a = Value.a;
+            Value = value;
         }
         private void OpacityChanged(UIComponent component, float value)
         {
-            Process(() =>
-            {
-                var color = Value;
-                color.a = (byte)value;
-                Value = color;
-            });
+            var color = Value;
+            color.a = (byte)value;
+            Value = color;
         }
-        protected virtual void FieldTextChanged(UIComponent component, string text)
+        protected virtual void FieldTextSubmitted(UIComponent component, string text)
         {
-            Process(() =>
-            {
                 Value = Value;
-            });
-        }
-
-        private void Process(Action action)
-        {
-            if (!InProcess)
-            {
-                InProcess = true;
-                action?.Invoke();
-                InProcess = false;
-            }
         }
     }
 }
+
