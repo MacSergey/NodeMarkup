@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
         {
             var type = (LineType)config.GetAttrValue<int>("T");
 
-            if (GetDefault(type) is LineStyle defaultStyle)
+            if (TemplateManager.GetDefault(type) is LineStyle defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config);

@@ -311,6 +311,7 @@ namespace NodeMarkup.UI.Editors
         {
             item.SimulateClick();
             item.Focus();
+            ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
         public void Select(EditableObject editableObject)

@@ -11,9 +11,9 @@ namespace NodeMarkup
 {
     public class Mod : LoadingExtensionBase, IUserMod
     {
-        public static string StaticName => nameof(NodeMarkup);
+        public static string StaticName { get; } = "Intersection Marking Tool";
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
-        public string Name { get; } = $"Intersection Marking {Version} [BETA]";
+        public string Name { get; } = $"{StaticName} {Version} [BETA]";
         public string Description => "Just do make markings at intersections";
 
         static AppMode CurrentMode => SimulationManager.instance.m_ManagersWrapper.loading.currentMode;

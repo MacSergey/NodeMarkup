@@ -34,7 +34,7 @@ namespace NodeMarkup.UI
             base.Start();
             name = nameof(Button);
             playAudioEvents = true;
-            tooltip = "Node Markup";
+            tooltip = Mod.StaticName;
 
             var builtinTabstrip = UIUtils.Instance.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None);
             if (builtinTabstrip == null)

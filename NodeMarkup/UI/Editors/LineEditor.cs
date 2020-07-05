@@ -15,6 +15,8 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name { get; } = "Lines";
 
+        private ButtonPanel AddButton { get; set; }
+
         public List<LineRawRuleEdgeBase> RuleEdges { get; } = new List<LineRawRuleEdgeBase>();
         private List<LineRawRuleEdgeBound> RuleEdgeBounds { get; } = new List<LineRawRuleEdgeBound>();
 
@@ -33,34 +35,19 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void FillItems()
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             foreach (var line in Markup.Lines)
             {
                 var item = AddItem(line);
             }
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
-#endif
         }
         protected override void OnObjectSelect()
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             GetRuleEdges();
-            AddAddButton();
             AddRulePanels();
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
-#endif
+            AddAddButton();
         }
         private void GetRuleEdges()
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             var intersectWith = EditObject.IntersectWith();
 
             RuleEdges.Clear();
@@ -70,9 +57,6 @@ namespace NodeMarkup.UI.Editors
 
             RuleEdgeBounds.Clear();
             RuleEdgeBounds.AddRange(RuleEdges.Select(r => new LineRawRuleEdgeBound(EditObject, r)));
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
-#endif
         }
         private void AddRulePanels()
         {
@@ -89,17 +73,27 @@ namespace NodeMarkup.UI.Editors
         {
             if (RuleEdges.Count > 2)
             {
-                var button = SettingsPanel.AddUIComponent<ButtonPanel>();
-                button.Text = "Add Rule";
-                button.Init();
-                button.OnButtonClick += AddButtonClick;
+                AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
+                AddButton.Text = "Add Rule";
+                AddButton.Init();
+                AddButton.OnButtonClick += AddButtonClick;
             }
+        }
+        private void DeleteAddButton()
+        {
+            AddButton.OnButtonClick -= AddButtonClick;
+            SettingsPanel.RemoveUIComponent(AddButton);
+            Destroy(AddButton);
         }
 
         private void AddButtonClick()
         {
             var newRule = EditObject.AddRule();
+            DeleteAddButton();
             AddRulePanel(newRule);
+            AddAddButton();
+
+            SettingsPanel.ScrollToBottom();
         }
         public void DeleteRule(RulePanel rulePanel)
         {
@@ -364,7 +358,7 @@ namespace NodeMarkup.UI.Editors
         private void ToChanged(LineRawRuleEdgeBase to) => Rule.To = to;
         private void StyleChanged(LineStyle.LineType style)
         {
-            var newStyle = LineStyle.GetDefault(style);
+            var newStyle = TemplateManager.GetDefault(style);
             newStyle.Color = Rule.Style.Color;
             if (newStyle is IDashedLine newDashed && Rule.Style is IDashedLine oldDashed)
             {

@@ -37,7 +37,7 @@ namespace NodeMarkup
         bool IsHoverPoint => HoverPoint != null;
         bool IsSelectPoint => SelectPoint != null;
 
-        Color32 hoverColor = new Color32(51, 181, 229, 224);
+        Color32 HoverColor { get; } = new Color32(255, 136, 0, 224);
 
         private NetManager NetManager => Singleton<NetManager>.instance;
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
@@ -263,7 +263,7 @@ namespace NodeMarkup
                     ShowToolInfo("Select end point", position);
                     break;
                 case Mode.ConnectLine:
-                    ShowToolInfo("Select point for start\ncreate or delete line", position);
+                    ShowToolInfo("Select point for start\ncreate or delete line\n+Shift to edit it", position);
                     break;
                 default:
                     cursorInfoLabel.isVisible = false;
@@ -432,7 +432,7 @@ namespace NodeMarkup
             {
                 case Mode.SelectNode when IsHoverNode:
                     var node = Utilities.GetNode(HoverNodeId);
-                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, hoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
+                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, HoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
                     break;
                 case Mode.ConnectLine:
                     if (IsHoverPoint)

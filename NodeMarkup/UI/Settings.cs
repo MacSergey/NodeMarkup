@@ -13,7 +13,7 @@ namespace NodeMarkup.UI
 {
     public static class Settings
     {
-        public static string SettingsFile => $"{Mod.StaticName}{nameof(SettingsFile)}";
+        public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);

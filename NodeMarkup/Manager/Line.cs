@@ -89,7 +89,7 @@ namespace NodeMarkup.Manager
             AddRule(newRule, empty, update);
             return newRule;
         }
-        public MarkupLineRawRule AddRule() => AddRule(LineStyle.DefaultDashed);
+        public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault(LineStyle.LineType.Dash));
         public void RemoveRule(MarkupLineRawRule rule)
         {
             RawRules.Remove(rule);
