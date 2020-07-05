@@ -54,7 +54,6 @@ namespace NodeMarkup.UI.Editors
         {
             HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
             HeaderPanel.Init(EditObject.IsDefault());
-            //HeaderPanel.OnDelete += DeleteTemplate;
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
         }
         private void AddTemplateName()

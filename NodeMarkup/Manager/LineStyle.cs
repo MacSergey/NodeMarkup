@@ -259,7 +259,7 @@ namespace NodeMarkup.Manager
             if (length == 0)
                 yield break;
 
-            var dashCount = (int)((length - SpaceLength) / (DashLength + SpaceLength));
+            var dashCount = (int)(length / (DashLength + SpaceLength));
 
             var startSpaceT = (1 - ((DashLength + SpaceLength) * dashCount - SpaceLength) / length) / 2;
             var dashT = DashLength / length;
