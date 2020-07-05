@@ -60,6 +60,7 @@ namespace NodeMarkup.UI.Editors
             Label.height = 20;
             Label.width = 230;
             Label.textScale = 0.7f;
+            Label.padding = new RectOffset(8, 0, 2, 0);
         }
 
         private void AddButton()

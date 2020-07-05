@@ -38,7 +38,7 @@ namespace NodeMarkup.UI.Editors
 #endif
             foreach (var line in Markup.Lines)
             {
-                AddItem(line);
+                var item = AddItem(line);
             }
 #if STOPWATCH
             Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
@@ -70,7 +70,7 @@ namespace NodeMarkup.UI.Editors
 
             RuleEdgeBounds.Clear();
             RuleEdgeBounds.AddRange(RuleEdges.Select(r => new LineRawRuleEdgeBound(EditObject, r)));
-#if DEBUG
+#if STOPWATCH
             Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
 #endif
         }
@@ -189,9 +189,16 @@ namespace NodeMarkup.UI.Editors
                 SelectRuleEdgePanel = null;
             }
         }
+        protected override void OnObjectDelete(MarkupLine line)
+        {
+            Markup.RemoveConnect(line.PointPair);
+        }
     }
 
-    public class LineItem : EditableItem<MarkupLine, UIPanel> { }
+    public class LineItem : EditableItem<MarkupLine, UIPanel> 
+    {
+        public LineItem() : base(false, true) { }
+    }
 
     public class RulePanel : UIPanel
     {

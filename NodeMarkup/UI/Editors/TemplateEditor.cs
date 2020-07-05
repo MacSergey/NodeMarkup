@@ -29,7 +29,7 @@ namespace NodeMarkup.UI.Editors
 #endif
             foreach (var templates in TemplateManager.Templates)
             {
-                AddItem(templates);
+                var item = AddItem(templates);
             }
 #if STOPWATCH
             Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
@@ -54,7 +54,7 @@ namespace NodeMarkup.UI.Editors
         {
             HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
             HeaderPanel.Init(EditObject.IsDefault());
-            HeaderPanel.OnDelete += DeleteTemplate;
+            //HeaderPanel.OnDelete += DeleteTemplate;
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
         }
         private void AddTemplateName()
@@ -169,15 +169,16 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.Init(EditObject.IsDefault());
         }
 
-        private void DeleteTemplate()
+        protected override void OnObjectDelete(LineStyleTemplate template)
         {
-            TemplateManager.DeleteTemplate(EditObject);
-            UpdateEditor();
+            TemplateManager.DeleteTemplate(template);
         }
     }
 
     public class TemplateItem : EditableItem<LineStyleTemplate, DefaultTemplateIcon> 
     {
+        public TemplateItem() : base(true, true) { }
+
         protected override void OnObjectSet() => SetIsDefault();
         public override void Refresh()
         {

@@ -52,11 +52,11 @@ namespace NodeMarkup.UI.Editors
             DropDown.popupColor = new Color32(45, 52, 61, 255);
             DropDown.popupTextColor = new Color32(170, 170, 170, 255);
             DropDown.textScale = 0.7f;
+            DropDown.textFieldPadding = new RectOffset(8, 0, 6, 0);
             DropDown.popupColor = Color.white;
             DropDown.popupTextColor = Color.black;
             DropDown.verticalAlignment = UIVerticalAlignment.Middle;
             DropDown.horizontalAlignment = UIHorizontalAlignment.Left;
-            DropDown.textFieldPadding = new RectOffset(8, 0, 8, 0);
             DropDown.itemPadding = new RectOffset(14, 0, 8, 0);
             DropDown.eventSelectedIndexChanged += DropDownIndexChanged;
             DropDown.eventDropdownOpen += DropDownOpen;

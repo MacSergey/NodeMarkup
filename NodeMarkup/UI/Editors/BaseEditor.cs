@@ -192,10 +192,10 @@ namespace NodeMarkup.UI.Editors
             private set
             {
                 if (_selectItem != null)
-                    _selectItem.isEnabled = true;
+                    _selectItem.Unselect();
 
                 _selectItem = value;
-                _selectItem.isEnabled = false;
+                _selectItem.Select();
             }
         }
         protected EditableObject EditObject => SelectItem.Object;
@@ -225,23 +225,43 @@ namespace NodeMarkup.UI.Editors
             item.eventClick += ItemClick;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
+            item.OnDelete += ItemDelete;
 #if STOPWATCH
             Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(Editor)}: {sw.ElapsedMilliseconds}ms");
 #endif
-
             return item;
         }
+
+        private void ItemDelete(EditableItem<EditableObject, ItemIcon> deleteItem)
+        {
+            if (!(deleteItem is EditableItemType item))
+                return;
+
+            OnObjectDelete(item.Object);
+            var isSelect = item == SelectItem;
+            DeleteItem(item);
+            if (isSelect)
+            {
+                ClearSettings();
+                Select(0);
+            }
+        }
+
         protected override void ClearItems()
         {
             var componets = ItemsPanel.components.ToArray();
-            foreach (var item in componets)
+            foreach (EditableItemType item in componets)
             {
-                item.eventClick -= ItemClick;
-                item.eventMouseEnter -= ItemHover;
-                item.eventMouseLeave -= ItemLeave;
-                ItemsPanel.RemoveUIComponent(item);
-                Destroy(item.gameObject);
+                DeleteItem(item);
             }
+        }
+        private void DeleteItem(EditableItemType item)
+        {
+            item.eventClick -= ItemClick;
+            item.eventMouseEnter -= ItemHover;
+            item.eventMouseLeave -= ItemLeave;
+            ItemsPanel.RemoveUIComponent(item);
+            Destroy(item.gameObject);
         }
         protected override void RefreshItems()
         {
@@ -270,6 +290,10 @@ namespace NodeMarkup.UI.Editors
         protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as EditableItemType;
         protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = null;
         protected virtual void OnObjectSelect()
+        {
+
+        }
+        protected virtual void OnObjectDelete(EditableObject editableObject)
         {
 
         }

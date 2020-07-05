@@ -17,9 +17,14 @@ namespace NodeMarkup.UI.Editors
             get => Label.text;
             set => Label.text = value;
         }
+
+        public void Select() => normalBgSprite = "ButtonSmallPressed";
+        public void Unselect() => normalBgSprite = "ButtonSmall";
     }
     public abstract class EditableItem<EditableObject, IconType> : EditableItem where IconType : UIComponent
     {
+        public event Action<EditableItem<EditableObject, IconType>> OnDelete;
+
         EditableObject _object;
         public EditableObject Object
         {
@@ -31,13 +36,26 @@ namespace NodeMarkup.UI.Editors
                 OnObjectSet();
             }
         }
-        public IconType Icon { get; }
+        protected IconType Icon { get; set; }
+        private UIButton DeleteButton { get; set; }
 
-        public EditableItem()
+        public bool ShowIcon { get; set; }
+        public bool ShowDelete { get; set; }
+
+        public EditableItem(bool showIcon, bool showDelete)
         {
 #if STOPWATCH
             var sw = Stopwatch.StartNew();
 #endif
+            ShowIcon = showIcon;
+            ShowDelete = showDelete;
+
+            if (ShowIcon)
+                AddIcon();
+            AddLable();
+            if (ShowDelete)
+                AddDeleteButton();
+
             atlas = NodeMarkupPanel.InGameAtlas;
 
             normalBgSprite = "ButtonSmall";
@@ -46,9 +64,6 @@ namespace NodeMarkup.UI.Editors
             hoveredBgSprite = "ButtonSmallHovered";
             pressedBgSprite = "ButtonSmallPressed";
 
-            Icon = AddUIComponent<IconType>();
-
-            AddLable();
 
             height = 25;
 #if STOPWATCH
@@ -56,6 +71,11 @@ namespace NodeMarkup.UI.Editors
 #endif
         }
 
+        private void AddIcon()
+        {
+            Icon = AddUIComponent<IconType>();
+            Icon.isEnabled = ShowIcon;
+        }
         private void AddLable()
         {
             Label = AddUIComponent<UILabel>();
@@ -65,6 +85,18 @@ namespace NodeMarkup.UI.Editors
             Label.autoHeight = false;
             Label.textScale = 0.7f;
         }
+        private void AddDeleteButton()
+        {
+            DeleteButton = AddUIComponent<UIButton>();
+            DeleteButton.atlas = NodeMarkupPanel.InGameAtlas;
+            DeleteButton.normalBgSprite = "buttonclose";
+            DeleteButton.hoveredBgSprite = "buttonclosehover";
+            DeleteButton.pressedBgSprite = "buttonclosepressed";
+            DeleteButton.size = new Vector2(20, 20);
+            DeleteButton.isEnabled = ShowDelete;
+            DeleteButton.eventClick += DeleteClick;
+        }
+        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
         protected virtual void OnObjectSet()
         {
 
@@ -73,18 +105,25 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            if (Icon != null)
+            var labelWidth = size.x- 3;
+            if (ShowIcon)
             {
                 Icon.size = new Vector2(size.y - 6, size.y - 6);
                 Icon.relativePosition = new Vector2(3, 3);
+                labelWidth -= 25;
             }
 
-            if (Label != null)
+            if (ShowDelete)
             {
-                Label.size = new Vector2(size.x - size.y, size.y);
-                Label.relativePosition = new Vector3(size.y, 0);
+                DeleteButton.size = new Vector2(size.y - 6, size.y - 6);
+                DeleteButton.relativePosition = new Vector2(size.x - (size.y - 3), 3);
+                labelWidth -= 25;
             }
+
+            Label.size = new Vector2(labelWidth, size.y);
+            Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, 0);
         }
+
         public virtual void Refresh()
         {
             Text = Object.ToString();

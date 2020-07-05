@@ -27,7 +27,7 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var point in enter.Points)
                 {
-                    AddItem(point);
+                    var item = AddItem(point);
                 }
             }
 #if STOPWATCH
@@ -56,6 +56,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
+        public PointItem() : base(true, false) { }
         protected override void OnObjectSet()
         {
             Icon.Color = Object.Color;

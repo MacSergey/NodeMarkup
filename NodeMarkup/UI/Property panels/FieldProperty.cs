@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -61,6 +62,7 @@ namespace NodeMarkup.UI.Editors
             Field.eventTextSubmitted += FieldTextSubmitted;
             Field.textScale = 0.7f;
             Field.verticalAlignment = UIVerticalAlignment.Middle;
+            Field.padding = new RectOffset(0, 0, 6, 0);
 
         }
         protected abstract ValueType Increment(ValueType value, ValueType step);

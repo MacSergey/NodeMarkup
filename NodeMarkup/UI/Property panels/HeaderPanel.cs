@@ -82,6 +82,7 @@ namespace NodeMarkup.UI.Editors
             SaveTemplateButton.pressedBgSprite = "InfoDisplayFocused";
             SaveTemplateButton.text = "Save as template";
             SaveTemplateButton.textScale = 0.7f;
+            SaveTemplateButton.textPadding = new RectOffset(0, 0, 2, 0);
             SaveTemplateButton.size = new Vector2(120, 20);
             SaveTemplateButton.textColor = Color.black;
             SaveTemplateButton.hoveredTextColor = Color.black;
@@ -110,12 +111,12 @@ namespace NodeMarkup.UI.Editors
             SelectTemplate.popupColor = new Color32(45, 52, 61, 255);
             SelectTemplate.popupTextColor = new Color32(170, 170, 170, 255);
             SelectTemplate.textScale = 0.7f;
+            SelectTemplate.textFieldPadding = new RectOffset(8, 0, 6, 0);
             SelectTemplate.textColor = Color.black;
             SelectTemplate.popupColor = Color.white;
             SelectTemplate.popupTextColor = Color.black;
             SelectTemplate.verticalAlignment = UIVerticalAlignment.Middle;
             SelectTemplate.horizontalAlignment = UIHorizontalAlignment.Left;
-            SelectTemplate.textFieldPadding = new RectOffset(8, 0, 8, 0);
             SelectTemplate.itemPadding = new RectOffset(14, 0, 8, 0);
             SelectTemplate.filteredItems = new int[] { 0 };
             SelectTemplate.eventDropdownOpen += DropdownOpen;
@@ -186,7 +187,7 @@ namespace NodeMarkup.UI.Editors
         }
         public new void Init(bool isDefault)
         {
-            base.Init(true);
+            base.Init(false);
 
             SetAsDefaultButton.text = $"{(isDefault ? "Unset" : "Set")} as default";
         }
@@ -206,6 +207,7 @@ namespace NodeMarkup.UI.Editors
             SetAsDefaultButton.hoveredBgSprite = "InfoDisplayHover";
             SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";
             SetAsDefaultButton.textScale = 0.7f;
+            SetAsDefaultButton.textPadding = new RectOffset(0, 0, 2, 0);
             SetAsDefaultButton.size = new Vector2(120, 20);
             SetAsDefaultButton.textColor = Color.black;
             SetAsDefaultButton.hoveredTextColor = Color.black;

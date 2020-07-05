@@ -83,6 +83,7 @@ namespace NodeMarkup.UI.Editors
             field.textScale = 0.7f;
             field.selectOnFocus = true;
             field.verticalAlignment = UIVerticalAlignment.Middle;
+            field.padding = new RectOffset(0, 0, 6, 0);
 
             return field;
         }
