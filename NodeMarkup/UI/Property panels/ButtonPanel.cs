@@ -24,7 +24,7 @@ namespace NodeMarkup.UI.Editors
         {
             Button = AddUIComponent<UIButton>();
 
-            Button.atlas = TextureUtil.GetAtlas("Ingame");
+            Button.atlas = NodeMarkupPanel.InGameAtlas;
             Button.normalBgSprite = "ButtonWhite";
             Button.disabledBgSprite = "ButtonWhiteDisabled";
             Button.hoveredBgSprite = "ButtonWhiteHovered";

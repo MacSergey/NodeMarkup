@@ -4,6 +4,7 @@ using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -15,77 +16,19 @@ namespace NodeMarkup.UI.Editors
         public NodeMarkupPanel NodeMarkupPanel { get; private set; }
         protected Markup Markup => NodeMarkupPanel.Markup;
 
-        public abstract string Name { get; }
-
-        public virtual void Init(NodeMarkupPanel panel)
-        {
-            NodeMarkupPanel = panel;
-        }
-
-        public virtual void UpdateEditor()
-        {
-            ClearItems();
-            if(Markup != null)
-                FillItems();
-            ClearSettings();
-            Select(0);
-        }
-        protected virtual void RefreshItems() { }
-        protected virtual void ClearItems() { }
-        protected virtual void ClearSettings() { }
-        protected virtual void FillItems() { }
-        public virtual void Select(int index) { }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
-        public virtual void OnUpdate() { }
-        public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
-        {
-            isDone = true;
-            NodeMarkupPanel.EndEditorAction();
-        }
-        public virtual void OnSecondaryMouseClicked(out bool isDone)
-        {
-            isDone = true;
-            NodeMarkupPanel.EndEditorAction();
-        }
-        public virtual void EndEditorAction() { }
-
-        protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
-        protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
-        protected abstract void ItemLeave(UIComponent component, UIMouseEventParameter eventParam);
-    }
-    public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
-        where EditableItemType : EditableItem<EditableObject, ItemIcon>
-        where ItemIcon : UIComponent
-    {
-        EditableItemType _selectItem;
-
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollbar ItemsScrollbar { get; set; }
         protected UIScrollablePanel SettingsPanel { get; set; }
         protected UIScrollbar SettingsScrollbar { get; set; }
 
-        protected EditableItemType HoverItem { get; set; }
-        protected bool IsHoverItem => HoverItem != null;
-        protected EditableItemType SelectItem
-        {
-            get => _selectItem;
-            private set
-            {
-                if (_selectItem != null)
-                    _selectItem.isEnabled = true;
-
-                _selectItem = value;
-                _selectItem.isEnabled = false;
-            }
-        }
-        protected EditableObject EditObject => SelectItem.Object;
+        public abstract string Name { get; }
 
         public Editor()
         {
             autoLayout = true;
             autoLayoutDirection = LayoutDirection.Horizontal;
             clipChildren = true;
-            atlas = TextureUtil.GetAtlas("Ingame");
+            atlas = NodeMarkupPanel.InGameAtlas;
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
@@ -101,7 +44,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.builtinKeyNavigation = true;
             ItemsPanel.clipChildren = true;
             ItemsPanel.eventSizeChanged += ItemsPanelSizeChanged;
-            ItemsPanel.atlas = TextureUtil.GetAtlas("Ingame");
+            ItemsPanel.atlas = NodeMarkupPanel.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
 
             ItemsScrollbar = AddScrollbar();
@@ -131,7 +74,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
             SettingsPanel.builtinKeyNavigation = true;
             SettingsPanel.clipChildren = true;
-            SettingsPanel.atlas = TextureUtil.GetAtlas("Ingame");
+            SettingsPanel.atlas = NodeMarkupPanel.InGameAtlas;
             SettingsPanel.backgroundSprite = "UnlockingItemBackground";
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
@@ -194,6 +137,70 @@ namespace NodeMarkup.UI.Editors
 
             return scrollbar;
         }
+
+        public virtual void Init(NodeMarkupPanel panel)
+        {
+            NodeMarkupPanel = panel;
+        }
+
+        public virtual void UpdateEditor()
+        {
+            Logger.LogDebug($"{nameof(Editor)}.{nameof(UpdateEditor)}");
+
+            ClearItems();
+            if (Markup != null)
+            {
+                FillItems();
+            }
+            ClearSettings();
+            Select(0);
+        }
+        protected virtual void RefreshItems() { }
+        protected virtual void ClearItems() { }
+        protected virtual void ClearSettings() { }
+        protected virtual void FillItems() { }
+        public virtual void Select(int index) { }
+        public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
+        public virtual void OnUpdate() { }
+        public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
+        {
+            isDone = true;
+            NodeMarkupPanel.EndEditorAction();
+        }
+        public virtual void OnSecondaryMouseClicked(out bool isDone)
+        {
+            isDone = true;
+            NodeMarkupPanel.EndEditorAction();
+        }
+        public virtual void EndEditorAction() { }
+
+        protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
+        protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
+        protected abstract void ItemLeave(UIComponent component, UIMouseEventParameter eventParam);
+    }
+    public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
+        where EditableItemType : EditableItem<EditableObject, ItemIcon>
+        where ItemIcon : UIComponent
+    {
+        EditableItemType _selectItem;
+
+        protected EditableItemType HoverItem { get; set; }
+        protected bool IsHoverItem => HoverItem != null;
+        protected EditableItemType SelectItem
+        {
+            get => _selectItem;
+            private set
+            {
+                if (_selectItem != null)
+                    _selectItem.isEnabled = true;
+
+                _selectItem = value;
+                _selectItem.isEnabled = false;
+            }
+        }
+        protected EditableObject EditObject => SelectItem.Object;
+
+        
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -208,6 +215,9 @@ namespace NodeMarkup.UI.Editors
 
         public EditableItemType AddItem(EditableObject editableObject)
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             var item = ItemsPanel.AddUIComponent<EditableItemType>();
             item.name = editableObject.ToString();
             item.width = ItemsPanel.width;
@@ -215,7 +225,9 @@ namespace NodeMarkup.UI.Editors
             item.eventClick += ItemClick;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
-
+#if STOPWATCH
+            Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(Editor)}: {sw.ElapsedMilliseconds}ms");
+#endif
 
             return item;
         }
@@ -281,117 +293,6 @@ namespace NodeMarkup.UI.Editors
         {
             if (ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => System.Object.ReferenceEquals(c.Object, editableObject)) is EditableItemType item)
                 Select(item);
-        }
-    }
-    public abstract class EditableItem : UIButton
-    {
-        protected UILabel Label { get; set; }
-
-        public string Text
-        {
-            get => Label.text;
-            set => Label.text = value;
-        }
-    }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItem where IconType : UIComponent
-    {
-        EditableObject _object;
-        public EditableObject Object
-        {
-            get => _object;
-            set
-            {
-                _object = value;
-                Refresh();
-                OnObjectSet();
-            }
-        }
-        public IconType Icon { get; }
-
-        public EditableItem()
-        {
-            atlas = TextureUtil.GetAtlas("Ingame");
-
-            normalBgSprite = "ButtonSmall";
-            disabledBgSprite = "ButtonSmallPressed";
-            focusedBgSprite = "ButtonSmallPressed";
-            hoveredBgSprite = "ButtonSmallHovered";
-            pressedBgSprite = "ButtonSmallPressed";
-
-            Icon = AddUIComponent<IconType>();
-
-            Label = AddUIComponent<UILabel>();
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.autoSize = false;
-            Label.autoHeight = false;
-            Label.textScale = 0.7f;
-
-            height = 25;
-        }
-
-        protected virtual void OnObjectSet()
-        {
-
-        }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            if (Icon != null)
-            {
-                Icon.size = new Vector2(size.y - 6, size.y - 6);
-                Icon.relativePosition = new Vector2(3, 3);
-            }
-
-            if (Label != null)
-            {
-                Label.size = new Vector2(size.x - size.y, size.y);
-                Label.relativePosition = new Vector3(size.y, 0);
-            }
-        }
-        public virtual void Refresh()
-        {
-            Text = Object.ToString();
-        }
-    }
-
-    public class ColorIcon : UIButton
-    {
-        private UIButton ColorCircule { get; set; }
-        public Color32 Color
-        {
-            get => ColorCircule.color;
-            set
-            {
-                ColorCircule.color = value;
-                ColorCircule.disabledColor = value;
-            }
-        }
-        public ColorIcon()
-        {
-            atlas = TextureUtil.GetAtlas("Ingame");
-            normalBgSprite = "PieChartWhiteBg";
-            disabledBgSprite = "PieChartWhiteBg";
-            isInteractive = false;
-            color = UnityEngine.Color.white;
-
-            ColorCircule = AddUIComponent<UIButton>();
-            ColorCircule.atlas = TextureUtil.GetAtlas("Ingame");
-            ColorCircule.normalBgSprite = "PieChartWhiteBg";
-            ColorCircule.normalFgSprite = "PieChartWhiteFg";
-            ColorCircule.disabledBgSprite = "PieChartWhiteBg";
-            ColorCircule.disabledFgSprite = "PieChartWhiteFg";
-            ColorCircule.isInteractive = false;
-            ColorCircule.relativePosition = new Vector3(2, 2);
-        }
-        protected override void OnSizeChanged()
-        {
-            if (ColorCircule != null)
-            {
-                ColorCircule.height = height - 4;
-                ColorCircule.width = width - 4;
-            }
         }
     }
 }

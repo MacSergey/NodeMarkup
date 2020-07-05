@@ -1,8 +1,10 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Threading;
+using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -31,19 +33,34 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void FillItems()
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             foreach (var line in Markup.Lines)
             {
                 AddItem(line);
             }
+#if STOPWATCH
+            Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
+#endif
         }
         protected override void OnObjectSelect()
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             GetRuleEdges();
             AddAddButton();
             AddRulePanels();
+#if STOPWATCH
+            Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
+#endif
         }
         private void GetRuleEdges()
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             var intersectWith = EditObject.IntersectWith();
 
             RuleEdges.Clear();
@@ -53,6 +70,9 @@ namespace NodeMarkup.UI.Editors
 
             RuleEdgeBounds.Clear();
             RuleEdgeBounds.AddRange(RuleEdges.Select(r => new LineRawRuleEdgeBound(EditObject, r)));
+#if DEBUG
+            Logger.LogDebug($"{nameof(LinesEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
+#endif
         }
         private void AddRulePanels()
         {
@@ -152,8 +172,8 @@ namespace NodeMarkup.UI.Editors
             {
                 if (IsHoverItem)
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f, 0f, 0f, -1f, 1280f, false, true);
-                if (IsHoverRuleEdgePanel && 
-                    HoverRuleEdgePanel.SelectedObject is LineRawRuleEdgeBase lineRawRuleEdge && 
+                if (IsHoverRuleEdgePanel &&
+                    HoverRuleEdgePanel.SelectedObject is LineRawRuleEdgeBase lineRawRuleEdge &&
                     RuleEdgeBounds.FirstOrDefault(b => b.LineRawRuleEdge == lineRawRuleEdge) is LineRawRuleEdgeBound bounds)
                 {
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, bounds.Position, 0.5f, -1f, 1280f, false, true);
@@ -183,7 +203,7 @@ namespace NodeMarkup.UI.Editors
 
         public RulePanel()
         {
-            atlas = TextureUtil.GetAtlas("Ingame");
+            atlas = NodeMarkupPanel.InGameAtlas;
             backgroundSprite = "AssetEditorItemBackground";
             autoLayout = true;
             autoFitChildrenVertically = true;
@@ -322,8 +342,8 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if(TemplateManager.AddTemplate(Rule.Style, out LineStyleTemplate template));
-                Editor.NodeMarkupPanel.EditTemplate(template);
+            if (TemplateManager.AddTemplate(Rule.Style, out LineStyleTemplate template)) ;
+            Editor.NodeMarkupPanel.EditTemplate(template);
         }
         private void OnSelectTemplate(LineStyleTemplate template)
         {

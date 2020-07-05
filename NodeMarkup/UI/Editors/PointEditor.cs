@@ -3,6 +3,7 @@ using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void FillItems()
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             foreach (var enter in Markup.Enters)
             {
                 foreach (var point in enter.Points)
@@ -26,6 +30,9 @@ namespace NodeMarkup.UI.Editors
                     AddItem(point);
                 }
             }
+#if STOPWATCH
+            Logger.LogDebug($"{nameof(PointsEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
+#endif
         }
         protected override void OnObjectSelect()
         {

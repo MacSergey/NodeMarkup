@@ -35,7 +35,7 @@ namespace NodeMarkup.UI.Editors
         {
             DropDown = Control.AddUIComponent<DropDownType>();
 
-            DropDown.atlas = TextureUtil.GetAtlas("Ingame");
+            DropDown.atlas = NodeMarkupPanel.InGameAtlas;
             DropDown.height = 20;
             DropDown.width = 230;
             DropDown.listBackground = "TextFieldPanel";
@@ -64,7 +64,7 @@ namespace NodeMarkup.UI.Editors
             DropDown.verticalAlignment = UIVerticalAlignment.Middle;
 
             var button = DropDown.AddUIComponent<UIButton>();
-            button.atlas = TextureUtil.GetAtlas("Ingame");
+            button.atlas = NodeMarkupPanel.InGameAtlas;
             button.text = string.Empty;
             button.size = DropDown.size;
             button.relativePosition = new Vector3(0f, 0f);

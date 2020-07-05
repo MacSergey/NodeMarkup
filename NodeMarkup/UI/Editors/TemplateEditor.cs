@@ -3,6 +3,7 @@ using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -23,19 +24,31 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             foreach (var templates in TemplateManager.Templates)
             {
                 AddItem(templates);
             }
+#if STOPWATCH
+            Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
+#endif
         }
 
         protected override void OnObjectSelect()
         {
+#if STOPWATCH
+            var sw = Stopwatch.StartNew();
+#endif
             AddHeader();
             AddTemplateName();
             AddColorProperty();
             AddStyleProperty();
             AddStyleProperties();
+#if STOPWATCH
+            Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
+#endif
         }
         private void AddHeader()
         {
@@ -178,7 +191,7 @@ namespace NodeMarkup.UI.Editors
         public bool IsDefault { set => isVisible = value; }
         public DefaultTemplateIcon()
         {
-            atlas = TextureUtil.GetAtlas("Ingame");
+            atlas = NodeMarkupPanel.InGameAtlas;
             backgroundSprite = "ParkLevelStar";
         }
     }
