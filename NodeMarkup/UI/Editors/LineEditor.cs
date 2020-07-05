@@ -307,7 +307,7 @@ namespace NodeMarkup.UI.Editors
             if (Rule.Style is IDashedLine dashedStyle)
             {
                 var dashLengthProperty = AddUIComponent<FloatPropertyPanel>();
-                dashLengthProperty.Text = "Dashed lenght";
+                dashLengthProperty.Text = "Dashed length";
                 dashLengthProperty.UseWheel = true;
                 dashLengthProperty.Step = 0.1f;
                 dashLengthProperty.Init();
@@ -316,7 +316,7 @@ namespace NodeMarkup.UI.Editors
                 StyleProperties.Add(dashLengthProperty);
 
                 var spaceLengthProperty = AddUIComponent<FloatPropertyPanel>();
-                spaceLengthProperty.Text = "Space lenght";
+                spaceLengthProperty.Text = "Space length";
                 spaceLengthProperty.UseWheel = true;
                 spaceLengthProperty.Step = 0.1f;
                 spaceLengthProperty.Init();

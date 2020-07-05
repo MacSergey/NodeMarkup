@@ -103,6 +103,11 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
         }
+        public static void DeleteAll()
+        {
+            Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(DeleteAll)}");
+            NodesMarkup.Clear();
+        }
 
         public static XElement ToXml()
         {

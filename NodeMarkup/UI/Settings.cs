@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.UI
 {
@@ -25,21 +27,22 @@ namespace NodeMarkup.UI
 
         public static void OnSettingsUI(UIHelperBase helper)
         {
-            KeyMapping(helper);
-            Other(helper);
+            AddKeyMapping(helper);
+            AddGeneral(helper);
+            AddOther(helper);
         }
-        private static void KeyMapping(UIHelperBase helper)
+        private static void AddKeyMapping(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup("Shortcuts") as UIHelper;
             UIPanel panel = group.self as UIPanel;
 
             var keymappings = panel.gameObject.AddComponent<KeymappingsPanel>();
-            keymappings.AddKeymapping("Activation Shortcut", NodeMarkupTool.ActivationShortcut);
+            keymappings.AddKeymapping("Activate tool", NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping("Delete all node lines", NodeMarkupTool.DeleteAllShortcut);
         }
-        private static void Other(UIHelperBase helper)
+        private static void AddGeneral(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup("Settings") as UIHelper;
+            UIHelper group = helper.AddGroup("General") as UIHelper;
 
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
@@ -71,6 +74,22 @@ namespace NodeMarkup.UI
             var showCheckBox = group.AddCheckbox("Show tooltips", true, OnShowToolTipsChanged) as UICheckBox;
 
             void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
+        }
+        private static void AddOther(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup("Other") as UIHelper;
+
+            AddDeleteAll(group);
+        }
+        private static void AddDeleteAll(UIHelper group)
+        {
+            var button = group.AddButton("Delete marking from all intersections", Click) as UIButton;
+            button.textColor = Color.red;
+
+            void Click()
+            {
+                MarkupManager.DeleteAll();
+            }
         }
     }
 }
