@@ -155,6 +155,12 @@ namespace NodeMarkup.UI.Editors
             ClearSettings();
             Select(0);
         }
+        public void ClearEditor()
+        {
+            Logger.LogDebug($"{nameof(Editor)}.{nameof(ClearEditor)}");
+            ClearItems();
+            ClearSettings();
+        }
         protected virtual void RefreshItems() { }
         protected virtual void ClearItems() { }
         protected virtual void ClearSettings() { }
