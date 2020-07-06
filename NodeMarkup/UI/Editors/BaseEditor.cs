@@ -177,6 +177,9 @@ namespace NodeMarkup.UI.Editors
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemLeave(UIComponent component, UIMouseEventParameter eventParam);
+
+        public void StopScroll() => SettingsPanel.scrollWheelDirection = UIOrientation.Horizontal;
+        public void StartScroll() => SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
     }
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
         where EditableItemType : EditableItem<EditableObject, ItemIcon>

@@ -15,6 +15,8 @@ namespace NodeMarkup.UI.Editors
 
         public event Action<ValueType> OnValueChanged;
         public event Action<ValueType> OnValueSubmitted;
+        public event Action OnHover;
+        public event Action OnLeave;
 
         protected abstract bool CanUseWheel { get; }
         public bool UseWheel { get; set; }
@@ -60,16 +62,23 @@ namespace NodeMarkup.UI.Editors
             Field.eventTextChanged += FieldTextChanged;
             Field.eventMouseWheel += FieldMouseWheel;
             Field.eventTextSubmitted += FieldTextSubmitted;
+            Field.eventMouseHover += FieldHover;
+            Field.eventMouseLeave += FieldLeave;
             Field.textScale = 0.7f;
             Field.verticalAlignment = UIVerticalAlignment.Middle;
             Field.padding = new RectOffset(0, 0, 6, 0);
 
         }
+
+
+
         protected abstract ValueType Increment(ValueType value, ValueType step);
         protected abstract ValueType Decrement(ValueType value, ValueType step);
 
         protected virtual void FieldTextChanged(UIComponent component, string text) => OnValueChanged?.Invoke(Value);
         protected virtual void FieldTextSubmitted(UIComponent component, string value) => OnValueSubmitted?.Invoke(Value);
+        private void FieldHover(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke();
+        private void FieldLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke();
         private void FieldMouseWheel(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (CanUseWheel && UseWheel)

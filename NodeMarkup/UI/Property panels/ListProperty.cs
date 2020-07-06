@@ -133,5 +133,6 @@ namespace NodeMarkup.UI.Editors
             Objects.Add(item);
             AddItem(label ?? item.ToString());
         }
+        protected override void OnMouseWheel(UIMouseEventParameter p) { }
     }
 }

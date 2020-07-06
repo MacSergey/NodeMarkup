@@ -13,9 +13,6 @@ namespace NodeMarkup.Manager
 {
     public static class MarkupManager
     {
-        static Color aciColor = Color.white;
-        static Color textureColor = Color.white;
-        static Color materialColor = Color.white;
         static Dictionary<ushort, Markup> NodesMarkup { get; } = new Dictionary<ushort, Markup>();
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
 
@@ -111,7 +108,7 @@ namespace NodeMarkup.Manager
 
         public static XElement ToXml()
         {
-            var confix = new XElement(nameof(NodeMarkup));
+            var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", Mod.Version));
             foreach (var markup in NodesMarkup.Values)
             {
                 var markupConfig = markup.ToXml();

@@ -307,6 +307,8 @@ namespace NodeMarkup.UI.Editors
                 dashLengthProperty.Init();
                 dashLengthProperty.Value = dashedStyle.DashLength;
                 dashLengthProperty.OnValueChanged += DashLengthChanged;
+                dashLengthProperty.OnHover += PropertyHover;
+                dashLengthProperty.OnLeave += PropertyLeave;
                 StyleProperties.Add(dashLengthProperty);
 
                 var spaceLengthProperty = AddUIComponent<FloatPropertyPanel>();
@@ -316,6 +318,8 @@ namespace NodeMarkup.UI.Editors
                 spaceLengthProperty.Init();
                 spaceLengthProperty.Value = dashedStyle.SpaceLength;
                 spaceLengthProperty.OnValueChanged += SpaceLengthChanged;
+                spaceLengthProperty.OnHover += PropertyHover;
+                spaceLengthProperty.OnLeave += PropertyLeave;
                 StyleProperties.Add(spaceLengthProperty);
             }
             if (Rule.Style is IDoubleLine doubleStyle)
@@ -327,9 +331,15 @@ namespace NodeMarkup.UI.Editors
                 offsetProperty.Init();
                 offsetProperty.Value = doubleStyle.Offset;
                 offsetProperty.OnValueChanged += OffsetChanged;
+                offsetProperty.OnHover += PropertyHover;
+                offsetProperty.OnLeave += PropertyLeave;
                 StyleProperties.Add(offsetProperty);
             }
         }
+
+        private void PropertyHover() => Editor.StopScroll();
+        private void PropertyLeave() => Editor.StartScroll();
+
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)
