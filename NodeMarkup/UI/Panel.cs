@@ -107,7 +107,7 @@ namespace NodeMarkup.UI
         public void SetNode(ushort nodeId)
         {
             Show();
-            Caption.text = $"Edit node #{nodeId} markup";
+            Caption.text = $"Edit node #{nodeId} marking";
 
             Markup = Manager.MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;
