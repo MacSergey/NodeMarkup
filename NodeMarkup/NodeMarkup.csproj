@@ -112,10 +112,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\slider.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Preview\PreviewImage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
 copy $(TargetDir)*.dll  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-copy $(TargetDir)*.dll  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"</PostBuildEvent>
+copy $(TargetDir)*.dll  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"
+copy $(SolutionDir)\Preview\PreviewImage.png  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
+copy $(SolutionDir)\Preview\PreviewImage.png  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"</PostBuildEvent>
   </PropertyGroup>
 </Project>
