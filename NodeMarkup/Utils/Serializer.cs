@@ -63,18 +63,46 @@ namespace NodeMarkup.Utils
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnSaveData)}");
 
-            var sw = Stopwatch.StartNew();
+            string xml = string.Empty;
+            try
+            {
+                var sw = Stopwatch.StartNew();
 
-            var config = Manager.MarkupManager.ToXml();
-            var xml = config.ToString(SaveOptions.DisableFormatting);
+                var config = MarkupManager.ToXml();
+                xml = config.ToString(SaveOptions.DisableFormatting);
 #if DEBUG
             Logger.LogDebug(xml);
 #endif
-            var compress = Compress(xml);
-            serializableDataManager.SaveData(Id, compress);
+                var compress = Compress(xml);
+                serializableDataManager.SaveData(Id, compress);
 
-            sw.Stop();
-            Logger.LogDebug($"Data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
+                sw.Stop();
+                Logger.LogDebug($"Data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
+            }
+            catch(Exception error)
+            {
+                Logger.LogError(() => "Save data failed", error);
+                SaveSettingDump(xml);
+                throw;
+            }
+        }
+        private void SaveSettingDump(string xml)
+        {
+            Logger.LogDebug($"{nameof(Serializer)}.{nameof(SaveSettingDump)}");
+            try
+            {
+                var file = $"MarkingRecovery{DateTime.Now.Ticks}.bak";
+                using (var fileStream = File.Create(file))
+                using (var writer = new StreamWriter(fileStream))
+                {
+                    writer.Write(xml);
+                }
+                Logger.LogDebug($"Dump saved {file}");
+            }
+            catch(Exception error)
+            {
+                Logger.LogError(() => "Save dump failed", error);
+            }
         }
 
         public static XElement Parse(string text, LoadOptions options = LoadOptions.None)
