@@ -14,7 +14,6 @@ namespace NodeMarkup.UI.Editors
         protected UITextField Field { get; set; }
 
         public event Action<ValueType> OnValueChanged;
-        public event Action<ValueType> OnValueSubmitted;
         public event Action OnHover;
         public event Action OnLeave;
 
@@ -27,7 +26,8 @@ namespace NodeMarkup.UI.Editors
             set => Field.width = value;
         }
 
-        public ValueType Value
+        private bool ValueProgress { get; set; } = false;
+        public virtual ValueType Value
         {
             get
             {
@@ -40,7 +40,16 @@ namespace NodeMarkup.UI.Editors
                     return default;
                 }
             }
-            set => Field.text = value.ToString();
+            set
+            {
+                if (!ValueProgress)
+                {
+                    ValueProgress = true;
+                    Field.text = value.ToString();
+                    OnValueChanged?.Invoke(value);
+                    ValueProgress = false;
+                }
+            }
         }
 
         public FieldPropertyPanel()
@@ -59,7 +68,7 @@ namespace NodeMarkup.UI.Editors
             Field.cursorWidth = 1;
             Field.cursorBlinkTime = 0.45f;
             Field.selectOnFocus = true;
-            Field.eventTextChanged += FieldTextChanged;
+            Field.tooltip = CanUseWheel ? "Scroll wheel to change" : string.Empty;
             Field.eventMouseWheel += FieldMouseWheel;
             Field.eventTextSubmitted += FieldTextSubmitted;
             Field.eventMouseHover += FieldHover;
@@ -75,11 +84,10 @@ namespace NodeMarkup.UI.Editors
         protected abstract ValueType Increment(ValueType value, ValueType step);
         protected abstract ValueType Decrement(ValueType value, ValueType step);
 
-        protected virtual void FieldTextChanged(UIComponent component, string text) => OnValueChanged?.Invoke(Value);
-        protected virtual void FieldTextSubmitted(UIComponent component, string value) => OnValueSubmitted?.Invoke(Value);
+        protected virtual void FieldTextSubmitted(UIComponent component, string value) => Value = Value;
         private void FieldHover(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke();
         private void FieldLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke();
-        private void FieldMouseWheel(UIComponent component, UIMouseEventParameter eventParam)
+        protected virtual void FieldMouseWheel(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (CanUseWheel && UseWheel)
             {
@@ -90,12 +98,37 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class FloatPropertyPanel : FieldPropertyPanel<float>
+    public abstract class ComparableFieldPropertyPanel<ValueType> : FieldPropertyPanel<ValueType>
+        where ValueType : IComparable<ValueType>
+    {
+        public ValueType MinValue { get; set; } = default;
+        public ValueType MaxValue { get; set; } = default;
+        public bool CheckMax { get; set; } = false;
+        public bool CheckMin { get; set; } = false;
+
+        public override ValueType Value 
+        { 
+            get => base.Value;
+            set
+            {
+                var newValue = value;
+
+                if (CheckMin && newValue.CompareTo(MinValue) < 0)
+                    newValue = MinValue;
+
+                if (CheckMax && newValue.CompareTo(MaxValue) > 0)
+                    newValue = MaxValue;
+
+                base.Value = newValue;
+            }
+        }
+    }
+    public class FloatPropertyPanel : ComparableFieldPropertyPanel<float>
     {
         protected override bool CanUseWheel => true;
 
-        protected override float Decrement(float value, float step) => value + step;
-        protected override float Increment(float value, float step) => value - step;
+        protected override float Decrement(float value, float step) => (value + step).RoundToNearest(step);
+        protected override float Increment(float value, float step) => (value - step).RoundToNearest(step);
     }
     public class StringPropertyPanel : FieldPropertyPanel<string>
     {

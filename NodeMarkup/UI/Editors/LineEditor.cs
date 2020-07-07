@@ -304,6 +304,8 @@ namespace NodeMarkup.UI.Editors
                 dashLengthProperty.Text = "Dashed length";
                 dashLengthProperty.UseWheel = true;
                 dashLengthProperty.Step = 0.1f;
+                dashLengthProperty.CheckMin = true;
+                dashLengthProperty.MinValue = 0.1f;
                 dashLengthProperty.Init();
                 dashLengthProperty.Value = dashedStyle.DashLength;
                 dashLengthProperty.OnValueChanged += DashLengthChanged;
@@ -315,6 +317,8 @@ namespace NodeMarkup.UI.Editors
                 spaceLengthProperty.Text = "Space length";
                 spaceLengthProperty.UseWheel = true;
                 spaceLengthProperty.Step = 0.1f;
+                spaceLengthProperty.CheckMin = true;
+                spaceLengthProperty.MinValue = 0.1f;
                 spaceLengthProperty.Init();
                 spaceLengthProperty.Value = dashedStyle.SpaceLength;
                 spaceLengthProperty.OnValueChanged += SpaceLengthChanged;

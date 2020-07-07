@@ -131,7 +131,7 @@ namespace NodeMarkup.Utils
 
         public static float DeltaAngle(this Bezier3 bezier) => 180 - Vector3.Angle(bezier.b - bezier.a, bezier.c - bezier.d);
 
-        public static int ToInt(this Color32 color) => (color.r << 24) + (color.r << 16) + (color.r << 8) + color.a;
+        public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
         public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
     }
 }
