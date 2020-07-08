@@ -3,6 +3,7 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,8 @@ namespace NodeMarkup.UI
             UIHelper group = helper.AddGroup("Other") as UIHelper;
 
             AddDeleteAll(group);
+            AddDump(group);
+            AddImport(group);
         }
         private static void AddDeleteAll(UIHelper group)
         {
@@ -89,6 +92,24 @@ namespace NodeMarkup.UI
             void Click()
             {
                 MarkupManager.DeleteAll();
+            }
+        }
+        private static void AddDump(UIHelper group)
+        {
+            var button = group.AddButton("Dump marking data to file", Click) as UIButton;
+
+            void Click()
+            {
+                Serializer.OnDumpData();
+            }
+        }
+        private static void AddImport(UIHelper group)
+        {
+            var button = group.AddButton("Import marking data from file", Click) as UIButton;
+
+            void Click()
+            {
+                Serializer.OnImportData();
             }
         }
     }

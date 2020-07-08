@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
         public List<MarkupLineRawRule> RawRules { get; } = new List<MarkupLineRawRule>();
 
         public Bezier3 Trajectory { get; private set; }
-        public MarkupDash[] Dashes { get; private set; }
+        public MarkupDash[] Dashes { get; private set; } = new MarkupDash[0];
 
         public string XmlSection => XmlName;
 

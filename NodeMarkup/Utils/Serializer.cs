@@ -45,7 +45,7 @@ namespace NodeMarkup.Utils
                     Logger.LogDebug(decompress);
 #endif
                     var config = Parse(decompress);
-                    Manager.MarkupManager.FromXml(config);
+                    MarkupManager.FromXml(config);
 
                     sw.Stop();
                     Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
@@ -57,6 +57,29 @@ namespace NodeMarkup.Utils
             }
             else
                 Logger.LogDebug($"Saved data not founded");
+        }
+        public static void OnImportData()
+        {
+            Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnImportData)}");
+
+            try
+            {
+                var file = $"MarkingImport.xml";
+                using (var fileStream = File.OpenRead(file))
+                using (var reader = new StreamReader(fileStream))
+                {
+                    var xml = reader.ReadToEnd();
+                    var config = Parse(xml);
+
+                    MarkupManager.FromXml(config);
+
+                    Logger.LogDebug($"Data was imported");
+                }
+            }
+            catch(Exception error)
+            {
+                Logger.LogError(() => "Could import data", error);
+            }
         }
 
         public override void OnSaveData()
@@ -86,12 +109,29 @@ namespace NodeMarkup.Utils
                 throw;
             }
         }
-        private void SaveSettingDump(string xml)
+        public static void OnDumpData()
+        {
+            Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnDumpData)}");
+
+            try
+            {
+                var config = MarkupManager.ToXml();
+                var xml = config.ToString(SaveOptions.DisableFormatting);
+
+                SaveSettingDump(xml);
+            }
+            catch (Exception error)
+            {
+                Logger.LogError(() => "Save dump failed", error);
+            }
+        }
+
+        private static void SaveSettingDump(string xml)
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(SaveSettingDump)}");
             try
             {
-                var file = $"MarkingRecovery{DateTime.Now.Ticks}.bak";
+                var file = $"MarkingRecovery{DateTime.Now.Ticks}.xml";
                 using (var fileStream = File.Create(file))
                 using (var writer = new StreamWriter(fileStream))
                 {
