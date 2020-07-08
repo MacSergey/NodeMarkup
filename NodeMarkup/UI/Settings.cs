@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace NodeMarkup.UI
 {
@@ -86,6 +87,9 @@ namespace NodeMarkup.UI
         }
         private static void AddOther(UIHelperBase helper)
         {
+            if (SceneManager.GetActiveScene().name is string scene && (scene == "MainMenu" || scene == "IntroScreen"))
+                return;
+
             UIHelper group = helper.AddGroup("Other") as UIHelper;
 
             AddDeleteAll(group);

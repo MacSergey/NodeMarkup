@@ -160,6 +160,8 @@ namespace NodeMarkup.Utils
 
         public static XElement Parse(string text, LoadOptions options = LoadOptions.None)
         {
+            Logger.LogDebug($"{nameof(Serializer)}.{nameof(Parse)}");
+
             using (StringReader input = new StringReader(text))
             {
                 XmlReaderSettings xmlReaderSettings = GetXmlReaderSettings(options);
@@ -183,6 +185,8 @@ namespace NodeMarkup.Utils
 
         static byte[] Compress(string xml)
         {
+            Logger.LogDebug($"{nameof(Serializer)}.{nameof(Compress)}");
+
             var buffer = Encoding.UTF8.GetBytes(xml);
 
             using (var outStream = new MemoryStream())
@@ -198,6 +202,8 @@ namespace NodeMarkup.Utils
 
         static string Decompress(byte[] data)
         {
+            Logger.LogDebug($"{nameof(Serializer)}.{nameof(Decompress)}");
+
             using (var inStream = new MemoryStream(data))
             using (var zipStream = new GZipStream(inStream, CompressionMode.Decompress))
             using (var outStream = new MemoryStream())
