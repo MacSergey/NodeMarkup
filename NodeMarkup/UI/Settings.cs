@@ -91,7 +91,15 @@ namespace NodeMarkup.UI
 
             void Click()
             {
+                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = "Delete all markings";
+                messageBox.MessageText = "Do you really want to remove all markings?\nThis action cannot be undone.";
+                messageBox.OnButton1Click = Сonfirmed;
+            }
+            bool Сonfirmed()
+            {
                 MarkupManager.DeleteAll();
+                return true;
             }
         }
         private static void AddDump(UIHelper group)
@@ -100,7 +108,29 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                Serializer.OnDumpData();
+                var result = Serializer.OnDumpData(out string path);
+
+                if (result)
+                {
+                    var messageBox = MessageBox.ShowModal<TwoButtonMessageBox>();
+                    messageBox.CaprionText = "Dump marking data";
+                    messageBox.MessageText = "Dump success saved";
+                    messageBox.Button1Text = "Copy path to clipboard";
+                    messageBox.Button2Text = "Ok";
+                    messageBox.OnButton1Click = CopyToClipboard;
+
+                    bool CopyToClipboard()
+                    {
+                        Clipboard.text = path;
+                        return false;
+                    }
+                }
+                else
+                {
+                    var messageBox = MessageBox.ShowModal<OkMessageBox>();
+                    messageBox.CaprionText = "Dump marking data";
+                    messageBox.MessageText = "Dump failed";
+                }
             }
         }
         private static void AddImport(UIHelper group)
@@ -109,7 +139,21 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                Serializer.OnImportData();
+                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = "Import marking data";
+                messageBox.MessageText = "Do you really want to import data?\nThe imported data will replace all existing markup.\nThis action cannot be undone";
+                messageBox.OnButton1Click = StartImport;
+
+            }
+            bool StartImport()
+            {
+                var result = Serializer.OnImportData();
+
+                var resultMessageBox = MessageBox.ShowModal<OkMessageBox>();
+                resultMessageBox.CaprionText = "Import marking data";
+                resultMessageBox.MessageText = result ? "Marking data success imported" : "Marking data import failed";
+
+                return true;
             }
         }
     }

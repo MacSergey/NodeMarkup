@@ -11,6 +11,7 @@ using System.Xml;
 using System.IO.Compression;
 using ColossalFramework.IO;
 using System.Linq.Expressions;
+using NodeMarkup.UI;
 
 namespace NodeMarkup.Utils
 {
@@ -58,7 +59,7 @@ namespace NodeMarkup.Utils
             else
                 Logger.LogDebug($"Saved data not founded");
         }
-        public static void OnImportData()
+        public static bool OnImportData()
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnImportData)}");
 
@@ -74,11 +75,14 @@ namespace NodeMarkup.Utils
                     MarkupManager.FromXml(config);
 
                     Logger.LogDebug($"Data was imported");
+
+                    return true;
                 }
             }
             catch(Exception error)
             {
                 Logger.LogError(() => "Could import data", error);
+                return false;
             }
         }
 
@@ -105,11 +109,11 @@ namespace NodeMarkup.Utils
             catch(Exception error)
             {
                 Logger.LogError(() => "Save data failed", error);
-                SaveSettingDump(xml);
+                SaveSettingDump(xml, out _);
                 throw;
             }
         }
-        public static void OnDumpData()
+        public static bool OnDumpData(out string path)
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnDumpData)}");
 
@@ -118,15 +122,18 @@ namespace NodeMarkup.Utils
                 var config = MarkupManager.ToXml();
                 var xml = config.ToString(SaveOptions.DisableFormatting);
 
-                SaveSettingDump(xml);
+                return SaveSettingDump(xml, out path);
             }
             catch (Exception error)
             {
                 Logger.LogError(() => "Save dump failed", error);
+
+                path = string.Empty;
+                return false;
             }
         }
 
-        private static void SaveSettingDump(string xml)
+        private static bool SaveSettingDump(string xml, out string path)
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(SaveSettingDump)}");
             try
@@ -137,11 +144,17 @@ namespace NodeMarkup.Utils
                 {
                     writer.Write(xml);
                 }
-                Logger.LogDebug($"Dump saved {file}");
+
+                path = Path.Combine(Directory.GetCurrentDirectory(), file);
+                Logger.LogDebug($"Dump saved {path}");
+                return true;
             }
             catch(Exception error)
             {
                 Logger.LogError(() => "Save dump failed", error);
+
+                path = string.Empty;
+                return false;
             }
         }
 

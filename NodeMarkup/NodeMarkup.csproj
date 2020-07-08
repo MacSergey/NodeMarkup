@@ -85,6 +85,7 @@
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\Editors\TemplateEditor.cs" />
     <Compile Include="UI\Keymapping.cs" />
+    <Compile Include="UI\MessageBox.cs" />
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
     <Compile Include="UI\Property panels\ButtonPanel.cs" />
