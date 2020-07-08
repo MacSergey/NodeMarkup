@@ -413,8 +413,22 @@ namespace NodeMarkup
 
             if (ToolMode == Mode.ConnectLine && !IsSelectPoint && MarkupManager.TryGetMarkup(SelectNodeId, out Markup markup))
             {
-                markup.Clear();
-                Panel.UpdatePanel();
+                if (UI.Settings.DeleteWarnings)
+                {
+                    var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                    messageBox.CaprionText = $"Clear node#{SelectNodeId} markings";
+                    messageBox.MessageText = "Do you really want clear all markings?\nThis action cannot be undone";
+                    messageBox.OnButton1Click = Delete;
+                }
+                else
+                    Delete();
+
+                bool Delete()
+                {
+                    markup.Clear();
+                    Panel.UpdatePanel();
+                    return true;
+                }
             }
         }
 

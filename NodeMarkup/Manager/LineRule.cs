@@ -217,7 +217,6 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        //public MarkupLineRawRule() : this(LineStyle.Empty) { }
         public MarkupLineRawRule(LineStyle style, LineRawRuleEdgeBase from = null, LineRawRuleEdgeBase to = null)
         {
             Style = style;

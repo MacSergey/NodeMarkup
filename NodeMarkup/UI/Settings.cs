@@ -18,6 +18,7 @@ namespace NodeMarkup.UI
 
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
+        public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
@@ -47,6 +48,7 @@ namespace NodeMarkup.UI
 
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
+            AddDeleteRequest(group);
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -75,6 +77,12 @@ namespace NodeMarkup.UI
             var showCheckBox = group.AddCheckbox("Show tooltips", true, OnShowToolTipsChanged) as UICheckBox;
 
             void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
+        }
+        private static void AddDeleteRequest(UIHelper group)
+        {
+            var requestCheckBox = group.AddCheckbox("Show delete warnings", true, OnDeleteRequestChanged) as UICheckBox;
+
+            void OnDeleteRequestChanged(bool request) => DeleteWarnings.value = request;
         }
         private static void AddOther(UIHelperBase helper)
         {

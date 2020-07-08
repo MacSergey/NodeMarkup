@@ -56,7 +56,10 @@ namespace NodeMarkup.UI.Editors
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
+        public override string Description => "point";
+
         public PointItem() : base(true, false) { }
+
         protected override void OnObjectSet()
         {
             Icon.Color = Object.Color;

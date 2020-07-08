@@ -97,9 +97,23 @@ namespace NodeMarkup.UI.Editors
         }
         public void DeleteRule(RulePanel rulePanel)
         {
-            EditObject.RemoveRule(rulePanel.Rule);
-            SettingsPanel.RemoveUIComponent(rulePanel);
-            Destroy(rulePanel);
+            if (Settings.DeleteWarnings)
+            {
+                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = $"Delete rule";
+                messageBox.MessageText = "Do you really want delete rule?\nThis action cannot be undone";
+                messageBox.OnButton1Click = Delete;
+            }
+            else
+                Delete();
+
+            bool Delete()
+            {
+                EditObject.RemoveRule(rulePanel.Rule);
+                SettingsPanel.RemoveUIComponent(rulePanel);
+                Destroy(rulePanel);
+                return true;
+            }
         }
         public void SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel)
         {
@@ -185,13 +199,15 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectDelete(MarkupLine line)
         {
-            Markup.RemoveConnect(line.PointPair);
+                Markup.RemoveConnect(line.PointPair);
         }
     }
 
-    public class LineItem : EditableItem<MarkupLine, UIPanel> 
+    public class LineItem : EditableItem<MarkupLine, UIPanel>
     {
         public LineItem() : base(false, true) { }
+
+        public override string Description => "line";
     }
 
     public class RulePanel : UIPanel

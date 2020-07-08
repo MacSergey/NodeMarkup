@@ -178,8 +178,10 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class TemplateItem : EditableItem<LineStyleTemplate, DefaultTemplateIcon> 
+    public class TemplateItem : EditableItem<LineStyleTemplate, DefaultTemplateIcon>
     {
+        public override string Description => "template";
+
         public TemplateItem() : base(true, true) { }
 
         protected override void OnObjectSet() => SetIsDefault();

@@ -209,7 +209,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected EditableObject EditObject => SelectItem.Object;
 
-        
+
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -246,13 +246,27 @@ namespace NodeMarkup.UI.Editors
             if (!(deleteItem is EditableItemType item))
                 return;
 
-            OnObjectDelete(item.Object);
-            var isSelect = item == SelectItem;
-            DeleteItem(item);
-            if (isSelect)
+            if (Settings.DeleteWarnings)
             {
-                ClearSettings();
-                Select(0);
+                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = $"Delete {item.Description}";
+                messageBox.MessageText = $"Do you really want delete {item.Description} {item.Object}?\nThis action cannot be undone";
+                messageBox.OnButton1Click = Delete;
+            }
+            else
+                Delete();
+
+            bool Delete()
+            {
+                OnObjectDelete(item.Object);
+                var isSelect = item == SelectItem;
+                DeleteItem(item);
+                if (isSelect)
+                {
+                    ClearSettings();
+                    Select(0);
+                }
+                return true;
             }
         }
 

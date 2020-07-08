@@ -26,6 +26,7 @@ namespace NodeMarkup.UI.Editors
         public event Action<EditableItem<EditableObject, IconType>> OnDelete;
 
         EditableObject _object;
+        public abstract string Description { get; }
         public EditableObject Object
         {
             get => _object;
