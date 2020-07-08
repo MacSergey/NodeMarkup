@@ -152,6 +152,8 @@ namespace NodeMarkup.Manager
             }
             else
             {
+                if (trajectory.a.y != trajectory.d.y)
+                    length *= 1.1f;
                 foreach (var dash in CalculateDashes(trajectory, direction, length))
                 {
                     yield return dash;
