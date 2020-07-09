@@ -115,13 +115,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Preview\PreviewImage.png" />
+    <Content Include="Preview\PreviewImageBeta.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
 copy $(TargetDir)*.dll  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
 copy $(TargetDir)*.dll  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"
-copy $(SolutionDir)\Preview\PreviewImage.png  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-copy $(SolutionDir)\Preview\PreviewImage.png  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"</PostBuildEvent>
+copy $(SolutionDir)Preview\PreviewImage.png  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
+copy $(SolutionDir)Preview\PreviewImage.png  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta"
+copy $(TargetDir)*.dll  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta"
+copy $(SolutionDir)Preview\PreviewImageBeta.png  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta"</PostBuildEvent>
   </PropertyGroup>
 </Project>

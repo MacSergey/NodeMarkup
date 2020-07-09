@@ -18,7 +18,11 @@ namespace NodeMarkup
 #endif
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
         public string Name { get; } = $"{StaticName} {Version}";
+#if DEBUG
+        public string Description => "This is BETA version, stability and absence of errors are not guaranteed";
+#else
         public string Description => "Just do make markings at intersections";
+#endif
 
         static AppMode CurrentMode => SimulationManager.instance.m_ManagersWrapper.loading.currentMode;
 
