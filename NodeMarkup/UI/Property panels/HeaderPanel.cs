@@ -80,7 +80,7 @@ namespace NodeMarkup.UI.Editors
             SaveTemplateButton.normalBgSprite = "InfoDisplay";
             SaveTemplateButton.hoveredBgSprite = "InfoDisplayHover";
             SaveTemplateButton.pressedBgSprite = "InfoDisplayFocused";
-            SaveTemplateButton.text = "Save as template";
+            SaveTemplateButton.text = NodeMarkup.Localize.HeaderPanel_SaveAsTemplate;
             SaveTemplateButton.textScale = 0.7f;
             SaveTemplateButton.textPadding = new RectOffset(0, 0, 2, 0);
             SaveTemplateButton.size = new Vector2(120, 20);
@@ -141,7 +141,7 @@ namespace NodeMarkup.UI.Editors
 
             SelectTemplate.triggerButton = button;
 
-            Add(new LineStyleTemplate("Apply template", LineStyle.DefaultSolid) { IsEmpty = true });
+            Add(new LineStyleTemplate(NodeMarkup.Localize.HeaderPanel_ApplyTemplate, LineStyle.DefaultSolid) { IsEmpty = true });
         }
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
         private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
@@ -189,7 +189,7 @@ namespace NodeMarkup.UI.Editors
         {
             base.Init(false);
 
-            SetAsDefaultButton.text = $"{(isDefault ? "Unset" : "Set")} as default";
+            SetAsDefaultButton.text = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
 
         protected override void OnSizeChanged()
@@ -208,7 +208,7 @@ namespace NodeMarkup.UI.Editors
             SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";
             SetAsDefaultButton.textScale = 0.7f;
             SetAsDefaultButton.textPadding = new RectOffset(0, 0, 2, 0);
-            SetAsDefaultButton.size = new Vector2(120, 20);
+            SetAsDefaultButton.size = new Vector2(180, 20);
             SetAsDefaultButton.textColor = Color.black;
             SetAsDefaultButton.hoveredTextColor = Color.black;
             SetAsDefaultButton.pressedTextColor = Color.black;

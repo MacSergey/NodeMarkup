@@ -13,7 +13,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : Editor<LineItem, MarkupLine, UIPanel>
     {
-        public override string Name { get; } = "Lines";
+        public override string Name => NodeMarkup.Localize.LineEditor_Lines;
 
         private ButtonPanel AddButton { get; set; }
 
@@ -77,7 +77,7 @@ namespace NodeMarkup.UI.Editors
             if (SupportRules)
             {
                 AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
-                AddButton.Text = "Add Rule";
+                AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
                 AddButton.Init();
                 AddButton.OnButtonClick += AddRule;
             }
@@ -110,8 +110,8 @@ namespace NodeMarkup.UI.Editors
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = $"Delete rule";
-                messageBox.MessageText = "Do you really want delete rule?\nThis action cannot be undone";
+                messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
+                messageBox.MessageText = NodeMarkup.Localize.LineEditor_DeleteRuleMessage;
                 messageBox.OnButton1Click = Delete;
             }
             else
@@ -224,9 +224,9 @@ namespace NodeMarkup.UI.Editors
                 switch (SelectRuleEdgePanel.Position)
                 {
                     case LineRawRuleEdgeBase.EdgePosition.From:
-                        return "Selet rule`s from point";
+                        return NodeMarkup.Localize.LineEditor_InfoSelectFrom;
                     case LineRawRuleEdgeBase.EdgePosition.To:
-                        return "Select rule`s to point";
+                        return NodeMarkup.Localize.LineEditor_InfoSelectTo;
                 }
             }
 
@@ -252,7 +252,7 @@ namespace NodeMarkup.UI.Editors
     {
         public LineItem() : base(false, true) { }
 
-        public override string Description => "line";
+        public override string Description => NodeMarkup.Localize.LineEditor_ItemDescription;
     }
 
     public class RulePanel : UIPanel
@@ -319,7 +319,7 @@ namespace NodeMarkup.UI.Editors
         private void AddFromProperty()
         {
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            From.Text = "From";
+            From.Text = NodeMarkup.Localize.LineEditor_From;
             From.Position = LineRawRuleEdgeBase.EdgePosition.From;
             From.Init();
             From.AddRange(Editor.RuleEdges);
@@ -333,7 +333,7 @@ namespace NodeMarkup.UI.Editors
         private void AddToProperty()
         {
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            To.Text = "To";
+            To.Text = NodeMarkup.Localize.LineEditor_To;
             To.Position = LineRawRuleEdgeBase.EdgePosition.To;
             To.Init();
             To.AddRange(Editor.RuleEdges);
@@ -346,7 +346,7 @@ namespace NodeMarkup.UI.Editors
         private void AddColorProperty()
         {
             var colorProperty = AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = "Color";
+            colorProperty.Text = NodeMarkup.Localize.LineEditor_Color;
             colorProperty.Init();
             colorProperty.Value = Rule.Style.Color;
             colorProperty.OnValueChanged += ColorChanged;
@@ -355,7 +355,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleTypeProperty()
         {
             var styleProperty = AddUIComponent<StylePropertyPanel>();
-            styleProperty.Text = "Style";
+            styleProperty.Text = NodeMarkup.Localize.LineEditor_Style;
             styleProperty.Init();
             styleProperty.SelectedObject = Rule.Style.Type;
             styleProperty.OnSelectObjectChanged += StyleChanged;
@@ -366,7 +366,7 @@ namespace NodeMarkup.UI.Editors
             if (Rule.Style is IDashedLine dashedStyle)
             {
                 var dashLengthProperty = AddUIComponent<FloatPropertyPanel>();
-                dashLengthProperty.Text = "Dashed length";
+                dashLengthProperty.Text = NodeMarkup.Localize.LineEditor_DashedLength;
                 dashLengthProperty.UseWheel = true;
                 dashLengthProperty.Step = 0.1f;
                 dashLengthProperty.CheckMin = true;
@@ -379,7 +379,7 @@ namespace NodeMarkup.UI.Editors
                 StyleProperties.Add(dashLengthProperty);
 
                 var spaceLengthProperty = AddUIComponent<FloatPropertyPanel>();
-                spaceLengthProperty.Text = "Space length";
+                spaceLengthProperty.Text = NodeMarkup.Localize.LineEditor_SpaceLength;
                 spaceLengthProperty.UseWheel = true;
                 spaceLengthProperty.Step = 0.1f;
                 spaceLengthProperty.CheckMin = true;
@@ -394,7 +394,7 @@ namespace NodeMarkup.UI.Editors
             if (Rule.Style is IDoubleLine doubleStyle)
             {
                 var offsetProperty = AddUIComponent<FloatPropertyPanel>();
-                offsetProperty.Text = "Offset";
+                offsetProperty.Text = NodeMarkup.Localize.LineEditor_Offset;
                 offsetProperty.UseWheel = true;
                 offsetProperty.Step = 0.1f;
                 offsetProperty.Init();

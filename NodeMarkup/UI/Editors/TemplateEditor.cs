@@ -12,7 +12,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class TemplateEditor : Editor<TemplateItem, LineStyleTemplate, DefaultTemplateIcon>
     {
-        public override string Name => "Templates";
+        public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
         private StringPropertyPanel NameProperty { get; set; }
         private TemplateHeaderPanel HeaderPanel { get; set; }
@@ -59,7 +59,7 @@ namespace NodeMarkup.UI.Editors
         private void AddTemplateName()
         {
             NameProperty = SettingsPanel.AddUIComponent<StringPropertyPanel>();
-            NameProperty.Text = "Name";
+            NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.UseWheel = false;
             NameProperty.Init();
@@ -69,7 +69,7 @@ namespace NodeMarkup.UI.Editors
         private void AddColorProperty()
         {
             var colorProperty = SettingsPanel.AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = "Color";
+            colorProperty.Text = NodeMarkup.Localize.TemplateEditor_Color;
             colorProperty.Init();
             colorProperty.Value = EditObject.Style.Color;
             colorProperty.OnValueChanged += ColorChanged;
@@ -77,7 +77,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperty()
         {
             var styleProperty = SettingsPanel.AddUIComponent<StylePropertyPanel>();
-            styleProperty.Text = "Style";
+            styleProperty.Text = NodeMarkup.Localize.TemplateEditor_Style;
             styleProperty.Init();
             styleProperty.SelectedObject = EditObject.Style.Type;
             styleProperty.OnSelectObjectChanged += StyleChanged;
@@ -87,7 +87,7 @@ namespace NodeMarkup.UI.Editors
             if (EditObject.Style is IDashedLine dashedStyle)
             {
                 var dashLengthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                dashLengthProperty.Text = "Dashed length";
+                dashLengthProperty.Text = NodeMarkup.Localize.TemplateEditor_DashedLength;
                 dashLengthProperty.UseWheel = true;
                 dashLengthProperty.Step = 0.1f;
                 dashLengthProperty.CheckMin = true;
@@ -98,7 +98,7 @@ namespace NodeMarkup.UI.Editors
                 StyleProperties.Add(dashLengthProperty);
 
                 var spaceLengthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                spaceLengthProperty.Text = "Space length";
+                spaceLengthProperty.Text = NodeMarkup.Localize.TemplateEditor_SpaceLength;
                 spaceLengthProperty.UseWheel = true;
                 spaceLengthProperty.Step = 0.1f;
                 spaceLengthProperty.CheckMin = true;
@@ -111,7 +111,7 @@ namespace NodeMarkup.UI.Editors
             if (EditObject.Style is IDoubleLine doubleStyle)
             {
                 var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                offsetProperty.Text = "Offset";
+                offsetProperty.Text = NodeMarkup.Localize.TemplateEditor_Offset;
                 offsetProperty.UseWheel = true;
                 offsetProperty.Step = 0.1f;
                 offsetProperty.Init();
@@ -180,7 +180,7 @@ namespace NodeMarkup.UI.Editors
 
     public class TemplateItem : EditableItem<LineStyleTemplate, DefaultTemplateIcon>
     {
-        public override string Description => "template";
+        public override string Description => NodeMarkup.Localize.TemplateEditor_ItemDescription;
 
         public TemplateItem() : base(true, true) { }
 

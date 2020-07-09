@@ -12,7 +12,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
-        public override string Name { get; } = "Points";
+        public override string Name => NodeMarkup.Localize.PointEditor_Points;
 
         public PointsEditor()
         {
@@ -37,7 +37,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             var offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-            offset.Text = "Offset";
+            offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             offset.UseWheel = true;
             offset.Step = 0.1f;
             offset.Init();
@@ -56,7 +56,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
-        public override string Description => "point";
+        public override string Description => NodeMarkup.Localize.PointEditor_ItemDescription;
 
         public PointItem() : base(true, false) { }
 

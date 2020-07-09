@@ -30,7 +30,7 @@ namespace NodeMarkup.UI.Editors
                 {
                     _selectIndex = value;
                     OnSelectChanged?.Invoke(SelectedObject);
-                    Label.text = SelectedObject?.ToString() ?? "Not set";
+                    Label.text = SelectedObject?.ToString() ?? NodeMarkup.Localize.SelectPanel_NotSet;
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace NodeMarkup.UI.Editors
         private void AddLable()
         {
             Label = Control.AddUIComponent<UILabel>();
-            Label.text = "Not set";
+            Label.text = NodeMarkup.Localize.SelectPanel_NotSet;
             Label.atlas = NodeMarkupPanel.InGameAtlas;
             Label.backgroundSprite = "TextFieldPanel";
             Label.isInteractive = true;

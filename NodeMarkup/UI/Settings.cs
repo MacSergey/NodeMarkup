@@ -37,17 +37,17 @@ namespace NodeMarkup.UI
         }
         private static void AddKeyMapping(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup("Shortcuts") as UIHelper;
+            UIHelper group = helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper;
             UIPanel panel = group.self as UIPanel;
 
             var keymappings = panel.gameObject.AddComponent<KeymappingsPanel>();
-            keymappings.AddKeymapping("Activate tool", NodeMarkupTool.ActivationShortcut);
-            keymappings.AddKeymapping("Delete all node lines", NodeMarkupTool.DeleteAllShortcut);
-            keymappings.AddKeymapping("Add new line rule", NodeMarkupTool.AddRuleShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ActivateTool, NodeMarkupTool.ActivationShortcut);
+            keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
+            keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
         }
         private static void AddGeneral(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup("General") as UIHelper;
+            UIHelper group = helper.AddGroup(Localize.Settings_General) as UIHelper;
 
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
@@ -57,7 +57,7 @@ namespace NodeMarkup.UI
         private static void AddDistanceSetting(UIHelper group)
         {
             UITextField distanceField = null;
-            distanceField = group.AddTextfield("Render distance", RenderDistance.ToString(), OnDistanceChanged, OnDistanceSubmitted) as UITextField;
+            distanceField = group.AddTextfield(Localize.Settings_RenderDistance, RenderDistance.ToString(), OnDistanceChanged, OnDistanceSubmitted) as UITextField;
 
             void OnDistanceChanged(string distance) { }
             void OnDistanceSubmitted(string text)
@@ -78,19 +78,19 @@ namespace NodeMarkup.UI
         }
         private static void AddShowToolTipsSetting(UIHelper group)
         {
-            var showCheckBox = group.AddCheckbox("Show tooltips", ShowToolTip, OnShowToolTipsChanged) as UICheckBox;
+            var showCheckBox = group.AddCheckbox(Localize.Settings_ShowTooltips, ShowToolTip, OnShowToolTipsChanged) as UICheckBox;
 
             void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
         }
         private static void AddDeleteRequest(UIHelper group)
         {
-            var requestCheckBox = group.AddCheckbox("Show delete warnings", DeleteWarnings, OnDeleteRequestChanged) as UICheckBox;
+            var requestCheckBox = group.AddCheckbox(Localize.Settings_ShowDeleteWarnings, DeleteWarnings, OnDeleteRequestChanged) as UICheckBox;
 
             void OnDeleteRequestChanged(bool request) => DeleteWarnings.value = request;
         }
         private static void AddQuickRuleSetup(UIHelper group)
         {
-            var quickRuleSetupCheckBox = group.AddCheckbox("Quick rule setup", QuickRuleSetip, OnQuickRuleSetuptChanged) as UICheckBox;
+            var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetip, OnQuickRuleSetuptChanged) as UICheckBox;
 
             void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetip.value = request;
         }
@@ -99,7 +99,7 @@ namespace NodeMarkup.UI
             if (SceneManager.GetActiveScene().name is string scene && (scene == "MainMenu" || scene == "IntroScreen"))
                 return;
 
-            UIHelper group = helper.AddGroup("Other") as UIHelper;
+            UIHelper group = helper.AddGroup(Localize.Settings_Other) as UIHelper;
 
             AddDeleteAll(group);
             AddDump(group);
@@ -107,14 +107,14 @@ namespace NodeMarkup.UI
         }
         private static void AddDeleteAll(UIHelper group)
         {
-            var button = group.AddButton("Delete marking from all intersections", Click) as UIButton;
+            var button = group.AddButton(Localize.Settings_DeleteMarkingButton, Click) as UIButton;
             button.textColor = Color.red;
 
             void Click()
             {
                 var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = "Delete all markings";
-                messageBox.MessageText = "Do you really want to remove all markings?\nThis action cannot be undone.";
+                messageBox.CaprionText = Localize.Settings_DeleteMarkingCaption;
+                messageBox.MessageText = Localize.Settings_DeleteMarkingMessage;
                 messageBox.OnButton1Click = Сonfirmed;
             }
             bool Сonfirmed()
@@ -125,7 +125,7 @@ namespace NodeMarkup.UI
         }
         private static void AddDump(UIHelper group)
         {
-            var button = group.AddButton("Dump marking data to file", Click) as UIButton;
+            var button = group.AddButton(Localize.Settings_DumpMarkingButton, Click) as UIButton;
 
             void Click()
             {
@@ -134,10 +134,10 @@ namespace NodeMarkup.UI
                 if (result)
                 {
                     var messageBox = MessageBox.ShowModal<TwoButtonMessageBox>();
-                    messageBox.CaprionText = "Dump marking data";
-                    messageBox.MessageText = "Dump success saved";
-                    messageBox.Button1Text = "Copy path to clipboard";
-                    messageBox.Button2Text = "Ok";
+                    messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
+                    messageBox.MessageText = Localize.Settings_DumpMarkingMessageSuccess;
+                    messageBox.Button1Text = Localize.Settings_DumpMarkingButton1;
+                    messageBox.Button2Text = Localize.Settings_DumpMarkingButton2;
                     messageBox.OnButton1Click = CopyToClipboard;
 
                     bool CopyToClipboard()
@@ -149,20 +149,20 @@ namespace NodeMarkup.UI
                 else
                 {
                     var messageBox = MessageBox.ShowModal<OkMessageBox>();
-                    messageBox.CaprionText = "Dump marking data";
-                    messageBox.MessageText = "Dump failed";
+                    messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
+                    messageBox.MessageText = Localize.Settings_DumpMarkingMessageFailed;
                 }
             }
         }
         private static void AddImport(UIHelper group)
         {
-            var button = group.AddButton("Import marking data from file", Click) as UIButton;
+            var button = group.AddButton(Localize.Settings_ImportMarkingButton, Click) as UIButton;
 
             void Click()
             {
                 var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = "Import marking data";
-                messageBox.MessageText = "Do you really want to import data?\nThe imported data will replace all existing markup.\nThis action cannot be undone";
+                messageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
+                messageBox.MessageText = Localize.Settings_ImportMarkingMessage;
                 messageBox.OnButton1Click = StartImport;
 
             }
@@ -171,8 +171,8 @@ namespace NodeMarkup.UI
                 var result = Serializer.OnImportData();
 
                 var resultMessageBox = MessageBox.ShowModal<OkMessageBox>();
-                resultMessageBox.CaprionText = "Import marking data";
-                resultMessageBox.MessageText = result ? "Marking data success imported" : "Marking data import failed";
+                resultMessageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
+                resultMessageBox.MessageText = result ? Localize.Settings_ImportMarkingMessageSuccess : Localize.Settings_ImportMarkingMessageFailed;
 
                 return true;
             }

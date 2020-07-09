@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Editor_DeleteCaption" xml:space="preserve">
+    <value>Delete {0}</value>
+  </data>
+  <data name="Editor_DeleteMessage" xml:space="preserve">
+    <value>Do you really want delete {0} {1}?
+This action cannot be undone</value>
+  </data>
+  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
+    <value>Scroll wheel to change</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Apply template</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Save as template</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Set as default</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Unset as default</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Add Rule</value>
+  </data>
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>Dashed length</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Delete rule</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Do you really want delete rule?
+This action cannot be undone</value>
+  </data>
+  <data name="LineEditor_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Selet rule`s from point</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Select rule`s to point</value>
+  </data>
+  <data name="LineEditor_ItemDescription" xml:space="preserve">
+    <value>line</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="LineEditor_Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>Space length</value>
+  </data>
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="LineEditor_To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Intersect with {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Self edge point {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Dashed</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Double dashed</value>
+  </data>
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>DD</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Double solid</value>
+  </data>
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>DS</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="MessageBox_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Just do make markings at intersections</value>
+  </data>
+  <data name="Mod_DescriptionBeta" xml:space="preserve">
+    <value>This is BETA version, stability and absence of errors are not guaranteed!</value>
+  </data>
+  <data name="Panel_Caption" xml:space="preserve">
+    <value>Edit node #{0} marking</value>
+  </data>
+  <data name="PointEditor_ItemDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="Settings_ActivateTool" xml:space="preserve">
+    <value>Activate tool</value>
+  </data>
+  <data name="Settings_AddNewLineRule" xml:space="preserve">
+    <value>Add new line rule</value>
+  </data>
+  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+    <value>Delete all node lines</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Delete marking from all intersections</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Delete all markings</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Do you really want to remove all markings?
+	This action cannot be undone.</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Dump marking data to file</value>
+  </data>
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>Copy path to clipboard</value>
+  </data>
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Dump marking data</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>Dump failed</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>Dump success saved</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_ImportMarkingButton" xml:space="preserve">
+    <value>Import marking data from file</value>
+  </data>
+  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
+    <value>Import marking data</value>
+  </data>
+  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
+    <value>Do you really want to import data?
+The imported data will replace all existing markup.
+This action cannot be undone</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
+    <value>Marking data import failed</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
+    <value>Marking data success imported</value>
+  </data>
+  <data name="Settings_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Quick rule setup</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>Render distance</value>
+  </data>
+  <data name="Settings_Shortcuts" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Show delete warnings</value>
+  </data>
+  <data name="Settings_ShowTooltips" xml:space="preserve">
+    <value>Show tooltips</value>
+  </data>
+  <data name="TemplateEditor_Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="TemplateEditor_DashedLength" xml:space="preserve">
+    <value>Dashed length</value>
+  </data>
+  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+    <value>template</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TemplateEditor_Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
+    <value>Space length</value>
+  </data>
+  <data name="TemplateEditor_Style" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>New template</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Clear node markings</value>
+  </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>Do you really want clear all node#{0} markings?
+	This action cannot be undone</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Click for create line
++Shift - Solid
++Ctrl - Double"</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Click for delete line</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Node #{0}
+Click for edit marking</value>
+  </data>
+  <data name="Tool_InfoNode" xml:space="preserve">
+    <value>Select node for change marking</value>
+  </data>
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Select end point</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Select point for start
+create or delete line
++Shift to edit it</value>
+  </data>
+</root>

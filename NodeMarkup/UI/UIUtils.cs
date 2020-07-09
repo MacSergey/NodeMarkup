@@ -14,23 +14,23 @@ namespace NodeMarkup.UI
         {
             get
             {
-                bool flag = UIUtils.instance == null;
+                bool flag = instance == null;
                 if (flag)
                 {
-                    UIUtils.instance = new UIUtils();
+                    instance = new UIUtils();
                 }
-                return UIUtils.instance;
+                return instance;
             }
         }
         private void FindUIRoot()
         {
-            this.uiRoot = null;
+            uiRoot = null;
             foreach (UIView uiview in UnityEngine.Object.FindObjectsOfType<UIView>())
             {
                 bool flag = uiview.transform.parent == null && uiview.name == "UIView";
                 if (flag)
                 {
-                    this.uiRoot = uiview;
+                    uiRoot = uiview;
                     break;
                 }
             }
@@ -46,21 +46,21 @@ namespace NodeMarkup.UI
             }
             return text;
         }
-        public T FindComponent<T>(string name, UIComponent parent = null, UIUtils.FindOptions options = UIUtils.FindOptions.None) where T : UIComponent
+        public T FindComponent<T>(string name, UIComponent parent = null, FindOptions options = FindOptions.None) where T : UIComponent
         {
-            bool flag = this.uiRoot == null;
+            bool flag = uiRoot == null;
             if (flag)
             {
-                this.FindUIRoot();
-                bool flag2 = this.uiRoot == null;
+                FindUIRoot();
+                bool flag2 = uiRoot == null;
                 if (flag2)
                 {
-                    return default(T);
+                    return default;
                 }
             }
             foreach (T t in UnityEngine.Object.FindObjectsOfType<T>())
             {
-                bool flag3 = (options & UIUtils.FindOptions.NameContains) > UIUtils.FindOptions.None;
+                bool flag3 = (options & FindOptions.NameContains) > FindOptions.None;
                 bool flag4;
                 if (flag3)
                 {
@@ -81,7 +81,7 @@ namespace NodeMarkup.UI
                     }
                     else
                     {
-                        transform = this.uiRoot.transform;
+                        transform = uiRoot.transform;
                     }
                     Transform parent2 = t.transform.parent;
                     while (parent2 != null && parent2 != transform)
@@ -95,7 +95,7 @@ namespace NodeMarkup.UI
                     }
                 }
             }
-            return default(T);
+            return default;
         }
 
         public static IEnumerable<T> GetCompenentsWithName<T>(string name) where T : UIComponent

@@ -237,15 +237,15 @@ namespace NodeMarkup.UI
     {
         public OkMessageBox()
         {
-            ButtonText = "OK";
+            ButtonText = NodeMarkup.Localize.MessageBox_OK;
         }
     }
     public class YesNoMessageBox : TwoButtonMessageBox
     {
         public YesNoMessageBox()
         {
-            Button1Text = "Yes";
-            Button2Text = "No";
+            Button1Text = NodeMarkup.Localize.MessageBox_Yes;
+            Button2Text = NodeMarkup.Localize.MessageBox_No;
         }
     }
 }

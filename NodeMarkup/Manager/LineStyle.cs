@@ -3,6 +3,7 @@ using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -43,9 +44,9 @@ namespace NodeMarkup.Manager
             switch (type)
             {
                 case LineType.Solid: return DefaultSolid;
-                case LineType.Dash: return DefaultDashed;
+                case LineType.Dashed: return DefaultDashed;
                 case LineType.DoubleSolid: return DefaultDoubleSolid;
-                case LineType.DoubleDash: return DefaultDoubleDashed;
+                case LineType.DoubleDashed: return DefaultDoubleDashed;
                 default: return null;
             }
         }
@@ -53,10 +54,10 @@ namespace NodeMarkup.Manager
         {
             switch (type)
             {
-                case LineType.Solid: return "S";
-                case LineType.Dash: return "D";
-                case LineType.DoubleSolid: return "DS";
-                case LineType.DoubleDash: return "DD";
+                case LineType.Solid: return Localize.LineStyle_SolidShort;
+                case LineType.Dashed: return Localize.LineStyle_DashedShort;
+                case LineType.DoubleSolid: return Localize.LineStyle_DoubleSolidShort;
+                case LineType.DoubleDashed: return Localize.LineStyle_DoubleDashedShort;
                 default: return null;
             }
         }
@@ -119,10 +120,17 @@ namespace NodeMarkup.Manager
 
         public enum LineType
         {
+            [Description("LineStyle_Solid")]
             Solid,
-            Dash,
+
+            [Description("LineStyle_Dashed")]
+            Dashed,
+
+            [Description("LineStyle_DoubleSolid")]
             DoubleSolid,
-            DoubleDash
+
+            [Description("LineStyle_DoubleDashed")]
+            DoubleDashed
         }
     }
 
@@ -226,7 +234,7 @@ namespace NodeMarkup.Manager
     }
     public class DashedLineStyle : LineStyle, IDashedLine
     {
-        public override LineType Type { get; } = LineType.Dash;
+        public override LineType Type { get; } = LineType.Dashed;
 
         float _dashLength;
         float _spaceLength;
@@ -315,7 +323,7 @@ namespace NodeMarkup.Manager
     }
     public class DoubleDashedStyle : DashedLineStyle, IDoubleLine
     {
-        public override LineType Type { get; } = LineType.DoubleDash;
+        public override LineType Type { get; } = LineType.DoubleDashed;
 
         float _offset;
         public float Offset

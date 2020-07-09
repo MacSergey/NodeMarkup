@@ -247,24 +247,24 @@ namespace NodeMarkup
             switch (ToolMode)
             {
                 case Mode.SelectNode when IsHoverNode:
-                    ShowToolInfo($"Node #{HoverNodeId}\nClick for edit marking", position);
+                    ShowToolInfo(string.Format(Localize.Tool_InfoHoverNode, HoverNodeId), position);
                     break;
                 case Mode.SelectNode:
-                    ShowToolInfo("Select node for change marking", position);
+                    ShowToolInfo(Localize.Tool_InfoNode, position);
                     break;
                 case Mode.ConnectLine when IsSelectPoint && IsHoverPoint:
                     var markup = MarkupManager.Get(SelectNodeId);
                     var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                     if (markup.ExistConnection(pointPair))
-                        ShowToolInfo($"Click for delete line", position);
+                        ShowToolInfo(Localize.Tool_InfoDeleteLine, position);
                     else
-                        ShowToolInfo($"Click for create line\n+Shift - Solid\n+Ctrl - Double", position);
+                        ShowToolInfo(Localize.Tool_InfoCreateLine, position);
                     break;
                 case Mode.ConnectLine when IsSelectPoint:
-                    ShowToolInfo("Select end point", position);
+                    ShowToolInfo(Localize.Tool_InfoSelectEndPoint, position);
                     break;
                 case Mode.ConnectLine:
-                    ShowToolInfo("Select point for start\ncreate or delete line\n+Shift to edit it", position);
+                    ShowToolInfo(Localize.Tool_InfoSelectStartPoint, position);
                     break;
                 case Mode.PanelAction when Panel.GetInfo() is string panelInfo && !string.IsNullOrEmpty(panelInfo):
                     ShowToolInfo(panelInfo, position);
@@ -369,7 +369,7 @@ namespace NodeMarkup
         private void OnMakeLine(Event e)
         {
             var markup = Manager.MarkupManager.Get(SelectNodeId);
-            var lineType = e.shift ? (e.control ? LineStyle.LineType.DoubleSolid : LineStyle.LineType.Solid) : (e.control ? LineStyle.LineType.DoubleDash : LineStyle.LineType.Dash);
+            var lineType = e.shift ? (e.control ? LineStyle.LineType.DoubleSolid : LineStyle.LineType.Solid) : (e.control ? LineStyle.LineType.DoubleDashed : LineStyle.LineType.Dashed);
             var newLine = markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;
@@ -422,8 +422,8 @@ namespace NodeMarkup
                 if (UI.Settings.DeleteWarnings)
                 {
                     var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
-                    messageBox.CaprionText = $"Clear node markings";
-                    messageBox.MessageText = $"Do you really want clear all node#{SelectNodeId} markings?\nThis action cannot be undone";
+                    messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
+                    messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, SelectNodeId);
                     messageBox.OnButton1Click = Delete;
                 }
                 else

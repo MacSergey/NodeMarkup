@@ -251,8 +251,8 @@ namespace NodeMarkup.UI.Editors
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = $"Delete {item.Description}";
-                messageBox.MessageText = $"Do you really want delete {item.Description} {item.Object}?\nThis action cannot be undone";
+                messageBox.CaprionText = string.Format(NodeMarkup.Localize.Editor_DeleteCaption, item.Description);
+                messageBox.MessageText = string.Format(NodeMarkup.Localize.Editor_DeleteMessage, item.Description, item.Object);
                 messageBox.OnButton1Click = Delete;
             }
             else

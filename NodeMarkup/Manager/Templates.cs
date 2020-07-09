@@ -10,7 +10,7 @@ namespace NodeMarkup.Manager
 {
     public static class TemplateManager
     {
-        static string DefaultName { get; } = "New template";
+        static string DefaultName => Localize.Template_NewTemplate;
 
         static Dictionary<string, LineStyleTemplate> TemplatesDictionary { get; } = new Dictionary<string, LineStyleTemplate>();
         static Dictionary<LineStyle.LineType, LineStyleTemplate> DefaultTemplates { get; } = new Dictionary<LineStyle.LineType, LineStyleTemplate>();

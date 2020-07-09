@@ -1,6 +1,8 @@
 ﻿using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -21,8 +23,13 @@ namespace NodeMarkup.UI.Editors
 
             foreach (var value in Enum.GetValues(typeof(EnumType)).OfType<EnumType>())
             {
-                DropDown.AddItem(value);
+                DropDown.AddItem(value, GetDescription(value.ToString()));
             }
+        }
+        private string GetDescription(string item)
+        {
+            var description = typeof(EnumType).GetField(item).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? item;
+            return NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
         }
     }
     public class StylePropertyPanel : EnumPropertyPanel<LineStyle.LineType, StylePropertyPanel.StyleDropDown>

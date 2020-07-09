@@ -15,7 +15,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, Markup markup, out LineRawRuleEdgeBase ruleEdge)
         {
             var type = (EdgeType)config.GetAttrValue<int>("T");
-            switch(type)
+            switch (type)
             {
                 case EdgeType.IntersectLine when LineRawRuleEdge.FromXml(config, markup, out LineRawRuleEdge lineEdge):
                     ruleEdge = lineEdge;
@@ -60,7 +60,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, Markup markup, out LineRawRuleEdge lineEdge)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
-            if(markup.TryGetLine(lineId, out MarkupLine line))
+            if (markup.TryGetLine(lineId, out MarkupLine line))
             {
                 lineEdge = new LineRawRuleEdge(line);
                 return true;
@@ -95,7 +95,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public override string ToString() => $"Intersect with {Line}";
+        public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Line);
 
         public override bool Equals(LineRawRuleEdgeBase other) => other is LineRawRuleEdge otherLine && otherLine.Line == Line;
 
@@ -147,7 +147,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public override string ToString() => $"Self edge point {Point}";
+        public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
 
         public override bool Equals(LineRawRuleEdgeBase other) => other is SelfPointRawRuleEdge otherPoint && otherPoint.Point == Point;
 
@@ -336,7 +336,7 @@ namespace NodeMarkup.Manager
             }
 
             var edges = new List<LineRawRuleEdgeBase>();
-            foreach(var edgeConfig in config.Elements(LineRawRuleEdgeBase.XmlName))
+            foreach (var edgeConfig in config.Elements(LineRawRuleEdgeBase.XmlName))
             {
                 if (LineRawRuleEdgeBase.FromXml(edgeConfig, markup, out LineRawRuleEdgeBase edge))
                     edges.Add(edge);

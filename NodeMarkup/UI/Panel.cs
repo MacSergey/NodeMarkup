@@ -110,7 +110,7 @@ namespace NodeMarkup.UI
         public void SetNode(ushort nodeId)
         {
             Show();
-            Caption.text = $"Edit node #{nodeId} marking";
+            Caption.text = string.Format(NodeMarkup.Localize.Panel_Caption, nodeId);
 
             Markup = MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;

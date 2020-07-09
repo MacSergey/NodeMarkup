@@ -6,25 +6,28 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using NodeMarkup.UI;
+using System.Globalization;
+using ColossalFramework.Globalization;
+using ColossalFramework;
 
 namespace NodeMarkup
 {
     public class Mod : LoadingExtensionBase, IUserMod
     {
-#if DEBUG
-        public static string StaticName { get; } = "Intersection Marking Tool [BETA]";
-#else
         public static string StaticName { get; } = "Intersection Marking Tool";
-#endif
+
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
-        public string Name { get; } = $"{StaticName} {Version}";
+
 #if DEBUG
-        public string Description => "This is BETA version, stability and absence of errors are not guaranteed";
+        public string Name { get; } = $"{StaticName} {Version} [BETA]";
+        public string Description => Localize.Mod_DescriptionBeta;
 #else
-        public string Description => "Just do make markings at intersections";
+        public string Name { get; } = $"{StaticName} {Version}";
+        public string Description => Localize.Mod_Description;
 #endif
 
         static AppMode CurrentMode => SimulationManager.instance.m_ManagersWrapper.loading.currentMode;
+        static CultureInfo Culture => new CultureInfo(SingletonLite<LocaleManager>.instance.language);
 
         public void OnEnabled()
         {
@@ -36,6 +39,8 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnDisabled)}");
             Patcher.Unpatch();
             NodeMarkupTool.Remove();
+
+            LocaleManager.eventLocaleChanged -= LocaleChanged;
         }
 
         public override void OnLevelLoaded(LoadMode mode)
@@ -55,6 +60,21 @@ namespace NodeMarkup
             NodeMarkupTool.Remove();
         }
 
-        public void OnSettingsUI(UIHelperBase helper) => UI.Settings.OnSettingsUI(helper);
+        public void OnSettingsUI(UIHelperBase helper)
+        {
+            LocaleManager.eventLocaleChanged -= LocaleChanged;
+            LocaleManager.eventLocaleChanged += LocaleChanged;
+            LocaleChanged();
+
+            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
+            UI.Settings.OnSettingsUI(helper);
+        }
+
+        private void LocaleChanged()
+        {
+            Logger.LogDebug($"{nameof(Mod)}.{nameof(LocaleChanged)}");
+            Localize.Culture = Culture;
+            Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
+        }
     }
 }

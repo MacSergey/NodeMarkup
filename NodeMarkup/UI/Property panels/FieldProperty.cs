@@ -68,7 +68,7 @@ namespace NodeMarkup.UI.Editors
             Field.cursorWidth = 1;
             Field.cursorBlinkTime = 0.45f;
             Field.selectOnFocus = true;
-            Field.tooltip = CanUseWheel ? "Scroll wheel to change" : string.Empty;
+            Field.tooltip = CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
             Field.eventMouseWheel += FieldMouseWheel;
             Field.eventTextSubmitted += FieldTextSubmitted;
             Field.eventMouseHover += FieldHover;
