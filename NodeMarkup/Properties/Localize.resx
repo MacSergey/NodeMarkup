@@ -354,7 +354,7 @@ This action cannot be undone</value>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Click for create line
 +Shift - Solid
-+Ctrl - Double"</value>
++Ctrl - Double</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Click for delete line</value>

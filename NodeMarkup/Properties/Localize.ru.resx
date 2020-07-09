@@ -297,7 +297,7 @@
     <value>Не удалось импортировать  разметку</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Разметку успешно испортирована</value>
+    <value>Разметку успешно импортирована</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
     <value>Другие</value>
@@ -309,7 +309,7 @@
     <value>Дистанция отрисовки</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Горячии клавиши</value>
+    <value>Горячие клавиши</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Подтверждение удаления</value>
@@ -354,8 +354,8 @@
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Нажмите для создания линии
 +Shift - Сплошная
-+Ctrl - Двойная"</value>
-  </data>
++Ctrl - Двойная</value>
+	    </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Нажмите для удаления линии</value>
   </data>

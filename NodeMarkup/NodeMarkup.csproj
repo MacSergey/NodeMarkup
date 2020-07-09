@@ -113,6 +113,7 @@
     <Compile Include="Utils\TextureUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Localize.ge.resx" />
     <EmbeddedResource Include="Properties\Localize.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>

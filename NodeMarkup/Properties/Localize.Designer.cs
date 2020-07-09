@@ -753,7 +753,7 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Click for create line
         ///+Shift - Solid
-        ///+Ctrl - Double&quot;.
+        ///+Ctrl - Double.
         /// </summary>
         public static string Tool_InfoCreateLine {
             get {
