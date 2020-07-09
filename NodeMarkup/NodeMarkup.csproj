@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -77,6 +80,11 @@
     <Compile Include="Manager\Manager.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Localize.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localize.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tool.cs" />
     <Compile Include="UI\Editors\BaseEditor.cs" />
     <Compile Include="UI\Editors\EditableItem.cs" />
@@ -105,6 +113,16 @@
     <Compile Include="Utils\TextureUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Localize.resx">
+      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localize.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.ru.resx">
+      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\sprites.png" />
   </ItemGroup>
   <ItemGroup>
@@ -119,15 +137,35 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-copy $(TargetDir)*.dll  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-copy $(TargetDir)*.dll  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"
-copy $(ProjectDir)Preview\PreviewImage.png  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-copy $(ProjectDir)Preview\PreviewImage.png  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403"</PostBuildEvent>
+    <PostBuildEvent>
+set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\"
+set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403\"
+
+del "$(TargetDir)*.pdb"
+rmdir /s /q "%ModDir%"
+mkdir "%ModDir%"
+
+xcopy /y /e "$(TargetDir)*"  "%ModDir%"
+xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
+
+copy $(ProjectDir)Preview\PreviewImage.png  "%ModDir%"
+copy $(ProjectDir)Preview\PreviewImage.png  "%WorkshopDir%"
+	</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta"
-copy $(TargetDir)*.dll  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta"
-copy $(ProjectDir)Preview\PreviewImageBeta.png  "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta\PreviewImage.png"</PostBuildEvent>
+    <PostBuildEvent>
+set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta\"
+set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2159934925\"
+
+del "$(TargetDir)*.pdb"
+rmdir /s /q "%ModDir%"
+mkdir "%ModDir%"
+
+xcopy /y /e "$(TargetDir)*"  "%ModDir%"
+xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
+
+copy $(ProjectDir)Preview\PreviewImageBeta.png  "%ModDir%PreviewImage.png"
+copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
+	</PostBuildEvent>
   </PropertyGroup>
 </Project>
