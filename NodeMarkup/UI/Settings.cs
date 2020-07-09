@@ -20,6 +20,7 @@ namespace NodeMarkup.UI
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
+        public static SavedBool QuickRuleSetip { get; } = new SavedBool(nameof(QuickRuleSetip), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
@@ -42,6 +43,7 @@ namespace NodeMarkup.UI
             var keymappings = panel.gameObject.AddComponent<KeymappingsPanel>();
             keymappings.AddKeymapping("Activate tool", NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping("Delete all node lines", NodeMarkupTool.DeleteAllShortcut);
+            keymappings.AddKeymapping("Add new line rule", NodeMarkupTool.AddRuleShortcut);
         }
         private static void AddGeneral(UIHelperBase helper)
         {
@@ -50,6 +52,7 @@ namespace NodeMarkup.UI
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
             AddDeleteRequest(group);
+            AddQuickRuleSetup(group);
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -75,15 +78,21 @@ namespace NodeMarkup.UI
         }
         private static void AddShowToolTipsSetting(UIHelper group)
         {
-            var showCheckBox = group.AddCheckbox("Show tooltips", true, OnShowToolTipsChanged) as UICheckBox;
+            var showCheckBox = group.AddCheckbox("Show tooltips", ShowToolTip, OnShowToolTipsChanged) as UICheckBox;
 
             void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
         }
         private static void AddDeleteRequest(UIHelper group)
         {
-            var requestCheckBox = group.AddCheckbox("Show delete warnings", true, OnDeleteRequestChanged) as UICheckBox;
+            var requestCheckBox = group.AddCheckbox("Show delete warnings", DeleteWarnings, OnDeleteRequestChanged) as UICheckBox;
 
             void OnDeleteRequestChanged(bool request) => DeleteWarnings.value = request;
+        }
+        private static void AddQuickRuleSetup(UIHelper group)
+        {
+            var quickRuleSetupCheckBox = group.AddCheckbox("Quick rule setup", QuickRuleSetip, OnQuickRuleSetuptChanged) as UICheckBox;
+
+            void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetip.value = request;
         }
         private static void AddOther(UIHelperBase helper)
         {

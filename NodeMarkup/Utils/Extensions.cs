@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using ColossalFramework.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -133,5 +134,10 @@ namespace NodeMarkup.Utils
 
         public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
         public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
+
+        public static EventModifiers GetModifiers(this UIKeyEventParameter p) =>
+            (p.shift ? EventModifiers.Shift : EventModifiers.None) |
+            (p.control ? EventModifiers.Control : EventModifiers.None) |
+            (p.alt ? EventModifiers.Alt : EventModifiers.None);
     }
 }

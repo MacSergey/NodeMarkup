@@ -110,6 +110,8 @@ namespace NodeMarkup.UI.Editors
         public new event Action<MarkupLineSelectPropertyPanel> OnHover;
         public new event Action<MarkupLineSelectPropertyPanel> OnLeave;
 
+        public LineRawRuleEdgeBase.EdgePosition Position { get; set; }
+
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);

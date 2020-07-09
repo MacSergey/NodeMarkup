@@ -167,7 +167,9 @@ namespace NodeMarkup.UI.Editors
         protected virtual void FillItems() { }
         public virtual void Select(int index) { }
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
+        public virtual string GetInfo() => string.Empty;
         public virtual void OnUpdate() { }
+        public virtual void OnEvent(Event e) { }
         public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
             isDone = true;

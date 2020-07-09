@@ -11,7 +11,11 @@ namespace NodeMarkup
 {
     public class Mod : LoadingExtensionBase, IUserMod
     {
+#if DEBUG
+        public static string StaticName { get; } = "Intersection Marking Tool [BETA]";
+#else
         public static string StaticName { get; } = "Intersection Marking Tool";
+#endif
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
         public string Name { get; } = $"{StaticName} {Version}";
         public string Description => "Just do make markings at intersections";

@@ -39,7 +39,7 @@ namespace NodeMarkup.UI
         }
         public void Init()
         {
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = InGameAtlas;
             backgroundSprite = "MenuPanel2";
             absolutePosition = new Vector3(100, 100);
             name = "NodeMarkupPanel";
@@ -100,7 +100,10 @@ namespace NodeMarkup.UI
         {
             base.OnVisibilityChanged();
             if (!isVisible)
+            {
                 CurrentEditor?.ClearEditor();
+                CurrentEditor = null;
+            }
         }
 
         public void UpdatePanel() => CurrentEditor?.UpdateEditor();
@@ -109,7 +112,7 @@ namespace NodeMarkup.UI
             Show();
             Caption.text = $"Edit node #{nodeId} marking";
 
-            Markup = Manager.MarkupManager.Get(nodeId);
+            Markup = MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;
             TabStrip.selectedIndex = 0;
         }
@@ -159,7 +162,9 @@ namespace NodeMarkup.UI
             editor?.Select(template);
         }
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
+        public string GetInfo() => CurrentEditor?.GetInfo();
         public void OnUpdate() => CurrentEditor?.OnUpdate();
+        public void OnEvent(Event e) => CurrentEditor?.OnEvent(e);
         public void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
             if (CurrentEditor is Editor editor)

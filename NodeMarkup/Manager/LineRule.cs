@@ -49,6 +49,11 @@ namespace NodeMarkup.Manager
             SelfPoint,
             IntersectLine
         }
+        public enum EdgePosition
+        {
+            From,
+            To
+        }
     }
     public class LineRawRuleEdge : LineRawRuleEdgeBase
     {

@@ -19,6 +19,7 @@ namespace NodeMarkup
     {
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
+        public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
@@ -182,7 +183,7 @@ namespace NodeMarkup
                     break;
             }
 
-            if(UI.Settings.ShowToolTip)
+            if (UI.Settings.ShowToolTip)
                 Info();
         }
 
@@ -265,6 +266,9 @@ namespace NodeMarkup
                 case Mode.ConnectLine:
                     ShowToolInfo("Select point for start\ncreate or delete line\n+Shift to edit it", position);
                     break;
+                case Mode.PanelAction when Panel.GetInfo() is string panelInfo && !string.IsNullOrEmpty(panelInfo):
+                    ShowToolInfo(panelInfo, position);
+                    break;
                 default:
                     cursorInfoLabel.isVisible = false;
                     break;
@@ -323,9 +327,11 @@ namespace NodeMarkup
                 else if (e.button == 1)
                     OnSecondaryMouseClicked();
             }
-
-            if (DeleteAllShortcut.IsPressed(e))
+            else if (DeleteAllShortcut.IsPressed(e))
                 DeleteAllLines();
+
+            else
+                Panel?.OnEvent(e);
         }
         private void OnPrimaryMouseClicked(Event e)
         {
@@ -416,8 +422,8 @@ namespace NodeMarkup
                 if (UI.Settings.DeleteWarnings)
                 {
                     var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
-                    messageBox.CaprionText = $"Clear node#{SelectNodeId} markings";
-                    messageBox.MessageText = "Do you really want clear all markings?\nThis action cannot be undone";
+                    messageBox.CaprionText = $"Clear node markings";
+                    messageBox.MessageText = $"Do you really want clear all node#{SelectNodeId} markings?\nThis action cannot be undone";
                     messageBox.OnButton1Click = Delete;
                 }
                 else
