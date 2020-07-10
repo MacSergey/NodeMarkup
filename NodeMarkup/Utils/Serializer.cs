@@ -12,6 +12,8 @@ using System.IO.Compression;
 using ColossalFramework.IO;
 using System.Linq.Expressions;
 using NodeMarkup.UI;
+using HarmonyLib;
+using ColossalFramework.Globalization;
 
 namespace NodeMarkup.Utils
 {
@@ -59,13 +61,17 @@ namespace NodeMarkup.Utils
             else
                 Logger.LogDebug($"Saved data not founded");
         }
-        public static bool OnImportData()
+        public static string[] GetImportList()
+        {
+            var files = Directory.GetFiles(Directory.GetCurrentDirectory(), "MarkingRecovery*.xml");
+            return files;
+        }
+        public static bool OnImportData(string file)
         {
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(OnImportData)}");
 
             try
             {
-                var file = $"MarkingImport.xml";
                 using (var fileStream = File.OpenRead(file))
                 using (var reader = new StreamReader(fileStream))
                 {
@@ -138,7 +144,7 @@ namespace NodeMarkup.Utils
             Logger.LogDebug($"{nameof(Serializer)}.{nameof(SaveSettingDump)}");
             try
             {
-                var file = $"MarkingRecovery{DateTime.Now.Ticks}.xml";
+                var file = $"MarkingRecovery.{GetSaveName()}.{DateTime.Now.Ticks}.xml";
                 using (var fileStream = File.Create(file))
                 using (var writer = new StreamWriter(fileStream))
                 {
@@ -156,6 +162,15 @@ namespace NodeMarkup.Utils
                 path = string.Empty;
                 return false;
             }
+        }
+        private static string GetSaveName()
+        {
+            var lastSaveField = AccessTools.Field(typeof(SavePanel), "m_LastSaveName");
+            var lastSave = lastSaveField.GetValue(null) as string;
+            if(string.IsNullOrEmpty(lastSave))
+                lastSave = Locale.Get("DEFAULTSAVENAMES", "NewSave");
+
+            return lastSave;
         }
 
         public static XElement Parse(string text, LoadOptions options = LoadOptions.None)

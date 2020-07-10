@@ -261,7 +261,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Self edge point {0}.
+        ///   Ищет локализованную строку, похожую на Self-edge point {0}.
         /// </summary>
         public static string LineRule_SelfEdgePoint {
             get {
@@ -457,6 +457,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string Setting_Cancel {
+            get {
+                return ResourceManager.GetString("Setting_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Activate tool.
         /// </summary>
         public static string Settings_ActivateTool {
@@ -571,6 +580,15 @@ namespace NodeMarkup {
         public static string Settings_General {
             get {
                 return ResourceManager.GetString("Settings_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Import.
+        /// </summary>
+        public static string Settings_Import {
+            get {
+                return ResourceManager.GetString("Settings_Import", resourceCulture);
             }
         }
         

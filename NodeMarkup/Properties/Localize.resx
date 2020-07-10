@@ -186,7 +186,7 @@ This action cannot be undone</value>
     <value>Intersection with {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Self edge point {0}</value>
+    <value>Self-edge point {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Dashed</value>
@@ -389,5 +389,11 @@ create or delete a line
 - Add new rule shortcut - Shift+Ctrl+A
 - Quick rule setup - The interface for selecting rule edges opens automatically when creating a new rule. You can disable it in the settings
 - What`s new message. You can disable in the settings</value>
+  </data>
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

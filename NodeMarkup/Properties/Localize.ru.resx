@@ -380,4 +380,10 @@
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Показывать что нового</value>
   </data>
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
 </root>

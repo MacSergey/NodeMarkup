@@ -169,21 +169,10 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.ShowModal<ImportMessageBox>();
                 messageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
                 messageBox.MessageText = Localize.Settings_ImportMarkingMessage;
-                messageBox.OnButton1Click = StartImport;
 
-            }
-            bool StartImport()
-            {
-                var result = Serializer.OnImportData();
-
-                var resultMessageBox = MessageBox.ShowModal<OkMessageBox>();
-                resultMessageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
-                resultMessageBox.MessageText = result ? Localize.Settings_ImportMarkingMessageSuccess : Localize.Settings_ImportMarkingMessageFailed;
-
-                return true;
             }
         }
     }
