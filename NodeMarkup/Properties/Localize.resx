@@ -121,11 +121,11 @@
     <value>Delete {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Do you really want delete {0} {1}?
+    <value>Do you really want to delete {0} {1}?
 This action cannot be undone</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scroll wheel to change</value>
+    <value>Scroll the wheel to change</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Apply template</value>
@@ -146,23 +146,23 @@ This action cannot be undone</value>
     <value>Color</value>
   </data>
   <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Dashed length</value>
+    <value>Dash length</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
     <value>Delete rule</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Do you really want delete rule?
+    <value>Do you really want to delete the rule?
 This action cannot be undone</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>From</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Selet rule`s from point</value>
+    <value>Select the rule's "From" point</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Select rule`s to point</value>
+    <value>Select the rule's "To" point</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>line</value>
@@ -183,7 +183,7 @@ This action cannot be undone</value>
     <value>To</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Intersect with {0}</value>
+    <value>Intersection with {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Self edge point {0}</value>
@@ -225,7 +225,7 @@ This action cannot be undone</value>
     <value>Just do make markings at intersections</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>This is BETA version, stability and absence of errors are not guaranteed!</value>
+    <value>This is a BETA version, errors may occur and stability is not guaranteed!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Edit node #{0} marking</value>
@@ -297,7 +297,7 @@ This action cannot be undone</value>
     <value>Marking data import failed</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Marking data success imported</value>
+    <value>Marking data successfully imported</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
     <value>Other</value>
@@ -312,7 +312,7 @@ This action cannot be undone</value>
     <value>Shortcuts</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Show delete warnings</value>
+    <value>Confirm before deleting</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Show tooltips</value>
@@ -321,7 +321,7 @@ This action cannot be undone</value>
     <value>Color</value>
   </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Dashed length</value>
+    <value>Dash length</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
     <value>template</value>
@@ -348,30 +348,30 @@ This action cannot be undone</value>
     <value>Clear node markings</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Do you really want clear all node#{0} markings?
+    <value>Do you really want to clear all node #{0} markings?
 This action cannot be undone</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Click for create line
+    <value>Click to create a line
 +Shift - Solid
 +Ctrl - Double</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Click for delete line</value>
+    <value>Click to delete the line</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Node #{0}
-Click for edit marking</value>
+Click to edit marking</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select node for change marking</value>
+    <value>Select a node to change marking</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Select end point</value>
+    <value>Select endpoint</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Select point for start
-create or delete line
-+Shift to edit it</value>
+    <value>Select a point to
+create or delete a line
++Shift to edit the point</value>
   </data>
 </root>

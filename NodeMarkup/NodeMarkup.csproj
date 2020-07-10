@@ -117,6 +117,7 @@
     <EmbeddedResource Include="Properties\Localize.de.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.nl.resx" />
     <EmbeddedResource Include="Properties\Localize.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>

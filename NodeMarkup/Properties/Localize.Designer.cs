@@ -70,7 +70,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want delete {0} {1}?
+        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?
         ///This action cannot be undone.
         /// </summary>
         public static string Editor_DeleteMessage {
@@ -80,7 +80,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Scroll wheel to change.
+        ///   Ищет локализованную строку, похожую на Scroll the wheel to change.
         /// </summary>
         public static string FieldPanel_ScrollWheel {
             get {
@@ -143,7 +143,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dashed length.
+        ///   Ищет локализованную строку, похожую на Dash length.
         /// </summary>
         public static string LineEditor_DashedLength {
             get {
@@ -161,7 +161,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want delete rule?
+        ///   Ищет локализованную строку, похожую на Do you really want to delete the rule?
         ///This action cannot be undone.
         /// </summary>
         public static string LineEditor_DeleteRuleMessage {
@@ -180,7 +180,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Selet rule`s from point.
+        ///   Ищет локализованную строку, похожую на Select the rule&apos;s &quot;From&quot; point.
         /// </summary>
         public static string LineEditor_InfoSelectFrom {
             get {
@@ -189,7 +189,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select rule`s to point.
+        ///   Ищет локализованную строку, похожую на Select the rule&apos;s &quot;To&quot; point.
         /// </summary>
         public static string LineEditor_InfoSelectTo {
             get {
@@ -252,7 +252,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Intersect with {0}.
+        ///   Ищет локализованную строку, похожую на Intersection with {0}.
         /// </summary>
         public static string LineRule_IntersectWith {
             get {
@@ -378,7 +378,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This is BETA version, stability and absence of errors are not guaranteed!.
+        ///   Ищет локализованную строку, похожую на This is a BETA version, errors may occur and stability is not guaranteed!.
         /// </summary>
         public static string Mod_DescriptionBeta {
             get {
@@ -588,7 +588,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data success imported.
+        ///   Ищет локализованную строку, похожую на Marking data successfully imported.
         /// </summary>
         public static string Settings_ImportMarkingMessageSuccess {
             get {
@@ -633,7 +633,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Show delete warnings.
+        ///   Ищет локализованную строку, похожую на Confirm before deleting.
         /// </summary>
         public static string Settings_ShowDeleteWarnings {
             get {
@@ -669,7 +669,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dashed length.
+        ///   Ищет локализованную строку, похожую на Dash length.
         /// </summary>
         public static string TemplateEditor_DashedLength {
             get {
@@ -741,7 +741,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want clear all node#{0} markings?
+        ///   Ищет локализованную строку, похожую на Do you really want to clear all node #{0} markings?
         ///This action cannot be undone.
         /// </summary>
         public static string Tool_ClearMarkingsMessage {
@@ -751,7 +751,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click for create line
+        ///   Ищет локализованную строку, похожую на Click to create a line
         ///+Shift - Solid
         ///+Ctrl - Double.
         /// </summary>
@@ -762,7 +762,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click for delete line.
+        ///   Ищет локализованную строку, похожую на Click to delete the line.
         /// </summary>
         public static string Tool_InfoDeleteLine {
             get {
@@ -772,7 +772,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Node #{0}
-        ///Click for edit marking.
+        ///Click to edit marking.
         /// </summary>
         public static string Tool_InfoHoverNode {
             get {
@@ -781,7 +781,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select node for change marking.
+        ///   Ищет локализованную строку, похожую на Select a node to change marking.
         /// </summary>
         public static string Tool_InfoNode {
             get {
@@ -790,7 +790,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select end point.
+        ///   Ищет локализованную строку, похожую на Select endpoint.
         /// </summary>
         public static string Tool_InfoSelectEndPoint {
             get {
@@ -799,9 +799,9 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select point for start
-        ///create or delete line
-        ///+Shift to edit it.
+        ///   Ищет локализованную строку, похожую на Select a point to
+        ///create or delete a line
+        ///+Shift to edit the point.
         /// </summary>
         public static string Tool_InfoSelectStartPoint {
             get {
