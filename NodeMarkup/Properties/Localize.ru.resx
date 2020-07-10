@@ -183,7 +183,7 @@
     <value>До</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Пересечение с {0}</value>
+    <value>Пересеч. с {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Собственная точка {0}</value>
@@ -355,7 +355,7 @@
     <value>Нажмите для создания линии
 +Shift - Сплошная
 +Ctrl - Двойная</value>
-	    </data>
+  </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Нажмите для удаления линии</value>
   </data>
@@ -373,5 +373,11 @@
     <value>Выберите начальную точку
 для создания или удаления линии
 +Shift для редактирования точки</value>
+  </data>
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>Что нового в {0}</value>
+  </data>
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>Показывать что нового</value>
   </data>
 </root>

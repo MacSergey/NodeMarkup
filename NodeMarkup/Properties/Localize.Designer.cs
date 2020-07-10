@@ -387,6 +387,31 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на What`s new in {0}.
+        /// </summary>
+        public static string Mod_WhatsNewCaption {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Support Localizations.  If you want to translate it into your own language, then Contact me
+        ///- Dump marking data to file
+        ///- Import marking data from file (MarkingImport.xml)
+        ///- Fix highway - city road transition
+        ///- Delete warnings - Warning when deleting lines, rules, and templates. You can disable it in the settings
+        ///- Add new rule shortcut - Shift+Ctrl+A
+        ///- Quick rule setup - The interface for selecting rule edges opens automatically when creating a new rule. You can disable it in the settings
+        ///- What`s [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Edit node #{0} marking.
         /// </summary>
         public static string Panel_Caption {
@@ -647,6 +672,15 @@ namespace NodeMarkup {
         public static string Settings_ShowTooltips {
             get {
                 return ResourceManager.GetString("Settings_ShowTooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show what`s new.
+        /// </summary>
+        public static string Settings_ShowWhatsNew {
+            get {
+                return ResourceManager.GetString("Settings_ShowWhatsNew", resourceCulture);
             }
         }
         

@@ -374,4 +374,20 @@ Click to edit marking</value>
 create or delete a line
 +Shift to edit the point</value>
   </data>
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>What`s new in {0}</value>
+  </data>
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>Show what`s new</value>
+  </data>
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Support Localizations.  If you want to translate it into your own language, then Contact me
+- Dump marking data to file
+- Import marking data from file (MarkingImport.xml)
+- Fix highway - city road transition
+- Delete warnings - Warning when deleting lines, rules, and templates. You can disable it in the settings
+- Add new rule shortcut - Shift+Ctrl+A
+- Quick rule setup - The interface for selecting rule edges opens automatically when creating a new rule. You can disable it in the settings
+- What`s new message. You can disable in the settings</value>
+  </data>
 </root>

@@ -98,7 +98,7 @@ namespace NodeMarkup.UI.Editors
 
             SettingsPanel.ScrollToBottom();
 
-            if(Settings.QuickRuleSetip)
+            if(Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
         }
         private void SetupRule(RulePanel rulePanel)

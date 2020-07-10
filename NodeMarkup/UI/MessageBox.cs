@@ -12,6 +12,7 @@ namespace NodeMarkup.UI
     {
         private static float Width { get; } = 573;
         private static float Height { get; } = 200;
+        private static float ButtonHeight { get; } = 47;
 
         public static T ShowModal<T>()
         where T : MessageBox
@@ -70,6 +71,7 @@ namespace NodeMarkup.UI
 
         public string CaprionText { set => Caption.text = value; }
         public string MessageText { set => Message.text = value; }
+        public UIHorizontalAlignment TextAlignment { set => Message.textAlignment = value; }
         private UILabel Caption { get; set; }
         private UILabel Message { get; set; }
         protected UIPanel ButtonPanel { get; set; }
@@ -136,7 +138,7 @@ namespace NodeMarkup.UI
             Message.autoHeight = true;
             Message.minimumSize = new Vector2(Width, 78);
             Message.size = new Vector2(Width, 78);
-            Message.padding = new RectOffset(16, 16, 0, 0);
+            Message.padding = new RectOffset(16, 16, 16, 16);
             Message.relativePosition = new Vector3(17, 7);
             Message.anchor = UIAnchorStyle.CenterHorizontal | UIAnchorStyle.CenterVertical;
             Message.eventTextChanged += ((UIComponent component, string value) => Message.PerformLayout());
@@ -144,7 +146,7 @@ namespace NodeMarkup.UI
         private void AddButtonPanel()
         {
             ButtonPanel = AddUIComponent<UIPanel>();
-            ButtonPanel.size = new Vector2(Width, 47);
+            ButtonPanel.size = new Vector2(Width, ButtonHeight + 10);
         }
         protected UIButton AddButton(int i, int from, Action action)
         {
@@ -156,7 +158,7 @@ namespace NodeMarkup.UI
             button.disabledTextColor = new Color32(7, 7, 7, 255);
             button.horizontalAlignment = UIHorizontalAlignment.Center;
             button.verticalAlignment = UIVerticalAlignment.Middle;
-            button.size = new Vector2(width, 47);
+            button.size = new Vector2(width, ButtonHeight);
             button.relativePosition = new Vector2(width * (i - 1) + 25 * i, 0);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => action?.Invoke();
             return button;

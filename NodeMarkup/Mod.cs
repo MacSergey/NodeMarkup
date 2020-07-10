@@ -9,6 +9,7 @@ using NodeMarkup.UI;
 using System.Globalization;
 using ColossalFramework.Globalization;
 using ColossalFramework;
+using ColossalFramework.UI;
 
 namespace NodeMarkup
 {
@@ -51,6 +52,8 @@ namespace NodeMarkup
                 NodeMarkupTool.Create();
                 MarkupManager.Init();
                 NodeMarkupTool.Instance?.DisableTool();
+
+                ShowWhatsNew();
             }
         }
 
@@ -75,6 +78,55 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Mod)}.{nameof(LocaleChanged)}");
             Localize.Culture = Culture;
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
+        }
+
+        private void ShowWhatsNew()
+        {
+            if (!UI.Settings.ShowWhatsNew || new VersionComparer().Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
+                return;
+
+            var messageBox = MessageBox.ShowModal<OkMessageBox>();
+            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
+            messageBox.TextAlignment = UIHorizontalAlignment.Left;
+            messageBox.MessageText = Localize.Mod_WhatsNewMessage;
+            messageBox.OnButtonClick = Confirm;
+
+            bool Confirm()
+            {
+                UI.Settings.WhatsNewVersion.value = Version;
+                return true;
+            }
+        }
+    }
+    public class VersionComparer : Comparer<string>
+    {
+        public override int Compare(string x, string y)
+        {
+            var xVer = Parse(x);
+            var yVer = Parse(y);
+
+            for (var i = 0; i < Math.Max(xVer.Length, yVer.Length); i += 1)
+            {
+                var xVerPart = i < xVer.Length ? xVer[i] : 0;
+                var yVerPart = i < yVer.Length ? yVer[i] : 0;
+                if (xVerPart != yVerPart)
+                    return xVerPart - yVerPart;
+            }
+
+            return 0;
+        }
+
+        private int[] Parse(string versionString)
+        {
+            var parts = new List<int>();
+            foreach (var versionPart in versionString.Split('.'))
+            {
+                if (!int.TryParse(versionPart, out int part))
+                    return new int[0];
+                else
+                    parts.Add(part);
+            }
+            return parts.ToArray();
         }
     }
 }

@@ -17,10 +17,12 @@ namespace NodeMarkup.UI
     {
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
+        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, string.Empty, true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
-        public static SavedBool QuickRuleSetip { get; } = new SavedBool(nameof(QuickRuleSetip), SettingsFile, true, true);
+        public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
+        public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
@@ -53,6 +55,7 @@ namespace NodeMarkup.UI
             AddShowToolTipsSetting(group);
             AddDeleteRequest(group);
             AddQuickRuleSetup(group);
+            AddShowWhatsNew(group);
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -90,9 +93,15 @@ namespace NodeMarkup.UI
         }
         private static void AddQuickRuleSetup(UIHelper group)
         {
-            var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetip, OnQuickRuleSetuptChanged) as UICheckBox;
+            var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetup, OnQuickRuleSetuptChanged) as UICheckBox;
 
-            void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetip.value = request;
+            void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetup.value = request;
+        }
+        private static void AddShowWhatsNew(UIHelper group)
+        {
+            var showWhatsNewCheckBox = group.AddCheckbox(Localize.Settings_ShowWhatsNew, ShowWhatsNew, OnShowWhatsNewChanged) as UICheckBox;
+
+            void OnShowWhatsNewChanged(bool request) => ShowWhatsNew.value = request;
         }
         private static void AddOther(UIHelperBase helper)
         {
