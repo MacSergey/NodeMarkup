@@ -159,13 +159,13 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Von</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value></value>
+    <value>Regeln des "Von"-Punktes auswählen</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value></value>
+    <value>Regeln des "Zu"-Punktes auswählen</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>Linie</value>
+    <value>linie</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Linien</value>
@@ -186,7 +186,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Überschneide mit {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value></value>
+    <value>Selbstbegrenzungs-Punkt {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Gestrichelt</value>
@@ -231,7 +231,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Bearbeite die Markierung von Node #{0}</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>Punkt</value>
+    <value>punkt</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
     <value>Versatz</value>
@@ -324,7 +324,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Strichlänge</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>Vorlage</value>
+    <value>vorlage</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Name</value>
