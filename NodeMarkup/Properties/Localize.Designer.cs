@@ -478,7 +478,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to remove all markings?
-        ///	This action cannot be undone..
+        ///This action cannot be undone.
         /// </summary>
         public static string Settings_DeleteMarkingMessage {
             get {
@@ -742,7 +742,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want clear all node#{0} markings?
-        ///	This action cannot be undone.
+        ///This action cannot be undone.
         /// </summary>
         public static string Tool_ClearMarkingsMessage {
             get {

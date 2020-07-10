@@ -183,8 +183,7 @@ namespace NodeMarkup
                     break;
             }
 
-            if (UI.Settings.ShowToolTip)
-                Info();
+            Info();
         }
 
         private void GetHoveredNode()
@@ -232,6 +231,12 @@ namespace NodeMarkup
 
         private void Info()
         {
+            if (!UI.Settings.ShowToolTip)
+            {
+                cursorInfoLabel.isVisible = false;
+                return;
+            }
+
             var position = GetInfoPosition();
 
             if (position.x > +Panel.relativePosition.x &&

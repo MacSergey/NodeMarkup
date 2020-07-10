@@ -118,260 +118,260 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Delete {0}</value>
+    <value>Odstranit {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Do you really want delete {0} {1}?
-This action cannot be undone</value>
+    <value>Opravdu chcete odstranit {0} {1}?
+Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scroll wheel to change</value>
+    <value>Použijte kolečko myši pro změnu hodnoty</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Apply template</value>
+    <value>Použít šablonu</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Save as template</value>
+    <value>Uložit jako šablonu</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Set as default</value>
+    <value>Nastavit jako výchozí</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Unset as default</value>
+    <value>Zrušit jako výchozí</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Add Rule</value>
+    <value>Přidat pravidlo</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
-    <value>Color</value>
+    <value>Barva</value>
   </data>
   <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Dashed length</value>
+    <value>Délka čáry</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Delete rule</value>
+    <value>Odstranit pravidlo</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Do you really want delete rule?
-This action cannot be undone</value>
+    <value>Opravdu chcete odstranit toto pravidlo?
+Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
-    <value>From</value>
+    <value>Z</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Selet rule`s from point</value>
+    <value>Vyberte výchozí bod pravidla</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Select rule`s to point</value>
+    <value>Vyberte koncový bod pravidla</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>line</value>
+    <value>čáru</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Lines</value>
+    <value>Čáry</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Odsazení</value>
   </data>
   <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>Space length</value>
+    <value>Vzdálenost mezi čárami</value>
   </data>
   <data name="LineEditor_Style" xml:space="preserve">
-    <value>Style</value>
+    <value>Styl</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
-    <value>To</value>
+    <value>Do</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Intersect with {0}</value>
+    <value>Průsečík s {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Self edge point {0}</value>
+    <value>Vlastní hranice {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Dashed</value>
+    <value>Přerušovaná</value>
   </data>
   <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>D</value>
+    <value>P</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Double dashed</value>
+    <value>Dvojitá přerušovaná</value>
   </data>
   <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DD</value>
+    <value>DP</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Double solid</value>
+    <value>Dvojitá nepřerušovaná</value>
   </data>
   <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DS</value>
+    <value>DN</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Solid</value>
+    <value>Nepřerušovná</value>
   </data>
   <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
+    <value>N</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
-    <value>No</value>
+    <value>Ne</value>
   </data>
   <data name="MessageBox_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ano</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Just do make markings at intersections</value>
+    <value>Nástroj pro kreslení vodorovných značek do křižovatek</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>This is BETA version, stability and absence of errors are not guaranteed!</value>
+    <value>Toto je BETA verze, mohou se zde vyskytovat chyby a stabilita není zaručena!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Edit node #{0} marking</value>
+    <value>Upravit značení křižovatky #{0}</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>point</value>
+    <value>bod</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Odsazení</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Points</value>
+    <value>Body</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Not set</value>
+    <value>Nenastaveno</value>
   </data>
   <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Activate tool</value>
+    <value>Aktivovat nástroj</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Add new line rule</value>
+    <value>Přidat nové pravidlo</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Delete all node lines</value>
+    <value>Odstranit všechna značení z křižovatky</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Delete marking from all intersections</value>
+    <value>Odstranit značení ze všech křižovatek</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Delete all markings</value>
+    <value>Odstranit všechna značení</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Do you really want to remove all markings?
-This action cannot be undone</value>
+    <value>Opravdu chcete odstranit všechna značení?
+Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Dump marking data to file</value>
+    <value>Exportovat data do souboru</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Copy path to clipboard</value>
+    <value>Kopírovat cestu k souboru</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Dump marking data</value>
+    <value>Exportovat data</value>
   </data>
   <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Dump failed</value>
+    <value>Export se nezdařil</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Dump success saved</value>
+    <value>Export úspěšný</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value>General</value>
+    <value>Základní nastavení</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Import marking data from file</value>
+    <value>Importovat data ze souboru</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Import marking data</value>
+    <value>Importovat data</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Do you really want to import data?
-The imported data will replace all existing markup.
-This action cannot be undone</value>
+    <value>Opravdu si přejete importovat nová data?
+Importovaná data připíší všechna existující značení.
+Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Marking data import failed</value>
+    <value>Import dat se nezdařil</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Marking data success imported</value>
+    <value>Import dat úspěšný</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
-    <value>Other</value>
+    <value>Ostatní</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Quick rule setup</value>
+    <value>Rychlé vytvoření pravidel</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Render distance</value>
+    <value>Vykreslovací vzdálenost</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Klávesové zkratky</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Show delete warnings</value>
+    <value>Zobrazovat upozornění při odstraňování</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Show tooltips</value>
+    <value>Zobrazovat popisky</value>
   </data>
   <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Color</value>
+    <value>Barva</value>
   </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Dashed length</value>
+    <value>Délka čáry</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>template</value>
+    <value>šablonu</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Název</value>
   </data>
   <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Odsazení</value>
   </data>
   <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Space length</value>
+    <value>Vzdálenost mezi čárami</value>
   </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Style</value>
+    <value>Styl</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Templates</value>
+    <value>Šablony</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>New template</value>
+    <value>Nová šablona</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Clear node markings</value>
+    <value>Odstranit všechna značení z této křižovatky</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Do you really want clear all node#{0} markings?
-This action cannot be undone</value>
+    <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?
+Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Click for create line
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Klikněte pro vykreslení čáry
++Shift - Plná čára
++Ctrl - Dvojitá čára</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Click for delete line</value>
+    <value>Kliknětě pro odstranění čáry</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Node #{0}
-Click for edit marking</value>
+    <value>Křižovatka #{0}
+Klikněte pro změnu značení</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select node for change marking</value>
+    <value>Vyberte křižovatku pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Select end point</value>
+    <value>Vyberte koncový bod</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Select point for start
-create or delete line
-+Shift to edit it</value>
+    <value>Vyberte výchozí bod pro
+vytvoření nebo odstranění čáry
++Shift pro nastavení bodu</value>
   </data>
 </root>
