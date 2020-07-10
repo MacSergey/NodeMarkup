@@ -72,6 +72,7 @@ namespace NodeMarkup.UI
         public string MessageText { set => Message.text = value; }
         private UILabel Caption { get; set; }
         private UILabel Message { get; set; }
+        protected UIPanel ButtonPanel { get; set; }
 
         public MessageBox()
         {
@@ -81,11 +82,21 @@ namespace NodeMarkup.UI
             width = Width;
             height = Height;
             color = new Color32(58, 88, 104, 255);
-            relativePosition = new Vector3(Mathf.Floor((GetUIView().fixedWidth - width) / 2), Mathf.Floor((GetUIView().fixedHeight - height) / 2));
             backgroundSprite = "MenuPanel";
+            autoLayout = true;
+            autoLayoutDirection = LayoutDirection.Vertical;
+            autoFitChildrenVertically = true;
+            
 
             AddHandle();
             AddMessage();
+            AddButtonPanel();
+        }
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            relativePosition = new Vector3(Mathf.Floor((GetUIView().fixedWidth - width) / 2), Mathf.Floor((GetUIView().fixedHeight - height) / 2));
         }
 
         private void AddHandle()
@@ -100,7 +111,7 @@ namespace NodeMarkup.UI
                 Caption.CenterToParent();
             });
 
-            Caption = handle.AddUIComponent<UILabel>(); ;
+            Caption = handle.AddUIComponent<UILabel>();
             Caption.textAlignment = UIHorizontalAlignment.Center;
             Caption.textScale = 1.3f;
             Caption.anchor = UIAnchorStyle.Top;
@@ -119,16 +130,26 @@ namespace NodeMarkup.UI
         {
             Message = AddUIComponent<UILabel>();
             Message.textAlignment = UIHorizontalAlignment.Center;
+            Message.verticalAlignment = UIVerticalAlignment.Middle;
             Message.textScale = 1.3f;
-            Message.size = new Vector2(536, 78);
+            Message.wordWrap = true;
+            Message.autoHeight = true;
+            Message.minimumSize = new Vector2(Width, 78);
+            Message.size = new Vector2(Width, 78);
+            Message.padding = new RectOffset(16, 16, 0, 0);
             Message.relativePosition = new Vector3(17, 7);
             Message.anchor = UIAnchorStyle.CenterHorizontal | UIAnchorStyle.CenterVertical;
             Message.eventTextChanged += ((UIComponent component, string value) => Message.PerformLayout());
         }
+        private void AddButtonPanel()
+        {
+            ButtonPanel = AddUIComponent<UIPanel>();
+            ButtonPanel.size = new Vector2(Width, 47);
+        }
         protected UIButton AddButton(int i, int from, Action action)
         {
             var width = (this.width - (25 * (from + 1))) / from;
-            var button = AddUIComponent<UIButton>();
+            var button = ButtonPanel.AddUIComponent<UIButton>();
             button.normalBgSprite = "ButtonMenu";
             button.hoveredTextColor = new Color32(7, 132, 255, 255);
             button.pressedTextColor = new Color32(30, 30, 44, 255);
@@ -136,7 +157,7 @@ namespace NodeMarkup.UI
             button.horizontalAlignment = UIHorizontalAlignment.Center;
             button.verticalAlignment = UIVerticalAlignment.Middle;
             button.size = new Vector2(width, 47);
-            button.relativePosition = new Vector2(width * (i - 1) + 25 * i, 139);
+            button.relativePosition = new Vector2(width * (i - 1) + 25 * i, 0);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => action?.Invoke();
             return button;
         }

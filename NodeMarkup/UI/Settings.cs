@@ -20,7 +20,7 @@ namespace NodeMarkup.UI
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
-        public static SavedBool QuickRuleSetip { get; } = new SavedBool(nameof(QuickRuleSetip), SettingsFile, false, true);
+        public static SavedBool QuickRuleSetip { get; } = new SavedBool(nameof(QuickRuleSetip), SettingsFile, true, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
