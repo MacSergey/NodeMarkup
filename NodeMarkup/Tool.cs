@@ -12,6 +12,7 @@ using System.Text;
 using UnityEngine;
 using NodeMarkup.Manager;
 using ICities;
+using ColossalFramework.PlatformServices;
 
 namespace NodeMarkup
 {
@@ -20,6 +21,7 @@ namespace NodeMarkup
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
+        public static SavedInputKey Escape { get; } = new SavedInputKey(nameof(Escape), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.Escape, false, false, false));
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
@@ -323,8 +325,6 @@ namespace NodeMarkup
 
         protected override void OnToolGUI(Event e)
         {
-            base.OnToolGUI(e);
-
             if (e.type == EventType.MouseUp && _mouseRayValid)
             {
                 if (e.button == 0)
@@ -333,10 +333,20 @@ namespace NodeMarkup
                     OnSecondaryMouseClicked();
             }
             else if (DeleteAllShortcut.IsPressed(e))
+            {
                 DeleteAllLines();
+                e.Use();
+            }
+            else if(Escape.IsPressed(e))
+            {
+                DisableTool();
+                e.Use();
+            }
 
             else
                 Panel?.OnEvent(e);
+
+            base.OnToolGUI(e);
         }
         private void OnPrimaryMouseClicked(Event e)
         {
@@ -551,13 +561,8 @@ namespace NodeMarkup
     {
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
-            var tool = ToolsModifierControl.toolController?.CurrentTool;
-            bool flag = tool == null || tool is NodeMarkupTool ||
-                tool.GetType() == typeof(DefaultTool) || tool is NetTool || tool is BuildingTool;
-            if (flag && NodeMarkupTool.ActivationShortcut.IsKeyUp())
-            {
+            if (!UIView.HasModalInput() && !UIView.HasInputFocus() && NodeMarkupTool.ActivationShortcut.IsKeyUp())
                 NodeMarkupTool.Instance.ToggleTool();
-            }
         }
     }
 }
