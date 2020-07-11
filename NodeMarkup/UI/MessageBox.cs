@@ -311,6 +311,7 @@ namespace NodeMarkup.UI
         {
             ImportButton = AddButton(1, 2, ImportClick);
             ImportButton.text = NodeMarkup.Localize.Settings_Import;
+            ImportButton.Disable();
             CancelButton = AddButton(2, 2, CancelClick);
             CancelButton.text = NodeMarkup.Localize.Setting_Cancel;
 
@@ -341,14 +342,23 @@ namespace NodeMarkup.UI
             DropDown.verticalAlignment = UIVerticalAlignment.Middle;
             DropDown.horizontalAlignment = UIHorizontalAlignment.Center;
             DropDown.itemPadding = new RectOffset(14, 14, 0, 0);
-            //fileDropDown.eventSelectedIndexChanged += DropDownIndexChanged;
             DropDown.verticalAlignment = UIVerticalAlignment.Middle;
+            DropDown.eventSelectedIndexChanged += DropDownIndexChanged;
 
             DropDown.triggerButton = DropDown;
 
             AddData();
             DropDown.selectedIndex = 0;
         }
+
+        private void DropDownIndexChanged(UIComponent component, int value)
+        {
+            if (DropDown.SelectedObject != null)
+                ImportButton.Enable();
+            else
+                ImportButton.Disable();
+        }
+
         private void AddData()
         {
             foreach (var file in Serializer.GetImportList())
