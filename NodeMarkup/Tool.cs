@@ -21,7 +21,6 @@ namespace NodeMarkup
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
-        public static SavedInputKey Escape { get; } = new SavedInputKey(nameof(Escape), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.Escape, false, false, false));
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
@@ -42,14 +41,12 @@ namespace NodeMarkup
 
         Color32 HoverColor { get; } = new Color32(255, 136, 0, 224);
 
-        private NetManager NetManager => Singleton<NetManager>.instance;
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
-
-        public ToolBase CurrentTool => ToolsModifierControl.toolController?.CurrentTool;
-        public bool ToolEnabled => CurrentTool == this;
 
         Button Button => Button.Instace;
         NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
+        private ToolBase PrevTool { get; set; }
+        UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
 
 
         #region BASIC
@@ -64,11 +61,12 @@ namespace NodeMarkup
         protected override void Awake()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
+            base.Awake();
+
             Button.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
             DisableTool();
-            base.Awake();
         }
         public static NodeMarkupTool Create()
         {
@@ -96,16 +94,25 @@ namespace NodeMarkup
         protected override void OnEnable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
-            base.OnEnable();
             Button?.Activate();
-            Panel?.Hide();
+            Reset();
+
+            PrevTool = m_toolController.CurrentTool;
+
+            base.OnEnable();
+
+            Singleton<InfoManager>.instance.SetCurrentMode(InfoManager.InfoMode.None, InfoManager.SubInfoMode.Default);
         }
         protected override void OnDisable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
-            base.OnDisable();
             Button?.Deactivate();
-            Panel?.Hide();
+            Reset();
+
+            if (m_toolController?.NextTool == null && PrevTool != null)
+                PrevTool.enabled = true;
+
+            PrevTool = null;
         }
         private void Reset()
         {
@@ -114,30 +121,17 @@ namespace NodeMarkup
             HoverPoint = null;
             SelectPoint = null;
             ToolMode = Mode.SelectNode;
+            cursorInfoLabel.isVisible = false;
             Panel?.EndPanelAction();
+            Panel?.Hide();
         }
 
         public void ToggleTool()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}");
-            if (!ToolEnabled)
-                EnableTool();
-            else
-                DisableTool();
+            enabled = !enabled;
         }
-        public void EnableTool()
-        {
-            ToolsModifierControl.toolController.CurrentTool = this;
-
-            Reset();
-        }
-        public void DisableTool()
-        {
-            if (CurrentTool == this)
-                ToolsModifierControl.SetTool<DefaultTool>();
-
-            Reset();
-        }
+        public void DisableTool() => enabled = false;
 
         public void StartPanelAction(out bool isAccept)
         {
@@ -164,8 +158,19 @@ namespace NodeMarkup
 
         protected override void OnToolUpdate()
         {
-            //Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnToolUpdate)}");
-            base.OnToolUpdate();
+            if (PauseMenu?.isVisible == true)
+            {
+                PrevTool = null;
+                DisableTool();
+                UIView.library.Hide("PauseMenu");
+                return;
+            }
+            if ((RenderManager.CurrentCameraInfo.m_layerMask & (3 << 24)) == 0)
+            {
+                PrevTool = null;
+                DisableTool();
+                return;
+            }
 
             _mousePosition = Input.mousePosition;
             _mouseRay = Camera.main.ScreenPointToRay(_mousePosition);
@@ -186,6 +191,8 @@ namespace NodeMarkup
             }
 
             Info();
+
+            base.OnToolUpdate();
         }
 
         private void GetHoveredNode()
@@ -214,7 +221,7 @@ namespace NodeMarkup
         {
             if (_mouseRayValid)
             {
-                var markup = Manager.MarkupManager.Get(SelectNodeId);
+                var markup = MarkupManager.Get(SelectNodeId);
                 foreach (var enter in markup.Enters)
                 {
                     foreach (var point in enter.Points)
@@ -241,7 +248,7 @@ namespace NodeMarkup
 
             var position = GetInfoPosition();
 
-            if (position.x > +Panel.relativePosition.x &&
+            if (position.x >= Panel.relativePosition.x &&
                 position.x <= Panel.relativePosition.x + Panel.width &&
                 position.y >= Panel.relativePosition.y &&
                 position.y <= Panel.relativePosition.y + Panel.height
@@ -337,12 +344,6 @@ namespace NodeMarkup
                 DeleteAllLines();
                 e.Use();
             }
-            else if(Escape.IsPressed(e))
-            {
-                DisableTool();
-                e.Use();
-            }
-
             else
                 Panel?.OnEvent(e);
 
@@ -456,13 +457,8 @@ namespace NodeMarkup
         #endregion
 
         #region Overlay
-
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            //Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(RenderOverlay)}");
-
-            base.RenderOverlay(cameraInfo);
-
             switch (ToolMode)
             {
                 case Mode.SelectNode when IsHoverNode:
@@ -481,6 +477,8 @@ namespace NodeMarkup
                     Panel.Render(cameraInfo);
                     break;
             }
+
+            base.RenderOverlay(cameraInfo);
         }
         private void RenderSegmentEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter ignore = null)
         {
