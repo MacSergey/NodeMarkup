@@ -14,6 +14,8 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
 
+        private FloatPropertyPanel Offset { get; set; }
+
         public PointsEditor()
         {
             SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
@@ -36,13 +38,19 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
-            var offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-            offset.Text = NodeMarkup.Localize.PointEditor_Offset;
-            offset.UseWheel = true;
-            offset.Step = 0.1f;
-            offset.Init();
-            offset.Value = EditObject.Offset;
-            offset.OnValueChanged += OffsetChanged;
+            Offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+            Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
+            Offset.UseWheel = true;
+            Offset.WheelStep = 0.1f;
+            Offset.Init();
+            Offset.Value = EditObject.Offset;
+            Offset.OnValueChanged += OffsetChanged;
+        }
+        protected override void OnObjectUpdate()
+        {
+            Offset.OnValueChanged -= OffsetChanged;
+            Offset.Value = EditObject.Offset;
+            Offset.OnValueChanged += OffsetChanged;
         }
         private void OffsetChanged(float value) => EditObject.Offset = value;
 

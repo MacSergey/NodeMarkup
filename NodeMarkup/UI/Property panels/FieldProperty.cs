@@ -19,7 +19,7 @@ namespace NodeMarkup.UI.Editors
 
         protected abstract bool CanUseWheel { get; }
         public bool UseWheel { get; set; }
-        public ValueType Step { get; set; }
+        public ValueType WheelStep { get; set; }
         public float FieldWidth
         {
             get => Field.width;
@@ -92,9 +92,9 @@ namespace NodeMarkup.UI.Editors
             if (CanUseWheel && UseWheel)
             {
                 if (eventParam.wheelDelta < 0)
-                    Value = Increment(Value, Step);
+                    Value = Increment(Value, WheelStep);
                 else
-                    Value = Decrement(Value, Step);
+                    Value = Decrement(Value, WheelStep);
             }
         }
     }

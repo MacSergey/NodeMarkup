@@ -382,6 +382,7 @@ create or delete a line
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
     <value>- Support Localizations.  If you want to translate it into your own language, then Contact me
+- Drag points
 - Dump marking data to file
 - Import marking data from file
 - Fix highway - city road transition

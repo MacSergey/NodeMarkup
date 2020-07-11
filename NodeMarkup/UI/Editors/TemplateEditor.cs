@@ -89,7 +89,7 @@ namespace NodeMarkup.UI.Editors
                 var dashLengthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
                 dashLengthProperty.Text = NodeMarkup.Localize.TemplateEditor_DashedLength;
                 dashLengthProperty.UseWheel = true;
-                dashLengthProperty.Step = 0.1f;
+                dashLengthProperty.WheelStep = 0.1f;
                 dashLengthProperty.CheckMin = true;
                 dashLengthProperty.MinValue = 0.1f;
                 dashLengthProperty.Init();
@@ -100,7 +100,7 @@ namespace NodeMarkup.UI.Editors
                 var spaceLengthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
                 spaceLengthProperty.Text = NodeMarkup.Localize.TemplateEditor_SpaceLength;
                 spaceLengthProperty.UseWheel = true;
-                spaceLengthProperty.Step = 0.1f;
+                spaceLengthProperty.WheelStep = 0.1f;
                 spaceLengthProperty.CheckMin = true;
                 spaceLengthProperty.MinValue = 0.1f;
                 spaceLengthProperty.Init();
@@ -113,7 +113,7 @@ namespace NodeMarkup.UI.Editors
                 var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
                 offsetProperty.Text = NodeMarkup.Localize.TemplateEditor_Offset;
                 offsetProperty.UseWheel = true;
-                offsetProperty.Step = 0.1f;
+                offsetProperty.WheelStep = 0.1f;
                 offsetProperty.Init();
                 offsetProperty.Value = doubleStyle.Offset;
                 offsetProperty.OnValueChanged += OffsetChanged;

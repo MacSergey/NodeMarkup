@@ -397,13 +397,14 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на - Support Localizations.  If you want to translate it into your own language, then Contact me
+        ///- Drag points
         ///- Dump marking data to file
         ///- Import marking data from file
         ///- Fix highway - city road transition
         ///- Delete warnings - Warning when deleting lines, rules, and templates. You can disable it in the settings
         ///- Add new rule shortcut - Shift+Ctrl+A
         ///- Quick rule setup - The interface for selecting rule edges opens automatically when creating a new rule. You can disable it in the settings
-        ///- What`s new message. You ca [остаток строки не уместился]&quot;;.
+        ///- What`s new  [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage {
             get {

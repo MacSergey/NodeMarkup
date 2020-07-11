@@ -322,6 +322,10 @@ namespace NodeMarkup.UI.Editors
         {
 
         }
+        protected virtual void OnObjectUpdate()
+        {
+
+        }
         protected override void OnVisibilityChanged()
         {
             if (isVisible)
@@ -341,7 +345,9 @@ namespace NodeMarkup.UI.Editors
         }
         public void Select(EditableObject editableObject)
         {
-            if (ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => System.Object.ReferenceEquals(c.Object, editableObject)) is EditableItemType item)
+            if (ReferenceEquals(EditObject, editableObject))
+                OnObjectUpdate();
+            else if (ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editableObject)) is EditableItemType item)
                 Select(item);
         }
     }
