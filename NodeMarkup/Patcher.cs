@@ -42,7 +42,6 @@ namespace NodeMarkup
             PatchNetManagerUpdateNode(harmony);
             PatchNetSegmentUpdateLanes(harmony);
             PatchNetManagerSimulationStepImpl(harmony);
-            //PatchUIAnchorLayoutResetLayoutAbsolute(harmony);
         }
 
         private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
@@ -65,7 +64,7 @@ namespace NodeMarkup
         private static void PatchNetNodeRenderInstance(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetNode), "RenderInstance", new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
-            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetNodeRenderInstancePostfix));
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix));
 
             AddPostfix(harmony, original, postfix);
         }
@@ -73,7 +72,7 @@ namespace NodeMarkup
         private static void PatchNetManagerUpdateNode(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetManager), nameof(NetManager.UpdateNode), new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
-            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetManagerUpdateNodePostfix));
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix));
 
             AddPostfix(harmony, original, postfix);
         }
@@ -81,7 +80,7 @@ namespace NodeMarkup
         private static void PatchNetManagerReleaseNodeImplementation(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetManager), "ReleaseNodeImplementation", new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() });
-            var prefix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetManagerReleaseNodeImplementationPrefix));
+            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix));
 
             AddPrefix(harmony, original, prefix);
         }
@@ -89,7 +88,7 @@ namespace NodeMarkup
         private static void PatchNetSegmentUpdateLanes(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetSegment), nameof(NetSegment.UpdateLanes));
-            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetSegmentUpdateLanesPostfix));
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentUpdateLanesPostfix));
 
             AddPostfix(harmony, original, postfix);
         }
@@ -97,25 +96,9 @@ namespace NodeMarkup
         private static void PatchNetManagerSimulationStepImpl(Harmony harmony)
         {
             var original = AccessTools.Method(typeof(NetManager), "SimulationStepImpl");
-            var postfix = AccessTools.Method(typeof(Manager.MarkupManager), nameof(Manager.MarkupManager.NetManagerSimulationStepImplPostfix));
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix));
 
             AddPostfix(harmony, original, postfix);
         }
-
-        //private static void PatchUIAnchorLayoutResetLayoutAbsolute(Harmony harmony)
-        //{
-        //    var original = AccessTools.Method(typeof(UIAnchorLayout), "ResetLayoutAbsolute");
-        //    var postfix = AccessTools.Method(typeof(Patcher), nameof(ResetLayoutAbsolute));
-
-        //    AddPostfix(harmony, original, postfix);
-        //}
-
-        //private static void ResetLayoutAbsolute(ref UIAnchorMargins ___m_Margins)
-        //{
-        //    ___m_Margins.left = 0;
-        //    ___m_Margins.right = 0;
-        //    ___m_Margins.top = 0;
-        //    ___m_Margins.bottom = 0;
-        //}
     }
 }
