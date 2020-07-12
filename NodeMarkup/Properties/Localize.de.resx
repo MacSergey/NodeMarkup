@@ -267,7 +267,9 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
     <value>Pfad in die Zwischenablage kopieren</value>
   </data>
-  
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Markierungsdaten speichern</value>
   </data>
@@ -324,7 +326,9 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
     <value>vorlage</value>
   </data>
-  
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="TemplateEditor_Offset" xml:space="preserve">
     <value>Versatz</value>
   </data>
@@ -370,9 +374,17 @@ Klicken zum Bearbeiten der Markierung</value>
 Linie erstellen oder löschen
 +Shift, um diese zu bearbeiten</value>
   </data>
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>Was ist neu in {0}</value>
+  </data>
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>"Was gibt es neues" zeigen</value>
+  </data>
   
-  
-  
-  
-  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Importieren</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
 </root>

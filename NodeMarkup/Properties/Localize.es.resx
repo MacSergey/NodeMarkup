@@ -142,7 +142,9 @@ No se puede deshacer esta acción</value>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Añadir Regla</value>
   </data>
-  
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="LineEditor_DashedLength" xml:space="preserve">
     <value>Longitud de trazos</value>
   </data>
@@ -189,11 +191,15 @@ No se puede deshacer esta acción</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Discontinua</value>
   </data>
-  
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>DC</value>
+  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Discontinua Doble</value>
   </data>
-  
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>DDC</value>
+  </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Continua doble</value>
   </data>
@@ -206,8 +212,12 @@ No se puede deshacer esta acción</value>
   <data name="LineStyle_SolidShort" xml:space="preserve">
     <value>C</value>
   </data>
-  
-  
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
   <data name="MessageBox_Yes" xml:space="preserve">
     <value>Sí</value>
   </data>
@@ -257,7 +267,9 @@ No se puede deshacer esta acción</value>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
     <value>Copie la ruta al portapapeles</value>
   </data>
-  
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportar marcas</value>
   </data>
@@ -267,7 +279,9 @@ No se puede deshacer esta acción</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Exportación guardada con éxito</value>
   </data>
-  
+  <data name="Settings_General" xml:space="preserve">
+    <value>Miscelánea</value>
+  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importar marcas desde archivo</value>
   </data>
@@ -303,7 +317,9 @@ No se puede deshacer esta acción</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Mostrar herramientas</value>
   </data>
-  
+  <data name="TemplateEditor_Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Longitud de trazos</value>
   </data>
