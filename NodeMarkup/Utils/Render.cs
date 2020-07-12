@@ -77,15 +77,15 @@ namespace NodeMarkup.Utils
         {
             Vector3[] c = new Vector3[8];
 
-            c[0] = new Vector3(-length * .5f, -width * .5f, height * .5f); //0 --+
-            c[1] = new Vector3(length * .5f, -width * .5f, height * .5f);  //1 +-+
-            c[2] = new Vector3(length * .5f, -width * .5f, -height * .5f); //2 +--
-            c[3] = new Vector3(-length * .5f, -width * .5f, -height * .5f);//3 ---
+            c[0] = new Vector3(-length * .5f, -height * .5f, width * .5f); //0 --+
+            c[1] = new Vector3(length * .5f, -height * .5f, width * .5f);  //1 +-+
+            c[2] = new Vector3(length * .5f, -height * .5f, -width * .5f); //2 +--
+            c[3] = new Vector3(-length * .5f, -height * .5f, -width * .5f);//3 ---
 
-            c[4] = new Vector3(-length * .5f, width * .5f, height * .5f);  //4 -++
-            c[5] = new Vector3(length * .5f, width * .5f, height * .5f);   //5 +++
-            c[6] = new Vector3(length * .5f, width * .5f, -height * .5f);  //6 ++-
-            c[7] = new Vector3(-length * .5f, width * .5f, -height * .5f); //7 -+-
+            c[4] = new Vector3(-length * .5f, height * .5f, width * .5f);  //4 -++
+            c[5] = new Vector3(length * .5f, height * .5f, width * .5f);   //5 +++
+            c[6] = new Vector3(length * .5f, height * .5f, -width * .5f);  //6 ++-
+            c[7] = new Vector3(-length * .5f, height * .5f, -width * .5f); //7 -+-
 
             vertices = new Vector3[24];
             triangles = new int[36];
@@ -103,7 +103,7 @@ namespace NodeMarkup.Utils
 
         public static Material CreateMaterial()
         {
-            var texture = CreateDotTexture(Color.white/*new Color32(127,127,127,255)*/);
+            var texture = CreateDotTexture(Color.white);
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
                 mainTexture = texture,
@@ -115,15 +115,7 @@ namespace NodeMarkup.Utils
             };
             material.EnableKeyword("MULTI_INSTANCE");
 
-            var size = new Vector2(1.5f, 0.15f * 8);
-            var tile = new Vector3(1.0f, 1.0f);
-            var slopeTolerance = 3f;
-
-            var scale = new Vector4(size.x, slopeTolerance, size.y, 0);
-            var tiling = new Vector4(tile.x, 0, tile.y, 0);
-
-            
-            material.SetVector("_DecalSize", scale);
+            var tiling = new Vector4(1f, 0f, 1f, 0f);
             material.SetVector("_DecalTiling", tiling);
 
             return material;
@@ -178,7 +170,7 @@ namespace NodeMarkup.Utils
             Locations = new Vector4[count];
             Indices = new Vector4[count];
             Colors = new Vector4[count];
-            Size = new Vector4(length, 3f, 0.15f);
+            Size = new Vector4(length, 1f, 0.15f);
 
             for (var i = 0; i < count; i += 1)
             {
