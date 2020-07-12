@@ -215,7 +215,9 @@ Tuto akci nelze vrátit zpět</value>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ne</value>
   </data>
-  
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="MessageBox_Yes" xml:space="preserve">
     <value>Ano</value>
   </data>
@@ -265,7 +267,9 @@ Tuto akci nelze vrátit zpět</value>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
     <value>Kopírovat cestu k souboru</value>
   </data>
-  
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportovat data</value>
   </data>
@@ -370,9 +374,17 @@ Klikněte pro změnu značení</value>
 vytvoření nebo odstranění čáry
 +Shift pro nastavení bodu</value>
   </data>
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>Co je nového v {0}</value>
+  </data>
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>Zobrazit novinky</value>
+  </data>
   
-  
-  
-  
-  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Importovat</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
 </root>
