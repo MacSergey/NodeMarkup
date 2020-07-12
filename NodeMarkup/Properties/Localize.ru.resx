@@ -117,91 +117,274 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Editor_DeleteCaption" xml:space="preserve">
+    <value>Удалить {0}</value>
+  </data>
+  <data name="Editor_DeleteMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить {0} {1}?
+Это действие нельзя отменить</value>
+  </data>
+  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
+    <value>Крутите колесико для изменения</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Выбрать шаблон</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Сохр. шаблон</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Сделать по умолчанию</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Убрать по умолчанию</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Добавить правило</value>
+  </data>
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>Цвет</value>
+  </data>
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>Длина штриха</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Удалить правило</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить правило?
+Это действие нельзя отменить</value>
+  </data>
+  <data name="LineEditor_From" xml:space="preserve">
+    <value>От</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Выберите начало правила</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Выберите конец правила</value>
+  </data>
+  <data name="LineEditor_ItemDescription" xml:space="preserve">
+    <value>линию</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Линии</value>
+  </data>
+  <data name="LineEditor_Offset" xml:space="preserve">
+    <value>Сдвиг</value>
+  </data>
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>Длина промежутка</value>
+  </data>
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>Стиль</value>
+  </data>
+  <data name="LineEditor_To" xml:space="preserve">
+    <value>До</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Пересеч. с {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Собственная точка {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Пунктирная</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>П</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Двойная пунктирная</value>
+  </data>
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>ДП</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Двойная сплошная</value>
+  </data>
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>ДС</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Сплошная</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>С</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="MessageBox_Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Просто сделай разметку на перекрестках</value>
+  </data>
+  <data name="Mod_DescriptionBeta" xml:space="preserve">
+    <value>Это BETA версия, стабильная работа и отсутствие ошибок не гарантировано!</value>
+  </data>
+  <data name="Panel_Caption" xml:space="preserve">
+    <value>Редактирование разметки перекрестка #{0}</value>
+  </data>
+  <data name="PointEditor_ItemDescription" xml:space="preserve">
+    <value>точку</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Сдвиг</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Точки</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Не задано</value>
+  </data>
+  <data name="Settings_ActivateTool" xml:space="preserve">
+    <value>Активация инструмента</value>
+  </data>
+  <data name="Settings_AddNewLineRule" xml:space="preserve">
+    <value>Добавление нового правила</value>
+  </data>
+  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+    <value>Удалить все линии перекрестка</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Удалить разметку со всех перекрестков</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Удалить всю разметку</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить всю разметку?
+Это действие нельзя будет отменить</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Сохранить разметку в файл</value>
+  </data>
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>Копировать путь в буфер</value>
+  </data>
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Сохранить разметку</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>Не удалось сохранить разметки</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>Разметки успешно сохранены</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>Основные</value>
+  </data>
+  <data name="Settings_ImportMarkingButton" xml:space="preserve">
+    <value>Импортировать разметки из файла</value>
+  </data>
+  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
+    <value>Импорт разметки</value>
+  </data>
+  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
+    <value>Вы действительно хотите импортировать разметку?
+Она заменит всю существующую
+Это действие нельзя отменить</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
+    <value>Не удалось импортировать  разметку</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
+    <value>Разметку успешно импортирована</value>
+  </data>
+  <data name="Settings_Other" xml:space="preserve">
+    <value>Другие</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Быстрая настройка правил</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>Дистанция отрисовки</value>
+  </data>
+  <data name="Settings_Shortcuts" xml:space="preserve">
+    <value>Горячие клавиши</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Подтверждение удаления</value>
+  </data>
+  <data name="Settings_ShowTooltips" xml:space="preserve">
+    <value>Показать подсказки</value>
+  </data>
+  <data name="TemplateEditor_Color" xml:space="preserve">
+    <value>Цвет</value>
+  </data>
+  <data name="TemplateEditor_DashedLength" xml:space="preserve">
+    <value>Длина штриха</value>
+  </data>
+  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+    <value>шаблон</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="TemplateEditor_Offset" xml:space="preserve">
+    <value>Сдвиг</value>
+  </data>
+  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
+    <value>Длина промежутка</value>
+  </data>
+  <data name="TemplateEditor_Style" xml:space="preserve">
+    <value>Стиль</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Шаблоны</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>Новый шаблон</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Удалить всю разметку</value>
+  </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить всю разметку перекрестка #{0}?
+Это действие нельзя отменить</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Нажмите для создания линии
++Shift - Сплошная
++Ctrl - Двойная</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Нажмите для удаления линии</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Перекресток #{0}
+Нажмите для редактирования разметки</value>
+  </data>
+  <data name="Tool_InfoNode" xml:space="preserve">
+    <value>Выберите перекресток для редактирования разметки</value>
+  </data>
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Выберите конечную точку</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Выберите начальную точку
+для создания или удаления линии
++Shift для редактирования точки</value>
+  </data>
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>Что нового в {0}</value>
+  </data>
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>Показывать что нового</value>
+  </data>
+  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
 </root>
