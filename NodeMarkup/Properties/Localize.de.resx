@@ -117,259 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Lösche {0}</value>
-  </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Willst du {0} {1} wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scrollrad bewegen zum Ändern</value>
-  </data>
-  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Vorlage anwenden</value>
-  </data>
-  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Als Vorlage speichern</value>
-  </data>
-  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Als Standard festlegen</value>
-  </data>
-  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Als Standard entfernen</value>
-  </data>
-  <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Regel hinzufügen</value>
-  </data>
-  <data name="LineEditor_Color" xml:space="preserve">
-    <value>Farbe</value>
-  </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Strichlänge</value>
-  </data>
-  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Regel löschen</value>
-  </data>
-  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Willst du diese Regel wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
-  <data name="LineEditor_From" xml:space="preserve">
-    <value>Von</value>
-  </data>
-  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Regeln des "Von"-Punktes auswählen</value>
-  </data>
-  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Regeln des "Zu"-Punktes auswählen</value>
-  </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>linie</value>
-  </data>
-  <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Linien</value>
-  </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
-  </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>Länge des Zwischenraums</value>
-  </data>
-  <data name="LineEditor_Style" xml:space="preserve">
-    <value>Stil</value>
-  </data>
-  <data name="LineEditor_To" xml:space="preserve">
-    <value>Zu</value>
-  </data>
-  <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Überschneide mit {0}</value>
-  </data>
-  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Selbstbegrenzungs-Punkt {0}</value>
-  </data>
-  <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Gestrichelt</value>
-  </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>G</value>
-  </data>
-  <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Doppelt gestrichelt</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DG</value>
-  </data>
-  <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Doppelt durchgezogen</value>
-  </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DD</value>
-  </data>
-  <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Durchgezogen</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>D</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Nein</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ja</value>
-  </data>
-  <data name="Mod_Description" xml:space="preserve">
-    <value>Markierungen nur an Kreuzungen erstellen</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dies ist eine BETA Version. Stabilität und Fehlerfreiheit sind nicht garantiert!</value>
-  </data>
-  <data name="Panel_Caption" xml:space="preserve">
-    <value>Bearbeite die Markierung von Node #{0}</value>
-  </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>punkt</value>
-  </data>
-  <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
-  </data>
-  <data name="PointEditor_Points" xml:space="preserve">
-    <value>Punkte</value>
-  </data>
-  <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Nicht festgelegt</value>
-  </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Tool aktivieren</value>
-  </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Neue Linienregel hinzufügen</value>
-  </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Alle Linien an Nodes löschen</value>
-  </data>
-  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Markierung von allen Kreuzungen löschen</value>
-  </data>
-  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Alle Markierungen löschen</value>
-  </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wollen Sie wirklich alle Markierungen entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
-  <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten in Datei speichern</value>
-  </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Pfad in die Zwischenablage kopieren</value>
-  </data>
   
-  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten speichern</value>
-  </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Speichern fehlgeschlagen</value>
-  </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Erfolgreich gespeichert</value>
-  </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Allgemein</value>
-  </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten aus Datei importieren</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten importieren</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Möchtest Du wirklich die Daten importieren?
-Die importierten Daten werden alle vorhandenen Markierungen ersetzen.
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import der Markierungsdaten fehlgeschlagen</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Markierungsdaten erfolgreich importiert</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Anderes</value>
-  </data>
-  <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Schnellregel-Einrichtung</value>
-  </data>
-  <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Render-Distanz</value>
-  </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Tastenkürzel</value>
-  </data>
-  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Löschwarnungen anzeigen</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Zeige Tooltips</value>
-  </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Farbe</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Strichlänge</value>
-  </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>vorlage</value>
-  </data>
   
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Länge des Zwischenraums</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Stil</value>
-  </data>
-  <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Vorlagen</value>
-  </data>
-  <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Neue Vorlage</value>
-  </data>
-  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Node-Markierungen löschen</value>
-  </data>
-  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Markierungen von Node#{0} entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klicken um die Linie zu erstellen
-+Shift - Durchgezogen
-+Strg - Doppelt</value>
-  </data>
-  <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Zum Löschen der Zeile klicken</value>
-  </data>
-  <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Node #{0}
-Klicken zum Bearbeiten der Markierung</value>
-  </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Node für die Änderung der Markierung auswählen</value>
-  </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Endpunkt auswählen</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Wähle den Startpunkt 
-Linie erstellen oder löschen
-+Shift, um diese zu bearbeiten</value>
-  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
