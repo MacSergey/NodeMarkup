@@ -122,6 +122,18 @@
   
   
   
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>既定に設定</value>
+  </data>
+  
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>ルールを追加</value>
+  </data>
+  
+  
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>ルールを削除</value>
+  </data>
   
   
   
@@ -134,15 +146,13 @@
   
   
   
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>破線</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>二重破線</value>
+  </data>
   
   
   
