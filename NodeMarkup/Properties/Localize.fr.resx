@@ -176,7 +176,9 @@ Cette action est irréversible</value>
   <data name="LineEditor_SpaceLength" xml:space="preserve">
     <value>Longueur de l'espace</value>
   </data>
-  
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>Style</value>
+  </data>
   <data name="LineEditor_To" xml:space="preserve">
     <value>À</value>
   </data>
@@ -187,19 +189,27 @@ Cette action est irréversible</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tiret</value>
   </data>
-  
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>T</value>
+  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Double tiret</value>
   </data>
-  
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>DT</value>
+  </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Double solide</value>
   </data>
-  
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>DS</value>
+  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Non</value>
   </data>
@@ -218,11 +228,15 @@ Cette action est irréversible</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Modifier le marquage du nœud #{0}</value>
   </data>
-  
+  <data name="PointEditor_ItemDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
   <data name="PointEditor_Offset" xml:space="preserve">
     <value>Décalage</value>
   </data>
-  
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Non défini</value>
   </data>
