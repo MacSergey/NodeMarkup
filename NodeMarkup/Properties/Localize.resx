@@ -268,7 +268,7 @@ This action cannot be undone</value>
     <value>Copy path to clipboard</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Dump marking data</value>

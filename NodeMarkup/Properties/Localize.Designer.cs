@@ -540,7 +540,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Ok.
+        ///   Ищет локализованную строку, похожую на OK.
         /// </summary>
         public static string Settings_DumpMarkingButton2 {
             get {

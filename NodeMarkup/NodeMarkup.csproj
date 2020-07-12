@@ -117,6 +117,8 @@
     <EmbeddedResource Include="Properties\Localize.de.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.es.resx" />
+    <EmbeddedResource Include="Properties\Localize.fr.resx" />
     <EmbeddedResource Include="Properties\Localize.nl.resx" />
     <EmbeddedResource Include="Properties\Localize.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
@@ -175,7 +177,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

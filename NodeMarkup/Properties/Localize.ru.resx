@@ -268,7 +268,7 @@
     <value>Копировать путь в буфер</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Ок</value>
+    <value>ОК</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Сохранить разметку</value>
