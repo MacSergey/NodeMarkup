@@ -121,7 +121,7 @@
     <value>Borrar {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar? {0} {1}?
+    <value>¿De verdad quieres borrar {0} {1}?
 No se puede deshacer esta acción</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
@@ -159,10 +159,10 @@ No se puede deshacer esta acción</value>
     <value>Desde</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Seleccione el punto "Desde" de la Regla</value>
+    <value>Seleccione el punto "Desde" de la regla</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Seleccione el punto "Hasta" de la Regla</value>
+    <value>Seleccione el punto "Hasta" de la regla</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>línea</value>
