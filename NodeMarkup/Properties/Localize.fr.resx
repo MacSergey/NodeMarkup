@@ -117,239 +117,90 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Supprimer {0}</value>
-  </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} {1}?
-Cette action est irréversible</value>
-  </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Faites défiler la roue pour changer</value>
-  </data>
-  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Appliquer le modèle</value>
-  </data>
-  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Enregistrer comme modèle</value>
-  </data>
-  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Définir par défaut</value>
-  </data>
-  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Retirer comme défaut</value>
-  </data>
-  <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Ajouter une règle</value>
-  </data>
-  <data name="LineEditor_Color" xml:space="preserve">
-    <value>Couleur</value>
-  </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Longueur du tiret</value>
-  </data>
-  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Supprimer cette règle</value>
-  </data>
-  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer la règle ?
-Cette action est irréversible</value>
-  </data>
-  <data name="LineEditor_From" xml:space="preserve">
-    <value>De</value>
-  </data>
-  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Sélectionnez le point "De" de cette règle</value>
-  </data>
-  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Sélectionnez le point "À" de cette règle</value>
-  </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>ligne</value>
-  </data>
-  <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Lignes</value>
-  </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
-    <value>Décalage</value>
-  </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>Longueur de l'espace</value>
-  </data>
-  
-  <data name="LineEditor_To" xml:space="preserve">
-    <value>À</value>
-  </data>
-  <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Intersection avec {0}</value>
-  </data>
-  
-  <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Tiret</value>
-  </data>
-  
-  <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Double tiret</value>
-  </data>
-  
-  <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Double solide</value>
-  </data>
-  
-  <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Solide</value>
-  </data>
-  
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Non</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>Valider</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Oui</value>
-  </data>
-  <data name="Mod_Description" xml:space="preserve">
-    <value>Faire marquages aux intersections seulement</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Ceci est une version BETA, des erreurs peuvent se produire et la stabilité n'est pas garantie!</value>
-  </data>
-  <data name="Panel_Caption" xml:space="preserve">
-    <value>Modifier le marquage du nœud #{0}</value>
-  </data>
-  
-  <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Décalage</value>
-  </data>
-  
-  <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Non défini</value>
-  </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Activer l'outil</value>
-  </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Ajouter une règle de ligne</value>
-  </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Supprimer toutes les lignes du noeud</value>
-  </data>
-  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Supprimer le marquage de tous les intersections</value>
-  </data>
-  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Supprimer tous les marquages</value>
-  </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les marquages ?
-Cette action est irréversible</value>
-  </data>
-  <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Extraire les données de marquage vers un fichier</value>
-  </data>
   
   
   
   
   
-  <data name="Settings_General" xml:space="preserve">
-    <value>Général</value>
-  </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importer des données de marquage depuis un fichier</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importer des données de marquage</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment importer les données ?
-Les données importées remplaceront toutes les marquages existants.
-Cette action est irréversible</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>L'importation des données de marquage a échoué</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Données de marquage importées avec succès</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Autre</value>
-  </data>
   
-  <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Distance d'affichage</value>
-  </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Raccourcis</value>
-  </data>
-  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Confirmer avant de supprimer</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Afficher les infobulles</value>
-  </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Couleur</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Longueur du tiret</value>
-  </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>modèle</value>
-  </data>
-  <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Nom</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Décalage</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Longueur de l'espace</value>
-  </data>
   
-  <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Modèles</value>
-  </data>
-  <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Nouveau modèle</value>
-  </data>
-  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Effacer les marquages de nœuds</value>
-  </data>
-  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les marquages du noeud #{0} ?
-Cette action est irréversible</value>
-  </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Cliquer pour créer une ligne
-+Shift - Solide
-+Ctrl - Double</value>
-  </data>
-  <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Cliquez pour supprimer la ligne</value>
-  </data>
-  <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Noeud #{0}
-Cliquez pour modifier le marquage</value>
-  </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Sélectionnez un nœud pour changer le marquage</value>
-  </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Sélectionnez un extrémité</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Sélectionnez un point pour
-créer ou supprimer une ligne
-+ Shift pour modifier le point</value>
-  </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Nouveautés dans {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Afficher les nouveautés</value>
-  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
