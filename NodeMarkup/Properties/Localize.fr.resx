@@ -185,7 +185,9 @@ Cette action est irréversible</value>
   <data name="LineRule_IntersectWith" xml:space="preserve">
     <value>Intersection avec {0}</value>
   </data>
-  
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Point de bord {0}</value>
+  </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tiret</value>
   </data>
@@ -262,19 +264,29 @@ Cette action est irréversible</value>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Extraire les données de marquage vers un fichier</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>Copier le chemin au presse-papier</value>
+  </data>
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Extraire les données de marquage</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>L'extraction a échoué</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>Extraction réussie</value>
+  </data>
   <data name="Settings_General" xml:space="preserve">
     <value>Général</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importer des données de marquage depuis un fichier</value>
+    <value>Importer les données de marquage depuis un fichier</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importer des données de marquage</value>
+    <value>Importer les données de marquage</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
     <value>Voulez-vous vraiment importer les données ?
@@ -290,7 +302,9 @@ Cette action est irréversible</value>
   <data name="Settings_Other" xml:space="preserve">
     <value>Autre</value>
   </data>
-  
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Configuration rapide des règles</value>
+  </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distance d'affichage</value>
   </data>
@@ -321,7 +335,9 @@ Cette action est irréversible</value>
   <data name="TemplateEditor_SpaceLength" xml:space="preserve">
     <value>Longueur de l'espace</value>
   </data>
-  
+  <data name="TemplateEditor_Style" xml:space="preserve">
+    <value>Style</value>
+  </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Modèles</value>
   </data>
@@ -365,6 +381,10 @@ créer ou supprimer une ligne
     <value>Afficher les nouveautés</value>
   </data>
   
-  
-  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Importer</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
 </root>
