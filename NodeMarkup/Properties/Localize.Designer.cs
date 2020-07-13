@@ -396,15 +396,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Support Localizations.  If you want to translate it into your own language, then Contact me
-        ///- Drag points
-        ///- Dump marking data to file
-        ///- Import marking data from file
-        ///- Fix highway - city road transition
-        ///- Delete warnings - Warning when deleting lines, rules, and templates. You can disable it in the settings
-        ///- Add new rule shortcut - Shift+Ctrl+A
-        ///- Quick rule setup - The interface for selecting rule edges opens automatically when creating a new rule. You can disable it in the settings
-        ///- What`s new  [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на - &quot;What`s New&quot; message this will pop-up one time after an update and can be disabled in the Options menu.
+        ///- Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish (Please contact the mod author to assist with translation into your own language).
+        ///- End Points can now be dragged from one to another by holding Ctrl.
+        ///- Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if y [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage {
             get {

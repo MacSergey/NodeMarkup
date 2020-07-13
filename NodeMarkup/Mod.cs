@@ -86,6 +86,7 @@ namespace NodeMarkup
 
             var messageBox = MessageBox.ShowModal<OkMessageBox>();
             messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
+            messageBox.MessageScale = 1f;
             messageBox.TextAlignment = UIHorizontalAlignment.Left;
             messageBox.MessageText = Localize.Mod_WhatsNewMessage;
             messageBox.OnButtonClick = Confirm;

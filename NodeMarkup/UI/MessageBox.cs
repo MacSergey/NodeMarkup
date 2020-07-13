@@ -76,6 +76,7 @@ namespace NodeMarkup.UI
 
         public string CaprionText { set => Caption.text = value; }
         public string MessageText { set => Message.text = value; }
+        public float MessageScale { set => Message.textScale = value; }
         public UIHorizontalAlignment TextAlignment { set => Message.textAlignment = value; }
         private UILabel Caption { get; set; }
         private UILabel Message { get; set; }
