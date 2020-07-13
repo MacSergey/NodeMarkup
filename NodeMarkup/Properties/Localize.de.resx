@@ -366,14 +366,8 @@ Klicken zum Bearbeiten der Markierung</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Node für die Änderung der Markierung auswählen</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Endpunkt auswählen</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Wähle den Startpunkt 
-Linie erstellen oder löschen
-+Shift, um diese zu bearbeiten</value>
-  </data>
+  
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
   </data>
