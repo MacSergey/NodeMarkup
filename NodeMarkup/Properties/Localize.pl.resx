@@ -383,19 +383,7 @@ utworzyć lub usunąć linię
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Pokaż "Co nowego?"</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Wsparcie lokalizacyjne. Jeśli chciałbyś pomóc w tłumaczeniu, skontaktuj się ze mną
-- Zmiana przesunięcia punktu przez przeciągnięcie
-- Eksport oznaczeń skrzyżowań do pliku
-- Import oznaczeń skrzyżowań z pliku
-- Poprawiono przejście autostrada - droga miejska
-- Potwierdzanie usunięcia - Ostrzeżenie podczas usuwania linii, reguł i szablonów. Można wyłączyć w opcjach
-- Dodaj nową regułę - Shift+Ctrl+A
-- Szybka konfiguracja reguł - Okno wyboru punktów reguły otwiera się automatycznie po dodaniu nowej reguły. Można wyłączyć w opcjach
-- Powiadomienie "Co nowego?". Można wyłączyć w opcjach
-- Aktywacja narzędzia możliwa nawet jeśli inne narzędzie jest aktualnie aktywne
-- Nie rysuje oznaczeń skrzyżowań gdy wybrano jedną z nakładek widoku</value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importuj</value>
   </data>
