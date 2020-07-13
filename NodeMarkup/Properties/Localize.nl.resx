@@ -121,29 +121,33 @@
     <value>Verwijder {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Wil je echt verwijderen {0} {1}
+    <value>Wil je {0} {1} echt verwijderen?
 Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scrolwiel om te wijzigen</value>
+    <value>Gebruik je scrollwiel om aan te passen</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Template toepassen</value>
+    <value>Sjabloon toepassen</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Als template opslaan</value>
+    <value>Opslaan als sjabloon</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
     <value>Als standaard instellen</value>
   </data>
-  
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Verwijder als standaard</value>
+  </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Regel toevoegen</value>
+    <value>Regel Toevoegen</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
     <value>Kleur</value>
   </data>
-  
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>Streeplengte</value>
+  </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
     <value>Regel verwijderen</value>
   </data>
@@ -154,35 +158,63 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Van</value>
   </data>
-  
-  
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Selecteer het startpunt van de regel</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Selecteer het eindpunt van de regel</value>
+  </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>lijn</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Lijnen</value>
   </data>
-  
-  
+  <data name="LineEditor_Offset" xml:space="preserve">
+    <value>Correctieafstand</value>
+  </data>
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>Afstand</value>
+  </data>
   <data name="LineEditor_Style" xml:space="preserve">
     <value>Stijl</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
     <value>Naar</value>
   </data>
-  
-  
-  
-  
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Knooppunt met {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Kantpunt {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Streeplijn</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>S</value>
+  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Dubbele streep</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>DS</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Dubbel ononderbroken</value>
+  </data>
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>DO</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Ononderbroken</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>O</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>Nee</value>
+  </data>
   <data name="MessageBox_OK" xml:space="preserve">
     <value>Ok</value>
   </data>
@@ -193,15 +225,17 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Maak gewoon markeringen op kruispunten</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dit is een BETA-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
+    <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Bewerk knooppunt #{0} markering</value>
+    <value>Bewerk markering punt #{0}</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>punt</value>
   </data>
-  
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Correctieafstand</value>
+  </data>
   <data name="PointEditor_Points" xml:space="preserve">
     <value>Punten</value>
   </data>
@@ -209,7 +243,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Niet ingesteld</value>
   </data>
   <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Tool activeren</value>
+    <value>Activeer programma</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
     <value>Voeg nieuwe lijnregel toe</value>
@@ -218,7 +252,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Verwijder alle markeringen van knooppunten</value>
+    <value>Verwijder markering van alle knooppunten</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Verwijder alle markeringen</value>
@@ -227,24 +261,44 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Wil je echt alle markeringen verwijderen?
 Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
-  
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Kopieer pad naar klembord</value>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Exporteer markeringsdata als bestand</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>Kopieer bestandslocatie naar klembord</value>
+  </data>
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>Oké</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Exporteer markeringsdata</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>Export mislukt</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>Export gelukt</value>
+  </data>
   <data name="Settings_General" xml:space="preserve">
     <value>Algemeen</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importeer markeringsgegevens uit bestand</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
+    <value>Importeer markeringsdata</value>
+  </data>
+  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
+    <value>Wil je echt deze data importeren?
+De geïmporteerde data vervangt alle huidige markeringen.
+Deze actie kan niet ongedaan worden gedaan</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
+    <value>Markeringsdata niet geïmporteerd</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
+    <value>Markeringsdata succesvol geïmporteerd</value>
+  </data>
   <data name="Settings_Other" xml:space="preserve">
     <value>Andere</value>
   </data>
@@ -254,7 +308,9 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Render afstand</value>
   </data>
-  
+  <data name="Settings_Shortcuts" xml:space="preserve">
+    <value>Snelkoppelingen</value>
+  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Bevestig voordat u verwijdert</value>
   </data>
@@ -264,30 +320,48 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="TemplateEditor_Color" xml:space="preserve">
     <value>Kleur</value>
   </data>
-  
-  
+  <data name="TemplateEditor_DashedLength" xml:space="preserve">
+    <value>Streeplengte</value>
+  </data>
+  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+    <value>sjabloon</value>
+  </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Naam</value>
   </data>
-  
-  
+  <data name="TemplateEditor_Offset" xml:space="preserve">
+    <value>Correctieafstand</value>
+  </data>
+  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
+    <value>Afstand</value>
+  </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
     <value>Stijl</value>
   </data>
-  
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Sjablonen</value>
+  </data>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>Nieuwe template</value>
   </data>
-  
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Verwijder puntmarkeringen</value>
+  </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Wil je echt alle punt #{0} markeringen wissen?
 Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
-  
-  <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Klik om lijn te verwijderen</value>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Klik om een lijn te maken
++Shift - Ononderbroken
++Ctrl - Dubbel</value>
   </data>
-  
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Klik om de lijn te verwijderen</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Punt #{0}</value>
+  </data>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>
   </data>
@@ -295,9 +369,9 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Selecteer eindpunt</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Selecteer punt voor start
-maak of verwijder lijn
-+Shift om het te bewerken</value>
+    <value>Selecteer een punt om
+een lijn te maken of verwijderen
++Shift om het punt te bewerken</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Wat is er nieuw in {0}</value>
@@ -306,6 +380,10 @@ maak of verwijder lijn
     <value>Toon wat nieuw is</value>
   </data>
   
-  
-  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Importeer</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Annuleer</value>
+  </data>
 </root>

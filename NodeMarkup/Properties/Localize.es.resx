@@ -121,11 +121,11 @@
     <value>Borrar {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar? {0} {1}?
+    <value>¿De verdad quieres borrar {0} {1}?
 No se puede deshacer esta acción</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Desplazca la rueda para cambiar</value>
+    <value>Desplaza la rueda para cambiar</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Aplicar plantilla</value>
@@ -137,7 +137,7 @@ No se puede deshacer esta acción</value>
     <value>Establecer como predeterminado</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Desmarcar por defecto</value>
+    <value>Desmarcar como predeterminado</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Añadir Regla</value>
@@ -149,7 +149,7 @@ No se puede deshacer esta acción</value>
     <value>Longitud de trazos</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Borrar Regla</value>
+    <value>Borrar regla</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>De verdad quieres borrar la regla?
@@ -159,10 +159,10 @@ No se puede deshacer esta acción</value>
     <value>Desde</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Seleccione el punto "Desde" de la Regla</value>
+    <value>Seleccione el punto "Desde" de la regla</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Seleccione el punto "Hasta" de la Regla</value>
+    <value>Seleccione el punto "Hasta" de la regla</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>línea</value>
@@ -192,13 +192,13 @@ No se puede deshacer esta acción</value>
     <value>Discontinua</value>
   </data>
   <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>DC</value>
+    <value>D</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Discontinua Doble</value>
   </data>
   <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DDC</value>
+    <value>DD</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Continua doble</value>
@@ -228,7 +228,7 @@ No se puede deshacer esta acción</value>
     <value>¡Esta es una versión BETA, pueden ocurrir errores y no se garantiza la estabilidad!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Editar las marcas del cruce #{0}</value>
+    <value>Editar las marcas del node #{0}</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>punto</value>
@@ -265,13 +265,13 @@ No se puede deshacer esta acción</value>
     <value>Exportar marcas al archivo</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Copie la ruta al portapapeles</value>
+    <value>Copiar la ruta al portapapeles</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
     <value>Aceptar</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Exportar marcas</value>
+    <value>Exportar las marcas</value>
   </data>
   <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
     <value>Exportación fallida</value>
@@ -280,13 +280,13 @@ No se puede deshacer esta acción</value>
     <value>Exportación guardada con éxito</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value>Miscelánea</value>
+    <value>Ajustes generales</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importar marcas desde archivo</value>
+    <value>Importar las marcas desde el archivo</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importar marcas</value>
+    <value>Importar las marcas</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
     <value>¿De verdad quieres importar los datos?
@@ -303,7 +303,7 @@ No se puede deshacer esta acción</value>
     <value>Otro</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Configuración rápida de reglas</value>
+    <value>Configuración rápida de regla</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distancia de renderizado</value>
@@ -345,7 +345,7 @@ No se puede deshacer esta acción</value>
     <value>Nueva plantilla</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Borrar marcas del nodo</value>
+    <value>Borrar las marcas del nodo</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>¿De verdad quieres borrar todas las marcas del nodo #{0}?
@@ -361,7 +361,7 @@ No se puede deshacer esta acción</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Nodo #{0}
-Haga clic para editar marcas</value>
+Haga clic para editar las marcas</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione un nodo para editar las marcas</value>

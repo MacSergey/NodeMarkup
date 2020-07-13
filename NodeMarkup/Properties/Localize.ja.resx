@@ -117,91 +117,274 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Editor_DeleteCaption" xml:space="preserve">
+    <value>{0} を削除しますか？</value>
+  </data>
+  <data name="Editor_DeleteMessage" xml:space="preserve">
+    <value>{0} - {1} を削除してもよろしいですか?
+この操作は元に戻せません</value>
+  </data>
+  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
+    <value>ホイールをスクロールして増減</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>テンプレートを適用</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>テンプレートの保存</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>デフォルトに設定</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>デフォルトの設定解除</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>ルールを追加</value>
+  </data>
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>カラー</value>
+  </data>
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>線の長さ</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>ルールを削除</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>ラインの設定を削除してもよろしいですか?
+この操作は元に戻せません</value>
+  </data>
+  <data name="LineEditor_From" xml:space="preserve">
+    <value>始点</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>始点側のポイントを選択</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>終点側のポイントを選択</value>
+  </data>
+  <data name="LineEditor_ItemDescription" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>ラインの一覧</value>
+  </data>
+  <data name="LineEditor_Offset" xml:space="preserve">
+    <value>オフセット</value>
+  </data>
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>空白の長さ</value>
+  </data>
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>種類</value>
+  </data>
+  <data name="LineEditor_To" xml:space="preserve">
+    <value>終点</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>交差点・ノード内 {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>交点・接点 {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>破線</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>2重破線</value>
+  </data>
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>DD</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>2重線</value>
+  </data>
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>DS</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>実線</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="MessageBox_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>交差点や高速道路のJCT・IC内に、ラインの作成・編集が出来るようになります</value>
+  </data>
+  <data name="Mod_DescriptionBeta" xml:space="preserve">
+    <value>これはβ版で、エラーが発生する可能性があります。安定性は保証されていません！</value>
+  </data>
+  <data name="Panel_Caption" xml:space="preserve">
+    <value>#{0} のノードを編集します</value>
+  </data>
+  <data name="PointEditor_ItemDescription" xml:space="preserve">
+    <value>ポイント</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>オフセット</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>ポイントの一覧</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>未設定</value>
+  </data>
+  <data name="Settings_ActivateTool" xml:space="preserve">
+    <value>マーキングツールの有効化</value>
+  </data>
+  <data name="Settings_AddNewLineRule" xml:space="preserve">
+    <value>新規ルールを追加</value>
+  </data>
+  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+    <value>ノードのマーキングを全て消去</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>全ての交差点からマークアップを削除</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>マップ上にある全てのマーキングを消去</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>マップ上にある、全てマーキングを削除してもよろしいですか?
+この操作は元に戻せません</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>マーキングデータをファイルに保存</value>
+  </data>
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>クリップボードにコピー</value>
+  </data>
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>マーキングデータのダンプ出力</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>ダンプ出力に失敗しました</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>ダンプ出力は正常に行われました</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>基本設定</value>
+  </data>
+  <data name="Settings_ImportMarkingButton" xml:space="preserve">
+    <value>マーキングデータをファイルからインポート</value>
+  </data>
+  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
+    <value>マーキングデータのインポート</value>
+  </data>
+  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
+    <value>本当にデータをインポートしますか？
+インポートされたデータは、既存のマーキングを全て置き換えます。
+この操作は、元に戻すことができません。</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
+    <value>マーキングデータのインポートに失敗しました</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
+    <value>マーキングデータのインポートに成功しました</value>
+  </data>
+  <data name="Settings_Other" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>ルールのクイックセットアップ</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>マーキングの描画距離（m）</value>
+  </data>
+  <data name="Settings_Shortcuts" xml:space="preserve">
+    <value>ショートカットの設定</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>削除前に確認します</value>
+  </data>
+  <data name="Settings_ShowTooltips" xml:space="preserve">
+    <value>ツールチップの表示</value>
+  </data>
+  <data name="TemplateEditor_Color" xml:space="preserve">
+    <value>カラー</value>
+  </data>
+  <data name="TemplateEditor_DashedLength" xml:space="preserve">
+    <value>破線の長さ</value>
+  </data>
+  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+    <value>テンプレート</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="TemplateEditor_Offset" xml:space="preserve">
+    <value>オフセット</value>
+  </data>
+  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
+    <value>空白の長さ</value>
+  </data>
+  <data name="TemplateEditor_Style" xml:space="preserve">
+    <value>ラインの種類</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>テンプレートの一覧</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>新規テンプレート</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>ノード内のマーキングを全て消去</value>
+  </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>ノード #{0} のマーキングを全て削除してもよろしいですか?
+この操作は元に戻せません</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>クリックしてラインの追加
++Shift - 実線
++Ctrl - 2重線</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>クリックしてラインを削除</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>ノード #{0}
+クリックしてマーキングの編集</value>
+  </data>
+  <data name="Tool_InfoNode" xml:space="preserve">
+    <value>マーキングを編集するノードを選択します</value>
+  </data>
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>終わりのポイントを選択</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>ポイントを選択して
+ラインを作成・削除する
++Shiftでポイントの編集</value>
+  </data>
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>新しい機能 {0}</value>
+  </data>
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>新着情報を表示する</value>
+  </data>
+  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>インポート</value>
+  </data>
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
 </root>
