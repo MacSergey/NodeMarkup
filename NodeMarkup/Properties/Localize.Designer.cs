@@ -843,7 +843,9 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select endpoint.
+        ///   Ищет локализованную строку, похожую на Select endpoint
+        ///+Shift - Solid
+        ///+Ctrl - Double.
         /// </summary>
         public static string Tool_InfoSelectEndPoint {
             get {
@@ -854,6 +856,7 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Select a point to
         ///create or delete a line
+        ///+Ctrl to move the point
         ///+Shift to edit the point.
         /// </summary>
         public static string Tool_InfoSelectStartPoint {
