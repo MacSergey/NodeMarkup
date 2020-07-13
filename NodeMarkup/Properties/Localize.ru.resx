@@ -259,7 +259,7 @@
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить всю разметку?
-Это действие нельзя будет отменить</value>
+Это действие нельзя отменить</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Сохранить разметку в файл</value>
@@ -283,14 +283,14 @@
     <value>Основные</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Импортировать разметки из файла</value>
+    <value>Импортировать разметку из файла</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
     <value>Импорт разметки</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
     <value>Вы действительно хотите импортировать разметку?
-Она заменит всю существующую
+Она заменит всю существующую разметку.
 Это действие нельзя отменить</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
@@ -315,7 +315,7 @@
     <value>Подтверждение удаления</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Показать подсказки</value>
+    <value>Показывать подсказки</value>
   </data>
   <data name="TemplateEditor_Color" xml:space="preserve">
     <value>Цвет</value>
