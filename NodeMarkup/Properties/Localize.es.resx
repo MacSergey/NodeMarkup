@@ -366,14 +366,8 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Seleccione punto final</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Seleccione un punto para
-crear o borrar la línea
-+Mayús para editar el punto</value>
-  </data>
+  
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
   </data>
