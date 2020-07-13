@@ -122,10 +122,10 @@
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
     <value>{0} - {1} を削除してもよろしいですか?
-この操作は、元に戻せません</value>
+この操作は元に戻せません</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールをスクロールして変更</value>
+    <value>ホイールをスクロールして増減</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -137,10 +137,10 @@
     <value>デフォルトに設定</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>デフォルトの解除</value>
+    <value>デフォルトの設定解除</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>ラインの設定を追加</value>
+    <value>ルールを追加</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
     <value>カラー</value>
@@ -149,7 +149,7 @@
     <value>線の長さ</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>ラインの設定を削除</value>
+    <value>ルールを削除</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>ラインの設定を削除してもよろしいですか?
@@ -159,16 +159,16 @@
     <value>始点</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>線の開始ポイントを選択</value>
+    <value>始点側のポイントを選択</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>線の終了ポイントを選択</value>
+    <value>終点側のポイントを選択</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>ライン</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>ライン</value>
+    <value>ラインの一覧</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
     <value>オフセット</value>
@@ -177,31 +177,41 @@
     <value>空白の長さ</value>
   </data>
   <data name="LineEditor_Style" xml:space="preserve">
-    <value>線の種類</value>
+    <value>種類</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
     <value>終点</value>
   </data>
-  
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>交差点・ノード内 {0}</value>
+  </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>交点 {0}</value>
+    <value>交点・接点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>破線</value>
   </data>
-  
-  <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>二重破線</value>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>D</value>
   </data>
-  
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>2重破線</value>
+  </data>
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>DD</value>
+  </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>2重線</value>
   </data>
-  
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>DS</value>
+  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>実線</value>
   </data>
-  
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>No</value>
   </data>
@@ -227,7 +237,7 @@
     <value>オフセット</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>ポイント</value>
+    <value>ポイントの一覧</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未設定</value>
@@ -236,7 +246,7 @@
     <value>マーキングツールの有効化</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>ラインの作成・追加</value>
+    <value>新規ルールを追加</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
     <value>ノードのマーキングを全て消去</value>
@@ -267,7 +277,7 @@
     <value>ダンプ出力に失敗しました</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>ダンプ出力は正常に保存されました</value>
+    <value>ダンプ出力は正常に行われました</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
     <value>基本設定</value>
@@ -293,16 +303,16 @@
     <value>その他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>ラインのクイックセットアップ</value>
+    <value>ルールのクイックセットアップ</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>最大描画距離</value>
+    <value>マーキングの描画距離（m）</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>ショートカット</value>
+    <value>ショートカットの設定</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>削除する前に確認します</value>
+    <value>削除前に確認します</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>ツールチップの表示</value>
@@ -326,16 +336,16 @@
     <value>空白の長さ</value>
   </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>線の種類</value>
+    <value>ラインの種類</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>テンプレート</value>
+    <value>テンプレートの一覧</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>新規テンプレート</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>ノードのマーキングを全て消去</value>
+    <value>ノード内のマーキングを全て消去</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>ノード #{0} のマーキングを全て削除してもよろしいですか?
@@ -365,7 +375,7 @@
 +Shiftでポイントの編集</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>バージョン {0} の新機能</value>
+    <value>新しい機能 {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
@@ -375,6 +385,6 @@
     <value>インポート</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
-    <value>中止</value>
+    <value>キャンセル</value>
   </data>
 </root>
