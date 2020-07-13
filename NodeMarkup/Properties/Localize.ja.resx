@@ -177,7 +177,7 @@
     <value>空白の長さ</value>
   </data>
   <data name="LineEditor_Style" xml:space="preserve">
-    <value>種類</value>
+    <value>ラインの種類</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
     <value>終点</value>
@@ -228,7 +228,7 @@
     <value>これはβ版で、エラーが発生する可能性があります。安定性は保証されていません！</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>#{0} のノードを編集します</value>
+    <value>#{0} のノードを編集中</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>ポイント</value>
@@ -252,7 +252,7 @@
     <value>ノードのマーキングを全て消去</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>全ての交差点からマークアップを削除</value>
+    <value>全ての交差点からマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>マップ上にある全てのマーキングを消去</value>
