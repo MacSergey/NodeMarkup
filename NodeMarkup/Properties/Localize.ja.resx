@@ -375,7 +375,7 @@
 +Shiftでポイントの編集</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>新しい機能 {0}</value>
+    <value>{0} の更新内容</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
