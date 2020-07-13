@@ -366,14 +366,8 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Sélectionnez un extrémité</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Sélectionnez un point pour
-créer ou supprimer une ligne
-+ Shift pour modifier le point</value>
-  </data>
+  
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
   </data>
