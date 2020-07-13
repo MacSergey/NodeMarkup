@@ -366,14 +366,8 @@
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Выберите перекресток для редактирования разметки</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Выберите начальную точку
-для создания или удаления линии
-+Shift для редактирования точки</value>
-  </data>
+  
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Что нового в {0}</value>
   </data>
