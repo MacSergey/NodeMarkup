@@ -249,13 +249,13 @@
     <value>新規ルールを追加</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>ノードのマーキングを全て消去</value>
+    <value>ノードのマーキングを全て削除</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
     <value>全ての交差点からマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>マップ上にある全てのマーキングを消去</value>
+    <value>マップ上にある全てのマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>マップ上にある、全てマーキングを削除してもよろしいですか?
@@ -380,7 +380,19 @@
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- ローカライズのサポート - 言語の翻訳に参加したい場合は連絡してください
+- ドラッグポイント
+- マーキングデータをファイルにダンプ出力
+- ファイルからマーキングデータをインポート
+- 高速道路から一般道路へのライン接続を修正
+- 削除確認のウィンドウを無効化 - 行・ルール・テンプレートの削除確認を設定で無効化できます
+- 新しいルールのショートカットを追加 - Shift+Ctrl+A
+- クイックルールのセットアップ - 新しいラインの設定を作成すると、始点側と終点側を選択が自動的に開始します。設定で無効化できます
+- 新着情報の表示は、設定で無効にすることができます
+- 他のツール類が表示されていても、アクティブ化のショートカットで起動します
+- ゲーム情報がオーバーレイされている場合は、ラインを表示しない</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>インポート</value>
   </data>
