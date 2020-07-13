@@ -159,10 +159,10 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Z</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Wybierz reguły punktu "Z"</value>
+    <value>Wybierz punkt "Z" wybranej reguły</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Wybierz reguły punktu "Do"</value>
+    <value>Wybierz punkt "Do" wybranej reguły</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>linia</value>
@@ -183,10 +183,10 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Do</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Przecina się z {0}</value>
+    <value>Przecięcie w {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Punkty krańcowy {0}</value>
+    <value>Punkt krańcowy {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Przerywana</value>
@@ -195,7 +195,7 @@ Nie będzie można cofnąć tej operacji</value>
     <value>P</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Przerywana podwójna</value>
+    <value>Podwójna przerywana</value>
   </data>
   <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
     <value>PP</value>
@@ -228,7 +228,7 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Wersja BETA, mogą pojawić się błędy oraz może działać niestabilnie!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Modyfikuj oznaczenia węzła/skrzyżowania #{0}</value>
+    <value>Modyfikuj oznaczenia skrzyżowania #{0}</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>punkt</value>
@@ -249,20 +249,20 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Dodaj nową regułę dla linii</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Usuń wszystkie oznaczenia skrzyżowania</value>
+    <value>Usuń wszystkie oznaczenia wybranego skrzyżowania</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
     <value>Usuń oznaczenia ze wszystkich skrzyżowań</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Usuń wszystkie oznaczenia</value>
+    <value>Usuwanie oznaczeń</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>Czy na pewno chcesz usunąć wszystkie oznaczenia?
 Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Eksportuj oznaczenia skrzyżowania do pliku</value>
+    <value>Eksportuj oznaczenia do pliku</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
     <value>Skopiuj ścieżkę do schowka</value>
@@ -274,10 +274,10 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Eksportuj dane oznaczeń</value>
   </data>
   <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Eksport się nie powiódł</value>
+    <value>Eksportowanie oznaczeń nie powiodło się</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Eksport oznaczeń pomyślny</value>
+    <value>Eksportowanie oznaczeń zakończono pomyślnie</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
     <value>Ogólne</value>
@@ -286,24 +286,24 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Importuj oznaczenia z pliku</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importuj dane oznaczeń</value>
+    <value>Import oznaczeń</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz zaimportować dane?
+    <value>Czy na pewno chcesz zaimportować oznaczenia?
 Wszystkie istniejące oznaczenia zostaną zastąpione.
 Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import oznaczeń nieudany</value>
+    <value>Importowanie oznaczeń nie powiodło się</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Pomyślnie zaimportowano dane</value>
+    <value>Importowanie oznaczeń zakończone sukcesem</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
     <value>Inne</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Konfiguracja szybkich reguł</value>
+    <value>Szybkie tworzenie reguł</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Odległość renderowania</value>
@@ -353,35 +353,35 @@ Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Kliknij aby utworzyć linię
-+Shift - linia ciągła
-+Ctrl - linia podwójna</value>
++Shift - ciągła
++Ctrl - podwójna</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknij aby usunąć linię</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Punkt #{0}
+    <value>Skrzyżowanie #{0}
 Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Wybierz węzeł/skrzyżowanie aby zmodyfikować oznaczenia</value>
+    <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
     <value>Wybierz punkt końcowy
-+Shift - linia ciągła
-+Ctrl - linia podwójna</value>
++Shift - ciągła
++Ctrl - podwójna</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby
 utworzyć lub usunąć linię
-+Ctrl aby przesunąć punkt
-+Shift aby edytować punkt</value>
++Ctrl - aby przesunąć punkt
++Shift - aby edytować punkt</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Pokaż co nowego</value>
+    <value>Pokaż "Co nowego?"</value>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">

@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -290,7 +290,7 @@
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
     <value>Вы действительно хотите импортировать разметку?
-Она заменит всю существующую.
+Она заменит всю существующую
 Это действие нельзя отменить</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
@@ -384,17 +384,16 @@
     <value>Показывать что нового</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Поддержка локализации. Добавлены Русский, Немецкий, Французский, Испанский, Чешский, Голландский и Японский языки. Если вы хотите перевести на свой язык, обратитесь к автору мода
-- Добавлена возможность перетаскивания точки курсором при зажатом Ctrl
-- Экспорт и импорт данных разметки в файл
-- Исправлено отображение на переходе с шоссе на обычную дорогу
-- Предупреждение об удалении линий, правил и шаблонов. Вы можете отключить это в настройках
-- Комбинация добавления нового правила - Shift+Ctrl+A
-- После добавления нового правила открывается интерфейс выбора ее граничных точек. Работают комбинации клавиш для задания стиля как при создании линии. Вы можете отключить это в настройках
-- Сообщения о новых версиях. Вы можете отключить это в настройках
-- Комбинация для активации работает когда выбран другой инструмент
-- Линии не отображаются когда открыты информационные оверлеи
-- Исправлен алгоритм расчета пунктирной линии</value>
+    <value>- Сообщение о изменениях в новой версии. Вы можете отключить это в настройках.
+- Поддержка локализаций. Добавлены Русский, Немецкий, Французский, Испанский, Чешский, Голландский и Японский языки. Если вы хотите перевести на свой язык, обратитесь к автору мода.
+- Добавлена возможность перетаскивания точки курсором при зажатом Ctrl.
+- В настройках появилась возможность экспортировать данные разметки в файл, а в дальнейшем импортировать их в туже карту. Это необходимо, если вы хотите выключить мод и делать новые сохранения без него, а потом, когда снова включите мод, вернуть всю разметку назад.
+- Добавлено предупреждение об удалении линий, правил и шаблонов. Вы можете отключить это в настройках.
+- Новая комбинация добавления правила - Shift+Ctrl+A (Может быть изменена в настройках).
+- Быстрая настройка правила: После добавления нового правила автоматически откроется интерфейс выбора его начальной и конечной точек. Больше не нужно нажимать на "От", a потом на "До". Вы можете отключить это в настройках.
+- Исправлено не корректное отображении линий на переходе с шоссе на обычную дорогу.
+- Линии больше не отображаются когда открыты информационные оверлеи.
+- Комбинация для активации работает когда выбран другой инструмент.</value>
   </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Импорт</value>
