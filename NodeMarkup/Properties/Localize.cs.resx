@@ -366,14 +366,8 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Vyberte výchozí bod pro
-vytvoření nebo odstranění čáry
-+Shift pro nastavení bodu</value>
-  </data>
+  
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
   </data>
