@@ -195,7 +195,7 @@ Nie będzie można cofnąć tej operacji</value>
     <value>P</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Przerywana podwójna</value>
+    <value>Podwójna przerywana</value>
   </data>
   <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
     <value>PP</value>
@@ -353,8 +353,8 @@ Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Kliknij aby utworzyć linię
-+Shift - linia ciągła
-+Ctrl - linia podwójna</value>
++Shift - ciągła
++Ctrl - podwójna ciągła</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknij aby usunąć linię</value>
@@ -368,8 +368,8 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
     <value>Wybierz punkt końcowy
-+Shift - linia ciągła
-+Ctrl - linia podwójna</value>
++Shift - ciągła
++Ctrl - podwójna ciągła</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby
