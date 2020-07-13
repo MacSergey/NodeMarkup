@@ -366,8 +366,17 @@
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>マーキングを編集するノードを選択します</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>終点側のポイントを選択
++Shift - 破線
++Ctrl - 2重線</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>ポイントを選択して
+ラインを作成・削除する
++Ctrlでポイントを移動
++Shiftでポイントの編集</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
   </data>
