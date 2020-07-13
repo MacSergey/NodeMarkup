@@ -37,6 +37,15 @@ namespace NodeMarkup.UI
             Instance.Init();
             return Instance;
         }
+        public static void RemovePanel()
+        {
+            if(Instance != null)
+            {
+                Instance.Hide();
+                Destroy(Instance);
+                Instance = null;
+            }
+        }
         public void Init()
         {
             atlas = InGameAtlas;

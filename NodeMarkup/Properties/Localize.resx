@@ -367,11 +367,14 @@ Click to edit marking</value>
     <value>Select a node to change marking</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Select endpoint</value>
+    <value>Select endpoint
++Shift - Solid
++Ctrl - Double</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
     <value>Select a point to
 create or delete a line
++Ctrl to move the point
 +Shift to edit the point</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">

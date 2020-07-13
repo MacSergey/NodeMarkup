@@ -265,29 +265,46 @@ namespace NodeMarkup.Manager
 
         public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0)
         {
-            var length = trajectory.Length();
-            if (length == 0)
-                yield break;
+            var dashesT = new List<float[]>();
 
-            var dashCount = (int)(length / (DashLength + SpaceLength));
-
-            var startSpaceT = (1 - ((DashLength + SpaceLength) * dashCount - SpaceLength) / length) / 2;
-            var dashT = DashLength / length;
-            var spaceT = SpaceLength / length;
-
-            int index = 0;
-            while (true)
+            var startSpace = SpaceLength / 2;
+            for (var i = 0; i < 3; i += 1)
             {
-                var startT = startSpaceT + (dashT + spaceT) * index;
-                var endT = startT + dashT;
+                dashesT.Clear();
+                var isDash = false;
 
-                if (endT >= 1)
+                var prevT = 0f;
+                var currentT = 0f;
+                var nextT = trajectory.Travel(currentT, startSpace);
+
+                while (nextT < 1)
+                {
+                    if (isDash)
+                        dashesT.Add(new float[] { currentT, nextT });
+
+                    isDash = !isDash;
+
+                    prevT = currentT;
+                    currentT = nextT;
+                    nextT = trajectory.Travel(currentT, isDash ? DashLength : SpaceLength);
+                }
+
+                float endSpace;
+                if (isDash || ((trajectory.Position(1) - trajectory.Position(currentT)).magnitude is float tempLength && tempLength < SpaceLength / 2))
+                    endSpace = (trajectory.Position(1) - trajectory.Position(prevT)).magnitude;
+                else
+                    endSpace = tempLength;
+
+                startSpace = (startSpace + endSpace) / 2;
+
+                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
                     break;
+            }
 
-                foreach (var dash in CalculateDashes(trajectory, startT, endT))
+            foreach (var dashT in dashesT)
+            {
+                foreach (var dash in CalculateDashes(trajectory, dashT[0], dashT[1]))
                     yield return dash;
-
-                index += 1;
             }
         }
 
