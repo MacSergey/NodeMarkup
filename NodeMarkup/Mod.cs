@@ -51,7 +51,6 @@ namespace NodeMarkup
             {
                 NodeMarkupTool.Create();
                 MarkupManager.Init();
-                //NodeMarkupTool.Instance?.DisableTool();
 
                 ShowWhatsNew();
             }

@@ -44,7 +44,7 @@ namespace NodeMarkup
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
-        Button Button => Button.Instace;
+        NodeMarkupButton Button => NodeMarkupButton.Instace;
         NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
@@ -64,7 +64,7 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
             base.Awake();
 
-            Button.CreateButton();
+            NodeMarkupButton.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
             DisableTool();
@@ -86,10 +86,8 @@ namespace NodeMarkup
         protected override void OnDestroy()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
-            Button?.Hide();
-            Destroy(Button);
-            Panel?.Hide();
-            Destroy(Panel);
+            NodeMarkupButton.RemoveButton();
+            NodeMarkupPanel.RemovePanel();
             base.OnDestroy();
         }
         protected override void OnEnable()
