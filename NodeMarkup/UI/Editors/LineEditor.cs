@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
         private bool IsHoverRuleEdgeBounds => IsSelectRuleEdgeMode && HoverRuleEdgeBounds != null;
 
         private MarkupLineSelectPropertyPanel SelectRuleEdgePanel { get; set; }
-        private Action AfterSelectRuleEdgePanel { get; set; }
+        private Func<Event, bool> AfterSelectRuleEdgePanel { get; set; }
         private bool IsSelectRuleEdgeMode => SelectRuleEdgePanel != null;
 
         private MarkupLineSelectPropertyPanel HoverRuleEdgePanel { get; set; }
@@ -103,7 +103,12 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetupRule(RulePanel rulePanel)
         {
-            SelectRuleEdge(rulePanel.From, () => SelectRuleEdge(rulePanel.To));
+            SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (e) => SetStyle(rulePanel, e)));
+        }
+        private bool SetStyle(RulePanel rulePanel, Event e)
+        {
+            rulePanel.Style.SelectedObject = e.GetStyle(); 
+            return true;
         }
         public void DeleteRule(RulePanel rulePanel)
         {
@@ -125,15 +130,15 @@ namespace NodeMarkup.UI.Editors
                 return true;
             }
         }
-        public void SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => SelectRuleEdge(selectPanel, null);
-        public void SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel, Action afterAction)
+        public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => SelectRuleEdge(selectPanel, null);
+        public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
         {
             if (IsSelectRuleEdgeMode)
             {
                 var isToggle = SelectRuleEdgePanel == selectPanel;
                 NodeMarkupPanel.EndEditorAction();
                 if (isToggle)
-                    return;
+                    return true;
             }
             NodeMarkupPanel.StartEditorAction(this, out bool isAccept);
             if (isAccept)
@@ -142,7 +147,9 @@ namespace NodeMarkup.UI.Editors
                 AfterSelectRuleEdgePanel = afterAction;
                 SelectRuleEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
                 SelectRuleEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
+                return false;
             }
+            return true;
         }
         public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverRuleEdgePanel = selectPanel;
         public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverRuleEdgePanel = null;
@@ -178,16 +185,8 @@ namespace NodeMarkup.UI.Editors
             {
                 SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.LineRawRuleEdge;
 
-                if (AfterSelectRuleEdgePanel != null)
-                {
-                    isDone = false;
-                    AfterSelectRuleEdgePanel();
-                }
-                else
-                {
-                    isDone = true;
+                if(isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true)
                     NodeMarkupPanel.EndEditorAction();
-                }
             }
             else
                 isDone = false;
@@ -262,6 +261,7 @@ namespace NodeMarkup.UI.Editors
 
         public MarkupLineSelectPropertyPanel From { get; private set; }
         public MarkupLineSelectPropertyPanel To { get; private set; }
+        public StylePropertyPanel Style { get; private set; }
 
         private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
 
@@ -325,7 +325,7 @@ namespace NodeMarkup.UI.Editors
             From.AddRange(Editor.RuleEdges);
             From.SelectedObject = Rule.From;
             From.OnSelectChanged += FromChanged;
-            From.OnSelect += Editor.SelectRuleEdge;
+            From.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             From.OnHover += Editor.HoverRuleEdge;
             From.OnLeave += Editor.LeaveRuleEdge;
         }
@@ -339,7 +339,7 @@ namespace NodeMarkup.UI.Editors
             To.AddRange(Editor.RuleEdges);
             To.SelectedObject = Rule.To;
             To.OnSelectChanged += ToChanged;
-            To.OnSelect += Editor.SelectRuleEdge;
+            To.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
         }
@@ -354,12 +354,12 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            var styleProperty = AddUIComponent<StylePropertyPanel>();
-            styleProperty.Text = NodeMarkup.Localize.LineEditor_Style;
-            styleProperty.Init();
-            styleProperty.SelectedObject = Rule.Style.Type;
-            styleProperty.OnSelectObjectChanged += StyleChanged;
-            StyleProperties.Add(styleProperty);
+            Style = AddUIComponent<StylePropertyPanel>();
+            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Init();
+            Style.SelectedObject = Rule.Style.Type;
+            Style.OnSelectObjectChanged += StyleChanged;
+            StyleProperties.Add(Style);
         }
         private void AddStyleAdditionalProperties()
         {

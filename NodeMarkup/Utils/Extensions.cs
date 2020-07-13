@@ -127,6 +127,47 @@ namespace NodeMarkup.Utils
                 return length;
             }
         }
+        public static float Length(this Bezier3 bezier, out List<BezierPoint> bezierPoints, float minAngleDelta = 10, int depth = 0)
+        {
+            bezierPoints = new List<BezierPoint>();
+
+            var start = bezier.b - bezier.a;
+            var end = bezier.c - bezier.d;
+            if (start.magnitude < Vector3.kEpsilon || end.magnitude < Vector3.kEpsilon)
+                return 0;
+
+            var angle = Vector3.Angle(start, end);
+            if (depth < 5 && 180 - angle > minAngleDelta)
+            {
+                bezier.Divide(out Bezier3 first, out Bezier3 second);
+                var firstLength = first.Length(out List<BezierPoint> firstPoints, depth: depth + 1);
+                var secondLength = second.Length(out List<BezierPoint> secondPoints, depth: depth + 1);
+                var length = firstLength + secondLength;
+                if (length == 0)
+                    return 0;
+
+                var firstPart = firstLength / length;
+                var secondPart = secondLength / length;
+
+                foreach(var point in firstPoints)
+                {
+                    bezierPoints.Add(new BezierPoint(point.T * firstPart, point.Length));
+                }
+                foreach (var point in secondPoints.Skip(1))
+                {
+                    bezierPoints.Add(new BezierPoint(point.T * secondPart + firstPart, point.Length + firstLength));
+                }
+                return length;
+            }
+            else
+            {
+                var length = (bezier.d - bezier.a).magnitude;
+                bezierPoints.Add(new BezierPoint(0, 0));
+                bezierPoints.Add(new BezierPoint(1, length));
+                return length;
+            }
+        }
+
         public static Vector4 ToVector(this Color c) => new Vector4(c.r, c.g, c.b, c.a);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
@@ -140,5 +181,24 @@ namespace NodeMarkup.Utils
             (p.shift ? EventModifiers.Shift : EventModifiers.None) |
             (p.control ? EventModifiers.Control : EventModifiers.None) |
             (p.alt ? EventModifiers.Alt : EventModifiers.None);
+
+        public static LineStyle.LineType GetStyle(this Event e) => e.shift ? (e.control ? LineStyle.LineType.DoubleSolid : LineStyle.LineType.Solid) : (e.control ? LineStyle.LineType.DoubleDashed : LineStyle.LineType.Dashed);
+    }
+
+    public struct BezierPoint
+    {
+        public float Length;
+        public float T;
+        public BezierPoint(float t, float length)
+        {
+            T = t;
+            Length = length;
+        }
+        public override string ToString() => $"{T} - {Length}";
+    }
+    public class BezierPointComparer : IComparer<BezierPoint>
+    {
+        public static BezierPointComparer Instance { get; } = new BezierPointComparer();
+        public int Compare(BezierPoint x, BezierPoint y) => x.Length.CompareTo(y.Length);
     }
 }
