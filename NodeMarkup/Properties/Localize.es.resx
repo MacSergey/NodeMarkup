@@ -125,7 +125,7 @@
 No se puede deshacer esta acción</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Desplaza la rueda para cambiar</value>
+    <value>Desplace la rueda para cambiar</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Aplicar plantilla</value>
