@@ -353,8 +353,8 @@
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>点击以创建地标线
-Shift+单击 创建实线
-Ctrl+单击 创建双线</value>
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>点击可擦除线段</value>
@@ -368,14 +368,14 @@ Ctrl+单击 创建双线</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
     <value>选择终止点
-Shift+单击 创建实线
-Ctrl+单击 创建双线</value>
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
     <value>点选起始点
 来创建/擦除线段
-Ctrl+长按 偏移端点
-Shift+单击 编辑端点</value>
++Ctrl 偏移端点
++Shift 编辑端点</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
@@ -390,4 +390,10 @@ Shift+单击 编辑端点</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  
+  
+  
+  
+  
+  
 </root>
