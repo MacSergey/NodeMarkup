@@ -117,16 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Editor_DeleteCaption" xml:space="preserve">
+    <value>删除{0}</value>
+  </data>
+  <data name="Editor_DeleteMessage" xml:space="preserve">
+    <value>确定要删除 {0} {1} 吗?
+此操作不可撤销。</value>
+  </data>
+  
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>应用模板</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>另存为模板</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>设定为默认</value>
+  </data>
   
   
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>虚线长度</value>
+  </data>
   
   
   
