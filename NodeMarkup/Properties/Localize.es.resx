@@ -118,14 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Borrar {0}</value>
+    <value>Eliminar {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar {0} {1}?
+    <value>¿De verdad quieres eliminar {0} {1}?
 No se puede deshacer esta acción</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Desplaza la rueda para cambiar</value>
+    <value>Desplazar la rueda para cambiar</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Aplicar plantilla</value>
@@ -140,7 +140,7 @@ No se puede deshacer esta acción</value>
     <value>Desmarcar como predeterminado</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Añadir Regla</value>
+    <value>Añadir la regla</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
     <value>Color</value>
@@ -149,20 +149,20 @@ No se puede deshacer esta acción</value>
     <value>Longitud de trazos</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Borrar regla</value>
+    <value>Eliminar la regla</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>De verdad quieres borrar la regla?
+    <value>De verdad quieres eliminar la regla?
 No se puede deshacer esta acción</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Desde</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Seleccione el punto "Desde" de la regla</value>
+    <value>Seleccionar el punto "Desde" de la regla</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Seleccione el punto "Hasta" de la regla</value>
+    <value>Seleccionar el punto "Hasta" de la regla</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
     <value>línea</value>
@@ -222,7 +222,7 @@ No se puede deshacer esta acción</value>
     <value>Sí</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Solo haga marcas en las intersecciones</value>
+    <value>Solo haga las marcas en las intersecciones</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>¡Esta es una versión BETA, pueden ocurrir errores y no se garantiza la estabilidad!</value>
@@ -243,26 +243,26 @@ No se puede deshacer esta acción</value>
     <value>No establecido</value>
   </data>
   <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Activar herramienta</value>
+    <value>Activar la herramienta</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Añadir nueva regla de línea</value>
+    <value>Añadir nueva regla de la línea</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Borrar todas las líneas del nodo</value>
+    <value>Eliminar todas las líneas del nodo</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Borrar marcas de todas las intersecciones</value>
+    <value>Eliminar las marcas de todas las intersecciones</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Borrar todas las marcas</value>
+    <value>Eliminar todas las marcas</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar todas las marcas?
+    <value>¿De verdad quieres eliminar todas las marcas?
 No se puede deshacer esta acción</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Exportar marcas al archivo</value>
+    <value>Exportar las marcas al archivo</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
     <value>Copiar la ruta al portapapeles</value>
@@ -280,7 +280,7 @@ No se puede deshacer esta acción</value>
     <value>Exportación guardada con éxito</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value>Ajustes generales</value>
+    <value>General</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importar las marcas desde el archivo</value>
@@ -300,10 +300,10 @@ No se puede deshacer esta acción</value>
     <value>Las marcas se han importado con éxito</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
-    <value>Otro</value>
+    <value>Otros</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Configuración rápida de regla</value>
+    <value>Configuración rápida de la regla</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distancia de renderizado</value>
@@ -312,16 +312,16 @@ No se puede deshacer esta acción</value>
     <value>Atajos</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Confirme antes de borrar</value>
+    <value>Confirmar antes de eliminar</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Mostrar herramientas</value>
+    <value>Mostrar las herramientas</value>
   </data>
   <data name="TemplateEditor_Color" xml:space="preserve">
     <value>Color</value>
   </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Longitud de trazos</value>
+    <value>Longitud del trazo</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
     <value>plantilla</value>
@@ -345,10 +345,10 @@ No se puede deshacer esta acción</value>
     <value>Nueva plantilla</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Borrar las marcas del nodo</value>
+    <value>Eliminar las marcas del nodo</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar todas las marcas del nodo #{0}?
+    <value>¿De verdad quieres eliminar todas las marcas del nodo #{0}?
 No se puede deshacer esta acción</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
@@ -366,15 +366,35 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Seleccione el punto final
++Mayús - Continua
++Ctrl - Discontinua</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Seleccione el punto para
+crear o eliminar la línea
++Ctrl para mover el punto
++Mayús para editar el punto</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Mostrar novedades</value>
+    <value>Mostrar las novedades</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Mensaje "Novedades" aparecerá una vez después de una actualización y se puede desactivar en el menú Opciones.
+- Se agregaron las siguientes traducciones: checo, holandés, francés, alemán, japonés, polaco, ruso y español (Por favor, póngase en contacto con el autor del mod para ayudar con la traducción a su propio idioma).
+- Los puntos finales ahora se pueden arrastrar de uno a otro manteniendo presionada la tecla Ctrl.
+- Copias de seguridad: en el menú Opciones, ahora se pueden hacer un respaldo de las marcas en un mapa exportando a un archivo y luego importándolo. Esto es necesario si tienes que desactivar el mod, hacer un nuevo guardado sin el y luego quieres recuperar todas las marcas.
+- Ahora hay una ventana emergente al eliminar elementos. Esto se aplica a líneas, reglas y plantillas. Se puede desactivar en las opciones.
+- Nuevo atajo agregado para añadir una nueva regla - Shift + Ctrl + A (reasignable).
+- Configuración rápida de la regla: Después de crear una nueva regla, la interfaz para seleccionar sus puntos de inicio y final ahora se abre automáticamente. Ya no necesita hacer clic en las áreas "Desde" y "Hasta". Esto se puede desactivar en las opciones.
+- Se solucionó el problema con las líneas que parecían rotas o divididas: solo ocurría en las transiciones de carreteras y calles.
+- Las líneas ya no se generan cuando se muestren las superposiciones de vistas de información.
+- El atajo de activación ahora se activará cuando se abra otra herramienta mientras la Herramienta de las Marcas ya está abierta.</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importar</value>
   </data>
