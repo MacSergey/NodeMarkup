@@ -198,6 +198,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string LineEditor_Invert {
+            get {
+                return ResourceManager.GetString("LineEditor_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на line.
         /// </summary>
         public static string LineEditor_ItemDescription {
@@ -248,6 +257,15 @@ namespace NodeMarkup {
         public static string LineEditor_To {
             get {
                 return ResourceManager.GetString("LineEditor_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width.
+        /// </summary>
+        public static string LineEditor_Width {
+            get {
+                return ResourceManager.GetString("LineEditor_Width", resourceCulture);
             }
         }
         
@@ -329,6 +347,24 @@ namespace NodeMarkup {
         public static string LineStyle_Solid {
             get {
                 return ResourceManager.GetString("LineStyle_Solid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid and Dashed.
+        /// </summary>
+        public static string LineStyle_SolidAndDashed {
+            get {
+                return ResourceManager.GetString("LineStyle_SolidAndDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SD.
+        /// </summary>
+        public static string LineStyle_SolidAndDashedShort {
+            get {
+                return ResourceManager.GetString("LineStyle_SolidAndDashedShort", resourceCulture);
             }
         }
         
@@ -726,6 +762,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string TemplateEditor_Invert {
+            get {
+                return ResourceManager.GetString("TemplateEditor_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на template.
         /// </summary>
         public static string TemplateEditor_ItemDescription {
@@ -776,6 +821,15 @@ namespace NodeMarkup {
         public static string TemplateEditor_Templates {
             get {
                 return ResourceManager.GetString("TemplateEditor_Templates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width.
+        /// </summary>
+        public static string TemplateEditor_Width {
+            get {
+                return ResourceManager.GetString("TemplateEditor_Width", resourceCulture);
             }
         }
         

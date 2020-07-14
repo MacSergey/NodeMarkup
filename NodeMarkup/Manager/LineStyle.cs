@@ -11,6 +11,44 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
+    abstract class StyleData
+    {
+        protected Action DataChanged { get;}
+        public StyleData(Action dataChanged)
+        {
+            DataChanged = dataChanged;
+        }
+    }
+
+    class DashedData : StyleData
+    {
+        float _dashLength;
+        float _spaceLength;
+        public float DashLength
+        {
+            get => _dashLength;
+            set
+            {
+                _dashLength = value;
+                DataChanged();
+            }
+        }
+        public float SpaceLength
+        {
+            get => _spaceLength;
+            set
+            {
+                _spaceLength = value;
+                DataChanged();
+            }
+        }
+        public DashedData(Action dataChanged, float dashLength, float spaceLength) : base(dataChanged)
+        {
+            DashLength = dashLength;
+            SpaceLength = spaceLength;
+        }
+    }
+
     public interface IDashedLine
     {
         float DashLength { get; set; }
@@ -19,6 +57,10 @@ namespace NodeMarkup.Manager
     public interface IDoubleLine
     {
         float Offset { get; set; }
+    }
+    public interface IAsymLine
+    {
+        bool Invert { get; set; }
     }
 
     public abstract class LineStyle : IToXml
@@ -39,6 +81,7 @@ namespace NodeMarkup.Manager
         public static DashedLineStyle DefaultDashed => new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength);
         public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffser);
         public static DoubleDashedStyle DefaultDoubleDashed => new DoubleDashedStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
+        public static SolidAndDashedStyle DefaultSolidAndDashed => new SolidAndDashedStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser, false);
 
         public static LineStyle GetDefault(LineType type)
         {
@@ -48,6 +91,7 @@ namespace NodeMarkup.Manager
                 case LineType.Dashed: return DefaultDashed;
                 case LineType.DoubleSolid: return DefaultDoubleSolid;
                 case LineType.DoubleDashed: return DefaultDoubleDashed;
+                case LineType.SolidAndDashed: return DefaultSolidAndDashed;
                 default: return null;
             }
         }
@@ -59,6 +103,7 @@ namespace NodeMarkup.Manager
                 case LineType.Dashed: return Localize.LineStyle_DashedShort;
                 case LineType.DoubleSolid: return Localize.LineStyle_DoubleSolidShort;
                 case LineType.DoubleDashed: return Localize.LineStyle_DoubleDashedShort;
+                case LineType.SolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
                 default: return null;
             }
         }
@@ -96,7 +141,7 @@ namespace NodeMarkup.Manager
             Width = width;
         }
 
-        public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0);
+        public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory);
         public abstract LineStyle Copy();
         protected void StyleChanged() => OnStyleChanged?.Invoke();
         public virtual XElement ToXml()
@@ -145,7 +190,126 @@ namespace NodeMarkup.Manager
             DoubleSolid,
 
             [Description("LineStyle_DoubleDashed")]
-            DoubleDashed
+            DoubleDashed,
+
+            [Description("LineStyle_SolidAndDashed")]
+            SolidAndDashed
+        }
+
+        protected IEnumerable<MarkupDash> CalculateSolid(Bezier3 trajectory, int depth, Func<Bezier3, IEnumerable<MarkupDash>> calculateDashes)
+        {
+            var deltaAngle = trajectory.DeltaAngle();
+            var direction = trajectory.d - trajectory.a;
+            var length = direction.magnitude;
+
+            if (depth < 5 && (deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
+            {
+                trajectory.Divide(out Bezier3 first, out Bezier3 second);
+                foreach (var dash in CalculateSolid(first, depth + 1, calculateDashes))
+                {
+                    yield return dash;
+                }
+                foreach (var dash in CalculateSolid(second, depth + 1, calculateDashes))
+                {
+                    yield return dash;
+                }
+            }
+            else
+            {
+                foreach (var dash in calculateDashes(trajectory))
+                {
+                    yield return dash;
+                }
+            }
+        }
+        protected IEnumerable<MarkupDash> CalculateDashed(Bezier3 trajectory, float dashLength, float spaceLength, Func<Bezier3, float, float, IEnumerable<MarkupDash>> calculateDashes)
+        {
+            var dashesT = new List<float[]>();
+
+            var startSpace = spaceLength / 2;
+            for (var i = 0; i < 3; i += 1)
+            {
+                dashesT.Clear();
+                var isDash = false;
+
+                var prevT = 0f;
+                var currentT = 0f;
+                var nextT = trajectory.Travel(currentT, startSpace);
+
+                while (nextT < 1)
+                {
+                    if (isDash)
+                        dashesT.Add(new float[] { currentT, nextT });
+
+                    isDash = !isDash;
+
+                    prevT = currentT;
+                    currentT = nextT;
+                    nextT = trajectory.Travel(currentT, isDash ? dashLength : spaceLength);
+                }
+
+                float endSpace;
+                if (isDash || ((trajectory.Position(1) - trajectory.Position(currentT)).magnitude is float tempLength && tempLength < spaceLength / 2))
+                    endSpace = (trajectory.Position(1) - trajectory.Position(prevT)).magnitude;
+                else
+                    endSpace = tempLength;
+
+                startSpace = (startSpace + endSpace) / 2;
+
+                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
+                    break;
+            }
+
+            foreach (var dashT in dashesT)
+            {
+                foreach (var dash in calculateDashes(trajectory, dashT[0], dashT[1]))
+                    yield return dash;
+            }
+        }
+
+        protected MarkupDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, float offset)
+        {
+            var startPosition = trajectory.Position(startT);
+            var endPosition = trajectory.Position(endT);
+
+            if (offset != 0f)
+            {
+                var startDirection = trajectory.Tangent(startT).Turn90(true).normalized;
+                var endDirection = trajectory.Tangent(endT).Turn90(true).normalized;
+
+                startPosition += startDirection * offset;
+                endPosition += endDirection * offset;
+            }
+
+            var position = (startPosition + endPosition) / 2;
+            var direction = (endPosition - startPosition);
+
+            var angle = Mathf.Atan2(direction.z, direction.x);
+
+            var dash = new MarkupDash(position, angle, dashLength, Width, Color);
+            return dash;
+        }
+
+        protected MarkupDash CalculateSolidDash(Bezier3 trajectory, float offset)
+        {
+            var startPosition = trajectory.a;
+            var endPosition = trajectory.d;
+
+            if (offset != 0f)
+            {
+                var startDirection = (trajectory.b - trajectory.a).Turn90(true).normalized;
+                var endDirection = (trajectory.d - trajectory.c).Turn90(true).normalized;
+
+                startPosition += startDirection * offset;
+                endPosition += endDirection * offset;
+            }
+
+            var position = (endPosition + startPosition) / 2;
+            var direction = endPosition - startPosition;
+            var angle = Mathf.Atan2(direction.z, direction.x);
+
+            var dash = new MarkupDash(position, angle, direction.magnitude, Width, Color);
+            return dash;
         }
     }
 
@@ -155,38 +319,10 @@ namespace NodeMarkup.Manager
 
         public SolidLineStyle(Color color, float width) : base(color, width) { }
 
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0)
+        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
+        protected virtual IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory)
         {
-            var deltaAngle = trajectory.DeltaAngle();
-            var direction = trajectory.d - trajectory.a;
-            var length = direction.magnitude;
-
-            if (depth < 5 && (deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
-            {
-                trajectory.Divide(out Bezier3 first, out Bezier3 second);
-                foreach (var dash in Calculate(first, depth + 1))
-                {
-                    yield return dash;
-                }
-                foreach (var dash in Calculate(second, depth + 1))
-                {
-                    yield return dash;
-                }
-            }
-            else
-            {
-                foreach (var dash in CalculateDashes(trajectory, direction, length))
-                {
-                    yield return dash;
-                }
-            }
-        }
-        protected virtual IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory, Vector3 direction, float length)
-        {
-            var position = (trajectory.d + trajectory.a) / 2;
-            var angle = Mathf.Atan2(direction.z, direction.x);
-            var dash = new MarkupDash(position, angle, length, Width, Color);
-            yield return dash;
+            yield return CalculateSolidDash(trajectory, 0f);
         }
 
         public override LineStyle Copy() => new SolidLineStyle(Color, Width);
@@ -211,26 +347,10 @@ namespace NodeMarkup.Manager
             Offset = offset;
         }
 
-        protected override IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory, Vector3 direction, float length)
+        protected override IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory)
         {
-            var startDirection = (trajectory.b - trajectory.a).Turn90(true).normalized;
-            var endDirection = (trajectory.d - trajectory.c).Turn90(true).normalized;
-
-            yield return CalculateDash(trajectory, startDirection, endDirection, 1);
-            yield return CalculateDash(trajectory, startDirection, endDirection, -1);
-        }
-        private MarkupDash CalculateDash(Bezier3 trajectory, Vector3 startDirection, Vector3 endDirection, float sign)
-        {
-            var startPosition = trajectory.a + sign * startDirection * Offset;
-            var endPosition = trajectory.d + sign * endDirection * Offset;
-
-            var position = (endPosition + startPosition) / 2;
-            var direction = endPosition - startPosition;
-            var angle = Mathf.Atan2(direction.z, direction.x);
-
-            var dash = new MarkupDash(position, angle, direction.magnitude, Width, Color);
-
-            return dash;
+            yield return CalculateSolidDash(trajectory, Offset);
+            yield return CalculateSolidDash(trajectory, -Offset);
         }
         public override XElement ToXml()
         {
@@ -276,63 +396,11 @@ namespace NodeMarkup.Manager
             SpaceLength = spaceLength;
         }
 
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0)
-        {
-            var dashesT = new List<float[]>();
-
-            var startSpace = SpaceLength / 2;
-            for (var i = 0; i < 3; i += 1)
-            {
-                dashesT.Clear();
-                var isDash = false;
-
-                var prevT = 0f;
-                var currentT = 0f;
-                var nextT = trajectory.Travel(currentT, startSpace);
-
-                while (nextT < 1)
-                {
-                    if (isDash)
-                        dashesT.Add(new float[] { currentT, nextT });
-
-                    isDash = !isDash;
-
-                    prevT = currentT;
-                    currentT = nextT;
-                    nextT = trajectory.Travel(currentT, isDash ? DashLength : SpaceLength);
-                }
-
-                float endSpace;
-                if (isDash || ((trajectory.Position(1) - trajectory.Position(currentT)).magnitude is float tempLength && tempLength < SpaceLength / 2))
-                    endSpace = (trajectory.Position(1) - trajectory.Position(prevT)).magnitude;
-                else
-                    endSpace = tempLength;
-
-                startSpace = (startSpace + endSpace) / 2;
-
-                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
-                    break;
-            }
-
-            foreach (var dashT in dashesT)
-            {
-                foreach (var dash in CalculateDashes(trajectory, dashT[0], dashT[1]))
-                    yield return dash;
-            }
-        }
+        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
         protected virtual IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
         {
-            var startPosition = trajectory.Position(startT);
-            var endPosition = trajectory.Position(endT);
-
-            var position = (startPosition + endPosition) / 2;
-            var direction = trajectory.Tangent((startT + endT) / 2);
-
-            var angle = Mathf.Atan2(direction.z, direction.x);
-
-            var dash = new MarkupDash(position, angle, DashLength, Width, Color);
-            yield return dash;
+            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
         }
 
         public override XElement ToXml()
@@ -373,27 +441,8 @@ namespace NodeMarkup.Manager
 
         protected override IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
         {
-            var startPosition = trajectory.Position(startT);
-            var endPosition = trajectory.Position(endT);
-
-            var startDirection = trajectory.Tangent(startT).Turn90(true).normalized;
-            var endDirection = trajectory.Tangent(endT).Turn90(true).normalized;
-
-            yield return CalculateDash(startPosition, endPosition, startDirection, endDirection, 1);
-            yield return CalculateDash(startPosition, endPosition, startDirection, endDirection, -1);
-        }
-        private MarkupDash CalculateDash(Vector3 startCentrePos, Vector3 endCentrePos, Vector3 startDirection, Vector3 endDirection, float sign)
-        {
-            var startPosition = startCentrePos + sign * startDirection * Offset;
-            var endPosition = endCentrePos + sign * endDirection * Offset;
-
-            var position = (startPosition + endPosition) / 2;
-            var direction = (endPosition - startPosition);
-
-            var angle = Mathf.Atan2(direction.z, direction.x);
-
-            var dash = new MarkupDash(position, angle, DashLength, Width, Color);
-            return dash;
+            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Offset);
+            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset);
         }
         public override XElement ToXml()
         {
@@ -408,6 +457,101 @@ namespace NodeMarkup.Manager
         }
         public override LineStyle Copy() => new DoubleDashedStyle(Color, Width, DashLength, SpaceLength, Offset);
     }
+    public class SolidAndDashedStyle : LineStyle, IDoubleLine, IDashedLine, IAsymLine
+    {
+        public override LineType Type => LineType.SolidAndDashed;
+
+        float _offset;
+        float _dashLength;
+        float _spaceLength;
+        bool _invert;
+        public float Offset
+        {
+            get => _offset;
+            set
+            {
+                _offset = value;
+                StyleChanged();
+            }
+        }
+        public float DashLength
+        {
+            get => _dashLength;
+            set
+            {
+                _dashLength = value;
+                StyleChanged();
+            }
+        }
+        public float SpaceLength
+        {
+            get => _spaceLength;
+            set
+            {
+                _spaceLength = value;
+                StyleChanged();
+            }
+        }
+        public bool Invert
+        {
+            get => _invert;
+            set
+            {
+                _invert = value;
+                StyleChanged();
+            }
+        }
+
+        public SolidAndDashedStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
+        {
+            Offset = offset;
+            DashLength = dashLength;
+            SpaceLength = spaceLength;
+            Invert = invert;
+        }
+
+
+        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
+        {
+            foreach (var dash in CalculateSolid(trajectory, 0, CalculateSolidDash))
+            {
+                yield return dash;
+            }
+            foreach (var dash in CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
+            {
+                yield return dash;
+            }
+        }
+
+        protected IEnumerable<MarkupDash> CalculateSolidDash(Bezier3 trajectory)
+        {
+            yield return CalculateSolidDash(trajectory, Invert ? Offset : -Offset);
+        }
+        protected IEnumerable<MarkupDash> CalculateDashedDash(Bezier3 trajectory, float startT, float endT)
+        {
+            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
+        }
+
+        public override LineStyle Copy() => new SolidAndDashedStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("O", Offset));
+            config.Add(new XAttribute("DL", DashLength));
+            config.Add(new XAttribute("SL", SpaceLength));
+            config.Add(new XAttribute("I", Invert ? 1 : 0));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            Offset = config.GetAttrValue("O", DefaultOffser);
+            DashLength = config.GetAttrValue("DL", DefaultDashLength);
+            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
+            Invert = config.GetAttrValue("I", 0) == 1;
+        }
+    }
+
 
     public class MarkupDash
     {

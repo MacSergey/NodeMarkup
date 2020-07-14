@@ -365,7 +365,7 @@ namespace NodeMarkup.UI.Editors
         private void AddWidthProperty()
         {
             var widthProperty = AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = "Width";
+            widthProperty.Text = NodeMarkup.Localize.LineEditor_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.01f;
             widthProperty.CheckMin = true;
@@ -420,6 +420,15 @@ namespace NodeMarkup.UI.Editors
                 offsetProperty.OnLeave += PropertyLeave;
                 StyleProperties.Add(offsetProperty);
             }
+            if(Rule.Style is IAsymLine asymStyle)
+            {
+                var invertProperty = AddUIComponent<BoolPropertyPanel>();
+                invertProperty.Text = NodeMarkup.Localize.LineEditor_Invert;
+                invertProperty.Init();
+                invertProperty.Value = asymStyle.Invert;
+                invertProperty.OnValueChanged += InvertChanged;
+                StyleProperties.Add(invertProperty);
+            }
         }
 
         private void PropertyHover() => Editor.StopScroll();
@@ -472,6 +481,7 @@ namespace NodeMarkup.UI.Editors
         private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
         private void SpaceLengthChanged(float value) => (Rule.Style as IDashedLine).SpaceLength = value;
         private void OffsetChanged(float value) => (Rule.Style as IDoubleLine).Offset = value;
+        private void InvertChanged(bool value) => (Rule.Style as IAsymLine).Invert = value;
 
         protected override void OnSizeChanged()
         {
