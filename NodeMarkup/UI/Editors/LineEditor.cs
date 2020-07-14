@@ -312,8 +312,9 @@ namespace NodeMarkup.UI.Editors
 
         private void AddStyleProperties()
         {
-            AddColorProperty();
             AddStyleTypeProperty();
+            AddColorProperty();
+            AddWidthProperty();
             AddStyleAdditionalProperties();
         }
         private void AddFromProperty()
@@ -343,6 +344,15 @@ namespace NodeMarkup.UI.Editors
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
         }
+        private void AddStyleTypeProperty()
+        {
+            Style = AddUIComponent<StylePropertyPanel>();
+            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Init();
+            Style.SelectedObject = Rule.Style.Type;
+            Style.OnSelectObjectChanged += StyleChanged;
+            StyleProperties.Add(Style);
+        }
         private void AddColorProperty()
         {
             var colorProperty = AddUIComponent<ColorPropertyPanel>();
@@ -352,14 +362,20 @@ namespace NodeMarkup.UI.Editors
             colorProperty.OnValueChanged += ColorChanged;
             StyleProperties.Add(colorProperty);
         }
-        private void AddStyleTypeProperty()
+        private void AddWidthProperty()
         {
-            Style = AddUIComponent<StylePropertyPanel>();
-            Style.Text = NodeMarkup.Localize.LineEditor_Style;
-            Style.Init();
-            Style.SelectedObject = Rule.Style.Type;
-            Style.OnSelectObjectChanged += StyleChanged;
-            StyleProperties.Add(Style);
+            var widthProperty = AddUIComponent<FloatPropertyPanel>();
+            widthProperty.Text = NodeMarkup.Localize.LineEditor_Width;
+            widthProperty.UseWheel = true;
+            widthProperty.WheelStep = 0.01f;
+            widthProperty.CheckMin = true;
+            widthProperty.MinValue = 0.05f;
+            widthProperty.Init();
+            widthProperty.Value = Rule.Style.Width;
+            widthProperty.OnValueChanged += WidthChanged;
+            widthProperty.OnHover += PropertyHover;
+            widthProperty.OnLeave += PropertyLeave;
+            StyleProperties.Add(widthProperty);
         }
         private void AddStyleAdditionalProperties()
         {
@@ -403,6 +419,15 @@ namespace NodeMarkup.UI.Editors
                 offsetProperty.OnHover += PropertyHover;
                 offsetProperty.OnLeave += PropertyLeave;
                 StyleProperties.Add(offsetProperty);
+            }
+            if(Rule.Style is IAsymLine asymStyle)
+            {
+                var invertProperty = AddUIComponent<BoolPropertyPanel>();
+                invertProperty.Text = NodeMarkup.Localize.LineEditor_Invert;
+                invertProperty.Init();
+                invertProperty.Value = asymStyle.Invert;
+                invertProperty.OnValueChanged += InvertChanged;
+                StyleProperties.Add(invertProperty);
             }
         }
 
@@ -452,9 +477,11 @@ namespace NodeMarkup.UI.Editors
             ClearStyleProperties();
             AddStyleProperties();
         }
+        private void WidthChanged(float value) => Rule.Style.Width = value;
         private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
         private void SpaceLengthChanged(float value) => (Rule.Style as IDashedLine).SpaceLength = value;
         private void OffsetChanged(float value) => (Rule.Style as IDoubleLine).Offset = value;
+        private void InvertChanged(bool value) => (Rule.Style as IAsymLine).Invert = value;
 
         protected override void OnSizeChanged()
         {
