@@ -368,7 +368,7 @@
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
     <value>終点側のポイントを選択
-+Shift - 破線
++Shift - 実線
 +Ctrl - 2重線</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
