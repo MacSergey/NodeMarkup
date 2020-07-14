@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -165,12 +166,12 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupDash[] dashes, int count, float length)
+        public RenderBatch(MarkupDash[] dashes, int count, Vector3 size)
         {
             Locations = new Vector4[count];
             Indices = new Vector4[count];
             Colors = new Vector4[count];
-            Size = new Vector4(length, 1f, 0.15f);
+            Size = size;
 
             for (var i = 0; i < count; i += 1)
             {
@@ -181,16 +182,15 @@ namespace NodeMarkup.Utils
                 Colors[i] = dash.Color.ToX3Vector();
             }
 
-            Mesh = Render.CreateMesh(count, Size);
+            Mesh = Render.CreateMesh(count, size);
         }
 
         public static IEnumerable<RenderBatch> FromDashes(MarkupDash[] dashes)
         {
-            var groups = dashes.GroupBy(d => Round(d.Length));
+            var groups = dashes.GroupBy(d => new Vector3(d.Length.RoundToNearest(0.05f), 1f, d.Width));
 
             foreach (var group in groups)
             {
-                var length = group.Key;
                 var groupEnumerator = group.GetEnumerator();
 
                 var buffer = new MarkupDash[16];
@@ -204,20 +204,28 @@ namespace NodeMarkup.Utils
                     isEnd = !groupEnumerator.MoveNext();
                     if (isEnd || count == 16)
                     {
-                        var batch = new RenderBatch(buffer, count, length);
+                        var batch = new RenderBatch(buffer, count, group.Key);
                         yield return batch;
                         count = 0;
                     }
                 }
                 while (!isEnd);
             }
-
-            float Round(float value)
-            {
-                var temp = (int)(value * 100);
-                var mod = temp % 10;
-                return (mod == 0 ? temp : temp - mod + 10) / 100f;
-            }
         }
+
+        //struct LW
+        //{
+        //    public float Length;
+        //    public float Width;
+        //    public LW(float l, float w)
+        //    {
+
+        //    }
+        //}
+        //class LWComparer : IEqualityComparer<LW>
+        //{
+        //    public bool Equals(LW x, LW y) => x.Length == y.Length && x.Width == y.Width;
+        //    public int GetHashCode(LW obj) => obj.GetHashCode();
+        //}
     }
 }

@@ -29,15 +29,16 @@ namespace NodeMarkup.Manager
         public static float DefaultDashLength { get; } = 1.5f;
         public static float DefaultSpaceLength { get; } = 1.5f;
         public static float DefaultOffser { get; } = 0.15f;
+        public static float DefaultWidth { get; } = 0.15f;
 
         public static float AngleDelta { get; } = 5f;
         public static float MaxLength { get; } = 10f;
         public static float MinLength { get; } = 1f;
 
-        public static SolidLineStyle DefaultSolid => new SolidLineStyle(DefaultColor);
-        public static DashedLineStyle DefaultDashed => new DashedLineStyle(DefaultColor, DefaultDashLength, DefaultSpaceLength);
-        public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultOffser);
-        public static DoubleDashedStyle DefaultDoubleDashed => new DoubleDashedStyle(DefaultColor, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
+        public static SolidLineStyle DefaultSolid => new SolidLineStyle(DefaultColor, DefaultWidth);
+        public static DashedLineStyle DefaultDashed => new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength);
+        public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffser);
+        public static DoubleDashedStyle DefaultDoubleDashed => new DoubleDashedStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
 
         public static LineStyle GetDefault(LineType type)
         {
@@ -64,6 +65,7 @@ namespace NodeMarkup.Manager
 
 
         Color32 _color;
+        float _width;
 
         public Color32 Color
         {
@@ -74,13 +76,24 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public float Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                StyleChanged();
+            }
+        }
+
         public Action OnStyleChanged { private get; set; }
         public abstract LineType Type { get; }
         public string XmlSection => XmlName;
 
-        public LineStyle(Color32 color)
+        public LineStyle(Color32 color, float width)
         {
             Color = color;
+            Width = width;
         }
 
         public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0);
@@ -90,7 +103,8 @@ namespace NodeMarkup.Manager
         {
             var config = new XElement(XmlSection,
                 new XAttribute("T", (int)Type),
-                new XAttribute("C", Color.ToInt())
+                new XAttribute("C", Color.ToInt()),
+                new XAttribute("W", Width)
             );
             return config;
         }
@@ -116,6 +130,7 @@ namespace NodeMarkup.Manager
         {
             var colorInt = config.GetAttrValue<int>("C");
             Color = colorInt != 0 ? colorInt.ToColor() : DefaultColor;
+            Width = config.GetAttrValue("W", DefaultWidth);
         }
 
         public enum LineType
@@ -138,7 +153,7 @@ namespace NodeMarkup.Manager
     {
         public override LineType Type { get; } = LineType.Solid;
 
-        public SolidLineStyle(Color color) : base(color) { }
+        public SolidLineStyle(Color color, float width) : base(color, width) { }
 
         public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory, int depth = 0)
         {
@@ -160,8 +175,6 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                //if (trajectory.a.y != trajectory.d.y)
-                //    length *= 1.1f;
                 foreach (var dash in CalculateDashes(trajectory, direction, length))
                 {
                     yield return dash;
@@ -172,11 +185,11 @@ namespace NodeMarkup.Manager
         {
             var position = (trajectory.d + trajectory.a) / 2;
             var angle = Mathf.Atan2(direction.z, direction.x);
-            var dash = new MarkupDash(position, angle, length, Color);
+            var dash = new MarkupDash(position, angle, length, Width, Color);
             yield return dash;
         }
 
-        public override LineStyle Copy() => new SolidLineStyle(Color);
+        public override LineStyle Copy() => new SolidLineStyle(Color, Width);
     }
     public class DoubleSolidLineStyle : SolidLineStyle, IDoubleLine
     {
@@ -193,7 +206,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public DoubleSolidLineStyle(Color color, float offset) : base(color)
+        public DoubleSolidLineStyle(Color color, float width, float offset) : base(color, width)
         {
             Offset = offset;
         }
@@ -215,7 +228,7 @@ namespace NodeMarkup.Manager
             var direction = endPosition - startPosition;
             var angle = Mathf.Atan2(direction.z, direction.x);
 
-            var dash = new MarkupDash(position, angle, direction.magnitude, Color);
+            var dash = new MarkupDash(position, angle, direction.magnitude, Width, Color);
 
             return dash;
         }
@@ -230,7 +243,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle Copy() => new DoubleSolidLineStyle(Color, Offset);
+        public override LineStyle Copy() => new DoubleSolidLineStyle(Color, Width, Offset);
     }
     public class DashedLineStyle : LineStyle, IDashedLine
     {
@@ -257,7 +270,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public DashedLineStyle(Color color, float dashLength, float spaceLength) : base(color)
+        public DashedLineStyle(Color color, float width, float dashLength, float spaceLength) : base(color, width)
         {
             DashLength = dashLength;
             SpaceLength = spaceLength;
@@ -318,7 +331,7 @@ namespace NodeMarkup.Manager
 
             var angle = Mathf.Atan2(direction.z, direction.x);
 
-            var dash = new MarkupDash(position, angle, DashLength, Color);
+            var dash = new MarkupDash(position, angle, DashLength, Width, Color);
             yield return dash;
         }
 
@@ -336,7 +349,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
 
-        public override LineStyle Copy() => new DashedLineStyle(Color, DashLength, SpaceLength);
+        public override LineStyle Copy() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
     }
     public class DoubleDashedStyle : DashedLineStyle, IDoubleLine
     {
@@ -353,7 +366,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public DoubleDashedStyle(Color color, float dashLength, float spaceLength, float offset) : base(color, dashLength, spaceLength)
+        public DoubleDashedStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
             Offset = offset;
         }
@@ -379,7 +392,7 @@ namespace NodeMarkup.Manager
 
             var angle = Mathf.Atan2(direction.z, direction.x);
 
-            var dash = new MarkupDash(position, angle, DashLength, Color);
+            var dash = new MarkupDash(position, angle, DashLength, Width, Color);
             return dash;
         }
         public override XElement ToXml()
@@ -393,7 +406,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle Copy() => new DoubleDashedStyle(Color, DashLength, SpaceLength, Offset);
+        public override LineStyle Copy() => new DoubleDashedStyle(Color, Width, DashLength, SpaceLength, Offset);
     }
 
     public class MarkupDash
@@ -401,13 +414,15 @@ namespace NodeMarkup.Manager
         public Vector3 Position { get; }
         public float Angle { get; }
         public float Length { get; }
+        public float Width { get; }
         public Color Color { get; }
 
-        public MarkupDash(Vector3 position, float angle, float length, Color color)
+        public MarkupDash(Vector3 position, float angle, float length, float width, Color color)
         {
             Position = position;
             Angle = angle;
             Length = length;
+            Width = width;
             Color = color;
         }
     }
