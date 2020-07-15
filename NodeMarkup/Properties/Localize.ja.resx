@@ -390,22 +390,4 @@
   <data name="Setting_Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>SD</value>
-  </data>
-  <data name="LineEditor_Invert" xml:space="preserve">
-    <value>ラインを反転</value>
-  </data>
-  <data name="LineEditor_Width" xml:space="preserve">
-    <value>ラインの太さ</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>ラインの太さ</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>ラインを反転</value>
-  </data>
-  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>破線＆実線</value>
-  </data>
 </root>
