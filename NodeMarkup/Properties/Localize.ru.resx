@@ -401,6 +401,7 @@
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
+
   <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
     <value>СП</value>
   </data>
