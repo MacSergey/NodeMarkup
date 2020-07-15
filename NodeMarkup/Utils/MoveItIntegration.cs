@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NodeMarkup.Manager;
+using System.Xml.Linq;
 
 namespace NodeMarkup.Utils
 {
@@ -40,9 +41,13 @@ namespace NodeMarkup.Utils
             throw new NotImplementedException();
         }
 
-        public void PasteNode(ushort nodeID, object record)
+        public void PasteNode(ushort nodeID, object record, Dictionary<InstanceID, InstanceID> map)
         {
-            
+            if (record is XElement config)
+            {
+                var markup = MarkupManager.Get(nodeID);
+                markup.FromXml(config, map);
+            }
         }
 
         public void PasteSegment(ushort segmentId, object record, Dictionary<InstanceID, InstanceID> map) { }
