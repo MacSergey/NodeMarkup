@@ -401,14 +401,23 @@
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  
-  
-  
+
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>СП</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Инвертировать</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Ширина</value>
+  </data>
   <data name="TemplateEditor_Width" xml:space="preserve">
     <value>Ширина</value>
   </data>
   <data name="TemplateEditor_Invert" xml:space="preserve">
     <value>Инвертировать</value>
   </data>
-  
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Сплошная и пунктирная</value>
+  </data>
 </root>

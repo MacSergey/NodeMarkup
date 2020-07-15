@@ -390,10 +390,22 @@ vytvoření nebo odstranění čáry
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>PP</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Obrátit</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Šířka</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Šířka</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Obrátit</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Plná i přerušovaná</value>
+  </data>
 </root>
