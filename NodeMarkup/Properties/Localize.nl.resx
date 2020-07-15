@@ -365,8 +365,17 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Selecteer eindpunt
++Shift - Ononderbroken
++Ctrl - Dubbel</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Selecteer een punt om
+maak of verwijderen een lijn
++Ctrl om het punt te bewegen
++Shift om het punt te bewerken</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Wat is er nieuw in {0}</value>
   </data>
