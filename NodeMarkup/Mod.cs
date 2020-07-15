@@ -27,8 +27,8 @@ namespace NodeMarkup
         public string Description => Localize.Mod_Description;
 #endif
 
-        static AppMode CurrentMode => SimulationManager.instance.m_ManagersWrapper.loading.currentMode;
         static CultureInfo Culture => new CultureInfo(SingletonLite<LocaleManager>.instance.language == "zh" ? "zh-cn" : SingletonLite<LocaleManager>.instance.language);
+
 
         public void OnEnabled()
         {
@@ -65,8 +65,8 @@ namespace NodeMarkup
         public void OnSettingsUI(UIHelperBase helper)
         {
             LocaleManager.eventLocaleChanged -= LocaleChanged;
-            LocaleManager.eventLocaleChanged += LocaleChanged;
             LocaleChanged();
+            LocaleManager.eventLocaleChanged += LocaleChanged;
 
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
             UI.Settings.OnSettingsUI(helper);
