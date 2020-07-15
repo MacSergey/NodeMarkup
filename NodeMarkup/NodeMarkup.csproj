@@ -96,6 +96,7 @@
     <Compile Include="UI\MessageBox.cs" />
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
+    <Compile Include="UI\Property panels\BoolProperty.cs" />
     <Compile Include="UI\Property panels\ButtonPanel.cs" />
     <Compile Include="UI\Property panels\ColorProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />
@@ -132,6 +133,7 @@
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.zh.resx" />
     <EmbeddedResource Include="Resources\sprites.png" />
   </ItemGroup>
   <ItemGroup>

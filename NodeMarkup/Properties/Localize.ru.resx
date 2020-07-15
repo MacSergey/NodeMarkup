@@ -401,4 +401,14 @@
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
+  
+  
+  
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Ширина</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Инвертировать</value>
+  </data>
+  
 </root>
