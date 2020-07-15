@@ -383,18 +383,7 @@ crear o eliminar la línea
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar las novedades</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Mensaje "Novedades" aparecerá una vez después de una actualización y se puede desactivar en el menú Opciones.
-- Se agregaron las siguientes traducciones: checo, holandés, francés, alemán, japonés, polaco, ruso y español (Por favor, póngase en contacto con el autor del mod para ayudar con la traducción a su propio idioma).
-- Los puntos finales ahora se pueden arrastrar de uno a otro manteniendo presionada la tecla Ctrl.
-- Copias de seguridad: en el menú Opciones, ahora se pueden hacer un respaldo de las marcas en un mapa exportando a un archivo y luego importándolo. Esto es necesario si tienes que desactivar el mod, hacer un nuevo guardado sin el y luego quieres recuperar todas las marcas.
-- Ahora hay una ventana emergente al eliminar elementos. Esto se aplica a líneas, reglas y plantillas. Se puede desactivar en las opciones.
-- Nuevo atajo agregado para añadir una nueva regla - Shift + Ctrl + A (reasignable).
-- Configuración rápida de la regla: Después de crear una nueva regla, la interfaz para seleccionar sus puntos de inicio y final ahora se abre automáticamente. Ya no necesita hacer clic en las áreas "Desde" y "Hasta". Esto se puede desactivar en las opciones.
-- Se solucionó el problema con las líneas que parecían rotas o divididas: solo ocurría en las transiciones de carreteras y calles.
-- Las líneas ya no se generan cuando se muestren las superposiciones de vistas de información.
-- El atajo de activación ahora se activará cuando se abra otra herramienta mientras la Herramienta de las Marcas ya está abierta.</value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importar</value>
   </data>

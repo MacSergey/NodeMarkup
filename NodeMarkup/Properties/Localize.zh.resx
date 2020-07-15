@@ -118,281 +118,298 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Verwijder {0}</value>
+    <value>删除{0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Wil je {0} {1} echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>确定要删除 {0} {1} 吗?
+此操作不可撤销。</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Gebruik je scrollwiel om aan te passen</value>
+    <value>可使用滚轮更改参数</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Sjabloon toepassen</value>
+    <value>应用模板</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Opslaan als sjabloon</value>
+    <value>另存为模板</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Als standaard instellen</value>
+    <value>设定为默认</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Verwijder als standaard</value>
+    <value>撤销默认</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Regel Toevoegen</value>
+    <value>添加规则</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
-    <value>Kleur</value>
+    <value>颜色</value>
   </data>
   <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Streeplengte</value>
+    <value>虚线长度</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Regel verwijderen</value>
+    <value>删除规则</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Will je de regel echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>确定要删除这个规则吗?
+此操作不可撤销。</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
-    <value>Van</value>
+    <value>起始点</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Selecteer het startpunt van de regel</value>
+    <value>选择此段落的起始点</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Selecteer het eindpunt van de regel</value>
+    <value>选择此段落的终止点</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>lijn</value>
+    <value>线</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Lijnen</value>
+    <value>线</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
-    <value>Correctieafstand</value>
+    <value>偏移</value>
   </data>
   <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>Afstand</value>
+    <value>间隔长度</value>
   </data>
   <data name="LineEditor_Style" xml:space="preserve">
-    <value>Stijl</value>
+    <value>样式</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
-    <value>Naar</value>
+    <value>终止点</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Knooppunt met {0}</value>
+    <value>与 {0} 相交</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Kantpunt {0}</value>
+    <value>节点端点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Streeplijn</value>
+    <value>虚线</value>
   </data>
   <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>S</value>
+    <value>虚线</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Dubbele streep</value>
+    <value>双虚线</value>
   </data>
   <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DS</value>
+    <value>双虚线</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Dubbel ononderbroken</value>
+    <value>双实线</value>
   </data>
   <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DO</value>
+    <value>双实线</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Ononderbroken</value>
+    <value>实线</value>
   </data>
   <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>O</value>
+    <value>实线</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
-    <value>Nee</value>
+    <value>取消</value>
   </data>
   <data name="MessageBox_OK" xml:space="preserve">
-    <value>Ok</value>
+    <value>确认</value>
   </data>
   <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ja</value>
+    <value>确定</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Maak gewoon markeringen op kruispunten</value>
+    <value>使用此工具来轻松创建交叉口地标线。</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
+    <value>这是BETA测试版，可能会出现功能性错误。无法担保工作稳定！</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Bewerk markering punt #{0}</value>
+    <value>编辑节点 #{0} 的地标线</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>punt</value>
+    <value>点</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Correctieafstand</value>
+    <value>偏移</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Punten</value>
+    <value>端点</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Niet ingesteld</value>
+    <value>未设置</value>
   </data>
   <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Activeer programma</value>
+    <value>启用工具</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Voeg nieuwe lijnregel toe</value>
+    <value>添加新段落</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Verwijder alle knooppuntlijnen</value>
+    <value>删除选中节点的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Verwijder markering van alle knooppunten</value>
+    <value>删除本地图内的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Verwijder alle markeringen</value>
+    <value>删除所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wil je echt alle markeringen verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>确定要删除全图所有的地标线吗?
+此操作不可撤销！</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Exporteer markeringsdata als bestand</value>
+    <value>将地标线信息导出到文件</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Kopieer bestandslocatie naar klembord</value>
+    <value>复制路径到剪贴板</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Oké</value>
+    <value>确认</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Exporteer markeringsdata</value>
+    <value>导出地标线信息</value>
   </data>
   <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Export mislukt</value>
+    <value>导出失败</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Export gelukt</value>
+    <value>导出成功</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value>Algemeen</value>
+    <value>常规设置</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importeer markeringsgegevens uit bestand</value>
+    <value>从文件中导入地标线信息</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importeer markeringsdata</value>
+    <value>导入地标线信息</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Wil je echt deze data importeren?
-De geïmporteerde data vervangt alle huidige markeringen.
-Deze actie kan niet ongedaan worden gedaan</value>
+    <value>确定要导入数据吗?
+导入后的数据会覆盖全图既存的地标线。
+此操作无法撤销！</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Markeringsdata niet geïmporteerd</value>
+    <value>地标线信息导入失败</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Markeringsdata succesvol geïmporteerd</value>
+    <value>地标线信息导入成功</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
-    <value>Andere</value>
+    <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Snelle regel setup</value>
+    <value>快速初始化新段落</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Render afstand</value>
+    <value>渲染距离</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Snelkoppelingen</value>
+    <value>快捷键</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Bevestig voordat u verwijdert</value>
+    <value>删除前弹窗确认</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Tooltips weergeven</value>
+    <value>显示提示</value>
   </data>
   <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Kleur</value>
+    <value>颜色</value>
   </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Streeplengte</value>
+    <value>虚线长度</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>sjabloon</value>
+    <value>模版</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Naam</value>
+    <value>名称</value>
   </data>
   <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Correctieafstand</value>
+    <value>偏移</value>
   </data>
   <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Afstand</value>
+    <value>间隔长度</value>
   </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Stijl</value>
+    <value>样式</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Sjablonen</value>
+    <value>模板</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Nieuwe template</value>
+    <value>新建模板</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Verwijder puntmarkeringen</value>
+    <value>清除节点的地标线</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Wil je echt alle punt #{0} markeringen wissen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>确定要删除节点 #{0} 的所有地标线吗?
+此操作不可撤销。</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klik om een lijn te maken
-+Shift - Ononderbroken
-+Ctrl - Dubbel</value>
+    <value>点击以创建地标线
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Klik om de lijn te verwijderen</value>
+    <value>点击可擦除线段</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Punt #{0}</value>
+    <value>节点 #{0}
+点击以编辑地标线</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Selecteer punt om markering te wijzigen</value>
+    <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Selecteer eindpunt
-+Shift - Ononderbroken
-+Ctrl - Dubbel</value>
+    <value>选择终止点
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Selecteer een punt om
-maak of verwijderen een lijn
-+Ctrl om het punt te bewegen
-+Shift om het punt te bewerken</value>
+    <value>点选起始点
+来创建/擦除线段
++Ctrl 偏移端点
++Shift 编辑端点</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Wat is er nieuw in {0}</value>
+    <value>{0} 版本的新功能</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Toon wat nieuw is</value>
+    <value>显示更新提示框</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- 地标线可被MoveIt!复制
+- 新增 "虚实线" 样式
+- 中文支持</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
-    <value>Importeer</value>
+    <value>导入</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
-    <value>Annuleer</value>
+    <value>取消</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>虚实线</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>翻转</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>翻转</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>虚实线</value>
+  </data>
 </root>
