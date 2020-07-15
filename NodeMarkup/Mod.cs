@@ -28,7 +28,7 @@ namespace NodeMarkup
 #endif
 
         static AppMode CurrentMode => SimulationManager.instance.m_ManagersWrapper.loading.currentMode;
-        static CultureInfo Culture => new CultureInfo(SingletonLite<LocaleManager>.instance.language);
+        static CultureInfo Culture => new CultureInfo(SingletonLite<LocaleManager>.instance.language == "zh" ? "zh-cn" : SingletonLite<LocaleManager>.instance.language);
 
         public void OnEnabled()
         {
