@@ -390,4 +390,22 @@ utworzyć lub usunąć linię
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>CP</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Odwróć</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Szerokość</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Szerokość</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Odwróć</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Ciągła z przerywaną</value>
+  </data>
 </root>
