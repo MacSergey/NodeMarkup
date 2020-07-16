@@ -297,6 +297,7 @@ namespace NodeMarkup.UI.Editors
                 AddFromProperty();
                 AddToProperty();
             }
+            AddStyleTypeProperty();
             AddStyleProperties();
         }
 
@@ -317,14 +318,6 @@ namespace NodeMarkup.UI.Editors
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
-        }
-
-        private void AddStyleProperties()
-        {
-            AddStyleTypeProperty();
-            AddColorProperty();
-            AddWidthProperty();
-            AddStyleAdditionalProperties();
         }
         private void AddFromProperty()
         {
@@ -364,6 +357,12 @@ namespace NodeMarkup.UI.Editors
             Style.SelectedObject = Rule.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
+        private void AddStyleProperties()
+        {
+            AddColorProperty();
+            AddWidthProperty();
+            AddStyleAdditionalProperties();
+        }
         private void AddColorProperty()
         {
             var colorProperty = AddUIComponent<ColorPropertyPanel>();
@@ -371,6 +370,7 @@ namespace NodeMarkup.UI.Editors
             colorProperty.Init();
             colorProperty.Value = Rule.Style.Color;
             colorProperty.OnValueChanged += ColorChanged;
+            StyleProperties.Add(colorProperty);
         }
         private void AddWidthProperty()
         {
@@ -385,6 +385,7 @@ namespace NodeMarkup.UI.Editors
             widthProperty.OnValueChanged += WidthChanged;
             widthProperty.OnHover += PropertyHover;
             widthProperty.OnLeave += PropertyLeave;
+            StyleProperties.Add(widthProperty);
         }
         private void AddStyleAdditionalProperties()
         {
@@ -462,6 +463,7 @@ namespace NodeMarkup.UI.Editors
         private void OnSelectTemplate(LineStyleTemplate template)
         {
             Rule.Style = template.Style.Copy();
+            Style.SelectedObject = Rule.Style.Type;
             ClearStyleProperties();
             AddStyleProperties();
         }
@@ -484,7 +486,7 @@ namespace NodeMarkup.UI.Editors
             Rule.Style = newStyle;
 
             ClearStyleProperties();
-            AddStyleProperties();
+            AddStyleAdditionalProperties();
         }
         private void WidthChanged(float value) => Rule.Style.Width = value;
         private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
