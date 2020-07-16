@@ -18,11 +18,11 @@ namespace NodeMarkup.UI.Editors
 
         private ButtonPanel AddButton { get; set; }
 
-        public List<LineRawRuleEdgeBase> RuleEdges { get; } = new List<LineRawRuleEdgeBase>();
-        private List<LineRawRuleEdgeBound> RuleEdgeBounds { get; } = new List<LineRawRuleEdgeBound>();
+        public List<SupportPointBase> RuleEdges { get; } = new List<SupportPointBase>();
+        private List<RuleSupportPointBound> RuleEdgeBounds { get; } = new List<RuleSupportPointBound>();
         public bool SupportRules => RuleEdges.Count > 2;
 
-        private LineRawRuleEdgeBound HoverRuleEdgeBounds { get; set; }
+        private RuleSupportPointBound HoverRuleEdgeBounds { get; set; }
         private bool IsHoverRuleEdgeBounds => IsSelectRuleEdgeMode && HoverRuleEdgeBounds != null;
 
         private MarkupLineSelectPropertyPanel SelectRuleEdgePanel { get; set; }
@@ -54,12 +54,12 @@ namespace NodeMarkup.UI.Editors
             var intersectWith = EditObject.IntersectWith();
 
             RuleEdges.Clear();
-            RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.Start));
-            RuleEdges.AddRange(intersectWith.Select(i => new LineRawRuleEdge(i) as LineRawRuleEdgeBase));
-            RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.End));
+            RuleEdges.Add(new EnterSupportPoint(EditObject.Start));
+            RuleEdges.AddRange(intersectWith.Select(i => new LineSupportPoint(i) as SupportPointBase));
+            RuleEdges.Add(new EnterSupportPoint(EditObject.End));
 
             RuleEdgeBounds.Clear();
-            RuleEdgeBounds.AddRange(RuleEdges.Select(r => new LineRawRuleEdgeBound(EditObject, r)));
+            RuleEdgeBounds.AddRange(RuleEdges.Select(r => new RuleSupportPointBound(EditObject, r)));
         }
         private void AddRulePanels()
         {
@@ -184,7 +184,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverRuleEdgeBounds)
             {
-                SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.LineRawRuleEdge;
+                SelectRuleEdgePanel.SelectedObject = (SupportPointBase)HoverRuleEdgeBounds.SupportPoint;
 
                 if (isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true)
                     NodeMarkupPanel.EndEditorAction();
@@ -198,7 +198,7 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var bounds in RuleEdgeBounds)
                 {
-                    var color = (SelectRuleEdgePanel.Position == LineRawRuleEdgeBase.EdgePosition.From ? Color.green : Color.red);
+                    var color = (SelectRuleEdgePanel.Position == RulePosition.Start ? Color.green : Color.red);
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, bounds.Position, 0.5f, -1f, 1280f, false, true);
                 }
 
@@ -218,8 +218,8 @@ namespace NodeMarkup.UI.Editors
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverRuleEdgePanel &&
-                    HoverRuleEdgePanel.SelectedObject is LineRawRuleEdgeBase lineRawRuleEdge &&
-                    RuleEdgeBounds.FirstOrDefault(b => b.LineRawRuleEdge == lineRawRuleEdge) is LineRawRuleEdgeBound bounds)
+                    HoverRuleEdgePanel.SelectedObject is SupportPointBase lineRawRuleEdge &&
+                    RuleEdgeBounds.FirstOrDefault(b => b.SupportPoint == lineRawRuleEdge) is RuleSupportPointBound bounds)
                 {
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, bounds.Position, 0.5f, -1f, 1280f, false, true);
                 }
@@ -231,9 +231,9 @@ namespace NodeMarkup.UI.Editors
             {
                 switch (SelectRuleEdgePanel.Position)
                 {
-                    case LineRawRuleEdgeBase.EdgePosition.From:
+                    case RulePosition.Start:
                         return NodeMarkup.Localize.LineEditor_InfoSelectFrom;
-                    case LineRawRuleEdgeBase.EdgePosition.To:
+                    case RulePosition.End:
                         return NodeMarkup.Localize.LineEditor_InfoSelectTo;
                 }
             }
@@ -323,7 +323,7 @@ namespace NodeMarkup.UI.Editors
         {
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
             From.Text = NodeMarkup.Localize.LineEditor_From;
-            From.Position = LineRawRuleEdgeBase.EdgePosition.From;
+            From.Position = RulePosition.Start;
             From.Init();
             From.AddRange(Editor.RuleEdges);
             From.SelectedObject = Rule.From;
@@ -337,7 +337,7 @@ namespace NodeMarkup.UI.Editors
         {
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
             To.Text = NodeMarkup.Localize.LineEditor_To;
-            To.Position = LineRawRuleEdgeBase.EdgePosition.To;
+            To.Position = RulePosition.End;
             To.Init();
             To.AddRange(Editor.RuleEdges);
             To.SelectedObject = Rule.To;
@@ -469,8 +469,8 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
-        private void FromChanged(LineRawRuleEdgeBase from) => Rule.From = from;
-        private void ToChanged(LineRawRuleEdgeBase to) => Rule.To = to;
+        private void FromChanged(SupportPointBase from) => Rule.From = from;
+        private void ToChanged(SupportPointBase to) => Rule.To = to;
         private void StyleChanged(LineStyle.LineType style)
         {
             var newStyle = TemplateManager.GetDefault(style);
