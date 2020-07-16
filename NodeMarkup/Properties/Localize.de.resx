@@ -425,4 +425,6 @@ Linie erstellen oder löschen
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>Klicken um eine Haltelinie zu erstellen</value>
   </data>
+  
+  
 </root>

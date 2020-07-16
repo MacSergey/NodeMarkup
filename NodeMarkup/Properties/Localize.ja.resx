@@ -408,8 +408,18 @@
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>破線＆実線</value>
   </data>
-  
-  
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>停止線</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>SL</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>クリックして停止線を削除</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>クリックして停止線の追加</value>
+  </data>
   
   
 </root>
