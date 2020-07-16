@@ -165,10 +165,10 @@
     <value>选择此段落的终止点</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>线</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>线</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
     <value>偏移</value>
