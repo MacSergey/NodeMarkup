@@ -120,39 +120,81 @@
   <data name="Editor_DeleteCaption" xml:space="preserve">
     <value>Poista {0}</value>
   </data>
+  <data name="Editor_DeleteMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa {0} {1}?
+Tätä toimintoa ei voi kumota</value>
+  </data>
+  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
+    <value>Vieritä hiiren rullalla vaihtaaksesi</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Käytä mallinetta</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Tallenna mallineena</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Aseta oletukseksi</value>
+  </data>
+  
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Lisää sääntö</value>
+  </data>
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>Väri</value>
+  </data>
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>Viivan pituus</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Poista sääntö</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa säännön?
+Tätä toimintoa ei voi kumota</value>
+  </data>
   
   
   
   
   
+  <data name="LineEditor_Offset" xml:space="preserve">
+    <value>Etäisyys</value>
+  </data>
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>Välimatka</value>
+  </data>
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>Tyyli</value>
+  </data>
+  
+  
+  
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Katkoviiva</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>K</value>
+  </data>
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Viiva</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>V</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>Ei</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="MessageBox_Yes" xml:space="preserve">
+    <value>Kyllä</value>
+  </data>
   
   
   
