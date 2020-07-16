@@ -378,6 +378,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Stop line.
+        /// </summary>
+        public static string LineStyle_Stop {
+            get {
+                return ResourceManager.GetString("LineStyle_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SL.
+        /// </summary>
+        public static string LineStyle_StopShort {
+            get {
+                return ResourceManager.GetString("LineStyle_StopShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No.
         /// </summary>
         public static string MessageBox_No {
@@ -432,7 +450,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Copy with MoveIt
+        ///   Ищет локализованную строку, похожую на - Copy with MoveIt (Does not work until MoveIt is updated)
+        ///- Stop lines
         ///- New &quot;Solid and Dashed&quot; style
         ///- Chinese.
         /// </summary>
@@ -863,11 +882,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to create a stop line.
+        /// </summary>
+        public static string Tool_InfoCreateStopLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoCreateStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to delete the line.
         /// </summary>
         public static string Tool_InfoDeleteLine {
             get {
                 return ResourceManager.GetString("Tool_InfoDeleteLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to delete the stop line.
+        /// </summary>
+        public static string Tool_InfoDeleteStopLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoDeleteStopLine", resourceCulture);
             }
         }
         

@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         Dictionary<ushort, Enter> EntersDictionary { get; set; } = new Dictionary<ushort, Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(new MarkupLinePairComparer());
+        Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(MarkupLinePair.Comparer);
 
         public bool NeedRecalculate { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];

@@ -384,7 +384,8 @@ create or delete a line
     <value>Show what`s new</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Copy with MoveIt
+    <value>- Copy with MoveIt (Does not work until MoveIt is updated)
+- Stop lines
 - New "Solid and Dashed" style
 - Chinese</value>
   </data>
@@ -411,5 +412,17 @@ create or delete a line
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Solid and Dashed</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Stop line</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>SL</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Click to delete the stop line</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Click to create a stop line</value>
   </data>
 </root>

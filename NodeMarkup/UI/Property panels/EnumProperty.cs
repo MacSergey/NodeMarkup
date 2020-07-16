@@ -21,6 +21,10 @@ namespace NodeMarkup.UI.Editors
             AllowNull = false;
             base.Init();
 
+            FillItems();
+        }
+        protected virtual void FillItems()
+        {
             foreach (var value in Enum.GetValues(typeof(EnumType)).OfType<EnumType>())
             {
                 DropDown.AddItem(value, GetDescription(value.ToString()));
@@ -34,12 +38,25 @@ namespace NodeMarkup.UI.Editors
     }
     public class StylePropertyPanel : EnumPropertyPanel<LineStyle.LineType, StylePropertyPanel.StyleDropDown>
     {
+        protected override void FillItems()
+        {
+            foreach (var field in typeof(LineStyle.LineType).GetFields().Skip(1))
+            {
+                if(field.GetCustomAttributes(typeof(LineStyle.SpecialLineAttribute), false).Any())
+                    continue;
+
+                var description = (field.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)?.Description ?? field.Name;
+                var localizeDescription = NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
+                var value = (LineStyle.LineType)field.GetValue(null);
+                DropDown.AddItem(value, localizeDescription);
+            }
+        }
         protected override bool IsEqual(LineStyle.LineType first, LineStyle.LineType second) => first == second;
         public class StyleDropDown : CustomUIDropDown<LineStyle.LineType> { }
     }
     public class MarkupLineListPropertyPanel : ListPropertyPanel<MarkupLine, MarkupLineListPropertyPanel.MarkupLineDropDown>
     {
-        protected override bool IsEqual(MarkupLine first, MarkupLine second) => System.Object.ReferenceEquals(first, second);
+        protected override bool IsEqual(MarkupLine first, MarkupLine second) => ReferenceEquals(first, second);
         public class MarkupLineDropDown : CustomUIDropDown<MarkupLine> { }
     }
 }
