@@ -13,11 +13,11 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "R";
 
-        SupportPointBase _from;
-        SupportPointBase _to;
+        IRuleEdge _from;
+        IRuleEdge _to;
         LineStyle _style;
 
-        public SupportPointBase From
+        public IRuleEdge From
         {
             get => _from;
             set
@@ -26,7 +26,7 @@ namespace NodeMarkup.Manager
                 RuleChanged();
             }
         }
-        public SupportPointBase To
+        public IRuleEdge To
         {
             get => _to;
             set
@@ -50,7 +50,7 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        public MarkupLineRawRule(LineStyle style, SupportPointBase from = null, SupportPointBase to = null)
+        public MarkupLineRawRule(LineStyle style, IRuleEdge from = null, IRuleEdge to = null)
         {
             Style = style;
             From = from;
@@ -163,10 +163,10 @@ namespace NodeMarkup.Manager
                 return false;
             }
 
-            var edges = new List<SupportPointBase>();
+            var edges = new List<IRuleEdge>();
             foreach (var supportConfig in config.Elements(SupportPointBase.XmlName))
             {
-                if (SupportPointBase.FromXml(supportConfig, markup, map, out SupportPointBase edge))
+                if (SupportPointBase.FromXml(supportConfig, markup, map, out SupportPointBase supportPoint) && supportPoint is IRuleEdge edge)
                     edges.Add(edge);
             }
 
