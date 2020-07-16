@@ -152,20 +152,20 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Regel löschen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Willst du diese Regel wirklich löschen?
+    <value>Regel wirklich löschen?
 Diese Aktion kann nicht rückgängig gemacht werden</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Von</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Regeln des "Von"-Punktes auswählen</value>
+    <value>Startpunkt der Regel auswählen</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Regeln des "Zu"-Punktes auswählen</value>
+    <value>Endpunkt der Regel auswählen</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>linie</value>
+    <value>Linie</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Linien</value>
@@ -183,7 +183,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Zu</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Überschneide mit {0}</value>
+    <value>Überschneidung mit {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Eckpunkt {0}</value>
@@ -222,16 +222,16 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Ja</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Markierungen nur an Kreuzungen erstellen</value>
+    <value>Markierungen an Kreuzungen erstellen</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Dies ist eine BETA Version. Stabilität und Fehlerfreiheit sind nicht garantiert!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Bearbeite die Markierung von Node #{0}</value>
+    <value>Markierungen von Node #{0} bearbeiten</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>punkt</value>
+    <value>Punkt</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
     <value>Versatz</value>
@@ -258,7 +258,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Alle Markierungen löschen</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wollen Sie wirklich alle Markierungen entfernen?
+    <value>Wirklich alle Markierungen entfernen?
 Diese Aktion kann nicht rückgängig gemacht werden</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
@@ -303,7 +303,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Anderes</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Schnellregel-Einrichtung</value>
+    <value>Schnelle Regel-Erstellung</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Render-Distanz</value>
@@ -324,7 +324,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Strichlänge</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>vorlage</value>
+    <value>Vorlage</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Name</value>
@@ -333,7 +333,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Versatz</value>
   </data>
   <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Länge des Zwischenraums</value>
+    <value>Zwischenraum-Länge</value>
   </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
     <value>Stil</value>
@@ -352,27 +352,27 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
 Diese Aktion kann nicht rückgängig gemacht werden</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klicken um die Linie zu erstellen
+    <value>Klicken um Linie zu erstellen
 +Shift - Durchgezogen
 +Strg - Doppelt</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Zum Löschen der Zeile klicken</value>
+    <value>Zum Löschen der Linie klicken</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Node #{0}
-Klicken zum Bearbeiten der Markierung</value>
+Klicken um Markierung zu bearbeiten</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Node für die Änderung der Markierung auswählen</value>
+    <value>Node zum Ändern der Markierung auswählen</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Wähle den Endpunkt
+    <value>Endpunkt wählen
 +Shift - Durchgezogen
-+Strg - Doppelt durchgezogen</value>
++Strg - Doppelt</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Wähle den Startpunkt 
+    <value>Startpunkt wählen zum
 Linie erstellen oder löschen
 +Strg um den Punkt zu verschieben
 +Shift um den Punkt zu bearbeiten</value>
