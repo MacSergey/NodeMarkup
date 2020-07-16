@@ -134,6 +134,7 @@ namespace NodeMarkup.Manager
         public ulong Hash { get; }
         public MarkupPoint First { get; }
         public MarkupPoint Second { get; }
+        public bool IsSomeEnter => First.Enter == Second.Enter;
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {
