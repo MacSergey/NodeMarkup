@@ -383,11 +383,7 @@ utworzyć lub usunąć linię
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Pokaż "Co nowego?"</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Kopiuj z użyciem MoveIt
-- Nowy styl "Linia ciągła z przerywaną"
-- Tłumaczenie na j. chiński</value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importuj</value>
   </data>
@@ -411,5 +407,17 @@ utworzyć lub usunąć linię
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ciągła z przerywaną</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Linia zatrzymania</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>LZ</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Kliknij aby usunąć linię zatrzymania</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Kliknij aby utworzyć linię zatrzymania</value>
   </data>
 </root>
