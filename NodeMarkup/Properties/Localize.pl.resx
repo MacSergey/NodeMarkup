@@ -408,4 +408,16 @@ utworzyć lub usunąć linię
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ciągła z przerywaną</value>
   </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Linia zatrzymania</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>LZ</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Kliknij aby usunąć linię zatrzymania</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Kliknij aby utworzyć linię zatrzymania</value>
+  </data>
 </root>
