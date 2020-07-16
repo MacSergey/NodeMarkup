@@ -384,7 +384,8 @@
     <value>Показывать что нового</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Копирование с помощью MoveIt
+    <value>- Копирование с помощью MoveIt (Не работает пока не будет обновлен MoveIt)
+- Стоп линии
 - Новый стиль "Сплошная и пунктирная"
 - Китайский язык</value>
   </data>
@@ -411,5 +412,17 @@
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Сплошная и пунктирная</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Стоп линия</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>СЛ</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Нажмите для удаления стоп линии</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Нажмите для создания стоп линии</value>
   </data>
 </root>

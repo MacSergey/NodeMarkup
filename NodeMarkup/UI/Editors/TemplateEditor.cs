@@ -69,6 +69,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperty()
         {
+            if (EditObject.Style.Type == LineStyle.LineType.Stop)
+                return;
+
             var styleProperty = SettingsPanel.AddUIComponent<StylePropertyPanel>();
             styleProperty.Text = NodeMarkup.Localize.TemplateEditor_Style;
             styleProperty.Init();
@@ -85,7 +88,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddWidthProperty()
         {
-            var widthProperty = AddUIComponent<FloatPropertyPanel>();
+            var widthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
             widthProperty.Text = NodeMarkup.Localize.TemplateEditor_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.01f;
@@ -94,7 +97,6 @@ namespace NodeMarkup.UI.Editors
             widthProperty.Init();
             widthProperty.Value = EditObject.Style.Width;
             widthProperty.OnValueChanged += WidthChanged;
-            StyleProperties.Add(widthProperty);
         }
         private void AddStyleAdditionalProperties()
         {
@@ -135,7 +137,7 @@ namespace NodeMarkup.UI.Editors
             }
             if (EditObject.Style is IAsymLine asymStyle)
             {
-                var invertProperty = AddUIComponent<BoolPropertyPanel>();
+                var invertProperty = SettingsPanel.AddUIComponent<BoolPropertyPanel>();
                 invertProperty.Text = NodeMarkup.Localize.TemplateEditor_Invert;
                 invertProperty.Init();
                 invertProperty.Value = asymStyle.Invert;

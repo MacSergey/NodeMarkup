@@ -4,6 +4,7 @@ using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -72,6 +73,7 @@ namespace NodeMarkup.Manager
         public static float DefaultSpaceLength { get; } = 1.5f;
         public static float DefaultOffser { get; } = 0.15f;
         public static float DefaultWidth { get; } = 0.15f;
+        public static float DefaultStopWidth { get; } = 0.3f;
 
         public static float AngleDelta { get; } = 5f;
         public static float MaxLength { get; } = 10f;
@@ -80,8 +82,9 @@ namespace NodeMarkup.Manager
         public static SolidLineStyle DefaultSolid => new SolidLineStyle(DefaultColor, DefaultWidth);
         public static DashedLineStyle DefaultDashed => new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength);
         public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffser);
-        public static DoubleDashedStyle DefaultDoubleDashed => new DoubleDashedStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
-        public static SolidAndDashedStyle DefaultSolidAndDashed => new SolidAndDashedStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser, false);
+        public static DoubleDashedLineStyle DefaultDoubleDashed => new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
+        public static SolidAndDashedLineStyle DefaultSolidAndDashed => new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser, false);
+        public static StopLineStyle DefaultStop => new StopLineStyle(DefaultColor, DefaultStopWidth);
 
         public static LineStyle GetDefault(LineType type)
         {
@@ -92,6 +95,7 @@ namespace NodeMarkup.Manager
                 case LineType.DoubleSolid: return DefaultDoubleSolid;
                 case LineType.DoubleDashed: return DefaultDoubleDashed;
                 case LineType.SolidAndDashed: return DefaultSolidAndDashed;
+                case LineType.Stop: return DefaultStop;
                 default: return null;
             }
         }
@@ -104,6 +108,7 @@ namespace NodeMarkup.Manager
                 case LineType.DoubleSolid: return Localize.LineStyle_DoubleSolidShort;
                 case LineType.DoubleDashed: return Localize.LineStyle_DoubleDashedShort;
                 case LineType.SolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
+                case LineType.Stop: return Localize.LineStyle_StopShort;
                 default: return null;
             }
         }
@@ -193,8 +198,13 @@ namespace NodeMarkup.Manager
             DoubleDashed,
 
             [Description("LineStyle_SolidAndDashed")]
-            SolidAndDashed
+            SolidAndDashed,
+
+            [Description("LineStyle_Stop")]
+            [SpecialLine]
+            Stop,
         }
+        public class SpecialLineAttribute : Attribute { }
 
         protected IEnumerable<MarkupDash> CalculateSolid(Bezier3 trajectory, int depth, Func<Bezier3, IEnumerable<MarkupDash>> calculateDashes)
         {
@@ -419,7 +429,7 @@ namespace NodeMarkup.Manager
 
         public override LineStyle Copy() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
     }
-    public class DoubleDashedStyle : DashedLineStyle, IDoubleLine
+    public class DoubleDashedLineStyle : DashedLineStyle, IDoubleLine
     {
         public override LineType Type { get; } = LineType.DoubleDashed;
 
@@ -434,7 +444,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public DoubleDashedStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
+        public DoubleDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
             Offset = offset;
         }
@@ -455,9 +465,9 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle Copy() => new DoubleDashedStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override LineStyle Copy() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
     }
-    public class SolidAndDashedStyle : LineStyle, IDoubleLine, IDashedLine, IAsymLine
+    public class SolidAndDashedLineStyle : LineStyle, IDoubleLine, IDashedLine, IAsymLine
     {
         public override LineType Type => LineType.SolidAndDashed;
 
@@ -502,7 +512,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public SolidAndDashedStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
+        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
         {
             Offset = offset;
             DashLength = dashLength;
@@ -532,7 +542,7 @@ namespace NodeMarkup.Manager
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
         }
 
-        public override LineStyle Copy() => new SolidAndDashedStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override LineStyle Copy() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -551,15 +561,30 @@ namespace NodeMarkup.Manager
             Invert = config.GetAttrValue("I", 0) == 1;
         }
     }
+    public class StopLineStyle : LineStyle
+    {
+        public override LineType Type => LineType.Stop;
+
+        public StopLineStyle(Color32 color, float width) : base(color, width) { }
+
+        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
+        {
+            var dash = CalculateSolidDash(trajectory, 0f);
+            dash.Position += (trajectory.a - trajectory.b).normalized * (Width / 2);
+            yield return dash;
+        }
+
+        public override LineStyle Copy() => new StopLineStyle(Color, Width);
+    }
 
 
     public class MarkupDash
     {
-        public Vector3 Position { get; }
-        public float Angle { get; }
-        public float Length { get; }
-        public float Width { get; }
-        public Color Color { get; }
+        public Vector3 Position { get; set; }
+        public float Angle { get; set; }
+        public float Length { get; set; }
+        public float Width { get; set; }
+        public Color Color { get; set; }
 
         public MarkupDash(Vector3 position, float angle, float length, float width, Color color)
         {

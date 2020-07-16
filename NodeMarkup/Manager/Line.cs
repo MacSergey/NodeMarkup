@@ -18,6 +18,7 @@ namespace NodeMarkup.Manager
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
+        public bool IsEnterLine => PointPair.IsSomeEnter;
 
         public List<MarkupLineRawRule> RawRules { get; } = new List<MarkupLineRawRule>();
 
