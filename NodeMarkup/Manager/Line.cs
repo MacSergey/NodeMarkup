@@ -100,7 +100,7 @@ namespace NodeMarkup.Manager
         public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(SupportPointBase supportPoint) => supportPoint is LineSupportPoint lineRuleEdge && lineRuleEdge.Line == intersectLine;
+            bool Match(ISupportPoint supportPoint) => supportPoint is LineSupportPoint lineRuleEdge && lineRuleEdge.Line == intersectLine;
 
             if (!RawRules.Any())
                 AddRule();

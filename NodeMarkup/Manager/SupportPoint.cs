@@ -8,7 +8,17 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class SupportPointBase : IToXml
+    public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>
+    {
+        SupportType Type { get; }
+    }
+    public enum SupportType
+    {
+        EnterPoint,
+        Line,
+        Intersect
+    }
+    public abstract class SupportPointBase : ISupportPoint
     {
         public static string XmlName { get; } = "E";
         public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out SupportPointBase supportPoint)
@@ -31,11 +41,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public virtual string XmlSection => XmlName;
-
+        public string XmlSection => XmlName;
         public abstract SupportType Type { get; }
 
-        public abstract bool Equals(SupportPointBase other);
+        public abstract bool Equals(ISupportPoint other);
         public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection,
@@ -44,15 +53,8 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public enum SupportType
-        {
-            EnterPoint,
-            Line,
-            Intersect
-        }
-
     }
-    public interface IRuleEdge : IToXml
+    public interface IRuleEdge : ISupportPoint
     {
         bool GetT(MarkupLine line, out float t);
     }
@@ -99,7 +101,7 @@ namespace NodeMarkup.Manager
         }
         public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Line);
 
-        public override bool Equals(SupportPointBase other) => other is LineSupportPoint otherLine && otherLine.Line == Line;
+        public override bool Equals(ISupportPoint other) => other is LineSupportPoint otherLine && otherLine.Line == Line;
 
         public override XElement ToXml()
         {
@@ -147,7 +149,7 @@ namespace NodeMarkup.Manager
         }
         public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
 
-        public override bool Equals(SupportPointBase other) => other is EnterSupportPoint otherPoint && otherPoint.Point == Point;
+        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherPoint && otherPoint.Point == Point;
 
         public override XElement ToXml()
         {
@@ -171,17 +173,17 @@ namespace NodeMarkup.Manager
             LinePair = linePair;
         }
 
-        public override bool Equals(SupportPointBase other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
+        public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
 
     }
     public class SupportPointBound
     {
         public static Vector3 MarkerSize { get; } = Vector3.one * 0.5f;
-        public SupportPointBase SupportPoint { get; private set; }
+        public ISupportPoint SupportPoint { get; private set; }
         Bounds Bounds { get; set; }
         public Vector3 Position => Bounds.center;
 
-        public SupportPointBound(SupportPointBase supportPoint, Bounds bounds)
+        public SupportPointBound(ISupportPoint supportPoint, Bounds bounds)
         {
             SupportPoint = supportPoint;
             Bounds = bounds;
@@ -198,7 +200,7 @@ namespace NodeMarkup.Manager
             return new Bounds(position, MarkerSize);
         }
         public new IRuleEdge SupportPoint => (IRuleEdge)base.SupportPoint;
-        public RuleSupportPointBound(MarkupLine line, SupportPointBase supportPoint) : base(supportPoint, GetBounds(line, (IRuleEdge)supportPoint)) { }
+        public RuleSupportPointBound(MarkupLine line, IRuleEdge supportPoint) : base(supportPoint, GetBounds(line, supportPoint)) { }
 
     }
 }

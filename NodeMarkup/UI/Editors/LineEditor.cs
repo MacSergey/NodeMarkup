@@ -18,7 +18,7 @@ namespace NodeMarkup.UI.Editors
 
         private ButtonPanel AddButton { get; set; }
 
-        public List<SupportPointBase> RuleEdges { get; } = new List<SupportPointBase>();
+        public List<IRuleEdge> RuleEdges { get; } = new List<IRuleEdge>();
         private List<RuleSupportPointBound> RuleEdgeBounds { get; } = new List<RuleSupportPointBound>();
         public bool SupportRules => RuleEdges.Count > 2;
 
@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
 
             RuleEdges.Clear();
             RuleEdges.Add(new EnterSupportPoint(EditObject.Start));
-            RuleEdges.AddRange(intersectWith.Select(i => new LineSupportPoint(i) as SupportPointBase));
+            RuleEdges.AddRange(intersectWith.Select(i => new LineSupportPoint(i) as IRuleEdge));
             RuleEdges.Add(new EnterSupportPoint(EditObject.End));
 
             RuleEdgeBounds.Clear();
@@ -184,7 +184,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverRuleEdgeBounds)
             {
-                SelectRuleEdgePanel.SelectedObject = (SupportPointBase)HoverRuleEdgeBounds.SupportPoint;
+                SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.SupportPoint;
 
                 if (isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true)
                     NodeMarkupPanel.EndEditorAction();
@@ -469,8 +469,8 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
-        private void FromChanged(SupportPointBase from) => Rule.From = from;
-        private void ToChanged(SupportPointBase to) => Rule.To = to;
+        private void FromChanged(IRuleEdge from) => Rule.From = from;
+        private void ToChanged(IRuleEdge to) => Rule.To = to;
         private void StyleChanged(LineStyle.LineType style)
         {
             var newStyle = TemplateManager.GetDefault(style);
