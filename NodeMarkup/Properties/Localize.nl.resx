@@ -394,7 +394,9 @@ maak of verwijderen een lijn
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annuleer</value>
   </data>
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>OS</value>
+  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Omkeren</value>
   </data>
