@@ -118,294 +118,183 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>删除{0}</value>
+    <value>Poista {0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>确定要删除 {0} {1} 吗?
-此操作不可撤销。</value>
+    <value>Haluatko varmasti poistaa {0} {1}?
+Tätä toimintoa ei voi kumota</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>可使用滚轮更改参数</value>
+    <value>Vieritä hiiren rullalla vaihtaaksesi</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>应用模板</value>
+    <value>Käytä mallinetta</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>另存为模板</value>
+    <value>Tallenna mallineena</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>设定为默认</value>
-  </data>
-  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>撤销默认</value>
-  </data>
-  <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>添加规则</value>
-  </data>
-  <data name="LineEditor_Color" xml:space="preserve">
-    <value>颜色</value>
-  </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>虚线长度</value>
-  </data>
-  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>删除规则</value>
-  </data>
-  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>确定要删除这个规则吗?
-此操作不可撤销。</value>
-  </data>
-  <data name="LineEditor_From" xml:space="preserve">
-    <value>起始点</value>
-  </data>
-  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>选择此段落的起始点</value>
-  </data>
-  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>选择此段落的终止点</value>
-  </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>线段</value>
-  </data>
-  <data name="LineEditor_Lines" xml:space="preserve">
-    <value>线段</value>
-  </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
-    <value>偏移</value>
-  </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>间隔长度</value>
-  </data>
-  <data name="LineEditor_Style" xml:space="preserve">
-    <value>样式</value>
-  </data>
-  <data name="LineEditor_To" xml:space="preserve">
-    <value>终止点</value>
-  </data>
-  <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>与 {0} 相交</value>
-  </data>
-  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>节点端点 {0}</value>
-  </data>
-  <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>虚线</value>
-  </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>虚线</value>
-  </data>
-  <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>双虚线</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>双虚线</value>
-  </data>
-  <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>双实线</value>
-  </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>双实线</value>
-  </data>
-  <data name="LineStyle_Solid" xml:space="preserve">
-    <value>实线</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>实线</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>确认</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>确定</value>
-  </data>
-  <data name="Mod_Description" xml:space="preserve">
-    <value>使用此工具来轻松创建交叉口地标线。</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>这是BETA测试版，可能会出现功能性错误。无法担保工作稳定！</value>
-  </data>
-  <data name="Panel_Caption" xml:space="preserve">
-    <value>编辑节点 #{0} 的地标线</value>
-  </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>点</value>
-  </data>
-  <data name="PointEditor_Offset" xml:space="preserve">
-    <value>偏移</value>
-  </data>
-  <data name="PointEditor_Points" xml:space="preserve">
-    <value>端点</value>
-  </data>
-  <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>未设置</value>
-  </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>启用工具</value>
-  </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>添加新规则</value>
-  </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>删除选中节点的所有地标线</value>
-  </data>
-  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>删除本地图内的所有地标线</value>
-  </data>
-  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>删除所有地标线</value>
-  </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>确定要删除全图所有的地标线吗?
-此操作不可撤销！</value>
-  </data>
-  <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>将地标线信息导出到文件</value>
-  </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>复制路径到剪贴板</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>确认</value>
-  </data>
-  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>导出地标线信息</value>
-  </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>导出失败</value>
-  </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>导出成功</value>
-  </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>常规设置</value>
-  </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>从文件中导入地标线信息</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>导入地标线信息</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>确定要导入数据吗?
-导入后的数据会覆盖全图既存的地标线。
-此操作无法撤销！</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>地标线信息导入失败</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>地标线信息导入成功</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>其他</value>
-  </data>
-  <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>快速初始化新规则</value>
-  </data>
-  <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>渲染距离</value>
-  </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>快捷键</value>
-  </data>
-  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>删除前弹窗确认</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>显示提示</value>
-  </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>颜色</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>虚线长度</value>
-  </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>模版</value>
-  </data>
-  <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>名称</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>偏移</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>间隔长度</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>样式</value>
-  </data>
-  <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>模板</value>
-  </data>
-  <data name="Template_NewTemplate" xml:space="preserve">
-    <value>新建模板</value>
-  </data>
-  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>清除节点的地标线</value>
-  </data>
-  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>确定要删除节点 #{0} 的所有地标线吗?
-此操作不可撤销。</value>
-  </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>点击以创建地标线
-+Shift 实线
-+Ctrl 双线</value>
-  </data>
-  <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>点击可擦除线段</value>
-  </data>
-  <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>节点 #{0}
-点击以编辑地标线</value>
-  </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>选择节点以编辑地标线</value>
-  </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>选择终止点
-+Shift 实线
-+Ctrl 双线</value>
-  </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>点选起始点
-来创建/擦除线段
-+Ctrl 偏移端点
-+Shift 编辑端点</value>
-  </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>{0} 版本的新功能</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>显示更新提示框</value>
+    <value>Aseta oletukseksi</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>导入</value>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Lisää sääntö</value>
   </data>
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>Väri</value>
+  </data>
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>Viivan pituus</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Poista sääntö</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa säännön?
+Tätä toimintoa ei voi kumota</value>
+  </data>
+  
+  
+  
+  
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Viivat</value>
+  </data>
+  <data name="LineEditor_Offset" xml:space="preserve">
+    <value>Etäisyys</value>
+  </data>
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>Välimatka</value>
+  </data>
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>Tyyli</value>
+  </data>
+  
+  
+  
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Katkoviiva</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>K</value>
+  </data>
+  
+  
+  
+  
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Viiva</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>V</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>Ei</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="MessageBox_Yes" xml:space="preserve">
+    <value>Kyllä</value>
+  </data>
+  
+  <data name="Mod_DescriptionBeta" xml:space="preserve">
+    <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
+Tätä toimintoa ei voi kumota</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Vie tiemerkintätiedot tiedostoon</value>
+  </data>
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>Kopioi tiedostopolku leikepöydälle</value>
+  </data>
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Vie tiemerkintätiedot</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>Vienti epäonnistui</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>Vienti onnistui</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>Yleiset</value>
+  </data>
+  <data name="Settings_ImportMarkingButton" xml:space="preserve">
+    <value>Tuo tiemerkintätiedot tiedostosta</value>
+  </data>
+  
+  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
+    <value>Haluatko varmasti tuoda tiedot?
+Tuodut tiedot korvaavat kaikki olemassa olevat tiemerkinnät.
+Tätä toimintoa ei voi kumota</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Vahvista ennen poistamista</value>
+  </data>
+  <data name="Settings_ShowTooltips" xml:space="preserve">
+    <value>Näytä työkaluvihjeet</value>
+  </data>
+  <data name="TemplateEditor_Color" xml:space="preserve">
+    <value>Väri</value>
+  </data>
+  <data name="TemplateEditor_DashedLength" xml:space="preserve">
+    <value>Viivan pituus</value>
+  </data>
+  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+    <value>malline</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Nimi</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>Näytä, mikä on uutta</value>
+  </data>
+  
+  
   <data name="Setting_Cancel" xml:space="preserve">
-    <value>取消</value>
+    <value>Peruuta</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>虚实线</value>
-  </data>
-  <data name="LineEditor_Invert" xml:space="preserve">
-    <value>翻转</value>
-  </data>
-  <data name="LineEditor_Width" xml:space="preserve">
-    <value>宽度</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>宽度</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>翻转</value>
-  </data>
-  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>虚实线</value>
-  </data>
+  
+  
+  
+  
+  
+  
 </root>
