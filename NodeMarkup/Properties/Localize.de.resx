@@ -390,10 +390,22 @@ Linie erstellen oder löschen
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>DG</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Invertieren</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Breite</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Breite</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Invertieren</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Durchgezogen und Gestrichelt</value>
+  </data>
 </root>
