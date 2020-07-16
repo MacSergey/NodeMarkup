@@ -390,9 +390,19 @@ maak of verwijderen een lijn
     <value>Annuleer</value>
   </data>
   
-  
-  
-  
-  
-  
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Omkeren</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Breedte</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Breedte</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Omkeren</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Ononderbroken en Streeplijn</value>
+  </data>
 </root>
