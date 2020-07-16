@@ -12,19 +12,23 @@ namespace NodeMarkup.Manager
     public class MarkupPoint : IToXml, IFromXml
     {
         public static string XmlName { get; } = "P";
-        public static bool FromId(int id, Markup markup, out MarkupPoint point)
+        public static bool FromId(int id, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupPoint point)
         {
+            point = null;
+
             var enterId = (ushort)id;
             var num = (byte)(id >> 16);
 
-            if (markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, out point))
-                return true;
-            else
+            if(map != null)
             {
-                point = null;
-                return false;
+                var source = new InstanceID() { Type = InstanceType.NetSegment, NetSegment = enterId };
+                if (map.TryGetValue(source, out InstanceID target))
+                    enterId = target.NetSegment;
+                else
+                    return false;
             }
 
+            return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, out point);
         }
 
         float _offset = 0;
@@ -96,10 +100,10 @@ namespace NodeMarkup.Manager
             );
             return config;
         }
-        public static void FromXml(XElement config, Markup markup)
+        public static void FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
-            if (FromId(id, markup, out MarkupPoint point))
+            if (FromId(id, markup, map, out MarkupPoint point))
                 point.FromXml(config);
         }
         public void FromXml(XElement config)
@@ -110,12 +114,12 @@ namespace NodeMarkup.Manager
     public struct MarkupPointPair
     {
         public static string XmlName { get; } = "PP";
-        public static bool FromHash(ulong hash, Markup markup, out MarkupPointPair pair)
+        public static bool FromHash(ulong hash, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupPointPair pair)
         {
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);
 
-            if (MarkupPoint.FromId(firstId, markup, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, out MarkupPoint second))
+            if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
             {
                 pair = new MarkupPointPair(first, second);
                 return true;

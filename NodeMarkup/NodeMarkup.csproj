@@ -54,6 +54,10 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="MoveItIntegration">
+      <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq">
@@ -109,6 +113,7 @@
     <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\BezierIntersect.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\MoveItIntegration.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\TextureUtil.cs" />

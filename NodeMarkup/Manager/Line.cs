@@ -119,10 +119,10 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup makrup, out MarkupLine line)
+        public static bool FromXml(XElement config, Markup makrup, Dictionary<InstanceID, InstanceID> map, out MarkupLine line)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            if (!makrup.TryGetLine(lineId, out line) && MarkupPointPair.FromHash(lineId, makrup, out MarkupPointPair pointPair))
+            if (!makrup.TryGetLine(lineId, out line) && MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair))
             {
                 line = new MarkupLine(makrup, pointPair);
                 return true;
@@ -130,11 +130,11 @@ namespace NodeMarkup.Manager
             else
                 return false;
         }
-        public void FromXml(XElement config)
+        public void FromXml(XElement config, Dictionary<InstanceID, InstanceID> map)
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule.XmlName))
             {
-                if (MarkupLineRawRule.FromXml(ruleConfig, Markup, out MarkupLineRawRule rule))
+                if (MarkupLineRawRule.FromXml(ruleConfig, Markup, map, out MarkupLineRawRule rule))
                     AddRule(rule, true, false);
             }
         }

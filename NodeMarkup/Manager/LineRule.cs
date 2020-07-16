@@ -12,15 +12,15 @@ namespace NodeMarkup.Manager
     public abstract class LineRawRuleEdgeBase
     {
         public static string XmlName { get; } = "E";
-        public static bool FromXml(XElement config, Markup markup, out LineRawRuleEdgeBase ruleEdge)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out LineRawRuleEdgeBase ruleEdge)
         {
             var type = (EdgeType)config.GetAttrValue<int>("T");
             switch (type)
             {
-                case EdgeType.IntersectLine when LineRawRuleEdge.FromXml(config, markup, out LineRawRuleEdge lineEdge):
+                case EdgeType.IntersectLine when LineRawRuleEdge.FromXml(config, markup, map, out LineRawRuleEdge lineEdge):
                     ruleEdge = lineEdge;
                     return true;
-                case EdgeType.SelfPoint when SelfPointRawRuleEdge.FromXml(config, markup, out SelfPointRawRuleEdge pointEdge):
+                case EdgeType.SelfPoint when SelfPointRawRuleEdge.FromXml(config, markup, map, out SelfPointRawRuleEdge pointEdge):
                     ruleEdge = pointEdge;
                     return true;
                 default:
@@ -57,10 +57,11 @@ namespace NodeMarkup.Manager
     }
     public class LineRawRuleEdge : LineRawRuleEdgeBase
     {
-        public static bool FromXml(XElement config, Markup markup, out LineRawRuleEdge lineEdge)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out LineRawRuleEdge lineEdge)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
-            if (markup.TryGetLine(lineId, out MarkupLine line))
+            MarkupPointPair.FromHash(lineId, markup, map, out MarkupPointPair pair);
+            if (markup.TryGetLine(pair.Hash, out MarkupLine line))
             {
                 lineEdge = new LineRawRuleEdge(line);
                 return true;
@@ -112,10 +113,10 @@ namespace NodeMarkup.Manager
     }
     public class SelfPointRawRuleEdge : LineRawRuleEdgeBase
     {
-        public static bool FromXml(XElement config, Markup markup, out SelfPointRawRuleEdge pointEdge)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out SelfPointRawRuleEdge pointEdge)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
-            if (MarkupPoint.FromId(pointId, markup, out MarkupPoint point))
+            if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
             {
                 pointEdge = new SelfPointRawRuleEdge(point);
                 return true;
@@ -327,7 +328,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, out MarkupLineRawRule rule)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupLineRawRule rule)
         {
             if (!(config.Element(LineStyle.XmlName) is XElement styleConfig) || !LineStyle.FromXml(styleConfig, out LineStyle style))
             {
@@ -338,7 +339,7 @@ namespace NodeMarkup.Manager
             var edges = new List<LineRawRuleEdgeBase>();
             foreach (var edgeConfig in config.Elements(LineRawRuleEdgeBase.XmlName))
             {
-                if (LineRawRuleEdgeBase.FromXml(edgeConfig, markup, out LineRawRuleEdgeBase edge))
+                if (LineRawRuleEdgeBase.FromXml(edgeConfig, markup, map, out LineRawRuleEdgeBase edge))
                     edges.Add(edge);
             }
 
