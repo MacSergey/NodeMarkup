@@ -246,7 +246,7 @@
     <value>启用工具</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>添加新段落</value>
+    <value>添加新规则</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
     <value>删除选中节点的所有地标线</value>
@@ -303,7 +303,7 @@
     <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>快速初始化新段落</value>
+    <value>快速初始化新规则</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>渲染距离</value>
