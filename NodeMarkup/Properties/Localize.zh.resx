@@ -246,7 +246,7 @@
     <value>启用工具</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>添加新段落</value>
+    <value>添加新规则</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
     <value>删除选中节点的所有地标线</value>
@@ -303,7 +303,7 @@
     <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>快速初始化新段落</value>
+    <value>快速初始化新规则</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>渲染距离</value>
@@ -384,9 +384,10 @@
     <value>显示更新提示框</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- 地标线可被MoveIt!复制
+    <value>- 支持使用MoveIt!复制地标线 (需等候MoveIt!更新)
+- 新：可划分停止线
 - 新增 "虚实线" 样式
-- 中文支持</value>
+- 简体中文支持</value>
   </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>导入</value>
@@ -411,5 +412,17 @@
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>虚实线</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>停止线</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>停止线</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>点击以擦除停止线</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>点击以创建停止线</value>
   </data>
 </root>
