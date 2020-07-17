@@ -196,6 +196,59 @@ Tätä toimintoa ei voi kumota</value>
     <value>Kyllä</value>
   </data>
   
+  <data name="Mod_DescriptionBeta" xml:space="preserve">
+    <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
+Tätä toimintoa ei voi kumota</value>
+  </data>
+  
+  
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Vahvista ennen poistamista</value>
+  </data>
+  <data name="Settings_ShowTooltips" xml:space="preserve">
+    <value>Näytä työkaluvihjeet</value>
+  </data>
+  <data name="TemplateEditor_Color" xml:space="preserve">
+    <value>Väri</value>
+  </data>
+  <data name="TemplateEditor_DashedLength" xml:space="preserve">
+    <value>Viivan pituus</value>
+  </data>
+  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+    <value>malline</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Nimi</value>
+  </data>
   
   
   
@@ -213,41 +266,9 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Setting_Cancel" xml:space="preserve">
+    <value>Peruuta</value>
+  </data>
   
   
   
