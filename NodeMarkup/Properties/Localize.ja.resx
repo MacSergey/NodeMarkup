@@ -420,6 +420,10 @@
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>クリックして停止線の追加</value>
   </data>
-  
-  
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>塗りつぶし</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>埋める</value>
+  </data>
 </root>

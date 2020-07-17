@@ -425,6 +425,10 @@ Linie erstellen oder löschen
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>Klicken um eine Haltelinie zu erstellen</value>
   </data>
-  
-  
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Flächenmarkierungen</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>Flächenmarkierung</value>
+  </data>
 </root>
