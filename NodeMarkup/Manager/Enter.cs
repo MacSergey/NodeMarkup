@@ -22,21 +22,33 @@ namespace NodeMarkup.Manager
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
-        Dictionary<byte, MarkupPoint> PointsDictionary { get; set; } = new Dictionary<byte, MarkupPoint>();
+        List<MarkupPoint> PointsList { get; set; } = new List<MarkupPoint>();
 
         public byte PointNum => ++_pointNum;
 
+        public float CornerAngle { get; private set; }
         public Vector3 CornerDir { get; private set; }
-        public int PointCount => PointsDictionary.Count;
-        public IEnumerable<MarkupPoint> Points
+
+        public Enter Next => Markup.GetNextEnter(this);
+        public Enter Prev => Markup.GetPrevEnter(this);
+        public MarkupPoint FirstPoint => PointsList.FirstOrDefault();
+        public MarkupPoint LastPoint => PointsList.LastOrDefault();
+
+        public int PointCount => PointsList.Count;
+        public IEnumerable<MarkupPoint> Points => PointsList;
+        public bool TryGetPoint(byte pointNum, out MarkupPoint point)
         {
-            get
+            if (1 <= pointNum && pointNum <= PointCount)
             {
-                foreach (var line in PointsDictionary.Values)
-                    yield return line;
+                point = PointsList[pointNum - 1];
+                return true;
+            }
+            else
+            {
+                point = null;
+                return false;
             }
         }
-        public bool TryGetPoint(byte pointNum, out MarkupPoint point) => PointsDictionary.TryGetValue(pointNum, out point);
 
 
         public string XmlSection => XmlName;
@@ -79,22 +91,21 @@ namespace NodeMarkup.Manager
 
             foreach (var markupLine in Lines)
             {
-                foreach(var point in markupLine.GetMarkupPoints())
-                {
-                    PointsDictionary.Add(point.Num, point);
-                }
+                PointsList.AddRange(markupLine.GetMarkupPoints());
             }
         }
 
         public void Update()
         {
             var segment = Utilities.GetSegment(Id);
-            var cornerAngle = IsStartSide ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd;
-            CornerDir = Vector3.right.TurnDeg(cornerAngle / 255f * 360f, false).normalized * (IsLaneInvert ? -1 : 1);
+            CornerAngle = (IsStartSide ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd) / 255f * 360f;
+            if (IsLaneInvert)
+                CornerAngle = CornerAngle >= 180 ? CornerAngle - 180 : CornerAngle + 180;
+            CornerDir = Vector3.right.TurnDeg(CornerAngle, false).normalized;
             if(DriveLanes.FirstOrDefault() is DriveLane driveLane)
                 Position = driveLane.NetLane.CalculatePosition(IsStartSide ? 0f : 1f) + CornerDir * driveLane.Position * (IsLaneInvert ? -1 : 1);
 
-            foreach (var point in PointsDictionary.Values)
+            foreach (var point in PointsList)
             {
                 point.Update();
             }

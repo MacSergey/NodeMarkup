@@ -71,11 +71,7 @@ namespace NodeMarkup.Manager
 
         public bool ContainPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
-        public MarkupLine[] IntersectWith()
-        {
-            var intersectWith = Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
-            return intersectWith;
-        }
+        public IEnumerable<MarkupLine> IntersectLines => Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
         private void AddRule(MarkupLineRawRule rule, bool update = true)
         {
             rule.OnRuleChanged = RuleChanged;

@@ -29,7 +29,7 @@ namespace NodeMarkup.Manager
         };
 
         public ushort Id { get; }
-        Dictionary<ushort, Enter> EntersDictionary { get; set; } = new Dictionary<ushort, Enter>();
+        List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(MarkupLinePair.Comparer);
 
@@ -45,16 +45,15 @@ namespace NodeMarkup.Manager
                     yield return line;
             }
         }
-        public IEnumerable<Enter> Enters
-        {
-            get
-            {
-                foreach (var enter in EntersDictionary.Values)
-                    yield return enter;
-            }
-        }
+        public IEnumerable<Enter> Enters => EntersList;
+        public IEnumerable<LineIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
         public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
-        public bool TryGetEnter(ushort enterId, out Enter enter) => EntersDictionary.TryGetValue(enterId, out enter);
+        public bool TryGetEnter(ushort enterId, out Enter enter)
+        {
+            enter = EntersList.Find(e => e.Id == enterId);
+            return enter != null;
+        }
+        public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
 
         public string XmlSection => XmlName;
 
@@ -85,19 +84,18 @@ namespace NodeMarkup.Manager
 #endif
             var node = Utilities.GetNode(Id);
 
-            var enters = new Dictionary<ushort, Enter>();
+            var enters = new List<Enter>();
 
             foreach (var segmentId in node.SegmentsId())
             {
-                if (!EntersDictionary.TryGetValue(segmentId, out Enter enter))
+                if (!TryGetEnter(segmentId, out Enter enter))
                     enter = new Enter(this, segmentId);
 
                 enter.Update();
-
-                enters.Add(segmentId, enter);
+                enters.Add(enter);
             }
-
-            EntersDictionary = enters;
+            enters.Sort((e1, e2) => e1.CornerAngle.CompareTo(e2.CornerAngle));
+            EntersList = enters;
 
 #if DEBUG
             Logger.LogDebug($"End update enters");
@@ -111,7 +109,7 @@ namespace NodeMarkup.Manager
             var lines = LinesDictionary.Values.ToArray();
             foreach (var line in lines)
             {
-                if (EntersDictionary.ContainsKey(line.Start.Enter.Id) && EntersDictionary.ContainsKey(line.End.Enter.Id))
+                if (ContainsEnter(line.Start.Enter.Id) && ContainsEnter(line.End.Enter.Id))
                     LinesDictionary[line.PointPair.Hash].Update();
                 else
                     LinesDictionary.Remove(line.PointPair.Hash);
@@ -179,7 +177,7 @@ namespace NodeMarkup.Manager
         {
             var line = LinesDictionary[pointPair.Hash];
 
-            var intersects = GetExistIntersects(line);
+            var intersects = GetExistIntersects(line).ToArray();
             foreach (var intersect in intersects)
             {
                 var intersectLine = intersect.Pair.GetOther(line);
@@ -207,16 +205,8 @@ namespace NodeMarkup.Manager
                 return null;
             }
         }
-        public LineIntersect[] GetExistIntersects(MarkupLine line)
-        {
-            var intersects = LineIntersects.Values.Where(i => i.Pair.ContainLine(line)).ToArray();
-            return intersects;
-        }
-        public LineIntersect[] GetIntersects(MarkupLine line)
-        {
-            var intersects = Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l))).ToArray();
-            return intersects;
-        }
+        public IEnumerable<LineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
+        public IEnumerable<LineIntersect> GetIntersects(MarkupLine line) => Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l)));
 
         public LineIntersect GetIntersect(MarkupLinePair linePair)
         {
@@ -228,6 +218,36 @@ namespace NodeMarkup.Manager
 
             return intersect;
         }
+        public IEnumerable<LineIntersect> GetAllIntersect()
+        {
+            var lines = Lines.ToArray();
+            for (var i = 0; i < lines.Length; i += 1)
+            {
+                for (var j = i + 1; j < lines.Length; j += 1)
+                {
+                    yield return GetIntersect(new MarkupLinePair(lines[i], lines[j]));
+                }
+            }
+        }
+
+        public Enter GetNextEnter(Enter current)
+        {
+            var index = EntersList.IndexOf(current);
+            return EntersList[index == EntersList.Count - 1 ? 0 : index + 1];
+        }
+        public Enter GetPrevEnter(Enter current)
+        {
+            var index = EntersList.IndexOf(current);
+            return EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
+        }
+        public IEnumerable<MarkupLine> GetLinesFromPoint(MarkupPoint point)
+        {
+            foreach (var line in LinesDictionary.Values)
+            {
+                if (line.ContainPoint(point))
+                    yield return line;
+            }
+        }
 
         public XElement ToXml()
         {
@@ -235,15 +255,15 @@ namespace NodeMarkup.Manager
                 new XAttribute(nameof(Id), Id.ToString())
             );
 
-            foreach(var enter in Enters)
+            foreach (var enter in Enters)
             {
-                foreach(var point in enter.Points)
+                foreach (var point in enter.Points)
                 {
                     var pointConfig = point.ToXml();
                     config.Add(pointConfig);
                 }
             }
-            foreach(var line in Lines)
+            foreach (var line in Lines)
             {
                 var lineConfig = line.ToXml();
                 config.Add(lineConfig);
@@ -274,7 +294,7 @@ namespace NodeMarkup.Manager
                     toInit[line] = lineConfig;
                 }
             }
-            foreach(var pair in toInit)
+            foreach (var pair in toInit)
             {
                 pair.Key.FromXml(pair.Value, map);
             }

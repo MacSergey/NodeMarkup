@@ -45,7 +45,12 @@ namespace NodeMarkup.Manager
 
         SegmentMarkupLine MarkupLine { get; }
         public Enter Enter => MarkupLine.SegmentEnter;
+        public IEnumerable<MarkupLine> Lines => Markup.GetLinesFromPoint(this);
         public Markup Markup => Enter.Markup;
+
+        public bool IsFirst => Num == 1;
+        public bool IsLast => Num == Enter.PointCount;
+        public bool IsEdge => IsFirst || IsLast;
 
         public float Offset
         {
@@ -146,6 +151,13 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
 
         public bool ContainPoint(MarkupPoint point) => First == point || Second == point;
+        public MarkupPoint GetOther(MarkupPoint point)
+        {
+            if (!ContainPoint(point))
+                return null;
+            else
+                return point == First ? Second : First;
+        }
 
         public override string ToString() => $"{First}—{Second}";
 

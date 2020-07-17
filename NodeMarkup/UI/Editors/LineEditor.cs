@@ -51,11 +51,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void GetRuleEdges()
         {
-            var intersectWith = EditObject.IntersectWith();
-
             RuleEdges.Clear();
             RuleEdges.Add(new EnterSupportPoint(EditObject.Start));
-            RuleEdges.AddRange(intersectWith.Select(i => new LineSupportPoint(i) as IRuleEdge));
+            RuleEdges.AddRange(EditObject.IntersectLines.Select(i => new LineSupportPoint(i) as IRuleEdge));
             RuleEdges.Add(new EnterSupportPoint(EditObject.End));
 
             RuleEdgeBounds.Clear();
@@ -185,9 +183,7 @@ namespace NodeMarkup.UI.Editors
             if (IsHoverRuleEdgeBounds)
             {
                 SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.SupportPoint;
-
-                if (isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true)
-                    NodeMarkupPanel.EndEditorAction();
+                isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true;
             }
             else
                 isDone = false;

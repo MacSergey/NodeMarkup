@@ -24,10 +24,10 @@ namespace NodeMarkup
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
-        private Ray _mouseRay;
-        private float _mouseRayLength;
-        private bool _mouseRayValid;
-        private Vector3 _mousePosition;
+        public static Ray MouseRay { get; private set; }
+        public static float MouseRayLength { get; private set; }
+        public static bool MouseRayValid { get; private set; }
+        public static Vector3 MousePosition { get; private set; }
 
         ushort HoverNodeId { get; set; } = 0;
         ushort SelectNodeId { get; set; } = 0;
@@ -172,10 +172,10 @@ namespace NodeMarkup
                 return;
             }
 
-            _mousePosition = Input.mousePosition;
-            _mouseRay = Camera.main.ScreenPointToRay(_mousePosition);
-            _mouseRayLength = Camera.main.farClipPlane;
-            _mouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
+            MousePosition = Input.mousePosition;
+            MouseRay = Camera.main.ScreenPointToRay(MousePosition);
+            MouseRayLength = Camera.main.farClipPlane;
+            MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
 
             switch (ToolMode)
             {
@@ -197,9 +197,9 @@ namespace NodeMarkup
 
         private void GetHoveredNode()
         {
-            if (_mouseRayValid)
+            if (MouseRayValid)
             {
-                RaycastInput input = new RaycastInput(_mouseRay, Camera.main.farClipPlane)
+                RaycastInput input = new RaycastInput(MouseRay, Camera.main.farClipPlane)
                 {
                     m_ignoreTerrain = true,
                     m_ignoreNodeFlags = NetNode.Flags.None,
@@ -219,14 +219,14 @@ namespace NodeMarkup
         }
         private void GetHoverPoint()
         {
-            if (_mouseRayValid)
+            if (MouseRayValid)
             {
                 var markup = MarkupManager.Get(SelectNodeId);
                 foreach (var enter in markup.Enters)
                 {
                     foreach (var point in enter.Points)
                     {
-                        if (point.IsIntersect(_mouseRay) && (!IsSelectPoint || point != SelectPoint))
+                        if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
                         {
                             HoverPoint = point;
                             return;
@@ -311,7 +311,7 @@ namespace NodeMarkup
         }
         private Vector3 GetInfoPosition()
         {
-            RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength)
+            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength)
             {
                 m_ignoreTerrain = false,
                 m_ignoreNodeFlags = NetNode.Flags.None
@@ -334,16 +334,16 @@ namespace NodeMarkup
         {
             switch (e.type)
             {
-                case EventType.MouseDown when _mouseRayValid && e.button == 0:
+                case EventType.MouseDown when MouseRayValid && e.button == 0:
                     OnMouseDown(e);
                     break;
-                case EventType.MouseDrag when _mouseRayValid:
+                case EventType.MouseDrag when MouseRayValid:
                     OnMouseDrag(e);
                     break;
-                case EventType.MouseUp when _mouseRayValid && e.button == 0:
+                case EventType.MouseUp when MouseRayValid && e.button == 0:
                     OnPrimaryMouseClicked(e);
                     break;
-                case EventType.MouseUp when _mouseRayValid && e.button == 1:
+                case EventType.MouseUp when MouseRayValid && e.button == 1:
                     OnSecondaryMouseClicked();
                     break;
                 default:
@@ -377,7 +377,7 @@ namespace NodeMarkup
         }
         private void OnPointDrag(MarkupPoint point)
         {
-            RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength);
+            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
             RayCast(input, out RaycastOutput output);
 
             var normal = point.Enter.CornerDir.Turn90(true);
@@ -436,7 +436,11 @@ namespace NodeMarkup
         {
             Panel.OnPrimaryMouseClicked(e, out bool isDone);
             if (isDone)
+            {
+                Panel.EndPanelAction();
                 ToolMode = Mode.ConnectLine;
+            }
+
         }
         private void OnSecondaryMouseClicked()
         {
@@ -462,7 +466,10 @@ namespace NodeMarkup
         {
             Panel.OnSecondaryMouseClicked(out bool isDone);
             if (isDone)
+            {
+                Panel.EndPanelAction();
                 ToolMode = Mode.ConnectLine;
+            }
         }
         private void OnUnselectPoint() => SelectPoint = null;
         private void OnUnselectNode()
@@ -587,7 +594,7 @@ namespace NodeMarkup
             {
                 color = Color.white;
 
-                RaycastInput input = new RaycastInput(_mouseRay, _mouseRayLength);
+                RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
                 RayCast(input, out RaycastOutput output);
 
                 bezier.a = SelectPoint.Position;
@@ -612,6 +619,7 @@ namespace NodeMarkup
             PanelAction,
             DragPoint
         }
+        public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
     }
     public class ThreadingExtension : ThreadingExtensionBase
     {

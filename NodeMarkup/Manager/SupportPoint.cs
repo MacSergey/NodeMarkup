@@ -18,6 +18,7 @@ namespace NodeMarkup.Manager
     }
     public interface IFillerVertex : ISupportPoint
     {
+        Vector3 Position { get; }
         List<IFillerVertex> Next(IFillerVertex prev);
     }
     public enum SupportType
@@ -133,6 +134,7 @@ namespace NodeMarkup.Manager
 
         public override SupportType Type { get; } = SupportType.EnterPoint;
         public MarkupPoint Point { get; }
+        public Vector3 Position => Point.Position;
 
         public EnterSupportPoint(MarkupPoint point)
         {
@@ -164,15 +166,58 @@ namespace NodeMarkup.Manager
 
         public List<IFillerVertex> Next(IFillerVertex prev)
         {
-            if(prev is EnterSupportPoint)
-            {
+            var next = new List<IFillerVertex>();
 
-            }
-            else if(prev is IntersectSupportPoint)
+            if (prev is EnterSupportPoint enterSupport)
             {
+                if (enterSupport.Point.Enter == Point.Enter)
+                {
+                    if (Point.IsEdge)
+                        next.Add(GetOtherEnterPoint());
+                }
+                else
+                    next.AddRange(GetEnterOtherPoints());
 
+                next.AddRange(GetPointLinesPoints());
             }
-            throw new NotImplementedException();
+            else if (prev is IntersectSupportPoint)
+            {
+                next.AddRange(GetEnterOtherPoints());
+                if (Point.IsEdge)
+                    next.Add(GetOtherEnterPoint());
+            }
+            else
+            {
+                next.AddRange(GetEnterOtherPoints());
+                if (Point.IsEdge)
+                    next.Add(GetOtherEnterPoint());
+                next.AddRange(GetPointLinesPoints());
+            }
+
+            return next;
+        }
+        private IFillerVertex GetOtherEnterPoint()
+        {
+            var otherEnterPoint = Point.IsFirst ? Point.Enter.Next.LastPoint : Point.Enter.Prev.FirstPoint;
+            return new EnterSupportPoint(otherEnterPoint);
+        }
+        private IEnumerable<IFillerVertex> GetEnterOtherPoints()
+        {
+            foreach (var point in Point.Enter.Points.Where(p => p != Point))
+            {
+                yield return new EnterSupportPoint(point);
+            }
+        }
+        private IEnumerable<IFillerVertex> GetPointLinesPoints()
+        {
+            foreach (var line in Point.Lines)
+            {
+                foreach (var intersectLine in line.IntersectLines.Where(l => !l.ContainPoint(Point)))
+                {
+                    yield return new IntersectSupportPoint(line, intersectLine);
+                }
+                yield return new EnterSupportPoint(line.PointPair.GetOther(Point));
+            }
         }
     }
     public class IntersectSupportPoint : SupportPointBase, IFillerVertex
@@ -184,17 +229,41 @@ namespace NodeMarkup.Manager
 
         public override SupportType Type { get; } = SupportType.Intersect;
         public MarkupLinePair LinePair { get; }
+        public Vector3 Position => LinePair.First.Trajectory.Position(LinePair.First.Markup.GetIntersect(LinePair)[LinePair.First]);
 
         public IntersectSupportPoint(MarkupLinePair linePair)
         {
             LinePair = linePair;
         }
+        public IntersectSupportPoint(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
 
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
 
         public List<IFillerVertex> Next(IFillerVertex prev)
         {
-            throw new NotImplementedException();
+            var next = new List<IFillerVertex>();
+
+            if (prev is EnterSupportPoint enterSupport)
+                next.AddRange(GetNextLinePoints(LinePair.First.ContainPoint(enterSupport.Point) ? LinePair.First : LinePair.Second));
+            else if (prev is IntersectSupportPoint intersectSupport)
+                next.AddRange(GetNextLinePoints(intersectSupport.LinePair.ContainLine(LinePair.First) ? LinePair.First : LinePair.Second));
+            else
+            {
+                next.AddRange(GetNextLinePoints(LinePair.Second));
+                next.AddRange(GetNextLinePoints(LinePair.First));
+            }
+
+            return next;
+        }
+        private IEnumerable<IFillerVertex> GetNextLinePoints(MarkupLine ignore)
+        {
+            var line = LinePair.GetOther(ignore);
+            foreach (var intersectLine in line.IntersectLines.Where(l => l != ignore))
+            {
+                yield return new IntersectSupportPoint(line, intersectLine);
+            }
+            yield return new EnterSupportPoint(line.Start);
+            yield return new EnterSupportPoint(line.End);
         }
     }
     public class SupportPointBound
@@ -221,7 +290,11 @@ namespace NodeMarkup.Manager
             return new Bounds(position, MarkerSize);
         }
         public new IRuleEdge SupportPoint => (IRuleEdge)base.SupportPoint;
-        public RuleSupportPointBound(MarkupLine line, IRuleEdge supportPoint) : base(supportPoint, GetBounds(line, supportPoint)) { }
-
+        public RuleSupportPointBound(MarkupLine line, IRuleEdge ruleEdge) : base(ruleEdge, GetBounds(line, ruleEdge)) { }
+    }
+    public class FillerSupportPointBound : SupportPointBound
+    {
+        public new IFillerVertex SupportPoint => (IFillerVertex)base.SupportPoint;
+        public FillerSupportPointBound(IFillerVertex fillerVertex) : base(fillerVertex, new Bounds(fillerVertex.Position, MarkerSize)) { }
     }
 }

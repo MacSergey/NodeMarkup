@@ -6,15 +6,22 @@ using System.Text;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IEnumerable<ISupportPoint>
+    public class MarkupFiller
     {
-        List<ISupportPoint> SupportPoints { get; } = new List<ISupportPoint>();
-        public ISupportPoint Last => SupportPoints.LastOrDefault();
+        public Markup Markup { get; }
+        List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
+        public IFillerVertex First => SupportPoints.FirstOrDefault();
+        public IFillerVertex Last => SupportPoints.LastOrDefault();
+        public IFillerVertex Prev => SupportPoints.Count >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
+        public IEnumerable<IFillerVertex> Vertices => SupportPoints;
+        public int VertexCount => SupportPoints.Count;
 
-        public IEnumerator<ISupportPoint> GetEnumerator() => SupportPoints.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public MarkupFiller(Markup markup)
+        {
+            Markup = markup;
+        }
 
-        public void Add(ISupportPoint supportPoint) => SupportPoints.Add(supportPoint);
+        public void Add(IFillerVertex supportPoint) => SupportPoints.Add(supportPoint);
         public void Remove()
         {
             if (SupportPoints.Any())
