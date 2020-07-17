@@ -172,6 +172,7 @@ namespace NodeMarkup.Manager
             {
 
             }
+            throw new NotImplementedException();
         }
     }
     public class IntersectSupportPoint : SupportPointBase, IFillerVertex
