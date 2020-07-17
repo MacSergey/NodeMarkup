@@ -420,6 +420,12 @@ utworzyć lub usunąć linię
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>Kliknij aby utworzyć linię zatrzymania</value>
   </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Wypełniacze</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>wypełniacz</value>
+  </data>
   
   
 </root>
