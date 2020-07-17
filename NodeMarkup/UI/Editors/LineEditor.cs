@@ -1,4 +1,5 @@
-﻿using ColossalFramework.Threading;
+﻿using ColossalFramework.Math;
+using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
@@ -17,11 +18,11 @@ namespace NodeMarkup.UI.Editors
 
         private ButtonPanel AddButton { get; set; }
 
-        public List<LineRawRuleEdgeBase> RuleEdges { get; } = new List<LineRawRuleEdgeBase>();
-        private List<LineRawRuleEdgeBound> RuleEdgeBounds { get; } = new List<LineRawRuleEdgeBound>();
+        public List<IRuleEdge> RuleEdges { get; } = new List<IRuleEdge>();
+        private List<RuleSupportPointBound> RuleEdgeBounds { get; } = new List<RuleSupportPointBound>();
         public bool SupportRules => RuleEdges.Count > 2;
 
-        private LineRawRuleEdgeBound HoverRuleEdgeBounds { get; set; }
+        private RuleSupportPointBound HoverRuleEdgeBounds { get; set; }
         private bool IsHoverRuleEdgeBounds => IsSelectRuleEdgeMode && HoverRuleEdgeBounds != null;
 
         private MarkupLineSelectPropertyPanel SelectRuleEdgePanel { get; set; }
@@ -53,12 +54,12 @@ namespace NodeMarkup.UI.Editors
             var intersectWith = EditObject.IntersectWith();
 
             RuleEdges.Clear();
-            RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.Start));
-            RuleEdges.AddRange(intersectWith.Select(i => new LineRawRuleEdge(i) as LineRawRuleEdgeBase));
-            RuleEdges.Add(new SelfPointRawRuleEdge(EditObject.End));
+            RuleEdges.Add(new EnterSupportPoint(EditObject.Start));
+            RuleEdges.AddRange(intersectWith.Select(i => new LineSupportPoint(i) as IRuleEdge));
+            RuleEdges.Add(new EnterSupportPoint(EditObject.End));
 
             RuleEdgeBounds.Clear();
-            RuleEdgeBounds.AddRange(RuleEdges.Select(r => new LineRawRuleEdgeBound(EditObject, r)));
+            RuleEdgeBounds.AddRange(RuleEdges.Select(r => new RuleSupportPointBound(EditObject, r)));
         }
         private void AddRulePanels()
         {
@@ -98,7 +99,7 @@ namespace NodeMarkup.UI.Editors
 
             SettingsPanel.ScrollToBottom();
 
-            if(Settings.QuickRuleSetup)
+            if (Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
         }
         private void SetupRule(RulePanel rulePanel)
@@ -107,7 +108,7 @@ namespace NodeMarkup.UI.Editors
         }
         private bool SetStyle(RulePanel rulePanel, Event e)
         {
-            rulePanel.Style.SelectedObject = e.GetStyle(); 
+            rulePanel.Style.SelectedObject = e.GetStyle();
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)
@@ -183,9 +184,9 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverRuleEdgeBounds)
             {
-                SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.LineRawRuleEdge;
+                SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.SupportPoint;
 
-                if(isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true)
+                if (isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true)
                     NodeMarkupPanel.EndEditorAction();
             }
             else
@@ -197,7 +198,7 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var bounds in RuleEdgeBounds)
                 {
-                    var color = (SelectRuleEdgePanel.Position == LineRawRuleEdgeBase.EdgePosition.From ? Color.green : Color.red);
+                    var color = (SelectRuleEdgePanel.Position == RulePosition.Start ? Color.green : Color.red);
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, bounds.Position, 0.5f, -1f, 1280f, false, true);
                 }
 
@@ -207,10 +208,18 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 if (IsHoverItem)
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f, 0f, 0f, -1f, 1280f, false, true);
+                {
+                    var bezier = HoverItem.Object.Trajectory;
+                    if (HoverItem.Object.IsEnterLine)
+                    {
+                        bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
+                        bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
+                    }
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
+                }
                 if (IsHoverRuleEdgePanel &&
-                    HoverRuleEdgePanel.SelectedObject is LineRawRuleEdgeBase lineRawRuleEdge &&
-                    RuleEdgeBounds.FirstOrDefault(b => b.LineRawRuleEdge == lineRawRuleEdge) is LineRawRuleEdgeBound bounds)
+                    HoverRuleEdgePanel.SelectedObject is SupportPointBase lineRawRuleEdge &&
+                    RuleEdgeBounds.FirstOrDefault(b => b.SupportPoint == lineRawRuleEdge) is RuleSupportPointBound bounds)
                 {
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, bounds.Position, 0.5f, -1f, 1280f, false, true);
                 }
@@ -222,9 +231,9 @@ namespace NodeMarkup.UI.Editors
             {
                 switch (SelectRuleEdgePanel.Position)
                 {
-                    case LineRawRuleEdgeBase.EdgePosition.From:
+                    case RulePosition.Start:
                         return NodeMarkup.Localize.LineEditor_InfoSelectFrom;
-                    case LineRawRuleEdgeBase.EdgePosition.To:
+                    case RulePosition.End:
                         return NodeMarkup.Localize.LineEditor_InfoSelectTo;
                 }
             }
@@ -288,6 +297,7 @@ namespace NodeMarkup.UI.Editors
                 AddFromProperty();
                 AddToProperty();
             }
+            AddStyleTypeProperty();
             AddStyleProperties();
         }
 
@@ -309,18 +319,11 @@ namespace NodeMarkup.UI.Editors
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
         }
-
-        private void AddStyleProperties()
-        {
-            AddColorProperty();
-            AddStyleTypeProperty();
-            AddStyleAdditionalProperties();
-        }
         private void AddFromProperty()
         {
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
             From.Text = NodeMarkup.Localize.LineEditor_From;
-            From.Position = LineRawRuleEdgeBase.EdgePosition.From;
+            From.Position = RulePosition.Start;
             From.Init();
             From.AddRange(Editor.RuleEdges);
             From.SelectedObject = Rule.From;
@@ -334,7 +337,7 @@ namespace NodeMarkup.UI.Editors
         {
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
             To.Text = NodeMarkup.Localize.LineEditor_To;
-            To.Position = LineRawRuleEdgeBase.EdgePosition.To;
+            To.Position = RulePosition.End;
             To.Init();
             To.AddRange(Editor.RuleEdges);
             To.SelectedObject = Rule.To;
@@ -342,6 +345,23 @@ namespace NodeMarkup.UI.Editors
             To.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
+        }
+        private void AddStyleTypeProperty()
+        {
+            if (Rule.Style.Type == LineStyle.LineType.Stop)
+                return;
+
+            Style = AddUIComponent<StylePropertyPanel>();
+            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Init();
+            Style.SelectedObject = Rule.Style.Type;
+            Style.OnSelectObjectChanged += StyleChanged;
+        }
+        private void AddStyleProperties()
+        {
+            AddColorProperty();
+            AddWidthProperty();
+            AddStyleAdditionalProperties();
         }
         private void AddColorProperty()
         {
@@ -352,14 +372,20 @@ namespace NodeMarkup.UI.Editors
             colorProperty.OnValueChanged += ColorChanged;
             StyleProperties.Add(colorProperty);
         }
-        private void AddStyleTypeProperty()
+        private void AddWidthProperty()
         {
-            Style = AddUIComponent<StylePropertyPanel>();
-            Style.Text = NodeMarkup.Localize.LineEditor_Style;
-            Style.Init();
-            Style.SelectedObject = Rule.Style.Type;
-            Style.OnSelectObjectChanged += StyleChanged;
-            StyleProperties.Add(Style);
+            var widthProperty = AddUIComponent<FloatPropertyPanel>();
+            widthProperty.Text = NodeMarkup.Localize.LineEditor_Width;
+            widthProperty.UseWheel = true;
+            widthProperty.WheelStep = 0.01f;
+            widthProperty.CheckMin = true;
+            widthProperty.MinValue = 0.05f;
+            widthProperty.Init();
+            widthProperty.Value = Rule.Style.Width;
+            widthProperty.OnValueChanged += WidthChanged;
+            widthProperty.OnHover += PropertyHover;
+            widthProperty.OnLeave += PropertyLeave;
+            StyleProperties.Add(widthProperty);
         }
         private void AddStyleAdditionalProperties()
         {
@@ -404,6 +430,15 @@ namespace NodeMarkup.UI.Editors
                 offsetProperty.OnLeave += PropertyLeave;
                 StyleProperties.Add(offsetProperty);
             }
+            if (Rule.Style is IAsymLine asymStyle)
+            {
+                var invertProperty = AddUIComponent<BoolPropertyPanel>();
+                invertProperty.Text = NodeMarkup.Localize.LineEditor_Invert;
+                invertProperty.Init();
+                invertProperty.Value = asymStyle.Invert;
+                invertProperty.OnValueChanged += InvertChanged;
+                StyleProperties.Add(invertProperty);
+            }
         }
 
         private void PropertyHover() => Editor.StopScroll();
@@ -428,13 +463,14 @@ namespace NodeMarkup.UI.Editors
         private void OnSelectTemplate(LineStyleTemplate template)
         {
             Rule.Style = template.Style.Copy();
+            Style.SelectedObject = Rule.Style.Type;
             ClearStyleProperties();
             AddStyleProperties();
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
-        private void FromChanged(LineRawRuleEdgeBase from) => Rule.From = from;
-        private void ToChanged(LineRawRuleEdgeBase to) => Rule.To = to;
+        private void FromChanged(IRuleEdge from) => Rule.From = from;
+        private void ToChanged(IRuleEdge to) => Rule.To = to;
         private void StyleChanged(LineStyle.LineType style)
         {
             var newStyle = TemplateManager.GetDefault(style);
@@ -450,11 +486,13 @@ namespace NodeMarkup.UI.Editors
             Rule.Style = newStyle;
 
             ClearStyleProperties();
-            AddStyleProperties();
+            AddStyleAdditionalProperties();
         }
+        private void WidthChanged(float value) => Rule.Style.Width = value;
         private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
         private void SpaceLengthChanged(float value) => (Rule.Style as IDashedLine).SpaceLength = value;
         private void OffsetChanged(float value) => (Rule.Style as IDoubleLine).Offset = value;
+        private void InvertChanged(bool value) => (Rule.Style as IAsymLine).Invert = value;
 
         protected override void OnSizeChanged()
         {

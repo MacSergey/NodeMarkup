@@ -18,6 +18,7 @@ namespace NodeMarkup.Manager
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
+        public bool IsEnterLine => PointPair.IsSomeEnter;
 
         public List<MarkupLineRawRule> RawRules { get; } = new List<MarkupLineRawRule>();
 
@@ -75,7 +76,7 @@ namespace NodeMarkup.Manager
             var intersectWith = Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
             return intersectWith;
         }
-        private void AddRule(MarkupLineRawRule rule, bool empty = true, bool update = true)
+        private void AddRule(MarkupLineRawRule rule, bool update = true)
         {
             rule.OnRuleChanged = RuleChanged;
             RawRules.Add(rule);
@@ -85,8 +86,8 @@ namespace NodeMarkup.Manager
         }
         public MarkupLineRawRule AddRule(LineStyle lineStyle, bool empty = true, bool update = true)
         {
-            var newRule = new MarkupLineRawRule(lineStyle, empty ? null : new SelfPointRawRuleEdge(Start), empty ? null : new SelfPointRawRuleEdge(End));
-            AddRule(newRule, empty, update);
+            var newRule = new MarkupLineRawRule(lineStyle, empty ? null : new EnterSupportPoint(Start), empty ? null : new EnterSupportPoint(End));
+            AddRule(newRule, update);
             return newRule;
         }
         public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault(LineStyle.LineType.Dashed));
@@ -99,7 +100,7 @@ namespace NodeMarkup.Manager
         public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(LineRawRuleEdgeBase ruleEdge) => ruleEdge is LineRawRuleEdge lineRuleEdge && lineRuleEdge.Line == intersectLine;
+            bool Match(ISupportPoint supportPoint) => supportPoint is LineSupportPoint lineRuleEdge && lineRuleEdge.Line == intersectLine;
 
             if (!RawRules.Any())
                 AddRule();
@@ -119,10 +120,10 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup makrup, out MarkupLine line)
+        public static bool FromXml(XElement config, Markup makrup, Dictionary<InstanceID, InstanceID> map, out MarkupLine line)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            if (!makrup.TryGetLine(lineId, out line) && MarkupPointPair.FromHash(lineId, makrup, out MarkupPointPair pointPair))
+            if (!makrup.TryGetLine(lineId, out line) && MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair))
             {
                 line = new MarkupLine(makrup, pointPair);
                 return true;
@@ -130,17 +131,25 @@ namespace NodeMarkup.Manager
             else
                 return false;
         }
-        public void FromXml(XElement config)
+        public void FromXml(XElement config, Dictionary<InstanceID, InstanceID> map)
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule.XmlName))
             {
-                if (MarkupLineRawRule.FromXml(ruleConfig, Markup, out MarkupLineRawRule rule))
-                    AddRule(rule, true, false);
+                if (MarkupLineRawRule.FromXml(ruleConfig, Markup, map, out MarkupLineRawRule rule))
+                    AddRule(rule, false);
             }
         }
     }
+#pragma warning disable CS0660 // Тип определяет оператор == или оператор !=, но не переопределяет Object.Equals(object o)
+#pragma warning disable CS0661 // Тип определяет оператор == или оператор !=, но не переопределяет Object.GetHashCode()
     public struct MarkupLinePair
+#pragma warning restore CS0661 // Тип определяет оператор == или оператор !=, но не переопределяет Object.GetHashCode()
+#pragma warning restore CS0660 // Тип определяет оператор == или оператор !=, но не переопределяет Object.Equals(object o)
     {
+        public static MarkupLinePairComparer Comparer { get; } = new MarkupLinePairComparer();
+        public static bool operator ==(MarkupLinePair a, MarkupLinePair b) => Comparer.Equals(a, b);
+        public static bool operator !=(MarkupLinePair a, MarkupLinePair b) => !Comparer.Equals(a, b);
+
         public MarkupLine First;
         public MarkupLine Second;
 

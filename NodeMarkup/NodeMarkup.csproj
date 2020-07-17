@@ -54,6 +54,10 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="MoveItIntegration">
+      <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq">
@@ -96,6 +100,7 @@
     <Compile Include="UI\MessageBox.cs" />
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
+    <Compile Include="UI\Property panels\BoolProperty.cs" />
     <Compile Include="UI\Property panels\ButtonPanel.cs" />
     <Compile Include="UI\Property panels\ColorProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />
@@ -108,6 +113,7 @@
     <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\BezierIntersect.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\MoveItIntegration.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
@@ -132,6 +138,7 @@
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.zh-cn.resx" />
     <EmbeddedResource Include="Resources\sprites.png" />
   </ItemGroup>
   <ItemGroup>

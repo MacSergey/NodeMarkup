@@ -382,7 +382,12 @@ maak of verwijderen een lijn
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Toon wat nieuw is</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopieer met MoveIt (Werkt niet tot MoveIt is bijgwerkt)
+- Stoplijnen
+- Nieuw "Ononderbroken en Streeplijn" stijl
+- Chinees</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importeer</value>
   </data>
@@ -406,5 +411,17 @@ maak of verwijderen een lijn
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ononderbroken en Streeplijn</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Stoplijn</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>SL</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Klik om een stoplijn te verwijderen</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Klik om een stoplijn te maken</value>
   </data>
 </root>

@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         Dictionary<ushort, Enter> EntersDictionary { get; set; } = new Dictionary<ushort, Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(new MarkupLinePairComparer());
+        Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(MarkupLinePair.Comparer);
 
         public bool NeedRecalculate { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
@@ -258,27 +258,25 @@ namespace NodeMarkup.Manager
             markup.FromXml(config);
             return true;
         }
-        public void FromXml(XElement config)
+        public void FromXml(XElement config, Dictionary<InstanceID, InstanceID> map = null)
         {
-            var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            var markup = MarkupManager.Get(nodeId);
-
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
             {
-                MarkupPoint.FromXml(pointConfig, this);
+                MarkupPoint.FromXml(pointConfig, this, map);
             }
 
+            var toInit = new Dictionary<MarkupLine, XElement>();
             foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
             {
-                if(MarkupLine.FromXml(lineConfig, this, out MarkupLine line))
-                    LinesDictionary.Add(line.Id, line);
+                if (MarkupLine.FromXml(lineConfig, this, map, out MarkupLine line))
+                {
+                    LinesDictionary[line.Id] = line;
+                    toInit[line] = lineConfig;
+                }
             }
-
-            foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
+            foreach(var pair in toInit)
             {
-                var lineId = lineConfig.GetAttrValue<ulong>(nameof(MarkupLine.Id));
-                if (TryGetLine(lineId, out MarkupLine line))
-                    line.FromXml(lineConfig);
+                pair.Key.FromXml(pair.Value, map);
             }
         }
     }

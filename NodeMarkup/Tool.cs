@@ -226,7 +226,7 @@ namespace NodeMarkup
                 {
                     foreach (var point in enter.Points)
                     {
-                        if (point.IsIntersect(_mouseRay) && (!IsSelectPoint || point.Enter != SelectPoint.Enter))
+                        if (point.IsIntersect(_mouseRay) && (!IsSelectPoint || point != SelectPoint))
                         {
                             HoverPoint = point;
                             return;
@@ -270,9 +270,9 @@ namespace NodeMarkup
                     var markup = MarkupManager.Get(SelectNodeId);
                     var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                     if (markup.ExistConnection(pointPair))
-                        ShowToolInfo(Localize.Tool_InfoDeleteLine, position);
+                        ShowToolInfo(pointPair.IsSomeEnter ? Localize.Tool_InfoDeleteStopLine : Localize.Tool_InfoDeleteLine, position);
                     else
-                        ShowToolInfo(Localize.Tool_InfoCreateLine, position);
+                        ShowToolInfo(pointPair.IsSomeEnter ? Localize.Tool_InfoCreateStopLine : Localize.Tool_InfoCreateLine, position);
                     break;
                 case Mode.ConnectLine when IsSelectPoint:
                     ShowToolInfo(Localize.Tool_InfoSelectEndPoint, position);
@@ -426,8 +426,9 @@ namespace NodeMarkup
         private void OnMakeLine(Event e)
         {
             var markup = MarkupManager.Get(SelectNodeId);
-            var lineType = e.GetStyle();
-            var newLine = markup.ToggleConnection(new MarkupPointPair(SelectPoint, HoverPoint), lineType);
+            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+            var lineType = pointPair.IsSomeEnter ? LineStyle.LineType.Stop : e.GetStyle();
+            var newLine = markup.ToggleConnection(pointPair, lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;
         }
@@ -510,7 +511,8 @@ namespace NodeMarkup
                     if (IsHoverPoint)
                         RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
-                    RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint?.Enter);
+                    //RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint?.Enter);
+                    RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint);
                     RenderConnectLineOverlay(cameraInfo);
                     Panel.Render(cameraInfo);
                     break;
@@ -530,7 +532,21 @@ namespace NodeMarkup
             var markup = MarkupManager.Get(SelectNodeId);
             foreach (var enter in markup.Enters.Where(m => m != ignore))
             {
-                RenderEnterPointsOverlay(cameraInfo, enter);
+                foreach (var point in enter.Points)
+                {
+                    RenderPointOverlay(cameraInfo, point);
+                }
+            }
+        }
+        private void RenderNodeEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint ignore = null)
+        {
+            var markup = MarkupManager.Get(SelectNodeId);
+            foreach (var enter in markup.Enters)
+            {
+                foreach (var point in enter.Points.Where(p => p != ignore))
+                {
+                    RenderPointOverlay(cameraInfo, point);
+                }
             }
         }
         private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
@@ -543,13 +559,6 @@ namespace NodeMarkup
             NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
 
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
-        }
-        private void RenderEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
-        {
-            foreach (var point in enter.Points)
-            {
-                RenderPointOverlay(cameraInfo, point);
-            }
         }
         private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point)
         {
@@ -570,8 +579,8 @@ namespace NodeMarkup
                 color = markup.ExistConnection(pointPair) ? Color.red : Color.green;
 
                 bezier.a = SelectPoint.Position;
-                bezier.b = SelectPoint.Direction;
-                bezier.c = HoverPoint.Direction;
+                bezier.b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.Position - SelectPoint.Position : SelectPoint.Direction;
+                bezier.c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.Position - HoverPoint.Position : HoverPoint.Direction;
                 bezier.d = HoverPoint.Position;
             }
             else

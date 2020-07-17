@@ -198,6 +198,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string LineEditor_Invert {
+            get {
+                return ResourceManager.GetString("LineEditor_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на line.
         /// </summary>
         public static string LineEditor_ItemDescription {
@@ -248,6 +257,15 @@ namespace NodeMarkup {
         public static string LineEditor_To {
             get {
                 return ResourceManager.GetString("LineEditor_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width.
+        /// </summary>
+        public static string LineEditor_Width {
+            get {
+                return ResourceManager.GetString("LineEditor_Width", resourceCulture);
             }
         }
         
@@ -333,11 +351,47 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid and Dashed.
+        /// </summary>
+        public static string LineStyle_SolidAndDashed {
+            get {
+                return ResourceManager.GetString("LineStyle_SolidAndDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SD.
+        /// </summary>
+        public static string LineStyle_SolidAndDashedShort {
+            get {
+                return ResourceManager.GetString("LineStyle_SolidAndDashedShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на S.
         /// </summary>
         public static string LineStyle_SolidShort {
             get {
                 return ResourceManager.GetString("LineStyle_SolidShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stop line.
+        /// </summary>
+        public static string LineStyle_Stop {
+            get {
+                return ResourceManager.GetString("LineStyle_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SL.
+        /// </summary>
+        public static string LineStyle_StopShort {
+            get {
+                return ResourceManager.GetString("LineStyle_StopShort", resourceCulture);
             }
         }
         
@@ -396,10 +450,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - &quot;What`s New&quot; message this will pop-up one time after an update and can be disabled in the Options menu.
-        ///- Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish (Please contact the mod author to assist with translation into your own language).
-        ///- End Points can now be dragged from one to another by holding Ctrl.
-        ///- Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if y [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на - Copy with MoveIt (Does not work until MoveIt is updated)
+        ///- Stop lines
+        ///- New &quot;Solid and Dashed&quot; style
+        ///- Chinese.
         /// </summary>
         public static string Mod_WhatsNewMessage {
             get {
@@ -726,6 +780,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string TemplateEditor_Invert {
+            get {
+                return ResourceManager.GetString("TemplateEditor_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на template.
         /// </summary>
         public static string TemplateEditor_ItemDescription {
@@ -780,6 +843,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Width.
+        /// </summary>
+        public static string TemplateEditor_Width {
+            get {
+                return ResourceManager.GetString("TemplateEditor_Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Clear node markings.
         /// </summary>
         public static string Tool_ClearMarkingsCaption {
@@ -810,11 +882,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to create a stop line.
+        /// </summary>
+        public static string Tool_InfoCreateStopLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoCreateStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to delete the line.
         /// </summary>
         public static string Tool_InfoDeleteLine {
             get {
                 return ResourceManager.GetString("Tool_InfoDeleteLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to delete the stop line.
+        /// </summary>
+        public static string Tool_InfoDeleteStopLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoDeleteStopLine", resourceCulture);
             }
         }
         
