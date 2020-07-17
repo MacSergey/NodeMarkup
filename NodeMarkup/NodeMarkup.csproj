@@ -73,12 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="Manager\Filler.cs" />
     <Compile Include="Manager\Line.cs" />
     <Compile Include="Manager\LineRule.cs" />
     <Compile Include="Manager\LineStyle.cs" />
     <Compile Include="Manager\Markup.cs" />
     <Compile Include="Manager\Point.cs" />
     <Compile Include="Manager\Enter.cs" />
+    <Compile Include="Manager\SupportPoint.cs" />
     <Compile Include="Manager\Templates.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Manager\Manager.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Tool.cs" />
     <Compile Include="UI\Editors\BaseEditor.cs" />
     <Compile Include="UI\Editors\EditableItem.cs" />
+    <Compile Include="UI\Editors\FillerEditor.cs" />
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Button.cs" />

@@ -425,4 +425,10 @@ create or delete a line
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>Click to create a stop line</value>
   </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Fillers</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>filler</value>
+  </data>
 </root>
