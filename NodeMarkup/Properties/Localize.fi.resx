@@ -203,7 +203,9 @@ Tätä toimintoa ei voi kumota</value>
   </data>
   
   
-  
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Siirtymä</value>
+  </data>
   
   
   
@@ -247,7 +249,9 @@ Tätä toimintoa ei voi kumota</value>
   </data>
   
   
-  
+  <data name="Settings_Other" xml:space="preserve">
+    <value>Muut</value>
+  </data>
   
   
   
@@ -269,15 +273,27 @@ Tätä toimintoa ei voi kumota</value>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Nimi</value>
   </data>
+  <data name="TemplateEditor_Offset" xml:space="preserve">
+    <value>Etäisyys</value>
+  </data>
+  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
+    <value>Välimatka</value>
+  </data>
+  <data name="TemplateEditor_Style" xml:space="preserve">
+    <value>Tyyli</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Mallineet</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>Uusi malline</value>
+  </data>
   
   
   
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Napauta poistaaksesi viivan</value>
+  </data>
   
   
   
