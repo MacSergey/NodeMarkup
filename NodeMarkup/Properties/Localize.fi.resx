@@ -157,7 +157,9 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Viivat</value>
+  </data>
   <data name="LineEditor_Offset" xml:space="preserve">
     <value>Etäisyys</value>
   </data>
@@ -213,18 +215,36 @@ Tätä toimintoa ei voi kumota</value>
     <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
 Tätä toimintoa ei voi kumota</value>
   </data>
-  
-  
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Vie tiemerkintätiedot tiedostoon</value>
+  </data>
+  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+    <value>Kopioi tiedostopolku leikepöydälle</value>
+  </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Vie tiemerkintätiedot</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+    <value>Vienti epäonnistui</value>
+  </data>
+  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+    <value>Vienti onnistui</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>Yleiset</value>
+  </data>
+  <data name="Settings_ImportMarkingButton" xml:space="preserve">
+    <value>Tuo tiemerkintätiedot tiedostosta</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
+  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
+    <value>Haluatko varmasti tuoda tiedot?
+Tuodut tiedot korvaavat kaikki olemassa olevat tiemerkinnät.
+Tätä toimintoa ei voi kumota</value>
+  </data>
   
   
   
@@ -263,7 +283,9 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  
+  <data name="Settings_ShowWhatsNew" xml:space="preserve">
+    <value>Näytä, mikä on uutta</value>
+  </data>
   
   
   <data name="Setting_Cancel" xml:space="preserve">

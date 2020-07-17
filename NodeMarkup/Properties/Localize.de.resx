@@ -426,9 +426,9 @@ Linie erstellen oder löschen
     <value>Klicken um eine Haltelinie zu erstellen</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Flächenmarkierungen</value>
+    <value>Füllungen</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>Flächenmarkierung</value>
+    <value>füllung</value>
   </data>
 </root>
