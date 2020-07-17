@@ -12,6 +12,14 @@ namespace NodeMarkup.Manager
     {
         SupportType Type { get; }
     }
+    public interface IRuleEdge : ISupportPoint
+    {
+        bool GetT(MarkupLine line, out float t);
+    }
+    public interface IFillerVertex : ISupportPoint
+    {
+        List<IFillerVertex> Next(IFillerVertex prev);
+    }
     public enum SupportType
     {
         EnterPoint,
@@ -53,10 +61,6 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-    }
-    public interface IRuleEdge : ISupportPoint
-    {
-        bool GetT(MarkupLine line, out float t);
     }
     public class LineSupportPoint : SupportPointBase, IRuleEdge
     {
@@ -110,7 +114,7 @@ namespace NodeMarkup.Manager
             return config;
         }
     }
-    public class EnterSupportPoint : SupportPointBase, IRuleEdge
+    public class EnterSupportPoint : SupportPointBase, IRuleEdge, IFillerVertex
     {
         public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out EnterSupportPoint enterPoint)
         {
@@ -157,8 +161,20 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute(MarkupPoint.XmlName, Point.Id));
             return config;
         }
+
+        public List<IFillerVertex> Next(IFillerVertex prev)
+        {
+            if(prev is EnterSupportPoint)
+            {
+
+            }
+            else if(prev is IntersectSupportPoint)
+            {
+
+            }
+        }
     }
-    public class IntersectSupportPoint : SupportPointBase
+    public class IntersectSupportPoint : SupportPointBase, IFillerVertex
     {
         public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out IntersectSupportPoint intersectPoint)
         {
@@ -175,6 +191,10 @@ namespace NodeMarkup.Manager
 
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
 
+        public List<IFillerVertex> Next(IFillerVertex prev)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class SupportPointBound
     {

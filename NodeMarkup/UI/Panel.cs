@@ -27,7 +27,6 @@ namespace NodeMarkup.UI
         private Vector2 EditorSize => new Vector2(500, 400);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
-        private static readonly string kTabstripButton = "RoadEditorTabstripButton";
         private static float TabStripHeight => 20;
 
         public static NodeMarkupPanel CreatePanel()
@@ -91,6 +90,7 @@ namespace NodeMarkup.UI
         {
             CreateEditor<PointsEditor>();
             CreateEditor<LinesEditor>();
+            CreateEditor<FillerEditor>();
             CreateEditor<TemplateEditor>();
         }
         private void CreateEditor<EditorType>() where EditorType : Editor
