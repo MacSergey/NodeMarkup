@@ -418,6 +418,8 @@
     <value>クリックして停止線を削除</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>クリックして停止線を追加</value>
+    <value>クリックして停止線の追加</value>
   </data>
+  
+  
 </root>
