@@ -89,6 +89,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers.
+        /// </summary>
+        public static string FillerEditor_Fillers {
+            get {
+                return ResourceManager.GetString("FillerEditor_Fillers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на filler.
+        /// </summary>
+        public static string FillerEditor_ItemDescription {
+            get {
+                return ResourceManager.GetString("FillerEditor_ItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply template.
         /// </summary>
         public static string HeaderPanel_ApplyTemplate {

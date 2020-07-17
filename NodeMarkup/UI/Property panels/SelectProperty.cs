@@ -104,7 +104,7 @@ namespace NodeMarkup.UI.Editors
         protected abstract bool IsEqual(Type first, Type second);
     }
 
-    public class MarkupLineSelectPropertyPanel : SelectPropertyPanel<SupportPointBase>
+    public class MarkupLineSelectPropertyPanel : SelectPropertyPanel<IRuleEdge>
     {
         public new event Action<MarkupLineSelectPropertyPanel> OnSelect;
         public new event Action<MarkupLineSelectPropertyPanel> OnHover;
@@ -116,6 +116,6 @@ namespace NodeMarkup.UI.Editors
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
 
-        protected override bool IsEqual(SupportPointBase first, SupportPointBase second) => (first == null && second == null) || first?.Equals(second) == true;
+        protected override bool IsEqual(IRuleEdge first, IRuleEdge second) => (first == null && second == null) || first?.Equals(second) == true;
     }
 }
