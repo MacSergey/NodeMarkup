@@ -32,7 +32,12 @@ namespace NodeMarkup.Manager
                 Logger.LogError(() => "Could load templates", error);
             }
         }
-
+        private static void InitTempalte(LineStyleTemplate template)
+        {
+            template.OnTemplateChanged = OnTemplateChanged;
+            template.OnStyleChanged = OnTemplateStyleChanged;
+            template.OnNameChanged = OnTemplateNameChanged;
+        }
         public static bool AddTemplate(LineStyle style, out LineStyleTemplate template, string name = null)
         {
             var templateName = name ?? GetNewName();
@@ -42,13 +47,9 @@ namespace NodeMarkup.Manager
                 return false;
             }
 
-            template = new LineStyleTemplate(templateName, style)
-            {
-                OnTemplateChanged = OnTemplateChanged,
-                OnStyleChanged = OnTemplateStyleChanged,
-                OnNameChanged = OnTemplateNameChanged
-            };
-            TemplatesDictionary.Add(template.Name, template);
+            template = new LineStyleTemplate(templateName, style);
+            InitTempalte(template);
+            TemplatesDictionary[template.Name] = template;
 
             Save();
 
@@ -74,7 +75,7 @@ namespace NodeMarkup.Manager
         private static string GetNewName()
         {
             var i = 1;
-            foreach(var template in Templates.Where(t => t.Name.StartsWith(DefaultName)))
+            foreach (var template in Templates.Where(t => t.Name.StartsWith(DefaultName)))
             {
                 if (int.TryParse(template.Name.Substring(DefaultName.Length), out int num) && num >= i)
                     i = num + 1;
@@ -135,6 +136,7 @@ namespace NodeMarkup.Manager
             {
                 if (LineStyleTemplate.FromXml(templateConfig, out LineStyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Name))
                 {
+                    InitTempalte(template);
                     TemplatesDictionary[template.Name] = template;
                 }
             }
