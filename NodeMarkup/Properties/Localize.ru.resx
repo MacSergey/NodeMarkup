@@ -426,9 +426,9 @@
     <value>Нажмите для создания стоп линии</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Заполнители</value>
+    <value>Заполнения</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>Заполнитель</value>
+    <value>заполнение</value>
   </data>
 </root>
