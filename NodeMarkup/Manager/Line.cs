@@ -31,12 +31,13 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
             PointPair = pointPair;
+
+            Update();
         }
+        public MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second) : this(markup, new MarkupPointPair(first, second)) { }
         public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : this(markup, pointPair)
         {
             AddRule(lineStyle, false, false);
-
-            Update();
             RecalculateDashes();
         }
         public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.LineType lineType) : this(markup, pointPair, TemplateManager.GetDefault(lineType)) { }
@@ -54,7 +55,7 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateDashes()
         {
-            var rules = MarkupLineRawRule.GetRules(this, RawRules);
+            var rules = MarkupLineRawRule.GetRules(RawRules);
 
             var dashes = new List<MarkupDash>();
             foreach (var rule in rules)
@@ -82,7 +83,7 @@ namespace NodeMarkup.Manager
         }
         public MarkupLineRawRule AddRule(LineStyle lineStyle, bool empty = true, bool update = true)
         {
-            var newRule = new MarkupLineRawRule(lineStyle, empty ? null : new EnterSupportPoint(Start), empty ? null : new EnterSupportPoint(End));
+            var newRule = new MarkupLineRawRule(this, lineStyle, empty ? null : new EnterPointEdge(Start), empty ? null : new EnterPointEdge(End));
             AddRule(newRule, update);
             return newRule;
         }
@@ -96,7 +97,7 @@ namespace NodeMarkup.Manager
         public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(ISupportPoint supportPoint) => supportPoint is LineSupportPoint lineRuleEdge && lineRuleEdge.Line == intersectLine;
+            bool Match(ILinePartEdge supportPoint) => supportPoint is LinesIntersectEdge lineRuleEdge && lineRuleEdge.Line == intersectLine;
 
             if (!RawRules.Any())
                 AddRule();
@@ -131,7 +132,7 @@ namespace NodeMarkup.Manager
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule.XmlName))
             {
-                if (MarkupLineRawRule.FromXml(ruleConfig, Markup, map, out MarkupLineRawRule rule))
+                if (MarkupLineRawRule.FromXml(ruleConfig, this, map, out MarkupLineRawRule rule))
                     AddRule(rule, false);
             }
         }
@@ -149,6 +150,7 @@ namespace NodeMarkup.Manager
         public MarkupLine First;
         public MarkupLine Second;
 
+        public Markup Markup => First.Markup == Second.Markup ? First.Markup : null;
         public bool IsSelf => First == Second;
 
         public MarkupLinePair(MarkupLine first, MarkupLine second)
@@ -173,5 +175,72 @@ namespace NodeMarkup.Manager
         public bool Equals(MarkupLinePair x, MarkupLinePair y) => (x.First == y.First && x.Second == y.Second) || (x.First == y.Second && x.Second == y.First);
 
         public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
+    }
+    public abstract class MarkupLinePart : IToXml
+    {
+        public Action OnRuleChanged { private get; set; }
+
+        ILinePartEdge _from;
+        ILinePartEdge _to;
+        public ILinePartEdge From
+        {
+            get => _from;
+            set
+            {
+                _from = value;
+                RuleChanged();
+            }
+        }
+        public ILinePartEdge To
+        {
+            get => _to;
+            set
+            {
+                _to = value;
+                RuleChanged();
+            }
+        }
+        public MarkupLine Line { get; }
+        public abstract string XmlSection { get; }
+
+        public MarkupLinePart(MarkupLine line, ILinePartEdge from = null, ILinePartEdge to = null)
+        {
+            Line = line;
+            From = from;
+            To = to;
+        }
+
+        protected void RuleChanged() => OnRuleChanged?.Invoke();
+        public bool GetFromT(out float t) => GetT(From, out t);
+        public bool GetToT(out float t) => GetT(To, out t);
+        private bool GetT(ILinePartEdge partEdge, out float t)
+        {
+            if (partEdge != null)
+                return partEdge.GetT(Line, out t);
+            else
+            {
+                t = -1;
+                return false;
+            }
+        }
+        public Bezier3 GetTrajectory()
+        {
+            GetFromT(out float from);
+            GetToT(out float to);
+            return Line.Trajectory.Cut(from, to);
+
+        }
+
+        public virtual XElement ToXml()
+        {
+            var config = new XElement(XmlSection);
+
+            if (From != null)
+                config.Add(From.ToXml());
+            if (To != null)
+                config.Add(To.ToXml());
+
+            return config;
+        }
     }
 }

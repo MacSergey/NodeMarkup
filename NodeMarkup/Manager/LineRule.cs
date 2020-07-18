@@ -9,32 +9,12 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupLineRawRule : IToXml
+    public class MarkupLineRawRule : MarkupLinePart
     {
         public static string XmlName { get; } = "R";
 
-        IRuleEdge _from;
-        IRuleEdge _to;
         LineStyle _style;
 
-        public IRuleEdge From
-        {
-            get => _from;
-            set
-            {
-                _from = value;
-                RuleChanged();
-            }
-        }
-        public IRuleEdge To
-        {
-            get => _to;
-            set
-            {
-                _to = value;
-                RuleChanged();
-            }
-        }
         public LineStyle Style
         {
             get => _style;
@@ -45,21 +25,13 @@ namespace NodeMarkup.Manager
                 RuleChanged();
             }
         }
+        public override string XmlSection => XmlName;
 
-        public Action OnRuleChanged { private get; set; }
-
-        public string XmlSection => XmlName;
-
-        public MarkupLineRawRule(LineStyle style, IRuleEdge from = null, IRuleEdge to = null)
+        public MarkupLineRawRule(MarkupLine line, LineStyle style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
         {
             Style = style;
-            From = from;
-            To = to;
         }
-
-        private void RuleChanged() => OnRuleChanged?.Invoke();
-
-        public static MarkupLineRule[] GetRules(MarkupLine line, List<MarkupLineRawRule> rawRules)
+        public static MarkupLineRule[] GetRules(List<MarkupLineRawRule> rawRules)
         {
             var rules = new List<MarkupLineRule>();
 
@@ -67,15 +39,7 @@ namespace NodeMarkup.Manager
             {
                 var rule = new MarkupLineRule(rawRule.Style);
 
-                var first = 0f;
-                if ((rawRule.From as IRuleEdge)?.GetT(line, out first) != true)
-                    continue;
-
-                var second = 0f;
-                if ((rawRule.To as IRuleEdge)?.GetT(line, out second) != true)
-                    continue;
-
-                if (first == second)
+                if (!rawRule.GetFromT(out float first) || !rawRule.GetToT(out float second) || first == second)
                     continue;
 
                 if (first < second)
@@ -142,20 +106,13 @@ namespace NodeMarkup.Manager
             rules.Add(newRule);
         }
 
-        public XElement ToXml()
+        public override XElement ToXml()
         {
-            var config = new XElement(XmlSection);
-
-            if (From != null)
-                config.Add(From.ToXml());
-            if (To != null)
-                config.Add(To.ToXml());
-
+            var config = base.ToXml();
             config.Add(Style.ToXml());
-
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupLineRawRule rule)
+        public static bool FromXml(XElement config, MarkupLine line, Dictionary<InstanceID, InstanceID> map, out MarkupLineRawRule rule)
         {
             if (!(config.Element(LineStyle.XmlName) is XElement styleConfig) || !LineStyle.FromXml(styleConfig, out LineStyle style))
             {
@@ -163,14 +120,14 @@ namespace NodeMarkup.Manager
                 return false;
             }
 
-            var edges = new List<IRuleEdge>();
-            foreach (var supportConfig in config.Elements(SupportPointBase.XmlName))
+            var edges = new List<ILinePartEdge>();
+            foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
             {
-                if (SupportPointBase.FromXml(supportConfig, markup, map, out SupportPointBase supportPoint) && supportPoint is IRuleEdge edge)
+                if (LinePartEdge.FromXml(supportConfig, line.Markup, map, out LinePartEdge supportPoint) && supportPoint is ILinePartEdge edge)
                     edges.Add(edge);
             }
 
-            rule = new MarkupLineRawRule(style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
+            rule = new MarkupLineRawRule(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
             return true;
         }
     }

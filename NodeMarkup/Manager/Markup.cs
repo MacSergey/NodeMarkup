@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, LineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, LineIntersect>(MarkupLinePair.Comparer);
+        Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
 
         public bool NeedRecalculate { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
@@ -46,7 +46,7 @@ namespace NodeMarkup.Manager
             }
         }
         public IEnumerable<Enter> Enters => EntersList;
-        public IEnumerable<LineIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+        public IEnumerable<MarkupLineIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
         public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {
@@ -205,12 +205,12 @@ namespace NodeMarkup.Manager
                 return null;
             }
         }
-        public IEnumerable<LineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
-        public IEnumerable<LineIntersect> GetIntersects(MarkupLine line) => Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l)));
+        public IEnumerable<MarkupLineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
+        public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line) => Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l)));
 
-        public LineIntersect GetIntersect(MarkupLinePair linePair)
+        public MarkupLineIntersect GetIntersect(MarkupLinePair linePair)
         {
-            if (!LineIntersects.TryGetValue(linePair, out LineIntersect intersect))
+            if (!LineIntersects.TryGetValue(linePair, out MarkupLineIntersect intersect))
             {
                 MarkupLineIntersect.Calculate(linePair, out intersect);
                 LineIntersects.Add(linePair, intersect);
@@ -218,7 +218,7 @@ namespace NodeMarkup.Manager
 
             return intersect;
         }
-        public IEnumerable<LineIntersect> GetAllIntersect()
+        public IEnumerable<MarkupLineIntersect> GetAllIntersect()
         {
             var lines = Lines.ToArray();
             for (var i = 0; i < lines.Length; i += 1)

@@ -18,9 +18,9 @@ namespace NodeMarkup.UI.Editors
         private MarkupFiller Filler { get; set; }
 
         private bool IsSelectFillerMode { get; set; } = false;
-        private List<FillerSupportPointBound> FillerBounds { get; } = new List<FillerSupportPointBound>();
-        private FillerSupportPointBound HoverFillerBounds { get; set; }
-        private bool IsHoverFillerBounds => HoverFillerBounds != null;
+        public List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
+        private IFillerVertex HoverSupportPoint { get; set; }
+        private bool IsHoverSupportPoint => HoverSupportPoint != null;
 
         public FillerEditor()
         {
@@ -45,7 +45,7 @@ namespace NodeMarkup.UI.Editors
             if (isAccept)
             {
                 Filler = new MarkupFiller(Markup);
-                CalculateBounds();
+                CalculateSupportPoints();
                 IsSelectFillerMode = true;
             }
         }
@@ -56,30 +56,30 @@ namespace NodeMarkup.UI.Editors
             {
                 Ray ray = Camera.main.ScreenPointToRay(NodeMarkupTool.MousePosition);
 
-                foreach (var fillerBounds in FillerBounds)
+                foreach (var ыupportPoint in SupportPoints)
                 {
-                    if (fillerBounds.IsIntersect(ray))
+                    if (ыupportPoint.IsIntersect(ray))
                     {
-                        HoverFillerBounds = fillerBounds;
+                        HoverSupportPoint = ыupportPoint;
                         return;
                     }
                 }
             }
 
-            HoverFillerBounds = null;
+            HoverSupportPoint = null;
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
-            if (IsHoverFillerBounds)
+            if (IsHoverSupportPoint)
             {
-                if (HoverFillerBounds.SupportPoint.Equals(Filler.First))
+                if (HoverSupportPoint.Equals(Filler.First))
                 {
                     isDone = true;
                     NodeMarkupPanel.EndEditorAction();
                     return;
                 }
-                Filler.Add(HoverFillerBounds.SupportPoint);
-                CalculateBounds();
+                Filler.Add(HoverSupportPoint);
+                CalculateSupportPoints();
             }
             isDone = false;
         }
@@ -93,32 +93,32 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 Filler.Remove();
-                CalculateBounds();
+                CalculateSupportPoints();
                 isDone = false;
             }
         }
-        private void CalculateBounds()
+        private void CalculateSupportPoints()
         {
-            FillerBounds.Clear();
+            SupportPoints.Clear();
 
             if (Filler.Last is IFillerVertex fillerVertex)
             {
                 var fillerVertexes = fillerVertex.Next(Filler.Prev).ToArray();
-                FillerBounds.AddRange(fillerVertexes.Select(v => new FillerSupportPointBound(v)));
+                SupportPoints.AddRange(fillerVertexes);
             }
             else
             {
                 foreach (var intersect in Markup.Intersects)
                 {
-                    var supportPoint = new IntersectSupportPoint(intersect.Pair);
-                    FillerBounds.Add(new FillerSupportPointBound(supportPoint));
+                    var supportPoint = new IntersectVertexPoint(intersect.Pair);
+                    SupportPoints.Add(supportPoint);
                 }
                 foreach (var enter in Markup.Enters)
                 {
-                    foreach (var point in enter.Points)
+                    foreach (var point in enter.Points.Where(p => p.Lines.Any()))
                     {
-                        var supportPoint = new EnterSupportPoint(point);
-                        FillerBounds.Add(new FillerSupportPointBound(supportPoint));
+                        var supportPoint = new EnterVertexPoint(point);
+                        SupportPoints.Add(supportPoint);
                     }
                 }
             }
@@ -131,30 +131,24 @@ namespace NodeMarkup.UI.Editors
             RenderFillerBounds(cameraInfo);
             RenderFillerLines(cameraInfo);
             RenderConnectLine(cameraInfo);
-            if (IsHoverFillerBounds)
-                NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverFillerBounds.Position, 1f, -1f, 1280f, false, true);
+            if (IsHoverSupportPoint)
+                NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverSupportPoint.Position, 1f, -1f, 1280f, false, true);
         }
         private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
         {
-            foreach (var fillerBounds in FillerBounds)
+            foreach (var supportPoint in SupportPoints)
             {
-                NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.red, fillerBounds.Position, 0.5f, -1f, 1280f, false, true);
+                NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.red, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
             }
         }
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = IsHoverFillerBounds && HoverFillerBounds.SupportPoint.Equals(Filler.First) ? Color.green : Color.white;
-            var fillerVertexes = Filler.Vertices.ToArray();
-            for (var i = 1; i < fillerVertexes.Length; i += 1)
+            var color = IsHoverSupportPoint && HoverSupportPoint.Equals(Filler.First) ? Color.green : Color.white;
+            foreach (var part in Filler.Parts)
             {
-                var bezier = new Bezier3()
-                {
-                    a = fillerVertexes[i - 1].Position,
-                    b = fillerVertexes[i].Position,
-                    c = fillerVertexes[i - 1].Position,
-                    d = fillerVertexes[i].Position
-                };
+                var bezier = part.GetTrajectory();
                 NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+
             }
         }
         private void RenderConnectLine(RenderManager.CameraInfo cameraInfo)
@@ -162,15 +156,13 @@ namespace NodeMarkup.UI.Editors
             if (Filler.VertexCount == 0)
                 return;
 
-            var bezier = new Bezier3();
+            Bezier3 bezier;
             Color color;
 
-            if (IsHoverFillerBounds)
+            if (IsHoverSupportPoint)
             {
-                bezier.a = Filler.Last.Position;
-                bezier.b = HoverFillerBounds.Position;
-                bezier.c = Filler.Last.Position;
-                bezier.d = HoverFillerBounds.Position;
+                var linePart = Filler.GetFillerLine(Filler.Last, HoverSupportPoint);
+                bezier = linePart.GetTrajectory();
 
                 color = Color.green;
             }

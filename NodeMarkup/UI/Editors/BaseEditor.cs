@@ -209,7 +209,7 @@ namespace NodeMarkup.UI.Editors
                 _selectItem.Select();
             }
         }
-        protected EditableObject EditObject => SelectItem.Object;
+        public EditableObject EditObject => SelectItem.Object;
 
 
         protected override void OnSizeChanged()

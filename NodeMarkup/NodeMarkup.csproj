@@ -78,6 +78,7 @@
     <Compile Include="Manager\LineRule.cs" />
     <Compile Include="Manager\LineStyle.cs" />
     <Compile Include="Manager\Markup.cs" />
+    <Compile Include="Manager\LinePartEdge.cs" />
     <Compile Include="Manager\Point.cs" />
     <Compile Include="Manager\Enter.cs" />
     <Compile Include="Manager\SupportPoint.cs" />
@@ -190,7 +191,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

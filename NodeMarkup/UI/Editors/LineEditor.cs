@@ -18,19 +18,18 @@ namespace NodeMarkup.UI.Editors
 
         private ButtonPanel AddButton { get; set; }
 
-        public List<IRuleEdge> RuleEdges { get; } = new List<IRuleEdge>();
-        private List<RuleSupportPointBound> RuleEdgeBounds { get; } = new List<RuleSupportPointBound>();
-        public bool SupportRules => RuleEdges.Count > 2;
+        public List<ISupportPoint> SupportPoints { get; } = new List<ISupportPoint>();
+        public bool CanDivide => SupportPoints.Count > 2;
 
-        private RuleSupportPointBound HoverRuleEdgeBounds { get; set; }
-        private bool IsHoverRuleEdgeBounds => IsSelectRuleEdgeMode && HoverRuleEdgeBounds != null;
+        private ISupportPoint HoverSupportPoint { get; set; }
+        private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
 
-        private MarkupLineSelectPropertyPanel SelectRuleEdgePanel { get; set; }
-        private Func<Event, bool> AfterSelectRuleEdgePanel { get; set; }
-        private bool IsSelectRuleEdgeMode => SelectRuleEdgePanel != null;
+        private MarkupLineSelectPropertyPanel SelectPartEdgePanel { get; set; }
+        private Func<Event, bool> AfterSelectPartEdgePanel { get; set; }
+        private bool IsSelectPartEdgeMode => SelectPartEdgePanel != null;
 
-        private MarkupLineSelectPropertyPanel HoverRuleEdgePanel { get; set; }
-        private bool IsHoverRuleEdgePanel => HoverRuleEdgePanel != null;
+        private MarkupLineSelectPropertyPanel HoverPartEdgePanel { get; set; }
+        private bool IsHoverPartEdgePanel => HoverPartEdgePanel != null;
 
         public LinesEditor()
         {
@@ -51,13 +50,10 @@ namespace NodeMarkup.UI.Editors
         }
         private void GetRuleEdges()
         {
-            RuleEdges.Clear();
-            RuleEdges.Add(new EnterSupportPoint(EditObject.Start));
-            RuleEdges.AddRange(EditObject.IntersectLines.Select(i => new LineSupportPoint(i) as IRuleEdge));
-            RuleEdges.Add(new EnterSupportPoint(EditObject.End));
-
-            RuleEdgeBounds.Clear();
-            RuleEdgeBounds.AddRange(RuleEdges.Select(r => new RuleSupportPointBound(EditObject, r)));
+            SupportPoints.Clear();
+            SupportPoints.Add(new EnterSupportPoint(EditObject.Start));
+            SupportPoints.AddRange(EditObject.IntersectLines.Select(l => (ISupportPoint)new IntersectSupportPoint(EditObject, l)));
+            SupportPoints.Add(new EnterSupportPoint(EditObject.End));
         }
         private void AddRulePanels()
         {
@@ -73,7 +69,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddAddButton()
         {
-            if (SupportRules)
+            if (CanDivide)
             {
                 AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
                 AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
@@ -132,9 +128,9 @@ namespace NodeMarkup.UI.Editors
         public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => SelectRuleEdge(selectPanel, null);
         public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
         {
-            if (IsSelectRuleEdgeMode)
+            if (IsSelectPartEdgeMode)
             {
-                var isToggle = SelectRuleEdgePanel == selectPanel;
+                var isToggle = SelectPartEdgePanel == selectPanel;
                 NodeMarkupPanel.EndEditorAction();
                 if (isToggle)
                     return true;
@@ -142,16 +138,16 @@ namespace NodeMarkup.UI.Editors
             NodeMarkupPanel.StartEditorAction(this, out bool isAccept);
             if (isAccept)
             {
-                SelectRuleEdgePanel = selectPanel;
-                AfterSelectRuleEdgePanel = afterAction;
-                SelectRuleEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                SelectRuleEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
+                SelectPartEdgePanel = selectPanel;
+                AfterSelectPartEdgePanel = afterAction;
+                SelectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
+                SelectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
                 return false;
             }
             return true;
         }
-        public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverRuleEdgePanel = selectPanel;
-        public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverRuleEdgePanel = null;
+        public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
+        public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
 
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
@@ -161,45 +157,45 @@ namespace NodeMarkup.UI.Editors
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                foreach (var ruleEdgeBound in RuleEdgeBounds)
+                foreach (var supportPoint in SupportPoints)
                 {
-                    if (ruleEdgeBound.IsIntersect(ray))
+                    if (supportPoint.IsIntersect(ray))
                     {
-                        HoverRuleEdgeBounds = ruleEdgeBound;
+                        HoverSupportPoint = supportPoint;
                         return;
                     }
                 }
             }
 
-            HoverRuleEdgeBounds = null;
+            HoverSupportPoint = null;
         }
         public override void OnEvent(Event e)
         {
-            if (SupportRules && !IsSelectRuleEdgeMode && NodeMarkupTool.AddRuleShortcut.IsPressed(e))
+            if (CanDivide && !IsSelectPartEdgeMode && NodeMarkupTool.AddRuleShortcut.IsPressed(e))
                 AddRule();
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
-            if (IsHoverRuleEdgeBounds)
+            if (IsHoverSupportPoint)
             {
-                SelectRuleEdgePanel.SelectedObject = HoverRuleEdgeBounds.SupportPoint;
-                isDone = AfterSelectRuleEdgePanel?.Invoke(e) ?? true;
+                SelectPartEdgePanel.SelectedObject = HoverSupportPoint;
+                isDone = AfterSelectPartEdgePanel?.Invoke(e) ?? true;
             }
             else
                 isDone = false;
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            if (IsSelectRuleEdgeMode)
+            if (IsSelectPartEdgeMode)
             {
-                foreach (var bounds in RuleEdgeBounds)
+                foreach (var supportPoint in SupportPoints)
                 {
-                    var color = (SelectRuleEdgePanel.Position == RulePosition.Start ? Color.green : Color.red);
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, bounds.Position, 0.5f, -1f, 1280f, false, true);
+                    var color = (SelectPartEdgePanel.Position == RulePosition.Start ? Color.green : Color.red);
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
                 }
 
-                if (IsHoverRuleEdgeBounds)
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverRuleEdgeBounds.Position, 1f, -1f, 1280f, false, true);
+                if (IsHoverSupportPoint)
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverSupportPoint.Position, 1f, -1f, 1280f, false, true);
             }
             else
             {
@@ -213,19 +209,17 @@ namespace NodeMarkup.UI.Editors
                     }
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
-                if (IsHoverRuleEdgePanel &&
-                    HoverRuleEdgePanel.SelectedObject is SupportPointBase lineRawRuleEdge &&
-                    RuleEdgeBounds.FirstOrDefault(b => b.SupportPoint == lineRawRuleEdge) is RuleSupportPointBound bounds)
+                if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
                 {
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, bounds.Position, 0.5f, -1f, 1280f, false, true);
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
                 }
             }
         }
         public override string GetInfo()
         {
-            if (IsSelectRuleEdgeMode)
+            if (IsSelectPartEdgeMode)
             {
-                switch (SelectRuleEdgePanel.Position)
+                switch (SelectPartEdgePanel.Position)
                 {
                     case RulePosition.Start:
                         return NodeMarkup.Localize.LineEditor_InfoSelectFrom;
@@ -238,12 +232,12 @@ namespace NodeMarkup.UI.Editors
         }
         public override void EndEditorAction()
         {
-            if (IsSelectRuleEdgeMode)
+            if (IsSelectPartEdgeMode)
             {
-                SelectRuleEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                SelectRuleEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
-                SelectRuleEdgePanel = null;
-                AfterSelectRuleEdgePanel = null;
+                SelectPartEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
+                SelectPartEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
+                SelectPartEdgePanel = null;
+                AfterSelectPartEdgePanel = null;
             }
         }
         protected override void OnObjectDelete(MarkupLine line)
@@ -288,7 +282,7 @@ namespace NodeMarkup.UI.Editors
             SetSize();
 
             AddHeader();
-            if (Editor.SupportRules)
+            if (Editor.CanDivide)
             {
                 AddFromProperty();
                 AddToProperty();
@@ -310,7 +304,7 @@ namespace NodeMarkup.UI.Editors
         {
             var header = AddUIComponent<RuleHeaderPanel>();
             header.AddRange(TemplateManager.Templates);
-            header.Init(Editor.SupportRules);
+            header.Init(Editor.CanDivide);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
@@ -321,8 +315,8 @@ namespace NodeMarkup.UI.Editors
             From.Text = NodeMarkup.Localize.LineEditor_From;
             From.Position = RulePosition.Start;
             From.Init();
-            From.AddRange(Editor.RuleEdges);
-            From.SelectedObject = Rule.From;
+            From.AddRange(Editor.SupportPoints);
+            From.SelectedObject = Rule.From?.GetSupport(Editor.EditObject);
             From.OnSelectChanged += FromChanged;
             From.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             From.OnHover += Editor.HoverRuleEdge;
@@ -335,8 +329,8 @@ namespace NodeMarkup.UI.Editors
             To.Text = NodeMarkup.Localize.LineEditor_To;
             To.Position = RulePosition.End;
             To.Init();
-            To.AddRange(Editor.RuleEdges);
-            To.SelectedObject = Rule.To;
+            To.AddRange(Editor.SupportPoints);
+            To.SelectedObject = Rule.To?.GetSupport(Editor.EditObject);
             To.OnSelectChanged += ToChanged;
             To.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             To.OnHover += Editor.HoverRuleEdge;
@@ -465,8 +459,8 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
-        private void FromChanged(IRuleEdge from) => Rule.From = from;
-        private void ToChanged(IRuleEdge to) => Rule.To = to;
+        private void FromChanged(ISupportPoint from) => Rule.From = from.GetPartEdge(Editor.EditObject);
+        private void ToChanged(ISupportPoint to) => Rule.To = to.GetPartEdge(Editor.EditObject);
         private void StyleChanged(LineStyle.LineType style)
         {
             var newStyle = TemplateManager.GetDefault(style);
