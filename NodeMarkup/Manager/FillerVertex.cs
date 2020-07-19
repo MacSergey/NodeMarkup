@@ -14,7 +14,7 @@ namespace NodeMarkup.Manager
     public class EnterFillerVertex : EnterSupportPoint, IFillerVertex
     {
         public MarkupFiller Filler { get; }
-        public EnterFillerVertex(MarkupFiller filler, MarkupPoint point) : base(point) 
+        public EnterFillerVertex(MarkupFiller filler, MarkupPoint point) : base(point)
         {
             Filler = filler;
         }
@@ -36,15 +36,18 @@ namespace NodeMarkup.Manager
 
         public IEnumerable<IFillerVertex> GetNextCandidates(IFillerVertex prev)
         {
-            switch (prev)
+            if(!(prev is EnterFillerVertex prevE && Enter == prevE.Point.Enter))
+                foreach (var vertex in GetEnterOtherPoints())
+                    yield return vertex;
+
+            if (Point.IsEdge)
             {
-                case EnterFillerVertex prevE:
-                    return GetNextEnterCandidates(prevE);
-                case IntersectFillerVertex prevI:
-                    return GetNextIntersectCandidates(prevI);
-                default:
-                    return GetNextEmptyCandidates();
+                foreach (var vertex in GetOtherEnterPoint())
+                    yield return vertex;
             }
+
+            foreach (var vertex in GetPointLinesPoints())
+                yield return vertex;
         }
 
         private IEnumerable<IFillerVertex> GetNextEnterCandidates(EnterFillerVertex prev)
@@ -54,8 +57,12 @@ namespace NodeMarkup.Manager
                 foreach (var vertex in GetEnterOtherPoints())
                     yield return vertex;
             }
-            else if (Point.IsEdge)
-                yield return GetOtherEnterPoint();
+
+            if (Point.IsEdge)
+            {
+                foreach (var vertex in GetOtherEnterPoint())
+                    yield return vertex;
+            }
 
             foreach (var vertex in GetPointLinesPoints())
                 yield return vertex;
@@ -66,7 +73,10 @@ namespace NodeMarkup.Manager
                 yield return vertex;
 
             if (Point.IsEdge)
-                yield return GetOtherEnterPoint();
+            {
+                foreach (var vertex in GetOtherEnterPoint())
+                    yield return vertex;
+            }
 
             foreach (var vertex in GetPointLinesPoints())
                 yield return vertex;
@@ -77,22 +87,29 @@ namespace NodeMarkup.Manager
                 yield return vertex;
 
             if (Point.IsEdge)
-                yield return GetOtherEnterPoint();
+            {
+                foreach (var vertex in GetOtherEnterPoint())
+                    yield return vertex;
+            }
 
             foreach (var vertex in GetPointLinesPoints())
                 yield return vertex;
         }
-        private EnterFillerVertex GetOtherEnterPoint()
+        private IEnumerable<IFillerVertex> GetOtherEnterPoint()
         {
             var otherEnterPoint = Point.IsFirst ? Enter.Next.LastPoint : Enter.Prev.FirstPoint;
-            return new EnterFillerVertex(Filler, otherEnterPoint);
+            var vertex = new EnterFillerVertex(Filler, otherEnterPoint);
+            if (vertex.Equals(Filler.First) || !Filler.Vertices.Any(v => vertex.Equals(v)))
+                yield return vertex;
         }
         private IEnumerable<IFillerVertex> GetEnterOtherPoints()
         {
             Filler.GetMinMaxNum(this, out byte num, out byte minNum, out byte maxNum);
+
             foreach (var point in Enter.Points.Where(p => p.Num != num && minNum < p.Num && p.Num < maxNum && (p.IsEdge || p.Lines.Any())))
                 yield return new EnterFillerVertex(Filler, point);
-            if (Filler.First is EnterFillerVertex first && (minNum == first.Point.Num || first.Point.Num == maxNum))
+
+            if (Filler.First is EnterFillerVertex first && first.Enter == Enter && (minNum == first.Point.Num || first.Point.Num == maxNum))
                 yield return first;
         }
         private IEnumerable<IFillerVertex> GetPointLinesPoints()
@@ -109,7 +126,7 @@ namespace NodeMarkup.Manager
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex
     {
         public MarkupFiller Filler { get; }
-        public IntersectFillerVertex(MarkupFiller filler, MarkupLinePair linePair) : base(linePair) 
+        public IntersectFillerVertex(MarkupFiller filler, MarkupLinePair linePair) : base(linePair)
         {
             Filler = filler;
         }
