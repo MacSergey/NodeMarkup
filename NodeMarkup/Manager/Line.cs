@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
 
         public List<MarkupLineRawRule> RawRules { get; } = new List<MarkupLineRawRule>();
 
-        public Bezier3 Trajectory { get; private set; }
+        public Bezier3 Trajectory { get; protected set; }
         public MarkupDash[] Dashes { get; private set; } = new MarkupDash[0];
 
         public string XmlSection => XmlName;
@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
             Markup = markup;
             PointPair = pointPair;
 
-            Update();
+            UpdateTrajectory();
         }
         public MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second) : this(markup, new MarkupPointPair(first, second)) { }
         public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : this(markup, pointPair)
@@ -42,7 +42,7 @@ namespace NodeMarkup.Manager
         }
         public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.LineType lineType) : this(markup, pointPair, TemplateManager.GetDefault(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
-        public void Update()
+        public virtual void UpdateTrajectory()
         {
             var trajectory = new Bezier3
             {

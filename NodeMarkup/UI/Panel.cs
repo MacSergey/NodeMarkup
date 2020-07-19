@@ -170,6 +170,12 @@ namespace NodeMarkup.UI
             editor?.UpdateEditor();
             editor?.Select(template);
         }
+        public void EditFiller(MarkupFiller filler)
+        {
+            var editor = SelectEditor<FillerEditor>();
+            editor?.UpdateEditor();
+            editor?.Select(filler);
+        }
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
         public string GetInfo() => CurrentEditor?.GetInfo();
         public void OnUpdate() => CurrentEditor?.OnUpdate();

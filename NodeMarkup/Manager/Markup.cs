@@ -32,6 +32,7 @@ namespace NodeMarkup.Manager
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
+        List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
 
         public bool NeedRecalculate { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
@@ -46,7 +47,9 @@ namespace NodeMarkup.Manager
             }
         }
         public IEnumerable<Enter> Enters => EntersList;
+        public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupLineIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+
         public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {
@@ -110,7 +113,7 @@ namespace NodeMarkup.Manager
             foreach (var line in lines)
             {
                 if (ContainsEnter(line.Start.Enter.Id) && ContainsEnter(line.End.Enter.Id))
-                    LinesDictionary[line.PointPair.Hash].Update();
+                    LinesDictionary[line.PointPair.Hash].UpdateTrajectory();
                 else
                     LinesDictionary.Remove(line.PointPair.Hash);
             }
@@ -124,13 +127,13 @@ namespace NodeMarkup.Manager
             point.Update();
             foreach (var line in Lines.Where(l => l.ContainPoint(point)))
             {
-                line.Update();
+                line.UpdateTrajectory();
             }
             RecalculateDashes();
         }
         public void Update(MarkupLine line)
         {
-            line.Update();
+            line.UpdateTrajectory();
             line.RecalculateDashes();
             NeedRecalculate = true;
         }
@@ -188,6 +191,14 @@ namespace NodeMarkup.Manager
             LinesDictionary.Remove(pointPair.Hash);
 
             RecalculateDashes();
+        }
+        public void AddFiller(MarkupFiller filler)
+        {
+            FillersList.Add(filler);
+        }
+        public void RemoveFiller(MarkupFiller filler)
+        {
+            FillersList.Remove(filler);
         }
         public void Clear()
         {

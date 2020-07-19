@@ -12,8 +12,10 @@ namespace NodeMarkup.Manager
     {
         Vector3 Position { get; }
         ILinePartEdge GetPartEdge(MarkupLine line);
+        bool GetT(MarkupLine line, out float t);
         bool IsIntersect(Ray ray);
     }
+
 
     public abstract class SupportPoint : ISupportPoint
     {
@@ -28,6 +30,7 @@ namespace NodeMarkup.Manager
 
         public abstract bool Equals(ISupportPoint other);
         public abstract ILinePartEdge GetPartEdge(MarkupLine line);
+        public abstract bool GetT(MarkupLine line, out float t);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
     }
@@ -35,21 +38,36 @@ namespace NodeMarkup.Manager
     public class EnterSupportPoint : SupportPoint
     {
         public MarkupPoint Point { get; }
+        public Enter Enter => Point.Enter;
 
         public EnterSupportPoint(MarkupPoint point) : base(point.Position)
         {
             Point = point;
         }
 
-        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
-
         public override ILinePartEdge GetPartEdge(MarkupLine line) => new EnterPointEdge(Point);
+        public override bool GetT(MarkupLine line, out float t)
+        {
+            if(line.ContainPoint(Point))
+            {
+                t = line.Start == Point ? 0 : 1;
+                return true;
+            }
+            else
+            {
+                t = -1;
+                return false;
+            }
+        }
+        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
 
         public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
     }
     public class IntersectSupportPoint : SupportPoint
     {
         public MarkupLinePair LinePair { get; set; }
+        public MarkupLine First => LinePair.First;
+        public MarkupLine Second => LinePair.Second;
 
         public IntersectSupportPoint(MarkupLinePair linePair) : base(linePair.Markup.GetIntersect(linePair).Position)
         {
@@ -57,10 +75,24 @@ namespace NodeMarkup.Manager
         }
         public IntersectSupportPoint(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
 
-        public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
-
         public override ILinePartEdge GetPartEdge(MarkupLine line) => new LinesIntersectEdge(LinePair.GetOther(line));
+        public override bool GetT(MarkupLine line, out float t)
+        {
+            var intersect = line.Markup.GetIntersect(LinePair);
+            if(intersect.IsIntersect)
+            {
+                t = intersect[line];
+                return true;
+            }
+            else
+            {
+                t = -1;
+                return false;
+            }
+        }
+        public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
+        
 
-
+        public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Second);
     }
 }

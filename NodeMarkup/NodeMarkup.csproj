@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Logger.cs" />
     <Compile Include="Manager\Filler.cs" />
+    <Compile Include="Manager\FillerVertex.cs" />
     <Compile Include="Manager\Line.cs" />
     <Compile Include="Manager\LineRule.cs" />
     <Compile Include="Manager\LineStyle.cs" />
@@ -191,7 +192,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug" BuildVersion_DetectChanges="False" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ColossalFramework.Math;
+using NodeMarkup.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,11 @@ namespace NodeMarkup.Manager
         List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
         public IFillerVertex First => SupportPoints.FirstOrDefault();
         public IFillerVertex Last => SupportPoints.LastOrDefault();
-        public IFillerVertex Prev => SupportPoints.Count >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
+        public IFillerVertex Prev => VertexCount >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
         public IEnumerable<IFillerVertex> Vertices => SupportPoints;
         public int VertexCount => SupportPoints.Count;
+
+        public bool IsDone => VertexCount >= 2 && First.Equals(Last);
 
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
         public IEnumerable<MarkupLinePart> Parts => LineParts;
@@ -38,11 +42,134 @@ namespace NodeMarkup.Manager
             if (LineParts.Any())
                 LineParts.RemoveAt(LineParts.Count - 1);
         }
+
         public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
         {
-            var line = first.GetСommonLine(second);
+            var line = first.GetCommonLine(second);
             var linePart = new FillerLinePart(line, first.GetPartEdge(line), second.GetPartEdge(line));
             return linePart;
+        }
+        public IEnumerable<IFillerVertex> GetNextСandidates()
+        {
+            if (Last is IFillerVertex last)
+                return last.GetNextCandidates(Prev);
+            else
+                return GetBeginCandidates();
+        }
+        private IEnumerable<IFillerVertex> GetBeginCandidates()
+        {
+            foreach (var intersect in Markup.Intersects)
+            {
+                yield return new IntersectFillerVertex(this, intersect.Pair);
+            }
+            foreach (var enter in Markup.Enters)
+            {
+                foreach (var point in enter.Points.Where(p => p.IsEdge || p.Lines.Any()))
+                {
+                    yield return new EnterFillerVertex(this, point);
+                }
+            }
+        }
+
+        public void GetMinMaxT(IFillerVertex fillerVertex, MarkupLine line, out float resultT, out float resultMinT, out float resultMaxT)
+        {
+            fillerVertex.GetT(line, out float t);
+            var minT = -1f;
+            var maxT = 2f;
+
+            foreach (var linePart in LineParts)
+            {
+                linePart.GetFromT(out float fromT);
+                linePart.GetToT(out float toT);
+
+                if (linePart.Line == line)
+                {
+                    Set(fromT, false);
+                    Set(toT, false);
+                }
+                else if (line.Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupLineIntersect intersect && intersect.IsIntersect)
+                {
+                    var linePartT = intersect[linePart.Line];
+
+                    if ((fromT <= linePartT && linePartT <= toT) || (toT <= linePartT && linePartT <= fromT))
+                        Set(intersect[line], true);
+                }
+                else if (linePart.Line.IsEnterLine)
+                {
+                    if (line.Start.Enter == linePart.Line.Start.Enter && CheckEnter(line.Start.Num, linePart.Line.Start.Num, linePart.Line.End.Num))
+                        Set(0, true);
+                    if (line.End.Enter == linePart.Line.Start.Enter && CheckEnter(line.End.Num, linePart.Line.Start.Num, linePart.Line.End.Num))
+                        Set(1, true);
+                }
+            }
+
+            void Set(float tt, bool isStrict)
+            {
+                if (minT < tt && (isStrict ? tt < t : tt <= t))
+                    minT = tt;
+
+                if (maxT > tt && (isStrict ? tt > t : tt >= t))
+                    maxT = tt;
+            }
+            bool CheckEnter(byte num, byte start, byte end) => (start <= num && num <= end) || (end <= num && num <= start);
+
+            resultT = t;
+            resultMinT = minT;
+            resultMaxT = maxT;
+        }
+        public void GetMinMaxNum(EnterFillerVertex vertex, out byte resultNum, out byte resultMinNum, out byte resultMaxNum)
+        {
+            var num = vertex.Point.Num;
+            var minNum = (byte)0;
+            var maxNum = (byte)(vertex.Enter.PointCount + 1);
+
+            foreach (var linePart in LineParts)
+            {
+                if (linePart.From is EnterPointEdge fromVertex && fromVertex.Point.Enter == vertex.Enter)
+                    Set(fromVertex.Point.Num);
+                if (linePart.To is EnterPointEdge toVertex && toVertex.Point.Enter == vertex.Enter)
+                    Set(toVertex.Point.Num);
+            }
+
+            void Set(byte n)
+            {
+                if (minNum < n && n < num)
+                    minNum = n;
+
+                if (maxNum > n && n > num)
+                    maxNum = n;
+            }
+
+            resultNum = num;
+            resultMinNum = minNum;
+            resultMaxNum = maxNum;
+        }
+        public IEnumerable<IFillerVertex> GetLinePoints(IFillerVertex fillerVertex, MarkupLine line)
+        {
+            GetMinMaxT(fillerVertex, line, out float t, out float minT, out float maxT);
+
+            foreach (var intersectLine in line.IntersectLines)
+            {
+                var vertex = new IntersectFillerVertex(this, line, intersectLine);
+                if (vertex.GetT(line, out float tt) && tt != t && minT < tt && tt < maxT)
+                    yield return vertex;
+            }
+
+            switch (First)
+            {
+                case EnterFillerVertex firstE when line.ContainPoint(firstE.Point) && ((line.Start == firstE.Point && minT == 0) || (line.End == firstE.Point && maxT == 1)):
+                    yield return firstE;
+                    break;
+                case IntersectFillerVertex firstI when firstI.LinePair.ContainLine(line) && firstI.GetT(line, out float firstT) && (firstT == minT || firstT == maxT):
+                    yield return firstI;
+                    break;
+            }
+
+            if (t != 0 && minT < 0 && 0 < maxT)
+                yield return new EnterFillerVertex(this, line.Start);
+
+            if (t != 1 && minT < 1 && 1 < maxT)
+                yield return new EnterFillerVertex(this, line.End);
         }
     }
     public class FillerLinePart : MarkupLinePart
@@ -51,129 +178,20 @@ namespace NodeMarkup.Manager
         public FillerLinePart(MarkupLine line, ILinePartEdge from, ILinePartEdge to) : base(line, from, to) { }
     }
 
-    public interface IFillerVertex : ISupportPoint
+    public class MarkupFakeLine : MarkupLine
     {
-        List<IFillerVertex> Next(IFillerVertex prev);
-        MarkupLine GetСommonLine(IFillerVertex other);
-    }
-    public class EnterVertexPoint : EnterSupportPoint, IFillerVertex
-    {
-        public EnterVertexPoint(MarkupPoint point) : base(point) { }
-
-        public List<IFillerVertex> Next(IFillerVertex prev)
+        public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
+        public override void UpdateTrajectory()
         {
-            var next = new List<IFillerVertex>();
-
-            if (prev is EnterVertexPoint enterSupport)
+            Trajectory = new Bezier3
             {
-                if (enterSupport.Point.Enter == Point.Enter)
-                {
-                    if (Point.IsEdge)
-                        next.Add(GetOtherEnterPoint());
-                }
-                else
-                    next.AddRange(GetEnterOtherPoints());
-
-                next.AddRange(GetPointLinesPoints());
-            }
-            else if (prev is IntersectVertexPoint)
-            {
-                next.AddRange(GetEnterOtherPoints());
-                if (Point.IsEdge)
-                    next.Add(GetOtherEnterPoint());
-            }
-            else
-            {
-                next.AddRange(GetEnterOtherPoints());
-                if (Point.IsEdge)
-                    next.Add(GetOtherEnterPoint());
-                next.AddRange(GetPointLinesPoints());
-            }
-
-            return next;
-        }
-        private IFillerVertex GetOtherEnterPoint()
-        {
-            var otherEnterPoint = Point.IsFirst ? Point.Enter.Next.LastPoint : Point.Enter.Prev.FirstPoint;
-            return new EnterVertexPoint(otherEnterPoint);
-        }
-        private IEnumerable<IFillerVertex> GetEnterOtherPoints()
-        {
-            foreach (var point in Point.Enter.Points.Where(p => p != Point && p.Lines.Any()))
-            {
-                yield return new EnterVertexPoint(point);
-            }
-        }
-        private IEnumerable<IFillerVertex> GetPointLinesPoints()
-        {
-            foreach (var line in Point.Lines)
-            {
-                foreach (var intersectLine in line.IntersectLines.Where(l => !l.ContainPoint(Point)))
-                {
-                    yield return new IntersectVertexPoint(line, intersectLine);
-                }
-                yield return new EnterVertexPoint(line.PointPair.GetOther(Point));
-            }
-        }
-
-        public MarkupLine GetСommonLine(IFillerVertex other)
-        {
-            if (other is EnterVertexPoint otherE)
-            {
-                if (!(Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line))
-                {
-                    line = new MarkupLine(Point.Markup, Point, otherE.Point);
-                    line.Update();
-                }
-                return line;
-            }
-            else if (other is IntersectVertexPoint otherI)
-                return otherI.LinePair.First.ContainPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second;
-            else
-                return null;
+                a = PointPair.First.Position,
+                b = PointPair.Second.Position,
+                c = PointPair.First.Position,
+                d = PointPair.Second.Position,
+            };
         }
     }
-    public class IntersectVertexPoint : IntersectSupportPoint, IFillerVertex
-    {
-        public IntersectVertexPoint(MarkupLinePair linePair) : base(linePair) { }
-        public IntersectVertexPoint(MarkupLine first, MarkupLine second) : base(first, second) { }
 
-        public List<IFillerVertex> Next(IFillerVertex prev)
-        {
-            var next = new List<IFillerVertex>();
-
-            if (prev is EnterVertexPoint enterSupport)
-                next.AddRange(GetNextLinePoints(LinePair.First.ContainPoint(enterSupport.Point) ? LinePair.First : LinePair.Second));
-            else if (prev is IntersectVertexPoint intersectSupport)
-                next.AddRange(GetNextLinePoints(intersectSupport.LinePair.ContainLine(LinePair.First) ? LinePair.First : LinePair.Second));
-            else
-            {
-                next.AddRange(GetNextLinePoints(LinePair.Second));
-                next.AddRange(GetNextLinePoints(LinePair.First));
-            }
-
-            return next;
-        }
-
-        private IEnumerable<IFillerVertex> GetNextLinePoints(MarkupLine ignore)
-        {
-            var line = LinePair.GetOther(ignore);
-            foreach (var intersectLine in line.IntersectLines.Where(l => l != ignore))
-            {
-                yield return new IntersectVertexPoint(line, intersectLine);
-            }
-            yield return new EnterVertexPoint(line.Start);
-            yield return new EnterVertexPoint(line.End);
-        }
-        public MarkupLine GetСommonLine(IFillerVertex other)
-        {
-            if (other is EnterVertexPoint otherE)
-                return LinePair.First.ContainPoint(otherE.Point) ? LinePair.First : LinePair.Second;
-            else if (other is IntersectVertexPoint otherI)
-                return LinePair.ContainLine(otherI.LinePair.First) ? otherI.LinePair.First : otherI.LinePair.Second;
-            else
-                return null;
-        }
-    }
 }
-   
+
