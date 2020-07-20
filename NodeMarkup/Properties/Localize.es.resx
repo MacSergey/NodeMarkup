@@ -401,8 +401,12 @@ crear o eliminar la línea
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Anular</value>
   </data>
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>Hola a todos, soy Humberto, que tal, ¿Cómo están</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Carajo</value>
+  </data>
   
   
   
