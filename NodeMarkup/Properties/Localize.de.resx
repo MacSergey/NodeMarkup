@@ -431,6 +431,10 @@ Linie erstellen oder löschen
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>füllung</value>
   </data>
-  
-  
+  <data name="LineStyle_DashedStop" xml:space="preserve">
+    <value>Gestrichelte Haltelinie</value>
+  </data>
+  <data name="LineStyle_DashedStopShort" xml:space="preserve">
+    <value>GHL</value>
+  </data>
 </root>
