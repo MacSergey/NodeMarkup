@@ -414,6 +414,10 @@ vytvoření nebo odstranění čáry
   
   
   
-  
-  
+  <data name="LineStyle_DashedStop" xml:space="preserve">
+    <value>Přerušovaná hranice křižovatky</value>
+  </data>
+  <data name="LineStyle_DashedStopShort" xml:space="preserve">
+    <value>PHK</value>
+  </data>
 </root>
