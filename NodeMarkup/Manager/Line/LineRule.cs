@@ -13,9 +13,9 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "R";
 
-        LineStyle _style;
+        BaseStyle _style;
 
-        public LineStyle Style
+        public BaseStyle Style
         {
             get => _style;
             set
@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
         }
         public override string XmlSection => XmlName;
 
-        public MarkupLineRawRule(MarkupLine line, LineStyle style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
+        public MarkupLineRawRule(MarkupLine line, BaseStyle style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
         {
             Style = style;
         }
@@ -114,7 +114,7 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, MarkupLine line, Dictionary<InstanceID, InstanceID> map, out MarkupLineRawRule rule)
         {
-            if (!(config.Element(LineStyle.XmlName) is XElement styleConfig) || !LineStyle.FromXml(styleConfig, out LineStyle style))
+            if (!(config.Element(BaseStyle.XmlName) is XElement styleConfig) || !BaseStyle.FromXml(styleConfig, out BaseStyle style))
             {
                 rule = default;
                 return false;
@@ -135,16 +135,16 @@ namespace NodeMarkup.Manager
     {
         public float Start;
         public float End;
-        public LineStyle LineStyle;
+        public BaseStyle LineStyle;
 
-        public MarkupLineRule(LineStyle lineStyle)
+        public MarkupLineRule(BaseStyle lineStyle)
         {
             LineStyle = lineStyle;
             Start = 0;
             End = 1;
         }
 
-        public MarkupLineRule(float start, float end, LineStyle lineStyle)
+        public MarkupLineRule(float start, float end, BaseStyle lineStyle)
         {
             Start = start;
             End = end;

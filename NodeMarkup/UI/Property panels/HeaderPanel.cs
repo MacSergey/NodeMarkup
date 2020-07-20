@@ -141,7 +141,7 @@ namespace NodeMarkup.UI.Editors
 
             SelectTemplate.triggerButton = button;
 
-            Add(new LineStyleTemplate(NodeMarkup.Localize.HeaderPanel_ApplyTemplate, LineStyle.DefaultSolid) { IsEmpty = true });
+            Add(new LineStyleTemplate(NodeMarkup.Localize.HeaderPanel_ApplyTemplate, BaseStyle.DefaultSolid) { IsEmpty = true });
         }
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
         private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)

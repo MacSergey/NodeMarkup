@@ -69,7 +69,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperty()
         {
-            if (EditObject.Style.Type == LineStyle.LineType.Stop)
+            if (EditObject.Style.Type == BaseStyle.LineType.StopSolid)
                 return;
 
             var styleProperty = SettingsPanel.AddUIComponent<StylePropertyPanel>();
@@ -162,9 +162,9 @@ namespace NodeMarkup.UI.Editors
             SelectItem.Refresh();
         }
         private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
-        private void StyleChanged(LineStyle.LineType style)
+        private void StyleChanged(BaseStyle.LineType style)
         {
-            var newStyle = LineStyle.GetDefault(style);
+            var newStyle = BaseStyle.GetDefault(style);
             newStyle.Color = EditObject.Style.Color;
             if (newStyle is IDashedLine newDashed && EditObject.Style is IDashedLine oldDashed)
             {

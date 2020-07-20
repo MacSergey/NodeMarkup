@@ -30,30 +30,53 @@ namespace NodeMarkup.UI.Editors
                 DropDown.AddItem(value, GetDescription(value.ToString()));
             }
         }
-        private string GetDescription(string item)
+        protected string GetDescription(string item)
         {
             var description = typeof(EnumType).GetField(item).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? item;
             return NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
         }
     }
-    public class StylePropertyPanel : EnumPropertyPanel<LineStyle.LineType, StylePropertyPanel.StyleDropDown>
+    //public class StylePropertyPanel : EnumPropertyPanel<BaseStyle.LineType, StylePropertyPanel.StyleDropDown>
+    //{
+    //    protected override void FillItems()
+    //    {
+    //        foreach (var field in typeof(BaseStyle.LineType).GetFields().Skip(1))
+    //        {
+    //            if(field.GetCustomAttributes(typeof(BaseStyle.SpecialLineAttribute), false).Any())
+    //                continue;
+
+    //            var description = (field.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)?.Description ?? field.Name;
+    //            var localizeDescription = NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
+    //            var value = (BaseStyle.LineType)field.GetValue(null);
+    //            DropDown.AddItem(value, localizeDescription);
+    //        }
+    //    }
+    //    protected override bool IsEqual(BaseStyle.LineType first, BaseStyle.LineType second) => first == second;
+    //    public class StyleDropDown : CustomUIDropDown<BaseStyle.LineType> { }
+    //}
+
+    public abstract class StylePropertyPanel : EnumPropertyPanel<BaseStyle.LineType, StylePropertyPanel.StyleDropDown>
+    {
+
+        protected override bool IsEqual(BaseStyle.LineType first, BaseStyle.LineType second) => first == second;
+        public class StyleDropDown : CustomUIDropDown<BaseStyle.LineType> { }
+    }
+    public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
+        where StyleType : Enum
     {
         protected override void FillItems()
         {
-            foreach (var field in typeof(LineStyle.LineType).GetFields().Skip(1))
+            foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<BaseStyle.LineType>())
             {
-                if(field.GetCustomAttributes(typeof(LineStyle.SpecialLineAttribute), false).Any())
-                    continue;
-
-                var description = (field.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)?.Description ?? field.Name;
-                var localizeDescription = NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
-                var value = (LineStyle.LineType)field.GetValue(null);
-                DropDown.AddItem(value, localizeDescription);
+                DropDown.AddItem(value, GetDescription(value.ToString()));
             }
         }
-        protected override bool IsEqual(LineStyle.LineType first, LineStyle.LineType second) => first == second;
-        public class StyleDropDown : CustomUIDropDown<LineStyle.LineType> { }
     }
+    public class SimpleStylePropertyPanel : StylePropertyPanel<BaseStyle.SimpleLineType> { }
+    public class StopStylePropertyPanel : StylePropertyPanel<BaseStyle.StopLineType> { }
+
+
+
     public class MarkupLineListPropertyPanel : ListPropertyPanel<MarkupLine, MarkupLineListPropertyPanel.MarkupLineDropDown>
     {
         protected override bool IsEqual(MarkupLine first, MarkupLine second) => ReferenceEquals(first, second);

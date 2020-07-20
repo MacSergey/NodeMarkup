@@ -427,7 +427,7 @@ namespace NodeMarkup
         {
             var markup = MarkupManager.Get(SelectNodeId);
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var lineType = pointPair.IsSomeEnter ? LineStyle.LineType.Stop : e.GetStyle();
+            var lineType = pointPair.IsSomeEnter ? e.GetStopStyle() : e.GetSimpleStyle();
             var newLine = markup.ToggleConnection(pointPair, lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;

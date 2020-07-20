@@ -431,4 +431,10 @@ create or delete a line
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>filler</value>
   </data>
+  <data name="LineStyle_DashedStop" xml:space="preserve">
+    <value>Dashed stop line</value>
+  </data>
+  <data name="LineStyle_DashedStopShort" xml:space="preserve">
+    <value>DSL</value>
+  </data>
 </root>

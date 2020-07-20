@@ -182,7 +182,8 @@ namespace NodeMarkup.Utils
             (p.control ? EventModifiers.Control : EventModifiers.None) |
             (p.alt ? EventModifiers.Alt : EventModifiers.None);
 
-        public static LineStyle.LineType GetStyle(this Event e) => e.shift ? (e.control ? LineStyle.LineType.DoubleSolid : LineStyle.LineType.Solid) : (e.control ? LineStyle.LineType.DoubleDashed : LineStyle.LineType.Dashed);
+        public static BaseStyle.LineType GetSimpleStyle(this Event e) => e.shift ? (e.control ? BaseStyle.LineType.DoubleSolid : BaseStyle.LineType.Solid) : (e.control ? BaseStyle.LineType.DoubleDashed : BaseStyle.LineType.Dashed);
+        public static BaseStyle.LineType GetStopStyle(this Event e) => e.shift ? BaseStyle.LineType.StopDashed : BaseStyle.LineType.StopSolid;
     }
 
     public struct BezierPoint

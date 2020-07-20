@@ -166,7 +166,7 @@ namespace NodeMarkup.Manager
 #endif
         }
 
-        public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.LineType lineType)
+        public MarkupLine AddConnect(MarkupPointPair pointPair, BaseStyle.LineType lineType)
         {
             var newLine = new MarkupLine(this, pointPair, lineType);
             LinesDictionary[pointPair.Hash] = newLine;
@@ -206,7 +206,7 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.LineType lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, BaseStyle.LineType lineType)
         {
             if (!ExistConnection(pointPair))
                 return AddConnect(pointPair, lineType);

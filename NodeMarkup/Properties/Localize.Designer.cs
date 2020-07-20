@@ -324,6 +324,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Dashed stop line.
+        /// </summary>
+        public static string LineStyle_DashedStop {
+            get {
+                return ResourceManager.GetString("LineStyle_DashedStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на DSL.
+        /// </summary>
+        public static string LineStyle_DashedStopShort {
+            get {
+                return ResourceManager.GetString("LineStyle_DashedStopShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Double dashed.
         /// </summary>
         public static string LineStyle_DoubleDashed {

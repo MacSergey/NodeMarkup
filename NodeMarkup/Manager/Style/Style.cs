@@ -1,10 +1,8 @@
 ﻿using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -12,59 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    abstract class StyleData
-    {
-        protected Action DataChanged { get;}
-        public StyleData(Action dataChanged)
-        {
-            DataChanged = dataChanged;
-        }
-    }
-
-    class DashedData : StyleData
-    {
-        float _dashLength;
-        float _spaceLength;
-        public float DashLength
-        {
-            get => _dashLength;
-            set
-            {
-                _dashLength = value;
-                DataChanged();
-            }
-        }
-        public float SpaceLength
-        {
-            get => _spaceLength;
-            set
-            {
-                _spaceLength = value;
-                DataChanged();
-            }
-        }
-        public DashedData(Action dataChanged, float dashLength, float spaceLength) : base(dataChanged)
-        {
-            DashLength = dashLength;
-            SpaceLength = spaceLength;
-        }
-    }
-
-    public interface IDashedLine
-    {
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
-    }
-    public interface IDoubleLine
-    {
-        float Offset { get; set; }
-    }
-    public interface IAsymLine
-    {
-        bool Invert { get; set; }
-    }
-
-    public abstract class LineStyle : IToXml
+    public abstract class BaseStyle : IToXml
     {
         public static string XmlName { get; } = "S";
 
@@ -84,9 +30,10 @@ namespace NodeMarkup.Manager
         public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffser);
         public static DoubleDashedLineStyle DefaultDoubleDashed => new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
         public static SolidAndDashedLineStyle DefaultSolidAndDashed => new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser, false);
-        public static StopLineStyle DefaultStop => new StopLineStyle(DefaultColor, DefaultStopWidth);
+        public static SolidStopLineStyle DefaultSolidStop => new SolidStopLineStyle(DefaultColor, DefaultStopWidth);
+        public static DashedStopLineStyle DefaultDashedStop => new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength);
 
-        public static LineStyle GetDefault(LineType type)
+        public static BaseStyle GetDefault(LineType type)
         {
             switch (type)
             {
@@ -95,7 +42,8 @@ namespace NodeMarkup.Manager
                 case LineType.DoubleSolid: return DefaultDoubleSolid;
                 case LineType.DoubleDashed: return DefaultDoubleDashed;
                 case LineType.SolidAndDashed: return DefaultSolidAndDashed;
-                case LineType.Stop: return DefaultStop;
+                case LineType.StopSolid: return DefaultSolidStop;
+                case LineType.StopDashed: return DefaultDashedStop;
                 default: return null;
             }
         }
@@ -108,7 +56,8 @@ namespace NodeMarkup.Manager
                 case LineType.DoubleSolid: return Localize.LineStyle_DoubleSolidShort;
                 case LineType.DoubleDashed: return Localize.LineStyle_DoubleDashedShort;
                 case LineType.SolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
-                case LineType.Stop: return Localize.LineStyle_StopShort;
+                case LineType.StopSolid: return Localize.LineStyle_StopShort;
+                case LineType.StopDashed: return Localize.LineStyle_DashedStopShort;
                 default: return null;
             }
         }
@@ -140,14 +89,14 @@ namespace NodeMarkup.Manager
         public abstract LineType Type { get; }
         public string XmlSection => XmlName;
 
-        public LineStyle(Color32 color, float width)
+        public BaseStyle(Color32 color, float width)
         {
             Color = color;
             Width = width;
         }
 
         public abstract IEnumerable<MarkupDash> Calculate(Bezier3 trajectory);
-        public abstract LineStyle Copy();
+        public abstract BaseStyle Copy();
         protected void StyleChanged() => OnStyleChanged?.Invoke();
         public virtual XElement ToXml()
         {
@@ -159,11 +108,11 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public static bool FromXml(XElement config, out LineStyle style)
+        public static bool FromXml(XElement config, out BaseStyle style)
         {
             var type = (LineType)config.GetAttrValue<int>("T");
 
-            if (TemplateManager.GetDefault(type) is LineStyle defaultStyle)
+            if (TemplateManager.GetDefault(type) is BaseStyle defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config);
@@ -201,8 +150,35 @@ namespace NodeMarkup.Manager
             SolidAndDashed,
 
             [Description("LineStyle_Stop")]
-            [SpecialLine]
-            Stop,
+            StopSolid,
+
+            [Description("LineStyle_Stop")]
+            StopDashed,
+        }
+        public enum SimpleLineType
+        {
+            [Description("LineStyle_Solid")]
+            Solid = LineType.Solid,
+
+            [Description("LineStyle_Dashed")]
+            Dashed = LineType.Dashed,
+
+            [Description("LineStyle_DoubleSolid")]
+            DoubleSolid = LineType.DoubleSolid,
+
+            [Description("LineStyle_DoubleDashed")]
+            DoubleDashed = LineType.DoubleDashed,
+
+            [Description("LineStyle_SolidAndDashed")]
+            SolidAndDashed = LineType.SolidAndDashed,
+        }
+        public enum StopLineType
+        {
+            [Description("LineStyle_Stop")]
+            Solid = LineType.StopSolid,
+
+            [Description("LineStyle_Stop")]
+            Dashed = LineType.StopDashed,
         }
         public class SpecialLineAttribute : Attribute { }
 
@@ -323,261 +299,6 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class SolidLineStyle : LineStyle
-    {
-        public override LineType Type { get; } = LineType.Solid;
-
-        public SolidLineStyle(Color color, float width) : base(color, width) { }
-
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
-        protected virtual IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory)
-        {
-            yield return CalculateSolidDash(trajectory, 0f);
-        }
-
-        public override LineStyle Copy() => new SolidLineStyle(Color, Width);
-    }
-    public class DoubleSolidLineStyle : SolidLineStyle, IDoubleLine
-    {
-        public override LineType Type { get; } = LineType.DoubleSolid;
-
-        float _offset;
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
-
-        public DoubleSolidLineStyle(Color color, float width, float offset) : base(color, width)
-        {
-            Offset = offset;
-        }
-
-        protected override IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory)
-        {
-            yield return CalculateSolidDash(trajectory, Offset);
-            yield return CalculateSolidDash(trajectory, -Offset);
-        }
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
-            return config;
-        }
-        public override void FromXml(XElement config)
-        {
-            base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultOffser);
-        }
-        public override LineStyle Copy() => new DoubleSolidLineStyle(Color, Width, Offset);
-    }
-    public class DashedLineStyle : LineStyle, IDashedLine
-    {
-        public override LineType Type { get; } = LineType.Dashed;
-
-        float _dashLength;
-        float _spaceLength;
-        public float DashLength
-        {
-            get => _dashLength;
-            set
-            {
-                _dashLength = value;
-                StyleChanged();
-            }
-        }
-        public float SpaceLength
-        {
-            get => _spaceLength;
-            set
-            {
-                _spaceLength = value;
-                StyleChanged();
-            }
-        }
-
-        public DashedLineStyle(Color color, float width, float dashLength, float spaceLength) : base(color, width)
-        {
-            DashLength = dashLength;
-            SpaceLength = spaceLength;
-        }
-
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
-
-        protected virtual IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
-        {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
-        }
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(new XAttribute("DL", DashLength));
-            config.Add(new XAttribute("SL", SpaceLength));
-            return config;
-        }
-        public override void FromXml(XElement config)
-        {
-            base.FromXml(config);
-            DashLength = config.GetAttrValue("DL", DefaultDashLength);
-            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
-        }
-
-        public override LineStyle Copy() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
-    }
-    public class DoubleDashedLineStyle : DashedLineStyle, IDoubleLine
-    {
-        public override LineType Type { get; } = LineType.DoubleDashed;
-
-        float _offset;
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
-
-        public DoubleDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
-        {
-            Offset = offset;
-        }
-
-        protected override IEnumerable<MarkupDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
-        {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Offset);
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset);
-        }
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
-            return config;
-        }
-        public override void FromXml(XElement config)
-        {
-            base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultOffser);
-        }
-        public override LineStyle Copy() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-    }
-    public class SolidAndDashedLineStyle : LineStyle, IDoubleLine, IDashedLine, IAsymLine
-    {
-        public override LineType Type => LineType.SolidAndDashed;
-
-        float _offset;
-        float _dashLength;
-        float _spaceLength;
-        bool _invert;
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
-        public float DashLength
-        {
-            get => _dashLength;
-            set
-            {
-                _dashLength = value;
-                StyleChanged();
-            }
-        }
-        public float SpaceLength
-        {
-            get => _spaceLength;
-            set
-            {
-                _spaceLength = value;
-                StyleChanged();
-            }
-        }
-        public bool Invert
-        {
-            get => _invert;
-            set
-            {
-                _invert = value;
-                StyleChanged();
-            }
-        }
-
-        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
-        {
-            Offset = offset;
-            DashLength = dashLength;
-            SpaceLength = spaceLength;
-            Invert = invert;
-        }
-
-
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
-        {
-            foreach (var dash in CalculateSolid(trajectory, 0, CalculateSolidDash))
-            {
-                yield return dash;
-            }
-            foreach (var dash in CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
-            {
-                yield return dash;
-            }
-        }
-
-        protected IEnumerable<MarkupDash> CalculateSolidDash(Bezier3 trajectory)
-        {
-            yield return CalculateSolidDash(trajectory, Invert ? Offset : -Offset);
-        }
-        protected IEnumerable<MarkupDash> CalculateDashedDash(Bezier3 trajectory, float startT, float endT)
-        {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
-        }
-
-        public override LineStyle Copy() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
-            config.Add(new XAttribute("DL", DashLength));
-            config.Add(new XAttribute("SL", SpaceLength));
-            config.Add(new XAttribute("I", Invert ? 1 : 0));
-            return config;
-        }
-        public override void FromXml(XElement config)
-        {
-            base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultOffser);
-            DashLength = config.GetAttrValue("DL", DefaultDashLength);
-            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
-            Invert = config.GetAttrValue("I", 0) == 1;
-        }
-    }
-    public class StopLineStyle : LineStyle
-    {
-        public override LineType Type => LineType.Stop;
-
-        public StopLineStyle(Color32 color, float width) : base(color, width) { }
-
-        public override IEnumerable<MarkupDash> Calculate(Bezier3 trajectory)
-        {
-            var dash = CalculateSolidDash(trajectory, 0f);
-            dash.Position += (trajectory.a - trajectory.b).normalized * (Width / 2);
-            yield return dash;
-        }
-
-        public override LineStyle Copy() => new StopLineStyle(Color, Width);
-    }
-
-
     public class MarkupDash
     {
         public Vector3 Position { get; set; }
@@ -595,13 +316,12 @@ namespace NodeMarkup.Manager
             Color = color;
         }
     }
-
     public class LineStyleTemplate : IToXml
     {
         public static string XmlName { get; } = "T";
 
         string _name;
-        LineStyle _style;
+        BaseStyle _style;
 
         public string Name
         {
@@ -615,7 +335,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public LineStyle Style
+        public BaseStyle Style
         {
             get => _style;
             set
@@ -628,12 +348,12 @@ namespace NodeMarkup.Manager
         public bool IsEmpty { get; set; } = false;
 
         public Action OnTemplateChanged { private get; set; }
-        public Action<LineStyleTemplate, LineStyle> OnStyleChanged { private get; set; }
+        public Action<LineStyleTemplate, BaseStyle> OnStyleChanged { private get; set; }
         public Func<LineStyleTemplate, string, bool> OnNameChanged { private get; set; }
 
         public string XmlSection => XmlName;
 
-        public LineStyleTemplate(string name, LineStyle style)
+        public LineStyleTemplate(string name, BaseStyle style)
         {
             _name = name;
             _style = style.Copy();
@@ -641,12 +361,12 @@ namespace NodeMarkup.Manager
         }
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
 
-        public override string ToString() => IsEmpty ? Name : $"{LineStyle.GetShortName(Style.Type)}-{Name}";
+        public override string ToString() => IsEmpty ? Name : $"{BaseStyle.GetShortName(Style.Type)}-{Name}";
 
         public static bool FromXml(XElement config, out LineStyleTemplate template)
         {
             var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(LineStyle.XmlName) is XElement styleConfig && LineStyle.FromXml(styleConfig, out LineStyle style))
+            if (!string.IsNullOrEmpty(name) && config.Element(BaseStyle.XmlName) is XElement styleConfig && BaseStyle.FromXml(styleConfig, out BaseStyle style))
             {
                 template = new LineStyleTemplate(name, style);
                 return true;

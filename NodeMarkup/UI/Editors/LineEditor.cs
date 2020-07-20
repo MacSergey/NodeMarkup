@@ -102,7 +102,7 @@ namespace NodeMarkup.UI.Editors
         }
         private bool SetStyle(RulePanel rulePanel, Event e)
         {
-            rulePanel.Style.SelectedObject = e.GetStyle();
+            rulePanel.Style.SelectedObject = e.GetSimpleStyle();
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)
@@ -338,10 +338,17 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            if (Rule.Style.Type == LineStyle.LineType.Stop)
-                return;
-
-            Style = AddUIComponent<StylePropertyPanel>();
+            switch (Rule.Style)
+            {
+                case ISimpleLine _:
+                    Style = AddUIComponent<SimpleStylePropertyPanel>();
+                    break;
+                case IStopLine _:
+                    Style = AddUIComponent<StopStylePropertyPanel>();
+                    break;
+                default:
+                    return;
+            }
             Style.Text = NodeMarkup.Localize.LineEditor_Style;
             Style.Init();
             Style.SelectedObject = Rule.Style.Type;
@@ -461,7 +468,7 @@ namespace NodeMarkup.UI.Editors
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
         private void FromChanged(ISupportPoint from) => Rule.From = from.GetPartEdge(Editor.EditObject);
         private void ToChanged(ISupportPoint to) => Rule.To = to.GetPartEdge(Editor.EditObject);
-        private void StyleChanged(LineStyle.LineType style)
+        private void StyleChanged(BaseStyle.LineType style)
         {
             var newStyle = TemplateManager.GetDefault(style);
             newStyle.Color = Rule.Style.Color;
@@ -476,7 +483,7 @@ namespace NodeMarkup.UI.Editors
             Rule.Style = newStyle;
 
             ClearStyleProperties();
-            AddStyleAdditionalProperties();
+            AddStyleProperties();
         }
         private void WidthChanged(float value) => Rule.Style.Width = value;
         private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
