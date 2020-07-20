@@ -408,10 +408,18 @@ vytvoření nebo odstranění čáry
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Plná i přerušovaná</value>
   </data>
-  
-  
-  
-  
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Hranice křižovatky</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>HK</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Klikněte pro odstranění hranice křižovatky</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Klikněte pro vytvoření hranice křižovatky</value>
+  </data>
   
   
   <data name="LineStyle_DashedStop" xml:space="preserve">
