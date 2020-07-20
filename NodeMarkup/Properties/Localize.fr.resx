@@ -395,4 +395,26 @@ Cliquez pour modifier le marquage</value>
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
 </root>

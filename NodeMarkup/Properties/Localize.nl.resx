@@ -428,4 +428,26 @@ maak of verwijderen een lijn
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Ononderbroken</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>O</value>
+  </data>
 </root>

@@ -426,6 +426,46 @@ utworzyć lub usunąć linię
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>wypełniacz</value>
   </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>PLZ</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Paski</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Kratka</value>
+  </data>
+  
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Przerywana linia zatrzymania</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Krok</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Kąt</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Odstęp od linii</value>
+  </data>
   
   
+  
+  
+  
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Odstęp od pasa rozdzielającego</value>
+  </data>
+  
+  
+  
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Ciągła</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>C</value>
+  </data>
 </root>

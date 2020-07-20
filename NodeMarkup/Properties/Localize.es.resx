@@ -415,4 +415,26 @@ crear o eliminar la línea
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Continua</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>C</value>
+  </data>
 </root>

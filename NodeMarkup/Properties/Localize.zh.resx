@@ -429,4 +429,26 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>实线</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>实线</value>
+  </data>
 </root>
