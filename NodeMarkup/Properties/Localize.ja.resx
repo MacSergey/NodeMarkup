@@ -409,7 +409,7 @@
     <value>破線＆実線</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>停止線</value>
+    <value>実線の停止線</value>
   </data>
   <data name="LineStyle_StopShort" xml:space="preserve">
     <value>SL</value>
@@ -426,6 +426,10 @@
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>埋める</value>
   </data>
-  
-  
+  <data name="LineStyle_DashedStop" xml:space="preserve">
+    <value>破線の停止線</value>
+  </data>
+  <data name="LineStyle_DashedStopShort" xml:space="preserve">
+    <value>DSL</value>
+  </data>
 </root>
