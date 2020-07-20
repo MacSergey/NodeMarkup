@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class TemplateEditor : Editor<TemplateItem, LineStyleTemplate, DefaultTemplateIcon>
+    public class TemplateEditor : Editor<TemplateItem, StyleTemplate, DefaultTemplateIcon>
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
@@ -69,10 +69,23 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperty()
         {
-            if (EditObject.Style.Type == BaseStyle.LineType.StopSolid)
-                return;
+            var styleProperty = default(StylePropertyPanel);
 
-            var styleProperty = SettingsPanel.AddUIComponent<StylePropertyPanel>();
+            switch (EditObject.Style)
+            {
+                case ISimpleLine _:
+                    styleProperty = AddUIComponent<SimpleStylePropertyPanel>();
+                    break;
+                case IStopLine _:
+                    styleProperty = AddUIComponent<StopStylePropertyPanel>();
+                    break;
+                case IFillerStyle _:
+                    styleProperty = AddUIComponent<FillerStylePropertyPanel>();
+                    break;
+                default:
+                    return;
+            }
+
             styleProperty.Text = NodeMarkup.Localize.TemplateEditor_Style;
             styleProperty.Init();
             styleProperty.SelectedObject = EditObject.Style.Type;
@@ -144,6 +157,43 @@ namespace NodeMarkup.UI.Editors
                 invertProperty.OnValueChanged += InvertChanged;
                 StyleProperties.Add(invertProperty);
             }
+            if(EditObject.Style is IStrokeFiller fillerStyle)
+            {
+                var stepProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+                stepProperty.Text = "Step";
+                stepProperty.UseWheel = true;
+                stepProperty.WheelStep = 0.1f;
+                stepProperty.CheckMin = true;
+                stepProperty.MinValue = EditObject.Style.Width;
+                stepProperty.Init();
+                stepProperty.Value = fillerStyle.Step;
+                stepProperty.OnValueChanged += StepChanged;
+                StyleProperties.Add(stepProperty);
+
+                var angleProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+                angleProperty.Text = "Angle";
+                angleProperty.UseWheel = true;
+                angleProperty.WheelStep = 1f;
+                angleProperty.CheckMin = true;
+                angleProperty.MinValue = -90;
+                angleProperty.CheckMax = true;
+                angleProperty.MaxValue = 90;
+                angleProperty.Init();
+                angleProperty.Value = fillerStyle.Angle;
+                angleProperty.OnValueChanged += AngleChanged;
+                StyleProperties.Add(angleProperty);
+
+                var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+                offsetProperty.Text = "Offset";
+                offsetProperty.UseWheel = true;
+                offsetProperty.WheelStep = 0.1f;
+                offsetProperty.CheckMin = true;
+                offsetProperty.MinValue = 0f;
+                offsetProperty.Init();
+                offsetProperty.Value = fillerStyle.Offset;
+                offsetProperty.OnValueChanged += FillerOffsetChanged;
+                StyleProperties.Add(offsetProperty);
+            }
         }
         private void ClearStyleProperties()
         {
@@ -162,9 +212,9 @@ namespace NodeMarkup.UI.Editors
             SelectItem.Refresh();
         }
         private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
-        private void StyleChanged(BaseStyle.LineType style)
+        private void StyleChanged(LineStyle.StyleType style)
         {
-            var newStyle = BaseStyle.GetDefault(style);
+            var newStyle = LineStyle.GetDefault(style);
             newStyle.Color = EditObject.Style.Color;
             if (newStyle is IDashedLine newDashed && EditObject.Style is IDashedLine oldDashed)
             {
@@ -186,6 +236,9 @@ namespace NodeMarkup.UI.Editors
         private void SpaceLengthChanged(float value) => (EditObject.Style as IDashedLine).SpaceLength = value;
         private void OffsetChanged(float value) => (EditObject.Style as IDoubleLine).Offset = value;
         private void InvertChanged(bool value) => (EditObject.Style as IAsymLine).Invert = value;
+        private void StepChanged(float value) => (EditObject.Style as IStrokeFiller).Step = value;
+        private void AngleChanged(float value) => (EditObject.Style as IStrokeFiller).Angle = value;
+        private void FillerOffsetChanged(float value) => (EditObject.Style as IStrokeFiller).Offset = value;
 
 
         private void ToggleAsDefault()
@@ -199,13 +252,13 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.Init(EditObject.IsDefault());
         }
 
-        protected override void OnObjectDelete(LineStyleTemplate template)
+        protected override void OnObjectDelete(StyleTemplate template)
         {
             TemplateManager.DeleteTemplate(template);
         }
     }
 
-    public class TemplateItem : EditableItem<LineStyleTemplate, DefaultTemplateIcon>
+    public class TemplateItem : EditableItem<StyleTemplate, DefaultTemplateIcon>
     {
         public override string Description => NodeMarkup.Localize.TemplateEditor_ItemDescription;
 

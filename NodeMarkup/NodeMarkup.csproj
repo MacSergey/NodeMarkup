@@ -74,16 +74,19 @@
   <ItemGroup>
     <Compile Include="Logger.cs" />
     <Compile Include="Manager\Filler\Filler.cs" />
+    <Compile Include="Manager\Filler\FillerStyle.cs" />
+    <Compile Include="Manager\Filler\FillerStyleBase.cs" />
     <Compile Include="Manager\Filler\FillerVertex.cs" />
     <Compile Include="Manager\Line\Line.cs" />
     <Compile Include="Manager\Line\LineRule.cs" />
-    <Compile Include="Manager\Style\LineStyle.cs" />
+    <Compile Include="Manager\Line\LineStyles.cs" />
     <Compile Include="Manager\Markup.cs" />
     <Compile Include="Manager\Line\LinePartEdge.cs" />
     <Compile Include="Manager\Point\Point.cs" />
     <Compile Include="Manager\Point\Enter.cs" />
     <Compile Include="Manager\Point\SupportPoint.cs" />
-    <Compile Include="Manager\Style\Style.cs" />
+    <Compile Include="Manager\Line\LineStyleBase.cs" />
+    <Compile Include="Manager\Style.cs" />
     <Compile Include="Manager\Templates.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Manager\Manager.cs" />
@@ -193,7 +196,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug" BuildVersion_DetectChanges="False" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

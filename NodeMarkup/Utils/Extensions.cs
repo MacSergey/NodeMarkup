@@ -92,6 +92,7 @@ namespace NodeMarkup.Utils
             VehicleInfo.VehicleType.Plane;
         public static bool IsDriveLane(this NetInfo.Lane info) => (info.m_vehicleType & DriveType) != VehicleInfo.VehicleType.None;
 
+        public static Vector2 Turn90(this Vector2 v, bool isClockWise) => isClockWise ? new Vector2(v.y, -v.x) : new Vector2(-v.y, v.x);
         public static Vector3 Turn90(this Vector3 v, bool isClockWise) => isClockWise ? new Vector3(v.z, v.y, -v.x) : new Vector3(-v.z, v.y, v.x);
         public static Vector3 TurnDeg(this Vector3 vector, float turnAngle, bool isClockWise) => vector.Turn(turnAngle * Mathf.Deg2Rad, isClockWise);
         public static Vector3 Turn(this Vector3 vector, float turnAngle, bool isClockWise)
@@ -149,7 +150,7 @@ namespace NodeMarkup.Utils
                 var firstPart = firstLength / length;
                 var secondPart = secondLength / length;
 
-                foreach(var point in firstPoints)
+                foreach (var point in firstPoints)
                 {
                     bezierPoints.Add(new BezierPoint(point.T * firstPart, point.Length));
                 }
@@ -182,8 +183,8 @@ namespace NodeMarkup.Utils
             (p.control ? EventModifiers.Control : EventModifiers.None) |
             (p.alt ? EventModifiers.Alt : EventModifiers.None);
 
-        public static BaseStyle.LineType GetSimpleStyle(this Event e) => e.shift ? (e.control ? BaseStyle.LineType.DoubleSolid : BaseStyle.LineType.Solid) : (e.control ? BaseStyle.LineType.DoubleDashed : BaseStyle.LineType.Dashed);
-        public static BaseStyle.LineType GetStopStyle(this Event e) => e.shift ? BaseStyle.LineType.StopDashed : BaseStyle.LineType.StopSolid;
+        public static Style.StyleType GetSimpleStyle(this Event e) => e.shift ? (e.control ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) : (e.control ? Style.StyleType.LineDoubleDashed : Style.StyleType.LineDashed);
+        public static Style.StyleType GetStopStyle(this Event e) => e.shift ? Style.StyleType.StopLineDashed : Style.StyleType.StopLineSolid;
     }
 
     public struct BezierPoint

@@ -166,7 +166,7 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupDash[] dashes, int count, Vector3 size)
+        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size)
         {
             Locations = new Vector4[count];
             Indices = new Vector4[count];
@@ -185,15 +185,15 @@ namespace NodeMarkup.Utils
             Mesh = Render.CreateMesh(count, size);
         }
 
-        public static IEnumerable<RenderBatch> FromDashes(MarkupDash[] dashes)
+        public static IEnumerable<RenderBatch> FromDashes(List<MarkupStyleDash> dashes)
         {
-            var groups = dashes.GroupBy(d => new Vector3(d.Length.RoundToNearest(0.05f), 1f, d.Width));
+            var groups = dashes.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(d.Length.RoundToNearest(0.05f), 1f, d.Width));
 
             foreach (var group in groups)
             {
                 var groupEnumerator = group.GetEnumerator();
 
-                var buffer = new MarkupDash[16];
+                var buffer = new MarkupStyleDash[16];
                 var count = 0;
 
                 bool isEnd = groupEnumerator.MoveNext();
@@ -212,20 +212,5 @@ namespace NodeMarkup.Utils
                 while (!isEnd);
             }
         }
-
-        //struct LW
-        //{
-        //    public float Length;
-        //    public float Width;
-        //    public LW(float l, float w)
-        //    {
-
-        //    }
-        //}
-        //class LWComparer : IEqualityComparer<LW>
-        //{
-        //    public bool Equals(LW x, LW y) => x.Length == y.Length && x.Width == y.Width;
-        //    public int GetHashCode(LW obj) => obj.GetHashCode();
-        //}
     }
 }

@@ -48,9 +48,9 @@ namespace NodeMarkup.Manager
             if (!cameraInfo.CheckRenderDistance(data.m_position, UI.Settings.RenderDistance))
                 return;
 
-            if (markup.NeedRecalculate)
+            if (markup.NeedRecalculateBatches)
             {
-                markup.NeedRecalculate = false;
+                markup.NeedRecalculateBatches = false;
                 markup.RecalculateBatches();
             }
 

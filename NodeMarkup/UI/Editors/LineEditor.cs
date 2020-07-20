@@ -302,7 +302,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddHeader()
         {
-            var header = AddUIComponent<RuleHeaderPanel>();
+            var header = AddUIComponent<StyleHeaderPanel>();
             header.AddRange(TemplateManager.Templates);
             header.Init(Editor.CanDivide);
             header.OnDelete += () => Editor.DeleteRule(this);
@@ -454,10 +454,10 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if (TemplateManager.AddTemplate(Rule.Style, out LineStyleTemplate template)) ;
+            if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template)) ;
             Editor.NodeMarkupPanel.EditTemplate(template);
         }
-        private void OnSelectTemplate(LineStyleTemplate template)
+        private void OnSelectTemplate(StyleTemplate template)
         {
             Rule.Style = template.Style.Copy();
             Style.SelectedObject = Rule.Style.Type;
@@ -468,7 +468,7 @@ namespace NodeMarkup.UI.Editors
         private void ColorChanged(Color32 color) => Rule.Style.Color = color;
         private void FromChanged(ISupportPoint from) => Rule.From = from.GetPartEdge(Editor.EditObject);
         private void ToChanged(ISupportPoint to) => Rule.To = to.GetPartEdge(Editor.EditObject);
-        private void StyleChanged(BaseStyle.LineType style)
+        private void StyleChanged(Style.StyleType style)
         {
             var newStyle = TemplateManager.GetDefault(style);
             newStyle.Color = Rule.Style.Color;

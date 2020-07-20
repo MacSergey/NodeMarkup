@@ -164,7 +164,7 @@ namespace NodeMarkup.UI
             editor?.UpdateEditor();
             editor?.Select(line);
         }
-        public void EditTemplate(LineStyleTemplate template)
+        public void EditTemplate(StyleTemplate template)
         {
             var editor = SelectEditor<TemplateEditor>();
             editor?.UpdateEditor();

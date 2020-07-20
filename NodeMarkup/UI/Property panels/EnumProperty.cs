@@ -36,44 +36,25 @@ namespace NodeMarkup.UI.Editors
             return NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
         }
     }
-    //public class StylePropertyPanel : EnumPropertyPanel<BaseStyle.LineType, StylePropertyPanel.StyleDropDown>
-    //{
-    //    protected override void FillItems()
-    //    {
-    //        foreach (var field in typeof(BaseStyle.LineType).GetFields().Skip(1))
-    //        {
-    //            if(field.GetCustomAttributes(typeof(BaseStyle.SpecialLineAttribute), false).Any())
-    //                continue;
-
-    //            var description = (field.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)?.Description ?? field.Name;
-    //            var localizeDescription = NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
-    //            var value = (BaseStyle.LineType)field.GetValue(null);
-    //            DropDown.AddItem(value, localizeDescription);
-    //        }
-    //    }
-    //    protected override bool IsEqual(BaseStyle.LineType first, BaseStyle.LineType second) => first == second;
-    //    public class StyleDropDown : CustomUIDropDown<BaseStyle.LineType> { }
-    //}
-
-    public abstract class StylePropertyPanel : EnumPropertyPanel<BaseStyle.LineType, StylePropertyPanel.StyleDropDown>
+    public abstract class StylePropertyPanel : EnumPropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
     {
-
-        protected override bool IsEqual(BaseStyle.LineType first, BaseStyle.LineType second) => first == second;
-        public class StyleDropDown : CustomUIDropDown<BaseStyle.LineType> { }
+        protected override bool IsEqual(Style.StyleType first, Style.StyleType second) => first == second;
+        public class StyleDropDown : CustomUIDropDown<Style.StyleType> { }
     }
     public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
         where StyleType : Enum
     {
         protected override void FillItems()
         {
-            foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<BaseStyle.LineType>())
+            foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<Style.StyleType>())
             {
                 DropDown.AddItem(value, GetDescription(value.ToString()));
             }
         }
     }
-    public class SimpleStylePropertyPanel : StylePropertyPanel<BaseStyle.SimpleLineType> { }
-    public class StopStylePropertyPanel : StylePropertyPanel<BaseStyle.StopLineType> { }
+    public class SimpleStylePropertyPanel : StylePropertyPanel<LineStyle.SimpleLineType> { }
+    public class StopStylePropertyPanel : StylePropertyPanel<LineStyle.StopLineType> { }
+    public class FillerStylePropertyPanel : StylePropertyPanel<FillerStyle.FillerType> { }
 
 
 

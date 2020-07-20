@@ -44,16 +44,16 @@ namespace NodeMarkup.UI.Editors
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
     }
-    public class RuleHeaderPanel : HeaderPanel
+    public class StyleHeaderPanel : HeaderPanel
     {
         public event Action OnSaveTemplate;
-        public event Action<LineStyleTemplate> OnSelectTemplate;
+        public event Action<StyleTemplate> OnSelectTemplate;
 
 
         UIButton SaveTemplateButton { get; set; }
         TemplateDropDown SelectTemplate { get; set; }
 
-        public RuleHeaderPanel()
+        public StyleHeaderPanel()
         {
             AddSaveTemplate();
             AddApplyTemplate();
@@ -141,7 +141,7 @@ namespace NodeMarkup.UI.Editors
 
             SelectTemplate.triggerButton = button;
 
-            Add(new LineStyleTemplate(NodeMarkup.Localize.HeaderPanel_ApplyTemplate, BaseStyle.DefaultSolid) { IsEmpty = true });
+            Add(new StyleTemplate(NodeMarkup.Localize.HeaderPanel_ApplyTemplate, LineStyle.DefaultSolid) { IsEmpty = true });
         }
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
         private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
@@ -161,11 +161,11 @@ namespace NodeMarkup.UI.Editors
             SelectTemplate.selectedIndex = 0;
         }
 
-        public void Add(LineStyleTemplate item)
+        public void Add(StyleTemplate item)
         {
             SelectTemplate.AddItem(item);
         }
-        public void AddRange(IEnumerable<LineStyleTemplate> items)
+        public void AddRange(IEnumerable<StyleTemplate> items)
         {
             foreach (var item in items)
             {
@@ -173,7 +173,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        public class TemplateDropDown : CustomUIDropDown<LineStyleTemplate> { }
+        public class TemplateDropDown : CustomUIDropDown<StyleTemplate> { }
     }
     public class TemplateHeaderPanel : HeaderPanel
     {

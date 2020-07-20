@@ -616,6 +616,7 @@ namespace NodeMarkup
         {
             SelectNode,
             ConnectLine,
+            SelectFiller,
             PanelAction,
             DragPoint
         }

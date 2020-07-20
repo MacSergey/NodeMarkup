@@ -22,6 +22,10 @@ namespace NodeMarkup.UI.Editors
         private IFillerVertex HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectFillerMode && HoverSupportPoint != null;
 
+        public StylePropertyPanel Style { get; private set; }
+
+        private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
+
         public FillerEditor()
         {
             SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
@@ -33,11 +37,111 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void FillItems()
         {
-            foreach(var filler in Markup.Fillers)
+            foreach (var filler in Markup.Fillers)
             {
                 AddItem(filler);
             }
         }
+        protected override void OnObjectSelect()
+        {
+            AddHeader();
+            AddStyleTypeProperty();
+            AddStyleProperties();
+        }
+
+        private void AddHeader()
+        {
+            var header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
+            header.AddRange(TemplateManager.Templates);
+            header.Init(false);
+            //header.OnSaveTemplate += OnSaveTemplate;
+            //header.OnSelectTemplate += OnSelectTemplate;
+        }
+        private void AddStyleTypeProperty()
+        {
+            Style = SettingsPanel.AddUIComponent<FillerStylePropertyPanel>();
+            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Init();
+            Style.SelectedObject = EditObject.Style.Type;
+            //Style.OnSelectObjectChanged += StyleChanged;
+        }
+        private void AddStyleProperties()
+        {
+            AddColorProperty();
+            AddWidthProperty();
+            AddStyleAdditionalProperties();
+        }
+        private void AddColorProperty()
+        {
+            var colorProperty = SettingsPanel.AddUIComponent<ColorPropertyPanel>();
+            colorProperty.Text = NodeMarkup.Localize.LineEditor_Color;
+            colorProperty.Init();
+            colorProperty.Value = EditObject.Style.Color;
+            colorProperty.OnValueChanged += ColorChanged;
+            StyleProperties.Add(colorProperty);
+        }
+        private void AddWidthProperty()
+        {
+            var widthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+            widthProperty.Text = NodeMarkup.Localize.LineEditor_Width;
+            widthProperty.UseWheel = true;
+            widthProperty.WheelStep = 0.01f;
+            widthProperty.CheckMin = true;
+            widthProperty.MinValue = 0.05f;
+            widthProperty.Init();
+            widthProperty.Value = EditObject.Style.Width;
+            widthProperty.OnValueChanged += WidthChanged;
+            //widthProperty.OnHover += PropertyHover;
+            //widthProperty.OnLeave += PropertyLeave;
+            StyleProperties.Add(widthProperty);
+        }
+        private void AddStyleAdditionalProperties()
+        {
+            if (EditObject.Style is IStrokeFiller strokeStyle)
+            {
+                var stepProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+                stepProperty.Text = "Step";
+                stepProperty.UseWheel = true;
+                stepProperty.WheelStep = 0.1f;
+                stepProperty.CheckMin = true;
+                stepProperty.MinValue = EditObject.Style.Width;
+                stepProperty.Init();
+                stepProperty.Value = strokeStyle.Step;
+                stepProperty.OnValueChanged += StepChanged;
+                StyleProperties.Add(stepProperty);
+
+                var angleProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+                angleProperty.Text = "Angle";
+                angleProperty.UseWheel = true;
+                angleProperty.WheelStep = 1f;
+                angleProperty.CheckMin = true;
+                angleProperty.MinValue = -90;
+                angleProperty.CheckMax = true;
+                angleProperty.MaxValue = 90;
+                angleProperty.Init();
+                angleProperty.Value = strokeStyle.Angle;
+                angleProperty.OnValueChanged += AngleChanged;
+                StyleProperties.Add(angleProperty);
+
+                var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+                offsetProperty.Text = "Offset";
+                offsetProperty.UseWheel = true;
+                offsetProperty.WheelStep = 0.1f;
+                offsetProperty.CheckMin = true;
+                offsetProperty.MinValue = 0f;
+                offsetProperty.Init();
+                offsetProperty.Value = strokeStyle.Offset;
+                offsetProperty.OnValueChanged += OffsetChanged;
+                StyleProperties.Add(offsetProperty);
+            }
+        }
+
+        private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
+        private void WidthChanged(float value) => EditObject.Style.Width = value;
+        private void StepChanged(float value) => (EditObject.Style as IStrokeFiller).Step = value;
+        private void AngleChanged(float value) => (EditObject.Style as IStrokeFiller).Angle = value;
+        private void OffsetChanged(float value) => (EditObject.Style as IStrokeFiller).Offset = value;
+
         private void AddAddButton()
         {
             AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
@@ -51,7 +155,7 @@ namespace NodeMarkup.UI.Editors
             NodeMarkupPanel.StartEditorAction(this, out bool isAccept);
             if (isAccept)
             {
-                Filler = new MarkupFiller(Markup);
+                Filler = new MarkupFiller(Markup, FillerStyle.FillerType.Stroke);
                 CalculateSupportPoints();
                 IsSelectFillerMode = true;
             }
@@ -121,7 +225,7 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverSupportPoint)
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverSupportPoint.Position, 1f, -1f, 1280f, false, true);
             }
-            else if(IsHoverItem)
+            else if (IsHoverItem)
                 RenderFillerLines(HoverItem.Object, cameraInfo);
         }
         private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)

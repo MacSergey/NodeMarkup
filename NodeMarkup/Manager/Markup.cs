@@ -29,12 +29,13 @@ namespace NodeMarkup.Manager
         };
 
         public ushort Id { get; }
+        public float Height { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
 
-        public bool NeedRecalculate { get; set; }
+        public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
 
 
@@ -74,6 +75,7 @@ namespace NodeMarkup.Manager
 #endif
             UpdateEnters();
             UpdateLines();
+            UpdateFillers();
 
             RecalculateDashes();
 #if DEBUG
@@ -86,6 +88,7 @@ namespace NodeMarkup.Manager
             Logger.LogDebug($"Start update enters");
 #endif
             var node = Utilities.GetNode(Id);
+            Height = node.m_position.y;
 
             var enters = new List<Enter>();
 
@@ -121,6 +124,20 @@ namespace NodeMarkup.Manager
             Logger.LogDebug($"End update lines");
 #endif
         }
+        private void UpdateFillers()
+        {
+#if DEBUG
+            Logger.LogDebug($"Start update fillers");
+#endif
+            var fillers = FillersList.ToArray();
+            foreach (var filler in fillers)
+            {
+                filler.Update();
+            }
+#if DEBUG
+            Logger.LogDebug($"End update fillers");
+#endif
+        }
 
         public void Update(MarkupPoint point)
         {
@@ -135,7 +152,12 @@ namespace NodeMarkup.Manager
         {
             line.UpdateTrajectory();
             line.RecalculateDashes();
-            NeedRecalculate = true;
+            NeedRecalculateBatches = true;
+        }
+        public void Update(MarkupFiller filler)
+        {
+            filler.RecalculateDashes();
+            NeedRecalculateBatches = true;
         }
 
         public void RecalculateDashes()
@@ -148,7 +170,11 @@ namespace NodeMarkup.Manager
             {
                 line.RecalculateDashes();
             }
-            NeedRecalculate = true;
+            foreach (var filler in Fillers)
+            {
+                filler.RecalculateDashes();
+            }
+            NeedRecalculateBatches = true;
 #if DEBUG
             Logger.LogDebug($"End recalculate dashes");
 #endif
@@ -159,19 +185,21 @@ namespace NodeMarkup.Manager
 #if DEBUG
             Logger.LogDebug($"Start recalculate batches");
 #endif
-            var dashes = LinesDictionary.Values.SelectMany(l => l.Dashes.Where(d => d.Length > 0.1f)).ToArray();
+            var dashes = new List<MarkupStyleDash>();
+            dashes.AddRange(Lines.SelectMany(l => l.Dashes));
+            dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
             RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
 #if DEBUG
-            Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}; dashes: {dashes.Length}");
+            Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}; dashes: {dashes.Count}");
 #endif
         }
 
-        public MarkupLine AddConnect(MarkupPointPair pointPair, BaseStyle.LineType lineType)
+        public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.StyleType lineType)
         {
             var newLine = new MarkupLine(this, pointPair, lineType);
             LinesDictionary[pointPair.Hash] = newLine;
 
-            NeedRecalculate = true;
+            NeedRecalculateBatches = true;
 
             return newLine;
         }
@@ -195,10 +223,13 @@ namespace NodeMarkup.Manager
         public void AddFiller(MarkupFiller filler)
         {
             FillersList.Add(filler);
+            filler.RecalculateDashes();
+            NeedRecalculateBatches = true;
         }
         public void RemoveFiller(MarkupFiller filler)
         {
             FillersList.Remove(filler);
+            NeedRecalculateBatches = true;
         }
         public void Clear()
         {
@@ -206,7 +237,7 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, BaseStyle.LineType lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.StyleType lineType)
         {
             if (!ExistConnection(pointPair))
                 return AddConnect(pointPair, lineType);

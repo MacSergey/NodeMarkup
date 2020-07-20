@@ -5,12 +5,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
     public class MarkupFiller
     {
         public Markup Markup { get; }
+
+        FillerStyle _style;
+        public FillerStyle Style
+        {
+            get => _style;
+            set
+            {
+                _style = value;
+                _style.OnStyleChanged = OnStyleChanged;
+                OnStyleChanged();
+            }
+        }
+
         List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
         public IFillerVertex First => SupportPoints.FirstOrDefault();
         public IFillerVertex Last => SupportPoints.LastOrDefault();
@@ -18,16 +32,55 @@ namespace NodeMarkup.Manager
         public IEnumerable<IFillerVertex> Vertices => SupportPoints;
         public int VertexCount => SupportPoints.Count;
 
-        public bool IsDone => VertexCount >= 2 && First.Equals(Last);
+        public bool IsDone => VertexCount >= 3 && First.Equals(Last);
 
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
         public IEnumerable<MarkupLinePart> Parts => LineParts;
+        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+
+        public Rect Rect
+        {
+            get
+            {
+                if (!IsDone)
+                    return Rect.zero;
+
+                var firstPos = First.Position;
+                var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
+
+                foreach (var part in LineParts)
+                {
+                    var trajectory = part.GetTrajectory();
+                    Set(trajectory.a);
+                    Set(trajectory.b);
+                    Set(trajectory.c);
+                    Set(trajectory.d);
+                }
+
+                return rect;
+
+                void Set(Vector3 pos)
+                {
+                    if (pos.x < rect.xMin)
+                        rect.xMin = pos.x;
+                    else if (pos.x > rect.xMax)
+                        rect.xMax = pos.x;
+
+                    if (pos.z < rect.yMin)
+                        rect.yMin = pos.z;
+                    else if (pos.z > rect.yMax)
+                        rect.yMax = pos.z;
+                }
+            }
+        }
 
 
-        public MarkupFiller(Markup markup)
+        public MarkupFiller(Markup markup, FillerStyle style)
         {
             Markup = markup;
+            Style = style;
         }
+        public MarkupFiller(Markup markup, FillerStyle.FillerType fillerType) : this(markup, FillerStyle.GetDefault(fillerType)) { }
 
         public void Add(IFillerVertex supportPoint)
         {
@@ -42,6 +95,8 @@ namespace NodeMarkup.Manager
             if (LineParts.Any())
                 LineParts.RemoveAt(LineParts.Count - 1);
         }
+
+        private void OnStyleChanged() => Markup.Update(this);
 
         public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
         {
@@ -117,6 +172,7 @@ namespace NodeMarkup.Manager
             resultMinT = minT;
             resultMaxT = maxT;
         }
+
         public void GetMinMaxNum(EnterFillerVertex vertex, out byte resultNum, out byte resultMinNum, out byte resultMaxNum)
         {
             var num = vertex.Point.Num;
@@ -170,6 +226,19 @@ namespace NodeMarkup.Manager
 
             if (t != 1 && minT < 1 && 1 < maxT)
                 yield return new EnterFillerVertex(this, line.End);
+        }
+
+        public void Update()
+        {
+            foreach (var part in LineParts)
+            {
+                if (part.Line is MarkupFakeLine fakeLine)
+                    fakeLine.UpdateTrajectory();
+            }
+        }
+        public void RecalculateDashes()
+        {
+            Dashes = Style.Calculate(this).ToArray();
         }
     }
     public class FillerLinePart : MarkupLinePart

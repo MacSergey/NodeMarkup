@@ -50,9 +50,9 @@ namespace NodeMarkup.Utils
             }
         }
 
-        private static bool Intersect(Bezier3 first, Bezier3 second, out float firstT, out float secondT)
+        public static bool Intersect(Bezier3 first, Bezier3 second, out float firstT, out float secondT)
         {
-            if (IntersectLines(first.a, first.d, second.a, second.d, out _, out _) && Intersect(first, second, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf))
+            if (IntersectSections(first.a, first.d, second.a, second.d, out _, out _) && Intersect(first, second, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf))
             {
                 firstT = 1f / firstOf * firstIndex;
                 secondT = 1f / secondOf * secondIndex;
@@ -72,7 +72,7 @@ namespace NodeMarkup.Utils
 
             if (firstParts == 1 && secondParts == 1)
             {
-                IntersectLines(first.a, first.d, second.a, second.d, out float firstT, out float secondT);
+                IntersectSections(first.a, first.d, second.a, second.d, out float firstT, out float secondT);
                 firstIndex = (int)(firstT * 100).RoundToNearest(1f);
                 firstOf = 100;
                 secondIndex = (int)(secondT * 100).RoundToNearest(1f);
@@ -84,7 +84,7 @@ namespace NodeMarkup.Utils
             {
                 for (var j = 0; j < secondParts; j += 1)
                 {
-                    if (IntersectLines(firstPos[i], firstPos[i + 1], secondPos[j], secondPos[j + 1], out float p, out float q))
+                    if (IntersectSections(firstPos[i], firstPos[i + 1], secondPos[j], secondPos[j + 1], out float p, out float q))
                     {
                         if (Intersect(first, second, firstPoints, secondPoints, WillTryParts(i, firstParts, p), WillTryParts(j, secondParts, q), out int resI, out int resJ, out firstIndex, out firstOf, out secondIndex, out secondOf))
                         {
@@ -125,6 +125,70 @@ namespace NodeMarkup.Utils
             return false;
         }
 
+        public static bool Intersect(Bezier3 bezier, Vector3 from, Vector3 to, out float firstT, out float lineT)
+        {
+            if (IntersectSectionAndRay(bezier.a, bezier.d, from, to, out _, out _) && Intersect(bezier, from, to, out int firstIndex, out int firstOf, out lineT))
+            {
+                firstT = 1f / firstOf * firstIndex;
+                return true;
+            }
+            else
+            {
+                firstT = -1;
+                lineT = -1;
+                return false;
+            }
+        }
+        private static bool Intersect(Bezier3 bezier, Vector3 from, Vector3 to, out int firstIndex, out int firstOf, out float lineT)
+        {
+            CalcParts(bezier, out int parts, out float[] points, out Vector3[] pos);
+
+            if (parts == 1)
+            {
+                IntersectSectionAndRay(bezier.a, bezier.d, from, to, out float firstT, out lineT);
+                firstIndex = (int)(firstT * 100).RoundToNearest(1f);
+                firstOf = 100;
+                return true;
+            }
+
+            for (var i = 0; i < parts; i += 1)
+            {
+                if (IntersectSectionAndRay(pos[i], pos[i + 1], from, to, out float p, out float q))
+                {
+                    if (Intersect(bezier, from, to, points, WillTryParts(i, parts, p), out int resI, out firstIndex, out firstOf, out lineT))
+                    {
+                        firstIndex += resI * firstOf;
+                        firstOf *= parts;
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+
+            firstIndex = firstOf = 0;
+            lineT = 0;
+            return false;
+        }
+        private static bool Intersect(Bezier3 first, Vector3 from, Vector3 to, float[] points, IEnumerable<int> _is, out int resI, out int index, out int of, out float lineT)
+        {
+            foreach (var i in _is)
+            {
+                var firstCut = first.Cut(points[i], points[i + 1]);
+
+                if (Intersect(firstCut, from, to, out index, out of, out lineT))
+                {
+                    resI = i;
+                    return true;
+                }
+            }
+
+            index = of = resI = 0;
+            lineT = 0f;
+            return false;
+        }
+
+
         private static void CalcParts(Bezier3 bezier, out int parts, out float[] points, out Vector3[] positons)
         {
             bezier.Divide(out Bezier3 b1, out Bezier3 b2);
@@ -145,10 +209,17 @@ namespace NodeMarkup.Utils
                 positons[i] = bezier.Position(points[i]);
             }
         }
-        private static bool IntersectLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d, out float p, out float q)
+        private static bool IntersectSections(Vector3 a, Vector3 b, Vector3 c, Vector3 d, out float p, out float q)
         {
             if (Line2.Intersect(VectorUtils.XZ(a), VectorUtils.XZ(b), VectorUtils.XZ(c), VectorUtils.XZ(d), out p, out q))
                 if ((0 <= p && p <= 1) && (0 <= q && q <= 1))
+                    return true;
+            return false;
+        }
+        private static bool IntersectSectionAndRay(Vector3 a, Vector3 b, Vector3 c, Vector3 d, out float p, out float q)
+        {
+            if (Line2.Intersect(VectorUtils.XZ(a), VectorUtils.XZ(b), VectorUtils.XZ(c), VectorUtils.XZ(d), out p, out q))
+                if ((0 <= p && p <= 1))
                     return true;
             return false;
         }

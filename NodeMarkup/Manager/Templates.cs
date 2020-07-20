@@ -12,10 +12,10 @@ namespace NodeMarkup.Manager
     {
         static string DefaultName => Localize.Template_NewTemplate;
 
-        static Dictionary<string, LineStyleTemplate> TemplatesDictionary { get; } = new Dictionary<string, LineStyleTemplate>();
-        static Dictionary<BaseStyle.LineType, LineStyleTemplate> DefaultTemplates { get; } = new Dictionary<BaseStyle.LineType, LineStyleTemplate>();
+        static Dictionary<string, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<string, StyleTemplate>();
+        static Dictionary<LineStyle.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<LineStyle.StyleType, StyleTemplate>();
 
-        public static IEnumerable<LineStyleTemplate> Templates => TemplatesDictionary.Values;
+        public static IEnumerable<StyleTemplate> Templates => TemplatesDictionary.Values;
 
         static TemplateManager()
         {
@@ -32,13 +32,13 @@ namespace NodeMarkup.Manager
                 Logger.LogError(() => "Could load templates", error);
             }
         }
-        private static void InitTempalte(LineStyleTemplate template)
+        private static void InitTempalte(StyleTemplate template)
         {
             template.OnTemplateChanged = OnTemplateChanged;
             template.OnStyleChanged = OnTemplateStyleChanged;
             template.OnNameChanged = OnTemplateNameChanged;
         }
-        public static bool AddTemplate(BaseStyle style, out LineStyleTemplate template, string name = null)
+        public static bool AddTemplate(LineStyle style, out StyleTemplate template, string name = null)
         {
             var templateName = name ?? GetNewName();
             if (TemplatesDictionary.ContainsKey(templateName))
@@ -47,7 +47,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
 
-            template = new LineStyleTemplate(templateName, style);
+            template = new StyleTemplate(templateName, style);
             InitTempalte(template);
             TemplatesDictionary[template.Name] = template;
 
@@ -55,7 +55,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public static void DeleteTemplate(LineStyleTemplate template)
+        public static void DeleteTemplate(StyleTemplate template)
         {
             TemplatesDictionary.Remove(template.Name);
             if (template.IsDefault())
@@ -63,7 +63,7 @@ namespace NodeMarkup.Manager
 
             Save();
         }
-        public static void ToggleAsDefaultTemplate(LineStyleTemplate template)
+        public static void ToggleAsDefaultTemplate(StyleTemplate template)
         {
             if (template.IsDefault())
                 DefaultTemplates.Remove(template.Style.Type);
@@ -82,15 +82,15 @@ namespace NodeMarkup.Manager
             }
             return $"{DefaultName} {i}";
         }
-        public static BaseStyle GetDefault(BaseStyle.LineType type)
+        public static LineStyle GetDefault(Style.StyleType type)
         {
-            if (DefaultTemplates.TryGetValue(type, out LineStyleTemplate template))
+            if (DefaultTemplates.TryGetValue(type, out StyleTemplate template))
                 return template.Style.Copy();
             else
-                return BaseStyle.GetDefault(type);
+                return LineStyle.GetDefault(type);
         }
-        public static bool IsDefault(this LineStyleTemplate template) =>
-            DefaultTemplates.TryGetValue(template.Style.Type, out LineStyleTemplate defaultTemplate) && template == defaultTemplate;
+        public static bool IsDefault(this StyleTemplate template) =>
+            DefaultTemplates.TryGetValue(template.Style.Type, out StyleTemplate defaultTemplate) && template == defaultTemplate;
         static void Save()
         {
             try
@@ -107,7 +107,7 @@ namespace NodeMarkup.Manager
             }
         }
         static void OnTemplateChanged() => Save();
-        static void OnTemplateStyleChanged(LineStyleTemplate template, BaseStyle newStyle)
+        static void OnTemplateStyleChanged(StyleTemplate template, LineStyle newStyle)
         {
             if (template.IsDefault())
             {
@@ -117,7 +117,7 @@ namespace NodeMarkup.Manager
                     DefaultTemplates[newStyle.Type] = template;
             }
         }
-        static bool OnTemplateNameChanged(LineStyleTemplate template, string newName)
+        static bool OnTemplateNameChanged(StyleTemplate template, string newName)
         {
             if (!string.IsNullOrEmpty(newName) && newName != template.Name && !TemplatesDictionary.ContainsKey(newName))
             {
@@ -132,9 +132,9 @@ namespace NodeMarkup.Manager
 
         static void FromXml(XElement config)
         {
-            foreach (var templateConfig in config.Elements(LineStyleTemplate.XmlName))
+            foreach (var templateConfig in config.Elements(StyleTemplate.XmlName))
             {
-                if (LineStyleTemplate.FromXml(templateConfig, out LineStyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Name))
+                if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Name))
                 {
                     InitTempalte(template);
                     TemplatesDictionary[template.Name] = template;
@@ -143,10 +143,10 @@ namespace NodeMarkup.Manager
 
             foreach (var defaultConfig in config.Elements("D"))
             {
-                var styleType = (BaseStyle.LineType)defaultConfig.GetAttrValue<int>("T");
+                var styleType = (LineStyle.StyleType)defaultConfig.GetAttrValue<int>("T");
                 var templateName = defaultConfig.GetAttrValue<string>("N");
 
-                if (TemplatesDictionary.TryGetValue(templateName, out LineStyleTemplate template))
+                if (TemplatesDictionary.TryGetValue(templateName, out StyleTemplate template))
                 {
                     DefaultTemplates[styleType] = template;
                 }

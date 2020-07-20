@@ -23,7 +23,7 @@ namespace NodeMarkup.Manager
         public List<MarkupLineRawRule> RawRules { get; } = new List<MarkupLineRawRule>();
 
         public Bezier3 Trajectory { get; protected set; }
-        public MarkupDash[] Dashes { get; private set; } = new MarkupDash[0];
+        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
 
         public string XmlSection => XmlName;
 
@@ -35,12 +35,12 @@ namespace NodeMarkup.Manager
             UpdateTrajectory();
         }
         public MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second) : this(markup, new MarkupPointPair(first, second)) { }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, BaseStyle lineStyle) : this(markup, pointPair)
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : this(markup, pointPair)
         {
             AddRule(lineStyle, false, false);
             RecalculateDashes();
         }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, BaseStyle.LineType lineType) : this(markup, pointPair, TemplateManager.GetDefault(lineType)) { }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.StyleType lineType) : this(markup, pointPair, TemplateManager.GetDefault(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
         public virtual void UpdateTrajectory()
         {
@@ -57,7 +57,7 @@ namespace NodeMarkup.Manager
         {
             var rules = MarkupLineRawRule.GetRules(RawRules);
 
-            var dashes = new List<MarkupDash>();
+            var dashes = new List<MarkupStyleDash>();
             foreach (var rule in rules)
             {
                 var trajectoryPart = Trajectory.Cut(rule.Start, rule.End);
@@ -81,13 +81,13 @@ namespace NodeMarkup.Manager
             if (update)
                 RuleChanged();
         }
-        public MarkupLineRawRule AddRule(BaseStyle lineStyle, bool empty = true, bool update = true)
+        public MarkupLineRawRule AddRule(LineStyle lineStyle, bool empty = true, bool update = true)
         {
             var newRule = new MarkupLineRawRule(this, lineStyle, empty ? null : new EnterPointEdge(Start), empty ? null : new EnterPointEdge(End));
             AddRule(newRule, update);
             return newRule;
         }
-        public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault(BaseStyle.LineType.Dashed));
+        public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault(Style.StyleType.LineDashed));
         public void RemoveRule(MarkupLineRawRule rule)
         {
             RawRules.Remove(rule);
