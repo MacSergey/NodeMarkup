@@ -54,6 +54,7 @@ namespace NodeMarkup.Manager
         {
             Angle = angle;
             Step = step;
+            Offset = offset;
         }
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
@@ -70,7 +71,7 @@ namespace NodeMarkup.Manager
 
                 intersect.Sort();
 
-                for (var i = 1; i < intersect.Count; i += 1)
+                for (var i = 1; i < intersect.Count; i += 2)
                 {
                     var start = point + normal * intersect[i - 1];
                     var end = point + normal * intersect[i];

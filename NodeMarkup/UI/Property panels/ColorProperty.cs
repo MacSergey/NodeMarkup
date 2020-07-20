@@ -145,7 +145,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SelectedColorChanged(UIComponent component, Color value)
         {
-            value.a = Value.a;
+            value.a = ((Color)Value).a;
             Value = value;
         }
         private void OpacityChanged(UIComponent component, float value)

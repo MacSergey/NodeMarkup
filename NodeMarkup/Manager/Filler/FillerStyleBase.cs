@@ -14,7 +14,7 @@ namespace NodeMarkup.Manager
     {
         public static float DefaultAngle { get; } = 0f;
         public static float DefaultStep { get; } = 1f;
-        public static float DefaultOffset { get; } = 1f;
+        public static float DefaultOffset { get; } = 0f;
 
         public static StrokeFillerStyle DefaultStroke => new StrokeFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
 

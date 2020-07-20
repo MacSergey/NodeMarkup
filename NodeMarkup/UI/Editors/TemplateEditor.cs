@@ -212,7 +212,7 @@ namespace NodeMarkup.UI.Editors
             SelectItem.Refresh();
         }
         private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
-        private void StyleChanged(LineStyle.StyleType style)
+        private void StyleChanged(Style.StyleType style)
         {
             var newStyle = LineStyle.GetDefault(style);
             newStyle.Color = EditObject.Style.Color;
