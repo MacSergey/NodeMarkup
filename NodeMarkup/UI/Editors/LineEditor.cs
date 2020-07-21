@@ -454,8 +454,8 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template)) ;
-            Editor.NodeMarkupPanel.EditTemplate(template);
+            if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template))
+                Editor.NodeMarkupPanel.EditTemplate(template);
         }
         private void OnSelectTemplate(StyleTemplate template)
         {

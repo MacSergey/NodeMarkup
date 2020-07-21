@@ -43,7 +43,7 @@ namespace NodeMarkup.UI.Editors
 #endif
             AddHeader();
             AddTemplateName();
-            AddStyleProperty();
+            //AddStyleProperty();
             AddColorProperty();
             AddWidthProperty();
             AddStyleAdditionalProperties();
@@ -67,30 +67,30 @@ namespace NodeMarkup.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += NameSubmitted;
         }
-        private void AddStyleProperty()
-        {
-            var styleProperty = default(StylePropertyPanel);
+        //private void AddStyleProperty()
+        //{
+        //    var styleProperty = default(StylePropertyPanel);
 
-            switch (EditObject.Style)
-            {
-                case ISimpleLine _:
-                    styleProperty = AddUIComponent<SimpleStylePropertyPanel>();
-                    break;
-                case IStopLine _:
-                    styleProperty = AddUIComponent<StopStylePropertyPanel>();
-                    break;
-                case IFillerStyle _:
-                    styleProperty = AddUIComponent<FillerStylePropertyPanel>();
-                    break;
-                default:
-                    return;
-            }
+        //    switch (EditObject.Style)
+        //    {
+        //        case ISimpleLine _:
+        //            styleProperty = SettingsPanel.AddUIComponent<SimpleStylePropertyPanel>();
+        //            break;
+        //        case IStopLine _:
+        //            styleProperty = SettingsPanel.AddUIComponent<StopStylePropertyPanel>();
+        //            break;
+        //        case IFillerStyle _:
+        //            styleProperty = SettingsPanel.AddUIComponent<FillerStylePropertyPanel>();
+        //            break;
+        //        default:
+        //            return;
+        //    }
 
-            styleProperty.Text = NodeMarkup.Localize.TemplateEditor_Style;
-            styleProperty.Init();
-            styleProperty.SelectedObject = EditObject.Style.Type;
-            styleProperty.OnSelectObjectChanged += StyleChanged;
-        }
+        //    styleProperty.Text = NodeMarkup.Localize.TemplateEditor_Style;
+        //    styleProperty.Init();
+        //    styleProperty.SelectedObject = EditObject.Style.Type;
+        //    styleProperty.OnSelectObjectChanged += StyleChanged;
+        //}
         private void AddColorProperty()
         {
             var colorProperty = SettingsPanel.AddUIComponent<ColorPropertyPanel>();
@@ -195,16 +195,16 @@ namespace NodeMarkup.UI.Editors
                 StyleProperties.Add(offsetProperty);
             }
         }
-        private void ClearStyleProperties()
-        {
-            foreach (var property in StyleProperties)
-            {
-                SettingsPanel.RemoveUIComponent(property);
-                Destroy(property);
-            }
+        //private void ClearStyleProperties()
+        //{
+        //    foreach (var property in StyleProperties)
+        //    {
+        //        SettingsPanel.RemoveUIComponent(property);
+        //        Destroy(property);
+        //    }
 
-            StyleProperties.Clear();
-        }
+        //    StyleProperties.Clear();
+        //}
         private void NameSubmitted(string value)
         {
             EditObject.Name = value;
@@ -212,25 +212,25 @@ namespace NodeMarkup.UI.Editors
             SelectItem.Refresh();
         }
         private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
-        private void StyleChanged(Style.StyleType style)
-        {
-            var newStyle = LineStyle.GetDefault(style);
-            newStyle.Color = EditObject.Style.Color;
-            if (newStyle is IDashedLine newDashed && EditObject.Style is IDashedLine oldDashed)
-            {
-                newDashed.DashLength = oldDashed.DashLength;
-                newDashed.SpaceLength = oldDashed.SpaceLength;
-            }
-            if (newStyle is IDoubleLine newDouble && EditObject.Style is IDoubleLine oldDouble)
-                newDouble.Offset = oldDouble.Offset;
+        //private void StyleChanged(Style.StyleType style)
+        //{
+        //    var newStyle = LineStyle.GetDefault(style);
+        //    newStyle.Color = EditObject.Style.Color;
+        //    if (newStyle is IDashedLine newDashed && EditObject.Style is IDashedLine oldDashed)
+        //    {
+        //        newDashed.DashLength = oldDashed.DashLength;
+        //        newDashed.SpaceLength = oldDashed.SpaceLength;
+        //    }
+        //    if (newStyle is IDoubleLine newDouble && EditObject.Style is IDoubleLine oldDouble)
+        //        newDouble.Offset = oldDouble.Offset;
 
-            EditObject.Style = newStyle;
+        //    EditObject.Style = newStyle;
 
-            ClearStyleProperties();
-            AddStyleAdditionalProperties();
+        //    ClearStyleProperties();
+        //    AddStyleAdditionalProperties();
 
-            AsDefaultRefresh();
-        }
+        //    AsDefaultRefresh();
+        //}
         private void WidthChanged(float value) => EditObject.Style.Width = value;
         private void DashLengthChanged(float value) => (EditObject.Style as IDashedLine).DashLength = value;
         private void SpaceLengthChanged(float value) => (EditObject.Style as IDashedLine).SpaceLength = value;

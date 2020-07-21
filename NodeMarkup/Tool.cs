@@ -29,6 +29,8 @@ namespace NodeMarkup
         public static bool MouseRayValid { get; private set; }
         public static Vector3 MousePosition { get; private set; }
 
+        Markup EditMarkup { get; set; }
+
         ushort HoverNodeId { get; set; } = 0;
         ushort SelectNodeId { get; set; } = 0;
         MarkupPoint HoverPoint { get; set; } = null;
@@ -39,6 +41,11 @@ namespace NodeMarkup
         bool IsSelectNode => SelectNodeId != 0;
         bool IsHoverPoint => HoverPoint != null;
         bool IsSelectPoint => SelectPoint != null;
+
+        MarkupFiller TempFiller { get; set; }
+        public List<IFillerVertex> FillerPoints { get; } = new List<IFillerVertex>();
+        private IFillerVertex HoverFillerPoint { get; set; }
+        private bool IsHoverFillerPoint => HoverFillerPoint != null;
 
         Color32 HoverColor { get; } = new Color32(255, 136, 0, 224);
 
@@ -115,11 +122,14 @@ namespace NodeMarkup
         }
         private void Reset()
         {
+            EditMarkup = null;
             HoverNodeId = 0;
             SelectNodeId = 0;
             HoverPoint = null;
             SelectPoint = null;
             DragPoint = null;
+            FillerPoints.Clear();
+            HoverFillerPoint = null;
             ToolMode = Mode.SelectNode;
             cursorInfoLabel.isVisible = false;
             Panel?.EndPanelAction();
@@ -188,6 +198,9 @@ namespace NodeMarkup
                 case Mode.PanelAction:
                     Panel.OnUpdate();
                     break;
+                case Mode.SelectFiller:
+                    GetHoverFillerPoint();
+                    break;
             }
 
             Info();
@@ -221,8 +234,7 @@ namespace NodeMarkup
         {
             if (MouseRayValid)
             {
-                var markup = MarkupManager.Get(SelectNodeId);
-                foreach (var enter in markup.Enters)
+                foreach (var enter in EditMarkup.Enters)
                 {
                     foreach (var point in enter.Points)
                     {
@@ -236,6 +248,22 @@ namespace NodeMarkup
             }
 
             HoverPoint = null;
+        }
+        private void GetHoverFillerPoint()
+        {
+            if (MouseRayValid)
+            {
+                foreach (var supportPoint in FillerPoints)
+                {
+                    if (supportPoint.IsIntersect(MouseRay))
+                    {
+                        HoverFillerPoint = supportPoint;
+                        return;
+                    }
+                }
+            }
+
+            HoverFillerPoint = null;
         }
 
         private void Info()
@@ -346,6 +374,12 @@ namespace NodeMarkup
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     OnSecondaryMouseClicked();
                     break;
+                case EventType.keyDown:
+                    OnKeyDown(e);
+                    break;
+                case EventType.keyUp:
+                    OnKeyUp(e);
+                    break;
                 default:
                     if (DeleteAllShortcut.IsPressed(e))
                     {
@@ -386,7 +420,27 @@ namespace NodeMarkup
 
             point.Offset = (point.Offset + offsetChange).RoundToNearest(0.01f);
         }
-
+        private void OnKeyDown(Event e)
+        {
+            switch (ToolMode)
+            {
+                case Mode.ConnectLine when !IsSelectPoint && e.alt:
+                    ToolMode = Mode.SelectFiller;
+                    TempFiller = new MarkupFiller(EditMarkup, FillerStyle.FillerType.Stroke);
+                    GetFillerPoints();
+                    break;
+            }
+        }
+        private void OnKeyUp(Event e)
+        {
+            switch (ToolMode)
+            {
+                case Mode.SelectFiller when TempFiller.IsEmpty:
+                    ToolMode = Mode.ConnectLine;
+                    TempFiller = null;
+                    break;
+            }
+        }
         private void OnPrimaryMouseClicked(Event e)
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnPrimaryMouseClicked)}");
@@ -402,6 +456,9 @@ namespace NodeMarkup
                 case Mode.ConnectLine when IsHoverPoint && IsSelectPoint:
                     OnMakeLine(e);
                     break;
+                case Mode.SelectFiller:
+                    OnSelectFillerPoint(e);
+                    break;
                 case Mode.PanelAction:
                     OnPanelActionPrimaryClick(e);
                     break;
@@ -413,6 +470,8 @@ namespace NodeMarkup
         private void OnSelectNode()
         {
             SelectNodeId = HoverNodeId;
+            EditMarkup = MarkupManager.Get(SelectNodeId);
+
             ToolMode = Mode.ConnectLine;
             Panel.SetNode(SelectNodeId);
         }
@@ -425,13 +484,27 @@ namespace NodeMarkup
         }
         private void OnMakeLine(Event e)
         {
-            var markup = MarkupManager.Get(SelectNodeId);
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var lineType = pointPair.IsSomeEnter ? e.GetStopStyle() : e.GetSimpleStyle();
-            var newLine = markup.ToggleConnection(pointPair, lineType);
+            var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;
         }
+        private void OnSelectFillerPoint(Event e)
+        {
+            if (IsHoverFillerPoint)
+            {
+                if (TempFiller.Add(HoverFillerPoint))
+                {
+                    EditMarkup.AddFiller(TempFiller);
+                    Panel.EditFiller(TempFiller);
+                    ToolMode = Mode.ConnectLine;
+                    return;
+                }
+                GetFillerPoints();
+            }
+        }
+
         private void OnPanelActionPrimaryClick(Event e)
         {
             Panel.OnPrimaryMouseClicked(e, out bool isDone);
@@ -450,6 +523,9 @@ namespace NodeMarkup
             {
                 case Mode.PanelAction:
                     OnPanelActionSecondaryClick();
+                    break;
+                case Mode.SelectFiller:
+                    OnUnselectFillerPoint();
                     break;
                 case Mode.ConnectLine when IsSelectPoint:
                     OnUnselectPoint();
@@ -471,12 +547,31 @@ namespace NodeMarkup
                 ToolMode = Mode.ConnectLine;
             }
         }
+        private void OnUnselectFillerPoint()
+        {
+            if (TempFiller.IsEmpty)
+            {
+                ToolMode = Mode.ConnectLine;
+                TempFiller = null;
+            }
+            else
+            {
+                TempFiller.Remove();
+                GetFillerPoints();
+            }
+        }
         private void OnUnselectPoint() => SelectPoint = null;
         private void OnUnselectNode()
         {
             ToolMode = Mode.SelectNode;
+            EditMarkup = null;
             SelectNodeId = 0;
             Panel?.Hide();
+        }
+        private void GetFillerPoints()
+        {
+            FillerPoints.Clear();
+            FillerPoints.AddRange(TempFiller.GetNextСandidates());
         }
         private void DeleteAllLines()
         {
@@ -510,34 +605,45 @@ namespace NodeMarkup
         {
             switch (ToolMode)
             {
-                case Mode.SelectNode when IsHoverNode:
-                    var node = Utilities.GetNode(HoverNodeId);
-                    RenderManager.OverlayEffect.DrawCircle(cameraInfo, HoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
+                case Mode.SelectNode:
+                    RenderSelectNodeMode(cameraInfo);
                     break;
                 case Mode.ConnectLine:
-                    if (IsHoverPoint)
-                        RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
-
-                    //RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint?.Enter);
-                    RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint);
-                    RenderConnectLineOverlay(cameraInfo);
-                    Panel.Render(cameraInfo);
+                    RenderConnectLineMode(cameraInfo);
                     break;
                 case Mode.PanelAction:
-                    Panel.Render(cameraInfo);
+                    RenderPanelActionMode(cameraInfo);
                     break;
                 case Mode.DragPoint:
-                    RenderEnterOverlay(cameraInfo, DragPoint.Enter);
-                    RenderPointOverlay(cameraInfo, DragPoint);
+                    RenderDragPointMode(cameraInfo);
+                    break;
+                case Mode.SelectFiller:
+                    RenderSelectFillerMode(cameraInfo);
                     break;
             }
 
             base.RenderOverlay(cameraInfo);
         }
+        private void RenderSelectNodeMode(RenderManager.CameraInfo cameraInfo)
+        {
+            if (IsHoverNode)
+            {
+                var node = Utilities.GetNode(HoverNodeId);
+                RenderManager.OverlayEffect.DrawCircle(cameraInfo, HoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
+            }
+        }
+        private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
+        {
+            if (IsHoverPoint)
+                RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
+
+            RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint);
+            RenderConnectLineOverlay(cameraInfo);
+            Panel.Render(cameraInfo);
+        }
         private void RenderNodeEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, Enter ignore = null)
         {
-            var markup = MarkupManager.Get(SelectNodeId);
-            foreach (var enter in markup.Enters.Where(m => m != ignore))
+            foreach (var enter in EditMarkup.Enters.Where(m => m != ignore))
             {
                 foreach (var point in enter.Points)
                 {
@@ -547,8 +653,7 @@ namespace NodeMarkup
         }
         private void RenderNodeEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint ignore = null)
         {
-            var markup = MarkupManager.Get(SelectNodeId);
-            foreach (var enter in markup.Enters)
+            foreach (var enter in EditMarkup.Enters)
             {
                 foreach (var point in enter.Points.Where(p => p != ignore))
                 {
@@ -581,9 +686,8 @@ namespace NodeMarkup
 
             if (IsHoverPoint)
             {
-                var markup = MarkupManager.Get(SelectNodeId);
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-                color = markup.ExistConnection(pointPair) ? Color.red : Color.green;
+                color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.green;
 
                 bezier.a = SelectPoint.Position;
                 bezier.b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.Position - SelectPoint.Position : SelectPoint.Direction;
@@ -607,6 +711,66 @@ namespace NodeMarkup
             }
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+        }
+        private void RenderPanelActionMode(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
+        private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
+        {
+            RenderEnterOverlay(cameraInfo, DragPoint.Enter);
+            RenderPointOverlay(cameraInfo, DragPoint);
+        }
+        private void RenderSelectFillerMode(RenderManager.CameraInfo cameraInfo)
+        {
+            RenderFillerLines(cameraInfo);
+            RenderFillerBounds(cameraInfo);
+            RenderFillerConnectLine(cameraInfo);
+            if (IsHoverFillerPoint)
+                RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverFillerPoint.Position, 1f, -1f, 1280f, false, true);
+        }
+        private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
+        {
+            var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? Color.green : Color.white;
+            foreach (var part in TempFiller.Parts)
+            {
+                var bezier = part.GetTrajectory();
+                RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+            }
+        }
+        private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
+        {
+            foreach (var supportPoint in FillerPoints)
+            {
+                RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.red, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
+            }
+        }
+        private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
+        {
+            if (TempFiller.IsEmpty)
+                return;
+
+            Bezier3 bezier;
+            Color color;
+
+            if (IsHoverFillerPoint)
+            {
+                var linePart = TempFiller.GetFillerLine(TempFiller.Last, HoverFillerPoint);
+                bezier = linePart.GetTrajectory();
+
+                color = Color.green;
+            }
+            else
+            {
+                RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
+                RayCast(input, out RaycastOutput output);
+
+                bezier.a = TempFiller.Last.Position;
+                bezier.b = output.m_hitPos;
+                bezier.c = TempFiller.Last.Position;
+                bezier.d = output.m_hitPos;
+
+                color = Color.white;
+            }
+
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
         }
 

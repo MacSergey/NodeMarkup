@@ -11,6 +11,21 @@ namespace NodeMarkup.Manager
 {
     public class MarkupFiller
     {
+        public static IEnumerable<IFillerVertex> GetBeginCandidates(Markup markup)
+        {
+            foreach (var intersect in markup.Intersects)
+            {
+                yield return new IntersectFillerVertex(intersect.Pair);
+            }
+            foreach (var enter in markup.Enters)
+            {
+                foreach (var point in enter.Points.Where(p => p.IsEdge || p.Lines.Any()))
+                {
+                    yield return new EnterFillerVertex(point);
+                }
+            }
+        }
+
         public Markup Markup { get; }
 
         FillerStyle _style;
@@ -31,8 +46,7 @@ namespace NodeMarkup.Manager
         public IFillerVertex Prev => VertexCount >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
         public IEnumerable<IFillerVertex> Vertices => SupportPoints;
         public int VertexCount => SupportPoints.Count;
-
-        public bool IsDone => VertexCount >= 3 && First.Equals(Last);
+        public bool IsEmpty => VertexCount == 0;
 
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
         public IEnumerable<MarkupLinePart> Parts => LineParts;
@@ -42,7 +56,7 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                if (!IsDone)
+                if (IsEmpty)
                     return Rect.zero;
 
                 var firstPos = First.Position;
@@ -82,11 +96,21 @@ namespace NodeMarkup.Manager
         }
         public MarkupFiller(Markup markup, FillerStyle.FillerType fillerType) : this(markup, FillerStyle.GetDefault(fillerType)) { }
 
-        public void Add(IFillerVertex supportPoint)
+        public bool Add(IFillerVertex supportPoint)
         {
-            SupportPoints.Add(supportPoint);
-            if (VertexCount >= 2)
-                LineParts.Add(GetFillerLine(Last, Prev));
+            if(supportPoint.Equals(First))
+            {
+                LineParts.Add(GetFillerLine(First, Last));
+                return true;
+            }
+            else
+            {
+                SupportPoints.Add(supportPoint);
+                if (VertexCount >= 2)
+                    LineParts.Add(GetFillerLine(Last, Prev));
+
+                return false;
+            }
         }
         public void Remove()
         {
@@ -107,23 +131,9 @@ namespace NodeMarkup.Manager
         public IEnumerable<IFillerVertex> GetNextСandidates()
         {
             if (Last is IFillerVertex last)
-                return last.GetNextCandidates(Prev);
+                return last.GetNextCandidates(this, Prev);
             else
-                return GetBeginCandidates();
-        }
-        private IEnumerable<IFillerVertex> GetBeginCandidates()
-        {
-            foreach (var intersect in Markup.Intersects)
-            {
-                yield return new IntersectFillerVertex(this, intersect.Pair);
-            }
-            foreach (var enter in Markup.Enters)
-            {
-                foreach (var point in enter.Points.Where(p => p.IsEdge || p.Lines.Any()))
-                {
-                    yield return new EnterFillerVertex(this, point);
-                }
-            }
+                return GetBeginCandidates(Markup);
         }
 
         public void GetMinMaxT(IFillerVertex fillerVertex, MarkupLine line, out float resultT, out float resultMinT, out float resultMaxT)
@@ -142,7 +152,7 @@ namespace NodeMarkup.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (line.Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupLineIntersect intersect && intersect.IsIntersect)
+                else if (Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupLineIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[linePart.Line];
 
@@ -206,7 +216,7 @@ namespace NodeMarkup.Manager
 
             foreach (var intersectLine in line.IntersectLines)
             {
-                var vertex = new IntersectFillerVertex(this, line, intersectLine);
+                var vertex = new IntersectFillerVertex(line, intersectLine);
                 if (vertex.GetT(line, out float tt) && tt != t && minT < tt && tt < maxT)
                     yield return vertex;
             }
@@ -222,10 +232,10 @@ namespace NodeMarkup.Manager
             }
 
             if (t != 0 && minT < 0 && 0 < maxT)
-                yield return new EnterFillerVertex(this, line.Start);
+                yield return new EnterFillerVertex(line.Start);
 
             if (t != 1 && minT < 1 && 1 < maxT)
-                yield return new EnterFillerVertex(this, line.End);
+                yield return new EnterFillerVertex(line.End);
         }
 
         public void Update()
