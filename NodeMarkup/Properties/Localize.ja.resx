@@ -186,7 +186,7 @@
     <value>交差点・ノード内 {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>交点・接点 {0}</value>
+    <value>端点・原点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>破線</value>
