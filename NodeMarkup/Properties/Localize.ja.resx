@@ -125,7 +125,7 @@
 この操作は元に戻せません</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールをスクロールして増減</value>
+    <value>ホイールスクロールで増減</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
