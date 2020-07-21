@@ -470,8 +470,12 @@ namespace NodeMarkup.UI.Editors
         private void ToChanged(ISupportPoint to) => Rule.To = to.GetPartEdge(Editor.EditObject);
         private void StyleChanged(Style.StyleType style)
         {
+            if (style == Rule.Style.Type)
+                return;
+
             var newStyle = TemplateManager.GetDefault(style);
             newStyle.Color = Rule.Style.Color;
+            newStyle.Width = Rule.Style.Width;
             if (newStyle is IDashedLine newDashed && Rule.Style is IDashedLine oldDashed)
             {
                 newDashed.DashLength = oldDashed.DashLength;

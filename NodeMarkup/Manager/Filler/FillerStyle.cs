@@ -62,25 +62,25 @@ namespace NodeMarkup.Manager
 
             foreach (var point in GetLines(filler.Rect, filler.Markup.Height, out Vector3 normal))
             {
-                var intersect = new List<float>();
+                var intersectSet = new HashSet<float>();
                 foreach (var part in parts)
                 {
-                    if (MarkupLineIntersect.Intersect(part, point, point + normal, out _, out float t))
-                        intersect.Add(t);
+                    foreach (var t in MarkupLineIntersect.Intersect(part, point, point + normal))
+                        intersectSet.Add(t);
                 }
 
-                intersect.Sort();
+                var intersects = intersectSet.OrderBy(i => i).ToArray();
 
-                for (var i = 1; i < intersect.Count; i += 2)
+                for (var i = 1; i < intersects.Length; i += 2)
                 {
-                    var start = point + normal * intersect[i - 1];
-                    var end = point + normal * intersect[i];
+                    var start = point + normal * intersects[i - 1];
+                    var end = point + normal * intersects[i];
 
                     var pos = (start + end) / 2;
                     var angle = Mathf.Atan2(normal.z, normal.x);
                     var length = (end - start).magnitude - (2 * Offset);
 
-                    if(length > 0)
+                    if (length > 0)
                         yield return new MarkupStyleDash(pos, angle, length, Width, Color);
                 }
             }
@@ -89,30 +89,25 @@ namespace NodeMarkup.Manager
         }
         private Vector3[] GetLines(Rect rect, float height, out Vector3 normal)
         {
-            var xDelta = Math.Max(rect.height - rect.width, 0);
-            var yDelta = Math.Max(rect.width - rect.height, 0);
-            var square = Rect.MinMaxRect(rect.xMin - xDelta, rect.yMin - yDelta, rect.xMax + xDelta, rect.yMax + yDelta);
+            var absAngle = Mathf.Abs(Angle) * Mathf.Deg2Rad;
+            var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
+            var dx = railLength * Mathf.Sin(absAngle);
+            var dy = railLength * Mathf.Cos(absAngle);
 
-            Line3 rail = default;
-            var angle = Mathf.Abs(Angle) <= 45 ? Angle : 90 - Angle;
-            var delta = Mathf.Tan(angle * Mathf.Deg2Rad) * square.width;
-
+            Line3 rail;
             if (Angle == -90 || Angle == 90)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMax), new Vector3(square.xMax, height, square.yMax));
-            else if (90 > Angle && Angle > 45)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMax), new Vector3(square.xMax, height, square.yMax - delta));
-            else if (Angle == 45)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMax), new Vector3(square.xMax, height, square.yMin));
-            else if (45 > Angle && Angle > 0)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMax), new Vector3(square.xMin + delta, height, square.yMin));
+                rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
+            else if (90 > Angle && Angle > 0)
+                rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
             else if (Angle == 0)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMax), new Vector3(square.xMin, height, square.yMin));
-            else if (0 > Angle && Angle > -45)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMin), new Vector3(square.xMin + delta, height, square.yMax));
-            else if (Angle == -45)
-                rail = new Line3(new Vector3(square.xMax, height, square.yMax), new Vector3(square.xMin, height, square.yMin));
-            else if (-45 > Angle && Angle > -90)
-                rail = new Line3(new Vector3(square.xMin, height, square.yMin), new Vector3(square.xMin, height, square.yMin + delta));
+                rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
+            else if (0 > Angle && Angle > -90)
+                rail = new Line3(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
+            else
+            {
+                normal = Vector3.zero;
+                return new Vector3[0];
+            }
 
             var dir = rail.b - rail.a;
             var length = dir.magnitude;
@@ -122,7 +117,7 @@ namespace NodeMarkup.Manager
             var start = (length - (Step * count)) / 2;
 
             var result = new Vector3[count];
-            for(var i = 0; i < count; i +=1)
+            for (var i = 0; i < count; i += 1)
             {
                 var pos = rail.a + dir * (i * Step + start);
                 result[i] = pos;
