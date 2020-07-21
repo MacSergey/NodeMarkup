@@ -164,8 +164,8 @@ namespace NodeMarkup.Manager
             }
             else if (NeedSplit)
             {
-                yield return new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
                 yield return new MarkupPoint(this, MarkupPoint.Type.RightEdge);
+                yield return new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
             }
             else
             {
