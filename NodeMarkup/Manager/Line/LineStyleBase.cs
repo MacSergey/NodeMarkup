@@ -74,12 +74,6 @@ namespace NodeMarkup.Manager
         public abstract IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(new XAttribute("T", (int)Type));
-            return config;
-        }
         protected static UIComponent AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
@@ -131,24 +125,6 @@ namespace NodeMarkup.Manager
             invertProperty.OnValueChanged += (bool value) => asymStyle.Invert = value;
             return invertProperty;
         }
-
-        public static bool FromXml(XElement config, out LineStyle style)
-        {
-            var type = (StyleType)config.GetAttrValue<int>("T");
-
-            if (TemplateManager.GetDefault<LineStyle>(type) is LineStyle defaultStyle)
-            {
-                style = defaultStyle;
-                style.FromXml(config);
-                return true;
-            }
-            else
-            {
-                style = default;
-                return false;
-            }
-        }
-
 
         public enum RegularLineType
         {

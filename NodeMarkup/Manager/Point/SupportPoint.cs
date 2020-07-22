@@ -8,20 +8,28 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface ISupportPoint : IEquatable<ISupportPoint>
+    public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>
     {
         Vector3 Position { get; }
         ILinePartEdge GetPartEdge(MarkupLine line);
         bool GetT(MarkupLine line, out float t);
         bool IsIntersect(Ray ray);
     }
-
+    public enum SupportType
+    {
+        EnterPoint,
+        LinesIntersect
+    }
 
     public abstract class SupportPoint : ISupportPoint
     {
+        public static string XmlName { get; } = "S";
         protected static Vector3 MarkerSize { get; } = Vector3.one * 0.5f;
         Bounds Bounds { get;}
         public Vector3 Position => Bounds.center;
+
+        public string XmlSection => XmlName;
+        public abstract SupportType Type { get; }
 
         public SupportPoint(Vector3 position)
         {
@@ -33,10 +41,19 @@ namespace NodeMarkup.Manager
         public abstract bool GetT(MarkupLine line, out float t);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
+
+        public virtual XElement ToXml()
+        {
+            var config = new XElement(XmlSection,
+                new XAttribute("T", (int)Type)
+            );
+            return config;
+        }
     }
 
     public class EnterSupportPoint : SupportPoint
     {
+        public override SupportType Type { get; } = SupportType.EnterPoint;
         public MarkupPoint Point { get; }
         public Enter Enter => Point.Enter;
 
@@ -65,6 +82,7 @@ namespace NodeMarkup.Manager
     }
     public class IntersectSupportPoint : SupportPoint
     {
+        public override SupportType Type { get; } = SupportType.LinesIntersect;
         public MarkupLinePair LinePair { get; set; }
         public MarkupLine First => LinePair.First;
         public MarkupLine Second => LinePair.Second;

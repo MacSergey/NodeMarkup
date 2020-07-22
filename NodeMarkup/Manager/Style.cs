@@ -13,6 +13,23 @@ namespace NodeMarkup.Manager
 {
     public abstract class Style : IToXml
     {
+        public static bool FromXml<T>(XElement config, out T style) where T : Style
+        {
+            var type = (StyleType)config.GetAttrValue<int>("T");
+
+            if (TemplateManager.GetDefault<T>(type) is T defaultStyle)
+            {
+                style = defaultStyle;
+                style.FromXml(config);
+                return true;
+            }
+            else
+            {
+                style = default;
+                return false;
+            }
+        }
+
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
         public static float DefaultWidth { get; } = 0.15f;
 
@@ -68,6 +85,7 @@ namespace NodeMarkup.Manager
         public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection,
+                new XAttribute("T", (int)Type),
                 new XAttribute("C", Color.ToInt()),
                 new XAttribute("W", Width)
             );
@@ -232,7 +250,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
             var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && LineStyle.FromXml(styleConfig, out LineStyle style))
+            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, out LineStyle style))
             {
                 template = new StyleTemplate(name, style);
                 return true;

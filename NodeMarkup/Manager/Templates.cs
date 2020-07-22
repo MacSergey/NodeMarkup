@@ -151,7 +151,7 @@ namespace NodeMarkup.Manager
 
             foreach (var defaultConfig in config.Elements("D"))
             {
-                var styleType = (LineStyle.StyleType)defaultConfig.GetAttrValue<int>("T");
+                var styleType = (Style.StyleType)defaultConfig.GetAttrValue<int>("T");
                 var templateName = defaultConfig.GetAttrValue<string>("N");
 
                 if (TemplatesDictionary.TryGetValue(templateName, out StyleTemplate template))

@@ -114,7 +114,7 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, MarkupLine line, Dictionary<InstanceID, InstanceID> map, out MarkupLineRawRule rule)
         {
-            if (!(config.Element(LineStyle.XmlName) is XElement styleConfig) || !LineStyle.FromXml(styleConfig, out LineStyle style))
+            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, out LineStyle style))
             {
                 rule = default;
                 return false;

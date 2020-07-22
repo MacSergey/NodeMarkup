@@ -5,11 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller
+    public class MarkupFiller : IToXml
     {
         public static IEnumerable<IFillerVertex> GetBeginCandidates(Markup markup)
         {
@@ -25,6 +26,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
+        public static string XmlName { get; } = "F";
 
         public Markup Markup { get; }
 
@@ -88,6 +90,7 @@ namespace NodeMarkup.Manager
             }
         }
 
+        public string XmlSection => XmlName;
 
         public MarkupFiller(Markup markup, FillerStyle style)
         {
@@ -249,6 +252,16 @@ namespace NodeMarkup.Manager
         public void RecalculateDashes()
         {
             Dashes = Style.Calculate(this).ToArray();
+        }
+
+        public XElement ToXml()
+        {
+            var config = new XElement(XmlSection, Style.ToXml());
+            foreach(var supportPoint in SupportPoints)
+            {
+                config.Add(supportPoint.ToXml());
+            }
+            return config;
         }
     }
     public class FillerLinePart : MarkupLinePart
