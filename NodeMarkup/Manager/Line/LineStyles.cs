@@ -1,5 +1,7 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework;
+using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using ColossalFramework.UI;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -40,7 +42,7 @@ namespace NodeMarkup.Manager
             yield return CalculateSolidDash(trajectory, 0f);
         }
 
-        public override LineStyle Copy() => new SolidLineStyle(Color, Width);
+        public override LineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
     }
     public class DoubleSolidLineStyle : SolidLineStyle, ISimpleLine, IDoubleLine
     {
@@ -67,6 +69,12 @@ namespace NodeMarkup.Manager
             yield return CalculateSolidDash(trajectory, Offset);
             yield return CalculateSolidDash(trajectory, -Offset);
         }
+        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = base.GetUIComponents(parent, onHover, onLeave);
+            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            return components;
+        }
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -78,7 +86,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle Copy() => new DoubleSolidLineStyle(Color, Width, Offset);
+        public override LineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
     }
     public class DashedLineStyle : LineStyle, ISimpleLine, IDashedLine
     {
@@ -117,6 +125,13 @@ namespace NodeMarkup.Manager
         {
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
         }
+        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = base.GetUIComponents(parent, onHover, onLeave);
+            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
+            return components;
+        }
 
         public override XElement ToXml()
         {
@@ -132,7 +147,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
 
-        public override LineStyle Copy() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
+        public override LineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
     }
     public class DoubleDashedLineStyle : DashedLineStyle, ISimpleLine, IDoubleLine
     {
@@ -159,6 +174,12 @@ namespace NodeMarkup.Manager
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Offset);
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset);
         }
+        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = base.GetUIComponents(parent, onHover, onLeave);
+            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            return components;
+        }
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -170,7 +191,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle Copy() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override LineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
     }
     public class SolidAndDashedLineStyle : LineStyle, ISimpleLine, IDoubleLine, IDashedLine, IAsymLine
     {
@@ -246,8 +267,17 @@ namespace NodeMarkup.Manager
         {
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
         }
+        public override LineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = base.GetUIComponents(parent, onHover, onLeave);
+            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            components.Add(AddInvertProperty(this, parent));
+            return components;
+        }
 
-        public override LineStyle Copy() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -290,7 +320,7 @@ namespace NodeMarkup.Manager
             yield return CalculateSolidDash(trajectory, 0f);
         }
 
-        public override LineStyle Copy() => new SolidStopLineStyle(Color, Width);
+        public override LineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
     }
     public class DashedStopLineStyle : LineStyle, IStopLine, IDashedLine
     {
@@ -342,7 +372,14 @@ namespace NodeMarkup.Manager
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
         }
 
-        public override LineStyle Copy() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
+        public override LineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
+        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = base.GetUIComponents(parent, onHover, onLeave);
+            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
+            return components;
+        }
 
         public override XElement ToXml()
         {

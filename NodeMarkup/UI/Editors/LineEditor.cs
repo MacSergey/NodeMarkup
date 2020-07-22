@@ -303,7 +303,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = AddUIComponent<StyleHeaderPanel>();
-            header.AddRange(TemplateManager.Templates);
+            header.AddRange(TemplateManager.GetTemplates(Rule.Style.Type));
             header.Init(Editor.CanDivide);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
@@ -338,12 +338,12 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            switch (Rule.Style)
+            switch (Rule.Style.Type & Manager.Style.StyleType.GroupMask)
             {
-                case ISimpleLine _:
-                    Style = AddUIComponent<SimpleStylePropertyPanel>();
+                case Manager.Style.StyleType.RegularLine:
+                    Style = AddUIComponent<RegularStylePropertyPanel>();
                     break;
-                case IStopLine _:
+                case Manager.Style.StyleType.StopLine:
                     Style = AddUIComponent<StopStylePropertyPanel>();
                     break;
                 default:
@@ -354,92 +354,7 @@ namespace NodeMarkup.UI.Editors
             Style.SelectedObject = Rule.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties()
-        {
-            AddColorProperty();
-            AddWidthProperty();
-            AddStyleAdditionalProperties();
-        }
-        private void AddColorProperty()
-        {
-            var colorProperty = AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = NodeMarkup.Localize.LineEditor_Color;
-            colorProperty.Init();
-            colorProperty.Value = Rule.Style.Color;
-            colorProperty.OnValueChanged += ColorChanged;
-            StyleProperties.Add(colorProperty);
-        }
-        private void AddWidthProperty()
-        {
-            var widthProperty = AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = NodeMarkup.Localize.LineEditor_Width;
-            widthProperty.UseWheel = true;
-            widthProperty.WheelStep = 0.01f;
-            widthProperty.CheckMin = true;
-            widthProperty.MinValue = 0.05f;
-            widthProperty.Init();
-            widthProperty.Value = Rule.Style.Width;
-            widthProperty.OnValueChanged += WidthChanged;
-            widthProperty.OnHover += PropertyHover;
-            widthProperty.OnLeave += PropertyLeave;
-            StyleProperties.Add(widthProperty);
-        }
-        private void AddStyleAdditionalProperties()
-        {
-            if (Rule.Style is IDashedLine dashedStyle)
-            {
-                var dashLengthProperty = AddUIComponent<FloatPropertyPanel>();
-                dashLengthProperty.Text = NodeMarkup.Localize.LineEditor_DashedLength;
-                dashLengthProperty.UseWheel = true;
-                dashLengthProperty.WheelStep = 0.1f;
-                dashLengthProperty.CheckMin = true;
-                dashLengthProperty.MinValue = 0.1f;
-                dashLengthProperty.Init();
-                dashLengthProperty.Value = dashedStyle.DashLength;
-                dashLengthProperty.OnValueChanged += DashLengthChanged;
-                dashLengthProperty.OnHover += PropertyHover;
-                dashLengthProperty.OnLeave += PropertyLeave;
-                StyleProperties.Add(dashLengthProperty);
-
-                var spaceLengthProperty = AddUIComponent<FloatPropertyPanel>();
-                spaceLengthProperty.Text = NodeMarkup.Localize.LineEditor_SpaceLength;
-                spaceLengthProperty.UseWheel = true;
-                spaceLengthProperty.WheelStep = 0.1f;
-                spaceLengthProperty.CheckMin = true;
-                spaceLengthProperty.MinValue = 0.1f;
-                spaceLengthProperty.Init();
-                spaceLengthProperty.Value = dashedStyle.SpaceLength;
-                spaceLengthProperty.OnValueChanged += SpaceLengthChanged;
-                spaceLengthProperty.OnHover += PropertyHover;
-                spaceLengthProperty.OnLeave += PropertyLeave;
-                StyleProperties.Add(spaceLengthProperty);
-            }
-            if (Rule.Style is IDoubleLine doubleStyle)
-            {
-                var offsetProperty = AddUIComponent<FloatPropertyPanel>();
-                offsetProperty.Text = NodeMarkup.Localize.LineEditor_Offset;
-                offsetProperty.UseWheel = true;
-                offsetProperty.WheelStep = 0.1f;
-                offsetProperty.Init();
-                offsetProperty.Value = doubleStyle.Offset;
-                offsetProperty.OnValueChanged += OffsetChanged;
-                offsetProperty.OnHover += PropertyHover;
-                offsetProperty.OnLeave += PropertyLeave;
-                StyleProperties.Add(offsetProperty);
-            }
-            if (Rule.Style is IAsymLine asymStyle)
-            {
-                var invertProperty = AddUIComponent<BoolPropertyPanel>();
-                invertProperty.Text = NodeMarkup.Localize.LineEditor_Invert;
-                invertProperty.Init();
-                invertProperty.Value = asymStyle.Invert;
-                invertProperty.OnValueChanged += InvertChanged;
-                StyleProperties.Add(invertProperty);
-            }
-        }
-
-        private void PropertyHover() => Editor.StopScroll();
-        private void PropertyLeave() => Editor.StartScroll();
+        private void AddStyleProperties() => StyleProperties.AddRange(Rule.Style.GetUIComponents(this, Editor.StopScroll, Editor.StartScroll));
 
         private void ClearStyleProperties()
         {
@@ -459,13 +374,15 @@ namespace NodeMarkup.UI.Editors
         }
         private void OnSelectTemplate(StyleTemplate template)
         {
-            Rule.Style = template.Style.Copy();
-            Style.SelectedObject = Rule.Style.Type;
-            ClearStyleProperties();
-            AddStyleProperties();
+            if (template.Style.Copy() is LineStyle style)
+            {
+                Rule.Style = style;
+                Style.SelectedObject = Rule.Style.Type;
+                ClearStyleProperties();
+                AddStyleProperties();
+            }
         }
 
-        private void ColorChanged(Color32 color) => Rule.Style.Color = color;
         private void FromChanged(ISupportPoint from) => Rule.From = from.GetPartEdge(Editor.EditObject);
         private void ToChanged(ISupportPoint to) => Rule.To = to.GetPartEdge(Editor.EditObject);
         private void StyleChanged(Style.StyleType style)
@@ -473,7 +390,7 @@ namespace NodeMarkup.UI.Editors
             if (style == Rule.Style.Type)
                 return;
 
-            var newStyle = TemplateManager.GetDefault(style);
+            var newStyle = TemplateManager.GetDefault<LineStyle>(style);
             newStyle.Color = Rule.Style.Color;
             newStyle.Width = Rule.Style.Width;
             if (newStyle is IDashedLine newDashed && Rule.Style is IDashedLine oldDashed)
@@ -489,11 +406,6 @@ namespace NodeMarkup.UI.Editors
             ClearStyleProperties();
             AddStyleProperties();
         }
-        private void WidthChanged(float value) => Rule.Style.Width = value;
-        private void DashLengthChanged(float value) => (Rule.Style as IDashedLine).DashLength = value;
-        private void SpaceLengthChanged(float value) => (Rule.Style as IDashedLine).SpaceLength = value;
-        private void OffsetChanged(float value) => (Rule.Style as IDoubleLine).Offset = value;
-        private void InvertChanged(bool value) => (Rule.Style as IAsymLine).Invert = value;
 
         protected override void OnSizeChanged()
         {

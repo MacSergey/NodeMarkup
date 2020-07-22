@@ -43,10 +43,7 @@ namespace NodeMarkup.UI.Editors
 #endif
             AddHeader();
             AddTemplateName();
-            //AddStyleProperty();
-            AddColorProperty();
-            AddWidthProperty();
-            AddStyleAdditionalProperties();
+            AddStyleProperties();
 #if STOPWATCH
             Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
 #endif
@@ -67,179 +64,14 @@ namespace NodeMarkup.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += NameSubmitted;
         }
-        //private void AddStyleProperty()
-        //{
-        //    var styleProperty = default(StylePropertyPanel);
-
-        //    switch (EditObject.Style)
-        //    {
-        //        case ISimpleLine _:
-        //            styleProperty = SettingsPanel.AddUIComponent<SimpleStylePropertyPanel>();
-        //            break;
-        //        case IStopLine _:
-        //            styleProperty = SettingsPanel.AddUIComponent<StopStylePropertyPanel>();
-        //            break;
-        //        case IFillerStyle _:
-        //            styleProperty = SettingsPanel.AddUIComponent<FillerStylePropertyPanel>();
-        //            break;
-        //        default:
-        //            return;
-        //    }
-
-        //    styleProperty.Text = NodeMarkup.Localize.TemplateEditor_Style;
-        //    styleProperty.Init();
-        //    styleProperty.SelectedObject = EditObject.Style.Type;
-        //    styleProperty.OnSelectObjectChanged += StyleChanged;
-        //}
-        private void AddColorProperty()
-        {
-            var colorProperty = SettingsPanel.AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = NodeMarkup.Localize.TemplateEditor_Color;
-            colorProperty.Init();
-            colorProperty.Value = EditObject.Style.Color;
-            colorProperty.OnValueChanged += ColorChanged;
-        }
-        private void AddWidthProperty()
-        {
-            var widthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = NodeMarkup.Localize.TemplateEditor_Width;
-            widthProperty.UseWheel = true;
-            widthProperty.WheelStep = 0.01f;
-            widthProperty.CheckMin = true;
-            widthProperty.MinValue = 0.05f;
-            widthProperty.Init();
-            widthProperty.Value = EditObject.Style.Width;
-            widthProperty.OnValueChanged += WidthChanged;
-        }
-        private void AddStyleAdditionalProperties()
-        {
-            if (EditObject.Style is IDashedLine dashedStyle)
-            {
-                var dashLengthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                dashLengthProperty.Text = NodeMarkup.Localize.TemplateEditor_DashedLength;
-                dashLengthProperty.UseWheel = true;
-                dashLengthProperty.WheelStep = 0.1f;
-                dashLengthProperty.CheckMin = true;
-                dashLengthProperty.MinValue = 0.1f;
-                dashLengthProperty.Init();
-                dashLengthProperty.Value = dashedStyle.DashLength;
-                dashLengthProperty.OnValueChanged += DashLengthChanged;
-                StyleProperties.Add(dashLengthProperty);
-
-                var spaceLengthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                spaceLengthProperty.Text = NodeMarkup.Localize.TemplateEditor_SpaceLength;
-                spaceLengthProperty.UseWheel = true;
-                spaceLengthProperty.WheelStep = 0.1f;
-                spaceLengthProperty.CheckMin = true;
-                spaceLengthProperty.MinValue = 0.1f;
-                spaceLengthProperty.Init();
-                spaceLengthProperty.Value = dashedStyle.SpaceLength;
-                spaceLengthProperty.OnValueChanged += SpaceLengthChanged;
-                StyleProperties.Add(spaceLengthProperty);
-            }
-            if (EditObject.Style is IDoubleLine doubleStyle)
-            {
-                var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                offsetProperty.Text = NodeMarkup.Localize.TemplateEditor_Offset;
-                offsetProperty.UseWheel = true;
-                offsetProperty.WheelStep = 0.1f;
-                offsetProperty.Init();
-                offsetProperty.Value = doubleStyle.Offset;
-                offsetProperty.OnValueChanged += OffsetChanged;
-                StyleProperties.Add(offsetProperty);
-            }
-            if (EditObject.Style is IAsymLine asymStyle)
-            {
-                var invertProperty = SettingsPanel.AddUIComponent<BoolPropertyPanel>();
-                invertProperty.Text = NodeMarkup.Localize.TemplateEditor_Invert;
-                invertProperty.Init();
-                invertProperty.Value = asymStyle.Invert;
-                invertProperty.OnValueChanged += InvertChanged;
-                StyleProperties.Add(invertProperty);
-            }
-            if(EditObject.Style is IStrokeFiller fillerStyle)
-            {
-                var stepProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                stepProperty.Text = "Step";
-                stepProperty.UseWheel = true;
-                stepProperty.WheelStep = 0.1f;
-                stepProperty.CheckMin = true;
-                stepProperty.MinValue = EditObject.Style.Width;
-                stepProperty.Init();
-                stepProperty.Value = fillerStyle.Step;
-                stepProperty.OnValueChanged += StepChanged;
-                StyleProperties.Add(stepProperty);
-
-                var angleProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                angleProperty.Text = "Angle";
-                angleProperty.UseWheel = true;
-                angleProperty.WheelStep = 1f;
-                angleProperty.CheckMin = true;
-                angleProperty.MinValue = -90;
-                angleProperty.CheckMax = true;
-                angleProperty.MaxValue = 90;
-                angleProperty.Init();
-                angleProperty.Value = fillerStyle.Angle;
-                angleProperty.OnValueChanged += AngleChanged;
-                StyleProperties.Add(angleProperty);
-
-                var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                offsetProperty.Text = "Offset";
-                offsetProperty.UseWheel = true;
-                offsetProperty.WheelStep = 0.1f;
-                offsetProperty.CheckMin = true;
-                offsetProperty.MinValue = 0f;
-                offsetProperty.Init();
-                offsetProperty.Value = fillerStyle.Offset;
-                offsetProperty.OnValueChanged += FillerOffsetChanged;
-                StyleProperties.Add(offsetProperty);
-            }
-        }
-        //private void ClearStyleProperties()
-        //{
-        //    foreach (var property in StyleProperties)
-        //    {
-        //        SettingsPanel.RemoveUIComponent(property);
-        //        Destroy(property);
-        //    }
-
-        //    StyleProperties.Clear();
-        //}
+        private void AddStyleProperties() => StyleProperties.AddRange(EditObject.Style.GetUIComponents(SettingsPanel));
+        
         private void NameSubmitted(string value)
         {
             EditObject.Name = value;
             NameProperty.Value = EditObject.Name;
             SelectItem.Refresh();
         }
-        private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
-        //private void StyleChanged(Style.StyleType style)
-        //{
-        //    var newStyle = LineStyle.GetDefault(style);
-        //    newStyle.Color = EditObject.Style.Color;
-        //    if (newStyle is IDashedLine newDashed && EditObject.Style is IDashedLine oldDashed)
-        //    {
-        //        newDashed.DashLength = oldDashed.DashLength;
-        //        newDashed.SpaceLength = oldDashed.SpaceLength;
-        //    }
-        //    if (newStyle is IDoubleLine newDouble && EditObject.Style is IDoubleLine oldDouble)
-        //        newDouble.Offset = oldDouble.Offset;
-
-        //    EditObject.Style = newStyle;
-
-        //    ClearStyleProperties();
-        //    AddStyleAdditionalProperties();
-
-        //    AsDefaultRefresh();
-        //}
-        private void WidthChanged(float value) => EditObject.Style.Width = value;
-        private void DashLengthChanged(float value) => (EditObject.Style as IDashedLine).DashLength = value;
-        private void SpaceLengthChanged(float value) => (EditObject.Style as IDashedLine).SpaceLength = value;
-        private void OffsetChanged(float value) => (EditObject.Style as IDoubleLine).Offset = value;
-        private void InvertChanged(bool value) => (EditObject.Style as IAsymLine).Invert = value;
-        private void StepChanged(float value) => (EditObject.Style as IStrokeFiller).Step = value;
-        private void AngleChanged(float value) => (EditObject.Style as IStrokeFiller).Angle = value;
-        private void FillerOffsetChanged(float value) => (EditObject.Style as IStrokeFiller).Offset = value;
-
 
         private void ToggleAsDefault()
         {

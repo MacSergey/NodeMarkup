@@ -39,10 +39,10 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
-            header.AddRange(TemplateManager.Templates);
+            header.AddRange(TemplateManager.GetTemplates(Manager.Style.StyleType.Filler));
             header.Init(false);
-            //header.OnSaveTemplate += OnSaveTemplate;
-            //header.OnSelectTemplate += OnSelectTemplate;
+            header.OnSaveTemplate += OnSaveTemplate;
+            header.OnSelectTemplate += OnSelectTemplate;
         }
         private void AddStyleTypeProperty()
         {
@@ -50,90 +50,62 @@ namespace NodeMarkup.UI.Editors
             Style.Text = NodeMarkup.Localize.LineEditor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
-            //Style.OnSelectObjectChanged += StyleChanged;
+            Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties()
+        private void AddStyleProperties() => StyleProperties.AddRange(EditObject.Style.GetUIComponents(SettingsPanel));
+        private void StyleChanged(Style.StyleType style)
         {
-            AddColorProperty();
-            AddWidthProperty();
-            AddStyleAdditionalProperties();
-        }
-        private void AddColorProperty()
-        {
-            var colorProperty = SettingsPanel.AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = NodeMarkup.Localize.LineEditor_Color;
-            colorProperty.Init();
-            colorProperty.Value = EditObject.Style.Color;
-            colorProperty.OnValueChanged += ColorChanged;
-            StyleProperties.Add(colorProperty);
-        }
-        private void AddWidthProperty()
-        {
-            var widthProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = NodeMarkup.Localize.LineEditor_Width;
-            widthProperty.UseWheel = true;
-            widthProperty.WheelStep = 0.01f;
-            widthProperty.CheckMin = true;
-            widthProperty.MinValue = 0.05f;
-            widthProperty.Init();
-            widthProperty.Value = EditObject.Style.Width;
-            widthProperty.OnValueChanged += WidthChanged;
-            //widthProperty.OnHover += PropertyHover;
-            //widthProperty.OnLeave += PropertyLeave;
-            StyleProperties.Add(widthProperty);
-        }
-        private void AddStyleAdditionalProperties()
-        {
-            if (EditObject.Style is IStrokeFiller strokeStyle)
+            if (style == EditObject.Style.Type)
+                return;
+
+            var newStyle = TemplateManager.GetDefault<FillerStyle>(style);
+            newStyle.Color = EditObject.Style.Color;
+            newStyle.Width = EditObject.Style.Width;
+            if (newStyle is IStrokeFiller newStroke && EditObject.Style is IStrokeFiller oldStroke)
             {
-                var stepProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                stepProperty.Text = "Step";
-                stepProperty.UseWheel = true;
-                stepProperty.WheelStep = 0.1f;
-                stepProperty.CheckMin = true;
-                stepProperty.MinValue = EditObject.Style.Width;
-                stepProperty.Init();
-                stepProperty.Value = strokeStyle.Step;
-                stepProperty.OnValueChanged += StepChanged;
-                StyleProperties.Add(stepProperty);
+                newStroke.Step = oldStroke.Step;
+                newStroke.Angle = oldStroke.Angle;
+                newStroke.Offset = oldStroke.Offset;
+            }
 
-                var angleProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                angleProperty.Text = "Angle";
-                angleProperty.UseWheel = true;
-                angleProperty.WheelStep = 1f;
-                angleProperty.CheckMin = true;
-                angleProperty.MinValue = -90;
-                angleProperty.CheckMax = true;
-                angleProperty.MaxValue = 90;
-                angleProperty.Init();
-                angleProperty.Value = strokeStyle.Angle;
-                angleProperty.OnValueChanged += AngleChanged;
-                StyleProperties.Add(angleProperty);
+            EditObject.Style = newStyle;
 
-                var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-                offsetProperty.Text = "Offset";
-                offsetProperty.UseWheel = true;
-                offsetProperty.WheelStep = 0.1f;
-                offsetProperty.CheckMin = true;
-                offsetProperty.MinValue = 0f;
-                offsetProperty.Init();
-                offsetProperty.Value = strokeStyle.Offset;
-                offsetProperty.OnValueChanged += OffsetChanged;
-                StyleProperties.Add(offsetProperty);
+            ClearStyleProperties();
+            AddStyleProperties();
+        }
+
+        private void OnSaveTemplate()
+        {
+            if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+                NodeMarkupPanel.EditTemplate(template);
+        }
+        private void OnSelectTemplate(StyleTemplate template)
+        {
+            if (template.Style.Copy() is FillerStyle style)
+            {
+                EditObject.Style = style;
+                Style.SelectedObject = EditObject.Style.Type;
+                ClearStyleProperties();
+                AddStyleProperties();
             }
         }
+        private void ClearStyleProperties()
+        {
+            foreach (var property in StyleProperties)
+            {
+                SettingsPanel.RemoveUIComponent(property);
+                Destroy(property);
+            }
 
-        private void ColorChanged(Color32 color) => EditObject.Style.Color = color;
-        private void WidthChanged(float value) => EditObject.Style.Width = value;
-        private void StepChanged(float value) => (EditObject.Style as IStrokeFiller).Step = value;
-        private void AngleChanged(float value) => (EditObject.Style as IStrokeFiller).Angle = value;
-        private void OffsetChanged(float value) => (EditObject.Style as IStrokeFiller).Offset = value;
+            StyleProperties.Clear();
+        }
+
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
             {
-                foreach (var part in EditObject.Parts)
+                foreach (var part in HoverItem.Object.Parts)
                 {
                     var bezier = part.GetTrajectory();
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);

@@ -40,7 +40,7 @@ namespace NodeMarkup.Manager
             AddRule(lineStyle, false, false);
             RecalculateDashes();
         }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.StyleType lineType) : this(markup, pointPair, TemplateManager.GetDefault(lineType)) { }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.StyleType lineType) : this(markup, pointPair, TemplateManager.GetDefault<LineStyle>(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
         public virtual void UpdateTrajectory()
         {
@@ -87,7 +87,7 @@ namespace NodeMarkup.Manager
             AddRule(newRule, update);
             return newRule;
         }
-        public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault(Style.StyleType.LineDashed));
+        public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault<LineStyle>(Style.StyleType.LineDashed));
         public void RemoveRule(MarkupLineRawRule rule)
         {
             RawRules.Remove(rule);

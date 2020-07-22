@@ -1,4 +1,6 @@
-﻿using NodeMarkup.Utils;
+﻿using ColossalFramework.UI;
+using NodeMarkup.UI.Editors;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,10 +11,25 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class Style: IToXml
+    public abstract class Style : IToXml
     {
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
         public static float DefaultWidth { get; } = 0.15f;
+
+        public static T GetDefault<T>(StyleType type) where T : Style
+        {
+            switch (type & StyleType.GroupMask)
+            {
+                case StyleType.RegularLine when LineStyle.GetDefault((LineStyle.RegularLineType)(int)type) is T tStyle:
+                    return tStyle;
+                case StyleType.StopLine when LineStyle.GetDefault((LineStyle.StopLineType)(int)type) is T tStyle:
+                    return tStyle;
+                case StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle:
+                    return tStyle;
+                default:
+                    return null;
+            }
+        }
 
         public static string XmlName { get; } = "S";
 
@@ -63,23 +80,72 @@ namespace NodeMarkup.Manager
             Width = config.GetAttrValue("W", DefaultWidth);
         }
 
+        public abstract Style Copy();
+
+        public virtual List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = new List<UIComponent>
+            {
+                AddColorProperty(parent),
+                AddWidthProperty(parent, onHover, onLeave),
+            };
+
+            return components;
+        }
+        private UIComponent AddColorProperty(UIComponent parent)
+        {
+            var colorProperty = parent.AddUIComponent<ColorPropertyPanel>();
+            colorProperty.Text = Localize.LineEditor_Color;
+            colorProperty.Init();
+            colorProperty.Value = Color;
+            colorProperty.OnValueChanged += (Color32 color) => Color = color;
+            return colorProperty;
+        }
+        private UIComponent AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
+        {
+            var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            widthProperty.Text = Localize.LineEditor_Width;
+            widthProperty.UseWheel = true;
+            widthProperty.WheelStep = 0.01f;
+            widthProperty.CheckMin = true;
+            widthProperty.MinValue = 0.05f;
+            widthProperty.Init();
+            widthProperty.Value = Width;
+            widthProperty.OnValueChanged += (float value) => Width = value;
+            AddOnHoverLeave(widthProperty, onHover, onLeave);
+
+            return widthProperty;
+        }
+        protected static void AddOnHoverLeave<T>(FieldPropertyPanel<T> fieldPanel, Action onHover, Action onLeave)
+        {
+            if (onHover != null)
+                fieldPanel.OnHover += onHover;
+            if (onLeave != null)
+                fieldPanel.OnLeave += onLeave;
+        }
+
+
         public enum StyleType
         {
+            GroupMask = ~0xFF,
+
+
+            RegularLine = 0x0,
+
             [Description("LineStyle_Solid")]
-            LineSolid = 0,
+            LineSolid = 0 + RegularLine,
 
             [Description("LineStyle_Dashed")]
-            LineDashed = 1,
+            LineDashed = 1 + RegularLine,
 
             [Description("LineStyle_DoubleSolid")]
-            LineDoubleSolid = 2,
+            LineDoubleSolid = 2 + RegularLine,
 
             [Description("LineStyle_DoubleDashed")]
-            LineDoubleDashed = 3,
+            LineDoubleDashed = 3 + RegularLine,
 
             [Description("LineStyle_SolidAndDashed")]
-            LineSolidAndDashed = 4,
-
+            LineSolidAndDashed = 4 + RegularLine,
 
 
             StopLine = 0x100,
@@ -120,7 +186,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "T";
 
         string _name;
-        LineStyle _style;
+        Style _style;
 
         public string Name
         {
@@ -134,7 +200,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public LineStyle Style
+        public Style Style
         {
             get => _style;
             set
@@ -147,12 +213,12 @@ namespace NodeMarkup.Manager
         public bool IsEmpty { get; set; } = false;
 
         public Action OnTemplateChanged { private get; set; }
-        public Action<StyleTemplate, LineStyle> OnStyleChanged { private get; set; }
+        public Action<StyleTemplate, Style> OnStyleChanged { private get; set; }
         public Func<StyleTemplate, string, bool> OnNameChanged { private get; set; }
 
         public string XmlSection => XmlName;
 
-        public StyleTemplate(string name, LineStyle style)
+        public StyleTemplate(string name, Style style)
         {
             _name = name;
             _style = style.Copy();
@@ -165,7 +231,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
             var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(Manager.Style.XmlName) is XElement styleConfig && LineStyle.FromXml(styleConfig, out LineStyle style))
+            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && LineStyle.FromXml(styleConfig, out LineStyle style))
             {
                 template = new StyleTemplate(name, style);
                 return true;

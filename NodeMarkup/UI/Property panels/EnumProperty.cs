@@ -52,7 +52,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class SimpleStylePropertyPanel : StylePropertyPanel<LineStyle.SimpleLineType> { }
+    public class RegularStylePropertyPanel : StylePropertyPanel<LineStyle.RegularLineType> { }
     public class StopStylePropertyPanel : StylePropertyPanel<LineStyle.StopLineType> { }
     public class FillerStylePropertyPanel : StylePropertyPanel<FillerStyle.FillerType> { }
 

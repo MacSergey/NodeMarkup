@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -30,20 +32,28 @@ namespace NodeMarkup.Manager
         public static SolidStopLineStyle DefaultSolidStop => new SolidStopLineStyle(DefaultColor, DefaultStopWidth);
         public static DashedStopLineStyle DefaultDashedStop => new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength);
 
-        public static LineStyle GetDefault(StyleType type)
+        public static LineStyle GetDefault(RegularLineType type)
         {
             switch (type)
             {
-                case StyleType.LineSolid: return DefaultSolid;
-                case StyleType.LineDashed: return DefaultDashed;
-                case StyleType.LineDoubleSolid: return DefaultDoubleSolid;
-                case StyleType.LineDoubleDashed: return DefaultDoubleDashed;
-                case StyleType.LineSolidAndDashed: return DefaultSolidAndDashed;
-                case StyleType.StopLineSolid: return DefaultSolidStop;
-                case StyleType.StopLineDashed: return DefaultDashedStop;
+                case RegularLineType.Solid: return DefaultSolid;
+                case RegularLineType.Dashed: return DefaultDashed;
+                case RegularLineType.DoubleSolid: return DefaultDoubleSolid;
+                case RegularLineType.DoubleDashed: return DefaultDoubleDashed;
+                case RegularLineType.SolidAndDashed: return DefaultSolidAndDashed;
                 default: return null;
             }
         }
+        public static LineStyle GetDefault(StopLineType type)
+        {
+            switch (type)
+            {
+                case StopLineType.Solid: return DefaultSolidStop;
+                case StopLineType.Dashed: return DefaultDashedStop;
+                default: return null;
+            }
+        }
+
         public static string GetShortName(StyleType type)
         {
             switch (type)
@@ -62,19 +72,71 @@ namespace NodeMarkup.Manager
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory);
-        public abstract LineStyle Copy();
+        public override Style Copy() => CopyLineStyle();
+        public abstract LineStyle CopyLineStyle();
         public override XElement ToXml()
         {
             var config = base.ToXml();
             config.Add(new XAttribute("T", (int)Type));
             return config;
         }
+        protected static UIComponent AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            dashLengthProperty.Text = Localize.LineEditor_DashedLength;
+            dashLengthProperty.UseWheel = true;
+            dashLengthProperty.WheelStep = 0.1f;
+            dashLengthProperty.CheckMin = true;
+            dashLengthProperty.MinValue = 0.1f;
+            dashLengthProperty.Init();
+            dashLengthProperty.Value = dashedStyle.DashLength;
+            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength = value;
+            AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
+            return dashLengthProperty;
+        }
+        protected static UIComponent AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
+            spaceLengthProperty.UseWheel = true;
+            spaceLengthProperty.WheelStep = 0.1f;
+            spaceLengthProperty.CheckMin = true;
+            spaceLengthProperty.MinValue = 0.1f;
+            spaceLengthProperty.Init();
+            spaceLengthProperty.Value = dashedStyle.SpaceLength;
+            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength = value;
+            AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
+            return spaceLengthProperty;
+        }
+        protected static UIComponent AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            offsetProperty.Text = Localize.LineEditor_Offset;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0.05f;
+            offsetProperty.Init();
+            offsetProperty.Value = doubleStyle.Offset;
+            offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset = value;
+            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+            return offsetProperty;
+        }
+        protected static UIComponent AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        {
+            var invertProperty = parent.AddUIComponent<BoolPropertyPanel>();
+            invertProperty.Text = Localize.LineEditor_Invert;
+            invertProperty.Init();
+            invertProperty.Value = asymStyle.Invert;
+            invertProperty.OnValueChanged += (bool value) => asymStyle.Invert = value;
+            return invertProperty;
+        }
 
         public static bool FromXml(XElement config, out LineStyle style)
         {
             var type = (StyleType)config.GetAttrValue<int>("T");
 
-            if (TemplateManager.GetDefault(type) is LineStyle defaultStyle)
+            if (TemplateManager.GetDefault<LineStyle>(type) is LineStyle defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config);
@@ -88,7 +150,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        public enum SimpleLineType
+        public enum RegularLineType
         {
             [Description("LineStyle_Solid")]
             Solid = StyleType.LineSolid,

@@ -13,9 +13,10 @@ namespace NodeMarkup.Manager
         static string DefaultName => Localize.Template_NewTemplate;
 
         static Dictionary<string, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<string, StyleTemplate>();
-        static Dictionary<LineStyle.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<LineStyle.StyleType, StyleTemplate>();
+        static Dictionary<Style.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<Style.StyleType, StyleTemplate>();
 
         public static IEnumerable<StyleTemplate> Templates => TemplatesDictionary.Values;
+        public static IEnumerable<StyleTemplate> GetTemplates(Style.StyleType groupType) => Templates.Where(t => (t.Style.Type & (groupType & Style.StyleType.GroupMask)) != 0);
 
         static TemplateManager()
         {
@@ -38,7 +39,7 @@ namespace NodeMarkup.Manager
             template.OnStyleChanged = OnTemplateStyleChanged;
             template.OnNameChanged = OnTemplateNameChanged;
         }
-        public static bool AddTemplate(LineStyle style, out StyleTemplate template, string name = null)
+        public static bool AddTemplate(Style style, out StyleTemplate template, string name = null)
         {
             var templateName = name ?? GetNewName();
             if (TemplatesDictionary.ContainsKey(templateName))
@@ -82,12 +83,12 @@ namespace NodeMarkup.Manager
             }
             return $"{DefaultName} {i}";
         }
-        public static LineStyle GetDefault(Style.StyleType type)
+        public static T GetDefault<T>(Style.StyleType type) where T : Style
         {
-            if (DefaultTemplates.TryGetValue(type, out StyleTemplate template))
-                return template.Style.Copy();
+            if (DefaultTemplates.TryGetValue(type, out StyleTemplate template) && template.Style.Copy() is T tStyle)
+                return tStyle;
             else
-                return LineStyle.GetDefault(type);
+                return Style.GetDefault<T>(type);
         }
         public static bool IsDefault(this StyleTemplate template) =>
             DefaultTemplates.TryGetValue(template.Style.Type, out StyleTemplate defaultTemplate) && template == defaultTemplate;
@@ -107,7 +108,7 @@ namespace NodeMarkup.Manager
             }
         }
         static void OnTemplateChanged() => Save();
-        static void OnTemplateStyleChanged(StyleTemplate template, LineStyle newStyle)
+        static void OnTemplateStyleChanged(StyleTemplate template, Style newStyle)
         {
             if (template.IsDefault())
             {

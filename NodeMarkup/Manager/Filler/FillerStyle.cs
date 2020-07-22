@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -125,6 +126,15 @@ namespace NodeMarkup.Manager
             return result;
         }
 
-        public override FillerStyle Copy() => new StrokeFillerStyle(Color, Width, Angle, Step, Offset);
+        public override FillerStyle CopyFillerStyle() => new StrokeFillerStyle(Color, Width, Angle, Step, Offset);
+
+        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        {
+            var components = base.GetUIComponents(parent, onHover, onLeave);
+            components.Add(AddAngleProperty(this, parent, onHover, onLeave));
+            components.Add(AddStepProperty(this, parent, onHover, onLeave));
+            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            return components;
+        }
     }
 }
