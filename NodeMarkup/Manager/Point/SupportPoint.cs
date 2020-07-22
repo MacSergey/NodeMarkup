@@ -72,6 +72,13 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute(MarkupPoint.XmlName, Point.Id));
+            return config;
+        }
     }
     public abstract class IntersectSupportPoint : SupportPoint
     {

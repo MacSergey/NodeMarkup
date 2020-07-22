@@ -263,6 +263,26 @@ namespace NodeMarkup.Manager
             }
             return config;
         }
+
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupFiller filler)
+        {
+            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, out FillerStyle style))
+            {
+                filler = default;
+                return false;
+            }
+
+            filler = new MarkupFiller(markup, style);
+
+            foreach (var supportConfig in config.Elements(FillerVertex.XmlName))
+            {
+                if (FillerVertex.FromXml(supportConfig, markup, map, out IFillerVertex vertex))
+                    filler.Add(vertex);
+            }
+            filler.Add(filler.First);
+
+            return true;
+        }
     }
     public class FillerLinePart : MarkupLinePart
     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -135,6 +136,21 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             return components;
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("A", Angle));
+            config.Add(new XAttribute("S", Step));
+            config.Add(new XAttribute("O", Offset));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            Angle = config.GetAttrValue("A", DefaultAngle);
+            Step = config.GetAttrValue("S", DefaultStep);
+            Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
 }

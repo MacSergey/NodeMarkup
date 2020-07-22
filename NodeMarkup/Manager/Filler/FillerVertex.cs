@@ -168,5 +168,13 @@ namespace NodeMarkup.Manager
             foreach (var vertex in filler.GetLinePoints(this, Second))
                 yield return vertex;
         }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute(MarkupPointPair.XmlName1, First.Id));
+            config.Add(new XAttribute(MarkupPointPair.XmlName2, Second.Id));
+            return config;
+        }
     }
 }

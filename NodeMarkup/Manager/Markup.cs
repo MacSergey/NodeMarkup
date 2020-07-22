@@ -310,6 +310,11 @@ namespace NodeMarkup.Manager
                 var lineConfig = line.ToXml();
                 config.Add(lineConfig);
             }
+            foreach (var filler in Fillers)
+            {
+                var fillerConfig = filler.ToXml();
+                config.Add(fillerConfig);
+            }
 
             return config;
         }
@@ -339,6 +344,12 @@ namespace NodeMarkup.Manager
             foreach (var pair in toInit)
             {
                 pair.Key.FromXml(pair.Value, map);
+            }
+
+            foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
+            {
+                if (MarkupFiller.FromXml(fillerConfig, this, map, out MarkupFiller filler))
+                    FillersList.Add(filler);
             }
         }
     }
