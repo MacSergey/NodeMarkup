@@ -24,29 +24,17 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             foreach (var templates in TemplateManager.Templates)
             {
                 var item = AddItem(templates);
             }
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
-#endif
         }
 
         protected override void OnObjectSelect()
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             AddHeader();
             AddTemplateName();
             AddStyleProperties();
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
-#endif
         }
         private void AddHeader()
         {

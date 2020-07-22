@@ -385,6 +385,7 @@ create or delete a line
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
     <value>- Copy with MoveIt (Does not work until MoveIt is updated)
+- Fillers. Hold ALT to start create (not saved yet)
 - Stop lines
 - New "Solid and Dashed" style
 - Chinese</value>

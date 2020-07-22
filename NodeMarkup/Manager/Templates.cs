@@ -16,7 +16,14 @@ namespace NodeMarkup.Manager
         static Dictionary<Style.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<Style.StyleType, StyleTemplate>();
 
         public static IEnumerable<StyleTemplate> Templates => TemplatesDictionary.Values;
-        public static IEnumerable<StyleTemplate> GetTemplates(Style.StyleType groupType) => Templates.Where(t => (t.Style.Type & (groupType & Style.StyleType.GroupMask)) != 0);
+        public static IEnumerable<StyleTemplate> GetTemplates(Style.StyleType groupType)
+        {
+            var groupMask = groupType & Style.StyleType.GroupMask;
+            var predicate = groupMask == Style.StyleType.RegularLine ? 
+                (Func<StyleTemplate, bool>)((StyleTemplate t) => (t.Style.Type & Style.StyleType.GroupMask) == 0) :
+                (Func<StyleTemplate, bool>)((StyleTemplate t) => (t.Style.Type & groupMask) != 0);
+            return Templates.Where(predicate);
+        }
 
         static TemplateManager()
         {

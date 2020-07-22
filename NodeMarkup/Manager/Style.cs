@@ -127,7 +127,8 @@ namespace NodeMarkup.Manager
 
         public enum StyleType
         {
-            GroupMask = ~0xFF,
+            ItemMask = 0xFF,
+            GroupMask = ~ItemMask,
 
 
             RegularLine = 0x0,

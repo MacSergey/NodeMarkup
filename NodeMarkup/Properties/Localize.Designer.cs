@@ -487,6 +487,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на - Copy with MoveIt (Does not work until MoveIt is updated)
+        ///- Fillers. Hold ALT to start create (not saved yet)
         ///- Stop lines
         ///- New &quot;Solid and Dashed&quot; style
         ///- Chinese.
