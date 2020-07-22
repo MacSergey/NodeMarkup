@@ -10,13 +10,13 @@ using static ToolBase;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class FillerEditor : Editor<FillerItem, MarkupFiller, UIPanel>
+    public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
 
         public StylePropertyPanel Style { get; private set; }
 
-        private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
+        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
         public FillerEditor()
         {
@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
-            AddStyleTypeProperty();
+            //AddStyleTypeProperty();
             AddStyleProperties();
         }
 
@@ -52,7 +52,12 @@ namespace NodeMarkup.UI.Editors
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties() => StyleProperties.AddRange(EditObject.Style.GetUIComponents(SettingsPanel));
+        private void AddStyleProperties()
+        {
+            StyleProperties = EditObject.Style.GetUIComponents(SettingsPanel);
+            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+        }
         private void StyleChanged(Style.StyleType style)
         {
             if (style == EditObject.Style.Type)
@@ -70,6 +75,7 @@ namespace NodeMarkup.UI.Editors
 
             EditObject.Style = newStyle;
 
+            RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
         }
@@ -84,7 +90,9 @@ namespace NodeMarkup.UI.Editors
             if (template.Style.Copy() is FillerStyle style)
             {
                 EditObject.Style = style;
-                Style.SelectedObject = EditObject.Style.Type;
+                //Style.SelectedObject = EditObject.Style.Type;
+
+                RefreshItem();
                 ClearStyleProperties();
                 AddStyleProperties();
             }
@@ -96,8 +104,6 @@ namespace NodeMarkup.UI.Editors
                 SettingsPanel.RemoveUIComponent(property);
                 Destroy(property);
             }
-
-            StyleProperties.Clear();
         }
 
 
@@ -113,15 +119,28 @@ namespace NodeMarkup.UI.Editors
                 }
             }
         }
+        private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(MarkupFiller filler)
         {
             Markup.RemoveFiller(filler);
         }
     }
-    public class FillerItem : EditableItem<MarkupFiller, UIPanel>
+    public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
-        public FillerItem() : base(false, true) { }
-
         public override string Description => NodeMarkup.Localize.FillerEditor_ItemDescription;
+
+        public FillerItem() : base(true, true) { }
+
+        protected override void OnObjectSet() => SetIcon();
+        public override void Refresh()
+        {
+            base.Refresh();
+            SetIcon();
+        }
+        private void SetIcon()
+        {
+            Icon.Type = Object.Style.Type;
+            Icon.StyleColor = Object.Style.Color;
+        }
     }
 }

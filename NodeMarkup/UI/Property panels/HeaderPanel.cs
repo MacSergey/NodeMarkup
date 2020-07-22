@@ -163,13 +163,13 @@ namespace NodeMarkup.UI.Editors
 
         public void Add(StyleTemplate item)
         {
-            SelectTemplate.AddItem(item);
+            SelectTemplate.AddItem(item, item.ToStringWithShort());
         }
         public void AddRange(IEnumerable<StyleTemplate> items)
         {
             foreach (var item in items)
             {
-                SelectTemplate.AddItem(item);
+                SelectTemplate.AddItem(item, item.ToStringWithShort());
             }
         }
 

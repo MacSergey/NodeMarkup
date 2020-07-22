@@ -13,6 +13,30 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class Editor : UIPanel
     {
+        public static Dictionary<Style.StyleType, string> SpriteNames { get; set; }
+        public static UITextureAtlas StylesAtlas { get; } = GetStylesIcons();
+        private static UITextureAtlas GetStylesIcons()
+        {
+            SpriteNames = new Dictionary<Style.StyleType, string>()
+            {
+                {Style.StyleType.LineSolid, nameof(Style.StyleType.LineSolid) },
+                {Style.StyleType.LineDashed,  nameof(Style.StyleType.LineDashed) },
+                {Style.StyleType.LineDoubleSolid,   nameof(Style.StyleType.LineDoubleSolid) },
+                {Style.StyleType.LineDoubleDashed, nameof(Style.StyleType.LineDoubleDashed) },
+                {Style.StyleType.LineSolidAndDashed, nameof(Style.StyleType.LineSolidAndDashed) },
+                {Style.StyleType.StopLineSolid, nameof(Style.StyleType.StopLineSolid) },
+                {Style.StyleType.StopLineDashed, nameof(Style.StyleType.StopLineDashed) },
+                {Style.StyleType.FillerStroke, nameof(Style.StyleType.FillerStroke) },
+            };
+
+            var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));
+            if (atlas == UIView.GetAView().defaultAtlas)
+            {
+                atlas = TextureUtil.CreateTextureAtlas("Styles.png", nameof(StylesAtlas), 19, 19, SpriteNames.Values.ToArray());
+            }
+
+            return atlas;
+        }
         public NodeMarkupPanel NodeMarkupPanel { get; private set; }
         protected Markup Markup => NodeMarkupPanel.Markup;
 

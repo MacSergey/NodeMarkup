@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class LinesEditor : Editor<LineItem, MarkupLine, UIPanel>
+    public class LinesEditor : Editor<LineItem, MarkupLine, LineIcon>
     {
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
 
@@ -95,6 +95,8 @@ namespace NodeMarkup.UI.Editors
 
             if (Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
+
+            RefreshItem();
         }
         private void SetupRule(RulePanel rulePanel)
         {
@@ -116,6 +118,8 @@ namespace NodeMarkup.UI.Editors
             }
             else
                 Delete();
+
+            RefreshItem();
 
             bool Delete()
             {
@@ -244,13 +248,60 @@ namespace NodeMarkup.UI.Editors
         {
             Markup.RemoveConnect(line.PointPair);
         }
+        public void RefreshItem() => SelectItem.Refresh();
     }
 
-    public class LineItem : EditableItem<MarkupLine, UIPanel>
+    public class LineItem : EditableItem<MarkupLine, LineIcon>
     {
-        public LineItem() : base(false, true) { }
+        public LineItem() : base(true, true) { }
 
         public override string Description => NodeMarkup.Localize.LineEditor_ItemDescription;
+        protected override void OnObjectSet() => SetIcon();
+        public override void Refresh()
+        {
+            base.Refresh();
+            SetIcon();
+        }
+        private void SetIcon()
+        {
+            Icon.Count = Object.RawRules.Count;
+            if (Object.RawRules.Count == 1)
+            {
+                Icon.Type = Object.RawRules[0].Style.Type;
+                Icon.StyleColor = Object.RawRules[0].Style.Color;
+            }
+        }
+    }
+    public class LineIcon : StyleIcon
+    {
+        protected UILabel CountLabel { get; }
+        public int Count
+        {
+            set
+            {
+                CountLabel.isVisible = value > 1;
+                Thumbnail.isVisible = value == 1;
+                CountLabel.text = value.ToString();
+            }
+        }
+
+        public LineIcon()
+        {
+            CountLabel = AddUIComponent<UILabel>();
+            CountLabel.textColor = Color.white;
+            CountLabel.textScale = 0.7f;
+            CountLabel.relativePosition = new Vector3(0, 0);
+            CountLabel.autoSize = false;
+            CountLabel.textAlignment = UIHorizontalAlignment.Center;
+            CountLabel.verticalAlignment = UIVerticalAlignment.Middle;
+            CountLabel.padding = new RectOffset(0, 0, 5, 0);
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            if (CountLabel != null)
+                CountLabel.size = size;
+        }
     }
 
     public class RulePanel : UIPanel
@@ -262,7 +313,7 @@ namespace NodeMarkup.UI.Editors
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
-        private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
+        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
         public RulePanel()
         {
@@ -354,7 +405,12 @@ namespace NodeMarkup.UI.Editors
             Style.SelectedObject = Rule.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties() => StyleProperties.AddRange(Rule.Style.GetUIComponents(this, Editor.StopScroll, Editor.StartScroll));
+        private void AddStyleProperties()
+        {
+            StyleProperties = Rule.Style.GetUIComponents(this, Editor.StopScroll, Editor.StartScroll);
+            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+                colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
+        }
 
         private void ClearStyleProperties()
         {
@@ -363,8 +419,6 @@ namespace NodeMarkup.UI.Editors
                 RemoveUIComponent(property);
                 Destroy(property);
             }
-
-            StyleProperties.Clear();
         }
 
         private void OnSaveTemplate()
@@ -378,6 +432,8 @@ namespace NodeMarkup.UI.Editors
             {
                 Rule.Style = style;
                 Style.SelectedObject = Rule.Style.Type;
+
+                Editor.RefreshItem();
                 ClearStyleProperties();
                 AddStyleProperties();
             }
@@ -403,6 +459,7 @@ namespace NodeMarkup.UI.Editors
 
             Rule.Style = newStyle;
 
+            Editor.RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
         }

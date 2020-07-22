@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -134,40 +135,62 @@ namespace NodeMarkup.UI.Editors
 
     public class ColorIcon : UIButton
     {
-        private UIButton ColorCircule { get; set; }
-        public Color32 Color
-        {
-            get => ColorCircule.color;
-            set
-            {
-                ColorCircule.color = value;
-                ColorCircule.disabledColor = value;
-            }
-        }
+        private static float Border => 1f;
+        protected UIButton InnerCircule { get; set; }
+        public Color32 InnerColor { set => InnerCircule.color = value; }
+        public Color32 BorderColor { set => color = value; }
         public ColorIcon()
         {
             atlas = NodeMarkupPanel.InGameAtlas;
             normalBgSprite = "PieChartWhiteBg";
             disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
-            color = UnityEngine.Color.white;
+            color = Color.white;
 
-            ColorCircule = AddUIComponent<UIButton>();
-            ColorCircule.atlas = NodeMarkupPanel.InGameAtlas;
-            ColorCircule.normalBgSprite = "PieChartWhiteBg";
-            ColorCircule.normalFgSprite = "PieChartWhiteFg";
-            ColorCircule.disabledBgSprite = "PieChartWhiteBg";
-            ColorCircule.disabledFgSprite = "PieChartWhiteFg";
-            ColorCircule.isInteractive = false;
-            ColorCircule.relativePosition = new Vector3(2, 2);
+            InnerCircule = AddUIComponent<UIButton>();
+            InnerCircule.atlas = NodeMarkupPanel.InGameAtlas;
+            InnerCircule.normalBgSprite = "PieChartWhiteBg";
+            InnerCircule.normalFgSprite = "PieChartWhiteFg";
+            InnerCircule.disabledBgSprite = "PieChartWhiteBg";
+            InnerCircule.disabledFgSprite = "PieChartWhiteFg";
+            InnerCircule.isInteractive = false;
+            InnerCircule.relativePosition = new Vector3(Border, Border);
+            InnerCircule.color = Color.black;
         }
         protected override void OnSizeChanged()
         {
-            if (ColorCircule != null)
+            if (InnerCircule != null)
             {
-                ColorCircule.height = height - 4;
-                ColorCircule.width = width - 4;
+                InnerCircule.height = height - (Border * 2);
+                InnerCircule.width = width - (Border * 2);
             }
+        }
+    }
+    public class StyleIcon : ColorIcon
+    {
+        protected static Color32 GetStyleColor(Color32 color)
+        {
+            var ratio = 255 / (float)Math.Max(Math.Max(color.r, color.g), color.b);
+            return new Color32((byte)(color.r * ratio), (byte)(color.g * ratio), (byte)(color.b * ratio), 255);
+        }
+        protected UIButton Thumbnail { get; set; }
+
+        public Color32 StyleColor { set => Thumbnail.color = GetStyleColor(value); }
+        public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = Editor.SpriteNames[value]; }
+
+        public StyleIcon()
+        {
+            Thumbnail = AddUIComponent<UIButton>();
+            Thumbnail.atlas = Editor.StylesAtlas;
+            Thumbnail.relativePosition = new Vector3(0, 0);
+            Thumbnail.isInteractive = false;
+        }
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            if (Thumbnail != null)
+                Thumbnail.size = size;
         }
     }
 }

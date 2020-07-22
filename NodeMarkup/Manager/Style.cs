@@ -258,12 +258,13 @@ namespace NodeMarkup.Manager
         }
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
 
-        public override string ToString() => IsEmpty ? Name : $"{LineStyle.GetShortName(Style.Type)}-{Name}";
+        public override string ToString() => Name;
+        public string ToStringWithShort() => IsEmpty ? Name : $"{LineStyle.GetShortName(Style.Type)}-{Name}";
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
             var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, out LineStyle style))
+            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, out Style style))
             {
                 template = new StyleTemplate(name, style);
                 return true;

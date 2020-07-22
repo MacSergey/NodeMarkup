@@ -160,6 +160,7 @@
   <ItemGroup>
     <Content Include="Preview\PreviewImage.png" />
     <Content Include="Preview\PreviewImageBeta.png" />
+    <EmbeddedResource Include="Resources\Styles.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -196,7 +197,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

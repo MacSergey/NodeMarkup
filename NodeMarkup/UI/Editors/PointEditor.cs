@@ -70,7 +70,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnObjectSet()
         {
-            Icon.Color = Object.Color;
+            Icon.InnerColor = Object.Color;
         }
     }
 }

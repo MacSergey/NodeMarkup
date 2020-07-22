@@ -10,10 +10,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class TemplateEditor : Editor<TemplateItem, StyleTemplate, DefaultTemplateIcon>
+    public class TemplateEditor : Editor<TemplateItem, StyleTemplate, TemplateIcon>
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
-        private List<UIComponent> StyleProperties { get; } = new List<UIComponent>();
+        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
         private StringPropertyPanel NameProperty { get; set; }
         private TemplateHeaderPanel HeaderPanel { get; set; }
 
@@ -35,7 +35,10 @@ namespace NodeMarkup.UI.Editors
             AddHeader();
             AddTemplateName();
             AddStyleProperties();
+            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
+
         private void AddHeader()
         {
             HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
@@ -52,13 +55,13 @@ namespace NodeMarkup.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += NameSubmitted;
         }
-        private void AddStyleProperties() => StyleProperties.AddRange(EditObject.Style.GetUIComponents(SettingsPanel));
-        
+        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(SettingsPanel);
+
         private void NameSubmitted(string value)
         {
             EditObject.Name = value;
             NameProperty.Value = EditObject.Name;
-            SelectItem.Refresh();
+            RefreshItem();
         }
 
         private void ToggleAsDefault()
@@ -68,37 +71,37 @@ namespace NodeMarkup.UI.Editors
         }
         private void AsDefaultRefresh()
         {
-            RefreshItems();
+            RefreshItem();
             HeaderPanel.Init(EditObject.IsDefault());
         }
-
+        private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(StyleTemplate template)
         {
             TemplateManager.DeleteTemplate(template);
         }
     }
 
-    public class TemplateItem : EditableItem<StyleTemplate, DefaultTemplateIcon>
+    public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>
     {
         public override string Description => NodeMarkup.Localize.TemplateEditor_ItemDescription;
 
         public TemplateItem() : base(true, true) { }
 
-        protected override void OnObjectSet() => SetIsDefault();
+        protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {
             base.Refresh();
-            SetIsDefault();
+            SetIcon();
         }
-        private void SetIsDefault() => Icon.IsDefault = Object.IsDefault();
-    }
-    public class DefaultTemplateIcon : UIPanel
-    {
-        public bool IsDefault { set => isVisible = value; }
-        public DefaultTemplateIcon()
+        private void SetIcon()
         {
-            atlas = NodeMarkupPanel.InGameAtlas;
-            backgroundSprite = "ParkLevelStar";
+            Icon.Type = Object.Style.Type;
+            Icon.StyleColor = Object.Style.Color;
+            Icon.IsDefault = Object.IsDefault();
         }
+    }
+    public class TemplateIcon : StyleIcon
+    {
+        public bool IsDefault { set => BorderColor = value ? new Color32(255, 215, 0, 255) : (Color32)Color.white; }
     }
 }
