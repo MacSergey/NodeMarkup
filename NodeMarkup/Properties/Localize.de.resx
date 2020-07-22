@@ -384,7 +384,8 @@ Linie erstellen oder löschen
     <value>"Was gibt es neues" zeigen</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Kopieren mit MoveIt (Funktioniert erst nachdem MoveIt geupdated wurde)
+    <value>- Kopieren mit MoveIt (Wird erst nach einem Update von MoveIt funktionieren)
+- Füllungen. ALT gedrückt halten um sie zu erstellen (wird noch nicht gespeichert)
 - Haltelinien
 - Neuer "Durchgezogen und Gestrichelt" Stil
 - Chinesisch</value>
