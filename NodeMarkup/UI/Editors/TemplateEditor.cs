@@ -24,9 +24,9 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var templates in TemplateManager.Templates)
+            foreach (var templates in TemplateManager.Templates.OrderBy(t => t.Style.Type))
             {
-                var item = AddItem(templates);
+                AddItem(templates);
             }
         }
 

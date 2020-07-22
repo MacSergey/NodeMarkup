@@ -117,7 +117,7 @@ namespace NodeMarkup.UI.Editors
             SelectTemplate.popupTextColor = Color.black;
             SelectTemplate.verticalAlignment = UIVerticalAlignment.Middle;
             SelectTemplate.horizontalAlignment = UIHorizontalAlignment.Left;
-            SelectTemplate.itemPadding = new RectOffset(14, 0, 8, 0);
+            SelectTemplate.itemPadding = new RectOffset(5, 0, 5, 0);
             SelectTemplate.filteredItems = new int[] { 0 };
             SelectTemplate.eventDropdownOpen += DropdownOpen;
             SelectTemplate.eventDropdownClose += DropdownClose;

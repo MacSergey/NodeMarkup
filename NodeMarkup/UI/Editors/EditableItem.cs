@@ -84,7 +84,8 @@ namespace NodeMarkup.UI.Editors
             Label.verticalAlignment = UIVerticalAlignment.Middle;
             Label.autoSize = false;
             Label.autoHeight = false;
-            Label.textScale = 0.7f;
+            Label.textScale = 0.6f;
+            Label.padding = new RectOffset(0, 0, 2, 0);
         }
         private void AddDeleteButton()
         {

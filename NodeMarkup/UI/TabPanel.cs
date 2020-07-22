@@ -21,6 +21,7 @@ namespace NodeMarkup.UI
             var tabButton = AddTab(name);
             tabButton.autoSize = true;
             tabButton.textPadding = new RectOffset(10, 10, 1, 1);
+            tabButton.textScale = 0.9f;
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             tabButton.verticalAlignment = UIVerticalAlignment.Middle;
 
