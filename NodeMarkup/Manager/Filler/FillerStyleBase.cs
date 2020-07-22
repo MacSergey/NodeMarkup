@@ -80,7 +80,7 @@ namespace NodeMarkup.Manager
 
         public enum FillerType
         {
-            [Description("LineStyle_Solid")]
+            [Description("FillerStyle_Stroke")]
             Stroke = StyleType.FillerStroke,
         }
     }

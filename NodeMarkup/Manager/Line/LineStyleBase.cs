@@ -128,27 +128,27 @@ namespace NodeMarkup.Manager
 
         public enum RegularLineType
         {
-            [Description("LineStyle_Solid")]
+            [Description(nameof(Localize.LineStyle_Solid))]
             Solid = StyleType.LineSolid,
 
-            [Description("LineStyle_Dashed")]
+            [Description(nameof(Localize.LineStyle_Dashed))]
             Dashed = StyleType.LineDashed,
 
-            [Description("LineStyle_DoubleSolid")]
+            [Description(nameof(Localize.LineStyle_DoubleSolid))]
             DoubleSolid = StyleType.LineDoubleSolid,
 
-            [Description("LineStyle_DoubleDashed")]
+            [Description(nameof(Localize.LineStyle_DoubleDashed))]
             DoubleDashed = StyleType.LineDoubleDashed,
 
-            [Description("LineStyle_SolidAndDashed")]
+            [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             SolidAndDashed = StyleType.LineSolidAndDashed,
         }
         public enum StopLineType
         {
-            [Description("LineStyle_Stop")]
+            [Description(nameof(Localize.LineStyle_Stop))]
             Solid = StyleType.StopLineSolid,
 
-            [Description("LineStyle_Stop")]
+            [Description(nameof(Localize.LineStyle_Stop))]
             Dashed = StyleType.StopLineDashed,
         }
         public class SpecialLineAttribute : Attribute { }

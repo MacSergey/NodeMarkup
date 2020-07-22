@@ -15,7 +15,7 @@ namespace NodeMarkup.Manager
     {
         public static bool FromXml<T>(XElement config, out T style) where T : Style
         {
-            var type = (StyleType)config.GetAttrValue<int>("T");
+            var type = IntToType(config.GetAttrValue<int>("T"));
 
             if (TemplateManager.GetDefault<T>(type) is T defaultStyle)
             {
@@ -28,6 +28,20 @@ namespace NodeMarkup.Manager
                 style = default;
                 return false;
             }
+        }
+        private static StyleType IntToType(int rawType)
+        {
+            var typeGroup = rawType & (int)StyleType.GroupMask;
+            var typeNum = (rawType & (int)StyleType.ItemMask) + 1;
+            var type = (StyleType)((typeGroup == 0 ? (int)StyleType.RegularLine : typeGroup << 1) + typeNum);
+            return type;
+        }
+        private static int TypeToInt(StyleType type)
+        {
+            var typeGroup = (int)type & (int)StyleType.GroupMask;
+            var typeNum = ((int)type & (int)StyleType.ItemMask) - 1;
+            var rawType = ((typeGroup >> 1) & (int)StyleType.GroupMask) + typeNum;
+            return rawType;
         }
 
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
@@ -85,7 +99,7 @@ namespace NodeMarkup.Manager
         public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection,
-                new XAttribute("T", (int)Type),
+                new XAttribute("T", TypeToInt(Type)),
                 new XAttribute("C", Color.ToInt()),
                 new XAttribute("W", Width)
             );
@@ -148,38 +162,37 @@ namespace NodeMarkup.Manager
             ItemMask = 0xFF,
             GroupMask = ~ItemMask,
 
+            RegularLine = 0x100,
 
-            RegularLine = 0x0,
+            [Description(nameof(Localize.LineStyle_Solid))]
+            LineSolid = 1 + RegularLine,
 
-            [Description("LineStyle_Solid")]
-            LineSolid = 0 + RegularLine,
+            [Description(nameof(Localize.LineStyle_Dashed))]
+            LineDashed = 2 + RegularLine,
 
-            [Description("LineStyle_Dashed")]
-            LineDashed = 1 + RegularLine,
+            [Description(nameof(Localize.LineStyle_DoubleSolid))]
+            LineDoubleSolid = 3 + RegularLine,
 
-            [Description("LineStyle_DoubleSolid")]
-            LineDoubleSolid = 2 + RegularLine,
+            [Description(nameof(Localize.LineStyle_DoubleDashed))]
+            LineDoubleDashed = 4 + RegularLine,
 
-            [Description("LineStyle_DoubleDashed")]
-            LineDoubleDashed = 3 + RegularLine,
-
-            [Description("LineStyle_SolidAndDashed")]
-            LineSolidAndDashed = 4 + RegularLine,
-
-
-            StopLine = 0x100,
-
-            [Description("LineStyle_Stop")]
-            StopLineSolid = 0 + StopLine,
-
-            [Description("LineStyle_Stop")]
-            StopLineDashed = 1 + StopLine,
+            [Description(nameof(Localize.LineStyle_SolidAndDashed))]
+            LineSolidAndDashed = 5 + RegularLine,
 
 
-            Filler = 0x200,
+            StopLine = 0x200,
+
+            [Description(nameof(Localize.LineStyle_Stop))]
+            StopLineSolid = 1 + StopLine,
+
+            [Description(nameof(Localize.LineStyle_Stop))]
+            StopLineDashed = 2 + StopLine,
+
+
+            Filler = 0x400,
 
             [Description("FillerStyle_Stroke")]
-            FillerStroke = 0 + Filler,
+            FillerStroke = 1 + Filler,
         }
     }
 
