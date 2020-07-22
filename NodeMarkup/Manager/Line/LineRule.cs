@@ -25,6 +25,16 @@ namespace NodeMarkup.Manager
                 RuleChanged();
             }
         }
+        public new ILinePartEdge From
+        {
+            get => base.From as ILinePartEdge;
+            set => base.From = value;
+        }
+        public new ILinePartEdge To
+        {
+            get => base.To as ILinePartEdge;
+            set => base.To = value;
+        }
         public override string XmlSection => XmlName;
 
         public MarkupLineRawRule(MarkupLine line, LineStyle style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
@@ -123,7 +133,7 @@ namespace NodeMarkup.Manager
             var edges = new List<ILinePartEdge>();
             foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
             {
-                if (LinePartEdge.FromXml(supportConfig, line.Markup, map, out LinePartEdge supportPoint) && supportPoint is ILinePartEdge edge)
+                if (LinePartEdge.FromXml(supportConfig, line, map, out ILinePartEdge edge))
                     edges.Add(edge);
             }
 

@@ -128,7 +128,7 @@ namespace NodeMarkup.Manager
         public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
         {
             var line = first.GetCommonLine(second);
-            var linePart = new FillerLinePart(line, first.GetPartEdge(line), second.GetPartEdge(line));
+            var linePart = new FillerLinePart(line, first, second);
             return linePart;
         }
         public IEnumerable<IFillerVertex> GetNextСandidates()
@@ -194,9 +194,9 @@ namespace NodeMarkup.Manager
 
             foreach (var linePart in LineParts)
             {
-                if (linePart.From is EnterPointEdge fromVertex && fromVertex.Point.Enter == vertex.Enter)
+                if (linePart.From is EnterSupportPoint fromVertex && fromVertex.Point.Enter == vertex.Enter)
                     Set(fromVertex.Point.Num);
-                if (linePart.To is EnterPointEdge toVertex && toVertex.Point.Enter == vertex.Enter)
+                if (linePart.To is EnterSupportPoint toVertex && toVertex.Point.Enter == vertex.Enter)
                     Set(toVertex.Point.Num);
             }
 
@@ -267,7 +267,17 @@ namespace NodeMarkup.Manager
     public class FillerLinePart : MarkupLinePart
     {
         public override string XmlSection => throw new NotImplementedException();
-        public FillerLinePart(MarkupLine line, ILinePartEdge from, ILinePartEdge to) : base(line, from, to) { }
+        public new IFillerVertex From
+        {
+            get => base.From as IFillerVertex;
+            set => base.From = value;
+        }
+        public new IFillerVertex To
+        {
+            get => base.To as IFillerVertex;
+            set => base.To = value;
+        }
+        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
     }
 
     public class MarkupFakeLine : MarkupLine

@@ -18,10 +18,10 @@ namespace NodeMarkup.UI.Editors
 
         private ButtonPanel AddButton { get; set; }
 
-        public List<ISupportPoint> SupportPoints { get; } = new List<ISupportPoint>();
+        public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool CanDivide => SupportPoints.Count > 2;
 
-        private ISupportPoint HoverSupportPoint { get; set; }
+        private ILinePartEdge HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
 
         private MarkupLineSelectPropertyPanel SelectPartEdgePanel { get; set; }
@@ -51,9 +51,9 @@ namespace NodeMarkup.UI.Editors
         private void GetRuleEdges()
         {
             SupportPoints.Clear();
-            SupportPoints.Add(new EnterSupportPoint(EditObject.Start));
-            SupportPoints.AddRange(EditObject.IntersectLines.Select(l => (ISupportPoint)new IntersectSupportPoint(EditObject, l)));
-            SupportPoints.Add(new EnterSupportPoint(EditObject.End));
+            SupportPoints.Add(new EnterPointEdge(EditObject.Start));
+            SupportPoints.AddRange(EditObject.IntersectLines.Select(l => (ILinePartEdge)new LinesIntersectEdge(EditObject, l)));
+            SupportPoints.Add(new EnterPointEdge(EditObject.End));
         }
         private void AddRulePanels()
         {
@@ -316,7 +316,7 @@ namespace NodeMarkup.UI.Editors
             From.Position = RulePosition.Start;
             From.Init();
             From.AddRange(Editor.SupportPoints);
-            From.SelectedObject = Rule.From?.GetSupport(Editor.EditObject);
+            From.SelectedObject = Rule.From;
             From.OnSelectChanged += FromChanged;
             From.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             From.OnHover += Editor.HoverRuleEdge;
@@ -330,7 +330,7 @@ namespace NodeMarkup.UI.Editors
             To.Position = RulePosition.End;
             To.Init();
             To.AddRange(Editor.SupportPoints);
-            To.SelectedObject = Rule.To?.GetSupport(Editor.EditObject);
+            To.SelectedObject = Rule.To;
             To.OnSelectChanged += ToChanged;
             To.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             To.OnHover += Editor.HoverRuleEdge;
@@ -383,8 +383,8 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        private void FromChanged(ISupportPoint from) => Rule.From = from.GetPartEdge(Editor.EditObject);
-        private void ToChanged(ISupportPoint to) => Rule.To = to.GetPartEdge(Editor.EditObject);
+        private void FromChanged(ILinePartEdge from) => Rule.From = from;
+        private void ToChanged(ILinePartEdge to) => Rule.To = to;
         private void StyleChanged(Style.StyleType style)
         {
             if (style == Rule.Style.Type)

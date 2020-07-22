@@ -97,7 +97,7 @@ namespace NodeMarkup.Manager
         public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(ILinePartEdge supportPoint) => supportPoint is LinesIntersectEdge lineRuleEdge && lineRuleEdge.Line == intersectLine;
+            bool Match(ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
 
             if (!RawRules.Any())
                 AddRule();
@@ -180,9 +180,9 @@ namespace NodeMarkup.Manager
     {
         public Action OnRuleChanged { private get; set; }
 
-        ILinePartEdge _from;
-        ILinePartEdge _to;
-        public ILinePartEdge From
+        ISupportPoint _from;
+        ISupportPoint _to;
+        public ISupportPoint From
         {
             get => _from;
             set
@@ -191,7 +191,7 @@ namespace NodeMarkup.Manager
                 RuleChanged();
             }
         }
-        public ILinePartEdge To
+        public ISupportPoint To
         {
             get => _to;
             set
@@ -203,7 +203,7 @@ namespace NodeMarkup.Manager
         public MarkupLine Line { get; }
         public abstract string XmlSection { get; }
 
-        public MarkupLinePart(MarkupLine line, ILinePartEdge from = null, ILinePartEdge to = null)
+        public MarkupLinePart(MarkupLine line, ISupportPoint from = null, ISupportPoint to = null)
         {
             Line = line;
             From = from;
@@ -213,7 +213,7 @@ namespace NodeMarkup.Manager
         protected void RuleChanged() => OnRuleChanged?.Invoke();
         public bool GetFromT(out float t) => GetT(From, out t);
         public bool GetToT(out float t) => GetT(To, out t);
-        private bool GetT(ILinePartEdge partEdge, out float t)
+        private bool GetT(ISupportPoint partEdge, out float t)
         {
             if (partEdge != null)
                 return partEdge.GetT(Line, out t);

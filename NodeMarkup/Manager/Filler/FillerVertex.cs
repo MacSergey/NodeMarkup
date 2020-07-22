@@ -1,7 +1,9 @@
-﻿using System;
+﻿using NodeMarkup.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
@@ -10,8 +12,44 @@ namespace NodeMarkup.Manager
         MarkupLine GetCommonLine(IFillerVertex other);
         IEnumerable<IFillerVertex> GetNextCandidates(MarkupFiller filler, IFillerVertex prev);
     }
+    public static class FillerVertex
+    {
+        public static string XmlName { get; } = "V";
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out IFillerVertex fillerVertex)
+        {
+            var type = (SupportType)config.GetAttrValue<int>("T");
+            switch (type)
+            {
+                case SupportType.EnterPoint when EnterFillerVertex.FromXml(config, markup, map, out EnterFillerVertex enterPoint):
+                    fillerVertex = enterPoint;
+                    return true;
+                case SupportType.LinesIntersect when IntersectFillerVertex.FromXml(config, markup, map, out IntersectFillerVertex linePoint):
+                    fillerVertex = linePoint;
+                    return true;
+                default:
+                    fillerVertex = null;
+                    return false;
+            }
+        }
+    }
     public class EnterFillerVertex : EnterSupportPoint, IFillerVertex
     {
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out EnterFillerVertex enterPoint)
+        {
+            var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
+            if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
+            {
+                enterPoint = new EnterFillerVertex(point);
+                return true;
+            }
+            else
+            {
+                enterPoint = null;
+                return false;
+            }
+        }
+
+        public override string XmlSection => FillerVertex.XmlName;
         public EnterFillerVertex(MarkupPoint point) : base(point) { }
 
         public MarkupLine GetCommonLine(IFillerVertex other)
@@ -74,6 +112,26 @@ namespace NodeMarkup.Manager
     }
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex
     {
+        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out IntersectFillerVertex linePoint)
+        {
+            var lineId1 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName1);
+            MarkupPointPair.FromHash(lineId1, markup, map, out MarkupPointPair pair1);
+            var lineId2 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName2);
+            MarkupPointPair.FromHash(lineId2, markup, map, out MarkupPointPair pair2);
+
+            if (markup.TryGetLine(pair1.Hash, out MarkupLine line1) && markup.TryGetLine(pair2.Hash, out MarkupLine line2))
+            {
+                linePoint = new IntersectFillerVertex(line1, line2);
+                return true;
+            }
+            else
+            {
+                linePoint = null;
+                return false;
+            }
+        }
+        public override string XmlSection => FillerVertex.XmlName;
+
         public IntersectFillerVertex(MarkupLinePair linePair) : base(linePair) { }
         public IntersectFillerVertex(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
 
