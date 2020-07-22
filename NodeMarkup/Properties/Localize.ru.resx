@@ -383,12 +383,7 @@
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Показывать что нового</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Копирование с помощью MoveIt (Не работает пока не будет обновлен MoveIt)
-- Стоп линии
-- Новый стиль "Сплошная и пунктирная"
-- Китайский язык</value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Импорт</value>
   </data>
