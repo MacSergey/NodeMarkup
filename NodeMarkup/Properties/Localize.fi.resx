@@ -153,9 +153,15 @@ Tätä toimintoa ei voi kumota</value>
     <value>Haluatko varmasti poistaa säännön?
 Tätä toimintoa ei voi kumota</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_From" xml:space="preserve">
+    <value>Alkupiste</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Valitse säännön alkupiste</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Valitse säännön loppupiste</value>
+  </data>
   
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Viivat</value>
@@ -169,7 +175,9 @@ Tätä toimintoa ei voi kumota</value>
   <data name="LineEditor_Style" xml:space="preserve">
     <value>Tyyli</value>
   </data>
-  
+  <data name="LineEditor_To" xml:space="preserve">
+    <value>Loppupiste</value>
+  </data>
   
   
   <data name="LineStyle_Dashed" xml:space="preserve">
