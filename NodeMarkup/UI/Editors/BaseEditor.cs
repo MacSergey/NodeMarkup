@@ -219,7 +219,7 @@ namespace NodeMarkup.UI.Editors
 
                 _selectItem = value;
 
-                if(_selectItem != null)
+                if (_selectItem != null)
                     _selectItem.Select();
             }
         }
@@ -294,24 +294,40 @@ namespace NodeMarkup.UI.Editors
             item.eventClick -= ItemClick;
             item.eventMouseEnter -= ItemHover;
             item.eventMouseLeave -= ItemLeave;
-            //ItemsPanel.RemoveUIComponent(item);
+            ItemsPanel.RemoveUIComponent(item);
             Destroy(item.gameObject);
         }
-        public override void UpdateEditor()
+        private EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+        public void UpdateEditor(EditableObject selectObject = null)
         {
             var editObject = EditObject;
+
+            if(selectObject != null && selectObject == editObject)
+            {
+                OnObjectUpdate();
+                return;
+            }
+
             ClearItems();
             if (Markup != null)
                 FillItems();
 
-            if (editObject != null && ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject)) is EditableItemType item)
-                SelectItem = item;
+            if (selectObject != null && GetItem(selectObject) is EditableItemType selectItem)
+                Select(selectItem);
+            else if (editObject != null && GetItem(editObject) is EditableItemType editItem)
+            {
+                SelectItem = editItem;
+                ScrollTo(SelectItem);
+            }
             else
             {
                 SelectItem = null;
                 ClearSettings();
+                Select(0);
             }
         }
+        public override void UpdateEditor() => UpdateEditor(null);
+
         protected override void RefreshItems()
         {
             foreach (EditableItemType item in ItemsPanel.components)
@@ -352,35 +368,22 @@ namespace NodeMarkup.UI.Editors
         {
             item.SimulateClick();
             item.Focus();
-
+            ScrollTo(item);
         }
         public void ScrollTo(EditableItemType item)
         {
             ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
-        public void Select(EditableObject editableObject = null, bool updateEditor = true)
-        {
-            if (updateEditor)
-                UpdateEditor();
 
-            if (editableObject == null && SelectItem != null)
-                return;
-            else if (EditObject != null && ReferenceEquals(EditObject, editableObject))
-                OnObjectUpdate();
-            else if (ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editableObject)) is EditableItemType item)
-                Select(item);
-            else
-                Select(0);
-        }
-        protected override void OnVisibilityChanged()
-        {
-            base.OnVisibilityChanged();
-            if (isVisible)
-            {
-                Select();
-                ScrollTo(SelectItem);
-            }
-        }
+        //protected override void OnVisibilityChanged()
+        //{
+        //    base.OnVisibilityChanged();
+        //    if (isVisible)
+        //    {
+        //        Select();
+        //        ScrollTo(SelectItem);
+        //    }
+        //}
     }
 }

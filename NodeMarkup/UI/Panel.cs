@@ -125,14 +125,13 @@ namespace NodeMarkup.UI
             Markup = MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;
             TabStrip.selectedIndex = 0;
-
-            foreach(var editor in Editors)
-            {
-                editor.UpdateEditor();
-            }
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
-        private void TabStripSelectedIndexChanged(UIComponent component, int index) => CurrentEditor = SelectEditor(index);
+        private void TabStripSelectedIndexChanged(UIComponent component, int index)
+        {
+            CurrentEditor = SelectEditor(index);
+            UpdatePanel();
+        }
         private Editor SelectEditor(int index)
         {
             if (index >= 0 && Editors.Count > index)
@@ -158,22 +157,22 @@ namespace NodeMarkup.UI
         public void EditPoint(MarkupPoint point)
         {
             var editor = SelectEditor<PointsEditor>();
-            editor?.Select(point, false);
+            editor?.UpdateEditor(point);
         }
         public void EditLine(MarkupLine line)
         {
             var editor = SelectEditor<LinesEditor>();
-            editor?.Select(line);
+            editor?.UpdateEditor(line);
         }
         public void EditTemplate(StyleTemplate template)
         {
             var editor = SelectEditor<TemplateEditor>();
-            editor?.Select(template);
+            editor?.UpdateEditor(template);
         }
         public void EditFiller(MarkupFiller filler)
         {
             var editor = SelectEditor<FillerEditor>();
-            editor?.Select(filler);
+            editor?.UpdateEditor(filler);
         }
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
         public string GetInfo() => CurrentEditor?.GetInfo();
