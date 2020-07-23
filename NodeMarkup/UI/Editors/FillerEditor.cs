@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
-            //AddStyleTypeProperty();
+            AddStyleTypeProperty();
             AddStyleProperties();
         }
 
@@ -66,11 +66,11 @@ namespace NodeMarkup.UI.Editors
             var newStyle = TemplateManager.GetDefault<FillerStyle>(style);
             newStyle.Color = EditObject.Style.Color;
             newStyle.Width = EditObject.Style.Width;
-            if (newStyle is IStrokeFiller newStroke && EditObject.Style is IStrokeFiller oldStroke)
+            if (newStyle is ISimpleFiller newStrip && EditObject.Style is ISimpleFiller oldStrip)
             {
-                newStroke.Step = oldStroke.Step;
-                newStroke.Angle = oldStroke.Angle;
-                newStroke.Offset = oldStroke.Offset;
+                newStrip.Step = oldStrip.Step;
+                newStrip.Angle = oldStrip.Angle;
+                newStrip.Offset = oldStrip.Offset;
             }
 
             EditObject.Style = newStyle;
@@ -90,7 +90,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style.Copy() is FillerStyle style)
             {
                 EditObject.Style = style;
-                //Style.SelectedObject = EditObject.Style.Type;
+                Style.SelectedObject = EditObject.Style.Type;
 
                 RefreshItem();
                 ClearStyleProperties();

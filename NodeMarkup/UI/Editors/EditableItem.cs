@@ -171,7 +171,16 @@ namespace NodeMarkup.UI.Editors
         protected UIButton Thumbnail { get; set; }
 
         public Color32 StyleColor { set => Thumbnail.color = GetStyleColor(value); }
-        public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = Editor.SpriteNames[value]; }
+        public Style.StyleType Type 
+        {
+            set
+            {
+                if (!Editor.SpriteNames.TryGetValue(value, out string sprite))
+                    sprite = string.Empty;
+
+                Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = sprite;
+            }
+        }
 
         public StyleIcon()
         {

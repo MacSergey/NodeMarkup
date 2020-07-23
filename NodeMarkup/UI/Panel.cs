@@ -106,15 +106,6 @@ namespace NodeMarkup.UI
 
             Editors.Add(editor);
         }
-        protected override void OnVisibilityChanged()
-        {
-            base.OnVisibilityChanged();
-            if (!isVisible)
-            {
-                CurrentEditor?.ClearEditor();
-                CurrentEditor = null;
-            }
-        }
 
         public void UpdatePanel() => CurrentEditor?.UpdateEditor();
         public void SetNode(ushort nodeId)

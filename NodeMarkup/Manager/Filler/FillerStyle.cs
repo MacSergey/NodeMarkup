@@ -10,17 +10,15 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IStrokeFiller
+    public interface ISimpleFiller
     {
         float Angle { get; set; }
         float Step { get; set; }
         float Offset { get; set; }
     }
 
-    public class StrokeFillerStyle : FillerStyle, IStrokeFiller
+    public abstract class SimpleFillerStyle : FillerStyle, ISimpleFiller
     {
-        public override StyleType Type => StyleType.FillerStroke;
-
         float _angle;
         float _step;
         float _offset;
@@ -51,18 +49,22 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-
-        public StrokeFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width)
+        public SimpleFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width)
         {
             Angle = angle;
             Step = step;
             Offset = offset;
         }
+
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
             var parts = filler.Parts.Select(p => p.GetTrajectory()).ToArray();
-
-            foreach (var point in GetLines(filler.Rect, filler.Markup.Height, out Vector3 normal))
+            return GetDashes(parts, filler.Rect, filler.Markup.Height);
+        }
+        protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height);
+        protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, float angleDeg, Rect rect, float height)
+        {
+            foreach (var point in GetLines(angleDeg, rect, height, out Vector3 normal))
             {
                 var intersectSet = new HashSet<float>();
                 foreach (var part in parts)
@@ -86,24 +88,22 @@ namespace NodeMarkup.Manager
                         yield return new MarkupStyleDash(pos, angle, length, Width, Color);
                 }
             }
-
-            yield break;
         }
-        private Vector3[] GetLines(Rect rect, float height, out Vector3 normal)
+        protected Vector3[] GetLines(float angle, Rect rect, float height, out Vector3 normal)
         {
-            var absAngle = Mathf.Abs(Angle) * Mathf.Deg2Rad;
+            var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
             var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
             var dx = railLength * Mathf.Sin(absAngle);
             var dy = railLength * Mathf.Cos(absAngle);
 
             Line3 rail;
-            if (Angle == -90 || Angle == 90)
+            if (angle == -90 || angle == 90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
-            else if (90 > Angle && Angle > 0)
+            else if (90 > angle && angle > 0)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
-            else if (Angle == 0)
+            else if (angle == 0)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
-            else if (0 > Angle && Angle > -90)
+            else if (0 > angle && angle > -90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
             else
             {
@@ -126,8 +126,6 @@ namespace NodeMarkup.Manager
             }
             return result;
         }
-
-        public override FillerStyle CopyFillerStyle() => new StrokeFillerStyle(Color, Width, Angle, Step, Offset);
 
         public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
         {
@@ -152,5 +150,30 @@ namespace NodeMarkup.Manager
             Step = config.GetAttrValue("S", DefaultStep);
             Offset = config.GetAttrValue("O", DefaultOffset);
         }
+    }
+
+    public class StripeFillerStyle : SimpleFillerStyle, ISimpleFiller
+    {
+        public override StyleType Type => StyleType.FillerStripe;
+
+        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width, angle, step, offset) { }
+        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height) => GetDashes(parts, Angle, rect, height);
+
+        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, Angle, Step, Offset);
+    }
+    public class GridFillerStyle : SimpleFillerStyle, ISimpleFiller
+    {
+        public override StyleType Type => StyleType.FillerGrid;
+
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width, angle, step, offset) { }
+        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height)
+        {
+            foreach (var dash in GetDashes(parts, Angle, rect, height))
+                yield return dash;
+            foreach (var dash in GetDashes(parts, Angle < 0 ? Angle + 90 : Angle - 90, rect, height))
+                yield return dash;
+        }
+        
+        public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, Angle, Step, Offset);
     }
 }

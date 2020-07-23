@@ -26,7 +26,8 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.LineSolidAndDashed, nameof(Style.StyleType.LineSolidAndDashed) },
                 {Style.StyleType.StopLineSolid, nameof(Style.StyleType.StopLineSolid) },
                 {Style.StyleType.StopLineDashed, nameof(Style.StyleType.StopLineDashed) },
-                {Style.StyleType.FillerStroke, nameof(Style.StyleType.FillerStroke) },
+                {Style.StyleType.FillerStripe, nameof(Style.StyleType.FillerStripe) },
+                {Style.StyleType.FillerGrid, nameof(Style.StyleType.FillerGrid) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));
@@ -165,14 +166,7 @@ namespace NodeMarkup.UI.Editors
         {
             NodeMarkupPanel = panel;
         }
-        public void ClearEditor()
-        {
-            Logger.LogDebug($"{nameof(Editor)}.{nameof(ClearEditor)}");
-            ClearItems();
-            ClearSettings();
-        }
         public virtual void UpdateEditor() { }
-        protected virtual void RefreshItems() { }
         protected virtual void ClearItems() { }
         protected virtual void ClearSettings() { }
         protected virtual void FillItems() { }
@@ -328,13 +322,6 @@ namespace NodeMarkup.UI.Editors
         }
         public override void UpdateEditor() => UpdateEditor(null);
 
-        protected override void RefreshItems()
-        {
-            foreach (EditableItemType item in ItemsPanel.components)
-            {
-                item.Refresh();
-            }
-        }
         protected override void ClearSettings()
         {
             var componets = SettingsPanel.components.ToArray();
@@ -375,15 +362,5 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
-
-        //protected override void OnVisibilityChanged()
-        //{
-        //    base.OnVisibilityChanged();
-        //    if (isVisible)
-        //    {
-        //        Select();
-        //        ScrollTo(SelectItem);
-        //    }
-        //}
     }
 }

@@ -426,7 +426,7 @@ namespace NodeMarkup
             {
                 case Mode.ConnectLine when !IsSelectPoint && e.alt:
                     ToolMode = Mode.SelectFiller;
-                    TempFiller = new MarkupFiller(EditMarkup, FillerStyle.FillerType.Stroke);
+                    TempFiller = new MarkupFiller(EditMarkup, FillerStyle.FillerType.Stripe);
                     GetFillerPoints();
                     break;
             }

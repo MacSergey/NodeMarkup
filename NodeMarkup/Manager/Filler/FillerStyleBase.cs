@@ -18,13 +18,15 @@ namespace NodeMarkup.Manager
         public static float DefaultStep { get; } = 1f;
         public static float DefaultOffset { get; } = 0f;
 
-        public static StrokeFillerStyle DefaultStroke => new StrokeFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
+        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
+        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
 
         public static FillerStyle GetDefault(FillerType type)
         {
             switch (type)
             {
-                case FillerType.Stroke: return DefaultStroke;
+                case FillerType.Stripe: return DefaultStripe;
+                case FillerType.Grid: return DefaultGrid;
                 default: return null;
             }
         }
@@ -33,7 +35,7 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler);
 
-        protected static UIComponent AddStepProperty(IStrokeFiller strokeStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static UIComponent AddStepProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
             stepProperty.Text = "Step";
@@ -42,12 +44,12 @@ namespace NodeMarkup.Manager
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 0.05f;
             stepProperty.Init();
-            stepProperty.Value = strokeStyle.Step;
-            stepProperty.OnValueChanged += (float value) => strokeStyle.Step = value;
+            stepProperty.Value = stripeStyle.Step;
+            stepProperty.OnValueChanged += (float value) => stripeStyle.Step = value;
             AddOnHoverLeave(stepProperty, onHover, onLeave);
             return stepProperty;
         }
-        protected static UIComponent AddAngleProperty(IStrokeFiller strokeStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static UIComponent AddAngleProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
             angleProperty.Text = "Angle";
@@ -58,12 +60,12 @@ namespace NodeMarkup.Manager
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 90;
             angleProperty.Init();
-            angleProperty.Value = strokeStyle.Angle;
-            angleProperty.OnValueChanged += (float value) => strokeStyle.Angle = value;
+            angleProperty.Value = stripeStyle.Angle;
+            angleProperty.OnValueChanged += (float value) => stripeStyle.Angle = value;
             AddOnHoverLeave(angleProperty, onHover, onLeave);
             return angleProperty;
         }
-        protected static UIComponent AddOffsetProperty(IStrokeFiller strokeStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static UIComponent AddOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
             offsetProperty.Text = "Offset";
@@ -72,16 +74,19 @@ namespace NodeMarkup.Manager
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
             offsetProperty.Init();
-            offsetProperty.Value = strokeStyle.Offset;
-            offsetProperty.OnValueChanged += (float value) => strokeStyle.Offset = value;
+            offsetProperty.Value = stripeStyle.Offset;
+            offsetProperty.OnValueChanged += (float value) => stripeStyle.Offset = value;
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
 
         public enum FillerType
         {
-            [Description("FillerStyle_Stroke")]
-            Stroke = StyleType.FillerStroke,
+            [Description("FillerStyle_Stripe")]
+            Stripe = StyleType.FillerStripe,
+
+            [Description("FillerStyle_Grid")]
+            Grid = StyleType.FillerGrid,
         }
     }
 }

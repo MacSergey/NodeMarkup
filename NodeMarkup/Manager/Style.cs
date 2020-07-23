@@ -165,34 +165,37 @@ namespace NodeMarkup.Manager
             RegularLine = 0x100,
 
             [Description(nameof(Localize.LineStyle_Solid))]
-            LineSolid = 1 + RegularLine,
+            LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
-            LineDashed = 2 + RegularLine,
+            LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
-            LineDoubleSolid = 3 + RegularLine,
+            LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
-            LineDoubleDashed = 4 + RegularLine,
+            LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
-            LineSolidAndDashed = 5 + RegularLine,
+            LineSolidAndDashed,
 
 
             StopLine = 0x200,
 
             [Description(nameof(Localize.LineStyle_Stop))]
-            StopLineSolid = 1 + StopLine,
+            StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_Stop))]
-            StopLineDashed = 2 + StopLine,
+            StopLineDashed,
 
 
             Filler = 0x400,
 
-            [Description("FillerStyle_Stroke")]
-            FillerStroke = 1 + Filler,
+            [Description("FillerStyle_Stripe")]
+            FillerStripe,
+
+            [Description("FillerStyle_Grid")]
+            FillerGrid,
         }
     }
 
