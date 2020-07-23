@@ -48,9 +48,6 @@ namespace NodeMarkup.UI.Editors
 
         public EditableItem(bool showIcon, bool showDelete)
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             ShowIcon = showIcon;
             ShowDelete = showDelete;
 
@@ -68,11 +65,7 @@ namespace NodeMarkup.UI.Editors
             hoveredBgSprite = "ButtonSmallHovered";
             pressedBgSprite = "ButtonSmallPressed";
 
-
             height = 25;
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(EditableItem)}.constructor: {sw.ElapsedMilliseconds}ms");
-#endif
         }
 
         private void AddIcon()
