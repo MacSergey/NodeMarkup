@@ -4,6 +4,7 @@ using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -124,13 +125,14 @@ namespace NodeMarkup.UI
             Markup = MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;
             TabStrip.selectedIndex = 0;
+
+            foreach(var editor in Editors)
+            {
+                editor.UpdateEditor();
+            }
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
-        private void TabStripSelectedIndexChanged(UIComponent component, int index)
-        {
-            CurrentEditor = SelectEditor(index);
-            CurrentEditor?.UpdateEditor();
-        }
+        private void TabStripSelectedIndexChanged(UIComponent component, int index) => CurrentEditor = SelectEditor(index);
         private Editor SelectEditor(int index)
         {
             if (index >= 0 && Editors.Count > index)
@@ -156,24 +158,21 @@ namespace NodeMarkup.UI
         public void EditPoint(MarkupPoint point)
         {
             var editor = SelectEditor<PointsEditor>();
-            editor?.Select(point);
+            editor?.Select(point, false);
         }
         public void EditLine(MarkupLine line)
         {
             var editor = SelectEditor<LinesEditor>();
-            editor?.UpdateEditor();
             editor?.Select(line);
         }
         public void EditTemplate(StyleTemplate template)
         {
             var editor = SelectEditor<TemplateEditor>();
-            editor?.UpdateEditor();
             editor?.Select(template);
         }
         public void EditFiller(MarkupFiller filler)
         {
             var editor = SelectEditor<FillerEditor>();
-            editor?.UpdateEditor();
             editor?.Select(filler);
         }
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);

@@ -71,8 +71,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.atlas = NodeMarkupPanel.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
 
-            ItemsScrollbar = AddScrollbar();
-            ItemsPanel.verticalScrollbar = ItemsScrollbar;
+            ItemsScrollbar = AddScrollbar(ItemsPanel);
 
             ItemsScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
         }
@@ -102,8 +101,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.backgroundSprite = "UnlockingItemBackground";
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
-            SettingsScrollbar = AddScrollbar();
-            SettingsPanel.verticalScrollbar = SettingsScrollbar;
+            SettingsScrollbar = AddScrollbar(SettingsPanel);
 
             SettingsScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
         }
@@ -119,7 +117,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.width = size.x / 10 * 7 - (SettingsScrollbar.isVisible ? SettingsScrollbar.width : 0);
         }
 
-        private UIScrollbar AddScrollbar()
+        private UIScrollbar AddScrollbar(UIScrollablePanel scrollablePanel)
         {
             var scrollbar = AddUIComponent<UIScrollbar>();
             scrollbar.orientation = UIOrientation.Vertical;
@@ -147,18 +145,19 @@ namespace NodeMarkup.UI.Editors
             thumbSprite.spriteName = "ScrollbarThumb";
             scrollbar.thumbObject = thumbSprite;
 
-            scrollbar.eventValueChanged += (component, value) => ItemsPanel.scrollPosition = new Vector2(0, value);
+            scrollbar.eventValueChanged += (component, value) => scrollablePanel.scrollPosition = new Vector2(0, value);
 
             eventMouseWheel += (component, eventParam) =>
             {
                 scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
             };
 
-            ItemsPanel.eventMouseWheel += (component, eventParam) =>
+            scrollablePanel.eventMouseWheel += (component, eventParam) =>
             {
                 scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
             };
 
+            scrollablePanel.verticalScrollbar = scrollbar;
             return scrollbar;
         }
 
@@ -166,25 +165,13 @@ namespace NodeMarkup.UI.Editors
         {
             NodeMarkupPanel = panel;
         }
-
-        public virtual void UpdateEditor()
-        {
-            Logger.LogDebug($"{nameof(Editor)}.{nameof(UpdateEditor)}");
-
-            ClearItems();
-            if (Markup != null)
-            {
-                FillItems();
-            }
-            ClearSettings();
-            Select(0);
-        }
         public void ClearEditor()
         {
             Logger.LogDebug($"{nameof(Editor)}.{nameof(ClearEditor)}");
             ClearItems();
             ClearSettings();
         }
+        public virtual void UpdateEditor() { }
         protected virtual void RefreshItems() { }
         protected virtual void ClearItems() { }
         protected virtual void ClearSettings() { }
@@ -216,6 +203,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
+        where EditableObject : class
     {
         EditableItemType _selectItem;
 
@@ -230,10 +218,12 @@ namespace NodeMarkup.UI.Editors
                     _selectItem.Unselect();
 
                 _selectItem = value;
-                _selectItem.Select();
+
+                if(_selectItem != null)
+                    _selectItem.Select();
             }
         }
-        public EditableObject EditObject => SelectItem.Object;
+        public EditableObject EditObject => SelectItem?.Object;
 
 
         protected override void OnSizeChanged()
@@ -250,9 +240,9 @@ namespace NodeMarkup.UI.Editors
 
         public EditableItemType AddItem(EditableObject editableObject)
         {
-#if STOPWATCH
+
             var sw = Stopwatch.StartNew();
-#endif
+
             var item = ItemsPanel.AddUIComponent<EditableItemType>();
             item.name = editableObject.ToString();
             item.width = ItemsPanel.width;
@@ -261,9 +251,9 @@ namespace NodeMarkup.UI.Editors
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
             item.OnDelete += ItemDelete;
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(TemplateEditor)}.{nameof(Editor)}: {sw.ElapsedMilliseconds}ms");
-#endif
+
+            Logger.LogDebug($"{nameof(AddItem)}: {sw.ElapsedMilliseconds}ms");
+
             return item;
         }
 
@@ -298,11 +288,13 @@ namespace NodeMarkup.UI.Editors
 
         protected override void ClearItems()
         {
+            var sw = Stopwatch.StartNew();
             var componets = ItemsPanel.components.ToArray();
             foreach (EditableItemType item in componets)
             {
                 DeleteItem(item);
             }
+            Logger.LogDebug($"{nameof(ClearItems)}: {sw.ElapsedMilliseconds}ms");
         }
         private void DeleteItem(EditableItemType item)
         {
@@ -311,6 +303,24 @@ namespace NodeMarkup.UI.Editors
             item.eventMouseLeave -= ItemLeave;
             ItemsPanel.RemoveUIComponent(item);
             Destroy(item.gameObject);
+        }
+        public override void UpdateEditor()
+        {
+            var sw = Stopwatch.StartNew();
+            var editObject = EditObject;
+            ClearItems();
+            if (Markup != null)
+                FillItems();
+
+            if (editObject != null && ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject)) is EditableItemType item)
+                SelectItem = item;
+            else
+            {
+                SelectItem = null;
+                ClearSettings();
+            }
+
+            Logger.LogDebug($"{nameof(UpdateEditor)}: {sw.ElapsedMilliseconds}ms");
         }
         protected override void RefreshItems()
         {
@@ -321,40 +331,32 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void ClearSettings()
         {
+            var sw = Stopwatch.StartNew();
             var componets = SettingsPanel.components.ToArray();
             foreach (var item in componets)
             {
                 SettingsPanel.RemoveUIComponent(item);
                 Destroy(item.gameObject);
             }
+            Logger.LogDebug($"{nameof(ClearSettings)}: {sw.ElapsedMilliseconds}ms");
         }
 
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
         protected virtual void ItemClick(EditableItemType item)
         {
+            var sw = Stopwatch.StartNew();
+            SettingsPanel.autoLayout = false;
             ClearSettings();
             SelectItem = item;
             OnObjectSelect();
+            SettingsPanel.autoLayout = true;
+            Logger.LogDebug($"{nameof(ItemClick)}: {sw.ElapsedMilliseconds}ms");
         }
         protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as EditableItemType;
         protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = null;
-        protected virtual void OnObjectSelect()
-        {
-
-        }
-        protected virtual void OnObjectDelete(EditableObject editableObject)
-        {
-
-        }
-        protected virtual void OnObjectUpdate()
-        {
-
-        }
-        protected override void OnVisibilityChanged()
-        {
-            if (isVisible)
-                Select(0);
-        }
+        protected virtual void OnObjectSelect() { }
+        protected virtual void OnObjectDelete(EditableObject editableObject) { }
+        protected virtual void OnObjectUpdate() { }
         public override void Select(int index)
         {
             if (ItemsPanel.components.Count > index && ItemsPanel.components[index] is EditableItemType item)
@@ -367,12 +369,25 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
-        public void Select(EditableObject editableObject)
+        public void Select(EditableObject editableObject = null, bool updateEditor = true)
         {
-            if (ReferenceEquals(EditObject, editableObject))
+            if (updateEditor)
+                UpdateEditor();
+
+            if (editableObject == null && SelectItem != null)
+                return;
+            else if (EditObject != null && ReferenceEquals(EditObject, editableObject))
                 OnObjectUpdate();
             else if (ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editableObject)) is EditableItemType item)
                 Select(item);
+            else
+                Select(0);
+        }
+        protected override void OnVisibilityChanged()
+        {
+            base.OnVisibilityChanged();
+            if (isVisible)
+                Select();
         }
     }
 }

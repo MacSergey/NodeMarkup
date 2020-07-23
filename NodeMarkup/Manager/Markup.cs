@@ -237,7 +237,7 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, LineStyle.StyleType lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType lineType)
         {
             if (!ExistConnection(pointPair))
                 return AddConnect(pointPair, lineType);

@@ -22,7 +22,9 @@ namespace NodeMarkup.UI.Editors
         public void Select() => normalBgSprite = "ButtonSmallPressed";
         public void Unselect() => normalBgSprite = "ButtonSmall";
     }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItem where IconType : UIComponent
+    public abstract class EditableItem<EditableObject, IconType> : EditableItem 
+        where IconType : UIComponent
+        where EditableObject : class
     {
         public event Action<EditableItem<EditableObject, IconType>> OnDelete;
 

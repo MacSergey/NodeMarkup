@@ -37,33 +37,43 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void FillItems()
         {
+            var sw = Stopwatch.StartNew();
             foreach (var line in Markup.Lines)
             {
                 AddItem(line);
             }
+            Logger.LogDebug($"{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
         }
         protected override void OnObjectSelect()
         {
+            var sw = Stopwatch.StartNew();
             GetRuleEdges();
             AddRulePanels();
             AddAddButton();
+            Logger.LogDebug($"{nameof(OnObjectSelect)}: {sw.ElapsedMilliseconds}ms");
         }
         private void GetRuleEdges()
         {
+            var sw = Stopwatch.StartNew();
             SupportPoints.Clear();
             SupportPoints.Add(new EnterPointEdge(EditObject.Start));
             SupportPoints.AddRange(EditObject.IntersectLines.Select(l => (ILinePartEdge)new LinesIntersectEdge(EditObject, l)));
             SupportPoints.Add(new EnterPointEdge(EditObject.End));
+            Logger.LogDebug($"{nameof(GetRuleEdges)}: {sw.ElapsedMilliseconds}ms");
         }
         private void AddRulePanels()
         {
+            var sw = Stopwatch.StartNew();
             foreach (var rule in EditObject.RawRules)
                 AddRulePanel(rule);
+            Logger.LogDebug($"{nameof(AddRulePanels)}: {sw.ElapsedMilliseconds}ms");
         }
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
         {
+            var sw = Stopwatch.StartNew();
             var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
             rulePanel.Init(this, rule);
+            Logger.LogDebug($"{nameof(AddRulePanel)}: {sw.ElapsedMilliseconds}ms");
             return rulePanel;
         }
 
@@ -264,12 +274,17 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetIcon()
         {
+            var sw = Stopwatch.StartNew();
+            if (!ShowIcon)
+                return;
+
             Icon.Count = Object.RawRules.Count;
             if (Object.RawRules.Count == 1)
             {
                 Icon.Type = Object.RawRules[0].Style.Type;
                 Icon.StyleColor = Object.RawRules[0].Style.Color;
             }
+            Logger.LogDebug($"{nameof(SetIcon)}: {sw.ElapsedMilliseconds}ms");
         }
     }
     public class LineIcon : StyleIcon
@@ -353,15 +368,18 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddHeader()
         {
+            var sw = Stopwatch.StartNew();
             var header = AddUIComponent<StyleHeaderPanel>();
             header.AddRange(TemplateManager.GetTemplates(Rule.Style.Type));
             header.Init(Editor.CanDivide);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
+            Logger.LogDebug($"{nameof(AddHeader)}: {sw.ElapsedMilliseconds}ms");
         }
         private void AddFromProperty()
         {
+            var sw = Stopwatch.StartNew();
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
             From.Text = NodeMarkup.Localize.LineEditor_From;
             From.Position = RulePosition.Start;
@@ -372,10 +390,12 @@ namespace NodeMarkup.UI.Editors
             From.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             From.OnHover += Editor.HoverRuleEdge;
             From.OnLeave += Editor.LeaveRuleEdge;
+            Logger.LogDebug($"{nameof(AddFromProperty)}: {sw.ElapsedMilliseconds}ms");
         }
 
         private void AddToProperty()
         {
+            var sw = Stopwatch.StartNew();
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
             To.Text = NodeMarkup.Localize.LineEditor_To;
             To.Position = RulePosition.End;
@@ -386,9 +406,11 @@ namespace NodeMarkup.UI.Editors
             To.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
+            Logger.LogDebug($"{nameof(AddToProperty)}: {sw.ElapsedMilliseconds}ms");
         }
         private void AddStyleTypeProperty()
         {
+            var sw = Stopwatch.StartNew();
             switch (Rule.Style.Type & Manager.Style.StyleType.GroupMask)
             {
                 case Manager.Style.StyleType.RegularLine:
@@ -404,12 +426,15 @@ namespace NodeMarkup.UI.Editors
             Style.Init();
             Style.SelectedObject = Rule.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
+            Logger.LogDebug($"{nameof(AddStyleTypeProperty)}: {sw.ElapsedMilliseconds}ms");
         }
         private void AddStyleProperties()
         {
+            var sw = Stopwatch.StartNew();
             StyleProperties = Rule.Style.GetUIComponents(this, Editor.StopScroll, Editor.StartScroll);
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
+            Logger.LogDebug($"{nameof(AddStyleProperties)}: {sw.ElapsedMilliseconds}ms");
         }
 
         private void ClearStyleProperties()
