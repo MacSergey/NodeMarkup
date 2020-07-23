@@ -429,7 +429,22 @@
   <data name="LineStyle_DashedStop" xml:space="preserve">
     <value>Пунктирная стоп линия</value>
   </data>
-  <data name="LineStyle_DashedStopShort" xml:space="preserve">
-    <value>ПСЛ</value>
+  
+  
+  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>С</value>
   </data>
+  
+  
+  
+  
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Сдвиг</value>
+  </data>
+  
+  
+  
+  
+  
 </root>
