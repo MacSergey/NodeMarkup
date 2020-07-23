@@ -424,4 +424,21 @@
   
   
   
+  
+  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>实线</value>
+  </data>
+  
+  
+  
+  
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>偏移</value>
+  </data>
+  
+  
+  
+  
+  
 </root>
