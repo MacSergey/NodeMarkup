@@ -366,6 +366,10 @@ namespace NodeMarkup.UI.Editors
         {
             item.SimulateClick();
             item.Focus();
+
+        }
+        public void ScrollTo(EditableItemType item)
+        {
             ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
@@ -387,7 +391,10 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnVisibilityChanged();
             if (isVisible)
+            {
                 Select();
+                ScrollTo(SelectItem);
+            }
         }
     }
 }
