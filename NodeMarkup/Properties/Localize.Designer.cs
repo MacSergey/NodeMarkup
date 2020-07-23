@@ -89,6 +89,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle.
+        /// </summary>
+        public static string Filler_Angle {
+            get {
+                return ResourceManager.GetString("Filler_Angle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset.
+        /// </summary>
+        public static string Filler_Offset {
+            get {
+                return ResourceManager.GetString("Filler_Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Step.
+        /// </summary>
+        public static string Filler_Step {
+            get {
+                return ResourceManager.GetString("Filler_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Fillers.
         /// </summary>
         public static string FillerEditor_Fillers {
@@ -103,6 +130,42 @@ namespace NodeMarkup {
         public static string FillerEditor_ItemDescription {
             get {
                 return ResourceManager.GetString("FillerEditor_ItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Grid.
+        /// </summary>
+        public static string FillerStyle_Grid {
+            get {
+                return ResourceManager.GetString("FillerStyle_Grid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на G.
+        /// </summary>
+        public static string FillerStyle_GridShort {
+            get {
+                return ResourceManager.GetString("FillerStyle_GridShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stripes.
+        /// </summary>
+        public static string FillerStyle_Stripe {
+            get {
+                return ResourceManager.GetString("FillerStyle_Stripe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на S.
+        /// </summary>
+        public static string FillerStyle_StripeShort {
+            get {
+                return ResourceManager.GetString("FillerStyle_StripeShort", resourceCulture);
             }
         }
         
@@ -333,15 +396,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DSL.
-        /// </summary>
-        public static string LineStyle_DashedStopShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DashedStopShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Double dashed.
         /// </summary>
         public static string LineStyle_DoubleDashed {
@@ -419,6 +473,24 @@ namespace NodeMarkup {
         public static string LineStyle_Stop {
             get {
                 return ResourceManager.GetString("LineStyle_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dashed stop line.
+        /// </summary>
+        public static string LineStyle_StopDashed {
+            get {
+                return ResourceManager.GetString("LineStyle_StopDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на DSL.
+        /// </summary>
+        public static string LineStyle_StopDashedShort {
+            get {
+                return ResourceManager.GetString("LineStyle_StopDashedShort", resourceCulture);
             }
         }
         
@@ -942,6 +1014,51 @@ namespace NodeMarkup {
         public static string Tool_InfoDeleteStopLine {
             get {
                 return ResourceManager.GetString("Tool_InfoDeleteStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Tool_InfoFillerClickEnd {
+            get {
+                return ResourceManager.GetString("Tool_InfoFillerClickEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Tool_InfoFillerClickNext {
+            get {
+                return ResourceManager.GetString("Tool_InfoFillerClickNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Tool_InfoFillerClickStart {
+            get {
+                return ResourceManager.GetString("Tool_InfoFillerClickStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Tool_InfoFillerSelectNext {
+            get {
+                return ResourceManager.GetString("Tool_InfoFillerSelectNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Tool_InfoFillerSelectStart {
+            get {
+                return ResourceManager.GetString("Tool_InfoFillerSelectStart", resourceCulture);
             }
         }
         

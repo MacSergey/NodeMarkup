@@ -311,6 +311,21 @@ namespace NodeMarkup
                 case Mode.PanelAction when Panel.GetInfo() is string panelInfo && !string.IsNullOrEmpty(panelInfo):
                     ShowToolInfo(panelInfo, position);
                     break;
+                case Mode.SelectFiller when IsHoverFillerPoint && TempFiller.IsEmpty:
+                    ShowToolInfo(Localize.Tool_InfoFillerClickStart, position);
+                    break;
+                case Mode.SelectFiller when IsHoverFillerPoint && HoverFillerPoint == TempFiller.First:
+                    ShowToolInfo(Localize.Tool_InfoFillerClickEnd, position);
+                    break;
+                case Mode.SelectFiller when IsHoverFillerPoint:
+                    ShowToolInfo(Localize.Tool_InfoFillerClickNext, position);
+                    break;
+                case Mode.SelectFiller when TempFiller.IsEmpty:
+                    ShowToolInfo(Localize.Tool_InfoFillerSelectStart, position);
+                    break;
+                case Mode.SelectFiller:
+                    ShowToolInfo(Localize.Tool_InfoFillerSelectNext, position);
+                    break;
                 default:
                     cursorInfoLabel.isVisible = false;
                     break;

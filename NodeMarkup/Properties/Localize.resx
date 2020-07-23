@@ -435,7 +435,46 @@ create or delete a line
   <data name="LineStyle_DashedStop" xml:space="preserve">
     <value>Dashed stop line</value>
   </data>
-  <data name="LineStyle_DashedStopShort" xml:space="preserve">
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>DSL</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Stripes</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Grid</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Dashed stop line</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value></value>
   </data>
 </root>

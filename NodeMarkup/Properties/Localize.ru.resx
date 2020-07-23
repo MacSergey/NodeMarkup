@@ -435,7 +435,46 @@
   <data name="LineStyle_DashedStop" xml:space="preserve">
     <value>Пунктирная стоп линия</value>
   </data>
-  <data name="LineStyle_DashedStopShort" xml:space="preserve">
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>ПСЛ</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Полосы</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Сетка</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>П</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>С</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Пунктирная стоп линия</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Угол</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Отступ</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Нажмите для начала создания заполнителя</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Нажмите для окончания создания заполнителя</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Нажмите для выбора следующей точки контура</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Выберите точку для начала создания заполнителя</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Выберите следующую точку контура</value>
   </data>
 </root>

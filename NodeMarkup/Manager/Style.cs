@@ -61,6 +61,22 @@ namespace NodeMarkup.Manager
                     return null;
             }
         }
+        public static string GetShortName(StyleType type)
+        {
+            switch (type)
+            {
+                case StyleType.LineSolid: return Localize.LineStyle_SolidShort;
+                case StyleType.LineDashed: return Localize.LineStyle_DashedShort;
+                case StyleType.LineDoubleSolid: return Localize.LineStyle_DoubleSolidShort;
+                case StyleType.LineDoubleDashed: return Localize.LineStyle_DoubleDashedShort;
+                case StyleType.LineSolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
+                case StyleType.StopLineSolid: return Localize.LineStyle_StopShort;
+                case StyleType.StopLineDashed: return Localize.LineStyle_StopDashedShort;
+                case StyleType.FillerStripe: return Localize.FillerStyle_StripeShort;
+                case StyleType.FillerGrid: return Localize.FillerStyle_GridShort;
+                default: return null;
+            }
+        }
 
         public static string XmlName { get; } = "S";
 
@@ -185,16 +201,16 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Stop))]
             StopLineSolid,
 
-            [Description(nameof(Localize.LineStyle_Stop))]
+            [Description(nameof(Localize.LineStyle_StopDashed))]
             StopLineDashed,
 
 
             Filler = 0x400,
 
-            [Description("FillerStyle_Stripe")]
+            [Description(nameof(Localize.FillerStyle_Stripe))]
             FillerStripe,
 
-            [Description("FillerStyle_Grid")]
+            [Description(nameof(Localize.FillerStyle_Grid))]
             FillerGrid,
         }
     }
@@ -262,7 +278,7 @@ namespace NodeMarkup.Manager
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
 
         public override string ToString() => Name;
-        public string ToStringWithShort() => IsEmpty ? Name : $"{LineStyle.GetShortName(Style.Type)}-{Name}";
+        public string ToStringWithShort() => IsEmpty ? Name : $"{Style.GetShortName(Style.Type)}-{Name}";
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {

@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
         protected static UIComponent AddStepProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            stepProperty.Text = "Step";
+            stepProperty.Text = Localize.Filler_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
             stepProperty.CheckMin = true;
@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         protected static UIComponent AddAngleProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            angleProperty.Text = "Angle";
+            angleProperty.Text = Localize.Filler_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.CheckMin = true;
@@ -68,7 +68,7 @@ namespace NodeMarkup.Manager
         protected static UIComponent AddOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = "Offset";
+            offsetProperty.Text = Localize.Filler_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -82,10 +82,10 @@ namespace NodeMarkup.Manager
 
         public enum FillerType
         {
-            [Description("FillerStyle_Stripe")]
+            [Description(nameof(Localize.FillerStyle_Stripe))]
             Stripe = StyleType.FillerStripe,
 
-            [Description("FillerStyle_Grid")]
+            [Description(nameof(Localize.FillerStyle_Grid))]
             Grid = StyleType.FillerGrid,
         }
     }

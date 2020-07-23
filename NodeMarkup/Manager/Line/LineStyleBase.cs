@@ -54,21 +54,6 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public static string GetShortName(StyleType type)
-        {
-            switch (type)
-            {
-                case StyleType.LineSolid: return Localize.LineStyle_SolidShort;
-                case StyleType.LineDashed: return Localize.LineStyle_DashedShort;
-                case StyleType.LineDoubleSolid: return Localize.LineStyle_DoubleSolidShort;
-                case StyleType.LineDoubleDashed: return Localize.LineStyle_DoubleDashedShort;
-                case StyleType.LineSolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
-                case StyleType.StopLineSolid: return Localize.LineStyle_StopShort;
-                case StyleType.StopLineDashed: return Localize.LineStyle_DashedStopShort;
-                default: return null;
-            }
-        }
-
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory);
