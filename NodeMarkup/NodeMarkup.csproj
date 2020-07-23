@@ -123,9 +123,11 @@
     <Compile Include="Utils\BezierIntersect.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\MoveItIntegration.cs" />
+    <Compile Include="Utils\ObjectId.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
+    <Compile Include="Utils\VersionMigration.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Localize.cs.resx" />
@@ -197,7 +199,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug" BuildVersion_DetectChanges="False" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -11,21 +11,23 @@ namespace NodeMarkup.Manager
 {
     public class MarkupPoint : IToXml, IFromXml
     {
+        static int GetId(ushort enter, byte num) => enter + (num << 16);
+        static ushort GetEnter(int id) => (ushort)id;
+        static byte GetNum(int id) => (byte)(id >> 16);
         public static string XmlName { get; } = "P";
-        public static bool FromId(int id, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupPoint point)
+        public static bool FromId(int id, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPoint point)
         {
             point = null;
 
-            var enterId = (ushort)id;
-            var num = (byte)(id >> 16);
+            var enterId = GetEnter(id);
+            var num = GetNum(id);
 
             if(map != null)
             {
-                var source = new InstanceID() { Type = InstanceType.NetSegment, NetSegment = enterId };
-                if (map.TryGetValue(source, out InstanceID target))
-                    enterId = target.NetSegment;
-                else
-                    return false;
+                if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
+                    enterId = targetSegment.Segment;
+                if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num) }, out ObjectId targetPoint))
+                    num = GetNum(targetPoint.Point);
             }
 
             return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, out point);
@@ -69,11 +71,10 @@ namespace NodeMarkup.Manager
             MarkupLine = markupLine;
             PointType = pointType;
             Num = Enter.PointNum;
-            Id = Enter.Id + (Num << 16);
+            Id = GetId(Enter.Id, Num);
 
             Update();
         }
-
         public void Update()
         {
             MarkupLine.GetPositionAndDirection(PointType, Offset, out Vector3 position, out Vector3 direction);
@@ -105,7 +106,7 @@ namespace NodeMarkup.Manager
             );
             return config;
         }
-        public static void FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map)
+        public static void FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
             if (FromId(id, markup, map, out MarkupPoint point))
@@ -121,7 +122,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, Dictionary<InstanceID, InstanceID> map, out MarkupPointPair pair)
+        public static bool FromHash(ulong hash, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPointPair pair)
         {
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);

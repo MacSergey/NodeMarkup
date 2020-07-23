@@ -318,15 +318,20 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, out Markup markup)
+        public static bool FromXml(string version, XElement config, out Markup markup)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
             markup = MarkupManager.Get(nodeId);
-            markup.FromXml(config);
+            markup.FromXml(version, config);
             return true;
         }
-        public void FromXml(XElement config, Dictionary<InstanceID, InstanceID> map = null)
+        public void FromXml(string version, XElement config, Dictionary<ObjectId, ObjectId> map = null)
         {
+            if (VersionComparer.Instance.Compare(version, "1.2") < 0)
+            {
+                map = VersionMigration.Befor1_2(this, map);
+            }
+
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
             {
                 MarkupPoint.FromXml(pointConfig, this, map);

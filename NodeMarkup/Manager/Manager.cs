@@ -123,9 +123,10 @@ namespace NodeMarkup.Manager
         {
             NodesMarkup.Clear();
 
+            var version = config.GetAttrValue("V", Mod.Version);
             foreach (var markupConfig in config.Elements(Markup.XmlName))
             {
-                if (Markup.FromXml(markupConfig, out Markup markup))
+                if (Markup.FromXml(version, markupConfig, out Markup markup))
                     NeedUpdate.Add(markup.Id);
             }
         }

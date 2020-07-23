@@ -41,12 +41,21 @@ namespace NodeMarkup.Utils
             throw new NotImplementedException();
         }
 
-        public void PasteNode(ushort nodeID, object record, Dictionary<InstanceID, InstanceID> map)
+        public void PasteNode(ushort nodeID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
         {
+            var map = new Dictionary<ObjectId, ObjectId>();
+            foreach (var source in sourceMap)
+            {
+                if (source.Key.Type == InstanceType.NetSegment && source.Value.Type == InstanceType.NetSegment)
+                {
+                    map.Add(new ObjectId() { Segment = source.Key.NetSegment }, new ObjectId() { Segment = source.Value.NetSegment });
+                }
+            }
+
             if (record is XElement config)
             {
                 var markup = MarkupManager.Get(nodeID);
-                markup.FromXml(config, map);
+                markup.FromXml(Mod.Version, config, map);
             }
         }
 

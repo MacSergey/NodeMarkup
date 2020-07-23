@@ -10,6 +10,7 @@ using System.Globalization;
 using ColossalFramework.Globalization;
 using ColossalFramework;
 using ColossalFramework.UI;
+using ColossalFramework.PlatformServices;
 
 namespace NodeMarkup
 {
@@ -81,7 +82,7 @@ namespace NodeMarkup
 
         private void ShowWhatsNew()
         {
-            if (!UI.Settings.ShowWhatsNew || new VersionComparer().Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
+            if (!UI.Settings.ShowWhatsNew || VersionComparer.Instance.Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
                 return;
 
             var messageBox = MessageBox.ShowModal<OkMessageBox>();
@@ -100,6 +101,8 @@ namespace NodeMarkup
     }
     public class VersionComparer : Comparer<string>
     {
+        public static VersionComparer Instance { get; } = new VersionComparer();
+
         public override int Compare(string x, string y)
         {
             var xVer = Parse(x);

@@ -15,7 +15,7 @@ namespace NodeMarkup.Manager
     public static class FillerVertex
     {
         public static string XmlName { get; } = "V";
-        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out IFillerVertex fillerVertex)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out IFillerVertex fillerVertex)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -34,7 +34,7 @@ namespace NodeMarkup.Manager
     }
     public class EnterFillerVertex : EnterSupportPoint, IFillerVertex
     {
-        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out EnterFillerVertex enterPoint)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out EnterFillerVertex enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
@@ -112,7 +112,7 @@ namespace NodeMarkup.Manager
     }
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex
     {
-        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out IntersectFillerVertex linePoint)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out IntersectFillerVertex linePoint)
         {
             var lineId1 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName1);
             MarkupPointPair.FromHash(lineId1, markup, map, out MarkupPointPair pair1);

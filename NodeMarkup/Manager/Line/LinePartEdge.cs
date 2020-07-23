@@ -13,7 +13,7 @@ namespace NodeMarkup.Manager
     public static class LinePartEdge
     {
         public static string XmlName { get; } = "E";
-        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<InstanceID, InstanceID> map, out ILinePartEdge supportPoint)
+        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out ILinePartEdge supportPoint)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
     }
     public class EnterPointEdge : EnterSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, Markup markup, Dictionary<InstanceID, InstanceID> map, out EnterPointEdge enterPoint)
+        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out EnterPointEdge enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
@@ -58,7 +58,7 @@ namespace NodeMarkup.Manager
 
     public class LinesIntersectEdge : IntersectSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<InstanceID, InstanceID> map, out LinesIntersectEdge linePoint)
+        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out LinesIntersectEdge linePoint)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             MarkupPointPair.FromHash(lineId, mainLine.Markup, map, out MarkupPointPair pair);
