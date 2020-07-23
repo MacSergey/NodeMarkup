@@ -435,7 +435,22 @@ Linie erstellen oder löschen
   <data name="LineStyle_DashedStop" xml:space="preserve">
     <value>Gestrichelte Haltelinie</value>
   </data>
-  <data name="LineStyle_DashedStopShort" xml:space="preserve">
-    <value>GHL</value>
+  
+  
+  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>D</value>
   </data>
+  
+  
+  
+  
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Versatz</value>
+  </data>
+  
+  
+  
+  
+  
 </root>
