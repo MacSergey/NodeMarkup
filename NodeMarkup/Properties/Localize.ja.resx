@@ -429,7 +429,22 @@
   <data name="LineStyle_DashedStop" xml:space="preserve">
     <value>破線の停止線</value>
   </data>
-  <data name="LineStyle_DashedStopShort" xml:space="preserve">
-    <value>DSL</value>
+  
+  
+  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>S</value>
   </data>
+  
+  
+  
+  
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>オフセット</value>
+  </data>
+  
+  
+  
+  
+  
 </root>
