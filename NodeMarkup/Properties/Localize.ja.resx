@@ -429,16 +429,30 @@
   <data name="LineStyle_DashedStop" xml:space="preserve">
     <value>破線の停止線</value>
   </data>
-  
-  
-  
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>DSL</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>ストライプ</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>グリッド</value>
+  </data>
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>S</value>
   </data>
-  
-  
-  
-  
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>破線の停止線</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>間隔</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>角度</value>
+  </data>
   <data name="Filler_Offset" xml:space="preserve">
     <value>オフセット</value>
   </data>
