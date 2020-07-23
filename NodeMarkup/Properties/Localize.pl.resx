@@ -428,4 +428,21 @@ utworzyć lub usunąć linię
   </data>
   
   
+  
+  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>C</value>
+  </data>
+  
+  
+  
+  
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Przesunięcie</value>
+  </data>
+  
+  
+  
+  
+  
 </root>
