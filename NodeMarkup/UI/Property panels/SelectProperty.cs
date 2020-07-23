@@ -102,6 +102,7 @@ namespace NodeMarkup.UI.Editors
         }
 
         protected abstract bool IsEqual(Type first, Type second);
+        public new void Focus() => Button.Focus();
     }
 
     public class MarkupLineSelectPropertyPanel : SelectPropertyPanel<ILinePartEdge>

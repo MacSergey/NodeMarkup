@@ -24,9 +24,29 @@ namespace NodeMarkup.UI.Editors
         private ILinePartEdge HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
 
-        private MarkupLineSelectPropertyPanel SelectPartEdgePanel { get; set; }
-        private Func<Event, bool> AfterSelectPartEdgePanel { get; set; }
+        private MarkupLineSelectPropertyPanel _selectPartEdgePanel;
+        private MarkupLineSelectPropertyPanel SelectPartEdgePanel 
+        {
+            get => _selectPartEdgePanel;
+            set
+            {
+                if(_selectPartEdgePanel != null)
+                {
+                    _selectPartEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
+                    _selectPartEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
+                }
+
+                _selectPartEdgePanel = value;
+
+                if (_selectPartEdgePanel != null)
+                {
+                    _selectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
+                    _selectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
+                }
+            }
+        }
         private bool IsSelectPartEdgeMode => SelectPartEdgePanel != null;
+        private Func<Event, bool> AfterSelectPartEdgePanel { get; set; }
 
         private MarkupLineSelectPropertyPanel HoverPartEdgePanel { get; set; }
         private bool IsHoverPartEdgePanel => HoverPartEdgePanel != null;
@@ -142,10 +162,9 @@ namespace NodeMarkup.UI.Editors
             NodeMarkupPanel.StartEditorAction(this, out bool isAccept);
             if (isAccept)
             {
+                selectPanel.Focus();
                 SelectPartEdgePanel = selectPanel;
                 AfterSelectPartEdgePanel = afterAction;
-                SelectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                SelectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
                 return false;
             }
             return true;
@@ -238,8 +257,6 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsSelectPartEdgeMode)
             {
-                SelectPartEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                SelectPartEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
                 SelectPartEdgePanel = null;
                 AfterSelectPartEdgePanel = null;
             }
@@ -386,7 +403,7 @@ namespace NodeMarkup.UI.Editors
             To.AddRange(Editor.SupportPoints);
             To.SelectedObject = Rule.To;
             To.OnSelectChanged += ToChanged;
-            To.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
+            To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
         }
