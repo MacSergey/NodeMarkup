@@ -124,6 +124,8 @@ namespace NodeMarkup.Manager
         }
 
         private void OnStyleChanged() => Markup.Update(this);
+        public bool ContainsLine(MarkupLine line) => LineParts.Any(p => p.Line.PointPair == line.PointPair);
+        public bool ContainsPoint(MarkupPoint point) => SupportPoints.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
         public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
         {
@@ -185,7 +187,6 @@ namespace NodeMarkup.Manager
             resultMinT = minT;
             resultMaxT = maxT;
         }
-
         public void GetMinMaxNum(EnterFillerVertex vertex, out byte resultNum, out byte resultMinNum, out byte resultMaxNum)
         {
             var num = vertex.Point.Num;
@@ -226,7 +227,7 @@ namespace NodeMarkup.Manager
 
             switch (First)
             {
-                case EnterFillerVertex firstE when line.ContainPoint(firstE.Point) && ((line.Start == firstE.Point && minT == 0) || (line.End == firstE.Point && maxT == 1)):
+                case EnterFillerVertex firstE when line.ContainsPoint(firstE.Point) && ((line.Start == firstE.Point && minT == 0) || (line.End == firstE.Point && maxT == 1)):
                     yield return firstE;
                     break;
                 case IntersectFillerVertex firstI when firstI.LinePair.ContainLine(line) && firstI.GetT(line, out float firstT) && (firstT == minT || firstT == maxT):
@@ -263,7 +264,6 @@ namespace NodeMarkup.Manager
             }
             return config;
         }
-
         public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupFiller filler)
         {
             if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, out FillerStyle style))

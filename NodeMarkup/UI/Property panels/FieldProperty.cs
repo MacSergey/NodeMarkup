@@ -46,7 +46,7 @@ namespace NodeMarkup.UI.Editors
                 {
                     ValueProgress = true;
                     Field.text = value.ToString();
-                    OnValueChanged?.Invoke(value);
+                    OnValueChanged?.Invoke(value);                   
                     ValueProgress = false;
                 }
             }
@@ -106,8 +106,8 @@ namespace NodeMarkup.UI.Editors
         public bool CheckMax { get; set; } = false;
         public bool CheckMin { get; set; } = false;
 
-        public override ValueType Value 
-        { 
+        public override ValueType Value
+        {
             get => base.Value;
             set
             {

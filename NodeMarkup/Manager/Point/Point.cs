@@ -47,7 +47,7 @@ namespace NodeMarkup.Manager
 
         SegmentMarkupLine MarkupLine { get; }
         public Enter Enter => MarkupLine.SegmentEnter;
-        public IEnumerable<MarkupLine> Lines => Markup.GetLinesFromPoint(this);
+        public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
         public Markup Markup => Enter.Markup;
 
         public bool IsFirst => Num == 1;
@@ -164,7 +164,11 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => $"{First}—{Second}";
 
+        public override bool Equals(object obj) => obj is MarkupPointPair other && other == this;
 
+        public override int GetHashCode() => Hash.GetHashCode();
+        public static bool operator ==(MarkupPointPair x, MarkupPointPair y) => x.Hash == y.Hash;
+        public static bool operator !=(MarkupPointPair x, MarkupPointPair y) => x.Hash != y.Hash;
     }
     public class MarkupPointPairComparer : IEqualityComparer<MarkupPointPair>
     {

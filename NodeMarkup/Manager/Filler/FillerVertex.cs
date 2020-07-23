@@ -61,7 +61,7 @@ namespace NodeMarkup.Manager
                         line = new MarkupFakeLine(Point.Markup, Point, otherE.Point);
                     return line;
                 case IntersectSupportPoint otherI:
-                    return otherI.LinePair.First.ContainPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second;
+                    return otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second;
                 default:
                     return null;
             }
@@ -140,7 +140,7 @@ namespace NodeMarkup.Manager
             switch (other)
             {
                 case EnterSupportPoint otherE:
-                    return First.ContainPoint(otherE.Point) ? First : Second;
+                    return First.ContainsPoint(otherE.Point) ? First : Second;
                 case IntersectSupportPoint otherI:
                     return LinePair.ContainLine(otherI.LinePair.First) ? otherI.LinePair.First : otherI.LinePair.Second;
                 default:
@@ -153,7 +153,7 @@ namespace NodeMarkup.Manager
             switch (prev)
             {
                 case EnterFillerVertex prevE:
-                    return filler.GetLinePoints(this, First.ContainPoint(prevE.Point) ? Second : First);
+                    return filler.GetLinePoints(this, First.ContainsPoint(prevE.Point) ? Second : First);
                 case IntersectFillerVertex prevI:
                     return filler.GetLinePoints(this, prevI.LinePair.ContainLine(First) ? Second : First);
                 default:

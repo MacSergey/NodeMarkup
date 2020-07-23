@@ -395,15 +395,6 @@ namespace NodeMarkup
                 case EventType.keyUp:
                     OnKeyUp(e);
                     break;
-                default:
-                    if (DeleteAllShortcut.IsPressed(e))
-                    {
-                        DeleteAllLines();
-                        e.Use();
-                    }
-                    else
-                        Panel?.OnEvent(e);
-                    break;
             }
 
             base.OnToolGUI(e);
@@ -443,6 +434,15 @@ namespace NodeMarkup
                     ToolMode = Mode.SelectFiller;
                     TempFiller = new MarkupFiller(EditMarkup, FillerStyle.FillerType.Stripe);
                     GetFillerPoints();
+                    break;
+                default:
+                    if (DeleteAllShortcut.IsPressed(e))
+                    {
+                        DeleteAllLines();
+                        e.Use();
+                    }
+                    else
+                        Panel?.OnEvent(e);
                     break;
             }
         }

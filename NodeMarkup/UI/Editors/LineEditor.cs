@@ -106,6 +106,9 @@ namespace NodeMarkup.UI.Editors
 
         private void AddRule()
         {
+            if (EditObject == null)
+                return;
+
             var newRule = EditObject.AddRule();
             DeleteAddButton();
             var rulePanel = AddRulePanel(newRule);
@@ -261,10 +264,7 @@ namespace NodeMarkup.UI.Editors
                 AfterSelectPartEdgePanel = null;
             }
         }
-        protected override void OnObjectDelete(MarkupLine line)
-        {
-            Markup.RemoveConnect(line.PointPair);
-        }
+        protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveConnect(line);
         public void RefreshItem() => SelectItem.Refresh();
     }
 

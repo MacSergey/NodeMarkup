@@ -13,6 +13,8 @@ namespace NodeMarkup.Manager
 {
     public class Markup : IToXml
     {
+        #region STATIC
+
         public static string XmlName { get; } = "M";
 
         public static Color32[] OverlayColors { get; } = new Color32[]
@@ -28,6 +30,11 @@ namespace NodeMarkup.Manager
             new Color32(255, 0, 204, 224),
         };
 
+        #endregion
+
+        #region PROPERTIES
+
+        public string XmlSection => XmlName;
         public ushort Id { get; }
         public float Height { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
@@ -38,28 +45,12 @@ namespace NodeMarkup.Manager
         public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
 
-
-        public IEnumerable<MarkupLine> Lines
-        {
-            get
-            {
-                foreach (var line in LinesDictionary.Values)
-                    yield return line;
-            }
-        }
+        public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupLineIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
 
-        public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
-        public bool TryGetEnter(ushort enterId, out Enter enter)
-        {
-            enter = EntersList.Find(e => e.Id == enterId);
-            return enter != null;
-        }
-        public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
-
-        public string XmlSection => XmlName;
+        #endregion
 
         public Markup(ushort nodeId)
         {
@@ -68,25 +59,19 @@ namespace NodeMarkup.Manager
             Update();
         }
 
+        #region UPDATE
+
         public void Update()
         {
-#if DEBUG
-            Logger.LogDebug($"Start update node #{Id}");
-#endif
             UpdateEnters();
             UpdateLines();
             UpdateFillers();
 
             RecalculateDashes();
-#if DEBUG
-            Logger.LogDebug($"End update node #{Id}");
-#endif
         }
+
         private void UpdateEnters()
         {
-#if DEBUG
-            Logger.LogDebug($"Start update enters");
-#endif
             var node = Utilities.GetNode(Id);
             Height = node.m_position.y;
 
@@ -100,52 +85,39 @@ namespace NodeMarkup.Manager
                 enter.Update();
                 enters.Add(enter);
             }
+
             enters.Sort((e1, e2) => e1.CornerAngle.CompareTo(e2.CornerAngle));
             EntersList = enters;
-
-#if DEBUG
-            Logger.LogDebug($"End update enters");
-#endif
         }
         private void UpdateLines()
         {
-#if DEBUG
-            Logger.LogDebug($"Start update lines");
-#endif
-            var lines = LinesDictionary.Values.ToArray();
-            foreach (var line in lines)
+            foreach (var line in LinesDictionary.Values.ToArray())
             {
                 if (ContainsEnter(line.Start.Enter.Id) && ContainsEnter(line.End.Enter.Id))
-                    LinesDictionary[line.PointPair.Hash].UpdateTrajectory();
+                    line.UpdateTrajectory();
                 else
-                    LinesDictionary.Remove(line.PointPair.Hash);
+                    RemoveLine(line);
             }
-#if DEBUG
-            Logger.LogDebug($"End update lines");
-#endif
         }
         private void UpdateFillers()
         {
-#if DEBUG
-            Logger.LogDebug($"Start update fillers");
-#endif
-            var fillers = FillersList.ToArray();
-            foreach (var filler in fillers)
-            {
+            foreach (var filler in FillersList)
                 filler.Update();
-            }
-#if DEBUG
-            Logger.LogDebug($"End update fillers");
-#endif
         }
 
         public void Update(MarkupPoint point)
         {
             point.Update();
-            foreach (var line in Lines.Where(l => l.ContainPoint(point)))
+
+            foreach (var line in GetPointLines(point))
             {
                 line.UpdateTrajectory();
             }
+            foreach(var filler in GetPointFillers(point))
+            {
+                filler.Update();
+            }
+
             RecalculateDashes();
         }
         public void Update(MarkupLine line)
@@ -160,11 +132,20 @@ namespace NodeMarkup.Manager
             NeedRecalculateBatches = true;
         }
 
+        public void Clear()
+        {
+            LinesDictionary.Clear();
+            FillersList.Clear();
+
+            RecalculateDashes();
+        }
+
+        #endregion
+
+        #region RECALCULATE
+
         public void RecalculateDashes()
         {
-#if DEBUG
-            Logger.LogDebug($"Start recalculate dashes");
-#endif
             LineIntersects.Clear();
             foreach (var line in Lines)
             {
@@ -175,81 +156,70 @@ namespace NodeMarkup.Manager
                 filler.RecalculateDashes();
             }
             NeedRecalculateBatches = true;
-#if DEBUG
-            Logger.LogDebug($"End recalculate dashes");
-#endif
         }
-
         public void RecalculateBatches()
         {
-#if DEBUG
-            Logger.LogDebug($"Start recalculate batches");
-#endif
             var dashes = new List<MarkupStyleDash>();
             dashes.AddRange(Lines.SelectMany(l => l.Dashes));
             dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
             RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
-#if DEBUG
-            Logger.LogDebug($"End recalculate batches: {RenderBatches.Length}; dashes: {dashes.Count}");
-#endif
         }
 
-        public MarkupLine AddConnect(MarkupPointPair pointPair, LineStyle.StyleType lineType)
-        {
-            var newLine = new MarkupLine(this, pointPair, lineType);
-            LinesDictionary[pointPair.Hash] = newLine;
+        #endregion
 
-            NeedRecalculateBatches = true;
+        #region LINES
 
-            return newLine;
-        }
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        public void RemoveConnect(MarkupPointPair pointPair)
-        {
-            var line = LinesDictionary[pointPair.Hash];
-
-            var intersects = GetExistIntersects(line).ToArray();
-            foreach (var intersect in intersects)
-            {
-                var intersectLine = intersect.Pair.GetOther(line);
-                intersectLine.RemoveRules(line);
-                LineIntersects.Remove(intersect.Pair);
-            }
-
-            LinesDictionary.Remove(pointPair.Hash);
-
-            RecalculateDashes();
-        }
-        public void AddFiller(MarkupFiller filler)
-        {
-            FillersList.Add(filler);
-            filler.RecalculateDashes();
-            NeedRecalculateBatches = true;
-        }
-        public void RemoveFiller(MarkupFiller filler)
-        {
-            FillersList.Remove(filler);
-            NeedRecalculateBatches = true;
-        }
-        public void Clear()
-        {
-            LinesDictionary.Clear();
-
-            RecalculateDashes();
-        }
         public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType lineType)
         {
-            if (!ExistConnection(pointPair))
-                return AddConnect(pointPair, lineType);
-            else
+            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
             {
-                RemoveConnect(pointPair);
+                RemoveConnect(line);
                 return null;
             }
+            else
+            {
+                line = new MarkupLine(this, pointPair, lineType);
+                LinesDictionary[pointPair.Hash] = line;
+                NeedRecalculateBatches = true;
+                return line;
+            }
         }
+        public void RemoveConnect(MarkupLine line)
+        {
+            RemoveLine(line);
+            RecalculateDashes();
+        }
+        private void RemoveLine(MarkupLine line)
+        {
+            foreach (var intersect in GetExistIntersects(line).ToArray())
+            {
+                intersect.Pair.GetOther(line).RemoveRules(line);
+                LineIntersects.Remove(intersect.Pair);
+            }
+            foreach (var filler in GetLineFillers(line).ToArray())
+            {
+                FillersList.Remove(filler);
+            }
+
+            LinesDictionary.Remove(line.PointPair.Hash);
+        }
+
+        #endregion
+
+        #region GET & CONTAINS
+
+        public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
+        public bool TryGetEnter(ushort enterId, out Enter enter)
+        {
+            enter = EntersList.Find(e => e.Id == enterId);
+            return enter != null;
+        }
+        public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
+        public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
+
         public IEnumerable<MarkupLineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
         public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line) => Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l)));
-
         public MarkupLineIntersect GetIntersect(MarkupLinePair linePair)
         {
             if (!LineIntersects.TryGetValue(linePair, out MarkupLineIntersect intersect))
@@ -282,14 +252,26 @@ namespace NodeMarkup.Manager
             var index = EntersList.IndexOf(current);
             return EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
         }
-        public IEnumerable<MarkupLine> GetLinesFromPoint(MarkupPoint point)
+
+        public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => LinesDictionary.Values.Where(l => l.ContainsPoint(point));
+        public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
+        public IEnumerable<MarkupFiller> GetPointFillers(MarkupPoint point) => FillersList.Where(f => f.ContainsPoint(point));
+
+        #endregion
+
+        public void AddFiller(MarkupFiller filler)
         {
-            foreach (var line in LinesDictionary.Values)
-            {
-                if (line.ContainPoint(point))
-                    yield return line;
-            }
+            FillersList.Add(filler);
+            filler.RecalculateDashes();
+            NeedRecalculateBatches = true;
         }
+        public void RemoveFiller(MarkupFiller filler)
+        {
+            FillersList.Remove(filler);
+            NeedRecalculateBatches = true;
+        }
+
+        #region XML
 
         public XElement ToXml()
         {
@@ -357,5 +339,9 @@ namespace NodeMarkup.Manager
                     FillersList.Add(filler);
             }
         }
+
+        #endregion XML
+
+
     }
 }

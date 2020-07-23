@@ -11,6 +11,11 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
+    public interface IStyle
+    {
+        Color32 Color { get; set; }
+        float Width { get; set; }
+    }
     public abstract class Style : IToXml
     {
         public static bool FromXml<T>(XElement config, out T style) where T : Style
@@ -84,7 +89,7 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
         public abstract StyleType Type { get; }
 
-        protected void StyleChanged() => OnStyleChanged?.Invoke();
+        protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
 
         Color32 _color;
         float _width;
@@ -140,7 +145,7 @@ namespace NodeMarkup.Manager
 
             return components;
         }
-        private UIComponent AddColorProperty(UIComponent parent)
+        protected ColorPropertyPanel AddColorProperty(UIComponent parent)
         {
             var colorProperty = parent.AddUIComponent<ColorPropertyPanel>();
             colorProperty.Text = Localize.LineEditor_Color;
@@ -149,7 +154,7 @@ namespace NodeMarkup.Manager
             colorProperty.OnValueChanged += (Color32 color) => Color = color;
             return colorProperty;
         }
-        private UIComponent AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
+        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
             widthProperty.Text = Localize.LineEditor_Width;

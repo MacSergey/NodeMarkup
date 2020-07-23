@@ -60,7 +60,7 @@ namespace NodeMarkup.Manager
         }
         public override bool GetT(MarkupLine line, out float t)
         {
-            if(line.ContainPoint(Point))
+            if(line.ContainsPoint(Point))
             {
                 t = line.Start == Point ? 0 : 1;
                 return true;

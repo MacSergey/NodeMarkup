@@ -70,7 +70,7 @@ namespace NodeMarkup.Manager
         }
         public override string ToString() => PointPair.ToString();
 
-        public bool ContainPoint(MarkupPoint point) => PointPair.ContainPoint(point);
+        public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
         public IEnumerable<MarkupLine> IntersectLines => Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
         private void AddRule(MarkupLineRawRule rule, bool update = true)
@@ -87,7 +87,7 @@ namespace NodeMarkup.Manager
             AddRule(newRule, update);
             return newRule;
         }
-        public MarkupLineRawRule AddRule() => AddRule(TemplateManager.GetDefault<LineStyle>(Style.StyleType.LineDashed));
+        public MarkupLineRawRule AddRule(bool empty = true) => AddRule(TemplateManager.GetDefault<LineStyle>(Style.StyleType.LineDashed), empty);
         public void RemoveRule(MarkupLineRawRule rule)
         {
             RawRules.Remove(rule);
@@ -100,7 +100,7 @@ namespace NodeMarkup.Manager
             bool Match(ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
 
             if (!RawRules.Any())
-                AddRule();
+                AddRule(false);
         }
 
         public XElement ToXml()

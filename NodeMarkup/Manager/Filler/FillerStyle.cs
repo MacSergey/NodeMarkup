@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface ISimpleFiller
+    public interface ISimpleFiller : IFillerStyle
     {
         float Angle { get; set; }
         float Step { get; set; }
@@ -115,13 +115,14 @@ namespace NodeMarkup.Manager
             var length = dir.magnitude;
             dir.Normalize();
             normal = dir.Turn90(false);
-            var count = Math.Max((int)(length / Step) - 1, 0);
-            var start = (length - (Step * count)) / 2;
+            var itemLength = Width * Step;
+            var count = Math.Max((int)(length / itemLength) - 1, 0);
+            var start = (length - (itemLength * count)) / 2;
 
             var result = new Vector3[count];
             for (var i = 0; i < count; i += 1)
             {
-                var pos = rail.a + dir * (i * Step + start);
+                var pos = rail.a + dir * (i * itemLength + start);
                 result[i] = pos;
             }
             return result;

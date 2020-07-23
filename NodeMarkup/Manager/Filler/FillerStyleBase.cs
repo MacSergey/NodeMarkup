@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -11,11 +12,11 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IFillerStyle { }
+    public interface IFillerStyle : IStyle { }
     public abstract class FillerStyle : Style, IFillerStyle
     {
         public static float DefaultAngle { get; } = 0f;
-        public static float DefaultStep { get; } = 1f;
+        public static float DefaultStep { get; } = 6f;
         public static float DefaultOffset { get; } = 0f;
 
         public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
@@ -42,7 +43,7 @@ namespace NodeMarkup.Manager
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
             stepProperty.CheckMin = true;
-            stepProperty.MinValue = 0.05f;
+            stepProperty.MinValue = 1f;
             stepProperty.Init();
             stepProperty.Value = stripeStyle.Step;
             stepProperty.OnValueChanged += (float value) => stripeStyle.Step = value;
