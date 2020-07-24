@@ -396,7 +396,6 @@ Cliquez pour modifier le marquage</value>
   
   
   
-  
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>S</value>
   </data>
@@ -404,9 +403,8 @@ Cliquez pour modifier le marquage</value>
   
   
   
-  <data name="Filler_Offset" xml:space="preserve">
-    <value>Décalage</value>
-  </data>
+  
+  
   
   
   
