@@ -421,10 +421,10 @@
     <value>クリックして停止線の追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗りつぶし</value>
+    <value>塗り潰し一覧</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>埋める</value>
+    <value>塗り潰し</value>
   </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>DSL</value>
@@ -433,7 +433,7 @@
     <value>ストライプ</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>グリッド</value>
+    <value>網掛け</value>
   </data>
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>S</value>
@@ -450,11 +450,15 @@
   <data name="Filler_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>塗り潰し部分のオフセット</value>
+  </data>
   
   
   
   
   
-  
-  
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>分離帯部分のオフセット</value>
+  </data>
 </root>
