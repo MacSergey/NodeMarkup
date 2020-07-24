@@ -382,7 +382,12 @@ maak of verwijderen een lijn
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Toon wat nieuw is</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopieer met MoveIt (Werkt niet tot MoveIt is bijgwerkt)
+- Stoplijnen
+- Nieuw "Ononderbroken en Streeplijn" stijl
+- Chinees</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importeer</value>
   </data>
@@ -424,7 +429,6 @@ maak of verwijderen een lijn
   
   
   
-  
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>O</value>
   </data>
@@ -432,9 +436,8 @@ maak of verwijderen een lijn
   
   
   
-  <data name="Filler_Offset" xml:space="preserve">
-    <value>Correctieafstand</value>
-  </data>
+  
+  
   
   
   
