@@ -383,7 +383,13 @@
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Показывать что нового</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Копирование с помощью MoveIt (Не работает пока не будет обновлен MoveIt)
+- Заполнители. Удерживайте ALT что бы начать создавать (еще не сохраняются)
+- Стоп линии
+- Новый стиль "Сплошная и пунктирная"
+- Китайский язык</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Импорт</value>
   </data>
@@ -426,22 +432,34 @@
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>Заполнитель</value>
   </data>
-  <data name="LineStyle_DashedStop" xml:space="preserve">
-    <value>Пунктирная стоп линия</value>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>ПСЛ</value>
   </data>
-  
-  
-  
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Полосы</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Сетка</value>
+  </data>
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>С</value>
   </data>
-  
-  
-  
-  
-  <data name="Filler_Offset" xml:space="preserve">
-    <value>Сдвиг</value>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>С</value>
   </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Пунктирная стоп линия</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Угол</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Отступ от линий</value>
+  </data>
+  
   
   
   
