@@ -50,25 +50,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties()
         {
-            StyleProperties = EditObject.Style.GetUIComponents(SettingsPanel);
-            if (EditObject.IsMedian)
-                AddMedianOffsetProperty();
-
+            StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel);
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
-        }
-        private void AddMedianOffsetProperty()
-        {
-            var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = NodeMarkup.Localize.Filler_MedianOffset;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
-            offsetProperty.Init();
-            offsetProperty.Value = EditObject.MedianOffset;
-            offsetProperty.OnValueChanged += (float value) => EditObject.MedianOffset = value;
-            StyleProperties.Add(offsetProperty);
         }
         private void StyleChanged(Style.StyleType style)
         {
@@ -83,6 +67,7 @@ namespace NodeMarkup.UI.Editors
                 newStrip.Step = oldStrip.Step;
                 newStrip.Angle = oldStrip.Angle;
                 newStrip.Offset = oldStrip.Offset;
+                newStrip.MedianOffset = oldStrip.MedianOffset;
             }
 
             EditObject.Style = newStyle;
@@ -101,6 +86,12 @@ namespace NodeMarkup.UI.Editors
         {
             if (template.Style.Copy() is FillerStyle style)
             {
+                if (style is ISimpleFiller newStrip && EditObject.Style is ISimpleFiller oldStrip)
+                {
+                    newStrip.Angle = oldStrip.Angle;
+                    newStrip.MedianOffset = oldStrip.MedianOffset;
+                }
+
                 EditObject.Style = style;
                 Style.SelectedObject = EditObject.Style.Type;
 
@@ -123,7 +114,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverItem)
             {
-                foreach (var trajectory in /*HoverItem.Object.Trajectories*/HoverItem.Object.TrajectoriesWithoutMedian)
+                foreach (var trajectory in HoverItem.Object.Trajectories)
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
             }
         }

@@ -41,16 +41,7 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
-        float _medianOffset;
-        public float MedianOffset
-        {
-            get => _medianOffset;
-            set
-            {
-                _medianOffset = value;
-                OnStyleChanged();
-            }
-        }
+
 
         List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
         public IFillerVertex First => SupportPoints.FirstOrDefault();
@@ -61,49 +52,11 @@ namespace NodeMarkup.Manager
         public bool IsEmpty => VertexCount == 0;
 
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
+        public IEnumerable<MarkupLinePart> Parts => LineParts;
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
         public bool IsMedian => LineParts.Any(p => p.Line is MarkupFakeLine);
 
         public IEnumerable<Bezier3> Trajectories => LineParts.Select(p => p.GetTrajectory());
-        public IEnumerable<Bezier3> TrajectoriesWithoutMedian
-        {
-            get
-            {
-                var trajectories = Trajectories.ToArray();
-                if (!IsMedian)
-                    return trajectories;
-
-                for (var i = 0; i < LineParts.Count; i += 1)
-                {
-                    var line = LineParts[i].Line;
-                    if (line is MarkupFakeLine)
-                        continue;
-
-                    var prevI = i == 0 ? LineParts.Count - 1 : i - 1;
-                    if (LineParts[prevI].Line is MarkupFakeLine)
-                    {
-                        trajectories[i] = Shift(trajectories[i]);
-                        trajectories[prevI].d = trajectories[prevI].b = trajectories[i].a;
-                    }
-
-                    var nextI = i + 1 == LineParts.Count ? 0 : i + 1;
-                    if (LineParts[nextI].Line is MarkupFakeLine)
-                    {
-                        trajectories[i] = Shift(trajectories[i].Invert()).Invert();
-                        trajectories[nextI].a = trajectories[nextI].c = trajectories[i].d;
-                    }
-
-                    Bezier3 Shift(Bezier3 trajectory)
-                    {
-                        var newT = trajectory.Travel(0, MedianOffset);
-                        return trajectory.Cut(newT, 1);
-                    }
-                }
-
-                return trajectories;
-            }
-        }
-
         public string XmlSection => XmlName;
 
         public MarkupFiller(Markup markup, FillerStyle style)
@@ -271,7 +224,7 @@ namespace NodeMarkup.Manager
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlSection, new XAttribute("MO", MedianOffset), Style.ToXml());
+            var config = new XElement(XmlSection, Style.ToXml());
             foreach (var supportPoint in SupportPoints)
             {
                 config.Add(supportPoint.ToXml());
@@ -287,7 +240,6 @@ namespace NodeMarkup.Manager
             }
 
             filler = new MarkupFiller(markup, style);
-            filler.FromXml(config);
 
             foreach (var supportConfig in config.Elements(FillerVertex.XmlName))
             {
@@ -297,10 +249,6 @@ namespace NodeMarkup.Manager
             filler.Add(filler.First);
 
             return true;
-        }
-        public void FromXml(XElement config)
-        {
-            MedianOffset = config.GetAttrValue("MO", 0f);
         }
     }
     public class FillerLinePart : MarkupLinePart

@@ -15,6 +15,7 @@ namespace NodeMarkup.Manager
         float Angle { get; set; }
         float Step { get; set; }
         float Offset { get; set; }
+        float MedianOffset { get; set; }
     }
 
     public abstract class SimpleFillerStyle : FillerStyle, ISimpleFiller
@@ -22,6 +23,7 @@ namespace NodeMarkup.Manager
         float _angle;
         float _step;
         float _offset;
+        float _medianOffset;
 
         public float Angle
         {
@@ -50,18 +52,63 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public SimpleFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width)
+        public float MedianOffset
+        {
+            get => _medianOffset;
+            set
+            {
+                _medianOffset = value;
+                StyleChanged();
+            }
+        }
+
+        public SimpleFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width)
         {
             Angle = angle;
             Step = step;
             Offset = offset;
+            MedianOffset = medianOffset;
         }
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
-            var trajectories = filler.TrajectoriesWithoutMedian.ToArray();
+            var trajectories = filler.Trajectories.ToArray();
+            if (filler.IsMedian)
+                GetTrajectoriesWithoutMedian(trajectories, filler.Parts.ToArray());
+
             var rect = GetRect(trajectories);
             return GetDashes(trajectories, rect, filler.Markup.Height);
+        }
+        public IEnumerable<Bezier3> GetTrajectoriesWithoutMedian(Bezier3[] trajectories, MarkupLinePart[] lineParts)
+        {
+            for (var i = 0; i < lineParts.Length; i += 1)
+            {
+                var line = lineParts[i].Line;
+                if (line is MarkupFakeLine)
+                    continue;
+
+                var prevI = i == 0 ? lineParts.Length - 1 : i - 1;
+                if (lineParts[prevI].Line is MarkupFakeLine)
+                {
+                    trajectories[i] = Shift(trajectories[i]);
+                    trajectories[prevI].d = trajectories[prevI].b = trajectories[i].a;
+                }
+
+                var nextI = i + 1 == lineParts.Length ? 0 : i + 1;
+                if (lineParts[nextI].Line is MarkupFakeLine)
+                {
+                    trajectories[i] = Shift(trajectories[i].Invert()).Invert();
+                    trajectories[nextI].a = trajectories[nextI].c = trajectories[i].d;
+                }
+
+                Bezier3 Shift(Bezier3 trajectory)
+                {
+                    var newT = trajectory.Travel(0, MedianOffset);
+                    return trajectory.Cut(newT, 1);
+                }
+            }
+
+            return trajectories;
         }
         protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height);
         protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, float angleDeg, Rect rect, float height)
@@ -223,12 +270,15 @@ namespace NodeMarkup.Manager
 
         }
 
-        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(parent, onHover, onLeave);
-            components.Add(AddAngleProperty(this, parent, onHover, onLeave));
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            if (!isTemplate)
+                components.Add(AddAngleProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            if (!isTemplate && editObject is MarkupFiller filler && filler.IsMedian)
+                components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
             return components;
         }
         public override XElement ToXml()
@@ -237,6 +287,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("A", Angle));
             config.Add(new XAttribute("S", Step));
             config.Add(new XAttribute("O", Offset));
+            config.Add(new XAttribute("MO", MedianOffset));
             return config;
         }
         public override void FromXml(XElement config)
@@ -245,6 +296,7 @@ namespace NodeMarkup.Manager
             Angle = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStep);
             Offset = config.GetAttrValue("O", DefaultOffset);
+            MedianOffset = config.GetAttrValue("MO", DefaultOffset);
         }
     }
 
@@ -252,16 +304,16 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.FillerStripe;
 
-        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width, angle, step, offset) { }
+        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
         protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height) => GetDashes(parts, Angle, rect, height);
 
-        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, Angle, Step, Offset);
+        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, Angle, Step, Offset, MedianOffset);
     }
     public class GridFillerStyle : SimpleFillerStyle, ISimpleFiller
     {
         public override StyleType Type => StyleType.FillerGrid;
 
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset) : base(color, width, angle, step, offset) { }
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
         protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height)
         {
             foreach (var dash in GetDashes(parts, Angle, rect, height))
@@ -270,6 +322,6 @@ namespace NodeMarkup.Manager
                 yield return dash;
         }
 
-        public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, Angle, Step, Offset);
+        public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, Angle, Step, Offset, MedianOffset);
     }
 }

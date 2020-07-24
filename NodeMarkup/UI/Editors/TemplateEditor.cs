@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += NameSubmitted;
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(SettingsPanel);
+        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: true);
 
         private void NameSubmitted(string value)
         {

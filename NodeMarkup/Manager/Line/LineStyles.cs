@@ -69,9 +69,9 @@ namespace NodeMarkup.Manager
             yield return CalculateSolidDash(trajectory, Offset);
             yield return CalculateSolidDash(trajectory, -Offset);
         }
-        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(parent, onHover, onLeave);
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             return components;
         }
@@ -125,9 +125,9 @@ namespace NodeMarkup.Manager
         {
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
         }
-        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(parent, onHover, onLeave);
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             return components;
@@ -174,9 +174,9 @@ namespace NodeMarkup.Manager
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Offset);
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset);
         }
-        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(parent, onHover, onLeave);
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             return components;
         }
@@ -268,9 +268,9 @@ namespace NodeMarkup.Manager
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
         }
         public override LineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
-        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(parent, onHover, onLeave);
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
@@ -373,9 +373,9 @@ namespace NodeMarkup.Manager
         }
 
         public override LineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
-        public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(parent, onHover, onLeave);
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             return components;

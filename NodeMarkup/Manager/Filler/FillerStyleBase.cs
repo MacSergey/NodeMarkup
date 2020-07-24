@@ -19,8 +19,8 @@ namespace NodeMarkup.Manager
         public static float DefaultStep { get; } = 6f;
         public static float DefaultOffset { get; } = 0f;
 
-        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
-        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset);
+        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset, DefaultOffset);
+        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset, DefaultOffset);
 
         public static FillerStyle GetDefault(FillerType type)
         {
@@ -77,6 +77,20 @@ namespace NodeMarkup.Manager
             offsetProperty.Init();
             offsetProperty.Value = stripeStyle.Offset;
             offsetProperty.OnValueChanged += (float value) => stripeStyle.Offset = value;
+            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+            return offsetProperty;
+        }
+        protected static FloatPropertyPanel AddMedianOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            offsetProperty.Text = Localize.Filler_MedianOffset;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0f;
+            offsetProperty.Init();
+            offsetProperty.Value = stripeStyle.MedianOffset;
+            offsetProperty.OnValueChanged += (float value) => stripeStyle.MedianOffset = value;
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }

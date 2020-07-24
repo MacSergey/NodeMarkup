@@ -135,7 +135,7 @@ namespace NodeMarkup.Manager
 
         public abstract Style Copy();
 
-        public virtual List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)
+        public virtual List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = new List<UIComponent>
             {
