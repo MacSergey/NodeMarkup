@@ -125,7 +125,7 @@
 この操作は元に戻せません</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールスクロールで増減</value>
+    <value>ホイールをスクロールして増減</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -186,7 +186,7 @@
     <value>交差点・ノード内 {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>端点・原点 {0}</value>
+    <value>交点・接点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>破線</value>
@@ -409,7 +409,7 @@
     <value>破線＆実線</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>実線の停止線</value>
+    <value>停止線</value>
   </data>
   <data name="LineStyle_StopShort" xml:space="preserve">
     <value>SL</value>
@@ -421,13 +421,10 @@
     <value>クリックして停止線の追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗り潰し一覧</value>
+    <value>塗りつぶし</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>塗り潰し</value>
-  </data>
-  <data name="LineStyle_DashedStop" xml:space="preserve">
-    <value>破線の停止線</value>
+    <value>埋める</value>
   </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>DSL</value>
@@ -453,9 +450,8 @@
   <data name="Filler_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="Filler_Offset" xml:space="preserve">
-    <value>オフセット</value>
-  </data>
+  
+  
   
   
   
