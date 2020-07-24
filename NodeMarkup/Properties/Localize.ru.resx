@@ -432,9 +432,6 @@
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>Заполнитель</value>
   </data>
-  <data name="LineStyle_DashedStop" xml:space="preserve">
-    <value>Пунктирная стоп линия</value>
-  </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>ПСЛ</value>
   </data>
