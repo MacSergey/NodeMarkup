@@ -383,7 +383,13 @@ vytvoření nebo odstranění čáry
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopírování pomocí MoveIt (Nefunkční do aktualizace MoveIt)
+- Výplně - Vytvořte podržením klávesy ALT (zatím neukládáno)
+- Hranice křižovatky (čáry zastavení)
+- Nový styl "Plná a přerušovaná"
+- Další jazyky</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importovat</value>
   </data>
@@ -420,27 +426,45 @@ vytvoření nebo odstranění čáry
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>Klikněte pro vytvoření hranice křižovatky</value>
   </data>
-  
-  
-  <data name="LineStyle_DashedStop" xml:space="preserve">
-    <value>Přerušovaná hranice křižovatky</value>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Výplňe</value>
   </data>
-  
-  
-  
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>výplň</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>PHK</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Proužky</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Mřížka</value>
+  </data>
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>N</value>
   </data>
-  
-  
-  
-  
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Přerušovaná hranice křižovatky</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Mezera</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Úhel</value>
+  </data>
   <data name="Filler_Offset" xml:space="preserve">
-    <value>Odsazení</value>
+    <value>Odsazení od čar</value>
   </data>
   
   
   
   
   
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Odsazení od mediánu</value>
+  </data>
 </root>
