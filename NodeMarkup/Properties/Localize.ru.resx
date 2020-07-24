@@ -460,7 +460,7 @@
     <value>Угол</value>
   </data>
   <data name="Filler_Offset" xml:space="preserve">
-    <value>Отступ</value>
+    <value>Отступ от линий</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Нажмите для начала создания заполнителя</value>
@@ -476,5 +476,8 @@
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Выберите следующую точку контура</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value></value>
   </data>
 </root>

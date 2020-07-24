@@ -41,6 +41,16 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
+        float _medianOffset;
+        public float MedianOffset
+        {
+            get => _medianOffset;
+            set
+            {
+                _medianOffset = value;
+                OnStyleChanged();
+            }
+        }
 
         List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
         public IFillerVertex First => SupportPoints.FirstOrDefault();
@@ -51,42 +61,46 @@ namespace NodeMarkup.Manager
         public bool IsEmpty => VertexCount == 0;
 
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
-        public IEnumerable<MarkupLinePart> Parts => LineParts;
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public bool IsMedian => LineParts.Any(p => p.Line is MarkupFakeLine);
 
-        public Rect Rect
+        public IEnumerable<Bezier3> Trajectories => LineParts.Select(p => p.GetTrajectory());
+        public IEnumerable<Bezier3> TrajectoriesWithoutMedian
         {
             get
             {
-                if (IsEmpty)
-                    return Rect.zero;
+                var trajectories = Trajectories.ToArray();
+                if (!IsMedian)
+                    return trajectories;
 
-                var firstPos = First.Position;
-                var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
-
-                foreach (var part in LineParts)
+                for (var i = 0; i < LineParts.Count; i += 1)
                 {
-                    var trajectory = part.GetTrajectory();
-                    Set(trajectory.a);
-                    Set(trajectory.b);
-                    Set(trajectory.c);
-                    Set(trajectory.d);
+                    var line = LineParts[i].Line;
+                    if (line is MarkupFakeLine)
+                        continue;
+
+                    var prevI = i == 0 ? LineParts.Count - 1 : i - 1;
+                    if (LineParts[prevI].Line is MarkupFakeLine)
+                    {
+                        trajectories[i] = Shift(trajectories[i]);
+                        trajectories[prevI].d = trajectories[prevI].b = trajectories[i].a;
+                    }
+
+                    var nextI = i + 1 == LineParts.Count ? 0 : i + 1;
+                    if (LineParts[nextI].Line is MarkupFakeLine)
+                    {
+                        trajectories[i] = Shift(trajectories[i].Invert()).Invert();
+                        trajectories[nextI].a = trajectories[nextI].c = trajectories[i].d;
+                    }
+
+                    Bezier3 Shift(Bezier3 trajectory)
+                    {
+                        var newT = trajectory.Travel(0, MedianOffset);
+                        return trajectory.Cut(newT, 1);
+                    }
                 }
 
-                return rect;
-
-                void Set(Vector3 pos)
-                {
-                    if (pos.x < rect.xMin)
-                        rect.xMin = pos.x;
-                    else if (pos.x > rect.xMax)
-                        rect.xMax = pos.x;
-
-                    if (pos.z < rect.yMin)
-                        rect.yMin = pos.z;
-                    else if (pos.z > rect.yMax)
-                        rect.yMax = pos.z;
-                }
+                return trajectories;
             }
         }
 
@@ -101,16 +115,16 @@ namespace NodeMarkup.Manager
 
         public bool Add(IFillerVertex supportPoint)
         {
-            if(supportPoint.Equals(First))
+            if (supportPoint.Equals(First))
             {
-                LineParts.Add(GetFillerLine(First, Last));
+                LineParts.Add(GetFillerLine(Last, First));
                 return true;
             }
             else
             {
                 SupportPoints.Add(supportPoint);
                 if (VertexCount >= 2)
-                    LineParts.Add(GetFillerLine(Last, Prev));
+                    LineParts.Add(GetFillerLine(Prev, Last));
 
                 return false;
             }
@@ -257,8 +271,8 @@ namespace NodeMarkup.Manager
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlSection, Style.ToXml());
-            foreach(var supportPoint in SupportPoints)
+            var config = new XElement(XmlSection, new XAttribute("MO", MedianOffset), Style.ToXml());
+            foreach (var supportPoint in SupportPoints)
             {
                 config.Add(supportPoint.ToXml());
             }
@@ -273,6 +287,7 @@ namespace NodeMarkup.Manager
             }
 
             filler = new MarkupFiller(markup, style);
+            filler.FromXml(config);
 
             foreach (var supportConfig in config.Elements(FillerVertex.XmlName))
             {
@@ -282,6 +297,10 @@ namespace NodeMarkup.Manager
             filler.Add(filler.First);
 
             return true;
+        }
+        public void FromXml(XElement config)
+        {
+            MedianOffset = config.GetAttrValue("MO", 0f);
         }
     }
     public class FillerLinePart : MarkupLinePart

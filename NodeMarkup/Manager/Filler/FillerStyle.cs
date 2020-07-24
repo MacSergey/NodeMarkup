@@ -22,6 +22,7 @@ namespace NodeMarkup.Manager
         float _angle;
         float _step;
         float _offset;
+
         public float Angle
         {
             get => _angle;
@@ -58,18 +59,19 @@ namespace NodeMarkup.Manager
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
-            var parts = filler.Parts.Select(p => p.GetTrajectory()).ToArray();
-            return GetDashes(parts, filler.Rect, filler.Markup.Height);
+            var trajectories = filler.TrajectoriesWithoutMedian.ToArray();
+            var rect = GetRect(trajectories);
+            return GetDashes(trajectories, rect, filler.Markup.Height);
         }
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height);
-        protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, float angleDeg, Rect rect, float height)
+        protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height);
+        protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, float angleDeg, Rect rect, float height)
         {
             foreach (var point in GetLines(angleDeg, rect, height, out Vector3 normal))
             {
                 var intersectSet = new HashSet<MarkupFillerIntersect>();
-                foreach (var part in parts)
+                foreach (var trajectory in trajectories)
                 {
-                    foreach (var t in MarkupFillerIntersect.Intersect(part, point, point + normal))
+                    foreach (var t in MarkupFillerIntersect.Intersect(trajectory, point, point + normal))
                         intersectSet.Add(t);
                 }
 
@@ -140,6 +142,38 @@ namespace NodeMarkup.Manager
                 result[i] = pos;
             }
             return result;
+        }
+        protected Rect GetRect(Bezier3[] trajectories)
+        {
+            if (!trajectories.Any())
+                return Rect.zero;
+
+            var firstPos = trajectories[0].a;
+            var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
+
+            foreach (var trajectory in trajectories)
+            {
+                Set(trajectory.a);
+                Set(trajectory.b);
+                Set(trajectory.c);
+                Set(trajectory.d);
+            }
+
+            return rect;
+
+            void Set(Vector3 pos)
+            {
+                if (pos.x < rect.xMin)
+                    rect.xMin = pos.x;
+                else if (pos.x > rect.xMax)
+                    rect.xMax = pos.x;
+
+                if (pos.z < rect.yMin)
+                    rect.yMin = pos.z;
+                else if (pos.z > rect.yMax)
+                    rect.yMax = pos.z;
+            }
+
         }
 
         public override List<UIComponent> GetUIComponents(UIComponent parent, Action onHover = null, Action onLeave = null)

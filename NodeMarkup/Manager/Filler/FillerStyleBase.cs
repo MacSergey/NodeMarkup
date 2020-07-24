@@ -36,7 +36,7 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler);
 
-        protected static UIComponent AddStepProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddStepProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
             stepProperty.Text = Localize.Filler_Step;
@@ -50,7 +50,7 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(stepProperty, onHover, onLeave);
             return stepProperty;
         }
-        protected static UIComponent AddAngleProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddAngleProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
             angleProperty.Text = Localize.Filler_Angle;
@@ -66,7 +66,7 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(angleProperty, onHover, onLeave);
             return angleProperty;
         }
-        protected static UIComponent AddOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
             offsetProperty.Text = Localize.Filler_Offset;

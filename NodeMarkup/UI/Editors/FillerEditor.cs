@@ -1,12 +1,8 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using static ToolBase;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -55,8 +51,24 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperties()
         {
             StyleProperties = EditObject.Style.GetUIComponents(SettingsPanel);
+            if (EditObject.IsMedian)
+                AddMedianOffsetProperty();
+
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+        }
+        private void AddMedianOffsetProperty()
+        {
+            var offsetProperty = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+            offsetProperty.Text = NodeMarkup.Localize.Filler_MedianOffset;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0f;
+            offsetProperty.Init();
+            offsetProperty.Value = EditObject.MedianOffset;
+            offsetProperty.OnValueChanged += (float value) => EditObject.MedianOffset = value;
+            StyleProperties.Add(offsetProperty);
         }
         private void StyleChanged(Style.StyleType style)
         {
@@ -111,12 +123,8 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverItem)
             {
-                foreach (var part in HoverItem.Object.Parts)
-                {
-                    var bezier = part.GetTrajectory();
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
-
-                }
+                foreach (var trajectory in /*HoverItem.Object.Trajectories*/HoverItem.Object.TrajectoriesWithoutMedian)
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();

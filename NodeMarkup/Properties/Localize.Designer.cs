@@ -98,7 +98,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset.
+        ///   Ищет локализованную строку, похожую на Offset from median.
+        /// </summary>
+        public static string Filler_MedianOffset {
+            get {
+                return ResourceManager.GetString("Filler_MedianOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset from lines.
         /// </summary>
         public static string Filler_Offset {
             get {

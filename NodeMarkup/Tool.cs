@@ -745,11 +745,8 @@ namespace NodeMarkup
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
             var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? Color.green : Color.white;
-            foreach (var part in TempFiller.Parts)
-            {
-                var bezier = part.GetTrajectory();
-                RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
-            }
+            foreach (var trajectory in TempFiller.Trajectories)
+                RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
         }
         private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
         {

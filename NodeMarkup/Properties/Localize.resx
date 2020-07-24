@@ -460,7 +460,7 @@ create or delete a line
     <value>Angle</value>
   </data>
   <data name="Filler_Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Offset from lines</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value></value>
@@ -476,5 +476,8 @@ create or delete a line
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value></value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Offset from median</value>
   </data>
 </root>
