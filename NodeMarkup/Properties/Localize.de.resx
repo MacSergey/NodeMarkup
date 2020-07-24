@@ -384,8 +384,7 @@ Linie erstellen oder löschen
     <value>"Was gibt es neues" zeigen</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Kopieren mit MoveIt (Wird erst nach einem Update von MoveIt funktionieren)
-- Füllungen. ALT gedrückt halten um sie zu erstellen (wird noch nicht gespeichert)
+    <value>- Kopieren mit MoveIt (Funktioniert erst nachdem MoveIt geupdated wurde)
 - Haltelinien
 - Neuer "Durchgezogen und Gestrichelt" Stil
 - Chinesisch</value>
@@ -432,9 +431,6 @@ Linie erstellen oder löschen
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>füllung</value>
   </data>
-  <data name="LineStyle_DashedStop" xml:space="preserve">
-    <value>Gestrichelte Haltelinie</value>
-  </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>GHL</value>
   </data>
@@ -459,9 +455,8 @@ Linie erstellen oder löschen
   <data name="Filler_Angle" xml:space="preserve">
     <value>Winkel</value>
   </data>
-  <data name="Filler_Offset" xml:space="preserve">
-    <value>Versatz</value>
-  </data>
+  
+  
   
   
   
