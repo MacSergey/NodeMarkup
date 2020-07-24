@@ -450,11 +450,15 @@ utworzyć lub usunąć linię
   <data name="Filler_Angle" xml:space="preserve">
     <value>Kąt</value>
   </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Odstęp od linii</value>
+  </data>
   
   
   
   
   
-  
-  
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Odstęp od pasa rozdzielającego</value>
+  </data>
 </root>
