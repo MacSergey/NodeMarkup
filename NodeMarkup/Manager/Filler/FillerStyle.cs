@@ -66,7 +66,7 @@ namespace NodeMarkup.Manager
         protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height);
         protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, float angleDeg, Rect rect, float height)
         {
-            foreach (var point in GetLines(angleDeg, rect, height, out Vector3 normal))
+            foreach (var point in GetLines(angleDeg, rect, height, out Vector3 normal, out float width))
             {
                 var intersectSet = new HashSet<MarkupFillerIntersect>();
                 foreach (var trajectory in trajectories)
@@ -81,21 +81,25 @@ namespace NodeMarkup.Manager
                 {
                     var start = point + normal * intersects[i - 1].FirstT;
                     var end = point + normal * intersects[i].FirstT;
-                    var startOffset = GetOffset(intersects[i - 1]);
-                    var endOffset = GetOffset(intersects[i]);
 
-                    if ((end - start).magnitude - Width < startOffset + endOffset)
-                        continue;
+                    if (Offset != 0)
+                    {
+                        var startOffset = GetOffset(intersects[i - 1]);
+                        var endOffset = GetOffset(intersects[i]);
 
-                    var sToE = intersects[i].FirstT >= intersects[i - 1].FirstT;
-                    start += normal * (sToE ? startOffset : -startOffset);
-                    end += normal * (sToE ? -endOffset : endOffset);
+                        if ((end - start).magnitude - Width < startOffset + endOffset)
+                            continue;
+
+                        var sToE = intersects[i].FirstT >= intersects[i - 1].FirstT;
+                        start += normal * (sToE ? startOffset : -startOffset);
+                        end += normal * (sToE ? -endOffset : endOffset);
+                    }
 
                     var pos = (start + end) / 2;
                     var angle = Mathf.Atan2(normal.z, normal.x);
                     var length = (end - start).magnitude;
 
-                    yield return new MarkupStyleDash(pos, angle, length, Width, Color);
+                    yield return new MarkupStyleDash(pos, angle, length, width, Color);
 
                     float GetOffset(MarkupFillerIntersect intersect)
                     {
@@ -105,14 +109,46 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected Vector3[] GetLines(float angle, Rect rect, float height, out Vector3 normal)
+        protected List<Vector3> GetLines(float angle, Rect rect, float height, out Vector3 normal, out float partWidth)
+        {
+            var results = new List<Vector3>();
+
+            if (!GetRail(angle, rect, height, out Line3 rail))
+            {
+                normal = Vector3.zero;
+                partWidth = Width;
+                return results;
+            }
+
+            var dir = rail.b - rail.a;
+            var length = dir.magnitude + Width * (Step - 1);
+            dir.Normalize();
+            normal = dir.Turn90(false);
+
+            var itemLength = Width * Step;
+            var stripeCount = Math.Max((int)(length / itemLength) - 1, 0);
+            var start = (length - (itemLength * stripeCount)) / 2;
+
+            GetParts(out int partsCount, out partWidth);
+
+            for (var i = 0; i < stripeCount; i += 1)
+            {
+                var stripStart = start + partWidth / 2 + i * itemLength;
+                for (var j = 0; j < partsCount; j += 1)
+                {
+                    results.Add(rail.a + dir * (stripStart + partWidth * j));
+                }
+            }
+
+            return results;
+        }
+        private bool GetRail(float angle, Rect rect, float height, out Line3 rail)
         {
             var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
             var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
             var dx = railLength * Mathf.Sin(absAngle);
             var dy = railLength * Mathf.Cos(absAngle);
 
-            Line3 rail;
             if (angle == -90 || angle == 90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
             else if (90 > angle && angle > 0)
@@ -123,25 +159,36 @@ namespace NodeMarkup.Manager
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
             else
             {
-                normal = Vector3.zero;
-                return new Vector3[0];
+                rail = default;
+                return false;
             }
 
-            var dir = rail.b - rail.a;
-            var length = dir.magnitude + Width * (Step - 1);
-            dir.Normalize();
-            normal = dir.Turn90(false);
-            var itemLength = Width * Step;
-            var count = Math.Max((int)(length / itemLength) - 1, 0);
-            var start = (length - (itemLength * count)) / 2;
-
-            var result = new Vector3[count];
-            for (var i = 0; i < count; i += 1)
+            return true;
+        }
+        private void GetParts(out int count, out float width)
+        {
+            if (Width < 0.2f || Offset != 0f)
             {
-                var pos = rail.a + dir * (start + Width / 2 + i * itemLength);
-                result[i] = pos;
+                count = 1;
+                width = Width;
             }
-            return result;
+            else
+            {
+                var intWidth = (int)(Width * 100);
+                var delta = 20;
+                var num = 0;
+                for (var i = 10; i < 20; i += 1)
+                {
+                    var iDelta = intWidth - (intWidth / i) * i;
+                    if (iDelta < delta)
+                    {
+                        delta = iDelta;
+                        num = i;
+                    }
+                }
+                count = intWidth / num;
+                width = num / 100f;
+            }
         }
         protected Rect GetRect(Bezier3[] trajectories)
         {
