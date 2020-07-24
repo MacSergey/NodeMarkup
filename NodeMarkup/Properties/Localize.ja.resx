@@ -125,7 +125,7 @@
 この操作は元に戻せません</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールスクロールで増減</value>
+    <value>ホイールをスクロールして増減</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -186,7 +186,7 @@
     <value>交差点・ノード内 {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>端点・原点 {0}</value>
+    <value>交点・接点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>破線</value>
