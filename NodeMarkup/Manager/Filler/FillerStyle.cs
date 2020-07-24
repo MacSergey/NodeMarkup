@@ -66,10 +66,10 @@ namespace NodeMarkup.Manager
         {
             foreach (var point in GetLines(angleDeg, rect, height, out Vector3 normal))
             {
-                var intersectSet = new HashSet<float>();
+                var intersectSet = new HashSet<MarkupFillerIntersect>();
                 foreach (var part in parts)
                 {
-                    foreach (var t in MarkupLineIntersect.Intersect(part, point, point + normal))
+                    foreach (var t in MarkupFillerIntersect.Intersect(part, point, point + normal))
                         intersectSet.Add(t);
                 }
 
@@ -77,15 +77,29 @@ namespace NodeMarkup.Manager
 
                 for (var i = 1; i < intersects.Length; i += 2)
                 {
-                    var start = point + normal * intersects[i - 1];
-                    var end = point + normal * intersects[i];
+                    var start = point + normal * intersects[i - 1].FirstT;
+                    var end = point + normal * intersects[i].FirstT;
+                    var startOffset = GetOffset(intersects[i - 1]);
+                    var endOffset = GetOffset(intersects[i]);
+
+                    if ((end - start).magnitude - Width < startOffset + endOffset)
+                        continue;
+
+                    var sToE = intersects[i].FirstT >= intersects[i - 1].FirstT;
+                    start += normal * (sToE ? startOffset : -startOffset);
+                    end += normal * (sToE ? -endOffset : endOffset);
 
                     var pos = (start + end) / 2;
                     var angle = Mathf.Atan2(normal.z, normal.x);
-                    var length = (end - start).magnitude - (2 * Offset);
+                    var length = (end - start).magnitude;
 
-                    if (length > 0)
-                        yield return new MarkupStyleDash(pos, angle, length, Width, Color);
+                    yield return new MarkupStyleDash(pos, angle, length, Width, Color);
+
+                    float GetOffset(MarkupFillerIntersect intersect)
+                    {
+                        var sin = Mathf.Sin(intersect.Angle);
+                        return sin != 0 ? Offset / sin : 1000f;
+                    }
                 }
             }
         }
@@ -112,7 +126,7 @@ namespace NodeMarkup.Manager
             }
 
             var dir = rail.b - rail.a;
-            var length = dir.magnitude;
+            var length = dir.magnitude + Width * (Step - 1);
             dir.Normalize();
             normal = dir.Turn90(false);
             var itemLength = Width * Step;
@@ -122,7 +136,7 @@ namespace NodeMarkup.Manager
             var result = new Vector3[count];
             for (var i = 0; i < count; i += 1)
             {
-                var pos = rail.a + dir * (i * itemLength + start);
+                var pos = rail.a + dir * (start + Width / 2 + i * itemLength);
                 result[i] = pos;
             }
             return result;
@@ -174,7 +188,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in GetDashes(parts, Angle < 0 ? Angle + 90 : Angle - 90, rect, height))
                 yield return dash;
         }
-        
+
         public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, Angle, Step, Offset);
     }
 }
