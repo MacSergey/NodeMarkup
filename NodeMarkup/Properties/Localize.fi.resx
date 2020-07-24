@@ -332,7 +332,6 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  
   <data name="FillerStyle_StripeShort" xml:space="preserve">
     <value>V</value>
   </data>
@@ -340,9 +339,8 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  <data name="Filler_Offset" xml:space="preserve">
-    <value>Etäisyys</value>
-  </data>
+  
+  
   
   
   
