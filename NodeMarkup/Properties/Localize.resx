@@ -460,19 +460,19 @@ create or delete a line
     <value>Offset from lines</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value></value>
+    <value>Click to start creating a filler</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value></value>
+    <value>Click to finish creating the filler</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value></value>
+    <value>Click to select the next point in the contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value></value>
+    <value>Select a point to start creating the filler</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value></value>
+    <value>Select the next point in the contour</value>
   </data>
   <data name="Filler_MedianOffset" xml:space="preserve">
     <value>Offset from median</value>

@@ -1063,7 +1063,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Click to finish creating the filler.
         /// </summary>
         public static string Tool_InfoFillerClickEnd {
             get {
@@ -1072,7 +1072,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Click to select the next point in the contour.
         /// </summary>
         public static string Tool_InfoFillerClickNext {
             get {
@@ -1081,7 +1081,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Click to start creating a filler.
         /// </summary>
         public static string Tool_InfoFillerClickStart {
             get {
@@ -1090,7 +1090,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Select the next point in the contour.
         /// </summary>
         public static string Tool_InfoFillerSelectNext {
             get {
@@ -1099,7 +1099,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Select a point to start creating the filler.
         /// </summary>
         public static string Tool_InfoFillerSelectStart {
             get {
