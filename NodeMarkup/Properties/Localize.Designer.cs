@@ -233,6 +233,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string LineEditor_ColorCopy {
+            get {
+                return ResourceManager.GetString("LineEditor_ColorCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Default.
+        /// </summary>
+        public static string LineEditor_ColorDefault {
+            get {
+                return ResourceManager.GetString("LineEditor_ColorDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste.
+        /// </summary>
+        public static string LineEditor_ColorPaste {
+            get {
+                return ResourceManager.GetString("LineEditor_ColorPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Dash length.
         /// </summary>
         public static string LineEditor_DashedLength {

@@ -477,4 +477,13 @@ create or delete a line
   <data name="Filler_MedianOffset" xml:space="preserve">
     <value>Offset from median</value>
   </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
 </root>

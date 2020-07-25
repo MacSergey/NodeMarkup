@@ -10,6 +10,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class ColorPropertyPanel : EditorPropertyPanel
     {
+        private static Color32 Buffer { get; set; } = Manager.Style.DefaultColor;
+
         public event Action<Color32> OnValueChanged;
 
         private bool InProcess { get; set; } = false;
@@ -108,10 +110,14 @@ namespace NodeMarkup.UI.Editors
 
         private void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
-            popup.component.width += 31;
+            popup.component.size += new Vector2(31, 31);
             popup.component.relativePosition -= new Vector3(31, 0);
             var slider = AddOpacitySlider(popup.component);
             slider.value = Value.a;
+
+            AddCopyButton(popup.component);
+            AddPasteButton(popup.component);
+            AddSetDefaultButton(popup.component);
         }
         private UISlider AddOpacitySlider(UIComponent parent)
         {
@@ -143,6 +149,47 @@ namespace NodeMarkup.UI.Editors
 
             return opacitySlider;
         }
+        private UIButton CreateButton(UIComponent parent, int count, int of)
+        {
+            var width = (parent.width - (10 * (of + 1))) / of;
+
+            var button = parent.AddUIComponent<UIButton>();
+            button.size = new Vector2(width, 20f);
+            button.relativePosition = new Vector2(10 * count + width * (count - 1), 223f);
+            button.textPadding = new RectOffset(0, 0, 5, 0);
+            button.horizontalAlignment = UIHorizontalAlignment.Center;
+            button.textVerticalAlignment = UIVerticalAlignment.Middle;
+            button.textScale = 0.6f;
+            button.atlas = NodeMarkupPanel.InGameAtlas;
+            button.normalBgSprite = "ButtonMenu";
+            button.disabledBgSprite = "ButtonMenuDisabled";
+            button.hoveredBgSprite = "ButtonMenuHovered";
+            button.focusedBgSprite = "ButtonMenu";
+            button.pressedBgSprite = "ButtonMenuPressed";
+
+            return button;
+        }
+        private void AddCopyButton(UIComponent parent)
+        {
+            var button = CreateButton(parent, 1, 3);
+            button.text = NodeMarkup.Localize.LineEditor_ColorCopy;
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Buffer = Value;
+        }
+
+        private void AddPasteButton(UIComponent parent)
+        {
+            var button = CreateButton(parent, 2, 3);
+            button.text = NodeMarkup.Localize.LineEditor_ColorPaste;
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Buffer;
+        }
+        private void AddSetDefaultButton(UIComponent parent)
+        {
+            var button = CreateButton(parent, 3, 3);
+            button.text = NodeMarkup.Localize.LineEditor_ColorDefault;
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Manager.Style.DefaultColor;
+        }
+
+
         private void SelectedColorChanged(UIComponent component, Color value)
         {
             value.a = ((Color)Value).a;
@@ -156,7 +203,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void FieldTextSubmitted(UIComponent component, string text)
         {
-                Value = Value;
+            Value = Value;
         }
 
         private static UITextureAtlas GetAtlas()

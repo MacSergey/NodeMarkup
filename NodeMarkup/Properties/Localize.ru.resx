@@ -474,4 +474,13 @@
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Выберите следующую точку контура</value>
   </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Стандартный</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
 </root>
