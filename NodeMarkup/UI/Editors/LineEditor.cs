@@ -15,6 +15,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : Editor<LineItem, MarkupLine, LineIcon>
     {
+        public static Color WhiteAlpha { get; } = new Color(1, 1, 1, 0.5f);
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
 
         private ButtonPanel AddButton { get; set; }
@@ -254,7 +255,7 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverRulePanel)
                 {
                     var bezier = HoverRulePanel.Rule.GetTrajectory();
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, WhiteAlpha, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
                 {
