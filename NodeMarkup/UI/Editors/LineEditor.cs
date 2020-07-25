@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using static ToolBase;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -25,12 +26,12 @@ namespace NodeMarkup.UI.Editors
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
 
         private MarkupLineSelectPropertyPanel _selectPartEdgePanel;
-        private MarkupLineSelectPropertyPanel SelectPartEdgePanel 
+        private MarkupLineSelectPropertyPanel SelectPartEdgePanel
         {
             get => _selectPartEdgePanel;
             set
             {
-                if(_selectPartEdgePanel != null)
+                if (_selectPartEdgePanel != null)
                 {
                     _selectPartEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
                     _selectPartEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
@@ -50,11 +51,11 @@ namespace NodeMarkup.UI.Editors
 
         private MarkupLineSelectPropertyPanel HoverPartEdgePanel { get; set; }
         private bool IsHoverPartEdgePanel => HoverPartEdgePanel != null;
+        private RulePanel HoverRulePanel { get; set; }
+        private bool IsHoverRulePanel => HoverRulePanel != null;
 
-        public LinesEditor()
-        {
+        public LinesEditor() { }
 
-        }
         protected override void FillItems()
         {
             foreach (var line in Markup.Lines)
@@ -84,6 +85,8 @@ namespace NodeMarkup.UI.Editors
         {
             var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
             rulePanel.Init(this, rule);
+            rulePanel.eventMouseEnter += RuleMouseHover;
+            rulePanel.eventMouseLeave += RuleMouseLeave;
             return rulePanel;
         }
 
@@ -174,7 +177,20 @@ namespace NodeMarkup.UI.Editors
         }
         public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
         public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
+        private void RuleMouseHover(UIComponent component, UIMouseEventParameter eventParam) => HoverRulePanel = component as RulePanel;
+        private void RuleMouseLeave(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            var uiView = component.GetUIView();
+            var mouse = uiView.ScreenPointToGUI((eventParam.position + eventParam.moveDelta) / uiView.inputScale);
+            var ruleRect = new Rect(SettingsPanel.absolutePosition + component.relativePosition, component.size);
+            var settingsRect = new Rect(SettingsPanel.absolutePosition, SettingsPanel.size);
 
+            if (eventParam.source == component || !ruleRect.Contains(mouse) || !settingsRect.Contains(mouse))
+            {
+                HoverRulePanel = null;
+                return;
+            }
+        }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
         public override void OnUpdate()
@@ -233,6 +249,11 @@ namespace NodeMarkup.UI.Editors
                         bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
                         bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
                     }
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
+                }
+                if (IsHoverRulePanel)
+                {
+                    var bezier = HoverRulePanel.Rule.GetTrajectory();
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
@@ -321,177 +342,6 @@ namespace NodeMarkup.UI.Editors
             base.OnSizeChanged();
             if (CountLabel != null)
                 CountLabel.size = size;
-        }
-    }
-
-    public class RulePanel : UIPanel
-    {
-        private LinesEditor Editor { get; set; }
-        public MarkupLineRawRule Rule { get; private set; }
-
-        public MarkupLineSelectPropertyPanel From { get; private set; }
-        public MarkupLineSelectPropertyPanel To { get; private set; }
-        public StylePropertyPanel Style { get; private set; }
-
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
-
-        public RulePanel()
-        {
-            atlas = NodeMarkupPanel.InGameAtlas;
-            backgroundSprite = "AssetEditorItemBackground";
-            autoLayout = true;
-            autoFitChildrenVertically = true;
-            autoLayoutDirection = LayoutDirection.Vertical;
-            autoLayoutPadding = new RectOffset(5, 5, 0, 0);
-        }
-
-        public void Init(LinesEditor editor, MarkupLineRawRule rule)
-        {
-            Editor = editor;
-            Rule = rule;
-
-            SetSize();
-
-            AddHeader();
-            if (Editor.CanDivide)
-            {
-                AddFromProperty();
-                AddToProperty();
-            }
-            AddStyleTypeProperty();
-            AddStyleProperties();
-        }
-
-        private void SetSize()
-        {
-            if (parent is UIScrollablePanel scrollablePanel)
-                width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
-            else if (parent is UIPanel panel)
-                width = panel.width - panel.autoLayoutPadding.horizontal;
-            else
-                width = parent.width;
-        }
-        private void AddHeader()
-        {
-            var header = AddUIComponent<StyleHeaderPanel>();
-            header.AddRange(TemplateManager.GetTemplates(Rule.Style.Type));
-            header.Init(Editor.CanDivide);
-            header.OnDelete += () => Editor.DeleteRule(this);
-            header.OnSaveTemplate += OnSaveTemplate;
-            header.OnSelectTemplate += OnSelectTemplate;
-        }
-        private void AddFromProperty()
-        {
-            From = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            From.Text = NodeMarkup.Localize.LineEditor_From;
-            From.Position = RulePosition.Start;
-            From.Init();
-            From.AddRange(Editor.SupportPoints);
-            From.SelectedObject = Rule.From;
-            From.OnSelectChanged += FromChanged;
-            From.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
-            From.OnHover += Editor.HoverRuleEdge;
-            From.OnLeave += Editor.LeaveRuleEdge;
-        }
-
-        private void AddToProperty()
-        {
-            To = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            To.Text = NodeMarkup.Localize.LineEditor_To;
-            To.Position = RulePosition.End;
-            To.Init();
-            To.AddRange(Editor.SupportPoints);
-            To.SelectedObject = Rule.To;
-            To.OnSelectChanged += ToChanged;
-            To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
-            To.OnHover += Editor.HoverRuleEdge;
-            To.OnLeave += Editor.LeaveRuleEdge;
-        }
-        private void AddStyleTypeProperty()
-        {
-            switch (Rule.Style.Type & Manager.Style.StyleType.GroupMask)
-            {
-                case Manager.Style.StyleType.RegularLine:
-                    Style = AddUIComponent<RegularStylePropertyPanel>();
-                    break;
-                case Manager.Style.StyleType.StopLine:
-                    Style = AddUIComponent<StopStylePropertyPanel>();
-                    break;
-                default:
-                    return;
-            }
-            Style.Text = NodeMarkup.Localize.LineEditor_Style;
-            Style.Init();
-            Style.SelectedObject = Rule.Style.Type;
-            Style.OnSelectObjectChanged += StyleChanged;
-        }
-        private void AddStyleProperties()
-        {
-            StyleProperties = Rule.Style.GetUIComponents(Rule, this, Editor.StopScroll, Editor.StartScroll);
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
-        }
-
-        private void ClearStyleProperties()
-        {
-            foreach (var property in StyleProperties)
-            {
-                RemoveUIComponent(property);
-                Destroy(property);
-            }
-        }
-
-        private void OnSaveTemplate()
-        {
-            if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template))
-                Editor.NodeMarkupPanel.EditTemplate(template);
-        }
-        private void OnSelectTemplate(StyleTemplate template)
-        {
-            if (template.Style.Copy() is LineStyle style)
-            {
-                Rule.Style = style;
-                Style.SelectedObject = Rule.Style.Type;
-
-                Editor.RefreshItem();
-                ClearStyleProperties();
-                AddStyleProperties();
-            }
-        }
-
-        private void FromChanged(ILinePartEdge from) => Rule.From = from;
-        private void ToChanged(ILinePartEdge to) => Rule.To = to;
-        private void StyleChanged(Style.StyleType style)
-        {
-            if (style == Rule.Style.Type)
-                return;
-
-            var newStyle = TemplateManager.GetDefault<LineStyle>(style);
-            newStyle.Color = Rule.Style.Color;
-            newStyle.Width = Rule.Style.Width;
-            if (newStyle is IDashedLine newDashed && Rule.Style is IDashedLine oldDashed)
-            {
-                newDashed.DashLength = oldDashed.DashLength;
-                newDashed.SpaceLength = oldDashed.SpaceLength;
-            }
-            if (newStyle is IDoubleLine newDouble && Rule.Style is IDoubleLine oldDouble)
-                newDouble.Offset = oldDouble.Offset;
-
-            Rule.Style = newStyle;
-
-            Editor.RefreshItem();
-            ClearStyleProperties();
-            AddStyleProperties();
-        }
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            foreach (var item in components)
-            {
-                item.width = width - autoLayoutPadding.horizontal;
-            }
         }
     }
 }

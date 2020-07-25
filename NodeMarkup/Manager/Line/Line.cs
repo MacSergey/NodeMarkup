@@ -40,7 +40,7 @@ namespace NodeMarkup.Manager
             AddRule(lineStyle, false, false);
             RecalculateDashes();
         }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle.StyleType lineType) : this(markup, pointPair, TemplateManager.GetDefault<LineStyle>(lineType)) { }
+        public MarkupLine(Markup markup, MarkupPointPair pointPair, Style.StyleType lineType) : this(markup, pointPair, TemplateManager.GetDefault<LineStyle>(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
         public virtual void UpdateTrajectory()
         {

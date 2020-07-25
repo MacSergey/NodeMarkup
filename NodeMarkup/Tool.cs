@@ -364,7 +364,7 @@ namespace NodeMarkup
             UIView uIView = cursorInfoLabel.GetUIView();
             var screenPoint = Camera.main.WorldToScreenPoint(output.m_hitPos) / uIView.inputScale;
             var relativePosition = uIView.ScreenPointToGUI(screenPoint);
-
+            
             return relativePosition;
         }
 
@@ -432,7 +432,7 @@ namespace NodeMarkup
             {
                 case Mode.ConnectLine when !IsSelectPoint && e.alt:
                     ToolMode = Mode.SelectFiller;
-                    TempFiller = new MarkupFiller(EditMarkup, FillerStyle.FillerType.Stripe);
+                    TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
                     GetFillerPoints();
                     break;
                 default:

@@ -84,7 +84,7 @@ namespace NodeMarkup.UI.Editors
 
             Button.eventClick += ButtonClick;
             Button.eventMouseEnter += ButtonMouseEnter;
-            Button.eventMouseLeave += ButtonMouseLeave; ;
+            Button.eventMouseLeave += ButtonMouseLeave;
         }
 
 

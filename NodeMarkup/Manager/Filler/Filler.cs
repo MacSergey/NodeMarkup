@@ -64,7 +64,7 @@ namespace NodeMarkup.Manager
             Markup = markup;
             Style = style;
         }
-        public MarkupFiller(Markup markup, FillerStyle.FillerType fillerType) : this(markup, FillerStyle.GetDefault(fillerType)) { }
+        public MarkupFiller(Markup markup, Style.StyleType fillerType) : this(markup, TemplateManager.GetDefault<FillerStyle>(fillerType)) { }
 
         public bool Add(IFillerVertex supportPoint)
         {
