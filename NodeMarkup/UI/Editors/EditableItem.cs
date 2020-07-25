@@ -103,7 +103,7 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            var labelWidth = size.x- 3;
+            var labelWidth = size.x;
             if (ShowIcon)
             {
                 Icon.size = new Vector2(size.y - 6, size.y - 6);
@@ -118,7 +118,7 @@ namespace NodeMarkup.UI.Editors
                 labelWidth -= 25;
             }
 
-            Label.size = new Vector2(labelWidth, size.y);
+            Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
             Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, 0);
         }
 

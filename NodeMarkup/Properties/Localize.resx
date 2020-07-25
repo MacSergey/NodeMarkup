@@ -442,7 +442,7 @@ create or delete a line
     <value>Grid</value>
   </data>
   <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>S</value>
+    <value>ST</value>
   </data>
   <data name="FillerStyle_GridShort" xml:space="preserve">
     <value>G</value>
@@ -485,5 +485,11 @@ create or delete a line
   </data>
   <data name="LineEditor_ColorDefault" xml:space="preserve">
     <value>Default</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
   </data>
 </root>

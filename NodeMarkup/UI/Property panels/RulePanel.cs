@@ -10,16 +10,12 @@ namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : UIPanel
     {
-        //public event Action<RulePanel> OnHover;
-        //public event Action<RulePanel> OnLeave;
-
         private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
 
         public MarkupLineSelectPropertyPanel From { get; private set; }
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
-        //public UIPanel HoverPanel { get; private set; }
 
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
@@ -31,12 +27,6 @@ namespace NodeMarkup.UI.Editors
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
             autoLayoutPadding = new RectOffset(5, 5, 0, 0);
-
-            //HoverPanel = AddUIComponent<UIPanel>();
-            //HoverPanel.isVisible = false;
-            //HoverPanel.relativePosition = new Vector2(0, 0);
-            //HoverPanel.eventMouseHover += (UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
-            //HoverPanel.eventMouseLeave += (UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
         }
         public void Init(LinesEditor editor, MarkupLineRawRule rule)
         {
@@ -67,8 +57,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = AddUIComponent<StyleHeaderPanel>();
-            header.AddRange(TemplateManager.GetTemplates(Rule.Style.Type));
-            header.Init(Editor.CanDivide);
+            header.Init(Rule.Style.Type, Editor.CanDivide);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
@@ -160,15 +149,7 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             var newStyle = TemplateManager.GetDefault<LineStyle>(style);
-            newStyle.Color = Rule.Style.Color;
-            newStyle.Width = Rule.Style.Width;
-            if (newStyle is IDashedLine newDashed && Rule.Style is IDashedLine oldDashed)
-            {
-                newDashed.DashLength = oldDashed.DashLength;
-                newDashed.SpaceLength = oldDashed.SpaceLength;
-            }
-            if (newStyle is IDoubleLine newDouble && Rule.Style is IDoubleLine oldDouble)
-                newDouble.Offset = oldDouble.Offset;
+            Rule.Style.CopyTo(newStyle);
 
             Rule.Style = newStyle;
 
@@ -185,8 +166,6 @@ namespace NodeMarkup.UI.Editors
             {
                 item.width = width - autoLayoutPadding.horizontal;
             }
-            //if(HoverPanel != null)
-            //    HoverPanel.size = size;
         }
     }
 }

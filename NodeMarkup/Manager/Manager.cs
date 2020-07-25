@@ -59,7 +59,6 @@ namespace NodeMarkup.Manager
 
             var renderBatches = markup.RenderBatches;
 
-            //Logger.LogDebug($"Start render node {nodeID} markup: {renderBatches.Length} batches");
             foreach (var batch in renderBatches)
             {
                 materialBlock.Clear();
@@ -73,7 +72,6 @@ namespace NodeMarkup.Manager
 
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
             }
-            //Logger.LogDebug($"End render node {nodeID} markup success");
         }
 
 

@@ -46,12 +46,15 @@ namespace NodeMarkup.UI.Editors
     }
     public class StyleHeaderPanel : HeaderPanel
     {
+        private static StyleTemplate EmptyTemplate { get; set; } = new StyleTemplate(string.Empty, LineStyle.DefaultSolid);
+
         public event Action OnSaveTemplate;
         public event Action<StyleTemplate> OnSelectTemplate;
 
 
         UIButton SaveTemplateButton { get; set; }
         TemplateDropDown SelectTemplate { get; set; }
+        Style.StyleType StyleGroup { get; set; }
 
         public StyleHeaderPanel()
         {
@@ -59,9 +62,11 @@ namespace NodeMarkup.UI.Editors
             AddApplyTemplate();
         }
 
-        public override void Init(bool isDeletable = true)
+        public void Init(Style.StyleType styleGroup, bool isDeletable = true)
         {
             base.Init(isDeletable);
+            StyleGroup = styleGroup & Style.StyleType.GroupMask;
+            Fill();
             SelectTemplate.selectedIndex = 0;
         }
         protected override void OnSizeChanged()
@@ -138,10 +143,9 @@ namespace NodeMarkup.UI.Editors
             button.horizontalAlignment = UIHorizontalAlignment.Right;
             button.verticalAlignment = UIVerticalAlignment.Middle;
             button.textScale = 0.8f;
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Fill();
 
             SelectTemplate.triggerButton = button;
-
-            Add(new StyleTemplate(NodeMarkup.Localize.HeaderPanel_ApplyTemplate, LineStyle.DefaultSolid) { IsEmpty = true });
         }
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
         private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
@@ -160,16 +164,13 @@ namespace NodeMarkup.UI.Editors
             SelectTemplate.eventSelectedIndexChanged -= DropDownIndexChanged;
             SelectTemplate.selectedIndex = 0;
         }
-
-        public void Add(StyleTemplate item)
+        private void Fill()
         {
-            SelectTemplate.AddItem(item, item.ToStringWithShort());
-        }
-        public void AddRange(IEnumerable<StyleTemplate> items)
-        {
-            foreach (var item in items)
+            SelectTemplate.Clear();
+            SelectTemplate.AddItem(EmptyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
+            foreach(var template in TemplateManager.GetTemplates(StyleGroup))
             {
-                SelectTemplate.AddItem(item, item.ToStringWithShort());
+                SelectTemplate.AddItem(template, template.ToStringWithShort());
             }
         }
 

@@ -99,6 +99,7 @@ namespace NodeMarkup.UI.Editors
         public override void Init()
         {
             base.Init();
+            DropDown.Clear();
 
             if (AllowNull)
                 DropDown.AddItem(default, NullText ?? string.Empty);
@@ -115,8 +116,6 @@ namespace NodeMarkup.UI.Editors
             }
         }
         protected abstract bool IsEqual(Type first, Type second);
-
-
     }
     public abstract class CustomUIDropDown<ValueType> : UIDropDown
     {
@@ -132,6 +131,11 @@ namespace NodeMarkup.UI.Editors
         {
             Objects.Add(item);
             AddItem(label ?? item.ToString());
+        }
+        public void Clear()
+        {
+            Objects.Clear();
+            items = new string[0];
         }
         protected override void OnMouseWheel(UIMouseEventParameter p) { }
     }

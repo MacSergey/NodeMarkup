@@ -11,9 +11,13 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IStyle
+    public interface IStyle { }
+    public interface IColorStyle : IStyle
     {
         Color32 Color { get; set; }
+    }
+    public interface IWidthStyle: IStyle
+    {
         float Width { get; set; }
     }
     public abstract class Style : IToXml
@@ -79,6 +83,7 @@ namespace NodeMarkup.Manager
                 case StyleType.StopLineDashed: return Localize.LineStyle_StopDashedShort;
                 case StyleType.FillerStripe: return Localize.FillerStyle_StripeShort;
                 case StyleType.FillerGrid: return Localize.FillerStyle_GridShort;
+                case StyleType.FillerSolid: return Localize.FillerStyle_SolidShort;
                 default: return null;
             }
         }
@@ -134,6 +139,13 @@ namespace NodeMarkup.Manager
         }
 
         public abstract Style Copy();
+        public virtual void CopyTo(Style target)
+        {
+            if(this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
+                widthTarget.Width = widthSource.Width;
+            if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
+                colorTarget.Color = colorSource.Color;
+        }
 
         public virtual List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -217,6 +229,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Grid))]
             FillerGrid,
+
+            [Description(nameof(Localize.FillerStyle_Solid))]
+            FillerSolid,
         }
     }
 
@@ -266,8 +281,6 @@ namespace NodeMarkup.Manager
                 TemplateChanged();
             }
         }
-        public bool IsEmpty { get; set; } = false;
-
         public Action OnTemplateChanged { private get; set; }
         public Action<StyleTemplate, Style> OnStyleChanged { private get; set; }
         public Func<StyleTemplate, string, bool> OnNameChanged { private get; set; }
@@ -283,7 +296,7 @@ namespace NodeMarkup.Manager
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
 
         public override string ToString() => Name;
-        public string ToStringWithShort() => IsEmpty ? Name : $"{Style.GetShortName(Style.Type)}-{Name}";
+        public string ToStringWithShort() => $"{Style.GetShortName(Style.Type)}-{Name}";
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {

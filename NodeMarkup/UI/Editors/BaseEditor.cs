@@ -28,6 +28,7 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.StopLineDashed, nameof(Style.StyleType.StopLineDashed) },
                 {Style.StyleType.FillerStripe, nameof(Style.StyleType.FillerStripe) },
                 {Style.StyleType.FillerGrid, nameof(Style.StyleType.FillerGrid) },
+                {Style.StyleType.FillerSolid, nameof(Style.StyleType.FillerSolid) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));

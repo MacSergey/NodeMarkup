@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface ILineStyle { }
+    public interface ILineStyle : IWidthStyle, IColorStyle { }
     public abstract class LineStyle : Style, ILineStyle
     {
         public static float DefaultDashLength { get; } = 1.5f;

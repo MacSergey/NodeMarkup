@@ -161,6 +161,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid.
+        /// </summary>
+        public static string FillerStyle_Solid {
+            get {
+                return ResourceManager.GetString("FillerStyle_Solid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на S.
+        /// </summary>
+        public static string FillerStyle_SolidShort {
+            get {
+                return ResourceManager.GetString("FillerStyle_SolidShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Stripes.
         /// </summary>
         public static string FillerStyle_Stripe {
@@ -170,7 +188,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на S.
+        ///   Ищет локализованную строку, похожую на ST.
         /// </summary>
         public static string FillerStyle_StripeShort {
             get {

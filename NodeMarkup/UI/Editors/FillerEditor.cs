@@ -11,7 +11,7 @@ namespace NodeMarkup.UI.Editors
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
 
         public StylePropertyPanel Style { get; private set; }
-
+        private StyleHeaderPanel Header { get; set; }
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
         public FillerEditor()
@@ -34,11 +34,10 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            var header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
-            header.AddRange(TemplateManager.GetTemplates(Manager.Style.StyleType.Filler));
-            header.Init(false);
-            header.OnSaveTemplate += OnSaveTemplate;
-            header.OnSelectTemplate += OnSelectTemplate;
+            Header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
+            Header.Init(Manager.Style.StyleType.Filler, false);
+            Header.OnSaveTemplate += OnSaveTemplate;
+            Header.OnSelectTemplate += OnSelectTemplate;
         }
         private void AddStyleTypeProperty()
         {
@@ -60,15 +59,7 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             var newStyle = TemplateManager.GetDefault<FillerStyle>(style);
-            newStyle.Color = EditObject.Style.Color;
-            newStyle.Width = EditObject.Style.Width;
-            if (newStyle is ISimpleFiller newStrip && EditObject.Style is ISimpleFiller oldStrip)
-            {
-                newStrip.Step = oldStrip.Step;
-                newStrip.Angle = oldStrip.Angle;
-                newStrip.Offset = oldStrip.Offset;
-                newStrip.MedianOffset = oldStrip.MedianOffset;
-            }
+            EditObject.Style.CopyTo(newStyle);
 
             EditObject.Style = newStyle;
 
@@ -84,15 +75,15 @@ namespace NodeMarkup.UI.Editors
         }
         private void OnSelectTemplate(StyleTemplate template)
         {
-            if (template.Style.Copy() is FillerStyle style)
+            if (template.Style.Copy() is FillerStyle newStyle)
             {
-                if (style is ISimpleFiller newStrip && EditObject.Style is ISimpleFiller oldStrip)
+                newStyle.MedianOffset = EditObject.Style.MedianOffset;
+                if (newStyle is ISimpleFiller newSimple && EditObject.Style is ISimpleFiller oldSimple)
                 {
-                    newStrip.Angle = oldStrip.Angle;
-                    newStrip.MedianOffset = oldStrip.MedianOffset;
+                    newSimple.Angle = oldSimple.Angle;
                 }
 
-                EditObject.Style = style;
+                EditObject.Style = newStyle;
                 Style.SelectedObject = EditObject.Style.Type;
 
                 RefreshItem();

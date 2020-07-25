@@ -483,4 +483,10 @@
   <data name="LineEditor_ColorPaste" xml:space="preserve">
     <value>Вставить</value>
   </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Сплошная</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>СП</value>
+  </data>
 </root>

@@ -36,13 +36,13 @@ namespace NodeMarkup.Manager
 
         public SolidLineStyle(Color color, float width) : base(color, width) { }
 
+        public override LineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
+
         public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
         {
             yield return CalculateSolidDash(trajectory, 0f);
         }
-
-        public override LineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
     }
     public class DoubleSolidLineStyle : SolidLineStyle, ISimpleLine, IDoubleLine
     {
@@ -62,6 +62,16 @@ namespace NodeMarkup.Manager
         public DoubleSolidLineStyle(Color color, float width, float offset) : base(color, width)
         {
             Offset = offset;
+        }
+
+        public override LineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDoubleLine doubleTarget)
+            {
+                doubleTarget.Offset = Offset;
+            }
         }
 
         protected override IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
@@ -86,7 +96,6 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
     }
     public class DashedLineStyle : LineStyle, ISimpleLine, IDashedLine
     {
@@ -119,6 +128,17 @@ namespace NodeMarkup.Manager
             SpaceLength = spaceLength;
         }
 
+        public override LineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDashedLine dashedTarget)
+            {
+                dashedTarget.DashLength = DashLength;
+                dashedTarget.SpaceLength = SpaceLength;
+            }
+        }
+
         public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
@@ -146,8 +166,6 @@ namespace NodeMarkup.Manager
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
-
-        public override LineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
     }
     public class DoubleDashedLineStyle : DashedLineStyle, ISimpleLine, IDoubleLine
     {
@@ -167,6 +185,16 @@ namespace NodeMarkup.Manager
         public DoubleDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
             Offset = offset;
+        }
+
+        public override LineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDoubleLine doubleTarget)
+            {
+                doubleTarget.Offset = Offset;
+            }
         }
 
         protected override IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
@@ -191,7 +219,6 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffser);
         }
-        public override LineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
     }
     public class SolidAndDashedLineStyle : LineStyle, ISimpleLine, IDoubleLine, IDashedLine, IAsymLine
     {
@@ -268,6 +295,23 @@ namespace NodeMarkup.Manager
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
         }
         public override LineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDashedLine dashedTarget)
+            {
+                dashedTarget.DashLength = DashLength;
+                dashedTarget.SpaceLength = SpaceLength;
+            }
+            if (target is IDoubleLine doubleTarget)
+            {
+                doubleTarget.Offset = Offset;
+            }
+            if(target is IAsymLine asymTarget)
+            {
+                asymTarget.Invert = Invert;
+            }
+        }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
@@ -373,6 +417,15 @@ namespace NodeMarkup.Manager
         }
 
         public override LineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDashedLine dashedTarget)
+            {
+                dashedTarget.DashLength = DashLength;
+                dashedTarget.SpaceLength = SpaceLength;
+            }
+        }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
