@@ -144,7 +144,7 @@ namespace NodeMarkup.Manager
             var direction = trajectory.d - trajectory.a;
             var length = direction.magnitude;
 
-            if (depth < 5 && (deltaAngle > AngleDelta || length > MaxLength) && length >= MinLength)
+            if (depth < 5 && (deltaAngle > AngleDelta || (length > MaxLength && depth != 0)) && length >= MinLength)
             {
                 trajectory.Divide(out Bezier3 first, out Bezier3 second);
                 foreach (var dash in CalculateSolid(first, depth + 1, calculateDashes))

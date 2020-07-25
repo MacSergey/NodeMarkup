@@ -36,6 +36,7 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
         public ushort Id { get; }
+        private Vector4 Index { get; }
         public float Height { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
@@ -55,7 +56,7 @@ namespace NodeMarkup.Manager
         public Markup(ushort nodeId)
         {
             Id = nodeId;
-
+            Index = RenderManager.GetColorLocation((uint)(86016 + Id)) + new Vector4(0, 0, 0, 1);
             Update();
         }
 
@@ -162,7 +163,7 @@ namespace NodeMarkup.Manager
             var dashes = new List<MarkupStyleDash>();
             dashes.AddRange(Lines.SelectMany(l => l.Dashes));
             dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
-            RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
+            RenderBatches = RenderBatch.FromDashes(dashes, Index).ToArray();
         }
 
         #endregion

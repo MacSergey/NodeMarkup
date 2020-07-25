@@ -9,7 +9,7 @@ using UnityEngine.Assertions.Must;
 
 namespace NodeMarkup.Utils
 {
-    public static class Render
+    public static class RenderHelper
     {
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         static int[] VerticesIdxs { get; } = new int[]
@@ -159,6 +159,7 @@ namespace NodeMarkup.Utils
 
     public class RenderBatch
     {
+        public int Count { get; }
         public Vector4[] Locations { get; }
         public Vector4[] Indices { get; }
         public Vector4[] Colors { get; }
@@ -166,26 +167,27 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size)
+        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size, Vector4 index)
         {
-            Locations = new Vector4[count];
-            Indices = new Vector4[count];
-            Colors = new Vector4[count];
+            Count = count;
+            Locations = new Vector4[Count];
+            Indices = new Vector4[Count];
+            Colors = new Vector4[Count];
             Size = size;
 
-            for (var i = 0; i < count; i += 1)
+            for (var i = 0; i < Count; i += 1)
             {
                 var dash = dashes[i];
                 Locations[i] = dash.Position;
                 Locations[i].w = dash.Angle;
-                Indices[i] = new Vector4(0f, 0f, 0f, 1f);
+                Indices[i] = index;
                 Colors[i] = dash.Color.ToX3Vector();
             }
 
-            Mesh = Render.CreateMesh(count, size);
+            Mesh = RenderHelper.CreateMesh(Count, size);
         }
 
-        public static IEnumerable<RenderBatch> FromDashes(List<MarkupStyleDash> dashes)
+        public static IEnumerable<RenderBatch> FromDashes(IEnumerable<MarkupStyleDash> dashes, Vector4 index)
         {
             var groups = dashes.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(d.Length.RoundToNearest(0.05f), 1f, d.Width));
 
@@ -204,7 +206,7 @@ namespace NodeMarkup.Utils
                     isEnd = !groupEnumerator.MoveNext();
                     if (isEnd || count == 16)
                     {
-                        var batch = new RenderBatch(buffer, count, group.Key);
+                        var batch = new RenderBatch(buffer, count, group.Key, index);
                         yield return batch;
                         count = 0;
                     }
@@ -212,5 +214,7 @@ namespace NodeMarkup.Utils
                 while (!isEnd);
             }
         }
+
+        public override string ToString() => $"{Count}: {Size}";
     }
 }

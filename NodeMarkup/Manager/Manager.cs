@@ -21,7 +21,7 @@ namespace NodeMarkup.Manager
 
         public static void Init()
         {
-            Material = Render.CreateMaterial();
+            Material = RenderHelper.CreateMaterial();
         }
 
         public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
@@ -39,6 +39,9 @@ namespace NodeMarkup.Manager
 
         public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data)
         {
+            if (data.m_nextInstance != ushort.MaxValue)
+                return;
+
             if (!TryGetMarkup(nodeID, out Markup markup))
                 return;
 
@@ -65,7 +68,7 @@ namespace NodeMarkup.Manager
                 materialBlock.SetVectorArray(instance.ID_PropLocation, batch.Locations);
                 materialBlock.SetVectorArray(instance.ID_PropObjectIndex, batch.Indices);
                 materialBlock.SetVectorArray(instance.ID_PropColor, batch.Colors);
-                materialBlock.SetVector(Render.ID_DecalSize, batch.Size);
+                materialBlock.SetVector(RenderHelper.ID_DecalSize, batch.Size);
 
                 var mesh = batch.Mesh;
                 var material = Material;
