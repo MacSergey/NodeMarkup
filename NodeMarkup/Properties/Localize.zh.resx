@@ -125,7 +125,8 @@
 此操作不可撤销。</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>可使用滚轮更改参数</value>
+    <value>使用滚轮改变参数
+Shift x10，Ctrl x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>应用模板</value>
@@ -375,7 +376,8 @@
     <value>点选起始点
 来创建/擦除线段
 +Ctrl 偏移端点
-+Shift 编辑端点</value>
++Shift 编辑端点
+按住Alt创建填充图案</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
@@ -425,26 +427,66 @@
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
     <value>点击以创建停止线</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>填充图案</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>填充图案</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>虚停止线</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>条纹线</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>网格</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>条纹线</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>网格</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>虚线停止线</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>间隔</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>从边线回缩</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>点击来开始创建填充</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>点击以完成创建填充</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>点击以选择填充区域下一端点</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>选择填充区域起点</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>选择填充区域下一端点</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>往中心回缩</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>默认</value>
+  </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>

@@ -125,7 +125,9 @@
 この操作は元に戻せません</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールをスクロールして増減</value>
+    <value>ホイールのスクロールで増減
++Shift ｘ10
++Ctrl ｘ0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -375,7 +377,8 @@
     <value>ポイントを選択して
 ラインを作成・削除する
 +Ctrlでポイントを移動
-+Shiftでポイントの編集</value>
++Shiftでポイントの編集
+Altキー押下で塗り潰しを開始</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -421,10 +424,10 @@
     <value>クリックして停止線の追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗り潰し一覧</value>
+    <value>塗りつぶし</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>塗り潰し</value>
+    <value>埋める</value>
   </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>DSL</value>
@@ -435,7 +438,9 @@
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>網掛け</value>
   </data>
-  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>ST</value>
+  </data>
   <data name="FillerStyle_GridShort" xml:space="preserve">
     <value>G</value>
   </data>
@@ -451,11 +456,21 @@
   <data name="Filler_Offset" xml:space="preserve">
     <value>塗り潰し部分のオフセット</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>このポイントから塗り潰しを開始</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>終点（開始）のポイントを選択して、塗り潰しを作成</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>このポイントを選択して、次のポイントへ移動</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>塗り潰し開始のポイントを選択</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>次のポイントを選択</value>
+  </data>
   <data name="Filler_MedianOffset" xml:space="preserve">
     <value>分離帯部分のオフセット</value>
   </data>

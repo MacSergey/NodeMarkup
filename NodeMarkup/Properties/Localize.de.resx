@@ -125,7 +125,8 @@
 Diese Aktion kann nicht rückgängig gemacht werden</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scrollrad bewegen zum Ändern</value>
+    <value>Mausrad scrollen zum ändern
+Shift x10, Strg x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Vorlage anwenden</value>
@@ -375,7 +376,8 @@ Klicken um Markierung zu bearbeiten</value>
     <value>Startpunkt wählen zum
 Linie erstellen oder löschen
 +Strg um den Punkt zu verschieben
-+Shift um den Punkt zu bearbeiten</value>
++Shift um den Punkt zu bearbeiten
+Alt halten um eine Füllung zu erstellen</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
@@ -458,11 +460,21 @@ Linie erstellen oder löschen
   <data name="Filler_Offset" xml:space="preserve">
     <value>Abstand der Linien</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Klicken um mit der Füllung zu beginnen</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Klicken um das Erstellen der Füllung zu beenden</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Klicken um den nächsten Punkt des Umrisses auszuwählen</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Wähle einen Punkt um mit dem Erstellen einer Füllung zu beginnen</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Wähle den nächsten Punkt des Umrisses</value>
+  </data>
   <data name="Filler_MedianOffset" xml:space="preserve">
     <value>Abstand vom Median</value>
   </data>
