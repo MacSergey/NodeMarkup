@@ -36,7 +36,7 @@ namespace NodeMarkup.UI.Editors
             AddTemplateName();
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+                colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
         }
 
         private void AddHeader()
@@ -61,7 +61,7 @@ namespace NodeMarkup.UI.Editors
         {
             EditObject.Name = value;
             NameProperty.Value = EditObject.Name;
-            RefreshItem();
+            SelectItem.Refresh();
         }
 
         private void ToggleAsDefault()
@@ -71,10 +71,13 @@ namespace NodeMarkup.UI.Editors
         }
         private void AsDefaultRefresh()
         {
-            RefreshItem();
+            RefreshItems();
             HeaderPanel.Init(EditObject.IsDefault());
         }
-        private void RefreshItem() => SelectItem.Refresh();
+        //private void RefreshItem()
+        //{
+        //    SelectItem.Refresh();
+        //}
         protected override void OnObjectDelete(StyleTemplate template)
         {
             TemplateManager.DeleteTemplate(template);

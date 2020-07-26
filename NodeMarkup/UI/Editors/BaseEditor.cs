@@ -363,5 +363,12 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
+        protected void RefreshItems()
+        {
+            foreach (EditableItemType item in ItemsPanel.components)
+            {
+                item.Refresh();
+            }
+        }
     }
 }
