@@ -80,7 +80,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Scroll the wheel to change.
+        ///   Ищет локализованную строку, похожую на Scroll the wheel to change
+        ///Shift X10, Ctrl X0.1.
         /// </summary>
         public static string FieldPanel_ScrollWheel {
             get {
@@ -1141,7 +1142,8 @@ namespace NodeMarkup {
         ///   Ищет локализованную строку, похожую на Select a point to
         ///create or delete a line
         ///+Ctrl to move the point
-        ///+Shift to edit the point.
+        ///+Shift to edit the point
+        ///Hold Alt to create a filler.
         /// </summary>
         public static string Tool_InfoSelectStartPoint {
             get {

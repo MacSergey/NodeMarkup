@@ -125,7 +125,8 @@
 This action cannot be undone</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scroll the wheel to change</value>
+    <value>Scroll the wheel to change
+Shift X10, Ctrl X0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Apply template</value>
@@ -375,7 +376,8 @@ Click to edit marking</value>
     <value>Select a point to
 create or delete a line
 +Ctrl to move the point
-+Shift to edit the point</value>
++Shift to edit the point
+Hold Alt to create a filler</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>What`s new in {0}</value>
