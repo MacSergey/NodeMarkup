@@ -20,12 +20,13 @@ namespace NodeMarkup.Manager
     public abstract class FillerStyle : Style, IFillerStyle
     {
         public static float DefaultAngle { get; } = 0f;
-        public static float DefaultStep { get; } = 6f;
+        public static float DefaultStepStripe { get; } = 3f;
+        public static float DefaultStepGrid { get; } = 6f;
         public static float DefaultOffset { get; } = 0f;
         public static float StripeDefaultWidth { get; } = 0.5f;
 
-        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStep, DefaultOffset, DefaultOffset);
-        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStep, DefaultOffset, DefaultOffset);
+        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset);
+        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset);
         public static SolidFillerStyle DefaultSolid => new SolidFillerStyle(DefaultColor, DefaultOffset);
 
         public static FillerStyle GetDefault(FillerType type)

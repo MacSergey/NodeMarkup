@@ -90,7 +90,7 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config);
             Angle = config.GetAttrValue("A", DefaultAngle);
-            Step = config.GetAttrValue("S", DefaultStep);
+            Step = config.GetAttrValue("S", DefaultStepGrid);
             Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }

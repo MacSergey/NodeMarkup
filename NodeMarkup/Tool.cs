@@ -51,7 +51,7 @@ namespace NodeMarkup
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
-        NodeMarkupButton Button => NodeMarkupButton.Instace;
+        NodeMarkupButton Button => NodeMarkupButton.Instance;
         NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
@@ -268,19 +268,9 @@ namespace NodeMarkup
 
         private void Info()
         {
-            if (!UI.Settings.ShowToolTip)
-            {
-                cursorInfoLabel.isVisible = false;
-                return;
-            }
-
             var position = GetInfoPosition();
 
-            if (position.x >= Panel.relativePosition.x &&
-                position.x <= Panel.relativePosition.x + Panel.width &&
-                position.y >= Panel.relativePosition.y &&
-                position.y <= Panel.relativePosition.y + Panel.height
-                )
+            if(!UI.Settings.ShowToolTip || (Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position)))
             {
                 cursorInfoLabel.isVisible = false;
                 return;
@@ -341,8 +331,7 @@ namespace NodeMarkup
 
             UIView uIView = cursorInfoLabel.GetUIView();
 
-            var cursorPosition = cursorInfoLabel.pivot.UpperLeftToTransform(cursorInfoLabel.size, cursorInfoLabel.arbitraryPivotOffset);
-            relativePosition += new Vector3(cursorPosition.x, cursorPosition.y);
+            relativePosition += new Vector3(25, 25);
 
             var screenSize = fullscreenContainer?.size ?? uIView.GetScreenResolution();
             relativePosition.x = MathPos(relativePosition.x, cursorInfoLabel.width, screenSize.x);
@@ -350,22 +339,14 @@ namespace NodeMarkup
 
             cursorInfoLabel.relativePosition = relativePosition;
 
-            float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : pos;
+            float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
         }
         private Vector3 GetInfoPosition()
         {
-            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength)
-            {
-                m_ignoreTerrain = false,
-                m_ignoreNodeFlags = NetNode.Flags.None
-            };
-            RayCast(input, out RaycastOutput output);
+            var uiView = cursorInfoLabel.GetUIView();
+            var mouse = uiView.ScreenPointToGUI(MousePosition / uiView.inputScale);
 
-            UIView uIView = cursorInfoLabel.GetUIView();
-            var screenPoint = Camera.main.WorldToScreenPoint(output.m_hitPos) / uIView.inputScale;
-            var relativePosition = uIView.ScreenPointToGUI(screenPoint);
-            
-            return relativePosition;
+            return mouse;
         }
 
 

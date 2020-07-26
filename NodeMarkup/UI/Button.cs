@@ -11,15 +11,16 @@ namespace NodeMarkup.UI
     public class NodeMarkupButton : UIButton
     {
         const string CONTAINING_PANEL_NAME = "RoadsOptionPanel";
-        const string nodeMarkupButtonBg = "NodeControllerButtonBg";
-        const string nodeMarkupButtonBgActive = "NodeControllerButtonBgFocused";
-        const string nodeMarkupButtonBgHovered = "NodeControllerButtonBgHovered";
-        const string nodeMarkupIcon = "NodeControllerIcon";
-        const string nodeMarkupIconActive = "NodeControllerIconPressed";
+        const string ButtonBg = "NodeMarkupButtonBg";
+        const string ButtonBgActive = "NodeMarkupButtonBgActive";
+        const string ButtonBgHovered = "NodeMarkupButtonBgHovered";
+        const string Icon = "NodeMarkupIcon";
+        const string IconActive = "NodeMarkupIconActived";
+        const string IconHovered = "NodeMarkupIconHovered";
         const int buttonSize = 31;
         readonly static Vector2 buttonPosition = new Vector3(64, 38);
         public static string AtlasName = nameof(NodeMarkupButton);
-        public static NodeMarkupButton Instace { get; private set; }
+        public static NodeMarkupButton Instance { get; private set; }
 
         static UIComponent GetContainingPanel()
         {
@@ -34,19 +35,18 @@ namespace NodeMarkup.UI
             base.Start();
             name = nameof(NodeMarkupButton);
             playAudioEvents = true;
-            tooltip = Mod.StaticName;
 
-            var builtinTabstrip = UIUtils.Instance.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None);
-            if (builtinTabstrip == null)
+            if(!(UIUtils.Instance.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None) is UITabstrip builtinTabstrip))
                 return;
 
             string[] spriteNames = new string[]
             {
-                nodeMarkupButtonBg,
-                nodeMarkupButtonBgActive,
-                nodeMarkupButtonBgHovered,
-                nodeMarkupIcon,
-                nodeMarkupIconActive
+                ButtonBg,
+                ButtonBgActive,
+                ButtonBgHovered,
+                Icon,
+                IconActive,
+                IconHovered
             };
 
             atlas = TextureUtil.GetAtlas(AtlasName);
@@ -56,48 +56,57 @@ namespace NodeMarkup.UI
             }
 
             Deactivate();
-            hoveredBgSprite = nodeMarkupButtonBgHovered;
+            hoveredBgSprite = ButtonBgHovered;
+            hoveredFgSprite = IconHovered;
 
             relativePosition = buttonPosition;
             size = new Vector2(buttonSize, buttonSize);
             Show();
             Unfocus();
             Invalidate();
+
+            Instance = this;
         }
 
         public void Activate()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Activate)}");
 
-            focusedFgSprite = normalBgSprite = pressedBgSprite = disabledBgSprite = nodeMarkupButtonBgActive;
-            normalFgSprite = focusedFgSprite = nodeMarkupIconActive;
+            focusedBgSprite = ButtonBgActive;
+            normalBgSprite = ButtonBgActive;
+            pressedBgSprite = ButtonBgActive;
+            disabledBgSprite = ButtonBgActive;
+            normalFgSprite = IconActive;
+            focusedFgSprite = IconActive;
             Invalidate();
         }
         public void Deactivate()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Deactivate)}");
 
-            focusedFgSprite = normalBgSprite = pressedBgSprite = disabledBgSprite = nodeMarkupButtonBg;
-            normalFgSprite = focusedFgSprite = nodeMarkupIcon;
+            focusedBgSprite = ButtonBg;
+            normalBgSprite = ButtonBg;
+            pressedBgSprite = ButtonBg;
+            disabledBgSprite = ButtonBg;
+            normalFgSprite = Icon;
+            focusedFgSprite = Icon;
             Invalidate();
         }
 
         public static NodeMarkupButton CreateButton()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
-
-            Instace = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
-            return Instace;
+            return GetContainingPanel().AddUIComponent<NodeMarkupButton>();
         }
         public static void RemoveButton()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(RemoveButton)}");
 
-            if (Instace != null)
+            if (Instance != null)
             {
-                GetContainingPanel().RemoveUIComponent(Instace);
-                Destroy(Instace);
-                Instace = null;
+                GetContainingPanel().RemoveUIComponent(Instance);
+                Destroy(Instance);
+                Instance = null;
             }
         }
 
@@ -107,6 +116,11 @@ namespace NodeMarkup.UI
 
             base.OnClick(p);
             NodeMarkupTool.Instance.ToggleTool();
+        }
+        protected override void OnTooltipEnter(UIMouseEventParameter p)
+        {
+            tooltip = $"{Mod.StaticName} ({NodeMarkupTool.ActivationShortcut})";
+            base.OnTooltipEnter(p);
         }
     }
 }
