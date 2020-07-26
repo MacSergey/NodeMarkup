@@ -167,7 +167,9 @@ Esta ação não pode ser desfeita</value>
     <value>Linhas</value>
   </data>
   
-  
+  <data name="LineEditor_SpaceLength" xml:space="preserve">
+    <value>Comprimento do espaço</value>
+  </data>
   <data name="LineEditor_Style" xml:space="preserve">
     <value>Estilo</value>
   </data>
@@ -214,13 +216,23 @@ Esta ação não pode ser desfeita</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Faz apenas marcações nas intersecções</value>
   </data>
+  <data name="Mod_DescriptionBeta" xml:space="preserve">
+    <value>Isto é uma versão BETA, podem ocorrer erros e não é garantida a estabilidade!</value>
+  </data>
   
+  <data name="PointEditor_ItemDescription" xml:space="preserve">
+    <value>ponto</value>
+  </data>
   
-  
-  
-  
-  
-  
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Pontos</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Não definido</value>
+  </data>
+  <data name="Settings_ActivateTool" xml:space="preserve">
+    <value>Activar a ferramenta</value>
+  </data>
   
   
   
