@@ -385,7 +385,12 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>"Was gibt es neues" zeigen</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopieren mit MoveIt (Funktioniert erst nachdem MoveIt geupdated wurde)
+- Haltelinien
+- Neuer "Durchgezogen und Gestrichelt" Stil
+- Chinesisch</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importieren</value>
   </data>
