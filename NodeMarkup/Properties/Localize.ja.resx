@@ -125,7 +125,9 @@
 この操作は元に戻せません</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールをスクロールして増減</value>
+    <value>ホイールのスクロールで増減
++Shift ｘ10
++Ctrl ｘ0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -375,7 +377,8 @@
     <value>ポイントを選択して
 ラインを作成・削除する
 +Ctrlでポイントを移動
-+Shiftでポイントの編集</value>
++Shiftでポイントの編集
+Altキー押下で塗り潰しを開始</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -407,5 +410,83 @@
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>破線＆実線</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>停止線</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>SL</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>クリックして停止線を削除</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>クリックして停止線の追加</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>塗りつぶし</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>埋める</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>DSL</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>ストライプ</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>網掛け</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>破線の停止線</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>間隔</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>塗り潰し部分のオフセット</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>このポイントから塗り潰しを開始</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>終点（開始）のポイントを選択して、塗り潰しを作成</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>このポイントを選択して、次のポイントへ移動</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>塗り潰し開始のポイントを選択</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>次のポイントを選択</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>分離帯部分のオフセット</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>ペースト</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>既定色</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>実線</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
   </data>
 </root>
