@@ -367,8 +367,8 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Selectionnez un point de fin
-+Shift - Solide
+    <value>Sélectionnez un point de fin
++Maj - Solide
 +Ctrl - Double</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
