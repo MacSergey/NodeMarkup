@@ -224,11 +224,22 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public Bezier3 GetTrajectory()
+        public bool GetTrajectory(out Bezier3 bezier)
         {
-            GetFromT(out float from);
-            GetToT(out float to);
-            return Line.Trajectory.Cut(from, to);
+            var succes = false;
+            succes |= GetFromT(out float from);
+            succes |= GetToT(out float to);
+
+            if (succes)
+            {
+                bezier = Line.Trajectory.Cut(from != -1 ? from : to, to != -1 ? to : from);
+                return true;
+            }
+            else
+            {
+                bezier = default;
+                return false;
+            }
 
         }
 

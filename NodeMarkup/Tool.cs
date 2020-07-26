@@ -766,7 +766,8 @@ namespace NodeMarkup
             if (IsHoverFillerPoint)
             {
                 var linePart = TempFiller.GetFillerLine(TempFiller.Last, HoverFillerPoint);
-                bezier = linePart.GetTrajectory();
+                if (!linePart.GetTrajectory(out bezier))
+                    return;
 
                 color = Color.green;
             }

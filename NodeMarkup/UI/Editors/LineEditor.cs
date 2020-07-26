@@ -254,8 +254,8 @@ namespace NodeMarkup.UI.Editors
                 }
                 if (IsHoverRulePanel)
                 {
-                    var bezier = HoverRulePanel.Rule.GetTrajectory();
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, WhiteAlpha, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
+                    if (HoverRulePanel.Rule.GetTrajectory(out Bezier3 bezier))
+                        NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, WhiteAlpha, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
                 {
