@@ -401,10 +401,22 @@ crear o eliminar la línea
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Anular</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>DC</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Invertir</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Invertir</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Doble Combinada</value>
+  </data>
 </root>
