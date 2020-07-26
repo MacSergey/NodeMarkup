@@ -385,12 +385,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>显示更新提示框</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- 支持使用MoveIt!复制地标线 (需等候MoveIt!更新)
-- 新：可划分停止线
-- 新增 "虚实线" 样式
-- 简体中文支持</value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>导入</value>
   </data>
