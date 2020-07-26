@@ -386,11 +386,15 @@ Hold Alt to create a filler</value>
     <value>Show what`s new</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Copy with MoveIt (Does not work until MoveIt is updated)
-- Fillers. Hold ALT to start create (not saved yet)
-- Stop lines
-- New "Solid and Dashed" style
-- Chinese</value>
+    <value>- Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
+- Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: "Solid" and "Dashed".
+- New line style: "Solid &amp; Dashed".
+- Lines and templates in the list now have icons that show style and colour.
+- Markings will be now copied when the road is copied with MoveIt (function will not become available until MoveIt mod is updated).
+- Added Copy and Paste options for line colour.
+- Upgrading the road to a different road with the same amount of lanes will now preserve the markings.
+- Line segment with the rule will be highlighted when hovering over the edit panel of that rule.
+- Added Simplified Chinese translation.</value>
   </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Import</value>

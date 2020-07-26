@@ -604,11 +604,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Copy with MoveIt (Does not work until MoveIt is updated)
-        ///- Fillers. Hold ALT to start create (not saved yet)
-        ///- Stop lines
-        ///- New &quot;Solid and Dashed&quot; style
-        ///- Chinese.
+        ///   Ищет локализованную строку, похожую на - Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
+        ///- Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
+        ///- New line style: &quot;Solid &amp; Dashed&quot;.
+        ///- Lines and templates in the list now have icons that show style and colour.
+        ///- Markings will be now copied when the road is copied with MoveIt (function will [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage {
             get {
