@@ -125,7 +125,8 @@
 Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Gebruik je scrollwiel om aan te passen</value>
+    <value>Scroll met het wiel om te veranderen
+Shift X10, Ctrl X0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Sjabloon toepassen</value>
@@ -372,9 +373,10 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
-maak of verwijderen een lijn
-+Ctrl om het punt te bewegen
-+Shift om het punt te bewerken</value>
+een lijn te creëren of te verwijderen
++Ctrl om het punt te verplaatsen
++Shift om het punt te bewerken
+Houd Alt ingedrukt om een opvulling te creëren</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Wat is er nieuw in {0}</value>
@@ -382,7 +384,13 @@ maak of verwijderen een lijn
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Toon wat nieuw is</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopiëren met MoveIt (Werkt niet totdat MoveIt geüpdatet is)
+- Opvullingen. Houd ALT ingedrukt om te starten met creëren (Nog niet opgeslagen)
+- Stoplijnen
+- Nieuwe "Ononderbroken en Gestreept" stijl
+- Chinees</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importeer</value>
   </data>
@@ -406,5 +414,83 @@ maak of verwijderen een lijn
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ononderbroken en Streeplijn</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Stoplijn</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>SL</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Klik om een stoplijn te verwijderen</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Klik om een stoplijn te maken</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Opvullingen</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>opvulling</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>OSL</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Strepen</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Raster</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>R</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Onderbroken stoplijn</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Stapgrootte</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Hoek</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Afstand tot lijnen</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Klik om te beginnen met het maken van een opvulling</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Klik om de opvulling af te maken</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Klik om het volgende punt van de omtrek te selecteren</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Selecteer een punt om te beginnen met het creëren van een opvulling</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Selecteer het volgende punt van de omtrek</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Afstand tot middenberm</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Kopiëren</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Plakken</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Standaard</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Ononderbroken</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>O</value>
   </data>
 </root>
