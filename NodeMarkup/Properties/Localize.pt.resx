@@ -117,6 +117,66 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Editor_DeleteCaption" xml:space="preserve">
+    <value>Apagar {0}</value>
+  </data>
+  <data name="Editor_DeleteMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo apagar {0} {1}?
+Esta ação não pode ser desfeita</value>
+  </data>
+  
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Aplicar modelo</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Guardar como modelo</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Definir como predefinição</value>
+  </data>
+  
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Adicionar Regra</value>
+  </data>
+  <data name="LineEditor_Color" xml:space="preserve">
+    <value>Cor</value>
+  </data>
+  
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Remover Regra</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo apagar esta regra?
+Esta ação não pode ser desfeita</value>
+  </data>
+  <data name="LineEditor_From" xml:space="preserve">
+    <value>De</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Seleccione o ponto "De" da regra</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Seleccione o ponto "Para" da regra</value>
+  </data>
+  <data name="LineEditor_ItemDescription" xml:space="preserve">
+    <value>linha</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Linhas</value>
+  </data>
+  
+  
+  <data name="LineEditor_Style" xml:space="preserve">
+    <value>Estilo</value>
+  </data>
+  <data name="LineEditor_To" xml:space="preserve">
+    <value>Para</value>
+  </data>
+  
+  
+  
+  
+  
   
   
   
