@@ -427,7 +427,7 @@ Altキー押下で塗り潰しを開始</value>
     <value>塗りつぶし</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>埋める</value>
+    <value>塗り潰し</value>
   </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>DSL</value>
@@ -484,7 +484,7 @@ Altキー押下で塗り潰しを開始</value>
     <value>既定色</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>実線</value>
+    <value>ベタ塗り</value>
   </data>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>S</value>
