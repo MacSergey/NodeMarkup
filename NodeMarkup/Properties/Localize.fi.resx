@@ -136,7 +136,9 @@ Tätä toimintoa ei voi kumota</value>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
     <value>Aseta oletukseksi</value>
   </data>
-  
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Älä käytä oletuksena</value>
+  </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Lisää sääntö</value>
   </data>
@@ -218,11 +220,19 @@ Tätä toimintoa ei voi kumota</value>
     <value>Pisteet</value>
   </data>
   
+  <data name="Settings_ActivateTool" xml:space="preserve">
+    <value>Käynnistä työkalu</value>
+  </data>
+  <data name="Settings_AddNewLineRule" xml:space="preserve">
+    <value>Lisää uusi sääntö</value>
+  </data>
   
-  
-  
-  
-  
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Poista tiemerkinnät kaikista risteyksistä</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Poista kaikki tiemerkinnät</value>
+  </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
 Tätä toimintoa ei voi kumota</value>
@@ -251,20 +261,30 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Tuo tiemerkintätiedot tiedostosta</value>
   </data>
-  
+  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
+    <value>Tuo tiemerkintätiedot</value>
+  </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
     <value>Haluatko varmasti tuoda tiedot?
 Tuodut tiedot korvaavat kaikki olemassa olevat tiemerkinnät.
 Tätä toimintoa ei voi kumota</value>
   </data>
-  
-  
+  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
+    <value>Tiemerkintätietojen tuonti epäonnistui</value>
+  </data>
+  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
+    <value>Tiemerkintätietojen tuonti onnistui</value>
+  </data>
   <data name="Settings_Other" xml:space="preserve">
     <value>Muut</value>
   </data>
   
-  
-  
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>Piirtoetäisyys</value>
+  </data>
+  <data name="Settings_Shortcuts" xml:space="preserve">
+    <value>Pikanäppäimet</value>
+  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Vahvista ennen poistamista</value>
   </data>
@@ -307,13 +327,19 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Valitse piste luodaksesi tai poistaaksesi viivan
++Ctrl siirtääksesi pistettä
++Shift muokataksesi pistettä</value>
+  </data>
   
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
   </data>
   
-  
+  <data name="Settings_Import" xml:space="preserve">
+    <value>Tuo</value>
+  </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
