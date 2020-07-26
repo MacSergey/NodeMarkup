@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -386,16 +386,7 @@ Mantenga Alt para crear un relleno</value>
     <value>Mostrar las novedades</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value>- Mensaje "Novedades" aparecerá una vez después de una actualización y se puede desactivar en el menú Opciones.
-- Se agregaron las siguientes traducciones: checo, holandés, francés, alemán, japonés, polaco, ruso y español (Por favor, póngase en contacto con el autor del mod para ayudar con la traducción a su propio idioma).
-- Los puntos finales ahora se pueden arrastrar de uno a otro manteniendo presionada la tecla Ctrl.
-- Copias de seguridad: en el menú Opciones, ahora se pueden hacer un respaldo de las marcas en un mapa exportando a un archivo y luego importándolo. Esto es necesario si tienes que desactivar el mod, hacer un nuevo guardado sin el y luego quieres recuperar todas las marcas.
-- Ahora hay una ventana emergente al eliminar elementos. Esto se aplica a líneas, reglas y plantillas. Se puede desactivar en las opciones.
-- Nuevo atajo agregado para añadir una nueva regla - Shift + Ctrl + A (reasignable).
-- Configuración rápida de la regla: Después de crear una nueva regla, la interfaz para seleccionar sus puntos de inicio y final ahora se abre automáticamente. Ya no necesita hacer clic en las áreas "Desde" y "Hasta". Esto se puede desactivar en las opciones.
-- Se solucionó el problema con las líneas que parecían rotas o divididas: solo ocurría en las transiciones de carreteras y calles.
-- Las líneas ya no se generan cuando se muestren las superposiciones de vistas de información.
-- El atajo de activación ahora se activará cuando se abra otra herramienta mientras la Herramienta de las Marcas ya está abierta.</value>
+    <value></value>
   </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importar</value>
