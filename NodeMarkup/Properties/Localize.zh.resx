@@ -118,376 +118,379 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Odstranit {0}</value>
+    <value>删除{0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit {0} {1}?
-Tuto akci nelze vrátit zpět</value>
+    <value>确定要删除 {0} {1} 吗?
+此操作不可撤销。</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Použijte kolečko myši pro změnu hodnoty
-Shift ×10, Ctrl ×0.1</value>
+    <value>使用滚轮改变参数
+Shift x10，Ctrl x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Použít šablonu</value>
+    <value>应用模板</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Uložit jako šablonu</value>
+    <value>另存为模板</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Nastavit jako výchozí</value>
+    <value>设定为默认</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Zrušit jako výchozí</value>
+    <value>撤销默认</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Přidat pravidlo</value>
+    <value>添加规则</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
-    <value>Barva</value>
+    <value>颜色</value>
   </data>
   <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Délka čáry</value>
+    <value>虚线长度</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Odstranit pravidlo</value>
+    <value>删除规则</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit toto pravidlo?
-Tuto akci nelze vrátit zpět</value>
+    <value>确定要删除这个规则吗?
+此操作不可撤销。</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
-    <value>Z</value>
+    <value>起始点</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Vyberte výchozí bod pravidla</value>
+    <value>选择此段落的起始点</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Vyberte koncový bod pravidla</value>
+    <value>选择此段落的终止点</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>čáru</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Čáry</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
-    <value>Odsazení</value>
+    <value>偏移</value>
   </data>
   <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>Vzdálenost mezi čárami</value>
+    <value>间隔长度</value>
   </data>
   <data name="LineEditor_Style" xml:space="preserve">
-    <value>Styl</value>
+    <value>样式</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
-    <value>Do</value>
+    <value>终止点</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Průsečík s {0}</value>
+    <value>与 {0} 相交</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Vlastní hranice {0}</value>
+    <value>节点端点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Přerušovaná</value>
+    <value>虚线</value>
   </data>
   <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>P</value>
+    <value>虚线</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Dvojitá přerušovaná</value>
+    <value>双虚线</value>
   </data>
   <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DP</value>
+    <value>双虚线</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Dvojitá nepřerušovaná</value>
+    <value>双实线</value>
   </data>
   <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DN</value>
+    <value>双实线</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>实线</value>
   </data>
   <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>N</value>
+    <value>实线</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
-    <value>Ne</value>
+    <value>取消</value>
   </data>
   <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>确认</value>
   </data>
   <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ano</value>
+    <value>确定</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Nástroj pro kreslení vodorovných značek do křižovatek</value>
+    <value>使用此工具来轻松创建交叉口地标线。</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Toto je BETA verze, mohou se zde vyskytovat chyby a stabilita není zaručena!</value>
+    <value>这是BETA测试版，可能会出现功能性错误。无法担保工作稳定！</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Upravit značení křižovatky #{0}</value>
+    <value>编辑节点 #{0} 的地标线</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>bod</value>
+    <value>点</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Odsazení</value>
+    <value>偏移</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Body</value>
+    <value>端点</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Nenastaveno</value>
+    <value>未设置</value>
   </data>
   <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Aktivovat nástroj</value>
+    <value>启用工具</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Přidat nové pravidlo</value>
+    <value>添加新规则</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Odstranit všechna značení z křižovatky</value>
+    <value>删除选中节点的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Odstranit značení ze všech křižovatek</value>
+    <value>删除本地图内的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Odstranit všechna značení</value>
+    <value>删除所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit všechna značení?
-Tuto akci nelze vrátit zpět</value>
+    <value>确定要删除全图所有的地标线吗?
+此操作不可撤销！</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Exportovat data do souboru</value>
+    <value>将地标线信息导出到文件</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Kopírovat cestu k souboru</value>
+    <value>复制路径到剪贴板</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
+    <value>确认</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Exportovat data</value>
+    <value>导出地标线信息</value>
   </data>
   <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Export se nezdařil</value>
+    <value>导出失败</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Export úspěšný</value>
+    <value>导出成功</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value>Základní nastavení</value>
+    <value>常规设置</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importovat data ze souboru</value>
+    <value>从文件中导入地标线信息</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importovat data</value>
+    <value>导入地标线信息</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Opravdu si přejete importovat nová data?
-Importovaná data připíší všechna existující značení.
-Tuto akci nelze vrátit zpět</value>
+    <value>确定要导入数据吗?
+导入后的数据会覆盖全图既存的地标线。
+此操作无法撤销！</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import dat se nezdařil</value>
+    <value>地标线信息导入失败</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Import dat úspěšný</value>
+    <value>地标线信息导入成功</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
-    <value>Ostatní</value>
+    <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Rychlé vytvoření pravidel</value>
+    <value>快速初始化新规则</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Vykreslovací vzdálenost</value>
+    <value>渲染距离</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Klávesové zkratky</value>
+    <value>快捷键</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Zobrazovat upozornění při odstraňování</value>
+    <value>删除前弹窗确认</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Zobrazovat popisky</value>
+    <value>显示提示</value>
   </data>
   <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Barva</value>
+    <value>颜色</value>
   </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Délka čáry</value>
+    <value>虚线长度</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>šablonu</value>
+    <value>模版</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Název</value>
+    <value>名称</value>
   </data>
   <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Odsazení</value>
+    <value>偏移</value>
   </data>
   <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Vzdálenost mezi čárami</value>
+    <value>间隔长度</value>
   </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Styl</value>
+    <value>样式</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Šablony</value>
+    <value>模板</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Nová šablona</value>
+    <value>新建模板</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Odstranit všechna značení z této křižovatky</value>
+    <value>清除节点的地标线</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?
-Tuto akci nelze vrátit zpět</value>
+    <value>确定要删除节点 #{0} 的所有地标线吗?
+此操作不可撤销。</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klikněte pro vykreslení čáry
-+Shift - Plná čára
-+Ctrl - Dvojitá čára</value>
+    <value>点击以创建地标线
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Kliknětě pro odstranění čáry</value>
+    <value>点击可擦除线段</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Křižovatka #{0}
-Klikněte pro změnu značení</value>
+    <value>节点 #{0}
+点击以编辑地标线</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Vyberte křižovatku pro změnu značení</value>
+    <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod
-+Shift - plná čára
-+Ctrl - dvojitá čára</value>
+    <value>选择终止点
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření
-nebo smazání čáry
-+Ctrl pro posunutí bodu
-+Shift pro upravení bodu
-+Alt pro vytvoření výplně</value>
+    <value>点选起始点
+来创建/擦除线段
++Ctrl 偏移端点
++Shift 编辑端点
+按住Alt创建填充图案</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Co je nového v {0}</value>
+    <value>{0} 版本的新功能</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Zobrazit novinky</value>
+    <value>显示更新提示框</value>
   </data>
   <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value></value>
+    <value>- 支持使用MoveIt!复制地标线 (需等候MoveIt!更新)
+- 新：可划分停止线
+- 新增 "虚实线" 样式
+- 简体中文支持</value>
   </data>
   <data name="Settings_Import" xml:space="preserve">
-    <value>Importovat</value>
+    <value>导入</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>取消</value>
   </data>
   <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>PP</value>
+    <value>虚实线</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
-    <value>Obrátit</value>
+    <value>翻转</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
-    <value>Šířka</value>
+    <value>宽度</value>
   </data>
   <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Šířka</value>
+    <value>宽度</value>
   </data>
   <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Obrátit</value>
+    <value>翻转</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Plná i přerušovaná</value>
+    <value>虚实线</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Hranice křižovatky</value>
+    <value>停止线</value>
   </data>
   <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>HK</value>
+    <value>停止线</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>Klikněte pro odstranění hranice křižovatky</value>
+    <value>点击以擦除停止线</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>Klikněte pro vytvoření hranice křižovatky</value>
+    <value>点击以创建停止线</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Výplňe</value>
+    <value>填充图案</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>výplň</value>
+    <value>填充图案</value>
   </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>PHK</value>
+    <value>虚停止线</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Pruhy</value>
+    <value>条纹线</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Mřížka</value>
+    <value>网格</value>
   </data>
   <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>KP</value>
+    <value>条纹线</value>
   </data>
   <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>M</value>
+    <value>网格</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Přerušovaná hranice křižovatky</value>
+    <value>虚线停止线</value>
   </data>
   <data name="Filler_Step" xml:space="preserve">
-    <value>Mezera</value>
+    <value>间隔</value>
   </data>
   <data name="Filler_Angle" xml:space="preserve">
-    <value>Úhel</value>
+    <value>角度</value>
   </data>
   <data name="Filler_Offset" xml:space="preserve">
-    <value>Odsazení od čar</value>
+    <value>从边线回缩</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>Klikněte pro vytvoření výplně</value>
+    <value>点击来开始创建填充</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Klikněte pro dokončení výplně</value>
+    <value>点击以完成创建填充</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>Klikněte pro výběr dalšího bodu výplně</value>
+    <value>点击以选择填充区域下一端点</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření výplně</value>
+    <value>选择填充区域起点</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Vyberte další bod obvodu výplně</value>
+    <value>选择填充区域下一端点</value>
   </data>
   <data name="Filler_MedianOffset" xml:space="preserve">
-    <value>Odsazení od mediánu</value>
+    <value>往中心回缩</value>
   </data>
   <data name="LineEditor_ColorCopy" xml:space="preserve">
-    <value>Kopírovat</value>
+    <value>复制</value>
   </data>
   <data name="LineEditor_ColorPaste" xml:space="preserve">
-    <value>Vložit</value>
+    <value>粘贴</value>
   </data>
   <data name="LineEditor_ColorDefault" xml:space="preserve">
-    <value>Výchozí</value>
+    <value>默认</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>实线</value>
   </data>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>N</value>
+    <value>实线</value>
   </data>
 </root>
