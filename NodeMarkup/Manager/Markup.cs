@@ -76,19 +76,35 @@ namespace NodeMarkup.Manager
             var node = Utilities.GetNode(Id);
             Height = node.m_position.y;
 
-            var enters = new List<Enter>();
+            var oldEnters = EntersList;
+            var exists = oldEnters.Select(e => e.Id).ToList();
+            var update = node.SegmentsId().ToList();
 
-            foreach (var segmentId in node.SegmentsId())
+            var still = exists.Intersect(update).ToArray();
+            var delete = exists.Except(still).ToArray();
+            var add = update.Except(still).ToArray();
+
+            var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
+            newEnters.AddRange(add.Select(id => new Enter(this, id)));
+            newEnters.Sort((e1, e2) => e1.CornerAngle.CompareTo(e2.CornerAngle));
+
+            if (delete.Length == 1 && add.Length == 1 && oldEnters.Find(e => e.Id == delete[0]).PointCount == newEnters.Find(e => e.Id == add[0]).PointCount)
             {
-                if (!TryGetEnter(segmentId, out Enter enter))
-                    enter = new Enter(this, segmentId);
+                var map = new Dictionary<ObjectId, ObjectId>()
+                {
+                    {new ObjectId() {Segment = delete[0] },  new ObjectId() {Segment = add[0] }}
+                };
 
-                enter.Update();
-                enters.Add(enter);
+                var currentData = ToXml();
+                EntersList = newEnters;
+                Clear();
+                FromXml(Mod.Version, currentData, map);
             }
+            else
+                EntersList = newEnters;
 
-            enters.Sort((e1, e2) => e1.CornerAngle.CompareTo(e2.CornerAngle));
-            EntersList = enters;
+            foreach (var enter in EntersList)
+                enter.Update();
         }
         private void UpdateLines()
         {
@@ -114,7 +130,7 @@ namespace NodeMarkup.Manager
             {
                 line.UpdateTrajectory();
             }
-            foreach(var filler in GetPointFillers(point))
+            foreach (var filler in GetPointFillers(point))
             {
                 filler.Update();
             }
