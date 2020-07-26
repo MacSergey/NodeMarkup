@@ -432,7 +432,7 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
     <value>PLZ</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Paski</value>
+    <value>Linie</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Kratka</value>
@@ -483,9 +483,9 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
     <value>Domyślne</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Ciągła</value>
+    <value>Wypełnienie</value>
   </data>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
+    <value>W</value>
   </data>
 </root>
