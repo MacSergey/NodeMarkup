@@ -368,8 +368,8 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Selectionnez un point de fin
-+Shift - Solide
+    <value>Sélectionnez un point de fin
++Maj - Solide
 +Ctrl - Double</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
@@ -377,7 +377,7 @@ Cliquez pour modifier le marquage</value>
 créer ou supprimer une ligne
 +Ctrl pour bouger le point
 +Maj pour éditer le point
-Maintenez Alt pour créer un remplisseur</value>
+Maintenez Alt pour créer un filler</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
@@ -426,7 +426,7 @@ Maintenez Alt pour créer un remplisseur</value>
     <value>Fillers</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>remplisseur</value>
+    <value>filler</value>
   </data>
   <data name="LineStyle_StopDashedShort" xml:space="preserve">
     <value>LST</value>
@@ -444,7 +444,7 @@ Maintenez Alt pour créer un remplisseur</value>
     <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Ligne d'arrêt en pointillé</value>
+    <value>Ligne de stop en pointillé</value>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Intervalle</value>
@@ -453,7 +453,7 @@ Maintenez Alt pour créer un remplisseur</value>
     <value>Angle</value>
   </data>
   <data name="Filler_Offset" xml:space="preserve">
-    <value>Ecart depuis la ligne</value>
+    <value>Écart depuis la ligne</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Cliquez pour commencer un remplisseur</value>
@@ -462,16 +462,16 @@ Maintenez Alt pour créer un remplisseur</value>
     <value>Cliquez pour finir le filler</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>Selectionnez le prochain point du contour</value>
+    <value>Sélectionnez le prochain point du contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Selectionnez un point pour commencer le filler</value>
+    <value>Sélectionnez un point pour commencer le filler</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Selectionnez le prochain point pour le contour</value>
+    <value>Sélectionnez le prochain point pour le contour</value>
   </data>
   <data name="Filler_MedianOffset" xml:space="preserve">
-    <value>Écart depuis centre</value>
+    <value>Écart depuis séparateur</value>
   </data>
   <data name="LineEditor_ColorCopy" xml:space="preserve">
     <value>Copier</value>
