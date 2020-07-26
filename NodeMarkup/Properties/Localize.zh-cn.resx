@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -125,7 +125,8 @@
 此操作不可撤销。</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>可使用滚轮更改参数</value>
+    <value>使用滚轮改变参数
+Shift x10，Ctrl x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>应用模板</value>
@@ -165,10 +166,10 @@
     <value>选择此段落的终止点</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>线</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>线</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
     <value>偏移</value>
@@ -246,7 +247,7 @@
     <value>启用工具</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>添加新段落</value>
+    <value>添加新规则</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
     <value>删除选中节点的所有地标线</value>
@@ -303,7 +304,7 @@
     <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>快速初始化新段落</value>
+    <value>快速初始化新规则</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>渲染距离</value>
@@ -375,7 +376,8 @@
     <value>点选起始点
 来创建/擦除线段
 +Ctrl 偏移端点
-+Shift 编辑端点</value>
++Shift 编辑端点
+按住Alt创建填充图案</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
@@ -383,17 +385,109 @@
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>显示更新提示框</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>导入</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>虚实线</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>翻转</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>翻转</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>虚实线</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>停止线</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>停止线</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>点击以擦除停止线</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>点击以创建停止线</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>填充图案</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>填充图案</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>虚停止线</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>条纹线</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>网格</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>条纹线</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>网格</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>虚线停止线</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>间隔</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>从边线回缩</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>点击来开始创建填充</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>点击以完成创建填充</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>点击以选择填充区域下一端点</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>选择填充区域起点</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>选择填充区域下一端点</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>往中心回缩</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>实线</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>实线</value>
+  </data>
 </root>
