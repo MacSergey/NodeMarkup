@@ -366,8 +366,17 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Selectionnez un point de fin
++Shift - Solide
++Ctrl - Double</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Sélectionnez un point pour 
+créer ou supprimer une ligne
++Ctrl pour bouger le point
++Maj pour éditer le point</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
   </data>
@@ -381,10 +390,22 @@ Cliquez pour modifier le marquage</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Largeur</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Largeur</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Solide et Tirets</value>
+  </data>
 </root>
