@@ -346,9 +346,16 @@ Esta acção não pode ser desfeita</value>
 Esta acção não pode ser desfeita</value>
   </data>
   
-  
-  
-  
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Clique para remover a linha</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Nó #{0}
+Clique para editar marcações</value>
+  </data>
+  <data name="Tool_InfoNode" xml:space="preserve">
+    <value>Seleccione um nó para editar marcações</value>
+  </data>
   
   
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
