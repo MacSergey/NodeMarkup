@@ -124,7 +124,10 @@
     <value>Tem a certeza que quer mesmo apagar {0} {1}?
 Esta ação não pode ser desfeita</value>
   </data>
-  
+  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
+    <value>Faça scroll para mudar
+Shift X10, Ctrl X0.1</value>
+  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Aplicar modelo</value>
   </data>
@@ -183,7 +186,9 @@ Esta ação não pode ser desfeita</value>
   <data name="LineRule_IntersectWith" xml:space="preserve">
     <value>Intersecção com {0}</value>
   </data>
-  
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Ponto próprio {0}</value>
+  </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tracejada</value>
   </data>
@@ -298,7 +303,9 @@ Esta acção não pode ser desfeita</value>
   <data name="Settings_Other" xml:space="preserve">
     <value>Outros</value>
   </data>
-  
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Configuração rápida das regras</value>
+  </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distância de renderização</value>
   </data>
@@ -345,7 +352,11 @@ Esta acção não pode ser desfeita</value>
     <value>Tem a certeza que quer mesmo remover todas as marcações do nó #{0}?
 Esta acção não pode ser desfeita</value>
   </data>
-  
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Clique para criar uma linha
++Shift - Sólida
++Ctrl - Dupla</value>
+  </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Clique para remover a linha</value>
   </data>
@@ -356,8 +367,18 @@ Clique para editar marcações</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione um nó para editar marcações</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Seleccionar ponto final
++Shift - Sólida
++Ctrl - Dupla</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Seleccione um ponto para
+criar ou remover a uma linha
++Ctrl para mover o ponto
++Shift para editar o ponto
+Prima Alt para criar um preenchimento</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
   </data>
@@ -416,8 +437,12 @@ Clique para editar marcações</value>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Grelha</value>
   </data>
-  
-  
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>G</value>
+  </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Linha de paragem tracejada</value>
   </data>
