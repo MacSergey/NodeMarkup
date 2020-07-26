@@ -392,6 +392,7 @@ Shift X10, Ctrl X0.1</value>
 - У линий и шаблонов в списке появились иконки, которые быстро подскажут стиль и цвет.
 - Копирование разметки при копирование дороги с помощью MoveIt (функция не доступна пока не будет обновлен MoveIt)
 - Копирование и вставка цвета линий.
+- При замене дороги, если у новой дороги количество точек совпадает со старой, то теперь разметка сохраняется.
 - Подсветка правила линии при наведении на панель редактирования.
 - Китайский язык.</value>
   </data>
@@ -479,14 +480,17 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Выберите следующую точку контура</value>
   </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Отступ от разд. полосы</value>
+  </data>
   <data name="LineEditor_ColorCopy" xml:space="preserve">
     <value>Копировать</value>
   </data>
-  <data name="LineEditor_ColorDefault" xml:space="preserve">
-    <value>Стандартный</value>
-  </data>
   <data name="LineEditor_ColorPaste" xml:space="preserve">
     <value>Вставить</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Стандартный</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>

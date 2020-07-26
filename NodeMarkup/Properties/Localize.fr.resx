@@ -125,7 +125,8 @@
 Cette action est irréversible</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Faites défiler la roue pour changer</value>
+    <value>Utilisez la molette pour changer
+Maj X10, Ctrl X0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Appliquer le modèle</value>
@@ -366,8 +367,18 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+    <value>Selectionnez un point de fin
++Shift - Solide
++Ctrl - Double</value>
+  </data>
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Sélectionnez un point pour 
+créer ou supprimer une ligne
++Ctrl pour bouger le point
++Maj pour éditer le point
+Maintenez Alt pour créer un remplisseur</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
   </data>
@@ -381,16 +392,100 @@ Cliquez pour modifier le marquage</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Largeur</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Largeur</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Solide et Tirets</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Ligne de stop</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>LdS</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Cliquez pour supprimer la ligne de stop</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Cliquez pour créer une ligne de stop</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Fillers</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>remplisseur</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>LST</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Grille</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Ligne d'arrêt en pointillé</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Ecart depuis la ligne</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Cliquez pour commencer un remplisseur</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Cliquez pour finir le filler</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Selectionnez le prochain point du contour</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Selectionnez un point pour commencer le filler</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Selectionnez le prochain point pour le contour</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Écart depuis centre</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Coller</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Par défaut</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
 </root>

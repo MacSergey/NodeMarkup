@@ -125,7 +125,8 @@
 Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Použijte kolečko myši pro změnu hodnoty</value>
+    <value>Použijte kolečko myši pro změnu hodnoty
+Shift ×10, Ctrl ×0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Použít šablonu</value>
@@ -372,10 +373,11 @@ Klikněte pro změnu značení</value>
 +Ctrl - dvojitá čára</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Vyberte bod pro
-vytvoření nebo odstranění čáry
-+Ctrl pro pohyb z bodem
-+Shift pro úpravu bodu</value>
+    <value>Vyberte bod pro vytvoření
+nebo smazání čáry
++Ctrl pro posunutí bodu
++Shift pro upravení bodu
++Alt pro vytvoření výplně</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
@@ -383,7 +385,13 @@ vytvoření nebo odstranění čáry
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopírování pomocí MoveIt (Nefunkční do aktualizace MoveIt)
+- Výplně - Vytvořte podržením klávesy ALT (zatím neukládáno)
+- Hranice křižovatky (čáry zastavení)
+- Nový styl "Plná a přerušovaná"
+- Další jazyky</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importovat</value>
   </data>
@@ -408,10 +416,82 @@ vytvoření nebo odstranění čáry
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Plná i přerušovaná</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Hranice křižovatky</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>HK</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Klikněte pro odstranění hranice křižovatky</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Klikněte pro vytvoření hranice křižovatky</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Výplňe</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>výplň</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>PHK</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Pruhy</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Mřížka</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>KP</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Přerušovaná hranice křižovatky</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Mezera</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Úhel</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Odsazení od čar</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Klikněte pro vytvoření výplně</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Klikněte pro dokončení výplně</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Klikněte pro výběr dalšího bodu výplně</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Vyberte bod pro vytvoření výplně</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Vyberte další bod obvodu výplně</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Odsazení od mediánu</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Kopírovat</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Vložit</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Výchozí</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Nepřerušovná</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>N</value>
+  </data>
 </root>

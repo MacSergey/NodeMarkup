@@ -125,7 +125,8 @@
 Diese Aktion kann nicht rückgängig gemacht werden</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scrollrad bewegen zum Ändern</value>
+    <value>Mausrad scrollen zum ändern
+Shift x10, Strg x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Vorlage anwenden</value>
@@ -375,7 +376,8 @@ Klicken um Markierung zu bearbeiten</value>
     <value>Startpunkt wählen zum
 Linie erstellen oder löschen
 +Strg um den Punkt zu verschieben
-+Shift um den Punkt zu bearbeiten</value>
++Shift um den Punkt zu bearbeiten
+Alt halten um eine Füllung zu erstellen</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
@@ -430,5 +432,65 @@ Linie erstellen oder löschen
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>füllung</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>GHL</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Streifen</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Gitter</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Gestrichelte Haltelinie</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Schritt</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Winkel</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Abstand der Linien</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Klicken um mit der Füllung zu beginnen</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Klicken um das Erstellen der Füllung zu beenden</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Klicken um den nächsten Punkt des Umrisses auszuwählen</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Wähle einen Punkt um mit dem Erstellen einer Füllung zu beginnen</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Wähle den nächsten Punkt des Umrisses</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Abstand vom Median</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Durchgezogen</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>D</value>
   </data>
 </root>
