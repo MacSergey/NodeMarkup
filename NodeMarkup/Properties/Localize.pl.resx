@@ -125,7 +125,8 @@
 Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Użyj kółka myszy aby zmienić</value>
+    <value>Użyj kółka myszy aby zmienić wartość
+Shift x10, Ctrl x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Zastosuj szablon</value>
@@ -375,7 +376,8 @@ Kliknij aby edytować oznaczenia</value>
     <value>Wybierz punkt aby
 utworzyć lub usunąć linię
 +Ctrl - aby przesunąć punkt
-+Shift - aby edytować punkt</value>
++Shift - aby edytować punkt
+Przytrzymaj Alt aby utworzyć wypełnienie</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
@@ -407,5 +409,83 @@ utworzyć lub usunąć linię
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ciągła z przerywaną</value>
+  </data>
+  <data name="LineStyle_Stop" xml:space="preserve">
+    <value>Linia zatrzymania</value>
+  </data>
+  <data name="LineStyle_StopShort" xml:space="preserve">
+    <value>LZ</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Kliknij aby usunąć linię zatrzymania</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Kliknij aby utworzyć linię zatrzymania</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Wypełnienia</value>
+  </data>
+  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+    <value>wypełniacz</value>
+  </data>
+  <data name="LineStyle_StopDashedShort" xml:space="preserve">
+    <value>PLZ</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Linie</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Kratka</value>
+  </data>
+  <data name="FillerStyle_StripeShort" xml:space="preserve">
+    <value>KP</value>
+  </data>
+  <data name="FillerStyle_GridShort" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Przerywana linia zatrzymania</value>
+  </data>
+  <data name="Filler_Step" xml:space="preserve">
+    <value>Krok</value>
+  </data>
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Kąt</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Odstęp od linii</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Kliknij, aby rozpocząć tworzenie wypełnienia</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Kliknij, aby zakończyć tworzenie wypełnienia</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Kliknij aby wybrać następny punkt konturu</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Wybierz punkt aby rozpocząć tworzenie wypełnienia</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Wybierz następny punkt konturu</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Odstęp od pasa rozdzielającego</value>
+  </data>
+  <data name="LineEditor_ColorCopy" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="LineEditor_ColorPaste" xml:space="preserve">
+    <value>Wklej</value>
+  </data>
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Domyślne</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Wypełnienie</value>
+  </data>
+  <data name="FillerStyle_SolidShort" xml:space="preserve">
+    <value>W</value>
   </data>
 </root>
