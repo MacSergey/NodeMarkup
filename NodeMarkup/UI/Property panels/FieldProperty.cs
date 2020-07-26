@@ -81,8 +81,8 @@ namespace NodeMarkup.UI.Editors
 
 
 
-        protected abstract ValueType Increment(ValueType value, ValueType step);
-        protected abstract ValueType Decrement(ValueType value, ValueType step);
+        protected abstract ValueType Increment(ValueType value, ValueType step, WheelMode mode);
+        protected abstract ValueType Decrement(ValueType value, ValueType step, WheelMode mode);
 
         protected virtual void FieldTextSubmitted(UIComponent component, string value) => Value = Value;
         private void FieldHover(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke();
@@ -91,11 +91,19 @@ namespace NodeMarkup.UI.Editors
         {
             if (CanUseWheel && UseWheel)
             {
+                var mode = Event.current.shift ? WheelMode.High : Event.current.control ? WheelMode.Low : WheelMode.Normal;
                 if (eventParam.wheelDelta < 0)
-                    Value = Increment(Value, WheelStep);
+                    Value = Increment(Value, WheelStep, mode);
                 else
-                    Value = Decrement(Value, WheelStep);
+                    Value = Decrement(Value, WheelStep, mode);
             }
+        }
+
+        protected enum WheelMode
+        {
+            Normal,
+            Low,
+            High
         }
     }
     public abstract class ComparableFieldPropertyPanel<ValueType> : FieldPropertyPanel<ValueType>
@@ -127,14 +135,22 @@ namespace NodeMarkup.UI.Editors
     {
         protected override bool CanUseWheel => true;
 
-        protected override float Decrement(float value, float step) => (value + step).RoundToNearest(step);
-        protected override float Increment(float value, float step) => (value - step).RoundToNearest(step);
+        protected override float Decrement(float value, float step, WheelMode mode)
+        {
+            step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
+            return (value + step).RoundToNearest(step);
+        }
+        protected override float Increment(float value, float step, WheelMode mode)
+        {
+            step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
+            return (value - step).RoundToNearest(step);
+        }
     }
     public class StringPropertyPanel : FieldPropertyPanel<string>
     {
         protected override bool CanUseWheel => false;
 
-        protected override string Decrement(string value, string step) => throw new NotSupportedException();
-        protected override string Increment(string value, string step) => throw new NotSupportedException();
+        protected override string Decrement(string value, string step, WheelMode mode) => throw new NotSupportedException();
+        protected override string Increment(string value, string step, WheelMode mode) => throw new NotSupportedException();
     }
 }
