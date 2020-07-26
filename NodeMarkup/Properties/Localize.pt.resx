@@ -141,7 +141,9 @@ Esta ação não pode ser desfeita</value>
   <data name="LineEditor_Color" xml:space="preserve">
     <value>Cor</value>
   </data>
-  
+  <data name="LineEditor_DashedLength" xml:space="preserve">
+    <value>Comprimento do traço</value>
+  </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
     <value>Remover Regra</value>
   </data>
@@ -172,6 +174,46 @@ Esta ação não pode ser desfeita</value>
   <data name="LineEditor_To" xml:space="preserve">
     <value>Para</value>
   </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Intersecção com {0}</value>
+  </data>
+  
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Tracejada</value>
+  </data>
+  <data name="LineStyle_DashedShort" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Tracejada dupla</value>
+  </data>
+  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
+    <value>TD</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Sólida dupla</value>
+  </data>
+  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
+    <value>SD</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Sólida</value>
+  </data>
+  <data name="LineStyle_SolidShort" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="MessageBox_No" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="MessageBox_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="MessageBox_Yes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Faz apenas marcações nas intersecções</value>
+  </data>
   
   
   
@@ -186,22 +228,12 @@ Esta ação não pode ser desfeita</value>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Exportar dados das marcações</value>
+  </data>
   
   
   
