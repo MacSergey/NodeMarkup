@@ -180,7 +180,7 @@ namespace NodeMarkup.Utils
                 var dash = dashes[i];
                 Locations[i] = dash.Position;
                 Locations[i].w = dash.Angle;
-                Indices[i] = index;
+                Indices[i] = new Vector4(0f, 0f, 0f, 1f);
                 Colors[i] = dash.Color.ToX3Vector();
             }
 
