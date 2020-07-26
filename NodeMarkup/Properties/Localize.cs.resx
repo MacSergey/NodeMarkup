@@ -385,7 +385,13 @@ nebo smazání čáry
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+    <value>- Kopírování pomocí MoveIt (Nefunkční do aktualizace MoveIt)
+- Výplně - Vytvořte podržením klávesy ALT (zatím neukládáno)
+- Hranice křižovatky (čáry zastavení)
+- Nový styl "Plná a přerušovaná"
+- Další jazyky</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importovat</value>
   </data>
