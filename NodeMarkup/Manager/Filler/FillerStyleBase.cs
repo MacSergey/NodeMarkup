@@ -130,12 +130,6 @@ namespace NodeMarkup.Manager
 
                 for (var i = 1; i < intersects.Length; i += 2)
                 {
-                    if(Mathf.Abs(intersects[i].FirstT - intersects[i - 1].FirstT) < 0.1f)
-                    {
-                        i -= 1;
-                        continue;
-                    }
-
                     var start = point + normal * intersects[i - 1].FirstT;
                     var end = point + normal * intersects[i].FirstT;
 
