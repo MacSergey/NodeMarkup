@@ -385,9 +385,7 @@ Mantenga Alt para crear un relleno</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar las novedades</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value></value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importar</value>
   </data>

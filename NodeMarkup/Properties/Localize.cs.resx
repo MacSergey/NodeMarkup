@@ -385,9 +385,7 @@ nebo smazání čáry
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
-    <value></value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importovat</value>
   </data>
