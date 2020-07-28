@@ -385,7 +385,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Показывать что нового</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Заполнители. Пространство между линиями можно заполнить, обозначив место куда нельзя заезжать или останавливаться. Доступно 3 стиля: Полоски, сетка и сплошная заливка. Для создания удерживайте клавишу ALT.
 - Стоп линии. Теперь возможно соединить две точки одной дороги для создания стоп линии. Доступно 2 стиля: Сплошная и прерывистая.
 - Новый стиль линий: "Сплошная и пунктирная".
@@ -497,5 +497,36 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>СП</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Исправлено зажатие клавиш Alt, Ctrl и Shift Mac OS и Linux.
+- Добавлены стили стоп линии "Двойная сплошная" и "Двойная пунктирная".
+- Добавлены Итальянский и Португальский переводы.</value>
+  </data>
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Версия {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Уведомления только о важных обновлениях</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Создать  заполнитель</value>
+  </data>
+  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Двойная стоп линия</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Двойная пунктирная стоп линия</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>ДСС</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>ДПС</value>
   </data>
 </root>

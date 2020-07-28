@@ -488,4 +488,31 @@ Maintenez Alt pour créer un filler</value>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>S</value>
   </data>
+  
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Paramètres de notification</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Uniquement notifier les mise à jour majeures</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Ajouter un nouveau filler</value>
+  </data>
+  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Double ligne de stop</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Double ligne de stop en pointillés</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>SDC</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>SDCP</value>
+  </data>
 </root>

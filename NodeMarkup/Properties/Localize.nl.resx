@@ -487,4 +487,31 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>O</value>
   </data>
+  
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Versie {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Meldingen</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Alleen meldingen over belangrijke updates</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Nieuwe opvulling toevoegen</value>
+  </data>
+  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Dubbele stoplijn</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Dubbele gestreepte stoplijn</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>DOS</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>DGS</value>
+  </data>
 </root>
