@@ -21,6 +21,8 @@ namespace NodeMarkup
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
+        public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
+        public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
@@ -56,6 +58,7 @@ namespace NodeMarkup
         private ToolBase PrevTool { get; set; }
         UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
 
+        private bool DisableByAlt { get; set; }
 
         #region BASIC
         public static NodeMarkupTool Instance
@@ -370,11 +373,8 @@ namespace NodeMarkup
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     OnSecondaryMouseClicked();
                     break;
-                case EventType.keyDown:
-                    OnKeyDown(e);
-                    break;
-                case EventType.keyUp:
-                    OnKeyUp(e);
+                default:
+                    ProcessShortcuts(e);
                     break;
             }
 
@@ -407,35 +407,35 @@ namespace NodeMarkup
 
             point.Offset = (point.Offset + offsetChange).RoundToNearest(0.01f);
         }
-        private void OnKeyDown(Event e)
+        private void ProcessShortcuts(Event e)
         {
             switch (ToolMode)
             {
-                case Mode.ConnectLine when !IsSelectPoint && e.alt:
-                    ToolMode = Mode.SelectFiller;
-                    TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
-                    GetFillerPoints();
+                case Mode.ConnectLine when !IsSelectPoint && AltIsPressed:
+                    DisableByAlt = true;
+                    EnableSelectFiller();
                     break;
-                default:
-                    if (DeleteAllShortcut.IsPressed(e))
-                    {
-                        DeleteAllLines();
-                        e.Use();
-                    }
-                    else
-                        Panel?.OnEvent(e);
+                case Mode.ConnectLine when !IsSelectPoint && AddFillerShortcut.IsPressed(e):
+                    DisableByAlt = false;
+                    EnableSelectFiller();
                     break;
-            }
-        }
-        private void OnKeyUp(Event e)
-        {
-            switch (ToolMode)
-            {
-                case Mode.SelectFiller when TempFiller.IsEmpty:
+                case Mode.ConnectLine when !IsSelectPoint && DeleteAllShortcut.IsPressed(e):
+                    DeleteAllLines();
+                    break;
+                case Mode.ConnectLine:
+                    Panel?.OnEvent(e);
+                    break;
+                case Mode.SelectFiller when DisableByAlt && !AltIsPressed && TempFiller.IsEmpty:
                     ToolMode = Mode.ConnectLine;
                     TempFiller = null;
                     break;
             }
+        }
+        private void EnableSelectFiller()
+        {
+            ToolMode = Mode.SelectFiller;
+            TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
+            GetFillerPoints();
         }
         private void OnPrimaryMouseClicked(Event e)
         {
@@ -497,6 +497,7 @@ namespace NodeMarkup
                     ToolMode = Mode.ConnectLine;
                     return;
                 }
+                DisableByAlt = false;
                 GetFillerPoints();
             }
         }
