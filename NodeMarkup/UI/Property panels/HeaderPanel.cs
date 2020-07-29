@@ -35,7 +35,7 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = NodeMarkupPanel.InGameAtlas;
+            DeleteButton.atlas = NodeMarkupTool.InGameAtlas;
             DeleteButton.normalBgSprite = "buttonclose";
             DeleteButton.hoveredBgSprite = "buttonclosehover";
             DeleteButton.pressedBgSprite = "buttonclosepressed";
@@ -81,7 +81,7 @@ namespace NodeMarkup.UI.Editors
         private void AddSaveTemplate()
         {
             SaveTemplateButton = AddUIComponent<UIButton>();
-            SaveTemplateButton.atlas = NodeMarkupPanel.InMapEditorAtlas;
+            SaveTemplateButton.atlas = NodeMarkupTool.InMapEditorAtlas;
             SaveTemplateButton.normalBgSprite = "InfoDisplay";
             SaveTemplateButton.hoveredBgSprite = "InfoDisplayHover";
             SaveTemplateButton.pressedBgSprite = "InfoDisplayFocused";
@@ -99,7 +99,7 @@ namespace NodeMarkup.UI.Editors
         {
             SelectTemplate = AddUIComponent<TemplateDropDown>();
 
-            SelectTemplate.atlas = NodeMarkupPanel.InMapEditorAtlas;
+            SelectTemplate.atlas = NodeMarkupTool.InMapEditorAtlas;
             SelectTemplate.height = 20;
             SelectTemplate.width = 150;
             SelectTemplate.listBackground = "TextFieldPanel";
@@ -128,7 +128,7 @@ namespace NodeMarkup.UI.Editors
             SelectTemplate.eventDropdownClose += DropdownClose;
 
             var button = SelectTemplate.AddUIComponent<UIButton>();
-            button.atlas = NodeMarkupPanel.InGameAtlas;
+            button.atlas = NodeMarkupTool.InGameAtlas;
             button.text = string.Empty;
             button.size = SelectTemplate.size;
             button.relativePosition = new Vector3(0f, 0f);
@@ -203,7 +203,7 @@ namespace NodeMarkup.UI.Editors
         private void AddSetAsDefault()
         {
             SetAsDefaultButton = AddUIComponent<UIButton>();
-            SetAsDefaultButton.atlas = NodeMarkupPanel.InMapEditorAtlas;
+            SetAsDefaultButton.atlas = NodeMarkupTool.InMapEditorAtlas;
             SetAsDefaultButton.normalBgSprite = "InfoDisplay";
             SetAsDefaultButton.hoveredBgSprite = "InfoDisplayHover";
             SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";

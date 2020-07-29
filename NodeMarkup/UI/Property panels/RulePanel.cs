@@ -21,7 +21,7 @@ namespace NodeMarkup.UI.Editors
 
         public RulePanel()
         {
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = NodeMarkupTool.InGameAtlas;
             backgroundSprite = "AssetEditorItemBackground";
             autoLayout = true;
             autoFitChildrenVertically = true;

@@ -18,6 +18,8 @@ namespace NodeMarkup
 {
     public class NodeMarkupTool : ToolBase
     {
+        public static UITextureAtlas InGameAtlas { get; } = TextureUtil.GetAtlas("Ingame");
+        public static UITextureAtlas InMapEditorAtlas { get; } = TextureUtil.GetAtlas("InMapEditor");
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
@@ -578,7 +580,7 @@ namespace NodeMarkup
             {
                 if (UI.Settings.DeleteWarnings)
                 {
-                    var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                    var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                     messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
                     messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, SelectNodeId);
                     messageBox.OnButton1Click = Delete;

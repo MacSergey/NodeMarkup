@@ -43,9 +43,7 @@ namespace NodeMarkup.UI.Editors
         protected Markup Markup => NodeMarkupPanel.Markup;
 
         protected UIScrollablePanel ItemsPanel { get; set; }
-        protected UIScrollbar ItemsScrollbar { get; set; }
         protected UIScrollablePanel SettingsPanel { get; set; }
-        protected UIScrollbar SettingsScrollbar { get; set; }
 
         public abstract string Name { get; }
 
@@ -54,7 +52,7 @@ namespace NodeMarkup.UI.Editors
             autoLayout = true;
             autoLayoutDirection = LayoutDirection.Horizontal;
             clipChildren = true;
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = NodeMarkupTool.InGameAtlas;
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
@@ -70,12 +68,12 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.builtinKeyNavigation = true;
             ItemsPanel.clipChildren = true;
             ItemsPanel.eventSizeChanged += ItemsPanelSizeChanged;
-            ItemsPanel.atlas = NodeMarkupPanel.InGameAtlas;
+            ItemsPanel.atlas = NodeMarkupTool.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
 
-            ItemsScrollbar = AddScrollbar(ItemsPanel);
+            UIUtils.AddScrollbar(this, ItemsPanel);
 
-            ItemsScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
+            ItemsPanel.verticalScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
         }
 
         private void ItemsPanelSizeChanged(UIComponent component, Vector2 value)
@@ -87,7 +85,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
-            ItemsPanel.width = size.x / 10 * 3 - (ItemsScrollbar.isVisible ? ItemsScrollbar.width : 0);
+            ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
         }
 
         private void AddSettingPanel()
@@ -99,13 +97,13 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
             SettingsPanel.builtinKeyNavigation = true;
             SettingsPanel.clipChildren = true;
-            SettingsPanel.atlas = NodeMarkupPanel.InGameAtlas;
+            SettingsPanel.atlas = NodeMarkupTool.InGameAtlas;
             SettingsPanel.backgroundSprite = "UnlockingItemBackground";
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
-            SettingsScrollbar = AddScrollbar(SettingsPanel);
+            UIUtils.AddScrollbar(this, SettingsPanel);
 
-            SettingsScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
+            SettingsPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
         }
         private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
         {
@@ -116,51 +114,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
-            SettingsPanel.width = size.x / 10 * 7 - (SettingsScrollbar.isVisible ? SettingsScrollbar.width : 0);
-        }
-
-        private UIScrollbar AddScrollbar(UIScrollablePanel scrollablePanel)
-        {
-            var scrollbar = AddUIComponent<UIScrollbar>();
-            scrollbar.orientation = UIOrientation.Vertical;
-            scrollbar.pivot = UIPivotPoint.TopLeft;
-            scrollbar.minValue = 0;
-            scrollbar.value = 0;
-            scrollbar.incrementAmount = 50;
-            scrollbar.autoHide = true;
-            scrollbar.width = 10;
-
-            UISlicedSprite trackSprite = scrollbar.AddUIComponent<UISlicedSprite>();
-            trackSprite.relativePosition = Vector2.zero;
-            trackSprite.autoSize = true;
-            trackSprite.anchor = UIAnchorStyle.All;
-            trackSprite.size = trackSprite.parent.size;
-            trackSprite.fillDirection = UIFillDirection.Vertical;
-            trackSprite.spriteName = "ScrollbarTrack";
-            scrollbar.trackObject = trackSprite;
-
-            UISlicedSprite thumbSprite = trackSprite.AddUIComponent<UISlicedSprite>();
-            thumbSprite.relativePosition = Vector2.zero;
-            thumbSprite.fillDirection = UIFillDirection.Vertical;
-            thumbSprite.autoSize = true;
-            thumbSprite.width = thumbSprite.parent.width;
-            thumbSprite.spriteName = "ScrollbarThumb";
-            scrollbar.thumbObject = thumbSprite;
-
-            scrollbar.eventValueChanged += (component, value) => scrollablePanel.scrollPosition = new Vector2(0, value);
-
-            eventMouseWheel += (component, eventParam) =>
-            {
-                scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
-            };
-
-            scrollablePanel.eventMouseWheel += (component, eventParam) =>
-            {
-                scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
-            };
-
-            scrollablePanel.verticalScrollbar = scrollbar;
-            return scrollbar;
+            SettingsPanel.width = size.x / 10 * 7 - (value ? SettingsPanel.verticalScrollbar.width : 0);
         }
 
         public virtual void Init(NodeMarkupPanel panel)
@@ -225,12 +179,12 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            ItemsPanel.width = size.x / 10 * 3 - (ItemsScrollbar.isVisible ? ItemsScrollbar.width : 0);
-            SettingsPanel.width = size.x / 10 * 7 - (SettingsScrollbar.isVisible ? SettingsScrollbar.width : 0);
+            ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
+            SettingsPanel.width = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
             ItemsPanel.height = size.y;
             SettingsPanel.height = size.y;
-            ItemsScrollbar.height = size.y;
-            SettingsScrollbar.height = size.y;
+            ItemsPanel.verticalScrollbar.height = size.y;
+            SettingsPanel.verticalScrollbar.height = size.y;
         }
 
         public EditableItemType AddItem(EditableObject editableObject)
@@ -254,7 +208,7 @@ namespace NodeMarkup.UI.Editors
 
             if (Settings.DeleteWarnings)
             {
-                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = string.Format(NodeMarkup.Localize.Editor_DeleteCaption, item.Description);
                 messageBox.MessageText = string.Format(NodeMarkup.Localize.Editor_DeleteMessage, item.Description, item.Object);
                 messageBox.OnButton1Click = Delete;

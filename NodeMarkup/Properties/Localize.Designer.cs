@@ -604,15 +604,47 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - &quot;What`s New&quot; message this will pop-up one time after an update and can be disabled in the Options menu.
+        ///- Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish (Please contact the mod author to assist with translation into your own language).
+        ///- End Points can now be dragged from one to another by holding Ctrl.
+        ///- Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if y [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на - Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
         ///- Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
         ///- New line style: &quot;Solid &amp; Dashed&quot;.
         ///- Lines and templates in the list now have icons that show style and colour.
         ///- Markings will be now copied when the road is copied with MoveIt (function will [остаток строки не уместился]&quot;;.
         /// </summary>
-        public static string Mod_WhatsNewMessage {
+        public static string Mod_WhatsNewMessage1_2 {
             get {
-                return ResourceManager.GetString("Mod_WhatsNewMessage", resourceCulture);
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Fix hold Alt to create fillers on Mac OS.
+        ///- Added Double Dashed stop line style.
+        ///- Added Portuguese translation..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_2_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Version {0}.
+        /// </summary>
+        public static string Mod_WhatsNewVersion {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewVersion", resourceCulture);
             }
         }
         

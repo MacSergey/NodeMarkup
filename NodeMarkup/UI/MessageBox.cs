@@ -6,21 +6,23 @@ using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public abstract class MessageBox : UIPanel
+    public abstract class MessageBoxBase : UIPanel
     {
         protected static float Width { get; } = 573;
         protected static float Height { get; } = 200;
         protected static float ButtonHeight { get; } = 47;
         protected static float Padding { get; } = 16;
+        private static float MaxContentHeight { get; } = 500;
 
         public static T ShowModal<T>()
-        where T : MessageBox
+        where T : MessageBoxBase
         {
             var uiObject = new GameObject();
             uiObject.transform.parent = UIView.GetAView().transform;
@@ -47,7 +49,7 @@ namespace NodeMarkup.UI
 
             return messageBox;
         }
-        public static void HideModal(MessageBox messageBox)
+        public static void HideModal(MessageBoxBase messageBox)
         {
             UIView.PopModal();
 
@@ -75,16 +77,13 @@ namespace NodeMarkup.UI
         }
 
         public string CaprionText { set => Caption.text = value; }
-        public string MessageText { set => Message.text = value; }
-        public float MessageScale { set => Message.textScale = value; }
-        public UIHorizontalAlignment TextAlignment { set => Message.textAlignment = value; }
+
         private UILabel Caption { get; set; }
-        private UILabel Message { get; set; }
         protected UIPanel ButtonPanel { get; private set; }
-        protected UIPanel Content { get; private set; }
+        protected UIScrollablePanel ScrollableContent { get; private set; }
         private UIDragHandle Handle { get; set; }
 
-        public MessageBox()
+        public MessageBoxBase()
         {
             isVisible = true;
             canFocus = true;
@@ -93,18 +92,15 @@ namespace NodeMarkup.UI
             height = Height;
             color = new Color32(58, 88, 104, 255);
             backgroundSprite = "MenuPanel";
-            //autoLayout = true;
-            //autoLayoutDirection = LayoutDirection.Vertical;
-            //autoFitChildrenVertically = true;
-
+            clipChildren = true;
 
             AddHandle();
             AddPanel();
-            AddMessage();
+            FillContent();
             AddButtonPanel();
             Init();
 
-            Content.eventSizeChanged += ContentSizeChanged;
+            ScrollableContent.eventSizeChanged += ContentSizeChanged;
         }
 
         protected override void OnSizeChanged()
@@ -118,19 +114,19 @@ namespace NodeMarkup.UI
             Handle = AddUIComponent<UIDragHandle>();
             Handle.size = new Vector2(Width, 42);
             Handle.relativePosition = new Vector2(0, 0);
-            Handle.target = parent;
-            Handle.eventSizeChanged += ((component, size) =>
+            //Handle.target = parent;
+            Handle.eventSizeChanged += (component, size) =>
             {
                 Caption.size = size;
                 Caption.CenterToParent();
-            });
+            };
 
             Caption = Handle.AddUIComponent<UILabel>();
             Caption.textAlignment = UIHorizontalAlignment.Center;
-            Caption.textScale = 1.3f;
+            Caption.textScale = 1.2f;
             Caption.anchor = UIAnchorStyle.Top;
 
-            Caption.eventTextChanged += ((component, text) => Caption.CenterToParent());
+            Caption.eventTextChanged += (component, text) => Caption.CenterToParent();
 
             var cancel = Handle.AddUIComponent<UIButton>();
             cancel.normalBgSprite = "buttonclose";
@@ -138,41 +134,48 @@ namespace NodeMarkup.UI
             cancel.pressedBgSprite = "buttonclosepressed";
             cancel.size = new Vector2(32, 32);
             cancel.relativePosition = new Vector2(527, 4);
-            cancel.eventClick += ((UIComponent component, UIMouseEventParameter eventParam) => Cancel());
+            cancel.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Cancel();
         }
         private void AddPanel()
         {
-            Content = AddUIComponent<UIPanel>();
-            Content.width = Width;
-            Content.autoLayoutPadding = new RectOffset((int)Padding, (int)Padding, (int)Padding/2, (int)Padding/2);
-            Content.autoLayout = true;
-            Content.autoLayoutDirection = LayoutDirection.Vertical;
-            Content.autoFitChildrenVertically = true;
-        }
+            ScrollableContent = AddUIComponent<UIScrollablePanel>();
+            ScrollableContent.width = Width;
+            ScrollableContent.autoLayout = true;
+            ScrollableContent.autoLayoutDirection = LayoutDirection.Vertical;
+            ScrollableContent.autoLayoutPadding = new RectOffset((int)Padding, (int)Padding, 0, 0);
+            ScrollableContent.clipChildren = true;
+            ScrollableContent.builtinKeyNavigation = true;
+            ScrollableContent.scrollWheelDirection = UIOrientation.Vertical;
+            ScrollableContent.maximumSize = new Vector2(Width, MaxContentHeight);
+            UIUtils.AddScrollbar(this, ScrollableContent);
 
+            ScrollableContent.eventComponentAdded += (UIComponent container, UIComponent child) =>
+            {
+                child.eventVisibilityChanged += (UIComponent component, bool value) => FitContentChildren();
+                child.eventSizeChanged += (UIComponent component, Vector2 value) => FitContentChildren();
+                child.eventPositionChanged += (UIComponent component, Vector2 value) => FitContentChildren();
+            };
+        }
+        private void FitContentChildren()
+        {
+            ScrollableContent.FitChildrenVertically();
+            ScrollableContent.width = ScrollableContent.verticalScrollbar.isVisible ? Width - ScrollableContent.verticalScrollbar.width : Width;
+        }
         private void ContentSizeChanged(UIComponent component, Vector2 value) => Init();
         private void Init()
         {
-            height = Handle.height + Content.height + ButtonPanel.height + Padding;
-            Content.relativePosition = new Vector2(0, Handle.height);
-            ButtonPanel.relativePosition = new Vector2(0, Handle.height + Content.height + Padding);
-        }
+            height = Handle.height + ScrollableContent.height + ButtonPanel.height + Padding;
+            ScrollableContent.relativePosition = new Vector2(0, Handle.height);
+            ButtonPanel.relativePosition = new Vector2(0, Handle.height + ScrollableContent.height + Padding);
+            ScrollableContent.verticalScrollbar.relativePosition = ScrollableContent.relativePosition + new Vector3(ScrollableContent.width, 0);
+            ScrollableContent.verticalScrollbar.height = ScrollableContent.height;
 
-        private void AddMessage()
-        {
-            Message = Content.AddUIComponent<UILabel>();
-            Message.textAlignment = UIHorizontalAlignment.Center;
-            Message.verticalAlignment = UIVerticalAlignment.Middle;
-            Message.textScale = 1.3f;
-            Message.wordWrap = true;
-            Message.autoHeight = true;
-            Message.minimumSize = new Vector2(Width - 2* Padding, 78);
-            Message.size = new Vector2(Width - 2 * Padding, 78);
-            //Message.padding = new RectOffset((int)Padding, (int)Padding, (int)Padding, (int)Padding);
-            Message.relativePosition = new Vector3(17, 7);
-            Message.anchor = UIAnchorStyle.CenterHorizontal | UIAnchorStyle.CenterVertical;
-            Message.eventTextChanged += ((UIComponent component, string value) => Message.PerformLayout());
+            foreach (var item in ScrollableContent.components)
+            {
+                item.width = ScrollableContent.width - 2 * Padding;
+            }
         }
+        protected virtual void FillContent() { }
         private void AddButtonPanel()
         {
             ButtonPanel = AddUIComponent<UIPanel>();
@@ -205,14 +208,41 @@ namespace NodeMarkup.UI
                 else if (p.keycode == KeyCode.Return)
                 {
                     p.Use();
-
                 }
             }
         }
 
         protected virtual void Cancel() => HideModal(this);
     }
-    public class OneButtonMessageBox : MessageBox
+    public abstract class SimpleMessageBox : MessageBoxBase
+    {
+        private UILabel Message { get; set; }
+
+        public string MessageText { set => Message.text = value; }
+        public float MessageScale { set => Message.textScale = value; }
+        public UIHorizontalAlignment TextAlignment { set => Message.textAlignment = value; }
+
+        protected override void FillContent()
+        {
+            AddMessage();
+        }
+        private void AddMessage()
+        {
+            Message = ScrollableContent.AddUIComponent<UILabel>();
+            Message.textAlignment = UIHorizontalAlignment.Center;
+            Message.verticalAlignment = UIVerticalAlignment.Middle;
+            Message.textScale = 1.1f;
+            Message.wordWrap = true;
+            Message.autoHeight = true;
+            Message.minimumSize = new Vector2(Width - 2 * Padding, 78);
+            Message.size = new Vector2(Width - 2 * Padding, 78);
+            Message.relativePosition = new Vector3(17, 7);
+            Message.anchor = UIAnchorStyle.CenterHorizontal | UIAnchorStyle.CenterVertical;
+            Message.eventTextChanged += (UIComponent component, string value) => Message.PerformLayout();
+        }
+    }
+
+    public class OneButtonMessageBox : SimpleMessageBox
     {
         private UIButton Button { get; set; }
         public Func<bool> OnButtonClick { get; set; }
@@ -228,7 +258,7 @@ namespace NodeMarkup.UI
                 Cancel();
         }
     }
-    public class TwoButtonMessageBox : MessageBox
+    public class TwoButtonMessageBox : SimpleMessageBox
     {
         private UIButton Button1 { get; set; }
         private UIButton Button2 { get; set; }
@@ -252,7 +282,7 @@ namespace NodeMarkup.UI
                 Cancel();
         }
     }
-    public class ThreeButtonMessageBox : MessageBox
+    public class ThreeButtonMessageBox : SimpleMessageBox
     {
         private UIButton Button1 { get; set; }
         private UIButton Button2 { get; set; }
@@ -301,7 +331,7 @@ namespace NodeMarkup.UI
             Button2Text = NodeMarkup.Localize.MessageBox_No;
         }
     }
-    public class ImportMessageBox : MessageBox
+    public class ImportMessageBox : SimpleMessageBox
     {
         private static Regex Regex { get; } = new Regex(@"MarkingRecovery\.(?<name>.+)\.(?<date>\d+)");
 
@@ -320,9 +350,9 @@ namespace NodeMarkup.UI
         }
         private void AddFileList()
         {
-            DropDown = Content.AddUIComponent<FileDropDown>();
+            DropDown = ScrollableContent.AddUIComponent<FileDropDown>();
 
-            DropDown.atlas = NodeMarkupPanel.InGameAtlas;
+            DropDown.atlas = NodeMarkupTool.InGameAtlas;
             DropDown.height = 38;
             DropDown.width = Width - 2 * Padding;
             DropDown.listBackground = "OptionsDropboxListbox";
@@ -379,7 +409,7 @@ namespace NodeMarkup.UI
             var resultMessageBox = ShowModal<OkMessageBox>();
             resultMessageBox.CaprionText = NodeMarkup.Localize.Settings_ImportMarkingCaption;
             resultMessageBox.MessageText = result ? NodeMarkup.Localize.Settings_ImportMarkingMessageSuccess : NodeMarkup.Localize.Settings_ImportMarkingMessageFailed;
-            
+
             Cancel();
         }
         protected virtual void CancelClick()
@@ -388,5 +418,103 @@ namespace NodeMarkup.UI
         }
 
         class FileDropDown : CustomUIDropDown<string> { }
+    }
+
+    public class WhatsNewMessageBox : MessageBoxBase
+    {
+        private UIButton Button { get; set; }
+        public Func<bool> OnButtonClick { get; set; }
+
+        public WhatsNewMessageBox()
+        {
+            Button = AddButton(1, 1, ButtonClick);
+            Button.text = NodeMarkup.Localize.MessageBox_OK;
+        }
+        protected virtual void ButtonClick()
+        {
+            if (OnButtonClick?.Invoke() != false)
+                Cancel();
+        }
+
+        public void Init(Dictionary<string, string> messages)
+        {
+            var first = default(VersionMessage);
+            foreach (var message in messages)
+            {
+                var versionMessage = ScrollableContent.AddUIComponent<VersionMessage>();
+                versionMessage.width = ScrollableContent.width;
+                versionMessage.Init(message.Key, message.Value);
+
+                if (first == null)
+                    first = versionMessage;
+            }
+            first.IsMinimize = false;
+        }
+
+        public class VersionMessage : UIPanel
+        {
+            public bool IsMinimize
+            {
+                get => !Message.isVisible;
+                set => Message.isVisible = !value;
+            }
+            UIButton Button { get; set; }
+            UILabel Message { get; set; }
+            string Label { get; set; }
+            public VersionMessage()
+            {
+                autoLayout = true;
+                autoLayoutDirection = LayoutDirection.Vertical;
+                autoFitChildrenVertically = true;
+                autoLayoutPadding = new RectOffset(0, 0, (int)Padding/2, (int)Padding/2);
+
+                AddButton();
+                AddText();
+            }
+
+            public void AddButton()
+            {
+                Button = AddUIComponent<UIButton>();
+                Button.height = 20;
+                Button.horizontalAlignment = UIHorizontalAlignment.Left;
+                Button.color = Color.white;
+                Button.textHorizontalAlignment = UIHorizontalAlignment.Left;
+                Button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => IsMinimize = !IsMinimize;
+            }
+
+            public void AddText()
+            {
+                Message = AddUIComponent<UILabel>();
+                Message.textAlignment = UIHorizontalAlignment.Left;
+                Message.verticalAlignment = UIVerticalAlignment.Middle;
+                Message.textScale = 0.8f;
+                Message.wordWrap = true;
+                Message.autoHeight = true;
+                Message.size = new Vector2(width - 2 * Padding, 0);
+                Message.relativePosition = new Vector3(17, 7);
+                Message.anchor = UIAnchorStyle.CenterHorizontal | UIAnchorStyle.CenterVertical;
+                Message.eventTextChanged += (UIComponent component, string value) => Message.PerformLayout();
+                Message.eventVisibilityChanged += (UIComponent component, bool value) => SetLabel();
+            }
+
+            public void Init(string version, string message)
+            {
+                Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, version);
+                Message.text = message;
+                IsMinimize = true;
+
+                SetLabel();
+            }
+            private void SetLabel() => Button.text = $"{(IsMinimize ? "►" : "▼")} {Label}";
+
+            protected override void OnSizeChanged()
+            {
+                base.OnSizeChanged();
+                if (Button != null)
+                    Button.width = width;
+                if (Message != null)
+                    Message.width = width;
+            }
+        }
     }
 }

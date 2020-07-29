@@ -385,7 +385,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>显示更新提示框</value>
   </data>
-  <data name="Mod_WhatsNewMessage" xml:space="preserve">
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value></value>
   </data>
   <data name="Settings_Import" xml:space="preserve">

@@ -14,8 +14,6 @@ namespace NodeMarkup.UI
     public class NodeMarkupPanel : UIPanel
     {
         public static NodeMarkupPanel Instance { get; private set; }
-        public static UITextureAtlas InGameAtlas { get; } = TextureUtil.GetAtlas("Ingame");
-        public static UITextureAtlas InMapEditorAtlas { get; } = TextureUtil.GetAtlas("InMapEditor");
 
         public Markup Markup { get; private set; }
 
@@ -48,7 +46,7 @@ namespace NodeMarkup.UI
         }
         public void Init()
         {
-            atlas = InGameAtlas;
+            atlas = NodeMarkupTool.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             absolutePosition = new Vector3(100, 100);
             name = "NodeMarkupPanel";

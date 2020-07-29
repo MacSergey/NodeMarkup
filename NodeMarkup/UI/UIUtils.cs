@@ -115,5 +115,48 @@ namespace NodeMarkup.UI
             None = 0,
             NameContains = 1
         }
+
+        public static void AddScrollbar(UIComponent parent, UIScrollablePanel scrollablePanel)
+        {
+            var scrollbar = parent.AddUIComponent<UIScrollbar>();
+            scrollbar.orientation = UIOrientation.Vertical;
+            scrollbar.pivot = UIPivotPoint.TopLeft;
+            scrollbar.minValue = 0;
+            scrollbar.value = 0;
+            scrollbar.incrementAmount = 50;
+            scrollbar.autoHide = true;
+            scrollbar.width = 10;
+
+            UISlicedSprite trackSprite = scrollbar.AddUIComponent<UISlicedSprite>();
+            trackSprite.relativePosition = Vector2.zero;
+            trackSprite.autoSize = true;
+            trackSprite.anchor = UIAnchorStyle.All;
+            trackSprite.size = trackSprite.parent.size;
+            trackSprite.fillDirection = UIFillDirection.Vertical;
+            trackSprite.spriteName = "ScrollbarTrack";
+            scrollbar.trackObject = trackSprite;
+
+            UISlicedSprite thumbSprite = trackSprite.AddUIComponent<UISlicedSprite>();
+            thumbSprite.relativePosition = Vector2.zero;
+            thumbSprite.fillDirection = UIFillDirection.Vertical;
+            thumbSprite.autoSize = true;
+            thumbSprite.width = thumbSprite.parent.width;
+            thumbSprite.spriteName = "ScrollbarThumb";
+            scrollbar.thumbObject = thumbSprite;
+
+            scrollbar.eventValueChanged += (component, value) => scrollablePanel.scrollPosition = new Vector2(0, value);
+
+            parent.eventMouseWheel += (component, eventParam) =>
+            {
+                scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
+            };
+
+            scrollablePanel.eventMouseWheel += (component, eventParam) =>
+            {
+                scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
+            };
+
+            scrollablePanel.verticalScrollbar = scrollbar;
+        }
     }
 }

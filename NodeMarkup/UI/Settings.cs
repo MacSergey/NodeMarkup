@@ -17,12 +17,13 @@ namespace NodeMarkup.UI
     {
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
-        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, string.Empty, true);
+        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, "1.0"/*Mod.Version*/, true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
+        public static SavedBool ShowOnlyImportantWhatsNew { get; } = new SavedBool(nameof(ShowOnlyImportantWhatsNew), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
@@ -121,7 +122,7 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Settings_DeleteMarkingCaption;
                 messageBox.MessageText = Localize.Settings_DeleteMarkingMessage;
                 messageBox.OnButton1Click = Сonfirmed;
@@ -142,7 +143,7 @@ namespace NodeMarkup.UI
 
                 if (result)
                 {
-                    var messageBox = MessageBox.ShowModal<TwoButtonMessageBox>();
+                    var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                     messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
                     messageBox.MessageText = Localize.Settings_DumpMarkingMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_DumpMarkingButton1;
@@ -157,7 +158,7 @@ namespace NodeMarkup.UI
                 }
                 else
                 {
-                    var messageBox = MessageBox.ShowModal<OkMessageBox>();
+                    var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
                     messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
                     messageBox.MessageText = Localize.Settings_DumpMarkingMessageFailed;
                 }
@@ -169,7 +170,7 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                var messageBox = MessageBox.ShowModal<ImportMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<ImportMessageBox>();
                 messageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
                 messageBox.MessageText = Localize.Settings_ImportMarkingMessage;
 

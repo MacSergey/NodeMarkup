@@ -20,6 +20,14 @@ namespace NodeMarkup
 
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
 
+        public static List<string> Versions { get; } = new List<string>
+        {
+            "1.2.1",
+            "1.2",
+            "1.1",
+            "1.0"
+        };
+
 #if DEBUG
         public string Name { get; } = $"{StaticName} {Version} [BETA]";
         public string Description => Localize.Mod_DescriptionBeta;
@@ -85,19 +93,41 @@ namespace NodeMarkup
             if (!UI.Settings.ShowWhatsNew || VersionComparer.Instance.Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
                 return;
 
-            var messageBox = MessageBox.ShowModal<OkMessageBox>();
+            var messages = GetWhatsNewMessages();
+            if (!messages.Any())
+                return;
+
+            var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
             messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
-            messageBox.MessageScale = 1f;
-            messageBox.TextAlignment = UIHorizontalAlignment.Left;
-            messageBox.MessageText = Localize.Mod_WhatsNewMessage;
             messageBox.OnButtonClick = Confirm;
+            messageBox.Init(messages);
 
             bool Confirm()
             {
-                UI.Settings.WhatsNewVersion.value = Version;
+                //UI.Settings.WhatsNewVersion.value = Version;
                 return true;
             }
         }
+        private Dictionary<string, string> GetWhatsNewMessages()
+        {
+            var messages = new Dictionary<string, string>(Versions.Count);
+
+            foreach (var version in Versions)
+            {
+                if (VersionComparer.Instance.Compare(version, UI.Settings.WhatsNewVersion) <= 0)
+                    break;
+
+                if (UI.Settings.ShowOnlyImportantWhatsNew && !IsImportantVersion(version))
+                    continue;
+
+                if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
+                    messages[version] = message;
+            }
+
+            return messages;
+        }
+        private string GetWhatsNew(string version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.Replace('.', '_')}", Localize.Culture);
+        private bool IsImportantVersion(string version) => version.Split('.').Length <= 2;
     }
     public class VersionComparer : Comparer<string>
     {

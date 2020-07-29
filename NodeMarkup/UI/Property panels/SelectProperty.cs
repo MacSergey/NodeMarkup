@@ -50,7 +50,7 @@ namespace NodeMarkup.UI.Editors
         {
             Label = Control.AddUIComponent<UILabel>();
             Label.text = NodeMarkup.Localize.SelectPanel_NotSet;
-            Label.atlas = NodeMarkupPanel.InGameAtlas;
+            Label.atlas = NodeMarkupTool.InGameAtlas;
             Label.backgroundSprite = "TextFieldPanel";
             Label.isInteractive = true;
             Label.enabled = true;
@@ -66,7 +66,7 @@ namespace NodeMarkup.UI.Editors
         private void AddButton()
         {
             Button = Label.AddUIComponent<UIButton>();
-            Button.atlas = NodeMarkupPanel.InGameAtlas;
+            Button.atlas = NodeMarkupTool.InGameAtlas;
             Button.text = string.Empty;
             Button.size = Label.size;
             Button.relativePosition = new Vector3(0f, 0f);

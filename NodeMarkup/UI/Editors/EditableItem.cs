@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
             if (ShowDelete)
                 AddDeleteButton();
 
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = NodeMarkupTool.InGameAtlas;
 
             normalBgSprite = "ButtonSmall";
             disabledBgSprite = "ButtonSmallPressed";
@@ -86,7 +86,7 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = NodeMarkupPanel.InGameAtlas;
+            DeleteButton.atlas = NodeMarkupTool.InGameAtlas;
             DeleteButton.normalBgSprite = "buttonclose";
             DeleteButton.hoveredBgSprite = "buttonclosehover";
             DeleteButton.pressedBgSprite = "buttonclosepressed";
@@ -136,14 +136,14 @@ namespace NodeMarkup.UI.Editors
         public Color32 BorderColor { set => color = value; }
         public ColorIcon()
         {
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = NodeMarkupTool.InGameAtlas;
             normalBgSprite = "PieChartWhiteBg";
             disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
             color = Color.white;
 
             InnerCircule = AddUIComponent<UIButton>();
-            InnerCircule.atlas = NodeMarkupPanel.InGameAtlas;
+            InnerCircule.atlas = NodeMarkupTool.InGameAtlas;
             InnerCircule.normalBgSprite = "PieChartWhiteBg";
             InnerCircule.normalFgSprite = "PieChartWhiteFg";
             InnerCircule.disabledBgSprite = "PieChartWhiteBg";

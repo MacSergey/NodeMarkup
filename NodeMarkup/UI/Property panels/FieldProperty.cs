@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
         public FieldPropertyPanel()
         {
             Field = Control.AddUIComponent<UITextField>();
-            Field.atlas = NodeMarkupPanel.InGameAtlas;
+            Field.atlas = NodeMarkupTool.InGameAtlas;
             Field.normalBgSprite = "TextFieldPanel";
             Field.hoveredBgSprite = "TextFieldPanelHovered";
             Field.focusedBgSprite = "TextFieldPanel";
