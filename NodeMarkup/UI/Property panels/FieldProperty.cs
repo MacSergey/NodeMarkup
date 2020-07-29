@@ -91,7 +91,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (CanUseWheel && UseWheel)
             {
-                var mode = Event.current.shift ? WheelMode.High : Event.current.control ? WheelMode.Low : WheelMode.Normal;
+                var mode = NodeMarkupTool.ShiftIsPressed ? WheelMode.High : NodeMarkupTool.CtrlIsPressed ? WheelMode.Low : WheelMode.Normal;
                 if (eventParam.wheelDelta < 0)
                     Value = Increment(Value, WheelStep, mode);
                 else

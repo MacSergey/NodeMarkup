@@ -104,7 +104,7 @@ namespace NodeMarkup
 
             bool Confirm()
             {
-                //UI.Settings.WhatsNewVersion.value = Version;
+                UI.Settings.WhatsNewVersion.value = Version;
                 return true;
             }
         }

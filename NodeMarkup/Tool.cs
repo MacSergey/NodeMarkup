@@ -25,6 +25,8 @@ namespace NodeMarkup
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
         public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+        public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        public static bool CtrlIsPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
@@ -384,7 +386,7 @@ namespace NodeMarkup
         }
         private void OnMouseDown(Event e)
         {
-            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && IsHoverPoint && e.control)
+            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && IsHoverPoint && CtrlIsPressed)
             {
                 ToolMode = Mode.DragPoint;
                 DragPoint = HoverPoint;
