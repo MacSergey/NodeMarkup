@@ -146,13 +146,12 @@ namespace NodeMarkup.UI.Editors
             else
                 Delete();
 
-            RefreshItem();
-
             bool Delete()
             {
                 EditObject.RemoveRule(rulePanel.Rule);
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
+                RefreshItem();
                 return true;
             }
         }
