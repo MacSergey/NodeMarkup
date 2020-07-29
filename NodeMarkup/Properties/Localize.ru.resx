@@ -530,4 +530,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
     <value>Тест</value>
   </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Двойная стоп линия</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Двойная пунктирная стоп линия</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>ДПС</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>ДСС</value>
+  </data>
 </root>

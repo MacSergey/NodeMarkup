@@ -60,9 +60,9 @@ namespace NodeMarkup.Manager
         {
             switch (type & StyleType.GroupMask)
             {
-                case StyleType.RegularLine when LineStyle.GetDefault((LineStyle.RegularLineType)(int)type) is T tStyle:
+                case StyleType.RegularLine when RegularLineStyle.GetDefault((RegularLineStyle.RegularLineType)(int)type) is T tStyle:
                     return tStyle;
-                case StyleType.StopLine when LineStyle.GetDefault((LineStyle.StopLineType)(int)type) is T tStyle:
+                case StyleType.StopLine when StopLineStyle.GetDefault((StopLineStyle.StopLineType)(int)type) is T tStyle:
                     return tStyle;
                 case StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle:
                     return tStyle;
@@ -81,6 +81,8 @@ namespace NodeMarkup.Manager
                 case StyleType.LineSolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
                 case StyleType.StopLineSolid: return Localize.LineStyle_StopShort;
                 case StyleType.StopLineDashed: return Localize.LineStyle_StopDashedShort;
+                case StyleType.StopLineDoubleSolid: return Localize.LineStyle_StopDoubleShort;
+                case StyleType.StopLineDoubleDashed: return Localize.LineStyle_StopDoubleDashedShort;
                 case StyleType.FillerStripe: return Localize.FillerStyle_StripeShort;
                 case StyleType.FillerGrid: return Localize.FillerStyle_GridShort;
                 case StyleType.FillerSolid: return Localize.FillerStyle_SolidShort;
@@ -220,6 +222,12 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
             StopLineDashed,
+
+            [Description(nameof(Localize.LineStyle_StopDouble))]
+            StopLineDoubleSolid,
+
+            [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
+            StopLineDoubleDashed,
 
 
             Filler = 0x400,

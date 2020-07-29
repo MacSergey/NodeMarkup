@@ -13,52 +13,38 @@ using UnityEngine;
 namespace NodeMarkup.Manager
 {
     public interface ILineStyle : IWidthStyle, IColorStyle { }
+    public interface IRegularLine : ILineStyle { }
+    public interface IStopLine : ILineStyle { }
+    public interface IDashedLine : ILineStyle
+    {
+        float DashLength { get; set; }
+        float SpaceLength { get; set; }
+    }
+    public interface IDoubleLine : ILineStyle
+    {
+        float Offset { get; set; }
+    }
+    public interface IAsymLine : ILineStyle
+    {
+        bool Invert { get; set; }
+    }
+
     public abstract class LineStyle : Style, ILineStyle
     {
         public static float DefaultDashLength { get; } = 1.5f;
         public static float DefaultSpaceLength { get; } = 1.5f;
-        public static float DefaultOffser { get; } = 0.15f;
-        public static float DefaultStopWidth { get; } = 0.3f;
+        public static float DefaultOffset { get; } = 0.15f;
 
         public static float AngleDelta { get; } = 5f;
         public static float MaxLength { get; } = 10f;
         public static float MinLength { get; } = 1f;
-
-        public static SolidLineStyle DefaultSolid => new SolidLineStyle(DefaultColor, DefaultWidth);
-        public static DashedLineStyle DefaultDashed => new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength);
-        public static DoubleSolidLineStyle DefaultDoubleSolid => new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffser);
-        public static DoubleDashedLineStyle DefaultDoubleDashed => new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser);
-        public static SolidAndDashedLineStyle DefaultSolidAndDashed => new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffser, false);
-        public static SolidStopLineStyle DefaultSolidStop => new SolidStopLineStyle(DefaultColor, DefaultStopWidth);
-        public static DashedStopLineStyle DefaultDashedStop => new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength);
-
-        public static LineStyle GetDefault(RegularLineType type)
-        {
-            switch (type)
-            {
-                case RegularLineType.Solid: return DefaultSolid;
-                case RegularLineType.Dashed: return DefaultDashed;
-                case RegularLineType.DoubleSolid: return DefaultDoubleSolid;
-                case RegularLineType.DoubleDashed: return DefaultDoubleDashed;
-                case RegularLineType.SolidAndDashed: return DefaultSolidAndDashed;
-                default: return null;
-            }
-        }
-        public static LineStyle GetDefault(StopLineType type)
-        {
-            switch (type)
-            {
-                case StopLineType.Solid: return DefaultSolidStop;
-                case StopLineType.Dashed: return DefaultDashedStop;
-                default: return null;
-            }
-        }
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
+
         protected static UIComponent AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
@@ -110,33 +96,6 @@ namespace NodeMarkup.Manager
             invertProperty.OnValueChanged += (bool value) => asymStyle.Invert = value;
             return invertProperty;
         }
-
-        public enum RegularLineType
-        {
-            [Description(nameof(Localize.LineStyle_Solid))]
-            Solid = StyleType.LineSolid,
-
-            [Description(nameof(Localize.LineStyle_Dashed))]
-            Dashed = StyleType.LineDashed,
-
-            [Description(nameof(Localize.LineStyle_DoubleSolid))]
-            DoubleSolid = StyleType.LineDoubleSolid,
-
-            [Description(nameof(Localize.LineStyle_DoubleDashed))]
-            DoubleDashed = StyleType.LineDoubleDashed,
-
-            [Description(nameof(Localize.LineStyle_SolidAndDashed))]
-            SolidAndDashed = StyleType.LineSolidAndDashed,
-        }
-        public enum StopLineType
-        {
-            [Description(nameof(Localize.LineStyle_Stop))]
-            Solid = StyleType.StopLineSolid,
-
-            [Description(nameof(Localize.LineStyle_Stop))]
-            Dashed = StyleType.StopLineDashed,
-        }
-        public class SpecialLineAttribute : Attribute { }
 
         protected IEnumerable<MarkupStyleDash> CalculateSolid(Bezier3 trajectory, int depth, Func<Bezier3, IEnumerable<MarkupStyleDash>> calculateDashes)
         {
@@ -251,6 +210,77 @@ namespace NodeMarkup.Manager
 
             var dash = new MarkupStyleDash(position, angle, direction.magnitude, Width, Color);
             return dash;
+        }
+    }
+
+    public abstract class RegularLineStyle : LineStyle
+    {
+        static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
+        {
+            {RegularLineType.Solid, new SolidLineStyle(DefaultColor, DefaultWidth)},
+            {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
+            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffset)},
+            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
+            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset, false)}
+        };
+        public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style : null;
+
+        public RegularLineStyle(Color32 color, float width) : base(color, width) { }
+
+        public override LineStyle CopyLineStyle() => CopyRegularLineStyle();
+        public abstract RegularLineStyle CopyRegularLineStyle();
+
+        public enum RegularLineType
+        {
+            [Description(nameof(Localize.LineStyle_Solid))]
+            Solid = StyleType.LineSolid,
+
+            [Description(nameof(Localize.LineStyle_Dashed))]
+            Dashed = StyleType.LineDashed,
+
+            [Description(nameof(Localize.LineStyle_DoubleSolid))]
+            DoubleSolid = StyleType.LineDoubleSolid,
+
+            [Description(nameof(Localize.LineStyle_DoubleDashed))]
+            DoubleDashed = StyleType.LineDoubleDashed,
+
+            [Description(nameof(Localize.LineStyle_SolidAndDashed))]
+            SolidAndDashed = StyleType.LineSolidAndDashed,
+        }
+    }
+    public abstract class StopLineStyle : LineStyle
+    {
+        public static float DefaultStopWidth { get; } = 0.3f;
+        public static float DefaultStopOffset { get; } = 0.3f;
+
+        static Dictionary<StopLineType, StopLineStyle> Defaults { get; } = new Dictionary<StopLineType, StopLineStyle>()
+        {
+            {StopLineType.Solid, new SolidStopLineStyle(DefaultColor, DefaultStopWidth)},
+            {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength)},
+            {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultStopOffset)},
+            {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+        };
+
+        public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style : null;
+
+        public StopLineStyle(Color32 color, float width) : base(color, width) { }
+
+        public override LineStyle CopyLineStyle() => CopyStopLineStyle();
+        public abstract StopLineStyle CopyStopLineStyle();
+
+        public enum StopLineType
+        {
+            [Description(nameof(Localize.LineStyle_Stop))]
+            Solid = StyleType.StopLineSolid,
+
+            [Description(nameof(Localize.LineStyle_Stop))]
+            Dashed = StyleType.StopLineDashed,
+
+            [Description(nameof(Localize.LineStyle_StopDouble))]
+            DoubleSolid = StyleType.StopLineDoubleSolid,
+
+            [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
+            DoubleDashed = StyleType.StopLineDoubleDashed,
         }
     }
 }

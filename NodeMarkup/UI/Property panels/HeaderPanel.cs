@@ -46,7 +46,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class StyleHeaderPanel : HeaderPanel
     {
-        private static StyleTemplate EmptyTemplate { get; set; } = new StyleTemplate(string.Empty, LineStyle.DefaultSolid);
+        private static StyleTemplate EmptyTemplate { get; set; } = new StyleTemplate(string.Empty, RegularLineStyle.GetDefault(RegularLineStyle.RegularLineType.Dashed));
 
         public event Action OnSaveTemplate;
         public event Action<StyleTemplate> OnSelectTemplate;

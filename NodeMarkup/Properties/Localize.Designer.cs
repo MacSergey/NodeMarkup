@@ -541,6 +541,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Double stop line.
+        /// </summary>
+        public static string LineStyle_StopDouble {
+            get {
+                return ResourceManager.GetString("LineStyle_StopDouble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Double dashed stop line.
+        /// </summary>
+        public static string LineStyle_StopDoubleDashed {
+            get {
+                return ResourceManager.GetString("LineStyle_StopDoubleDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на DDS.
+        /// </summary>
+        public static string LineStyle_StopDoubleDashedShort {
+            get {
+                return ResourceManager.GetString("LineStyle_StopDoubleDashedShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на DSS.
+        /// </summary>
+        public static string LineStyle_StopDoubleShort {
+            get {
+                return ResourceManager.GetString("LineStyle_StopDoubleShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на SL.
         /// </summary>
         public static string LineStyle_StopShort {

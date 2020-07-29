@@ -530,4 +530,16 @@ Hold Alt to create a filler</value>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
     <value>Test</value>
   </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Double stop line</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Double dashed stop line</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>DSS</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>DDS</value>
+  </data>
 </root>
