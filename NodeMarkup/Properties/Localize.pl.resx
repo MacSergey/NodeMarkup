@@ -488,4 +488,31 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>W</value>
   </data>
+  
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Wersja {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Powiadomienia</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Powiadamiaj tylko o ważnych aktualizacjach</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Dodaj nowe wypełnienie</value>
+  </data>
+  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Podwójna linia zatrzymania</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Podwójna przerywana linia zatrzymania</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>PLZ</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>PPLZ</value>
+  </data>
 </root>

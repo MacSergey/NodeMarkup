@@ -489,4 +489,23 @@ Altキー押下で塗り潰しを開始</value>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>S</value>
   </data>
+  
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>通知の設定</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>主要なアップデートのみ通知</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>新しい塗り潰しを追加</value>
+  </data>
+  
+  
+  
+  
+  
 </root>

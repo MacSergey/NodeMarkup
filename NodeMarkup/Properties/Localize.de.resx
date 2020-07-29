@@ -483,9 +483,53 @@ Alt halten um eine Füllung zu erstellen</value>
     <value>Standard</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Durchgezogen</value>
+    <value>Vollständig gefüllt</value>
   </data>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>D</value>
+    <value>VG</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Fix Alt halten um Füllungen zu erstellen unter Mac OS.
+- Doppelte gestrichelte Haltelinie hinzugefügt.
+- Portugiesische Übersetzung hinzugefügt.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>- "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.
+- Übersetzungen hinzugefügt:  Tschechisch, Niederländisch, Französisch, Deutsch, Japanisch, Polnisch, Russisch und Spanisch (Bitte den Mod-Autor kontaktieren, wenn du bei der Übersetzung in deine Sprache helfen möchtest).
+- Endpunkte können nun von einem zum anderen gezogen werden, wenn man Strg hält.
+- Backups - In den Einstellungen können alle gesetzten Markierungen einer Map als Backup gespeichert und später wieder importiert werden. Dies wird benötigt, wenn du den Mod deaktivieren willst, den Spielstand dann nochmal speichern möchtest und nach der erneuten Aktivierung des Mods die Markierungen wieder herstellen möchtest.
+- Es gibt nun einen Warnhinweis wenn etwas gelöscht werden soll. Dies gilt für Linien, Regeln und Vorlagen. Die Warnung kann in den Einstellungen deaktiviert werden.
+- Neues Tastenkürzel zum Hinzufügen neuer Regeln eingestellt - Shift+Ctrl+A (änderbar).
+- Schnell-Regeln-Einstellungen: Nach dem Hinzufügen einer neuen Regel öffnet sich die Mod-Oberfläche zum Auswählen des Start- und Endpunktes automatisch. "Von" und "Zu" muss nicht mehr zusätzlich angeklickt werden. Das kann in den Einstellungen deaktiviert werden.
+- Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
+- Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
+- Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
+  </data>
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Benachrichtigungen</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Benachrichtigungen nur bei Haupt-Versions-Updates</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Neue Füllung hinzufügen</value>
+  </data>
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Doppelte Haltelinie</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Gestrichelte doppelte Haltelinie</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>DHL</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>GDHL</value>
   </data>
 </root>

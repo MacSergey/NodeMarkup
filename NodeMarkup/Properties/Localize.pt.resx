@@ -385,7 +385,17 @@ Prima Alt para criar um preenchimento</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar as novidades</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>- Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
+- Adicionada Linha de Paragem. Agora é possível conectar dois pontos da mesma estrada para criar uma linha de paragem. 2 estilos disponíveis: "Sólida" e "Tracejada".
+- Adicionado estilo de linha: "Sólida &amp; Tracejada".
+- Adicionado icons que mostram o estilo e a cor.
+- Marcações são agora copiadas ao copiar as estradas com MoveIt (funcionalidade só estará disponível aquando o MoveIt for actualizado).
+- Adicionada opção para copiar e colar cor das linhas.
+- Melhorar uma estrada para um diferente com o mesmo número de vias agora preserva as marcações.
+- O segmento de uma linha agora é realçado quando paira com o rato no painel de edição daquela regra.
+- Adicionada tradução para Chinês Simplificado.</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importar</value>
   </data>
@@ -488,4 +498,29 @@ Prima Alt para criar um preenchimento</value>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>S</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Corrigido pressionar Alt para criar preenchimentos em Mac OS.
+- Adicionado estilo de Linha Dupla de Paragem Tracejada.
+- Adicionada tradução para Português.</value>
+  </data>
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Versão {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Notificações</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Notificar apenas sobre actualizações principais</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Adicionar novo preenchimento</value>
+  </data>
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>Teste</value>
+  </data>
+  
+  
+  
+  
 </root>

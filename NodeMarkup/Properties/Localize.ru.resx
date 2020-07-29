@@ -514,9 +514,9 @@ Shift X10, Ctrl X0.1</value>
     <value>Версия {0}</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Исправлено зажатие Alt для создания заполнителя на Mac OS.
-- Добавлен стиль стоп линии "Двойная пунктирная".
-- Добавлен перевод на Португальский.</value>
+    <value>- Исправлено зажатие клавиш Alt, Ctrl и Shift Mac OS и Linux.
+- Добавлены стили стоп линии "Двойная сплошная" и "Двойная пунктирная".
+- Добавлены Итальянский и Португальский переводы.</value>
   </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Уведомления</value>
@@ -525,7 +525,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Уведомления только о важных обновлениях</value>
   </data>
   <data name="Settings_AddNewFiller" xml:space="preserve">
-    <value>Создать  заполнитель</value>
+    <value>Создать заполнитель</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
     <value>Тест</value>
