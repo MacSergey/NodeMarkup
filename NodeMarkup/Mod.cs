@@ -117,7 +117,7 @@ namespace NodeMarkup
                 if (VersionComparer.Instance.Compare(version, UI.Settings.WhatsNewVersion) <= 0)
                     break;
 
-                if (UI.Settings.ShowOnlyImportantWhatsNew && !IsImportantVersion(version))
+                if (UI.Settings.ShowOnlyMajor && !IsImportantVersion(version))
                     continue;
 
                 if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))

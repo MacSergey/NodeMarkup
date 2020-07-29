@@ -518,4 +518,10 @@ Hold Alt to create a filler</value>
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Notification only about major updates</value>
+  </data>
 </root>

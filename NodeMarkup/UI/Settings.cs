@@ -23,7 +23,7 @@ namespace NodeMarkup.UI
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
-        public static SavedBool ShowOnlyImportantWhatsNew { get; } = new SavedBool(nameof(ShowOnlyImportantWhatsNew), SettingsFile, false, true);
+        public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
 
         static Settings()
@@ -48,6 +48,7 @@ namespace NodeMarkup.UI
             keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
         }
+
         private static void AddGeneral(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_General) as UIHelper;
@@ -56,7 +57,6 @@ namespace NodeMarkup.UI
             AddShowToolTipsSetting(group);
             AddDeleteRequest(group);
             AddQuickRuleSetup(group);
-            AddShowWhatsNew(group);
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -98,12 +98,27 @@ namespace NodeMarkup.UI
 
             void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetup.value = request;
         }
+
+        private static void AddNotifications(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
+
+            AddShowWhatsNew(group);
+            AddShowOnlyMajor(group);
+        }
         private static void AddShowWhatsNew(UIHelper group)
         {
             var showWhatsNewCheckBox = group.AddCheckbox(Localize.Settings_ShowWhatsNew, ShowWhatsNew, OnShowWhatsNewChanged) as UICheckBox;
 
             void OnShowWhatsNewChanged(bool request) => ShowWhatsNew.value = request;
         }
+        private static void AddShowOnlyMajor(UIHelper group)
+        {
+            var showOnlyMajorCheckBox = group.AddCheckbox(Localize.Settings_ShowOnlyMajor, ShowOnlyMajor, OnShowOnlyMajorChanged) as UICheckBox;
+
+            void OnShowOnlyMajorChanged(bool request) => ShowOnlyMajor.value = request;
+        }
+
         private static void AddOther(UIHelperBase helper)
         {
             if (SceneManager.GetActiveScene().name is string scene && (scene == "MainMenu" || scene == "IntroScreen"))

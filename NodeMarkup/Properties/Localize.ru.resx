@@ -518,4 +518,10 @@ Shift X10, Ctrl X0.1</value>
 - Добавлен стиль стоп линии "Двойная пунктирная".
 - Добавлен перевод на Португальский.</value>
   </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Уведомления только о важных обновлениях</value>
+  </data>
 </root>

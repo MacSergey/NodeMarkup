@@ -877,6 +877,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Notifications.
+        /// </summary>
+        public static string Settings_Notifications {
+            get {
+                return ResourceManager.GetString("Settings_Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Other.
         /// </summary>
         public static string Settings_Other {
@@ -918,6 +927,15 @@ namespace NodeMarkup {
         public static string Settings_ShowDeleteWarnings {
             get {
                 return ResourceManager.GetString("Settings_ShowDeleteWarnings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Notification only about major updates.
+        /// </summary>
+        public static string Settings_ShowOnlyMajor {
+            get {
+                return ResourceManager.GetString("Settings_ShowOnlyMajor", resourceCulture);
             }
         }
         
