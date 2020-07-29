@@ -48,7 +48,7 @@ namespace NodeMarkup.Manager
             Offset = offset;
         }
 
-        public override LineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
+        public override RegularLineStyle CopyRegularLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -171,7 +171,7 @@ namespace NodeMarkup.Manager
             Offset = offset;
         }
 
-        public override LineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override RegularLineStyle CopyRegularLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);

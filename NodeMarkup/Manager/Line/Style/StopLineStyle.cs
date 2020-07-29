@@ -193,7 +193,7 @@ namespace NodeMarkup.Manager
         {
             Offset = offset;
         }
-        public override LineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override StopLineStyle CopyStopLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
