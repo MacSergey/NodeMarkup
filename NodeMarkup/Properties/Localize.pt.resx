@@ -498,11 +498,7 @@ Prima Alt para criar um preenchimento</value>
   <data name="FillerStyle_SolidShort" xml:space="preserve">
     <value>S</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Corrigido pressionar Alt para criar preenchimentos em Mac OS.
-- Adicionado estilo de Linha Dupla de Paragem Tracejada.
-- Adicionada tradução para Português.</value>
-  </data>
+  
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versão {0}</value>

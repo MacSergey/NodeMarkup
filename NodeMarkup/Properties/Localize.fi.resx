@@ -213,7 +213,9 @@ Tätä toimintoa ei voi kumota</value>
     <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
   </data>
   
-  
+  <data name="PointEditor_ItemDescription" xml:space="preserve">
+    <value>piste</value>
+  </data>
   <data name="PointEditor_Offset" xml:space="preserve">
     <value>Siirtymä</value>
   </data>
@@ -328,7 +330,12 @@ Tätä toimintoa ei voi kumota</value>
   
   
   
-  
+  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+    <value>Valitse piste luodaksesi tai poistaaksesi viivan
++Ctrl siirtääksesi pistettä
++Shift muokataksesi pistettä
+Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
+  </data>
   
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
@@ -341,10 +348,18 @@ Tätä toimintoa ei voi kumota</value>
     <value>Peruuta</value>
   </data>
   
-  
-  
-  
-  
+  <data name="LineEditor_Invert" xml:space="preserve">
+    <value>Käänteinen</value>
+  </data>
+  <data name="LineEditor_Width" xml:space="preserve">
+    <value>Leveys</value>
+  </data>
+  <data name="TemplateEditor_Width" xml:space="preserve">
+    <value>Leveys</value>
+  </data>
+  <data name="TemplateEditor_Invert" xml:space="preserve">
+    <value>Käänteinen</value>
+  </data>
   
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Pysäytysviiva</value>
@@ -379,27 +394,39 @@ Tätä toimintoa ei voi kumota</value>
   </data>
   
   
-  
-  
+  <data name="Filler_Angle" xml:space="preserve">
+    <value>Kulma</value>
+  </data>
+  <data name="Filler_Offset" xml:space="preserve">
+    <value>Etäisyys viivoista</value>
+  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Napauta aloittaaksesi sulkualueen luomisen</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
     <value>Napauta viimeistelläksesi sulkualueen luomisen</value>
   </data>
-  
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Napauta valitaksesi ääriviivan seuraava piste</value>
+  </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
     <value>Valitse piste aloittaaksesi sulkualueen luomisen</value>
   </data>
-  
-  
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Valitse ääriviivan seuraava piste</value>
+  </data>
+  <data name="Filler_MedianOffset" xml:space="preserve">
+    <value>Etäisyys keskikaistaleesta</value>
+  </data>
   <data name="LineEditor_ColorCopy" xml:space="preserve">
     <value>Kopioi</value>
   </data>
   <data name="LineEditor_ColorPaste" xml:space="preserve">
     <value>Liitä</value>
   </data>
-  
+  <data name="LineEditor_ColorDefault" xml:space="preserve">
+    <value>Oletus</value>
+  </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Viiva</value>
   </data>
@@ -408,10 +435,18 @@ Tätä toimintoa ei voi kumota</value>
   </data>
   
   
-  
-  
-  
-  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Versio {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Ilmoitukset</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Ilmoita vain merkittävistä päivityksistä</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Lisää uusi sulkualue</value>
+  </data>
   
   
   
