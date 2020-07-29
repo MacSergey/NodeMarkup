@@ -524,4 +524,10 @@ Hold Alt to create a filler</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Notification only about major updates</value>
   </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Add new filler</value>
+  </data>
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>Test</value>
+  </data>
 </root>

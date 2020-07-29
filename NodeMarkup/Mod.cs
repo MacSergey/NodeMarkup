@@ -29,7 +29,8 @@ namespace NodeMarkup
         };
 
 #if DEBUG
-        public string Name { get; } = $"{StaticName} {Version} [BETA]";
+        public static string VersionBeta => $"{Version} [BETA]";
+        public string Name { get; } = $"{StaticName} {VersionBeta}";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public string Name { get; } = $"{StaticName} {Version}";
@@ -98,7 +99,7 @@ namespace NodeMarkup
                 return;
 
             var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
-            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
+            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, StaticName);
             messageBox.OnButtonClick = Confirm;
             messageBox.Init(messages);
 
@@ -111,7 +112,9 @@ namespace NodeMarkup
         private Dictionary<string, string> GetWhatsNewMessages()
         {
             var messages = new Dictionary<string, string>(Versions.Count);
-
+#if DEBUG
+            messages[VersionBeta] = Localize.Mod_WhatsNewMessageBeta;
+#endif
             foreach (var version in Versions)
             {
                 if (VersionComparer.Instance.Compare(version, UI.Settings.WhatsNewVersion) <= 0)

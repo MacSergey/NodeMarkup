@@ -640,6 +640,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Test.
+        /// </summary>
+        public static string Mod_WhatsNewMessageBeta {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessageBeta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Version {0}.
         /// </summary>
         public static string Mod_WhatsNewVersion {
@@ -708,6 +717,15 @@ namespace NodeMarkup {
         public static string Settings_ActivateTool {
             get {
                 return ResourceManager.GetString("Settings_ActivateTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new filler.
+        /// </summary>
+        public static string Settings_AddNewFiller {
+            get {
+                return ResourceManager.GetString("Settings_AddNewFiller", resourceCulture);
             }
         }
         

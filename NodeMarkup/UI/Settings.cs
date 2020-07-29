@@ -17,7 +17,7 @@ namespace NodeMarkup.UI
     {
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
-        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, "1.0"/*Mod.Version*/, true);
+        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version, true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
@@ -36,6 +36,7 @@ namespace NodeMarkup.UI
         {
             AddKeyMapping(helper);
             AddGeneral(helper);
+            AddNotifications(helper);
             AddOther(helper);
         }
         private static void AddKeyMapping(UIHelperBase helper)
@@ -47,6 +48,7 @@ namespace NodeMarkup.UI
             keymappings.AddKeymapping(Localize.Settings_ActivateTool, NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
+            keymappings.AddKeymapping(Localize.Settings_AddNewFiller, NodeMarkupTool.AddFillerShortcut);
         }
 
         private static void AddGeneral(UIHelperBase helper)

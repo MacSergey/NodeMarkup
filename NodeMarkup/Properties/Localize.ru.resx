@@ -524,4 +524,10 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Уведомления только о важных обновлениях</value>
   </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Создать  заполнитель</value>
+  </data>
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>Тест</value>
+  </data>
 </root>

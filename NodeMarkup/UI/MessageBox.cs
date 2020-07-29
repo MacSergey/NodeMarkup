@@ -123,7 +123,7 @@ namespace NodeMarkup.UI
 
             Caption = Handle.AddUIComponent<UILabel>();
             Caption.textAlignment = UIHorizontalAlignment.Center;
-            Caption.textScale = 1.2f;
+            Caption.textScale = 1.3f;
             Caption.anchor = UIAnchorStyle.Top;
 
             Caption.eventTextChanged += (component, text) => Caption.CenterToParent();
