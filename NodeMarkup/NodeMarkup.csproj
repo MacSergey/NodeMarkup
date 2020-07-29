@@ -106,7 +106,7 @@
     <Compile Include="Manager\Point\Point.cs" />
     <Compile Include="Manager\Point\Enter.cs" />
     <Compile Include="Manager\Point\SupportPoint.cs" />
-    <Compile Include="Manager\Line\Style\LineStyle.cs" />
+    <Compile Include="Manager\Line\Style\LineStyleBase.cs" />
     <Compile Include="Manager\Style.cs" />
     <Compile Include="Manager\Templates.cs" />
     <Compile Include="Mod.cs" />

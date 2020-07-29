@@ -25,20 +25,14 @@ namespace NodeMarkup.Manager
         public static float DefaultOffset { get; } = 0f;
         public static float StripeDefaultWidth { get; } = 0.5f;
 
-        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset);
-        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset);
-        public static SolidFillerStyle DefaultSolid => new SolidFillerStyle(DefaultColor, DefaultOffset);
-
-        public static FillerStyle GetDefault(FillerType type)
+        static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            switch (type)
-            {
-                case FillerType.Stripe: return DefaultStripe;
-                case FillerType.Grid: return DefaultGrid;
-                case FillerType.Solid: return DefaultSolid;
-                default: return null;
-            }
-        }
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset)},
+            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
+        };
+
+        public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
 
         float _medianOffset;
         public float MedianOffset
