@@ -46,7 +46,7 @@ namespace NodeMarkup.UI
         }
         public void Init()
         {
-            atlas = NodeMarkupTool.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             absolutePosition = new Vector3(100, 100);
             name = "NodeMarkupPanel";

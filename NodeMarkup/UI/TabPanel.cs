@@ -13,7 +13,7 @@ namespace NodeMarkup.UI
     {
         public CustomUITabstrip()
         {
-            atlas = NodeMarkupTool.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "";
         }
         public void AddTab<PanelType>(string name) where PanelType : Editor
@@ -25,7 +25,7 @@ namespace NodeMarkup.UI
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             tabButton.verticalAlignment = UIVerticalAlignment.Middle;
 
-            tabButton.atlas = NodeMarkupTool.InGameAtlas;
+            tabButton.atlas = TextureUtil.InGameAtlas;
 
             tabButton.normalBgSprite = "SubBarButtonBase";
             tabButton.disabledBgSprite = "SubBarButtonBaseDisabled";

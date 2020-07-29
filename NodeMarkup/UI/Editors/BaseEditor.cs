@@ -52,7 +52,7 @@ namespace NodeMarkup.UI.Editors
             autoLayout = true;
             autoLayoutDirection = LayoutDirection.Horizontal;
             clipChildren = true;
-            atlas = NodeMarkupTool.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
@@ -68,7 +68,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.builtinKeyNavigation = true;
             ItemsPanel.clipChildren = true;
             ItemsPanel.eventSizeChanged += ItemsPanelSizeChanged;
-            ItemsPanel.atlas = NodeMarkupTool.InGameAtlas;
+            ItemsPanel.atlas = TextureUtil.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
 
             UIUtils.AddScrollbar(this, ItemsPanel);
@@ -97,7 +97,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
             SettingsPanel.builtinKeyNavigation = true;
             SettingsPanel.clipChildren = true;
-            SettingsPanel.atlas = NodeMarkupTool.InGameAtlas;
+            SettingsPanel.atlas = TextureUtil.InGameAtlas;
             SettingsPanel.backgroundSprite = "UnlockingItemBackground";
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 

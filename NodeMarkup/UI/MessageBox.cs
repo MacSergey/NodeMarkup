@@ -352,7 +352,7 @@ namespace NodeMarkup.UI
         {
             DropDown = ScrollableContent.AddUIComponent<FileDropDown>();
 
-            DropDown.atlas = NodeMarkupTool.InGameAtlas;
+            DropDown.atlas = TextureUtil.InGameAtlas;
             DropDown.height = 38;
             DropDown.width = Width - 2 * Padding;
             DropDown.listBackground = "OptionsDropboxListbox";

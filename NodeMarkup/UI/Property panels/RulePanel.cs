@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace NodeMarkup.UI.Editors
 
         public RulePanel()
         {
-            atlas = NodeMarkupTool.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "AssetEditorItemBackground";
             autoLayout = true;
             autoFitChildrenVertically = true;

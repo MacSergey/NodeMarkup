@@ -7,7 +7,28 @@ namespace NodeMarkup.Utils
 {
     public static class TextureUtil
     {
-        static readonly string path = $"{nameof(NodeMarkup)}.Resources.";
+        public static UITextureAtlas _inGameAtlas;
+        public static UITextureAtlas _inMapEditorAtlas;
+        public static UITextureAtlas InGameAtlas
+        {
+            get
+            {
+                if (_inGameAtlas == null)
+                    _inGameAtlas = GetAtlas("Ingame");
+                return _inGameAtlas;
+            }
+        }
+        public static UITextureAtlas InMapEditorAtlas
+                {
+            get
+            {
+                if (_inMapEditorAtlas == null)
+                    _inMapEditorAtlas = GetAtlas("InMapEditor");
+                return _inMapEditorAtlas;
+            }
+}
+
+static readonly string path = $"{nameof(NodeMarkup)}.Resources.";
         public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames)
         {
             Texture2D texture2D = LoadTextureFromAssembly(

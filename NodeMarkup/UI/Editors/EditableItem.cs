@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -57,7 +58,7 @@ namespace NodeMarkup.UI.Editors
             if (ShowDelete)
                 AddDeleteButton();
 
-            atlas = NodeMarkupTool.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
 
             normalBgSprite = "ButtonSmall";
             disabledBgSprite = "ButtonSmallPressed";
@@ -86,7 +87,7 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = NodeMarkupTool.InGameAtlas;
+            DeleteButton.atlas = TextureUtil.InGameAtlas;
             DeleteButton.normalBgSprite = "buttonclose";
             DeleteButton.hoveredBgSprite = "buttonclosehover";
             DeleteButton.pressedBgSprite = "buttonclosepressed";
@@ -136,14 +137,14 @@ namespace NodeMarkup.UI.Editors
         public Color32 BorderColor { set => color = value; }
         public ColorIcon()
         {
-            atlas = NodeMarkupTool.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             normalBgSprite = "PieChartWhiteBg";
             disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
             color = Color.white;
 
             InnerCircule = AddUIComponent<UIButton>();
-            InnerCircule.atlas = NodeMarkupTool.InGameAtlas;
+            InnerCircule.atlas = TextureUtil.InGameAtlas;
             InnerCircule.normalBgSprite = "PieChartWhiteBg";
             InnerCircule.normalFgSprite = "PieChartWhiteFg";
             InnerCircule.disabledBgSprite = "PieChartWhiteBg";
