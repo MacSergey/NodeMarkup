@@ -489,9 +489,9 @@ Alt halten um eine Füllung zu erstellen</value>
     <value>VG</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Fix Alt halten um Füllungen zu erstellen unter Mac OS.
-- Doppelte gestrichelte Haltelinie hinzugefügt.
-- Portugiesische Übersetzung hinzugefügt.</value>
+    <value>- Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
+- "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
+- Italienische und Portugiesische Übersetzung hinzugefügt.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
     <value>- "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.

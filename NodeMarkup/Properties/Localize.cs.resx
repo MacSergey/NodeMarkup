@@ -490,13 +490,29 @@ nebo smazání čáry
   </data>
   
   
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Verze {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Oznámení</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Oznámení pouze o významných aktualizacích</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Přidat výplň</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Dvojítá čára hranice</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Dvojitá přerušovaná hranice</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>DNH</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>DPH</value>
+  </data>
 </root>
