@@ -519,8 +519,16 @@ Prima Alt para criar um preenchimento</value>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
     <value>Teste</value>
   </data>
-  
-  
-  
-  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Linha de Paragem Dupla</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Linha de Paragem Dupla Tracejada</value>
+  </data>
+  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
+    <value>PDS</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
+    <value>PDT</value>
+  </data>
 </root>
