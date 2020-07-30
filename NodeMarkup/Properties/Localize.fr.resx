@@ -192,26 +192,14 @@ Cette action est irréversible</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tiret</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>T</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Double tiret</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DT</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Double solide</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DS</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solide</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Non</value>
@@ -392,9 +380,6 @@ Maintenez Alt pour créer un filler</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>ST</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Inverser</value>
   </data>
@@ -413,9 +398,6 @@ Maintenez Alt pour créer un filler</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Ligne de stop</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>LdS</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Cliquez pour supprimer la ligne de stop</value>
   </data>
@@ -428,20 +410,11 @@ Maintenez Alt pour créer un filler</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>filler</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>LST</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Grille</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>Z</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Ligne de stop en pointillé</value>
@@ -485,9 +458,6 @@ Maintenez Alt pour créer un filler</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
-  </data>
   
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
@@ -509,10 +479,22 @@ Maintenez Alt pour créer un filler</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Double ligne de stop en pointillés</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>SDC</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copier</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>SDCP</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Coller</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Angle entre les deux</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Virage</value>
   </data>
 </root>

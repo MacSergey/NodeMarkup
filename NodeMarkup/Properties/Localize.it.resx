@@ -192,26 +192,14 @@ Questa azione non può essere annullata</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tratteggiata</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>T</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Doppia tratteggiata</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DT</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Doppia continua</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DC</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Continua</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>No</value>
@@ -402,9 +390,6 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>CT</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Inverti</value>
   </data>
@@ -423,9 +408,6 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Linea di Stop</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>LS</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Clicca per cancellare la linea di Stop</value>
   </data>
@@ -438,20 +420,11 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>riempimento</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>LST</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Striscie</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Griglia</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>ST</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Linea di Stop tratteggiata</value>
@@ -495,16 +468,33 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
+  
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Versione {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Notifiche</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Notifica solo gli update maggiore</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Aggiungi un nuovo riempimento</value>
   </data>
   
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Doppia linea di stop</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Doppia linea di stop tratteggiata</value>
+  </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Incolla</value>
+  </data>
   
   
   

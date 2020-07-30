@@ -192,26 +192,14 @@ No se puede deshacer esta acción</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Discontinua</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>D</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Discontinua Doble</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DD</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Continua doble</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>CD</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Continua</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>No</value>
@@ -392,9 +380,6 @@ Mantenga Alt para crear un relleno</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Anular</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>DC</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Invertir</value>
   </data>
@@ -413,9 +398,6 @@ Mantenga Alt para crear un relleno</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Línea transversal</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>LT</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Haga clic para borrar la línea transversal</value>
   </data>
@@ -428,20 +410,11 @@ Mantenga Alt para crear un relleno</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>relleno</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>LTD</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Franjas</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Cuadrícula</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>F</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>C</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Línea transversal discontinua</value>
@@ -485,9 +458,6 @@ Mantenga Alt para crear un relleno</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
-  </data>
   
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
@@ -509,10 +479,20 @@ Mantenga Alt para crear un relleno</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Línea transversal discontinua doble</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>LTCD</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copiar</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>LTDD</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Pegar</value>
   </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Cebreado</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Ángulo entre</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Invertir</value>
+  </data>
+  
 </root>

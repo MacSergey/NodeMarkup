@@ -192,26 +192,14 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Gestrichelt</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>G</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Doppelt gestrichelt</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DG</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Doppelt durchgezogen</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DD</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Durchgezogen</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>D</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Nein</value>
@@ -392,9 +380,6 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>DG</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Invertieren</value>
   </data>
@@ -413,9 +398,6 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Haltelinie</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>HL</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Zum Löschen der Haltelinie klicken</value>
   </data>
@@ -428,20 +410,11 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>füllung</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>GHL</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Streifen</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Gitter</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>ST</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Gestrichelte Haltelinie</value>
@@ -485,9 +458,6 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Vollständig gefüllt</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>VG</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
     <value>- Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
 - "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
@@ -518,7 +488,9 @@ Alt halten um eine Füllung zu erstellen</value>
     <value>Neue Füllung hinzufügen</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Test</value>
+    <value>- Flächenfüllung in Winkel-Form hinzugefügt
+- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
+- Kopieren/Einfügen von Linien und Füllungs-Stilen.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelte Haltelinie</value>
@@ -526,10 +498,20 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Gestrichelte doppelte Haltelinie</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>DHL</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Kopieren</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>GDHL</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Einfügen</value>
   </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Winkel</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Winkel-Grad</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Invertieren</value>
+  </data>
+  
 </root>

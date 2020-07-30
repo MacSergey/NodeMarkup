@@ -192,25 +192,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>虚线</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>虚线</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>双虚线</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
     <value>双虚线</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>双实线</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>双实线</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>实线</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
     <value>实线</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
@@ -392,9 +380,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>虚实线</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>翻转</value>
   </data>
@@ -413,9 +398,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>停止线</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>停止线</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>点击以擦除停止线</value>
   </data>
@@ -428,19 +410,10 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>填充图案</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>虚停止线</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>条纹线</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>网格</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>条纹线</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
     <value>网格</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
@@ -485,9 +458,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>实线</value>
-  </data>
   
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
@@ -509,10 +479,20 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>双虚停止线</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>双停止线</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>复制</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>双虚停止线</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>粘贴</value>
   </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>箭头</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>翻转</value>
+  </data>
+  
 </root>

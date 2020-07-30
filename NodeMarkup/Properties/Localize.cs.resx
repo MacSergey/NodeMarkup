@@ -192,26 +192,14 @@ Tuto akci nelze vrátit zpět</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Přerušovaná</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>P</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DP</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Dvojitá nepřerušovaná</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DN</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>N</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ne</value>
@@ -392,9 +380,6 @@ nebo smazání čáry
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>PP</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Obrátit</value>
   </data>
@@ -413,9 +398,6 @@ nebo smazání čáry
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Hranice křižovatky</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>HK</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
   </data>
@@ -428,20 +410,11 @@ nebo smazání čáry
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>výplň</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>PHK</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Pruhy</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Mřížka</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>KP</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>M</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Přerušovaná hranice křižovatky</value>
@@ -485,9 +458,6 @@ nebo smazání čáry
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>N</value>
-  </data>
   
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
@@ -509,10 +479,20 @@ nebo smazání čáry
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná hranice</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>DNH</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Kopírovat</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>DPH</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Vložit</value>
+  </data>
+  
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Úhel mezi</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Prohodit</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Odbočka</value>
   </data>
 </root>

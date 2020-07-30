@@ -192,26 +192,14 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Streeplijn</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>S</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Dubbele streep</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DS</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Dubbel ononderbroken</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DO</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>O</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Nee</value>
@@ -391,9 +379,6 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annuleer</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>OS</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Omkeren</value>
   </data>
@@ -412,9 +397,6 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Stoplijn</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>SL</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klik om een stoplijn te verwijderen</value>
   </data>
@@ -427,20 +409,11 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>opvulling</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>OSL</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Strepen</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Raster</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>ST</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>R</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Onderbroken stoplijn</value>
@@ -484,9 +457,6 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>O</value>
-  </data>
   
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
@@ -508,10 +478,22 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dubbele gestreepte stoplijn</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>DOS</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Kopiëren</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>DGS</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Plakken</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Binnenhoek</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Omkeren</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Omdraaien</value>
   </data>
 </root>

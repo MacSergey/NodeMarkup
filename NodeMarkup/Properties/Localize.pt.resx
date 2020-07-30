@@ -192,26 +192,14 @@ Esta ação não pode ser desfeita</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tracejada</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>T</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Tracejada dupla</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>TD</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Sólida dupla</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>SD</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Não</value>
@@ -402,9 +390,6 @@ Prima Alt para criar um preenchimento</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>DC</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Inverter</value>
   </data>
@@ -423,9 +408,6 @@ Prima Alt para criar um preenchimento</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Linha de paragem</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>LP</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Clique para remover linha de paragem</value>
   </data>
@@ -438,20 +420,11 @@ Prima Alt para criar um preenchimento</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>preenchimento</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>LPT</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Listras</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Grelha</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>L</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Linha de paragem tracejada</value>
@@ -495,9 +468,6 @@ Prima Alt para criar um preenchimento</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
-  </data>
   
   
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
@@ -512,19 +482,27 @@ Prima Alt para criar um preenchimento</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Teste</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Linha de Paragem Dupla</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Linha de Paragem Dupla Tracejada</value>
   </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>PDS</value>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copiar</value>
   </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>PDT</value>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Colar</value>
   </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Ângulo entre</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Inverter</value>
+  </data>
+  
 </root>
