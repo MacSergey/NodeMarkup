@@ -542,4 +542,10 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_StopDoubleShort" xml:space="preserve">
     <value>ДСС</value>
   </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
 </root>

@@ -11,6 +11,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : UIPanel
     {
+        private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
 
@@ -37,6 +38,7 @@ namespace NodeMarkup.UI.Editors
             SetSize();
 
             AddHeader();
+            AddCopyPaste();
             if (Editor.CanDivide)
             {
                 AddFromProperty();
@@ -58,10 +60,17 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = AddUIComponent<StyleHeaderPanel>();
-            header.Init(Rule.Style.Type, Editor.CanDivide);
+            header.Init(Rule.Style.Type, true);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
+        }
+        private void AddCopyPaste()
+        {
+            var copyPaste = AddUIComponent<CopyPasteHeaderPanel>();
+            copyPaste.Init();
+            copyPaste.OnCopy += CopyStyle;
+            copyPaste.OnPaste += PasteStyle;
         }
         private void AddFromProperty()
         {
@@ -129,17 +138,25 @@ namespace NodeMarkup.UI.Editors
             if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template))
                 Editor.NodeMarkupPanel.EditTemplate(template);
         }
+        private void ApplyStyle(LineStyle style)
+        {
+            Rule.Style = style.CopyLineStyle();
+            Style.SelectedObject = Rule.Style.Type;
+
+            Editor.RefreshItem();
+            ClearStyleProperties();
+            AddStyleProperties();
+        }
         private void OnSelectTemplate(StyleTemplate template)
         {
-            if (template.Style.Copy() is LineStyle style)
-            {
-                Rule.Style = style;
-                Style.SelectedObject = Rule.Style.Type;
-
-                Editor.RefreshItem();
-                ClearStyleProperties();
-                AddStyleProperties();
-            }
+            if (template.Style is LineStyle style)
+                ApplyStyle(style);
+        }
+        private void CopyStyle() => Buffer = Rule.Style.CopyLineStyle();
+        private void PasteStyle()
+        {
+            if(Buffer is LineStyle style)
+                ApplyStyle(style);
         }
 
         private void FromChanged(ILinePartEdge from) => Rule.From = from;

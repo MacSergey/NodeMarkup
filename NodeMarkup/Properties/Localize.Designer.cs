@@ -388,6 +388,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string LineEditor_StyleCopy {
+            get {
+                return ResourceManager.GetString("LineEditor_StyleCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste.
+        /// </summary>
+        public static string LineEditor_StylePaste {
+            get {
+                return ResourceManager.GetString("LineEditor_StylePaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на To.
         /// </summary>
         public static string LineEditor_To {
@@ -665,9 +683,9 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fix hold Alt to create fillers on Mac OS.
-        ///- Added Double Dashed stop line style.
-        ///- Added Portuguese translation..
+        ///   Ищет локализованную строку, похожую на - Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
+        ///- Added &quot;Double solid&quot; and &quot;Double Dashed&quot; stop line styles.
+        ///- Added Italian and Portuguese translations..
         /// </summary>
         public static string Mod_WhatsNewMessage1_2_1 {
             get {
@@ -676,7 +694,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Test.
+        ///   Ищет локализованную строку, похожую на - You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
+        ///- Copy/paste lines and fillers style..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

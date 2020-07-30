@@ -43,6 +43,27 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.eventClick += DeleteClick;
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
+
+        protected UIButton AddButton(string text = null, MouseEventHandler onClick = null)
+        {
+            var button = AddUIComponent<UIButton>();
+            button.atlas = TextureUtil.InMapEditorAtlas;
+            button.normalBgSprite = "InfoDisplay";
+            button.hoveredBgSprite = "InfoDisplayHover";
+            button.pressedBgSprite = "InfoDisplayFocused";
+            button.text = text;
+            button.textScale = 0.7f;
+            button.textPadding = new RectOffset(0, 0, 2, 0);
+            button.size = new Vector2(180, 20);
+            button.textColor = Color.black;
+            button.hoveredTextColor = Color.black;
+            button.pressedTextColor = Color.black;
+            button.focusedTextColor = Color.black;
+            if (onClick != null)
+                button.eventClick += onClick;
+
+            return button;
+        }
     }
     public class StyleHeaderPanel : HeaderPanel
     {
@@ -168,7 +189,7 @@ namespace NodeMarkup.UI.Editors
         {
             SelectTemplate.Clear();
             SelectTemplate.AddItem(EmptyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            foreach(var template in TemplateManager.GetTemplates(StyleGroup))
+            foreach (var template in TemplateManager.GetTemplates(StyleGroup))
             {
                 SelectTemplate.AddItem(template, template.ToStringWithShort());
             }
@@ -184,7 +205,7 @@ namespace NodeMarkup.UI.Editors
 
         public TemplateHeaderPanel()
         {
-            AddSetAsDefault();
+            SetAsDefaultButton = AddButton(onClick: SetAsDefaultClick);
         }
         public new void Init(bool isDefault)
         {
@@ -199,23 +220,35 @@ namespace NodeMarkup.UI.Editors
 
             SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
         }
-
-        private void AddSetAsDefault()
-        {
-            SetAsDefaultButton = AddUIComponent<UIButton>();
-            SetAsDefaultButton.atlas = TextureUtil.InMapEditorAtlas;
-            SetAsDefaultButton.normalBgSprite = "InfoDisplay";
-            SetAsDefaultButton.hoveredBgSprite = "InfoDisplayHover";
-            SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";
-            SetAsDefaultButton.textScale = 0.7f;
-            SetAsDefaultButton.textPadding = new RectOffset(0, 0, 2, 0);
-            SetAsDefaultButton.size = new Vector2(180, 20);
-            SetAsDefaultButton.textColor = Color.black;
-            SetAsDefaultButton.hoveredTextColor = Color.black;
-            SetAsDefaultButton.pressedTextColor = Color.black;
-            SetAsDefaultButton.focusedTextColor = Color.black;
-            SetAsDefaultButton.eventClick += SetAsDefaultClick;
-        }
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
+    }
+    public class CopyPasteHeaderPanel : HeaderPanel
+    {
+        public event Action OnCopy;
+        public event Action OnPaste;
+
+        UIButton Copy { get; set; }
+        UIButton Paste { get; set; }
+        public new void Init()
+        {
+            base.Init(false);
+        }
+        public CopyPasteHeaderPanel()
+        {
+            Copy = AddButton(NodeMarkup.Localize.LineEditor_StyleCopy, CopyClick);
+            Copy.width = 100;
+            Paste = AddButton(NodeMarkup.Localize.LineEditor_StylePaste, PasteClick);
+            Paste.width = 100;
+        }
+        private void CopyClick(UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke();
+        private void PasteClick(UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke();
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            Copy.relativePosition = new Vector2(5, (height - Copy.height) / 2);
+            Paste.relativePosition = new Vector2(Copy.relativePosition.x + Copy.width + 5, (height - Paste.height) / 2);
+        }
     }
 }

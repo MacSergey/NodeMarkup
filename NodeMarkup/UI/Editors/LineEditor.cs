@@ -22,6 +22,7 @@ namespace NodeMarkup.UI.Editors
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool CanDivide => SupportPoints.Count > 2;
+        private bool AddRuleAvailable => CanDivide || !EditObject.RawRules.Any();
 
         private ILinePartEdge HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
@@ -93,7 +94,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddAddButton()
         {
-            if (CanDivide)
+            if (AddRuleAvailable)
             {
                 AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
                 AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
@@ -113,7 +114,7 @@ namespace NodeMarkup.UI.Editors
             if (EditObject == null)
                 return;
 
-            var newRule = EditObject.AddRule();
+            var newRule = EditObject.AddRule(CanDivide);
             DeleteAddButton();
             var rulePanel = AddRulePanel(newRule);
             AddAddButton();
@@ -152,6 +153,7 @@ namespace NodeMarkup.UI.Editors
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
                 RefreshItem();
+                AddAddButton();
                 return true;
             }
         }
@@ -213,7 +215,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override void OnEvent(Event e)
         {
-            if (CanDivide && !IsSelectPartEdgeMode && NodeMarkupTool.AddRuleShortcut.IsPressed(e))
+            if (AddRuleAvailable && !IsSelectPartEdgeMode && NodeMarkupTool.AddRuleShortcut.IsPressed(e))
                 AddRule();
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)

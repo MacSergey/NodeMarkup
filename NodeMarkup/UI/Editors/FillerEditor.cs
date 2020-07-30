@@ -8,6 +8,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
+        private static FillerStyle Buffer { get; set; }
+
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
 
         public StylePropertyPanel Style { get; private set; }
@@ -28,6 +30,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
+            AddCopyPaste();
             AddStyleTypeProperty();
             AddStyleProperties();
         }
@@ -38,6 +41,13 @@ namespace NodeMarkup.UI.Editors
             Header.Init(Manager.Style.StyleType.Filler, false);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnSelectTemplate += OnSelectTemplate;
+        }
+        private void AddCopyPaste()
+        {
+            var copyPaste = SettingsPanel.AddUIComponent<CopyPasteHeaderPanel>();
+            copyPaste.Init();
+            copyPaste.OnCopy += CopyStyle;
+            copyPaste.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
@@ -73,23 +83,33 @@ namespace NodeMarkup.UI.Editors
             if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
                 NodeMarkupPanel.EditTemplate(template);
         }
+        private void ApplyStyle(FillerStyle style)
+        {
+            var newStyle = style.CopyFillerStyle();
+
+            newStyle.MedianOffset = EditObject.Style.MedianOffset;
+            if (newStyle is ISimpleFiller newSimple && EditObject.Style is ISimpleFiller oldSimple)
+            {
+                newSimple.Angle = oldSimple.Angle;
+            }
+
+            EditObject.Style = newStyle;
+            Style.SelectedObject = EditObject.Style.Type;
+
+            RefreshItem();
+            ClearStyleProperties();
+            AddStyleProperties();
+        }
         private void OnSelectTemplate(StyleTemplate template)
         {
-            if (template.Style.Copy() is FillerStyle newStyle)
-            {
-                newStyle.MedianOffset = EditObject.Style.MedianOffset;
-                if (newStyle is ISimpleFiller newSimple && EditObject.Style is ISimpleFiller oldSimple)
-                {
-                    newSimple.Angle = oldSimple.Angle;
-                }
-
-                EditObject.Style = newStyle;
-                Style.SelectedObject = EditObject.Style.Type;
-
-                RefreshItem();
-                ClearStyleProperties();
-                AddStyleProperties();
-            }
+            if (template.Style is FillerStyle style)
+                ApplyStyle(style);
+        }
+        private void CopyStyle() => Buffer = EditObject.Style.CopyFillerStyle();
+        private void PasteStyle()
+        {
+            if (Buffer is FillerStyle style)
+                ApplyStyle(style);
         }
         private void ClearStyleProperties()
         {
