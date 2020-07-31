@@ -22,7 +22,7 @@ namespace NodeMarkup.UI.Editors
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool CanDivide => SupportPoints.Count > 2;
-        private bool AddRuleAvailable => CanDivide || !EditObject.RawRules.Any();
+        private bool AddRuleAvailable => CanDivide || EditObject?.RawRules.Any() == false;
 
         private ILinePartEdge HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
@@ -215,7 +215,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override void OnEvent(Event e)
         {
-            if (AddRuleAvailable && !IsSelectPartEdgeMode && NodeMarkupTool.AddRuleShortcut.IsPressed(e))
+            if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)
                 AddRule();
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)

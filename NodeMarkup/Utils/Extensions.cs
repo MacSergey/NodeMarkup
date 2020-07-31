@@ -168,8 +168,8 @@ namespace NodeMarkup.Utils
                 return length;
             }
         }
+        public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
 
-        public static Vector4 ToVector(this Color c) => new Vector4(c.r, c.g, c.b, c.a);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 
