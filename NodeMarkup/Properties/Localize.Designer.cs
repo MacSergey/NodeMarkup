@@ -99,6 +99,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle between.
+        /// </summary>
+        public static string Filler_AngleBetween {
+            get {
+                return ResourceManager.GetString("Filler_AngleBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string Filler_Invert {
+            get {
+                return ResourceManager.GetString("Filler_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Offset from median.
         /// </summary>
         public static string Filler_MedianOffset {
@@ -140,6 +158,15 @@ namespace NodeMarkup {
         public static string FillerEditor_ItemDescription {
             get {
                 return ResourceManager.GetString("FillerEditor_ItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Chevron.
+        /// </summary>
+        public static string FillerStyle_Chevron {
+            get {
+                return ResourceManager.GetString("FillerStyle_Chevron", resourceCulture);
             }
         }
         

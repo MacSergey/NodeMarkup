@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    class BoolPropertyPanel : EditorPropertyPanel
+    public class BoolPropertyPanel : EditorPropertyPanel
     {
         private UICheckBox CheckBox { get; set; }
         public event Action<bool> OnValueChanged;

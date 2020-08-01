@@ -240,6 +240,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Solid))]
             FillerSolid,
+
+            [Description(nameof(Localize.FillerStyle_Chevron))]
+            FillerChevron,
         }
     }
 
@@ -259,6 +262,7 @@ namespace NodeMarkup.Manager
             Width = width;
             Color = color;
         }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color) : this((start + end) / 2, Mathf.Atan2(dir.z, dir.x), (end - start).magnitude, width, color) { }
     }
     public class StyleTemplate : IToXml
     {

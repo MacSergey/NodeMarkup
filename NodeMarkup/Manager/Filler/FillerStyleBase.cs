@@ -24,12 +24,14 @@ namespace NodeMarkup.Manager
         public static float DefaultStepGrid { get; } = 6f;
         public static float DefaultOffset { get; } = 0f;
         public static float StripeDefaultWidth { get; } = 0.5f;
+        public static float DefaultAngleBetween { get; } = 90f;
 
         static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
             {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe, DefaultOffset, false)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
@@ -72,13 +74,15 @@ namespace NodeMarkup.Manager
         {
             var trajectories = filler.Trajectories.ToArray();
             if (filler.IsMedian)
-                GetTrajectoriesWithoutMedian(trajectories, filler.Parts.ToArray());
+                trajectories = GetTrajectoriesWithoutMedian(trajectories, filler.Parts.ToArray());
 
             var rect = GetRect(trajectories);
             return GetDashes(trajectories, rect, filler.Markup.Height);
         }
-        public IEnumerable<Bezier3> GetTrajectoriesWithoutMedian(Bezier3[] trajectories, MarkupLinePart[] lineParts)
+        public Bezier3[] GetTrajectoriesWithoutMedian(Bezier3[] baseTrajectories, MarkupLinePart[] lineParts)
         {
+            var trajectories = baseTrajectories.ToArray();
+
             for (var i = 0; i < lineParts.Length; i += 1)
             {
                 var line = lineParts[i].Line;
@@ -130,8 +134,8 @@ namespace NodeMarkup.Manager
 
                     if (offset != 0)
                     {
-                        var startOffset = GetOffset(intersects[i - 1]);
-                        var endOffset = GetOffset(intersects[i]);
+                        var startOffset = GetOffset(intersects[i - 1], offset);
+                        var endOffset = GetOffset(intersects[i], offset);
 
                         if ((end - start).magnitude - Width < startOffset + endOffset)
                             continue;
@@ -147,13 +151,14 @@ namespace NodeMarkup.Manager
 
                     yield return new MarkupStyleDash(pos, angle, length, partWidth, Color);
 
-                    float GetOffset(MarkupFillerIntersect intersect)
-                    {
-                        var sin = Mathf.Sin(intersect.Angle);
-                        return sin != 0 ? offset / sin : 1000f;
-                    }
+
                 }
             }
+        }
+        protected float GetOffset(MarkupFillerIntersect intersect, float offset)
+        {
+            var sin = Mathf.Sin(intersect.Angle);
+            return sin != 0 ? offset / sin : 1000f;
         }
         protected List<Vector3> GetLines(float angle, Rect rect, float height, float width, float step, float offset, out Vector3 normal, out float partWidth)
         {
@@ -211,7 +216,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        private void GetParts(float width, float offset, out int count, out float partWidth)
+        protected void GetParts(float width, float offset, out int count, out float partWidth)
         {
             if (width < 0.2f || offset != 0f)
             {
@@ -281,50 +286,6 @@ namespace NodeMarkup.Manager
             MedianOffset = config.GetAttrValue("MO", DefaultOffset);
         }
 
-        protected static FloatPropertyPanel AddStepProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            stepProperty.Text = Localize.Filler_Step;
-            stepProperty.UseWheel = true;
-            stepProperty.WheelStep = 0.1f;
-            stepProperty.CheckMin = true;
-            stepProperty.MinValue = 1.5f;
-            stepProperty.Init();
-            stepProperty.Value = stripeStyle.Step;
-            stepProperty.OnValueChanged += (float value) => stripeStyle.Step = value;
-            AddOnHoverLeave(stepProperty, onHover, onLeave);
-            return stepProperty;
-        }
-        protected static FloatPropertyPanel AddAngleProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            angleProperty.Text = Localize.Filler_Angle;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.CheckMin = true;
-            angleProperty.MinValue = -90;
-            angleProperty.CheckMax = true;
-            angleProperty.MaxValue = 90;
-            angleProperty.Init();
-            angleProperty.Value = stripeStyle.Angle;
-            angleProperty.OnValueChanged += (float value) => stripeStyle.Angle = value;
-            AddOnHoverLeave(angleProperty, onHover, onLeave);
-            return angleProperty;
-        }
-        protected static FloatPropertyPanel AddOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.Filler_Offset;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
-            offsetProperty.Init();
-            offsetProperty.Value = stripeStyle.Offset;
-            offsetProperty.OnValueChanged += (float value) => stripeStyle.Offset = value;
-            AddOnHoverLeave(offsetProperty, onHover, onLeave);
-            return offsetProperty;
-        }
         protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
@@ -339,6 +300,50 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
+        protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            angleProperty.Text = Localize.Filler_Angle;
+            angleProperty.UseWheel = true;
+            angleProperty.WheelStep = 1f;
+            angleProperty.CheckMin = true;
+            angleProperty.MinValue = -90;
+            angleProperty.CheckMax = true;
+            angleProperty.MaxValue = 90;
+            angleProperty.Init();
+            angleProperty.Value = rotateStyle.Angle;
+            angleProperty.OnValueChanged += (float value) => rotateStyle.Angle = value;
+            AddOnHoverLeave(angleProperty, onHover, onLeave);
+            return angleProperty;
+        }
+        protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            stepProperty.Text = Localize.Filler_Step;
+            stepProperty.UseWheel = true;
+            stepProperty.WheelStep = 0.1f;
+            stepProperty.CheckMin = true;
+            stepProperty.MinValue = 1.5f;
+            stepProperty.Init();
+            stepProperty.Value = periodicStyle.Step;
+            stepProperty.OnValueChanged += (float value) => periodicStyle.Step = value;
+            AddOnHoverLeave(stepProperty, onHover, onLeave);
+            return stepProperty;
+        }
+        protected static FloatPropertyPanel AddOffsetProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            offsetProperty.Text = Localize.Filler_Offset;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0f;
+            offsetProperty.Init();
+            offsetProperty.Value = periodicStyle.Offset;
+            offsetProperty.OnValueChanged += (float value) => periodicStyle.Offset = value;
+            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+            return offsetProperty;
+        }
 
         public enum FillerType
         {
@@ -350,6 +355,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Solid))]
             Solid = StyleType.FillerSolid,
+
+            [Description(nameof(Localize.FillerStyle_Chevron))]
+            Chevron = StyleType.FillerChevron,
         }
     }
 }
