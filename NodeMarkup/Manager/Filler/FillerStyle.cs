@@ -248,7 +248,7 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
             var trajectories = filler.Trajectories.ToArray();
-            if (trajectories.Length != 3)
+            if (trajectories.Length < 3)
                 return new MarkupStyleDash[0];
 
             if (filler.IsMedian)
@@ -260,17 +260,26 @@ namespace NodeMarkup.Manager
         }
         private Bezier3 GetMiddle(Bezier3[] trajectories)
         {
+            var left = 1;
+            var right = left == 0 ? trajectories.Length - 1 : left - 1;
             var middle = new Bezier3()
             {
-                a = (trajectories[0].d + trajectories[1].a) / 2,
-                b = (((trajectories[0].c - trajectories[0].d) + (trajectories[1].b - trajectories[1].a)) / 2).normalized,
-                c = (((trajectories[0].b - trajectories[0].a) + (trajectories[1].c - trajectories[1].d)) / 2).normalized,
-                d = (trajectories[0].a + trajectories[1].d) / 2,
+                a = (trajectories[right].d + trajectories[left].a) / 2,
+                b = (((trajectories[right].c - trajectories[right].d) + (trajectories[left].b - trajectories[left].a)) / 2).normalized,
+                c = (((trajectories[right].b - trajectories[right].a) + (trajectories[left].c - trajectories[left].d)) / 2).normalized,
+                d = (trajectories[right].a + trajectories[left].d) / 2,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
 
-            if (MarkupLineIntersect.Intersect(middle, trajectories[2], out float cutT, out _))
-                middle = middle.Cut(0, cutT);
+            var cutT = 1f;
+            for (var i = 0; i < trajectories.Length; i += 1)
+            {
+                if (i == left || i == right)
+                    continue;
+                if (MarkupLineIntersect.Intersect(middle, trajectories[i], out float t, out _) &&  t < cutT)
+                    cutT = t;
+            }
+            middle = middle.Cut(0, cutT);
 
             return middle;
         }
@@ -334,7 +343,7 @@ namespace NodeMarkup.Manager
             }
 
             var normalStart = mainEndPos;
-            var normalEnd = dir.Turn90(true);
+            var normalEnd = normalStart + dir.Turn90(true);
 
             for (var i = 1; i < partsCount; i += 1)
             {
