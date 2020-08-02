@@ -31,6 +31,7 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.FillerSolid, nameof(Style.StyleType.FillerSolid) },
                 {Style.StyleType.StopLineDoubleSolid, nameof(Style.StyleType.StopLineDoubleSolid) },
                 {Style.StyleType.StopLineDoubleDashed, nameof(Style.StyleType.StopLineDoubleDashed) },
+                {Style.StyleType.FillerChevron, nameof(Style.StyleType.FillerChevron) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));
