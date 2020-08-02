@@ -189,15 +189,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на G.
-        /// </summary>
-        public static string FillerStyle_GridShort {
-            get {
-                return ResourceManager.GetString("FillerStyle_GridShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid.
         /// </summary>
         public static string FillerStyle_Solid {
@@ -207,29 +198,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на S.
-        /// </summary>
-        public static string FillerStyle_SolidShort {
-            get {
-                return ResourceManager.GetString("FillerStyle_SolidShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Stripes.
         /// </summary>
         public static string FillerStyle_Stripe {
             get {
                 return ResourceManager.GetString("FillerStyle_Stripe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на ST.
-        /// </summary>
-        public static string FillerStyle_StripeShort {
-            get {
-                return ResourceManager.GetString("FillerStyle_StripeShort", resourceCulture);
             }
         }
         
@@ -487,15 +460,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на D.
-        /// </summary>
-        public static string LineStyle_DashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Double dashed.
         /// </summary>
         public static string LineStyle_DoubleDashed {
@@ -505,29 +469,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DD.
-        /// </summary>
-        public static string LineStyle_DoubleDashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DoubleDashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Double solid.
         /// </summary>
         public static string LineStyle_DoubleSolid {
             get {
                 return ResourceManager.GetString("LineStyle_DoubleSolid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на DS.
-        /// </summary>
-        public static string LineStyle_DoubleSolidShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DoubleSolidShort", resourceCulture);
             }
         }
         
@@ -550,24 +496,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SD.
-        /// </summary>
-        public static string LineStyle_SolidAndDashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_SolidAndDashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на S.
-        /// </summary>
-        public static string LineStyle_SolidShort {
-            get {
-                return ResourceManager.GetString("LineStyle_SolidShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Stop line.
         /// </summary>
         public static string LineStyle_Stop {
@@ -586,15 +514,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DSL.
-        /// </summary>
-        public static string LineStyle_StopDashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_StopDashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Double stop line.
         /// </summary>
         public static string LineStyle_StopDouble {
@@ -609,33 +528,6 @@ namespace NodeMarkup {
         public static string LineStyle_StopDoubleDashed {
             get {
                 return ResourceManager.GetString("LineStyle_StopDoubleDashed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на DDS.
-        /// </summary>
-        public static string LineStyle_StopDoubleDashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_StopDoubleDashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на DSS.
-        /// </summary>
-        public static string LineStyle_StopDoubleShort {
-            get {
-                return ResourceManager.GetString("LineStyle_StopDoubleShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на SL.
-        /// </summary>
-        public static string LineStyle_StopShort {
-            get {
-                return ResourceManager.GetString("LineStyle_StopShort", resourceCulture);
             }
         }
         

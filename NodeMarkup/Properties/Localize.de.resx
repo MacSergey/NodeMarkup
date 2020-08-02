@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -192,26 +192,14 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Gestrichelt</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>G</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Doppelt gestrichelt</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DG</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Doppelt durchgezogen</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DD</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Durchgezogen</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>D</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Nein</value>
@@ -385,15 +373,11 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>"Was gibt es neues" zeigen</value>
   </data>
-  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importieren</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
-  </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>DG</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Invertieren</value>
@@ -413,9 +397,6 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Haltelinie</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>HL</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Zum Löschen der Haltelinie klicken</value>
   </data>
@@ -428,20 +409,11 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>füllung</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>GHL</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Streifen</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Gitter</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>ST</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Gestrichelte Haltelinie</value>
@@ -485,9 +457,6 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Vollständig gefüllt</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>VG</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
     <value>- Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
 - "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
@@ -525,11 +494,5 @@ Alt halten um eine Füllung zu erstellen</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Gestrichelte doppelte Haltelinie</value>
-  </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>DHL</value>
-  </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>GDHL</value>
   </data>
 </root>

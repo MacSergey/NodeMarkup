@@ -192,26 +192,14 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Пунктирная</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>П</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Двойная пунктирная</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>ДП</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Двойная сплошная</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>ДС</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>С</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Нет</value>
@@ -402,9 +390,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>СП</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Инвертировать</value>
   </data>
@@ -423,9 +408,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Стоп линия</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>СЛ</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Нажмите для удаления стоп линии</value>
   </data>
@@ -438,20 +420,11 @@ Shift X10, Ctrl X0.1</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>Заполнитель</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>ПСЛ</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Полосы</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Сетка</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>П</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>С</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Пунктирная стоп линия</value>
@@ -495,9 +468,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>СП</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
     <value>- Сообщение о изменениях в новой версии. Вы можете отключить это в настройках.
 - Поддержка локализаций. Добавлены Русский, Немецкий, Французский, Испанский, Чешский, Голландский и Японский языки. Если вы хотите перевести на свой язык, обратитесь к автору мода.
@@ -535,12 +505,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Двойная пунктирная стоп линия</value>
-  </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>ДПС</value>
-  </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>ДСС</value>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Копировать</value>

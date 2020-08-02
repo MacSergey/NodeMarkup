@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -192,26 +192,14 @@ Cette action est irréversible</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Tiret</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>T</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Double tiret</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DT</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Double solide</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DS</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solide</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Non</value>
@@ -385,15 +373,11 @@ Maintenez Alt pour créer un filler</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Afficher les nouveautés</value>
   </data>
-  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importer</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Annuler</value>
-  </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>ST</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Inverser</value>
@@ -413,9 +397,6 @@ Maintenez Alt pour créer un filler</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Ligne de stop</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>LdS</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Cliquez pour supprimer la ligne de stop</value>
   </data>
@@ -428,20 +409,11 @@ Maintenez Alt pour créer un filler</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>filler</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>LST</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Grille</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>Z</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Ligne de stop en pointillé</value>
@@ -485,11 +457,6 @@ Maintenez Alt pour créer un filler</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
-  </data>
-  
-  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
@@ -502,17 +469,10 @@ Maintenez Alt pour créer un filler</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Ajouter un nouveau filler</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double ligne de stop</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Double ligne de stop en pointillés</value>
-  </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>SDC</value>
-  </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>SDCP</value>
   </data>
 </root>

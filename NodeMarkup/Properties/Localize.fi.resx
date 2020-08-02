@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -165,7 +165,6 @@ Tätä toimintoa ei voi kumota</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Valitse säännön loppupiste</value>
   </data>
-  
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Viivat</value>
   </data>
@@ -181,23 +180,11 @@ Tätä toimintoa ei voi kumota</value>
   <data name="LineEditor_To" xml:space="preserve">
     <value>Loppupiste</value>
   </data>
-  
-  
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Katkoviiva</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>K</value>
-  </data>
-  
-  
-  
-  
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Viiva</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>V</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ei</value>
@@ -208,11 +195,9 @@ Tätä toimintoa ei voi kumota</value>
   <data name="MessageBox_Yes" xml:space="preserve">
     <value>Kyllä</value>
   </data>
-  
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
   </data>
-  
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>piste</value>
   </data>
@@ -222,14 +207,12 @@ Tätä toimintoa ei voi kumota</value>
   <data name="PointEditor_Points" xml:space="preserve">
     <value>Pisteet</value>
   </data>
-  
   <data name="Settings_ActivateTool" xml:space="preserve">
     <value>Käynnistä työkalu</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
     <value>Lisää uusi sääntö</value>
   </data>
-  
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
     <value>Poista tiemerkinnät kaikista risteyksistä</value>
   </data>
@@ -281,7 +264,6 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Settings_Other" xml:space="preserve">
     <value>Muut</value>
   </data>
-  
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Piirtoetäisyys</value>
   </data>
@@ -321,33 +303,24 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>Uusi malline</value>
   </data>
-  
-  
-  
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Napauta poistaaksesi viivan</value>
   </data>
-  
-  
-  
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan
 +Ctrl siirtääksesi pistettä
 +Shift muokataksesi pistettä
 Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   </data>
-  
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
   </data>
-  
   <data name="Settings_Import" xml:space="preserve">
     <value>Tuo</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
-  
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Käänteinen</value>
   </data>
@@ -360,12 +333,8 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   <data name="TemplateEditor_Invert" xml:space="preserve">
     <value>Käänteinen</value>
   </data>
-  
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Pysäytysviiva</value>
-  </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>PV</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Napauta poistaaksesi pysäytysviivan</value>
@@ -379,21 +348,12 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>sulkualue</value>
   </data>
-  
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Raidat</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Ruudukko</value>
   </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>RA</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>R</value>
-  </data>
-  
-  
   <data name="Filler_Angle" xml:space="preserve">
     <value>Kulma</value>
   </data>
@@ -430,11 +390,6 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Viiva</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>V</value>
-  </data>
-  
-  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versio {0}</value>
   </data>
@@ -447,9 +402,4 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Lisää uusi sulkualue</value>
   </data>
-  
-  
-  
-  
-  
 </root>

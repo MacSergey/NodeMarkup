@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -192,26 +192,14 @@ Tuto akci nelze vrátit zpět</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Přerušovaná</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>P</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DP</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Dvojitá nepřerušovaná</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DN</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>N</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ne</value>
@@ -385,15 +373,11 @@ nebo smazání čáry
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
   </data>
-  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importovat</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Zrušit</value>
-  </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>PP</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Obrátit</value>
@@ -413,9 +397,6 @@ nebo smazání čáry
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Hranice křižovatky</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>HK</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
   </data>
@@ -428,20 +409,11 @@ nebo smazání čáry
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>výplň</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>PHK</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Pruhy</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Mřížka</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>KP</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>M</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Přerušovaná hranice křižovatky</value>
@@ -485,11 +457,6 @@ nebo smazání čáry
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>N</value>
-  </data>
-  
-  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Verze {0}</value>
   </data>
@@ -502,17 +469,10 @@ nebo smazání čáry
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dvojítá čára hranice</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná hranice</value>
-  </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>DNH</value>
-  </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>DPH</value>
   </data>
 </root>

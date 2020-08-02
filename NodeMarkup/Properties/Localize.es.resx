@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -192,26 +192,14 @@ No se puede deshacer esta acción</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Discontinua</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>D</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Discontinua Doble</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DD</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Continua doble</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>CD</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Continua</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>No</value>
@@ -385,15 +373,11 @@ Mantenga Alt para crear un relleno</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar las novedades</value>
   </data>
-  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importar</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Anular</value>
-  </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>DC</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Invertir</value>
@@ -413,9 +397,6 @@ Mantenga Alt para crear un relleno</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Línea transversal</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>LT</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Haga clic para borrar la línea transversal</value>
   </data>
@@ -428,20 +409,11 @@ Mantenga Alt para crear un relleno</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>relleno</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>LTD</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Franjas</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Cuadrícula</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>F</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>C</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Línea transversal discontinua</value>
@@ -485,11 +457,6 @@ Mantenga Alt para crear un relleno</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>C</value>
-  </data>
-  
-  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versión {0}</value>
   </data>
@@ -502,17 +469,10 @@ Mantenga Alt para crear un relleno</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Añadir nuevo relleno</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Línea transversal continua doble</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Línea transversal discontinua doble</value>
-  </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>LTCD</value>
-  </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>LTDD</value>
   </data>
 </root>

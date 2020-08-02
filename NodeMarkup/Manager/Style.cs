@@ -70,25 +70,6 @@ namespace NodeMarkup.Manager
                     return null;
             }
         }
-        public static string GetShortName(StyleType type)
-        {
-            switch (type)
-            {
-                case StyleType.LineSolid: return Localize.LineStyle_SolidShort;
-                case StyleType.LineDashed: return Localize.LineStyle_DashedShort;
-                case StyleType.LineDoubleSolid: return Localize.LineStyle_DoubleSolidShort;
-                case StyleType.LineDoubleDashed: return Localize.LineStyle_DoubleDashedShort;
-                case StyleType.LineSolidAndDashed: return Localize.LineStyle_SolidAndDashedShort;
-                case StyleType.StopLineSolid: return Localize.LineStyle_StopShort;
-                case StyleType.StopLineDashed: return Localize.LineStyle_StopDashedShort;
-                case StyleType.StopLineDoubleSolid: return Localize.LineStyle_StopDoubleShort;
-                case StyleType.StopLineDoubleDashed: return Localize.LineStyle_StopDoubleDashedShort;
-                case StyleType.FillerStripe: return Localize.FillerStyle_StripeShort;
-                case StyleType.FillerGrid: return Localize.FillerStyle_GridShort;
-                case StyleType.FillerSolid: return Localize.FillerStyle_SolidShort;
-                default: return null;
-            }
-        }
 
         public static string XmlName { get; } = "S";
 
@@ -315,7 +296,6 @@ namespace NodeMarkup.Manager
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
 
         public override string ToString() => Name;
-        public string ToStringWithShort() => $"{Style.GetShortName(Style.Type)}-{Name}";
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {

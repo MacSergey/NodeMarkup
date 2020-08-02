@@ -326,6 +326,7 @@ namespace NodeMarkup.UI.Editors
             base.Init(isDeletable: false);
 
             SetSprite(SetAsDefaultButton, isDefault ? "UnsetDefault" : "SetDefault");
+            SetAsDefaultButton.tooltip = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
 
         protected override void OnSizeChanged()

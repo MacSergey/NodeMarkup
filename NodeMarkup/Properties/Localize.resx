@@ -192,26 +192,14 @@ This action cannot be undone</value>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Dashed</value>
   </data>
-  <data name="LineStyle_DashedShort" xml:space="preserve">
-    <value>D</value>
-  </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Double dashed</value>
-  </data>
-  <data name="LineStyle_DoubleDashedShort" xml:space="preserve">
-    <value>DD</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Double solid</value>
   </data>
-  <data name="LineStyle_DoubleSolidShort" xml:space="preserve">
-    <value>DS</value>
-  </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solid</value>
-  </data>
-  <data name="LineStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>No</value>
@@ -402,9 +390,6 @@ Hold Alt to create a filler</value>
   <data name="Setting_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="LineStyle_SolidAndDashedShort" xml:space="preserve">
-    <value>SD</value>
-  </data>
   <data name="LineEditor_Invert" xml:space="preserve">
     <value>Invert</value>
   </data>
@@ -423,9 +408,6 @@ Hold Alt to create a filler</value>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Stop line</value>
   </data>
-  <data name="LineStyle_StopShort" xml:space="preserve">
-    <value>SL</value>
-  </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Click to delete the stop line</value>
   </data>
@@ -438,20 +420,11 @@ Hold Alt to create a filler</value>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>filler</value>
   </data>
-  <data name="LineStyle_StopDashedShort" xml:space="preserve">
-    <value>DSL</value>
-  </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Stripes</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Grid</value>
-  </data>
-  <data name="FillerStyle_StripeShort" xml:space="preserve">
-    <value>ST</value>
-  </data>
-  <data name="FillerStyle_GridShort" xml:space="preserve">
-    <value>G</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Dashed stop line</value>
@@ -495,9 +468,6 @@ Hold Alt to create a filler</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solid</value>
   </data>
-  <data name="FillerStyle_SolidShort" xml:space="preserve">
-    <value>S</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
     <value>- Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
 - Added "Double solid" and "Double Dashed" stop line styles.
@@ -537,12 +507,6 @@ Hold Alt to create a filler</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Double dashed stop line</value>
-  </data>
-  <data name="LineStyle_StopDoubleShort" xml:space="preserve">
-    <value>DSS</value>
-  </data>
-  <data name="LineStyle_StopDoubleDashedShort" xml:space="preserve">
-    <value>DDS</value>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Copy</value>
