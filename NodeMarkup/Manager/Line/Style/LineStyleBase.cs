@@ -45,7 +45,7 @@ namespace NodeMarkup.Manager
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
-        protected static UIComponent AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
             dashLengthProperty.Text = Localize.LineEditor_DashedLength;
@@ -59,7 +59,7 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
             return dashLengthProperty;
         }
-        protected static UIComponent AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
             spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
@@ -73,7 +73,7 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
             return spaceLengthProperty;
         }
-        protected static UIComponent AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
             offsetProperty.Text = Localize.LineEditor_Offset;
@@ -87,14 +87,20 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
-        protected static UIComponent AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
         {
-            var invertProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            invertProperty.Text = Localize.LineEditor_Invert;
-            invertProperty.Init();
-            invertProperty.Value = asymStyle.Invert;
-            invertProperty.OnValueChanged += (bool value) => asymStyle.Invert = value;
-            return invertProperty;
+            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
+            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += OnButtonClick;
+
+            void OnButtonClick(int index)
+            {
+                if (index == invertIndex)
+                    asymStyle.Invert = !asymStyle.Invert;
+            }
+
+            return buttonsPanel;
         }
 
         protected IEnumerable<MarkupStyleDash> CalculateSolid(Bezier3 trajectory, int depth, Func<Bezier3, IEnumerable<MarkupStyleDash>> calculateDashes)
