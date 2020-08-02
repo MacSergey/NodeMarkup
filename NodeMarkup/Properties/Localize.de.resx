@@ -487,7 +487,9 @@ Alt halten um eine Füllung zu erstellen</value>
     <value>Neue Füllung hinzufügen</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Test</value>
+    <value>- Flächenfüllung in Winkel-Form hinzugefügt
+- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
+- Kopieren/Einfügen von Linien und Füllungs-Stilen.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelte Haltelinie</value>
@@ -495,4 +497,20 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Gestrichelte doppelte Haltelinie</value>
   </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Winkel</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Winkel-Grad</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Invertieren</value>
+  </data>
+  
 </root>

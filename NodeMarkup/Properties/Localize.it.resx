@@ -468,4 +468,35 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
+  
+  
+  <data name="Mod_WhatsNewVersion" xml:space="preserve">
+    <value>Versione {0}</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Notifiche</value>
+  </data>
+  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
+    <value>Notifica solo gli update maggiore</value>
+  </data>
+  <data name="Settings_AddNewFiller" xml:space="preserve">
+    <value>Aggiungi un nuovo riempimento</value>
+  </data>
+  
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Doppia linea di stop</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Doppia linea di stop tratteggiata</value>
+  </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Incolla</value>
+  </data>
+  
+  
+  
+  
 </root>

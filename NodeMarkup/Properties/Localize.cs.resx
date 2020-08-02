@@ -457,6 +457,8 @@ nebo smazání čáry
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Verze {0}</value>
   </data>
@@ -474,5 +476,21 @@ nebo smazání čáry
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná hranice</value>
+  </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Kopírovat</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Vložit</value>
+  </data>
+  
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Úhel mezi</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Prohodit</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Odbočka</value>
   </data>
 </root>

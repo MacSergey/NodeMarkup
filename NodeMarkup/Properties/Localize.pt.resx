@@ -468,6 +468,8 @@ Prima Alt para criar um preenchimento</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versão {0}</value>
   </data>
@@ -480,13 +482,27 @@ Prima Alt para criar um preenchimento</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Teste</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Linha de Paragem Dupla</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Linha de Paragem Dupla Tracejada</value>
   </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Colar</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Ângulo entre</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Inverter</value>
+  </data>
+  
 </root>

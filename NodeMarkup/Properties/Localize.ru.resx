@@ -512,4 +512,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_StylePaste" xml:space="preserve">
     <value>Вставить</value>
   </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Шеврон</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Угол между</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Инвертировать</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Повернуть</value>
+  </data>
 </root>

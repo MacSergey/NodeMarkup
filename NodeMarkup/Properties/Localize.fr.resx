@@ -457,6 +457,8 @@ Maintenez Alt pour créer un filler</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
@@ -474,5 +476,23 @@ Maintenez Alt pour créer un filler</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Double ligne de stop en pointillés</value>
+  </data>
+  <data name="LineEditor_StyleCopy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="LineEditor_StylePaste" xml:space="preserve">
+    <value>Coller</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Angle entre les deux</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Virage</value>
   </data>
 </root>
