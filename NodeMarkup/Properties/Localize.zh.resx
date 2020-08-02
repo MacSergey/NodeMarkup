@@ -494,5 +494,10 @@ Shift x10，Ctrl x0.1</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>翻转</value>
   </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>旋转</value>
+  </data>
+  
+  
   
 </root>
