@@ -9,7 +9,10 @@ namespace NodeMarkup.UI
 {
     public abstract class EditorItem : UIPanel
     {
-        public virtual void Init()
+        protected const float defaultHeight = 30f;
+
+        public virtual void Init() => Init(defaultHeight);
+        public void Init(float height)
         {
             if (parent is UIScrollablePanel scrollablePanel)
                 width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
@@ -18,7 +21,7 @@ namespace NodeMarkup.UI
             else
                 width = parent.width;
 
-            height = 30;
+            this.height = height;
         }
     }
     public abstract class EditorPropertyPanel : EditorItem

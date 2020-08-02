@@ -74,10 +74,6 @@ namespace NodeMarkup.UI.Editors
             RefreshItems();
             HeaderPanel.Init(EditObject.IsDefault());
         }
-        //private void RefreshItem()
-        //{
-        //    SelectItem.Refresh();
-        //}
         protected override void OnObjectDelete(StyleTemplate template)
         {
             TemplateManager.DeleteTemplate(template);
@@ -88,7 +84,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Description => NodeMarkup.Localize.TemplateEditor_ItemDescription;
 
-        public TemplateItem() : base(true, true) { }
+        public override void Init() => Init(true, true);
 
         protected override void OnObjectSet() => SetIcon();
         public override void Refresh()

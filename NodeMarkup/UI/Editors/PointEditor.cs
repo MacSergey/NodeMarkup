@@ -66,7 +66,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Description => NodeMarkup.Localize.PointEditor_ItemDescription;
 
-        public PointItem() : base(true, false) { }
+        public override void Init() => Init(true, false);
 
         protected override void OnObjectSet()
         {

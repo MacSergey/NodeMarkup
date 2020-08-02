@@ -23,13 +23,14 @@ namespace NodeMarkup.UI.Editors
         public void Select() => normalBgSprite = "ButtonSmallPressed";
         public void Unselect() => normalBgSprite = "ButtonSmall";
     }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItem 
+    public abstract class EditableItem<EditableObject, IconType> : EditableItem
         where IconType : UIComponent
         where EditableObject : class
     {
         public event Action<EditableItem<EditableObject, IconType>> OnDelete;
 
         EditableObject _object;
+        private bool Inited { get; set; } = false;
         public abstract string Description { get; }
         public EditableObject Object
         {
@@ -47,16 +48,9 @@ namespace NodeMarkup.UI.Editors
         public bool ShowIcon { get; set; }
         public bool ShowDelete { get; set; }
 
-        public EditableItem(bool showIcon, bool showDelete)
+        public EditableItem()
         {
-            ShowIcon = showIcon;
-            ShowDelete = showDelete;
-
-            if (ShowIcon)
-                AddIcon();
             AddLable();
-            if (ShowDelete)
-                AddDeleteButton();
 
             atlas = TextureUtil.InGameAtlas;
 
@@ -67,6 +61,24 @@ namespace NodeMarkup.UI.Editors
             pressedBgSprite = "ButtonSmallPressed";
 
             height = 25;
+        }
+        public abstract void Init();
+        public void Init(bool showIcon, bool showDelete)
+        {
+            if (Inited)
+                return;
+
+            ShowIcon = showIcon;
+            ShowDelete = showDelete;
+
+            if (ShowIcon)
+                AddIcon();
+            if (ShowDelete)
+                AddDeleteButton();
+
+            OnSizeChanged();
+
+            Inited = true;
         }
 
         private void AddIcon()
@@ -172,7 +184,7 @@ namespace NodeMarkup.UI.Editors
         protected UIButton Thumbnail { get; set; }
 
         public Color32 StyleColor { set => Thumbnail.color = GetStyleColor(value); }
-        public Style.StyleType Type 
+        public Style.StyleType Type
         {
             set
             {

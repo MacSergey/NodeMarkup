@@ -61,8 +61,8 @@ namespace NodeMarkup.UI.Editors
             button.hoveredBgSprite = "ButtonWhiteHovered";
             button.pressedBgSprite = "ButtonWhitePressed";
             button.text = text;
-            button.textScale = 0.9f;
-            button.textPadding = new RectOffset(0, 0, 2, 0);
+            button.textScale = 0.8f;
+            button.textPadding = new RectOffset(0, 0, 3, 0);
             button.textColor = Color.black;
             button.focusedTextColor = Color.black;
             button.hoveredTextColor = Color.black;

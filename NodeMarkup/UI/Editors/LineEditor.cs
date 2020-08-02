@@ -294,7 +294,7 @@ namespace NodeMarkup.UI.Editors
 
     public class LineItem : EditableItem<MarkupLine, LineIcon>
     {
-        public LineItem() : base(true, true) { }
+        public override void Init() => Init(true, true);
 
         public override string Description => NodeMarkup.Localize.LineEditor_ItemDescription;
         protected override void OnObjectSet() => SetIcon();

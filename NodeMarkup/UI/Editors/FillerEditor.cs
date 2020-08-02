@@ -30,7 +30,6 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
-            AddCopyPaste();
             AddStyleTypeProperty();
             AddStyleProperties();
         }
@@ -41,13 +40,8 @@ namespace NodeMarkup.UI.Editors
             Header.Init(Manager.Style.StyleType.Filler, false);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnSelectTemplate += OnSelectTemplate;
-        }
-        private void AddCopyPaste()
-        {
-            var copyPaste = SettingsPanel.AddUIComponent<CopyPasteHeaderPanel>();
-            copyPaste.Init();
-            copyPaste.OnCopy += CopyStyle;
-            copyPaste.OnPaste += PasteStyle;
+            Header.OnCopy += CopyStyle;
+            Header.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
@@ -138,8 +132,7 @@ namespace NodeMarkup.UI.Editors
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
         public override string Description => NodeMarkup.Localize.FillerEditor_ItemDescription;
-
-        public FillerItem() : base(true, true) { }
+        public override void Init() => Init(true, true);
 
         protected override void OnObjectSet() => SetIcon();
         public override void Refresh()

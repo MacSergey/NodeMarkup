@@ -193,6 +193,7 @@ namespace NodeMarkup.UI.Editors
         public EditableItemType AddItem(EditableObject editableObject)
         {
             var item = ItemsPanel.AddUIComponent<EditableItemType>();
+            item.Init();
             item.name = editableObject.ToString();
             item.width = ItemsPanel.width;
             item.Object = editableObject;

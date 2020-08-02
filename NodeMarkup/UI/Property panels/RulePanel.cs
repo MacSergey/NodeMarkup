@@ -38,7 +38,6 @@ namespace NodeMarkup.UI.Editors
             SetSize();
 
             AddHeader();
-            AddCopyPaste();
             if (Editor.CanDivide)
             {
                 AddFromProperty();
@@ -64,13 +63,8 @@ namespace NodeMarkup.UI.Editors
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
-        }
-        private void AddCopyPaste()
-        {
-            var copyPaste = AddUIComponent<CopyPasteHeaderPanel>();
-            copyPaste.Init();
-            copyPaste.OnCopy += CopyStyle;
-            copyPaste.OnPaste += PasteStyle;
+            header.OnCopy += CopyStyle;
+            header.OnPaste += PasteStyle;
         }
         private void AddFromProperty()
         {
