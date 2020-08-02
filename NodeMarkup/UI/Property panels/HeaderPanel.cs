@@ -16,9 +16,9 @@ namespace NodeMarkup.UI.Editors
         {
             var spriteNames = new string[]
             {
-                "Normal",
                 "Hovered",
                 "Pressed",
+                "Normal",
                 "AddTemplate",
                 "ApplyTemplate",
                 "Copy",
