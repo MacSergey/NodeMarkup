@@ -526,4 +526,13 @@ Hold Alt to create a filler</value>
   <data name="Filler_Turn" xml:space="preserve">
     <value>Turn</value>
   </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>There are no lines at this intersection yet. To create a line connect two points.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>There are no fillers at this intersection yet. To create a filler, hold Alt or press {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>The list of templates is empty. To create a template, click «{0}» at the line style</value>
+  </data>
 </root>

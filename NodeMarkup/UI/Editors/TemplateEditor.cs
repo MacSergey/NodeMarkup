@@ -13,6 +13,8 @@ namespace NodeMarkup.UI.Editors
     public class TemplateEditor : Editor<TemplateItem, StyleTemplate, TemplateIcon>
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
+        public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
+
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
         private StringPropertyPanel NameProperty { get; set; }
         private TemplateHeaderPanel HeaderPanel { get; set; }

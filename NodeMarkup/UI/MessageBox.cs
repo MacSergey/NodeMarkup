@@ -92,7 +92,6 @@ namespace NodeMarkup.UI
             height = Height;
             color = new Color32(58, 88, 104, 255);
             backgroundSprite = "MenuPanel";
-            //clipChildren = true;
 
             AddHandle();
             AddPanel();

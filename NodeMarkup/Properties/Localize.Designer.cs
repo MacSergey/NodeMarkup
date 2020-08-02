@@ -153,6 +153,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet. To create a filler, hold Alt or press {0}..
+        /// </summary>
+        public static string FillerEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("FillerEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Fillers.
         /// </summary>
         public static string FillerEditor_Fillers {
@@ -312,6 +321,15 @@ namespace NodeMarkup {
         public static string LineEditor_DeleteRuleMessage {
             get {
                 return ResourceManager.GetString("LineEditor_DeleteRuleMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на There are no lines at this intersection yet. To create a line connect two points..
+        /// </summary>
+        public static string LineEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("LineEditor_EmptyMessage", resourceCulture);
             }
         }
         
@@ -983,6 +1001,15 @@ namespace NodeMarkup {
         public static string TemplateEditor_DashedLength {
             get {
                 return ResourceManager.GetString("TemplateEditor_DashedLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The list of templates is empty. To create a template, click «{0}» at the line style.
+        /// </summary>
+        public static string TemplateEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_EmptyMessage", resourceCulture);
             }
         }
         

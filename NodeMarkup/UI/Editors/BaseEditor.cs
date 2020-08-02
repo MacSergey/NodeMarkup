@@ -48,18 +48,22 @@ namespace NodeMarkup.UI.Editors
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollablePanel SettingsPanel { get; set; }
 
+        protected UILabel EmptyLabel { get; set; }
+
         public abstract string Name { get; }
+        public abstract string EmptyMessage { get; }
 
         public Editor()
         {
-            autoLayout = true;
-            autoLayoutDirection = LayoutDirection.Horizontal;
+            //autoLayout = true;
+            //autoLayoutDirection = LayoutDirection.Horizontal;
             clipChildren = true;
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
             AddSettingPanel();
+            AddEmptyLabel();
         }
         private void AddItemsPanel()
         {
@@ -82,9 +86,7 @@ namespace NodeMarkup.UI.Editors
         private void ItemsPanelSizeChanged(UIComponent component, Vector2 value)
         {
             foreach (var item in ItemsPanel.components)
-            {
                 item.width = ItemsPanel.width;
-            }
         }
         private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
@@ -111,13 +113,32 @@ namespace NodeMarkup.UI.Editors
         private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
         {
             foreach (var item in SettingsPanel.components)
-            {
                 item.width = SettingsPanel.width - SettingsPanel.autoLayoutPadding.horizontal;
-            }
         }
         private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
             SettingsPanel.width = size.x / 10 * 7 - (value ? SettingsPanel.verticalScrollbar.width : 0);
+        }
+        private void AddEmptyLabel()
+        {
+            EmptyLabel = AddUIComponent<UILabel>();
+            EmptyLabel.textAlignment = UIHorizontalAlignment.Center;
+            EmptyLabel.verticalAlignment = UIVerticalAlignment.Middle;
+            EmptyLabel.padding = new RectOffset(10, 10, 0, 0);
+            EmptyLabel.wordWrap = true;
+            EmptyLabel.autoSize = false;
+
+            SwitchEmpty();
+        }
+        protected void SwitchEmpty()
+        {
+            if (ItemsPanel.components.Any())
+                EmptyLabel.isVisible = false;
+            else
+            {
+                EmptyLabel.isVisible = true;
+                EmptyLabel.text = EmptyMessage;
+            }
         }
 
         public virtual void Init(NodeMarkupPanel panel)
@@ -183,13 +204,20 @@ namespace NodeMarkup.UI.Editors
             base.OnSizeChanged();
 
             ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
-            SettingsPanel.width = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
             ItemsPanel.height = size.y;
-            SettingsPanel.height = size.y;
+            ItemsPanel.relativePosition = new Vector2(0, 0);
             ItemsPanel.verticalScrollbar.height = size.y;
-            SettingsPanel.verticalScrollbar.height = size.y;
-        }
+            ItemsPanel.verticalScrollbar.relativePosition = ItemsPanel.relativePosition + new Vector3(ItemsPanel.width, 0);
 
+            SettingsPanel.width = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
+            SettingsPanel.height = size.y;
+            SettingsPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
+            SettingsPanel.verticalScrollbar.height = size.y;
+            SettingsPanel.verticalScrollbar.relativePosition = SettingsPanel.relativePosition + new Vector3(SettingsPanel.width, 0);
+
+            EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);
+            EmptyLabel.relativePosition = SettingsPanel.relativePosition;
+        }
         public EditableItemType AddItem(EditableObject editableObject)
         {
             var item = ItemsPanel.AddUIComponent<EditableItemType>();
@@ -201,6 +229,8 @@ namespace NodeMarkup.UI.Editors
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
             item.OnDelete += ItemDelete;
+
+            SwitchEmpty();
 
             return item;
         }
@@ -249,13 +279,15 @@ namespace NodeMarkup.UI.Editors
             item.eventMouseLeave -= ItemLeave;
             ItemsPanel.RemoveUIComponent(item);
             Destroy(item.gameObject);
+
+            SwitchEmpty();
         }
         private EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
         public void UpdateEditor(EditableObject selectObject = null)
         {
             var editObject = EditObject;
 
-            if(selectObject != null && selectObject == editObject)
+            if (selectObject != null && selectObject == editObject)
             {
                 OnObjectUpdate();
                 return;
@@ -286,6 +318,8 @@ namespace NodeMarkup.UI.Editors
             var componets = SettingsPanel.components.ToArray();
             foreach (var item in componets)
             {
+                if (item == EmptyLabel)
+                    continue;
                 SettingsPanel.RemoveUIComponent(item);
                 Destroy(item.gameObject);
             }

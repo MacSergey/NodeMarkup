@@ -17,6 +17,7 @@ namespace NodeMarkup.UI.Editors
     {
         public static Color WhiteAlpha { get; } = new Color(1, 1, 1, 0.5f);
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
+        public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
 
         private ButtonPanel AddButton { get; set; }
 
