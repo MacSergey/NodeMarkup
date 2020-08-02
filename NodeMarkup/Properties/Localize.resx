@@ -559,4 +559,7 @@ Hold Alt to create a filler</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>Invert</value>
   </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Turn</value>
+  </data>
 </root>

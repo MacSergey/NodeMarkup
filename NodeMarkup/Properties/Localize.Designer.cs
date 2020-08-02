@@ -144,6 +144,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn.
+        /// </summary>
+        public static string Filler_Turn {
+            get {
+                return ResourceManager.GetString("Filler_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Fillers.
         /// </summary>
         public static string FillerEditor_Fillers {

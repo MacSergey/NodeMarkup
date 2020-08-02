@@ -160,8 +160,8 @@ namespace NodeMarkup.Manager
 
         float _angleBetween;
         float _step;
-        float _offset;
         bool _invert;
+        int _output;
 
         public float AngleBetween
         {
@@ -181,15 +181,7 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
+        public float Offset { get; set; }
         public bool Invert
         {
             get => _invert;
@@ -199,23 +191,31 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public int Output
+        {
+            get => _output;
+            set
+            {
+                _output = value;
+                StyleChanged();
+            }
+        }
 
-        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, float offset, bool invert) : base(color, width, medianOffset)
+        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, medianOffset)
         {
             AngleBetween = angleBetween;
             Step = step;
-            Offset = offset;
+            Output = output;
             Invert = invert;
         }
 
-        public override FillerStyle CopyFillerStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step, Offset, Invert);
+        public override FillerStyle CopyFillerStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
-            //components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            components.Add(AddInvertProperty(this, parent));
+            components.Add(AddInvertAndTurnProperty(this, parent));
             return components;
         }
         protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent, Action onHover, Action onLeave)
@@ -234,15 +234,26 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(angleProperty, onHover, onLeave);
             return angleProperty;
         }
-        protected static BoolPropertyPanel AddInvertProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
-            var invertProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            invertProperty.Text = Localize.Filler_Invert;
-            invertProperty.Init();
-            invertProperty.Value = chevronStyle.Invert;
-            invertProperty.OnValueChanged += (bool value) => chevronStyle.Invert = value;
-            return invertProperty;
+            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
+            var invertIndex = buttonsPanel.AddButton(Localize.Filler_Invert);
+            var turnIndex = buttonsPanel.AddButton(Localize.Filler_Turn);
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += OnButtonClick;
+
+            void OnButtonClick(int index)
+            {
+                if (index == invertIndex)
+                    chevronStyle.Invert = !chevronStyle.Invert;
+                else if (index == turnIndex)
+                    chevronStyle.Output += 1;
+            }
+
+            return buttonsPanel;
         }
+
+
 
         protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height)
         {
@@ -377,7 +388,7 @@ namespace NodeMarkup.Manager
         }
         private Bezier3 GetMiddleBezier(Bezier3[] trajectories)
         {
-            var left = 1;
+            var left = Output % trajectories.Length;
             var right = left == 0 ? trajectories.Length - 1 : left - 1;
             var middle = new Bezier3()
             {
@@ -428,8 +439,8 @@ namespace NodeMarkup.Manager
             var config = base.ToXml();
             config.Add(new XAttribute("A", AngleBetween));
             config.Add(new XAttribute("S", Step));
-            config.Add(new XAttribute("O", Offset));
             config.Add(new XAttribute("I", Invert));
+            config.Add(new XAttribute("O", Output));
             return config;
         }
         public override void FromXml(XElement config)
@@ -437,8 +448,8 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             AngleBetween = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStepGrid);
-            Offset = config.GetAttrValue("O", DefaultOffset);
             Invert = config.GetAttrValue("I", false);
+            Output = config.GetAttrValue("O", 0);
         }
     }
 }

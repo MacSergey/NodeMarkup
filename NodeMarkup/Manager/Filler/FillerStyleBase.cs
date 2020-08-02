@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
             {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
-            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe, DefaultOffset, false)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
