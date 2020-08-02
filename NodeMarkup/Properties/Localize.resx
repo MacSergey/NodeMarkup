@@ -528,7 +528,8 @@ Hold Alt to create a filler</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- You can delete a rule for a line that doesn't intersect to make it invisible.
+    <value>- Added chevron filler style
+- You can delete a rule for a line that doesn't intersect to make it invisible.
 - Copy/paste lines and fillers style.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">

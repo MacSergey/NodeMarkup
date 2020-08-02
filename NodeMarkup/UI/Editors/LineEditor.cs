@@ -153,7 +153,8 @@ namespace NodeMarkup.UI.Editors
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
                 RefreshItem();
-                AddAddButton();
+                if (!CanDivide)
+                    AddAddButton();
                 return true;
             }
         }
