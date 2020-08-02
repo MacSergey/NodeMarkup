@@ -107,7 +107,7 @@ namespace NodeMarkup.Utils
         public static NetSegment GetSegment(ushort segmentId) => NetManager.m_segments.m_buffer[segmentId];
         public static NetLane GetLane(uint laneId) => NetManager.m_lanes.m_buffer[laneId];
 
-        public static float Length(this Bezier3 bezier, float minAngleDelta = 10, int depth = 0)
+        public static float Length(this Bezier3 bezier, float minAngleDelta = 10, int depth = 0, int maxDepth = 5)
         {
             var start = bezier.b - bezier.a;
             var end = bezier.c - bezier.d;
@@ -115,11 +115,11 @@ namespace NodeMarkup.Utils
                 return 0;
 
             var angle = Vector3.Angle(start, end);
-            if (depth < 5 && 180 - angle > minAngleDelta)
+            if (depth < maxDepth && 180 - angle > minAngleDelta)
             {
                 bezier.Divide(out Bezier3 first, out Bezier3 second);
-                var firstLength = first.Length(depth: depth + 1);
-                var secondLength = second.Length(depth: depth + 1);
+                var firstLength = first.Length(depth: depth + 1, maxDepth: maxDepth);
+                var secondLength = second.Length(depth: depth + 1, maxDepth: maxDepth);
                 return firstLength + secondLength;
             }
             else
@@ -169,7 +169,7 @@ namespace NodeMarkup.Utils
             }
         }
         public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
-
+        public static float Angle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 

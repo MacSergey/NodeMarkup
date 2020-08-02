@@ -178,13 +178,7 @@ namespace NodeMarkup.Manager
                 endPosition += endDirection * offset;
             }
 
-            var position = (startPosition + endPosition) / 2;
-            var direction = (endPosition - startPosition);
-
-            var angle = Mathf.Atan2(direction.z, direction.x);
-
-            var dash = new MarkupStyleDash(position, angle, dashLength, Width, Color);
-            return dash;
+            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, Width, Color);
         }
         protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, float offset)
         {
@@ -200,12 +194,7 @@ namespace NodeMarkup.Manager
                 endPosition += endDirection * offset;
             }
 
-            var position = (endPosition + startPosition) / 2;
-            var direction = endPosition - startPosition;
-            var angle = Mathf.Atan2(direction.z, direction.x);
-
-            var dash = new MarkupStyleDash(position, angle, direction.magnitude, Width, Color);
-            return dash;
+            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, Width, Color);
         }
     }
 

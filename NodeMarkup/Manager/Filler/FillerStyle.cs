@@ -154,7 +154,6 @@ namespace NodeMarkup.Manager
             return components;
         }
     }
-
     public class ChevronFillerStyle : FillerStyle, IPeriodicFiller
     {
         public override StyleType Type => StyleType.FillerChevron;
@@ -215,7 +214,7 @@ namespace NodeMarkup.Manager
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            //components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             components.Add(AddInvertProperty(this, parent));
             return components;
         }
@@ -245,20 +244,138 @@ namespace NodeMarkup.Manager
             return invertProperty;
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
+        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height)
         {
-            var trajectories = filler.Trajectories.ToArray();
             if (trajectories.Length < 3)
-                return new MarkupStyleDash[0];
+                yield break;
 
-            if (filler.IsMedian)
-                trajectories = GetTrajectoriesWithoutMedian(trajectories, filler.Parts.ToArray());
+            GetItems(trajectories, rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth);
 
-            var middle = GetMiddle(trajectories);
+            for (var i = 0; i < directions.Count; i += 1)
+            {
+                var dir = directions[i];
+                foreach (var pos in positions[i])
+                {
+                    var intersectSet = new HashSet<MarkupFillerIntersect>();
+                    foreach (var trajectory in trajectories)
+                    {
+                        foreach (var t in MarkupFillerIntersect.Intersect(trajectory, pos, pos + dir))
+                            if (t.FirstT > 0)
+                                intersectSet.Add(t);
+                    }
 
-            return GetDashes(trajectories, middle);
+                    if(intersectSet.Count % 2 == 1)
+                        intersectSet.Add(new MarkupFillerIntersect(0, 0, 0));
+
+                    var intersects = intersectSet.OrderBy(j => j).ToArray();
+
+                    for (var j = 1; j < intersects.Length; j += 2)
+                    {
+                        var start = pos + dir * intersects[j - 1].FirstT;
+                        var end = pos + dir * intersects[j].FirstT;
+
+                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color);
+                    }
+                }
+            }
         }
-        private Bezier3 GetMiddle(Bezier3[] trajectories)
+
+        private void GetItems(Bezier3[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
+        {
+            var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;
+            var width = Width / Mathf.Sin(halfAngelRad);
+
+            var bezier = GetMiddleBezier(trajectories);
+            var line = GetMiddleLine(bezier, halfAngelRad, rect);
+
+            GetParts(width, 0, out int partsCount, out partWidth);
+
+            positions = new List<Vector3[]>();
+            directions = new List<Vector3>();
+
+            foreach (var itemPositions in GetItemsPositions(bezier, line, width, width * (Step - 1)))
+            {
+                var dir = (itemPositions[1] - itemPositions[0]).normalized;
+                var dirRight = dir.Turn(halfAngelRad, true);
+                var dirLeft = dir.Turn(halfAngelRad, false);
+
+                var start = partWidth / 2;
+
+                var rightPos = new Vector3[partsCount];
+                var leftPos = new Vector3[partsCount];
+
+                for (var i = 0; i < partsCount; i += 1)
+                {
+                    var partPos = itemPositions[0] + dir * (start + partWidth * i);
+
+                    rightPos[i] = partPos;
+                    leftPos[i] = partPos;
+                }
+
+                positions.Add(rightPos);
+                directions.Add(dirRight);
+                positions.Add(leftPos);
+                directions.Add(dirLeft);
+            }
+        }
+        private IEnumerable<Vector3[]> GetItemsPositions(Bezier3 bezier, Line3 line, float dash, float space)
+        {
+            var dashesT = new List<float[]>();
+
+            var startSpace = space / 2;
+            for (var i = 0; i < 3; i += 1)
+            {
+                dashesT.Clear();
+                var isDash = false;
+
+                var prevT = 0f;
+                var currentT = 0f;
+                var nextT = Travel(currentT, startSpace);
+
+                while (nextT < 2)
+                {
+                    if (isDash)
+                        dashesT.Add(new float[] { currentT, nextT });
+
+                    isDash = !isDash;
+
+                    prevT = currentT;
+                    currentT = nextT;
+                    nextT = Travel(currentT, isDash ? dash : space);
+                }
+
+                float endSpace;
+                if (isDash || ((Position(2) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
+                    endSpace = (Position(2) - Position(prevT)).magnitude;
+                else
+                    endSpace = tempLength;
+
+                startSpace = (startSpace + endSpace) / 2;
+
+                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
+                    break;
+            }
+
+            foreach (var dashT in dashesT)
+            {
+                yield return new Vector3[] { Position(dashT[0]), Position(dashT[1]) };
+            }
+
+
+            Vector3 Position(float t) => t <= 1 ? bezier.Position(t) : line.a + (line.b - line.a) * (t - 1);
+            float Travel(float current, float distance)
+            {
+                if (current >= 1)
+                    return distance / (line.b - line.a).magnitude + current;
+
+                var next = bezier.Travel(current, distance);
+                if (next < 1)
+                    return next;
+                else
+                    return (distance - (Position(1) - Position(current)).magnitude) / (line.b - line.a).magnitude + 1;
+            }
+        }
+        private Bezier3 GetMiddleBezier(Bezier3[] trajectories)
         {
             var left = 1;
             var right = left == 0 ? trajectories.Length - 1 : left - 1;
@@ -276,113 +393,35 @@ namespace NodeMarkup.Manager
             {
                 if (i == left || i == right)
                     continue;
-                if (MarkupLineIntersect.Intersect(middle, trajectories[i], out float t, out _) &&  t < cutT)
+                if (MarkupLineIntersect.Intersect(middle, trajectories[i], out float t, out _) && t < cutT)
                     cutT = t;
             }
-            middle = middle.Cut(0, cutT);
 
-            return middle;
+            return cutT == 1f ? middle : middle.Cut(0, cutT);
         }
-        private IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Bezier3 middle)
+        private Line3 GetMiddleLine(Bezier3 middleBezier, float halfAngelRad, Rect rect)
         {
-            var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;
-            var width = Width / Mathf.Sin(halfAngelRad);
+            var middleDir = (middleBezier.d - middleBezier.c).normalized;
+            var dirRight = middleDir.Turn(halfAngelRad, true);
+            var dirLeft = middleDir.Turn(halfAngelRad, false);
 
-            GetParts(width, 0, out int partsCount, out float partWidth);
+            GetRail(dirRight.Angle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
+            GetRail(dirLeft.Angle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
 
-            var length = middle.Length() + width * (Step - 1);
-            var itemLength = width * Step;
-            var itemsCount = Math.Max((int)(length / itemLength) - 1, 0);
-            var start = (length - (itemLength * itemsCount)) / 2;
+            var t = 0f;
+            t = Mathf.Max(t, GetT(rightRail.a, dirRight));
+            t = Mathf.Max(t, GetT(rightRail.b, dirRight));
+            t = Mathf.Max(t, GetT(leftRail.a, dirLeft));
+            t = Mathf.Max(t, GetT(leftRail.b, dirLeft));
 
-            var getDashFunc = Offset == 0 ? (GetDashesDelegate)GetItemDashes : (GetDashesDelegate)GetItemDashesWithOffset;
+            return new Line3(middleBezier.d, middleBezier.d + middleDir * t);
 
-            for (var i = 0; i < itemsCount; i += 1)
+            float GetT(Vector3 railPos, Vector3 railDir)
             {
-                var itemStart = start + partWidth / 2 + i * itemLength;
-                var itemStartT = middle.Travel(0f, itemStart);
-                var dir = middle.Tangent(itemStartT);
-                var leftDir = dir.Turn(halfAngelRad, false).normalized;
-                var rightDir = dir.Turn(halfAngelRad, true).normalized;
-
-                foreach (var dash in getDashFunc(trajectories, middle, itemStart, itemStartT, leftDir, partsCount, partWidth))
-                    yield return dash;
-
-                foreach (var dash in getDashFunc(trajectories, middle, itemStart, itemStartT, rightDir, partsCount, partWidth))
-                    yield return dash;
+                Line2.Intersect(middleBezier.d.XZ(), (middleBezier.d + middleDir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
+                return p;
             }
         }
-        private delegate IEnumerable<MarkupStyleDash> GetDashesDelegate(Bezier3[] trajectories, Bezier3 middle, float start, float startT, Vector3 dir, int partsCount, float partWidth);
-        private IEnumerable<MarkupStyleDash> GetItemDashes(Bezier3[] trajectories, Bezier3 middle, float start, float startT, Vector3 dir, int partsCount, float partWidth)
-        {
-            for (var i = 0; i < partsCount; i += 1)
-            {
-                var startPos = GetPartPos(middle, start, startT, partWidth, i);
-                if (!(GetIntersect(trajectories, startPos, dir) is MarkupFillerIntersect intersect))
-                    continue;
-                var endPos = startPos + dir * intersect.FirstT;
-
-                yield return new MarkupStyleDash(startPos, endPos, dir, partWidth, Color);
-            }
-        }
-        private IEnumerable<MarkupStyleDash> GetItemDashesWithOffset(Bezier3[] trajectories, Bezier3 middle, float start, float startT, Vector3 dir, int partsCount, float partWidth)
-        {
-            var mainStartPos = GetPartPos(middle, start, startT, partWidth, 0);
-            if (!(GetIntersect(trajectories, mainStartPos, dir) is MarkupFillerIntersect intersect))
-                yield break;
-
-            var mainEndPos = mainStartPos + dir * intersect.FirstT;
-            var offset = GetOffset(intersect, Offset);
-
-            if ((mainEndPos - mainStartPos).magnitude < offset)
-                yield break;
-            else
-            {
-                mainEndPos -= dir * offset;
-                yield return new MarkupStyleDash(mainStartPos, mainEndPos, dir, partWidth, Color);
-            }
-
-            var normalStart = mainEndPos;
-            var normalEnd = normalStart + dir.Turn90(true);
-
-            for (var i = 1; i < partsCount; i += 1)
-            {
-                var startPos = GetPartPos(middle, start, startT, partWidth, i);
-                if (Line2.Intersect(startPos.XZ(), (startPos + dir).XZ(), normalStart.XZ(), normalEnd.XZ(), out float v, out _) && v > 0)
-                {
-                    var endPos = startPos + v * dir;
-                    yield return new MarkupStyleDash(startPos, endPos, dir, partWidth, Color);
-                }
-            }
-        }
-
-        private Vector3 GetPartPos(Bezier3 middle, float start, float startT, float partWidth, int index)
-        {
-            var partStart = start + partWidth * index;
-
-            if (partStart.NearlyEqual(start, Vector3.kEpsilon))
-                return middle.Position(startT);
-            else
-            {
-                var partT = middle.Travel(startT, partStart - start);
-                return middle.Position(partT);
-            }
-        }
-        private MarkupFillerIntersect GetIntersect(Bezier3[] trajectories, Vector3 pos, Vector3 dir)
-        {
-            var result = default(MarkupFillerIntersect);
-            foreach (var trajectory in trajectories)
-            {
-                foreach (var intersect in MarkupFillerIntersect.Intersect(trajectory, pos, pos + dir))
-                {
-                    if (intersect.FirstT >= 0 && (result == null || intersect.FirstT < result.FirstT))
-                        result = intersect;
-                }
-            }
-            return result;
-        }
-
-        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height) => throw new NotSupportedException();
 
         public override XElement ToXml()
         {

@@ -116,7 +116,7 @@ namespace NodeMarkup.Manager
 
         protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
         {
-            foreach (var point in GetLines(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
+            foreach (var point in GetItems(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
             {
                 var intersectSet = new HashSet<MarkupFillerIntersect>();
                 foreach (var trajectory in trajectories)
@@ -140,18 +140,12 @@ namespace NodeMarkup.Manager
                         if ((end - start).magnitude - Width < startOffset + endOffset)
                             continue;
 
-                        var sToE = intersects[i].FirstT >= intersects[i - 1].FirstT;
-                        start += normal * (sToE ? startOffset : -startOffset);
-                        end += normal * (sToE ? -endOffset : endOffset);
+                        var isStartToEnd = intersects[i].FirstT >= intersects[i - 1].FirstT;
+                        start += normal * (isStartToEnd ? startOffset : -startOffset);
+                        end += normal * (isStartToEnd ? -endOffset : endOffset);
                     }
 
-                    var pos = (start + end) / 2;
-                    var angle = Mathf.Atan2(normal.z, normal.x);
-                    var length = (end - start).magnitude;
-
-                    yield return new MarkupStyleDash(pos, angle, length, partWidth, Color);
-
-
+                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color);
                 }
             }
         }
@@ -160,7 +154,7 @@ namespace NodeMarkup.Manager
             var sin = Mathf.Sin(intersect.Angle);
             return sin != 0 ? offset / sin : 1000f;
         }
-        protected List<Vector3> GetLines(float angle, Rect rect, float height, float width, float step, float offset, out Vector3 normal, out float partWidth)
+        protected List<Vector3> GetItems(float angle, Rect rect, float height, float width, float step, float offset, out Vector3 normal, out float partWidth)
         {
             var results = new List<Vector3>();
 
@@ -177,12 +171,12 @@ namespace NodeMarkup.Manager
             normal = dir.Turn90(false);
 
             var itemLength = width * step;
-            var stripeCount = Math.Max((int)(length / itemLength) - 1, 0);
-            var start = (length - (itemLength * stripeCount)) / 2;
+            var itemsCount = Math.Max((int)(length / itemLength) - 1, 0);
+            var start = (length - (itemLength * itemsCount)) / 2;
 
             GetParts(width, offset, out int partsCount, out partWidth);
 
-            for (var i = 0; i < stripeCount; i += 1)
+            for (var i = 0; i < itemsCount; i += 1)
             {
                 var stripStart = start + partWidth / 2 + i * itemLength;
                 for (var j = 0; j < partsCount; j += 1)
@@ -193,20 +187,25 @@ namespace NodeMarkup.Manager
 
             return results;
         }
-        private bool GetRail(float angle, Rect rect, float height, out Line3 rail)
+        protected bool GetRail(float SceneAngle, Rect rect, float height, out Line3 rail)
         {
-            var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
+            if (SceneAngle > 90)
+                SceneAngle -= 180;
+            else if (SceneAngle < -90)
+                SceneAngle += 180;
+
+            var absAngle = Mathf.Abs(SceneAngle) * Mathf.Deg2Rad;
             var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
             var dx = railLength * Mathf.Sin(absAngle);
             var dy = railLength * Mathf.Cos(absAngle);
 
-            if (angle == -90 || angle == 90)
+            if (SceneAngle == -90 || SceneAngle == 90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
-            else if (90 > angle && angle > 0)
+            else if (90 > SceneAngle && SceneAngle > 0)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
-            else if (angle == 0)
+            else if (SceneAngle == 0)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
-            else if (0 > angle && angle > -90)
+            else if (0 > SceneAngle && SceneAngle > -90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
             else
             {
