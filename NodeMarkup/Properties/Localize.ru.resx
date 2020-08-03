@@ -512,12 +512,15 @@ Shift X10, Ctrl X0.1</value>
     <value>Повернуть</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>У этого перекрестка еще нет линий. Для создания линии соедините две точки.</value>
+    <value>У этого перекрестка еще нет линий.
+Для создания линии соедините две точки.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>У этого перекрестка еще нет заполнителей. Для создания заполнителя удерживайте Alt или нажмите {0}.</value>
+    <value>У этого перекрестка еще нет заполнителей.
+Для создания заполнителя удерживайте Alt или нажмите {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Список шаблонов пуст. Для создания шаблона нажмите «{0}» у стиля линии.</value>
+    <value>Список шаблонов пуст.
+Для создания шаблона нажмите «{0}» у стиля линии.</value>
   </data>
 </root>
