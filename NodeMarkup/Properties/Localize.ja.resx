@@ -493,7 +493,9 @@ Altキー押下で塗り潰しを開始</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>ラインを反転</value>
   </data>
-  
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>左右に回転</value>
+  </data>
   
   
   
