@@ -468,8 +468,23 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Correttii pulsanti Alt, Ctrl e Shift su Mac OS e Linux.
+- Aggiunti gli stili di linea di stop "Doppia continua" e "Doppia tratteggiata".
+- Aggiunte traduzioni in italiano e portoghese.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>- Il messaggio "Novità - What's New" verrà visualizzato una volta dopo un aggiornamento e può essere disabilitato nel menu Opzioni.
+- Aggiunte le seguenti traduzioni: ceco, olandese, francese, tedesco, giapponese, polacco, russo e spagnolo (si prega di contattare l'autore della mod per aiutare con la traduzione nella propria lingua).
+- Ora è possibile trascinare i punti finali da uno dall'altro tenendo premuto Ctrl.
+- Backup: nel menu Opzioni è ora possibile eseguire il backup dei dati di marcatura su una mappa scaricando su un file e quindi importandolo. Ciò è necessario se servisse disabilitare la mod, effettuare un nuovo salvataggio senza la mod e quindi ripristinare tutti i contrassegni.
+- Ora verrà visualizzato un avviso popup quando si eliminano elementi. Questo vale per linee, regole e modelli. Questo può essere disabilitato nelle opzioni.
+- Aggiunta nuova scorciatoia per l'aggiunta di una nuova regola - Maiusc + Ctrl + A (rimappabile).
+- Impostazione rapida della regola: dopo aver aggiunto una nuova regola, l'interfaccia per la selezione dei punti iniziale e finale ora si apre automaticamente. Non è più necessario fare clic sulle aree "Da" e "A". Questo può essere disabilitato nelle opzioni.
+- Risolto il problema con le linee che sembravano essere spezzate o divise - si verificava solo nelle transizioni autostradali e stradali.
+- Le linee non verranno più visualizzate quando sono mostrate le informazioni della visualizzazione delle sovrapposizioni.
+- La scorciatoia di attivazione ora si attiverà quando si apre un altro strumento mentre lo strumento di marcatura è già aperto.</value>
+  </data>
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versione {0}</value>
   </data>
@@ -482,7 +497,12 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>- Aggiunto lo stile riempimento a spina di pesce o a galloni.
+- Puoi eliminare una regola per una linea che non si interseca per renderla invisibile.
+- Copia/incolla stili linee e riempimento.
+- Migliorate le linee di stop.</value>
+  </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia linea di stop</value>
   </data>
@@ -507,7 +527,16 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="Filler_Turn" xml:space="preserve">
     <value>Gira</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Non ci sono ancora linee in questa intersezione.
+Per creare una linea connetti due punti.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Non ci sono ancora riempimenti in questa intersezione.
+Per creare uno riempimento, tieni premuto Alt o premi {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>La lista dei modelli è vuota.
+Per creare una modello, clicca «{0}» sullo stile linea.</value>
+  </data>
 </root>

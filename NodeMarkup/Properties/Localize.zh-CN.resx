@@ -118,425 +118,386 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Editor_DeleteCaption" xml:space="preserve">
-    <value>Lösche {0}</value>
+    <value>删除{0}</value>
   </data>
   <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Willst du {0} {1} wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+    <value>确定要删除 {0} {1} 吗?
+此操作不可撤销。</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Mausrad scrollen zum ändern
-Shift x10, Strg x0.1</value>
+    <value>使用滚轮改变参数
+Shift x10，Ctrl x0.1</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Vorlage anwenden</value>
+    <value>应用模板</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Als Vorlage speichern</value>
+    <value>另存为模板</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Als Standard festlegen</value>
+    <value>设定为默认</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Als Standard entfernen</value>
+    <value>撤销默认</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Regel hinzufügen</value>
+    <value>添加规则</value>
   </data>
   <data name="LineEditor_Color" xml:space="preserve">
-    <value>Farbe</value>
+    <value>颜色</value>
   </data>
   <data name="LineEditor_DashedLength" xml:space="preserve">
-    <value>Strichlänge</value>
+    <value>虚线长度</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Regel löschen</value>
+    <value>删除规则</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Regel wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+    <value>确定要删除这个规则吗?
+此操作不可撤销。</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
-    <value>Von</value>
+    <value>起始点</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Startpunkt der Regel auswählen</value>
+    <value>选择此段落的起始点</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Endpunkt der Regel auswählen</value>
+    <value>选择此段落的终止点</value>
   </data>
   <data name="LineEditor_ItemDescription" xml:space="preserve">
-    <value>Linie</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Linien</value>
+    <value>线段</value>
   </data>
   <data name="LineEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
+    <value>偏移</value>
   </data>
   <data name="LineEditor_SpaceLength" xml:space="preserve">
-    <value>Länge des Zwischenraums</value>
+    <value>间隔长度</value>
   </data>
   <data name="LineEditor_Style" xml:space="preserve">
-    <value>Stil</value>
+    <value>样式</value>
   </data>
   <data name="LineEditor_To" xml:space="preserve">
-    <value>Zu</value>
+    <value>终止点</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Überschneidung mit {0}</value>
+    <value>与 {0} 相交</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Eckpunkt {0}</value>
+    <value>节点端点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Gestrichelt</value>
+    <value>虚线</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Doppelt gestrichelt</value>
+    <value>双虚线</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Doppelt durchgezogen</value>
+    <value>双实线</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Durchgezogen</value>
+    <value>实线</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
-    <value>Nein</value>
+    <value>取消</value>
   </data>
   <data name="MessageBox_OK" xml:space="preserve">
-    <value>Ok</value>
+    <value>确认</value>
   </data>
   <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ja</value>
+    <value>确定</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Markierungen an Kreuzungen erstellen</value>
+    <value>使用此工具来轻松创建交叉口地标线。</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dies ist eine BETA Version. Stabilität und Fehlerfreiheit sind nicht garantiert!</value>
+    <value>这是BETA测试版，可能会出现功能性错误。无法担保工作稳定！</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Markierungen von Node #{0} bearbeiten</value>
+    <value>编辑节点 #{0} 的地标线</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
-    <value>Punkt</value>
+    <value>点</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
+    <value>偏移</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Punkte</value>
+    <value>端点</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Nicht festgelegt</value>
+    <value>未设置</value>
   </data>
   <data name="Settings_ActivateTool" xml:space="preserve">
-    <value>Tool aktivieren</value>
+    <value>启用工具</value>
   </data>
   <data name="Settings_AddNewLineRule" xml:space="preserve">
-    <value>Neue Linienregel hinzufügen</value>
+    <value>添加新规则</value>
   </data>
   <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
-    <value>Alle Linien an Nodes löschen</value>
+    <value>删除选中节点的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Markierung von allen Kreuzungen löschen</value>
+    <value>删除本地图内的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Alle Markierungen löschen</value>
+    <value>删除所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wirklich alle Markierungen entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+    <value>确定要删除全图所有的地标线吗?
+此操作不可撤销！</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten in Datei speichern</value>
+    <value>将地标线信息导出到文件</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
-    <value>Pfad in die Zwischenablage kopieren</value>
+    <value>复制路径到剪贴板</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Ok</value>
+    <value>确认</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten speichern</value>
+    <value>导出地标线信息</value>
   </data>
   <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Speichern fehlgeschlagen</value>
+    <value>导出失败</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Erfolgreich gespeichert</value>
+    <value>导出成功</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value>Allgemein</value>
+    <value>常规设置</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten aus Datei importieren</value>
+    <value>从文件中导入地标线信息</value>
   </data>
   <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten importieren</value>
+    <value>导入地标线信息</value>
   </data>
   <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Möchtest Du wirklich die Daten importieren?
-Die importierten Daten werden alle vorhandenen Markierungen ersetzen.
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+    <value>确定要导入数据吗?
+导入后的数据会覆盖全图既存的地标线。
+此操作无法撤销！</value>
   </data>
   <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import der Markierungsdaten fehlgeschlagen</value>
+    <value>地标线信息导入失败</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Markierungsdaten erfolgreich importiert</value>
+    <value>地标线信息导入成功</value>
   </data>
   <data name="Settings_Other" xml:space="preserve">
-    <value>Anderes</value>
+    <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Schnelle Regel-Erstellung</value>
+    <value>快速初始化新规则</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Render-Distanz</value>
+    <value>渲染距离</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Tastenkürzel</value>
+    <value>快捷键</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Löschwarnungen anzeigen</value>
+    <value>删除前弹窗确认</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Zeige Tooltips</value>
+    <value>显示提示</value>
   </data>
   <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Farbe</value>
+    <value>颜色</value>
   </data>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Strichlänge</value>
+    <value>虚线长度</value>
   </data>
   <data name="TemplateEditor_ItemDescription" xml:space="preserve">
-    <value>Vorlage</value>
+    <value>模版</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>名称</value>
   </data>
   <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
+    <value>偏移</value>
   </data>
   <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Zwischenraum-Länge</value>
+    <value>间隔长度</value>
   </data>
   <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Stil</value>
+    <value>样式</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Vorlagen</value>
+    <value>模板</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Neue Vorlage</value>
+    <value>新建模板</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Node-Markierungen löschen</value>
+    <value>清除节点的地标线</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Markierungen von Node#{0} entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+    <value>确定要删除节点 #{0} 的所有地标线吗?
+此操作不可撤销。</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klicken um Linie zu erstellen
-+Shift - Durchgezogen
-+Strg - Doppelt</value>
+    <value>点击以创建地标线
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Zum Löschen der Linie klicken</value>
+    <value>点击可擦除线段</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Node #{0}
-Klicken um Markierung zu bearbeiten</value>
+    <value>节点 #{0}
+点击以编辑地标线</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Node zum Ändern der Markierung auswählen</value>
+    <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
-    <value>Endpunkt wählen
-+Shift - Durchgezogen
-+Strg - Doppelt</value>
+    <value>选择终止点
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Startpunkt wählen zum
-Linie erstellen oder löschen
-+Strg um den Punkt zu verschieben
-+Shift um den Punkt zu bearbeiten
-Alt halten um eine Füllung zu erstellen</value>
+    <value>点选起始点
+来创建/擦除线段
++Ctrl 偏移端点
++Shift 编辑端点
+按住Alt创建填充图案</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Was ist neu in {0}</value>
+    <value>{0} 版本的新功能</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>"Was gibt es neues" zeigen</value>
+    <value>显示更新提示框</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>- Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
-- Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
-- Neuer Linien-Stil: "Durchgezogen &amp; gestrichelt".
-- Linien und Vorlagen haben in Listen nun Icons, die den Stil und die Farbe anzeigen.
-- Markierungen werden kopiert, wenn man eine Kreuzung mit Move it kopiert (Steht erst zur Verfügung, wenn Move it ein Update bereit stellt).
-- Kopieren und Einfügen Funktion für Linien-Farben hinzugefügt.
-- Beim Upgraden einer Straße auf eine andere mit gleicher Anzahl an Spuren, bleiben die Markierungen nun erhalten.
-- Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
-- Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
-  </data>
+  
   <data name="Settings_Import" xml:space="preserve">
-    <value>Importieren</value>
+    <value>导入</value>
   </data>
   <data name="Setting_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>取消</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
-    <value>Invertieren</value>
+    <value>翻转</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
-    <value>Breite</value>
+    <value>宽度</value>
   </data>
   <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Breite</value>
+    <value>宽度</value>
   </data>
   <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Invertieren</value>
+    <value>翻转</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Durchgezogen und Gestrichelt</value>
+    <value>虚实线</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Haltelinie</value>
+    <value>停止线</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>Zum Löschen der Haltelinie klicken</value>
+    <value>点击以擦除停止线</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>Klicken um eine Haltelinie zu erstellen</value>
+    <value>点击以创建停止线</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Füllungen</value>
+    <value>填充图案</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
-    <value>füllung</value>
+    <value>填充图案</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Streifen</value>
+    <value>条纹线</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Gitter</value>
+    <value>网格</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Gestrichelte Haltelinie</value>
+    <value>虚线停止线</value>
   </data>
   <data name="Filler_Step" xml:space="preserve">
-    <value>Schritt</value>
+    <value>间隔</value>
   </data>
   <data name="Filler_Angle" xml:space="preserve">
-    <value>Winkel</value>
+    <value>角度</value>
   </data>
   <data name="Filler_Offset" xml:space="preserve">
-    <value>Abstand der Linien</value>
+    <value>从边线回缩</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>Klicken um mit der Füllung zu beginnen</value>
+    <value>点击来开始创建填充</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Klicken um das Erstellen der Füllung zu beenden</value>
+    <value>点击以完成创建填充</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>Klicken um den nächsten Punkt des Umrisses auszuwählen</value>
+    <value>点击以选择填充区域下一端点</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Wähle einen Punkt um mit dem Erstellen einer Füllung zu beginnen</value>
+    <value>选择填充区域起点</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Wähle den nächsten Punkt des Umrisses</value>
+    <value>选择填充区域下一端点</value>
   </data>
   <data name="Filler_MedianOffset" xml:space="preserve">
-    <value>Abstand vom Median</value>
+    <value>往中心回缩</value>
   </data>
   <data name="LineEditor_ColorCopy" xml:space="preserve">
-    <value>Kopieren</value>
+    <value>复制</value>
   </data>
   <data name="LineEditor_ColorPaste" xml:space="preserve">
-    <value>Einfügen</value>
+    <value>粘贴</value>
   </data>
   <data name="LineEditor_ColorDefault" xml:space="preserve">
-    <value>Standard</value>
+    <value>默认</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Vollständig gefüllt</value>
+    <value>实线</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
-- "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
-- Italienische und Portugiesische Übersetzung hinzugefügt.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>- "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.
-- Übersetzungen hinzugefügt:  Tschechisch, Niederländisch, Französisch, Deutsch, Japanisch, Polnisch, Russisch und Spanisch (Bitte den Mod-Autor kontaktieren, wenn du bei der Übersetzung in deine Sprache helfen möchtest).
-- Endpunkte können nun von einem zum anderen gezogen werden, wenn man Strg hält.
-- Backups - In den Einstellungen können alle gesetzten Markierungen einer Map als Backup gespeichert und später wieder importiert werden. Dies wird benötigt, wenn du den Mod deaktivieren willst, den Spielstand dann nochmal speichern möchtest und nach der erneuten Aktivierung des Mods die Markierungen wieder herstellen möchtest.
-- Es gibt nun einen Warnhinweis wenn etwas gelöscht werden soll. Dies gilt für Linien, Regeln und Vorlagen. Die Warnung kann in den Einstellungen deaktiviert werden.
-- Neues Tastenkürzel zum Hinzufügen neuer Regeln eingestellt - Shift+Ctrl+A (änderbar).
-- Schnell-Regeln-Einstellungen: Nach dem Hinzufügen einer neuen Regel öffnet sich die Mod-Oberfläche zum Auswählen des Start- und Endpunktes automatisch. "Von" und "Zu" muss nicht mehr zusätzlich angeklickt werden. Das kann in den Einstellungen deaktiviert werden.
-- Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
-- Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
-- Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
-  </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Version {0}</value>
+    <value>版本{0}</value>
   </data>
   <data name="Settings_Notifications" xml:space="preserve">
-    <value>Benachrichtigungen</value>
+    <value>通知消息</value>
   </data>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Benachrichtigungen nur bei Haupt-Versions-Updates</value>
+    <value>只推送重要更新提示消息</value>
   </data>
   <data name="Settings_AddNewFiller" xml:space="preserve">
-    <value>Neue Füllung hinzufügen</value>
+    <value>创建新填充图案</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
-- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
-- Kopieren/Einfügen von Linien und Füllungs-Stilen.
-- Haltelinien verbessert.</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Doppelte Haltelinie</value>
+    <value>双停止线</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Gestrichelte doppelte Haltelinie</value>
+    <value>双虚停止线</value>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
-    <value>Kopieren</value>
+    <value>复制</value>
   </data>
   <data name="LineEditor_StylePaste" xml:space="preserve">
-    <value>Einfügen</value>
+    <value>粘贴</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Winkel</value>
+    <value>箭头</value>
   </data>
   <data name="Filler_AngleBetween" xml:space="preserve">
-    <value>Winkel-Grad</value>
+    <value>角度</value>
   </data>
   <data name="Filler_Invert" xml:space="preserve">
-    <value>Invertieren</value>
+    <value>翻转</value>
   </data>
   <data name="Filler_Turn" xml:space="preserve">
-    <value>Umdrehen</value>
+    <value>旋转</value>
   </data>
-  <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>Es befinden sich noch keine Linien auf dieser Kreuzung.
-Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
-  </data>
-  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Es befinden sich noch keine Füllungen auf dieser Kreuzung.
-Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
-  </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Vorlagen ist leer.
-Um eine Vorlage zu erstellen klicke «{0}» beim Linien-Stil.</value>
-  </data>
+  
+  
+  
 </root>

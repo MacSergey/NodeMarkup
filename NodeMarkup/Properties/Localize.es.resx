@@ -494,8 +494,19 @@ Mantenga Alt para crear un relleno</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>Invertir</value>
   </data>
-  
-  
-  
-  
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Girar</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Todavía no hay líneas en este cruce.
+Para crear una línea, conecta dos puntos.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Todavía no hay rellenos en este cruce.
+Para crear un relleno, mantenga presionada la tecla Alt o presione {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>La lista de plantillas está vacía.
+Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
+  </data>
 </root>

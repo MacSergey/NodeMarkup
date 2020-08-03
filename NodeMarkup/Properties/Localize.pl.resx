@@ -494,8 +494,19 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>Odwróć</value>
   </data>
-  
-  
-  
-  
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Obróć</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>To skrzyżowanie nie ma jeszcze żadnych linii.
+Aby utworzyć linię połącz ze sobą dwa punkty.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>To skrzyżowanie nie ma jeszcze żadnych wypełnień.
+Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Lista szablonów jest pusta.
+Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii.</value>
+  </data>
 </root>
