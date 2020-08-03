@@ -178,7 +178,7 @@ namespace NodeMarkup.Manager
             ItemMask = 0xFF,
             GroupMask = ~ItemMask,
 
-            RegularLine = 0x100,
+            RegularLine = Markup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
             LineSolid,
@@ -196,7 +196,7 @@ namespace NodeMarkup.Manager
             LineSolidAndDashed,
 
 
-            StopLine = 0x200,
+            StopLine = Markup.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_Stop))]
             StopLineSolid,
@@ -211,7 +211,7 @@ namespace NodeMarkup.Manager
             StopLineDoubleDashed,
 
 
-            Filler = 0x400,
+            Filler = Markup.Item.Filler,
 
             [Description(nameof(Localize.FillerStyle_Stripe))]
             FillerStripe,
@@ -224,6 +224,14 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Chevron))]
             FillerChevron,
+
+
+            Crosswalk = Markup.Item.Crosswalk,
+
+            CrosswalkDashed,
+            CrosswalkDoubleSolid,
+            CrosswalkDoubleDashed,
+
         }
     }
 
@@ -235,14 +243,6 @@ namespace NodeMarkup.Manager
         public float Width { get; set; }
         public Color Color { get; set; }
 
-        //public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color)
-        //{
-        //    Position = position;
-        //    Angle = angle;
-        //    Length = length;
-        //    Width = width;
-        //    Color = color;
-        //}
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color)
         {
             Position = (start + end) / 2;

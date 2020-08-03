@@ -99,6 +99,7 @@
     <Compile Include="Manager\Filler\FillerVertex.cs" />
     <Compile Include="Manager\Line\Line.cs" />
     <Compile Include="Manager\Line\LineRule.cs" />
+    <Compile Include="Manager\Line\Style\CrosswalkLineStyle.cs" />
     <Compile Include="Manager\Line\Style\StopLineStyle.cs" />
     <Compile Include="Manager\Line\Style\RegularLineStyles.cs" />
     <Compile Include="Manager\Markup.cs" />
@@ -230,7 +231,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

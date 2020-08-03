@@ -276,6 +276,8 @@ namespace NodeMarkup.Manager
 
         #endregion
 
+        #region FILLERS
+
         public void AddFiller(MarkupFiller filler)
         {
             FillersList.Add(filler);
@@ -287,6 +289,8 @@ namespace NodeMarkup.Manager
             FillersList.Remove(filler);
             NeedRecalculateBatches = true;
         }
+
+        #endregion
 
         #region XML
 
@@ -359,6 +363,12 @@ namespace NodeMarkup.Manager
 
         #endregion XML
 
-
+        public enum Item
+        {
+            RegularLine = 0x100,
+            StopLine = 0x200,
+            Filler = 0x400,
+            Crosswalk = 0x800,
+        }
     }
 }

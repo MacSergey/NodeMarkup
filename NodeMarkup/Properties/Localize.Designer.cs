@@ -153,7 +153,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet. To create a filler, hold Alt or press {0}..
+        ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet.
+        ///To create a filler, hold Alt or press {0}..
         /// </summary>
         public static string FillerEditor_EmptyMessage {
             get {
@@ -325,7 +326,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на There are no lines at this intersection yet. To create a line connect two points..
+        ///   Ищет локализованную строку, похожую на There are no lines at this intersection yet.
+        ///To create a line connect two points..
         /// </summary>
         public static string LineEditor_EmptyMessage {
             get {
@@ -642,7 +644,8 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на - Added chevron filler style
         ///- You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
-        ///- Copy/paste lines and fillers style..
+        ///- Copy/paste lines and fillers style.
+        ///- Improved stop lines..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -1005,7 +1008,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на The list of templates is empty. To create a template, click «{0}» at the line style.
+        ///   Ищет локализованную строку, похожую на The list of templates is empty.
+        ///To create a template, click «{0}» at the line style..
         /// </summary>
         public static string TemplateEditor_EmptyMessage {
             get {

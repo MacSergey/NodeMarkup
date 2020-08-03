@@ -285,4 +285,26 @@ namespace NodeMarkup.Manager
             DoubleDashed = StyleType.StopLineDoubleDashed,
         }
     }
+    public abstract class CrosswalkStyle : LineStyle
+    {
+        static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
+        {
+        };
+
+        public static LineStyle GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
+
+        public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
+
+        public override LineStyle CopyLineStyle() => CopyCrosswalkStyle();
+        public abstract StopLineStyle CopyCrosswalkStyle();
+
+        public enum CrosswalkType
+        {
+            Dashed = StyleType.CrosswalkDashed,
+
+            DoubleSolid = StyleType.CrosswalkDoubleSolid,
+
+            DoubleDashed = StyleType.CrosswalkDoubleDashed,
+        }
+    }
 }

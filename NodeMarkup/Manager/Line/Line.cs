@@ -116,6 +116,8 @@ namespace NodeMarkup.Manager
             {
                 case Style.StyleType.StopLine:
                     return new MarkupStopLine(makrup, pointPair, (StopLineStyle.StopLineType)(int)style);
+                case Style.StyleType.Crosswalk:
+                    return new MarkupCrosswalk(makrup, pointPair, (CrosswalkStyle.CrosswalkType)(int)style);
                 case Style.StyleType.RegularLine:
                 default:
                     return new MarkupRegularLine(makrup, pointPair, (RegularLineStyle.RegularLineType)(int)style);
@@ -191,6 +193,29 @@ namespace NodeMarkup.Manager
         public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType) :
             base(markup, pointPair, TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType))
         { }
+    }
+    public class MarkupCrosswalk : MarkupLine
+    {
+        public override bool SupportRules => false;
+
+        public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) :
+            base(markup, pointPair, TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType))
+        { }
+
+        public override void UpdateTrajectory()
+        {
+            var shift = RawRules.FirstOrDefault() is MarkupLineRawRule rule && rule.Style is CrosswalkStyle style ? style.Width : 0;
+            var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
+
+            var trajectory = default(Bezier3);
+            trajectory.a = PointPair.First.Position + PointPair.First.Direction * shift;
+            trajectory.b = trajectory.a + dir;
+            trajectory.d = PointPair.Second.Position + PointPair.Second.Direction * shift;
+            trajectory.c = trajectory.d - dir;
+
+            Trajectory = trajectory;
+        }
     }
 
     public struct MarkupLinePair
