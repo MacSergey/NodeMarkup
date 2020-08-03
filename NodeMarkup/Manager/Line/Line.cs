@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupLine : IToXml
+    public abstract class MarkupLine : IToXml
     {
         public static string XmlName { get; } = "L";
 
@@ -27,20 +27,19 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        public MarkupLine(Markup markup, MarkupPointPair pointPair)
+        protected MarkupLine(Markup markup, MarkupPointPair pointPair)
         {
             Markup = markup;
             PointPair = pointPair;
 
             UpdateTrajectory();
         }
-        public MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second) : this(markup, new MarkupPointPair(first, second)) { }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : this(markup, pointPair)
+        protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second) : this(markup, new MarkupPointPair(first, second)) { }
+        protected MarkupLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : this(markup, pointPair)
         {
             AddRule(lineStyle, false, false);
             RecalculateDashes();
         }
-        public MarkupLine(Markup markup, MarkupPointPair pointPair, Style.StyleType lineType) : this(markup, pointPair, TemplateManager.GetDefault<LineStyle>(lineType)) { }
         private void RuleChanged() => Markup.Update(this);
         public virtual void UpdateTrajectory()
         {
@@ -61,7 +60,7 @@ namespace NodeMarkup.Manager
             foreach (var rule in rules)
             {
                 var trajectoryPart = Trajectory.Cut(rule.Start, rule.End);
-                var ruleDashes = rule.LineStyle.Calculate(trajectoryPart).ToArray();
+                var ruleDashes = rule.LineStyle.Calculate(this, trajectoryPart).ToArray();
 
                 dashes.AddRange(ruleDashes);
             }
@@ -93,7 +92,6 @@ namespace NodeMarkup.Manager
             RawRules.Remove(rule);
             RuleChanged();
         }
-
         public void RemoveRules(MarkupLine intersectLine)
         {
             RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
@@ -103,6 +101,24 @@ namespace NodeMarkup.Manager
                 AddRule(false);
         }
 
+        public static MarkupLine FromPointPair(Markup makrup, MarkupPointPair pointPair)
+        {
+            if (pointPair.IsSomeEnter)
+                return new MarkupStopLine(makrup, pointPair);
+            else
+                return new MarkupRegularLine(makrup, pointPair);
+        }
+        public static MarkupLine FromStyle(Markup makrup, MarkupPointPair pointPair, Style.StyleType style)
+        {
+            switch (style & Style.StyleType.GroupMask)
+            {
+                case Style.StyleType.StopLine:
+                    return new MarkupStopLine(makrup, pointPair, (StopLineStyle.StopLineType)(int)style);
+                case Style.StyleType.RegularLine:
+                default:
+                    return new MarkupRegularLine(makrup, pointPair, (RegularLineStyle.RegularLineType)(int)style);
+            }
+        }
         public XElement ToXml()
         {
             var config = new XElement(XmlSection,
@@ -123,7 +139,7 @@ namespace NodeMarkup.Manager
             MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair);
             if (!makrup.TryGetLine(pointPair.Hash, out line))
             {
-                line = new MarkupLine(makrup, pointPair);
+                line = FromPointPair(makrup, pointPair);
                 return true;
             }
             else
@@ -138,11 +154,40 @@ namespace NodeMarkup.Manager
             }
         }
     }
-#pragma warning disable CS0660 // Тип определяет оператор == или оператор !=, но не переопределяет Object.Equals(object o)
-#pragma warning disable CS0661 // Тип определяет оператор == или оператор !=, но не переопределяет Object.GetHashCode()
+    public class MarkupRegularLine : MarkupLine
+    {
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
+            base(markup, pointPair, TemplateManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType))
+        { }
+    }
+    public abstract class MarkupStraightLine : MarkupLine
+    {
+        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
+        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, LineStyle lineStyle) : base(markup, pointPair, lineStyle) { }
+
+        public override void UpdateTrajectory()
+        {
+            var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
+            Trajectory = new Bezier3
+            {
+                a = PointPair.First.Position,
+                b = PointPair.First.Position + dir,
+                c = PointPair.Second.Position - dir,
+                d = PointPair.Second.Position,
+            };
+        }
+    }
+    public class MarkupStopLine : MarkupStraightLine
+    {
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType) :
+            base(markup, pointPair, TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType))
+        { }
+    }
+
     public struct MarkupLinePair
-#pragma warning restore CS0661 // Тип определяет оператор == или оператор !=, но не переопределяет Object.GetHashCode()
-#pragma warning restore CS0660 // Тип определяет оператор == или оператор !=, но не переопределяет Object.Equals(object o)
     {
         public static MarkupLinePairComparer Comparer { get; } = new MarkupLinePairComparer();
         public static bool operator ==(MarkupLinePair a, MarkupLinePair b) => Comparer.Equals(a, b);

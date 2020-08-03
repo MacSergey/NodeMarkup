@@ -17,16 +17,12 @@ namespace NodeMarkup.Manager
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
         protected virtual float Shift => Width / 2;
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory)
         {
-            var offset = (trajectory.a - trajectory.b).normalized * Shift;
-
-            trajectory.b = trajectory.d;
-            trajectory.c = trajectory.a;
-
+            var offset = ((line.Start.Direction + line.End.Direction) / 2).normalized * Shift;
             foreach (var dash in CalculateSolid(trajectory, 0, CalculateDashes))
             {
-                dash.Position += offset;
+                dash.Position -= offset;
                 yield return dash;
             }
         }
@@ -125,16 +121,12 @@ namespace NodeMarkup.Manager
         }
 
         protected virtual float Shift => Width / 2;
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory)
         {
-            var offset = (trajectory.a - trajectory.b).normalized * Shift;
-
-            trajectory.b = trajectory.d;
-            trajectory.c = trajectory.a;
-
+            var offset = ((line.Start.Direction + line.End.Direction) / 2).normalized * Shift;
             foreach (var dash in CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes))
             {
-                dash.Position += offset;
+                dash.Position -= offset;
                 yield return dash;
             }
         }

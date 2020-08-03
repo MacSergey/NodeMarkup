@@ -248,11 +248,11 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverItem)
                 {
                     var bezier = HoverItem.Object.Trajectory;
-                    if (HoverItem.Object.IsEnterLine)
-                    {
-                        bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
-                        bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
-                    }
+                    //if (HoverItem.Object.IsEnterLine)
+                    //{
+                    //    bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
+                    //    bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
+                    //}
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverRulePanel)

@@ -41,7 +41,7 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory);
+        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 

@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
         {
             yield return CalculateSolidDash(trajectory, 0f);
@@ -123,7 +123,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
         {
@@ -258,7 +258,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory)
         {
             foreach (var dash in CalculateSolid(trajectory, 0, CalculateSolidDash))
             {

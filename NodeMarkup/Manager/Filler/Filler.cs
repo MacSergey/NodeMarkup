@@ -284,19 +284,9 @@ namespace NodeMarkup.Manager
         public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
     }
 
-    public class MarkupFakeLine : MarkupLine
+    public class MarkupFakeLine : MarkupStraightLine
     {
         public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
-        public override void UpdateTrajectory()
-        {
-            Trajectory = new Bezier3
-            {
-                a = PointPair.First.Position,
-                b = PointPair.Second.Position,
-                c = PointPair.First.Position,
-                d = PointPair.Second.Position,
-            };
-        }
     }
 
 }

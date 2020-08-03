@@ -187,7 +187,7 @@ namespace NodeMarkup.Manager
         #region LINES
 
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
         {
             if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
             {
@@ -196,7 +196,7 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                line = new MarkupLine(this, pointPair, lineType);
+                line = MarkupLine.FromStyle(this, pointPair, style);
                 LinesDictionary[pointPair.Hash] = line;
                 NeedRecalculateBatches = true;
                 return line;
