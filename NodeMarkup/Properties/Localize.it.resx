@@ -495,7 +495,18 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="LineEditor_StylePaste" xml:space="preserve">
     <value>Incolla</value>
   </data>
-  
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Spina di pesce o Gallone</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Angolo compreso tra</value>
+  </data>
+  <data name="Filler_Invert" xml:space="preserve">
+    <value>Inverti</value>
+  </data>
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Gira</value>
+  </data>
   
   
   
