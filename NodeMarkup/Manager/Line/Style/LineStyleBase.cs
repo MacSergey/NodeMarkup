@@ -172,33 +172,44 @@ namespace NodeMarkup.Manager
 
         protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, float offset)
         {
+            if (offset == 0)
+                return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero);
+            else
+            {
+                var startOffset = trajectory.Tangent(startT).Turn90(true).normalized * offset;
+                var endOffset = trajectory.Tangent(endT).Turn90(true).normalized * offset;
+                return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset);
+            }
+        }
+        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset)
+        {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
 
-            if (offset != 0f)
-            {
-                var startDirection = trajectory.Tangent(startT).Turn90(true).normalized;
-                var endDirection = trajectory.Tangent(endT).Turn90(true).normalized;
+            startPosition += startOffset;
+            endPosition += endOffset;
 
-                startPosition += startDirection * offset;
-                endPosition += endDirection * offset;
-            }
-
-            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, Width, Color);
+            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, Width, Color);
         }
+
         protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, float offset)
+        {
+            if (offset == 0)
+                return CalculateSolidDash(trajectory, Vector3.zero, Vector3.zero);
+            else
+            {
+                var startOffset = (trajectory.b - trajectory.a).Turn90(true).normalized * offset;
+                var endOffset = (trajectory.d - trajectory.c).Turn90(true).normalized * offset;
+                return CalculateSolidDash(trajectory, startOffset, endOffset);
+            }
+        }
+        protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, Vector3 startOffset, Vector3 endOffset)
         {
             var startPosition = trajectory.a;
             var endPosition = trajectory.d;
 
-            if (offset != 0f)
-            {
-                var startDirection = (trajectory.b - trajectory.a).Turn90(true).normalized;
-                var endDirection = (trajectory.d - trajectory.c).Turn90(true).normalized;
-
-                startPosition += startDirection * offset;
-                endPosition += endDirection * offset;
-            }
+            startPosition += startOffset;
+            endPosition += endOffset;
 
             return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, Width, Color);
         }

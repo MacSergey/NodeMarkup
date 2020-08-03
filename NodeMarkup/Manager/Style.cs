@@ -243,14 +243,15 @@ namespace NodeMarkup.Manager
         //    Width = width;
         //    Color = color;
         //}
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color)
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color)
         {
             Position = (start + end) / 2;
             Angle = dir.Angle();
-            Length = (end - start).magnitude;
+            Length = length;
             Width = width;
             Color = color;
         }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color) : this(start, end, dir, (end - start).magnitude, width, color) { }
     }
     public class StyleTemplate : IToXml
     {
