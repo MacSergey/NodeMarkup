@@ -59,7 +59,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = AddUIComponent<StyleHeaderPanel>();
-            header.Init(Rule.Style.Type, true);
+            header.Init(Rule.Style.Type, Editor.EditObject.SupportRules);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
@@ -95,17 +95,18 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            switch (Rule.Style.Type & Manager.Style.StyleType.GroupMask)
+            switch (Editor.EditObject)
             {
-                case Manager.Style.StyleType.RegularLine:
+                case MarkupRegularLine regularLine:
                     Style = AddUIComponent<RegularStylePropertyPanel>();
                     break;
-                case Manager.Style.StyleType.StopLine:
+                case MarkupStopLine stopLine:
                     Style = AddUIComponent<StopStylePropertyPanel>();
                     break;
                 default:
                     return;
             }
+
             Style.Text = NodeMarkup.Localize.LineEditor_Style;
             Style.Init();
             Style.SelectedObject = Rule.Style.Type;

@@ -12,6 +12,8 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "L";
 
+        public abstract bool SupportRules { get;}
+
         public Markup Markup { get; private set; }
         public ulong Id => PointPair.Hash;
 
@@ -156,6 +158,8 @@ namespace NodeMarkup.Manager
     }
     public class MarkupRegularLine : MarkupLine
     {
+        public override bool SupportRules => true;
+
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
             base(markup, pointPair, TemplateManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType))
@@ -181,6 +185,8 @@ namespace NodeMarkup.Manager
     }
     public class MarkupStopLine : MarkupStraightLine
     {
+        public override bool SupportRules => false;
+
         public MarkupStopLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType) :
             base(markup, pointPair, TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType))

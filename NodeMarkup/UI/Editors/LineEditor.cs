@@ -22,7 +22,7 @@ namespace NodeMarkup.UI.Editors
         private ButtonPanel AddButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
-        public bool CanDivide => SupportPoints.Count > 2;
+        public bool CanDivide => EditObject?.SupportRules == true && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.RawRules.Any() == false;
 
         private ILinePartEdge HoverSupportPoint { get; set; }

@@ -286,6 +286,8 @@ namespace NodeMarkup.Manager
 
     public class MarkupFakeLine : MarkupStraightLine
     {
+        public override bool SupportRules => false;
+
         public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
     }
 
