@@ -72,35 +72,40 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
-            var trajectories = filler.Trajectories.ToArray();
-            if (filler.IsMedian)
-                trajectories = GetTrajectoriesWithoutMedian(trajectories, filler.Parts.ToArray());
-
+            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Trajectories.ToArray();
             var rect = GetRect(trajectories);
             return GetDashes(trajectories, rect, filler.Markup.Height);
         }
-        public Bezier3[] GetTrajectoriesWithoutMedian(Bezier3[] baseTrajectories, MarkupLinePart[] lineParts)
+        public Bezier3[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
-            var trajectories = baseTrajectories.ToArray();
+            var lineParts = filler.Parts.ToArray();
+            var trajectories = filler.TrajectoriesRaw.ToArray();
 
             for (var i = 0; i < lineParts.Length; i += 1)
             {
+                if (trajectories[i] == null)
+                    continue;
+
                 var line = lineParts[i].Line;
                 if (line is MarkupFakeLine)
                     continue;
 
                 var prevI = i == 0 ? lineParts.Length - 1 : i - 1;
-                if (lineParts[prevI].Line is MarkupFakeLine)
+                if (lineParts[prevI].Line is MarkupFakeLine && trajectories[prevI] != null)
                 {
-                    trajectories[i] = Shift(trajectories[i]);
-                    trajectories[prevI].d = trajectories[prevI].b = trajectories[i].a;
+                    trajectories[i] = Shift(trajectories[i].Value);
+                    var temp = trajectories[prevI].Value;
+                    temp.d = temp.b = trajectories[i].Value.a;
+                    trajectories[prevI] = temp;
                 }
 
                 var nextI = i + 1 == lineParts.Length ? 0 : i + 1;
-                if (lineParts[nextI].Line is MarkupFakeLine)
+                if (lineParts[nextI].Line is MarkupFakeLine && trajectories[nextI] != null)
                 {
-                    trajectories[i] = Shift(trajectories[i].Invert()).Invert();
-                    trajectories[nextI].a = trajectories[nextI].c = trajectories[i].d;
+                    trajectories[i] = Shift(trajectories[i].Value.Invert()).Invert();
+                    var temp = trajectories[nextI].Value;
+                    temp.a = temp.c = trajectories[i].Value.d;
+                    trajectories[nextI] = temp;
                 }
 
                 Bezier3 Shift(Bezier3 trajectory)
@@ -110,7 +115,7 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            return trajectories;
+            return trajectories.Where(t => t != null).Select(t => t.Value).ToArray();
         }
         protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height);
 

@@ -56,17 +56,22 @@ namespace NodeMarkup.Manager
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
         public bool IsMedian => LineParts.Any(p => p.Line is MarkupFakeLine);
 
-        public IEnumerable<Bezier3> Trajectories
+        public IEnumerable<Bezier3?> TrajectoriesRaw
         {
             get
             {
-                foreach(var part in LineParts)
+                foreach (var part in LineParts)
                 {
                     if (part.GetTrajectory(out Bezier3 bezier))
                         yield return bezier;
+                    else
+                        yield return null;
                 }
             }
         }
+
+        public IEnumerable<Bezier3> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t.Value);
+
         public string XmlSection => XmlName;
 
         public MarkupFiller(Markup markup, FillerStyle style)

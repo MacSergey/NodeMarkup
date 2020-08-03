@@ -307,8 +307,8 @@ namespace NodeMarkup.Manager
             foreach (var itemPositions in GetItemsPositions(bezier, line, width, width * (Step - 1)))
             {
                 var dir = (itemPositions[1] - itemPositions[0]).normalized;
-                var dirRight = dir.Turn(halfAngelRad, true);
-                var dirLeft = dir.Turn(halfAngelRad, false);
+                var dirRight = dir.TurnRad(halfAngelRad, true);
+                var dirLeft = dir.TurnRad(halfAngelRad, false);
 
                 var start = partWidth / 2;
 
@@ -413,8 +413,8 @@ namespace NodeMarkup.Manager
         private Line3 GetMiddleLine(Bezier3 middleBezier, float halfAngelRad, Rect rect)
         {
             var middleDir = (middleBezier.d - middleBezier.c).normalized;
-            var dirRight = middleDir.Turn(halfAngelRad, true);
-            var dirLeft = middleDir.Turn(halfAngelRad, false);
+            var dirRight = middleDir.TurnRad(halfAngelRad, true);
+            var dirLeft = middleDir.TurnRad(halfAngelRad, false);
 
             GetRail(dirRight.Angle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
             GetRail(dirLeft.Angle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);

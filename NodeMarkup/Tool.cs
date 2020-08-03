@@ -405,9 +405,9 @@ namespace NodeMarkup
 
             var normal = point.Enter.CornerDir.Turn90(true);
 
-            Line2.Intersect(VectorUtils.XZ(point.Position), VectorUtils.XZ(point.Position + point.Enter.CornerDir), VectorUtils.XZ(output.m_hitPos), VectorUtils.XZ(output.m_hitPos + normal), out float offsetChange, out _);
+            Line2.Intersect(point.Position.XZ(), (point.Position + point.Enter.CornerDir).XZ(), output.m_hitPos.XZ(), (output.m_hitPos + normal).XZ(), out float offsetChange, out _);
 
-            point.Offset = (point.Offset + offsetChange).RoundToNearest(0.01f);
+            point.Offset = (point.Offset + offsetChange * Mathf.Sin(point.Enter.CornerDeltaAngle)).RoundToNearest(0.01f);
         }
         private void ProcessShortcuts(Event e)
         {
@@ -662,10 +662,13 @@ namespace NodeMarkup
         }
         private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
         {
+            if (enter.Position == null)
+                return;
+
             var bezier = new Bezier3
             {
-                a = enter.Position - enter.CornerDir * enter.RoadHalfWidth,
-                d = enter.Position + enter.CornerDir * enter.RoadHalfWidth
+                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth,
+                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth
             };
             NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
 

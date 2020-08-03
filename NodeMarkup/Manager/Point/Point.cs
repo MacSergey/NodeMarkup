@@ -46,7 +46,7 @@ namespace NodeMarkup.Manager
         public Bounds Bounds { get; private set; }
 
         SegmentMarkupLine MarkupLine { get; }
-        public Enter Enter => MarkupLine.SegmentEnter;
+        public Enter Enter => MarkupLine.Enter;
         public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
         public Markup Markup => Enter.Markup;
 

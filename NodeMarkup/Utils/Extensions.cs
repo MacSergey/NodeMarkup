@@ -94,8 +94,8 @@ namespace NodeMarkup.Utils
 
         public static Vector2 Turn90(this Vector2 v, bool isClockWise) => isClockWise ? new Vector2(v.y, -v.x) : new Vector2(-v.y, v.x);
         public static Vector3 Turn90(this Vector3 v, bool isClockWise) => isClockWise ? new Vector3(v.z, v.y, -v.x) : new Vector3(-v.z, v.y, v.x);
-        public static Vector3 TurnDeg(this Vector3 vector, float turnAngle, bool isClockWise) => vector.Turn(turnAngle * Mathf.Deg2Rad, isClockWise);
-        public static Vector3 Turn(this Vector3 vector, float turnAngle, bool isClockWise)
+        public static Vector3 TurnDeg(this Vector3 vector, float turnAngle, bool isClockWise) => vector.TurnRad(turnAngle * Mathf.Deg2Rad, isClockWise);
+        public static Vector3 TurnRad(this Vector3 vector, float turnAngle, bool isClockWise)
         {
             turnAngle = isClockWise ? -turnAngle : turnAngle;
             var newX = vector.x * Mathf.Cos(turnAngle) - vector.z * Mathf.Sin(turnAngle);
