@@ -504,8 +504,19 @@ Prima Alt para criar um preenchimento</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>Inverter</value>
   </data>
-  
-  
-  
-  
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Virar</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Ainda não existem linhas nesta intercessão.
+Para criar uma linha conecte dois pontos.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Ainda não existem preenchimentos nesta intercessão.
+Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>A lista de modelos está vazia.
+Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value>
+  </data>
 </root>

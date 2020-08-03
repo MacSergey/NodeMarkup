@@ -495,7 +495,16 @@ nebo smazání čáry
   <data name="Filler_Turn" xml:space="preserve">
     <value>Odbočka</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Na této křižovatce nejsou žádné čáry.
+Pro vytvoření čáry spojte dva body.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Na této křižovatce nejsou žádné výplňě.
+Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Nejsou vytvořeny žádné šablony.
+Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry.</value>
+  </data>
 </root>
