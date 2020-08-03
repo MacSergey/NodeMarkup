@@ -373,6 +373,17 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>"Was gibt es neues" zeigen</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>- Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
+- Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
+- Neuer Linien-Stil: "Durchgezogen &amp; gestrichelt".
+- Linien und Vorlagen haben in Listen nun Icons, die den Stil und die Farbe anzeigen.
+- Markierungen werden kopiert, wenn man eine Kreuzung mit Move it kopiert (Steht erst zur Verfügung, wenn Move it ein Update bereit stellt).
+- Kopieren und Einfügen Funktion für Linien-Farben hinzugefügt.
+- Beim Upgraden einer Straße auf eine andere mit gleicher Anzahl an Spuren, bleiben die Markierungen nun erhalten.
+- Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
+- Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
+  </data>
   <data name="Settings_Import" xml:space="preserve">
     <value>Importieren</value>
   </data>
@@ -512,8 +523,19 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Filler_Invert" xml:space="preserve">
     <value>Invertieren</value>
   </data>
-  
-  
-  
-  
+  <data name="Filler_Turn" xml:space="preserve">
+    <value>Umdrehen</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Es befinden sich noch keine Linien auf dieser Kreuzung.
+Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Es befinden sich noch keine Füllungen auf dieser Kreuzung.
+Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Die Liste mit Vorlagen ist leer.
+Um eine Vorlage zu erstellen klicke «{0}» beim Linien-Stil.</value>
+  </data>
 </root>
