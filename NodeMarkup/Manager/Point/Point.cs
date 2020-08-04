@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
             var enterId = GetEnter(id);
             var num = GetNum(id);
 
-            if(map != null)
+            if (map != null)
             {
                 if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
                     enterId = targetSegment.Segment;
@@ -161,6 +161,7 @@ namespace NodeMarkup.Manager
             else
                 return point == First ? Second : First;
         }
+        public MarkupLine.LineType DefaultType => IsSomeEnter ? MarkupLine.LineType.Stop : MarkupLine.LineType.Regular;
 
         public override string ToString() => $"{First}—{Second}";
 

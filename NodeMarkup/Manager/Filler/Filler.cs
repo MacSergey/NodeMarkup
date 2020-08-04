@@ -288,7 +288,21 @@ namespace NodeMarkup.Manager
     {
         public override bool SupportRules => false;
 
+        public override LineType Type => throw new NotImplementedException();
+
+        public override IEnumerable<MarkupLineRawRule> Rules => throw new NotImplementedException();
+
         public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
+
+        protected override IEnumerable<MarkupStyleDash> GetDashes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

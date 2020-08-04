@@ -23,7 +23,7 @@ namespace NodeMarkup.UI.Editors
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool CanDivide => EditObject?.SupportRules == true && SupportPoints.Count > 2;
-        private bool AddRuleAvailable => CanDivide || EditObject?.RawRules.Any() == false;
+        private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private ILinePartEdge HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
@@ -81,7 +81,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddRulePanels()
         {
-            foreach (var rule in EditObject.RawRules)
+            foreach (var rule in EditObject.Rules)
                 AddRulePanel(rule);
         }
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
@@ -112,10 +112,10 @@ namespace NodeMarkup.UI.Editors
 
         private void AddRule()
         {
-            if (EditObject == null)
+            if (!(EditObject is MarkupRegularLine regularLine))
                 return;
 
-            var newRule = EditObject.AddRule(CanDivide);
+            var newRule = regularLine.AddRule(CanDivide);
             DeleteAddButton();
             var rulePanel = AddRulePanel(newRule);
             AddAddButton();
@@ -138,6 +138,9 @@ namespace NodeMarkup.UI.Editors
         }
         public void DeleteRule(RulePanel rulePanel)
         {
+            if (!(EditObject is MarkupRegularLine regularLine))
+                return;
+
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
@@ -150,7 +153,7 @@ namespace NodeMarkup.UI.Editors
 
             bool Delete()
             {
-                EditObject.RemoveRule(rulePanel.Rule);
+                regularLine.RemoveRule(rulePanel.Rule);
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
                 RefreshItem();
@@ -309,11 +312,12 @@ namespace NodeMarkup.UI.Editors
             if (!ShowIcon)
                 return;
 
-            Icon.Count = Object.RawRules.Count;
-            if (Object.RawRules.Count == 1)
+            var rules = Object.Rules.ToArray();
+            Icon.Count = rules.Length;
+            if (rules.Length == 1)
             {
-                Icon.Type = Object.RawRules[0].Style.Type;
-                Icon.StyleColor = Object.RawRules[0].Style.Color;
+                Icon.Type = rules[0].Style.Type;
+                Icon.StyleColor = rules[0].Style.Color;
             }
         }
     }

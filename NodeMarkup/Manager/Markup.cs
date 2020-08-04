@@ -211,7 +211,9 @@ namespace NodeMarkup.Manager
         {
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                intersect.Pair.GetOther(line).RemoveRules(line);
+                if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
+                    regularLine.RemoveRules(line);
+
                 LineIntersects.Remove(intersect.Pair);
             }
             foreach (var filler in GetLineFillers(line).ToArray())

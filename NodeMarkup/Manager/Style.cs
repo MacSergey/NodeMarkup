@@ -66,6 +66,8 @@ namespace NodeMarkup.Manager
                     return tStyle;
                 case StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle:
                     return tStyle;
+                case StyleType.Crosswalk when CrosswalkStyle.GetDefault((CrosswalkStyle.CrosswalkType)(int)type) is T tStyle:
+                    return tStyle;
                 default:
                     return null;
             }
