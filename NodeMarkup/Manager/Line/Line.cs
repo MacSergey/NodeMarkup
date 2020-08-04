@@ -214,6 +214,16 @@ namespace NodeMarkup.Manager
     }
     public abstract class MarkupStraightLine : MarkupLine
     {
+        public override bool SupportRules => false;
+        protected MarkupLineRawRule Rule { get; set; }
+        public override IEnumerable<MarkupLineRawRule> Rules
+        {
+            get
+            {
+                yield return Rule;
+            }
+        }
+
         protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
 
@@ -228,36 +238,13 @@ namespace NodeMarkup.Manager
                 d = PointPair.Second.Position,
             };
         }
-    }
-    public class MarkupStopLine : MarkupStraightLine
-    {
-        public override LineType Type => LineType.Stop;
-        public override bool SupportRules => false;
-        private MarkupLineRawRule Rule { get; set; }
-        public override IEnumerable<MarkupLineRawRule> Rules
-        {
-            get
-            {
-                yield return Rule;
-            }
-        }
-
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType) : base(markup, pointPair)
-        {
-            AddDefaultRule(lineType);
-        }
-        private void AddDefaultRule(StopLineStyle.StopLineType lineType = StopLineStyle.StopLineType.Solid)
-        {
-            var style = TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
-            SetRule(new MarkupLineRawRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
-        }
-        private void SetRule(MarkupLineRawRule rule)
+        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, Trajectory);
+        protected void SetRule(MarkupLineRawRule rule)
         {
             rule.OnRuleChanged = RuleChanged;
             Rule = rule;
         }
-        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, Trajectory);
+        protected abstract void AddDefaultRule();
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -272,33 +259,36 @@ namespace NodeMarkup.Manager
                 AddDefaultRule();
         }
     }
-    public class MarkupCrosswalk : MarkupLine
+    public class MarkupStopLine : MarkupStraightLine
+    {
+        public override LineType Type => LineType.Stop;
+
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType) : base(markup, pointPair)
+        {
+            AddDefaultRule(lineType);
+        }
+        protected override void AddDefaultRule() => AddDefaultRule();
+        private void AddDefaultRule(StopLineStyle.StopLineType lineType = StopLineStyle.StopLineType.Solid)
+        {
+            var style = TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
+            SetRule(new MarkupLineRawRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
+        }
+    }
+    public class MarkupCrosswalk : MarkupStraightLine
     {
         public override LineType Type => LineType.Crosswalk;
-        public override bool SupportRules => false;
-        private MarkupLineRawRule Rule { get; set; }
-        public override IEnumerable<MarkupLineRawRule> Rules
-        {
-            get
-            {
-                yield return Rule;
-            }
-        }
 
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
         {
             AddDefaultRule(crosswalkType);
         }
+        protected override void AddDefaultRule() => AddDefaultRule();
         private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Dashed)
         {
             var style = TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType);
             SetRule(new MarkupLineRawRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
-        }
-        private void SetRule(MarkupLineRawRule rule)
-        {
-            rule.OnRuleChanged = RuleChanged;
-            Rule = rule;
         }
 
         public override Bezier3 GetTrajectory()
@@ -312,21 +302,6 @@ namespace NodeMarkup.Manager
             trajectory.c = trajectory.d - dir;
 
             return trajectory;
-        }
-
-        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, Trajectory);
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(Rule.ToXml());
-            return config;
-        }
-        public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
-        {
-            if (config.Element(MarkupLineRawRule.XmlName) is XElement ruleConfig && MarkupLineRawRule.FromXml(ruleConfig, this, map, out MarkupLineRawRule rule))
-                SetRule(rule);
-            else
-                AddDefaultRule();
         }
     }
 
