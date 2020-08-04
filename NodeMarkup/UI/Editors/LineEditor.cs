@@ -76,7 +76,8 @@ namespace NodeMarkup.UI.Editors
         {
             SupportPoints.Clear();
             SupportPoints.Add(new EnterPointEdge(EditObject.Start));
-            SupportPoints.AddRange(EditObject.IntersectLines.Select(l => (ILinePartEdge)new LinesIntersectEdge(EditObject, l)));
+            foreach (var line in EditObject.IntersectLines)
+                SupportPoints.Add(new LinesIntersectEdge(EditObject, line));
             SupportPoints.Add(new EnterPointEdge(EditObject.End));
         }
         private void AddRulePanels()

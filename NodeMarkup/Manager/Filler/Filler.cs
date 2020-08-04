@@ -217,10 +217,10 @@ namespace NodeMarkup.Manager
                     break;
             }
 
-            if (t != 0 && minT < 0 && 0 < maxT)
+            if (line.Start.Type == MarkupPoint.PointType.Enter && t != 0 && minT < 0 && 0 < maxT)
                 yield return new EnterFillerVertex(line.Start);
 
-            if (t != 1 && minT < 1 && 1 < maxT)
+            if (line.End.Type == MarkupPoint.PointType.Enter && t != 1 && minT < 1 && 1 < maxT)
                 yield return new EnterFillerVertex(line.End);
         }
 

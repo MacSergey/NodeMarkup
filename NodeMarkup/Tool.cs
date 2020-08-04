@@ -39,6 +39,7 @@ namespace NodeMarkup
         ushort SelectNodeId { get; set; } = 0;
         MarkupPoint HoverPoint { get; set; } = null;
         MarkupPoint SelectPoint { get; set; } = null;
+        List<MarkupPoint> TargetPoints { get; set; } = new List<MarkupPoint>();
         MarkupPoint DragPoint { get; set; } = null;
 
         bool IsHoverNode => HoverNodeId != 0;
@@ -132,6 +133,7 @@ namespace NodeMarkup
             SelectNodeId = 0;
             HoverPoint = null;
             SelectPoint = null;
+            TargetPoints.Clear();
             DragPoint = null;
             FillerPoints.Clear();
             HoverFillerPoint = null;
@@ -239,15 +241,12 @@ namespace NodeMarkup
         {
             if (MouseRayValid)
             {
-                foreach (var enter in EditMarkup.Enters)
+                foreach(var point in TargetPoints)
                 {
-                    foreach (var point in enter.Points)
+                    if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
                     {
-                        if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
-                        {
-                            HoverPoint = point;
-                            return;
-                        }
+                        HoverPoint = point;
+                        return;
                     }
                 }
             }
@@ -472,21 +471,38 @@ namespace NodeMarkup
 
             ToolMode = Mode.ConnectLine;
             Panel.SetNode(SelectNodeId);
+            SetTarget();
+        }
+        private void SetTarget(MarkupPoint ignore = null)
+        {
+            TargetPoints.Clear();
+            foreach (var enter in EditMarkup.Enters)
+            {
+                foreach (var point in enter.Points.Where(p => p != ignore))
+                    TargetPoints.Add(point);
+            }
         }
         private void OnSelectPoint(Event e)
         {
             if (e.shift)
                 Panel.EditPoint(HoverPoint);
             else
+            {
                 SelectPoint = HoverPoint;
+
+                SetTarget(SelectPoint);
+                if (SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                    TargetPoints.Add(normalPoint);
+            }
         }
         private void OnMakeLine(Event e)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var lineType = pointPair.IsSomeEnter ? e.GetStopStyle() : e.GetSimpleStyle();
+            var lineType = pointPair.IsSomeEnter && !pointPair.IsNormal ? e.GetStopStyle() : e.GetSimpleStyle();
             var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;
+            SetTarget();
         }
         private void OnSelectFillerPoint(Event e)
         {
@@ -559,7 +575,11 @@ namespace NodeMarkup
                 GetFillerPoints();
             }
         }
-        private void OnUnselectPoint() => SelectPoint = null;
+        private void OnUnselectPoint()
+        {
+            SelectPoint = null;
+            SetTarget();
+        }
         private void OnUnselectNode()
         {
             ToolMode = Mode.SelectNode;
@@ -636,7 +656,7 @@ namespace NodeMarkup
             if (IsHoverPoint)
                 RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
-            RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint);
+            RenderPointsOverlay(cameraInfo);
             RenderConnectLineOverlay(cameraInfo);
             Panel.Render(cameraInfo);
         }
@@ -650,15 +670,10 @@ namespace NodeMarkup
                 }
             }
         }
-        private void RenderNodeEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint ignore = null)
+        private void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            foreach (var enter in EditMarkup.Enters)
-            {
-                foreach (var point in enter.Points.Where(p => p != ignore))
-                {
-                    RenderPointOverlay(cameraInfo, point);
-                }
-            }
+            foreach(var point in TargetPoints)
+                RenderPointOverlay(cameraInfo, point);
         }
         private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
         {

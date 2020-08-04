@@ -30,6 +30,7 @@ namespace NodeMarkup.Manager
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
         public bool IsEnterLine => PointPair.IsSomeEnter;
+        public bool IsNormal => PointPair.IsNormal;
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
 
@@ -68,7 +69,17 @@ namespace NodeMarkup.Manager
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
-        public IEnumerable<MarkupLine> IntersectLines => Markup.GetIntersects(this).Where(i => i.IsIntersect).Select(i => i.Pair.GetOther(this)).ToArray();
+        public IEnumerable<MarkupLine> IntersectLines
+        {
+            get
+            {
+                foreach(var intersect in Markup.GetIntersects(this))
+                {
+                    if (intersect.IsIntersect)
+                        yield return intersect.Pair.GetOther(this);
+                }
+            }
+        }
 
         public static MarkupLine FromStyle(Markup makrup, MarkupPointPair pointPair, Style.StyleType style)
         {
@@ -316,6 +327,25 @@ namespace NodeMarkup.Manager
 
         public Markup Markup => First.Markup == Second.Markup ? First.Markup : null;
         public bool IsSelf => First == Second;
+        public bool CanIntersect
+        {
+            get
+            {
+                if (IsSelf)
+                    return false;
+
+                if (First.IsEnterLine && !First.IsNormal)
+                    return false;
+
+                if (Second.IsEnterLine && !Second.IsNormal)
+                    return false;
+
+                if (First.ContainsPoint(Second.Start) || First.ContainsPoint(Second.End))
+                    return false;
+
+                return true;
+            }
+        }
 
         public MarkupLinePair(MarkupLine first, MarkupLine second)
         {

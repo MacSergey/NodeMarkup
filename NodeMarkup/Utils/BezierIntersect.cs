@@ -65,7 +65,7 @@ namespace NodeMarkup.Utils
         {
             intersect = NotIntersect(pair);
 
-            if (pair.First.IsEnterLine || pair.Second.IsEnterLine || pair.First.Start == pair.Second.Start || pair.First.Start == pair.Second.End || pair.First.End == pair.Second.Start || pair.First.End == pair.Second.End)
+            if (!pair.CanIntersect)
                 return false;
             else
             {

@@ -23,7 +23,9 @@ namespace NodeMarkup.Manager
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
-        List<MarkupPoint> PointsList { get; set; } = new List<MarkupPoint>();
+        Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; } = new Dictionary<byte, MarkupEnterPoint>();
+        Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; } = new Dictionary<byte, MarkupCrosswalkPoint>();
+        Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; } = new Dictionary<byte, MarkupNormalPoint>();
 
         public byte PointNum => ++_pointNum;
 
@@ -33,27 +35,18 @@ namespace NodeMarkup.Manager
 
         public Enter Next => Markup.GetNextEnter(this);
         public Enter Prev => Markup.GetPrevEnter(this);
-        public MarkupPoint FirstPoint => PointsList.FirstOrDefault();
-        public MarkupPoint LastPoint => PointsList.LastOrDefault();
+        public MarkupPoint FirstPoint => EnterPointsDic[1];
+        public MarkupPoint LastPoint => EnterPointsDic[(byte)PointCount];
 
-        public int PointCount => PointsList.Count;
-        public IEnumerable<MarkupPoint> Points => PointsList;
+        public int PointCount => EnterPointsDic.Count;
+        public int CrosswalkCount => CrosswalkPointsDic.Count;
+        public int NormalCount => NormalPointsDic.Count;
+
+        public IEnumerable<MarkupEnterPoint> Points => EnterPointsDic.Values;
+        public IEnumerable<MarkupCrosswalkPoint> Crosswalks => CrosswalkPointsDic.Values;
+        public IEnumerable<MarkupNormalPoint> Normals => NormalPointsDic.Values;
+
         public float T => IsStartSide ? 0f : 1f;
-        public bool TryGetPoint(byte pointNum, out MarkupPoint point)
-        {
-            if (1 <= pointNum && pointNum <= PointCount)
-            {
-                point = PointsList[pointNum - 1];
-                return true;
-            }
-            else
-            {
-                point = null;
-                return false;
-            }
-        }
-
-
         public string XmlSection => XmlName;
 
 
@@ -65,8 +58,10 @@ namespace NodeMarkup.Manager
             Init();
             Update();
 
-            foreach (var markupLine in Lines)
-                PointsList.AddRange(markupLine.GetMarkupPoints());
+            var points = Lines.SelectMany(l => l.GetMarkupPoints()).ToArray();
+            EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
+            CrosswalkPointsDic = points.Where(p => p.IsEdge).ToDictionary(p => p.Num, p => new MarkupCrosswalkPoint(p.Num, p.SegmentLine, p.Location));
+            NormalPointsDic = points.ToDictionary(p => p.Num, p => new MarkupNormalPoint(p));
         }
         private void Init()
         {
@@ -94,6 +89,35 @@ namespace NodeMarkup.Manager
                 Lines[i] = markupLine;
             }
         }
+        public bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
+        {
+            switch (type)
+            {
+                case MarkupPoint.PointType.Enter:
+                    if (EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
+                    {
+                        point = enterPoint;
+                        return true;
+                    }
+                    break;
+                case MarkupPoint.PointType.Crosswalk:
+                    if (CrosswalkPointsDic.TryGetValue(pointNum, out MarkupCrosswalkPoint crosswalkPoint))
+                    {
+                        point = crosswalkPoint;
+                        return true;
+                    }
+                    break;
+                case MarkupPoint.PointType.Normal:
+                    if (NormalPointsDic.TryGetValue(pointNum, out MarkupNormalPoint normalPoint))
+                    {
+                        point = normalPoint;
+                        return true;
+                    }
+                    break;
+            }
+            point = null;
+            return false;
+        }
 
         public void Update()
         {
@@ -102,10 +126,12 @@ namespace NodeMarkup.Manager
             CalculateCorner(segment);
             CalculatePosition(segment);
 
-            foreach (var point in PointsList)
-            {
+            foreach (var point in EnterPointsDic.Values)
                 point.Update();
-            }
+            foreach (var point in CrosswalkPointsDic.Values)
+                point.Update();
+            foreach (var point in NormalPointsDic.Values)
+                point.Update();
         }
         private void CalculateCorner(NetSegment segment)
         {
@@ -176,30 +202,30 @@ namespace NodeMarkup.Manager
             RightLane = rightLane;
         }
 
-        public IEnumerable<MarkupPoint> GetMarkupPoints()
+        public IEnumerable<MarkupEnterPoint> GetMarkupPoints()
         {
             if (IsEdge)
             {
-                yield return new MarkupPoint(this, IsRightEdge ? MarkupPoint.Type.RightEdge : MarkupPoint.Type.LeftEdge);
+                yield return new MarkupEnterPoint(this, IsRightEdge ? MarkupPoint.LocationType.RightEdge : MarkupPoint.LocationType.LeftEdge);
             }
             else if (NeedSplit)
             {
-                yield return new MarkupPoint(this, MarkupPoint.Type.RightEdge);
-                yield return new MarkupPoint(this, MarkupPoint.Type.LeftEdge);
+                yield return new MarkupEnterPoint(this, MarkupPoint.LocationType.RightEdge);
+                yield return new MarkupEnterPoint(this, MarkupPoint.LocationType.LeftEdge);
             }
             else
             {
-                yield return new MarkupPoint(this, MarkupPoint.Type.Between);
+                yield return new MarkupEnterPoint(this, MarkupPoint.LocationType.Between);
             }
         }
 
-        public void GetPositionAndDirection(MarkupPoint.Type pointType, float offset, out Vector3 position, out Vector3 direction)
+        public void GetPositionAndDirection(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
-            if ((pointType & MarkupPoint.Type.Between) != MarkupPoint.Type.None)
+            if ((location & MarkupPoint.LocationType.Between) != MarkupPoint.LocationType.None)
                 GetMiddlePosition(offset, out position, out direction);
 
-            else if ((pointType & MarkupPoint.Type.Edge) != MarkupPoint.Type.None)
-                GetEdgePosition(pointType, offset, out position, out direction);
+            else if ((location & MarkupPoint.LocationType.Edge) != MarkupPoint.LocationType.None)
+                GetEdgePosition(location, offset, out position, out direction);
 
             else
                 throw new Exception();
@@ -214,16 +240,16 @@ namespace NodeMarkup.Manager
             var part = (RightLane.HalfWidth + HalfSideDelta) / CenterDelte;
             position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Mathf.Sin(Enter.CornerDeltaAngle));
         }
-        void GetEdgePosition(MarkupPoint.Type pointType, float offset, out Vector3 position, out Vector3 direction)
+        void GetEdgePosition(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
             float lineShift;
-            switch (pointType)
+            switch (location)
             {
-                case MarkupPoint.Type.LeftEdge:
+                case MarkupPoint.LocationType.LeftEdge:
                     RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out position, out direction);
                     lineShift = -RightLane.HalfWidth;
                     break;
-                case MarkupPoint.Type.RightEdge:
+                case MarkupPoint.LocationType.RightEdge:
                     LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out position, out direction);
                     lineShift = LeftLane.HalfWidth;
                     break;

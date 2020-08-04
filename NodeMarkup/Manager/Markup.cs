@@ -38,6 +38,7 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         private Vector4 Index { get; }
         public float Height { get; private set; }
+        public float HalfWidth { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
@@ -105,6 +106,8 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in EntersList)
                 enter.Update();
+
+            HalfWidth = EntersList.Max(e => e.RoadHalfWidth);
         }
         private void UpdateLines()
         {
@@ -238,7 +241,15 @@ namespace NodeMarkup.Manager
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
         public IEnumerable<MarkupLineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
-        public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line) => Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l)));
+        public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line)
+        {
+            foreach(var otherLine in Lines)
+            {
+                if (otherLine != line)
+                    yield return GetIntersect(new MarkupLinePair(line, otherLine));
+            }
+        }
+
         public MarkupLineIntersect GetIntersect(MarkupLinePair linePair)
         {
             if (!LineIntersects.TryGetValue(linePair, out MarkupLineIntersect intersect))

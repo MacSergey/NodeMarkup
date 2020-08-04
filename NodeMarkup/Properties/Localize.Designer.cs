@@ -645,7 +645,8 @@ namespace NodeMarkup {
         ///   Ищет локализованную строку, похожую на - Added chevron filler style
         ///- You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
         ///- Copy/paste lines and fillers style.
-        ///- Improved stop lines..
+        ///- Improved stop lines.
+        ///- Added perpendicular lines..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

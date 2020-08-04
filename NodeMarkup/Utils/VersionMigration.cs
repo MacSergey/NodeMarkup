@@ -17,12 +17,12 @@ namespace NodeMarkup.Utils
             {
                 foreach(var point in enter.Points.Skip(1).Take(enter.PointCount - 2))
                 {
-                    switch(point.PointType)
+                    switch(point.Location)
                     {
-                        case MarkupPoint.Type.LeftEdge:
+                        case MarkupPoint.LocationType.LeftEdge:
                             map[new ObjectId() { Point = point.Id }] = new ObjectId() { Point = point.Id - (1 << 16) };
                             break;
-                        case MarkupPoint.Type.RightEdge:
+                        case MarkupPoint.LocationType.RightEdge:
                             map[new ObjectId() { Point = point.Id }] = new ObjectId() { Point = point.Id + (1 << 16) };
                             break;
                     }
