@@ -486,7 +486,7 @@ Shift x10，Ctrl x0.1</value>
     <value>粘贴</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>箭头</value>
+    <value>锯齿形</value>
   </data>
   <data name="Filler_AngleBetween" xml:space="preserve">
     <value>角度</value>
@@ -497,7 +497,16 @@ Shift x10，Ctrl x0.1</value>
   <data name="Filler_Turn" xml:space="preserve">
     <value>旋转</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>此交叉路口没有标线。
+连接端点以创建标线。</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>此交叉路口没有填充图案。
+按住Alt或点按 {0} 以创建填充图案.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>没有模板可选。
+在线段页点击 «{0}» 来创建新模板。</value>
+  </data>
 </root>
