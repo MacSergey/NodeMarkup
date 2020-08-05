@@ -199,6 +199,9 @@ namespace NodeMarkup.Manager
             }
             else
             {
+                if (pointPair.IsNormal && !EarlyAccess.CheckAccess("Perpendicular lines"))
+                    return null;
+
                 line = MarkupLine.FromStyle(this, pointPair, style);
                 LinesDictionary[pointPair.Hash] = line;
                 NeedRecalculateBatches = true;

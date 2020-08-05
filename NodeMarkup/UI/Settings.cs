@@ -138,13 +138,18 @@ namespace NodeMarkup.UI
             UITextField accessKeyField = null;
             accessKeyField = group.AddTextfield("Access key", AccessKey.value, OnKeyChanged, OnKeySubmitted) as UITextField;
             accessKeyField.width = 400;
+            accessKeyField.readOnly = EarlyAccess.Allowed;
 
             void OnKeyChanged(string key) { }
             void OnKeySubmitted(string key) 
             {
-                if(EarlyAccess.CheckAccess(key))
+                if (EarlyAccess.Allowed)
+                    return;
+
+                if(EarlyAccess.CheckSign(key))
                 {
                     AccessKey.value = key;
+                    accessKeyField.readOnly = true;
                     var messageBox = MessageBoxBase.ShowModal<OneButtonMessageBox>();
                     messageBox.CaprionText = "The key is correct";
                     messageBox.MessageText = "Thank you for your support, now you can enjoy all the features";
@@ -160,7 +165,7 @@ namespace NodeMarkup.UI
                     messageBox.Button1Text = "OK";
                     messageBox.OnButton1Click = () => true;
                     messageBox.Button2Text = "Get key";
-                    messageBox.OnButton1Click = () => true;
+                    messageBox.OnButton2Click = EarlyAccess.GetAccess;
                 }
             }
         }

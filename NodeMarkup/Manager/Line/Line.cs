@@ -254,6 +254,8 @@ namespace NodeMarkup.Manager
         {
             rule.OnRuleChanged = RuleChanged;
             Rule = rule;
+
+            RuleChanged();
         }
         protected abstract void AddDefaultRule();
         public override XElement ToXml()

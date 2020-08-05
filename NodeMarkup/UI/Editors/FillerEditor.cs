@@ -60,6 +60,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
+            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckAccess("Chevron style"))
+                return;
+
             if (style == EditObject.Style.Type)
                 return;
 
@@ -80,6 +83,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
+            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckAccess("Chevron style"))
+                return;
+
             var newStyle = style.CopyFillerStyle();
 
             newStyle.MedianOffset = EditObject.Style.MedianOffset;
@@ -100,10 +106,14 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyFillerStyle();
+        private void CopyStyle()
+        {
+            if (EarlyAccess.CheckAccess("Copy style"))
+                Buffer = EditObject.Style.CopyFillerStyle();
+        }
         private void PasteStyle()
         {
-            if (Buffer is FillerStyle style)
+            if (EarlyAccess.CheckAccess("Paste style") && Buffer is FillerStyle style)
                 ApplyStyle(style);
         }
         private void ClearStyleProperties()
@@ -121,7 +131,7 @@ namespace NodeMarkup.UI.Editors
             if (IsHoverItem)
             {
                 foreach (var trajectory in HoverItem.Object.Trajectories)
-                        NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();

@@ -135,6 +135,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(LineStyle style)
         {
+            if ((Rule.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
+                return;
+
             Rule.Style = style.CopyLineStyle();
             Style.SelectedObject = Rule.Style.Type;
 
@@ -147,10 +150,14 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = Rule.Style.CopyLineStyle();
+        private void CopyStyle()
+        {
+            if (EarlyAccess.CheckAccess("Copy style"))
+                Buffer = Rule.Style.CopyLineStyle();
+        }
         private void PasteStyle()
         {
-            if(Buffer is LineStyle style)
+            if(EarlyAccess.CheckAccess("Paste style") && Buffer is LineStyle style)
                 ApplyStyle(style);
         }
 
