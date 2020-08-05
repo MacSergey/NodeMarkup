@@ -25,6 +25,7 @@ namespace NodeMarkup.UI
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
+        public static SavedString AccessKey { get; } = new SavedString(nameof(AccessKey), SettingsFile, string.Empty, true);
 
         static Settings()
         {
@@ -36,9 +37,12 @@ namespace NodeMarkup.UI
         {
             AddKeyMapping(helper);
             AddGeneral(helper);
+            AddAccess(helper);
             AddNotifications(helper);
             AddOther(helper);
         }
+
+        #region KEYMAPPING
         private static void AddKeyMapping(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper;
@@ -50,7 +54,9 @@ namespace NodeMarkup.UI
             keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewFiller, NodeMarkupTool.AddFillerShortcut);
         }
+        #endregion
 
+        #region GENERAL
         private static void AddGeneral(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_General) as UIHelper;
@@ -59,6 +65,7 @@ namespace NodeMarkup.UI
             AddShowToolTipsSetting(group);
             AddDeleteRequest(group);
             AddQuickRuleSetup(group);
+
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -100,7 +107,66 @@ namespace NodeMarkup.UI
 
             void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetup.value = request;
         }
+        #endregion
 
+        #region ACCESS
+        private static void AddAccess(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup("Early access") as UIHelper;
+            AddAccessId(group);
+            AddAccessKey(group);
+        }
+        private static void AddAccessId(UIHelper group)
+        {
+            var accessIdField = default(UITextField);
+            var process = false;
+            accessIdField = group.AddTextfield("Your access ID", EarlyAccess.Id, Set, Set) as UITextField;
+            accessIdField.width = 400;
+
+            void Set(string text)
+            {
+                if (!process)
+                {
+                    process = true;
+                    accessIdField.text = EarlyAccess.Id;
+                    process = false;
+                }
+            }
+        }
+        private static void AddAccessKey(UIHelper group)
+        {
+            UITextField accessKeyField = null;
+            accessKeyField = group.AddTextfield("Access key", AccessKey.value, OnKeyChanged, OnKeySubmitted) as UITextField;
+            accessKeyField.width = 400;
+
+            void OnKeyChanged(string key) { }
+            void OnKeySubmitted(string key) 
+            {
+                if(EarlyAccess.CheckAccess(key))
+                {
+                    AccessKey.value = key;
+                    var messageBox = MessageBoxBase.ShowModal<OneButtonMessageBox>();
+                    messageBox.CaprionText = "The key is correct";
+                    messageBox.MessageText = "Thank you for your support, now you can enjoy all the features";
+                    messageBox.ButtonText = "OK";
+                    messageBox.OnButtonClick = () => true;
+                }
+                else
+                {
+                    accessKeyField.text = string.Empty;
+                    var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+                    messageBox.CaprionText = "The key is incorrect";
+                    messageBox.MessageText = "The key you entered is not correct";
+                    messageBox.Button1Text = "OK";
+                    messageBox.OnButton1Click = () => true;
+                    messageBox.Button2Text = "Get key";
+                    messageBox.OnButton1Click = () => true;
+                }
+            }
+        }
+        #endregion
+
+        #region NOTIFICATIONS
         private static void AddNotifications(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
@@ -120,7 +186,9 @@ namespace NodeMarkup.UI
 
             void OnShowOnlyMajorChanged(bool request) => ShowOnlyMajor.value = request;
         }
+        #endregion
 
+        #region OTHER
         private static void AddOther(UIHelperBase helper)
         {
             if (SceneManager.GetActiveScene().name is string scene && (scene == "MainMenu" || scene == "IntroScreen"))
@@ -193,5 +261,6 @@ namespace NodeMarkup.UI
 
             }
         }
+        #endregion
     }
 }

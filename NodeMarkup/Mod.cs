@@ -22,6 +22,7 @@ namespace NodeMarkup
 
         public static List<string> Versions { get; } = new List<string>
         {
+            "1.3",
             "1.2.1",
             "1.2",
             "1.1",
@@ -44,6 +45,9 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
+
+            if (!EarlyAccess.CheckAccess(UI.Settings.AccessKey.value))
+                UI.Settings.AccessKey.value = string.Empty;
         }
         public void OnDisabled()
         {

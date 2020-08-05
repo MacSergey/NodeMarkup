@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EarlyAccess.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Manager\Filler\Filler.cs" />
     <Compile Include="Manager\Filler\FillerStyle.cs" />
@@ -189,6 +190,12 @@
     <Content Include="Preview\PreviewImageBeta.png" />
     <EmbeddedResource Include="Resources\Buttons.png" />
     <EmbeddedResource Include="Resources\Styles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EarlyAccess\EarlyAccess.csproj">
+      <Project>{8fa0a542-b2d4-4e00-abd6-e7470906351d}</Project>
+      <Name>EarlyAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
