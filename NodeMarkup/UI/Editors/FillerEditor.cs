@@ -60,7 +60,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckAccess("Chevron style"))
+            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess("Chevron style"))
                 return;
 
             if (style == EditObject.Style.Type)
@@ -83,7 +83,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
-            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckAccess("Chevron style"))
+            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess("Chevron style"))
                 return;
 
             var newStyle = style.CopyFillerStyle();
@@ -108,12 +108,12 @@ namespace NodeMarkup.UI.Editors
         }
         private void CopyStyle()
         {
-            if (EarlyAccess.CheckAccess("Copy style"))
+            if (EarlyAccess.CheckFunctionAccess("Copy style"))
                 Buffer = EditObject.Style.CopyFillerStyle();
         }
         private void PasteStyle()
         {
-            if (EarlyAccess.CheckAccess("Paste style") && Buffer is FillerStyle style)
+            if (EarlyAccess.CheckFunctionAccess("Paste style") && Buffer is FillerStyle style)
                 ApplyStyle(style);
         }
         private void ClearStyleProperties()

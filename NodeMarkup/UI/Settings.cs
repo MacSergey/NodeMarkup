@@ -1,15 +1,13 @@
 ﻿using ColossalFramework;
-using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
+using ColossalFramework.Threading;
+using System.Threading;
 
 namespace NodeMarkup.UI
 {
@@ -25,7 +23,7 @@ namespace NodeMarkup.UI
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
-        public static SavedString AccessKey { get; } = new SavedString(nameof(AccessKey), SettingsFile, string.Empty, true);
+        //public static SavedString AccessKey { get; } = new SavedString(nameof(AccessKey), SettingsFile, string.Empty, true);
 
         static Settings()
         {
@@ -113,62 +111,62 @@ namespace NodeMarkup.UI
         private static void AddAccess(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup("Early access") as UIHelper;
-            AddAccessId(group);
-            AddAccessKey(group);
+            //AddAccessId(group);
+            //AddAccessKey(group);
+            if (group.self is UIComponent component)
+                component.AddUIComponent<EarlyAccessPanel>();
         }
-        private static void AddAccessId(UIHelper group)
-        {
-            var accessIdField = default(UITextField);
-            var process = false;
-            accessIdField = group.AddTextfield("Your access ID", EarlyAccess.Id, Set, Set) as UITextField;
-            accessIdField.width = 400;
+        //private static void AddAccessId(UIHelper group)
+        //{
+        //    var accessIdField = default(UITextField);
+        //    var process = false;
+        //    accessIdField = group.AddTextfield("Your access ID", EarlyAccess.Id, Set, Set) as UITextField;
+        //    accessIdField.width = 400;
 
-            void Set(string text)
-            {
-                if (!process)
-                {
-                    process = true;
-                    accessIdField.text = EarlyAccess.Id;
-                    process = false;
-                }
-            }
-        }
-        private static void AddAccessKey(UIHelper group)
-        {
-            UITextField accessKeyField = null;
-            accessKeyField = group.AddTextfield("Access key", AccessKey.value, OnKeyChanged, OnKeySubmitted) as UITextField;
-            accessKeyField.width = 400;
-            accessKeyField.readOnly = EarlyAccess.Allowed;
+        //    void Set(string text)
+        //    {
+        //        if (!process)
+        //        {
+        //            process = true;
+        //            accessIdField.text = EarlyAccess.Id;
+        //            process = false;
+        //        }
+        //    }
+        //}
+        //private static void AddAccessKey(UIHelper group)
+        //{
+        //    UITextField accessKeyField = null;
+        //    accessKeyField = group.AddTextfield("Access key", AccessKey.value, OnKeyChanged, OnKeySubmitted) as UITextField;
+        //    accessKeyField.width = 400;
+        //    accessKeyField.readOnly = EarlyAccess.Allowed;
 
-            void OnKeyChanged(string key) { }
-            void OnKeySubmitted(string key) 
-            {
-                if (EarlyAccess.Allowed)
-                    return;
+        //    void OnKeyChanged(string key) { }
+        //    void OnKeySubmitted(string key)
+        //    {
+        //        if (EarlyAccess.Allowed)
+        //            return;
 
-                if(EarlyAccess.CheckSign(key))
-                {
-                    AccessKey.value = key;
-                    accessKeyField.readOnly = true;
-                    var messageBox = MessageBoxBase.ShowModal<OneButtonMessageBox>();
-                    messageBox.CaprionText = "The key is correct";
-                    messageBox.MessageText = "Thank you for your support, now you can enjoy all the features";
-                    messageBox.ButtonText = "OK";
-                    messageBox.OnButtonClick = () => true;
-                }
-                else
-                {
-                    accessKeyField.text = string.Empty;
-                    var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                    messageBox.CaprionText = "The key is incorrect";
-                    messageBox.MessageText = "The key you entered is not correct";
-                    messageBox.Button1Text = "OK";
-                    messageBox.OnButton1Click = () => true;
-                    messageBox.Button2Text = "Get key";
-                    messageBox.OnButton2Click = EarlyAccess.GetAccess;
-                }
-            }
-        }
+        //        if (EarlyAccess.CheckSign(key))
+        //        {
+        //            AccessKey.value = key;
+        //            accessKeyField.readOnly = true;
+        //            var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
+        //            messageBox.CaprionText = "The key is correct";
+        //            messageBox.MessageText = "Thank you for your support, now you can enjoy all the features";
+        //        }
+        //        else
+        //        {
+        //            accessKeyField.text = string.Empty;
+        //            var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+        //            messageBox.CaprionText = "The key is incorrect";
+        //            messageBox.MessageText = "The key you entered is not correct";
+        //            messageBox.Button1Text = "OK";
+        //            messageBox.Button2Text = "Get key";
+        //            messageBox.OnButton2Click = EarlyAccess.GetAccess;
+        //        }
+        //    }
+        //}
+
         #endregion
 
         #region NOTIFICATIONS

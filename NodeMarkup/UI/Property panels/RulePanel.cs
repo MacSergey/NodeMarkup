@@ -152,12 +152,12 @@ namespace NodeMarkup.UI.Editors
         }
         private void CopyStyle()
         {
-            if (EarlyAccess.CheckAccess("Copy style"))
+            if (EarlyAccess.CheckFunctionAccess("Copy style"))
                 Buffer = Rule.Style.CopyLineStyle();
         }
         private void PasteStyle()
         {
-            if(EarlyAccess.CheckAccess("Paste style") && Buffer is LineStyle style)
+            if(EarlyAccess.CheckFunctionAccess("Paste style") && Buffer is LineStyle style)
                 ApplyStyle(style);
         }
 

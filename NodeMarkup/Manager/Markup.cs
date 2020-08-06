@@ -199,7 +199,7 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                if (pointPair.IsNormal && !EarlyAccess.CheckAccess("Perpendicular lines"))
+                if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess("Perpendicular lines"))
                     return null;
 
                 line = MarkupLine.FromStyle(this, pointPair, style);

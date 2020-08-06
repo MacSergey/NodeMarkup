@@ -17,10 +17,12 @@ namespace NodeMarkup
             using (var rsa = new RSACryptoServiceProvider())
             {
                 rsa.FromXmlString(PrivateKey);
+                var param = rsa.ExportParameters(true);
 
                 var idBytes = Encoding.UTF8.GetBytes(id);
                 var sign = rsa.SignData(idBytes, new MD5CryptoServiceProvider());
-                return BytesToHex(sign);
+                var result = BytesToHex(sign);
+                return result;
             }
         }
         public static bool Verify(string id, string sign)

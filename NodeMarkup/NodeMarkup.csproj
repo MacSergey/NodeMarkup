@@ -78,7 +78,12 @@
       <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq">
       <Private>True</Private>
@@ -148,6 +153,7 @@
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\MoveItIntegration.cs" />
     <Compile Include="Utils\ObjectId.cs" />
+    <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
@@ -192,9 +198,9 @@
     <EmbeddedResource Include="Resources\Styles.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EarlyAccess\EarlyAccess.csproj">
+    <ProjectReference Include="..\EarlyAccess\EarlyAccessLibrary.csproj">
       <Project>{8fa0a542-b2d4-4e00-abd6-e7470906351d}</Project>
-      <Name>EarlyAccess</Name>
+      <Name>EarlyAccessLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

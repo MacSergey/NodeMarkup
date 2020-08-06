@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EarlyAccess\EarlyAccess.csproj">
+    <ProjectReference Include="..\EarlyAccess\EarlyAccessLibrary.csproj">
       <Project>{8fa0a542-b2d4-4e00-abd6-e7470906351d}</Project>
-      <Name>EarlyAccess</Name>
+      <Name>EarlyAccessLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

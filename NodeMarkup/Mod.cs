@@ -19,7 +19,7 @@ namespace NodeMarkup
         public static string StaticName { get; } = "Intersection Marking Tool";
 
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
-
+        public static string VersionMajor => string.Join(".", Version.Split('.').Take(3).ToArray());
 
         public static List<string> Versions { get; } = new List<string>
         {
@@ -31,11 +31,9 @@ namespace NodeMarkup
 
 #if DEBUG
         public static string VersionBeta => $"{Version} [BETA]";
-        public static string VersionMajor => $"{string.Join(".", Version.Split('.').Take(3).ToArray())} [BETA]";
         public string Name { get; } = $"{StaticName} {VersionBeta}";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
-        public static string VersionMajor => string.Join(".", Version.Split('.').Take(3).ToArray());
         public string Name { get; } = $"{StaticName} {Version}";
         public string Description => Localize.Mod_Description;
 #endif
@@ -48,8 +46,8 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
 
-            if (!EarlyAccess.CheckSign(UI.Settings.AccessKey.value))
-                UI.Settings.AccessKey.value = string.Empty;
+            //if (!EarlyAccess.CheckSign(UI.Settings.AccessKey.value))
+            //    UI.Settings.AccessKey.value = string.Empty;
         }
         public void OnDisabled()
         {
