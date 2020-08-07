@@ -509,4 +509,37 @@ Shift x10，Ctrl x0.1</value>
     <value>没有模板可选。
 在线段页点击 «{0}» 来创建新模板。</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  
+  
+  
+  
 </root>
