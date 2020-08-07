@@ -24,7 +24,7 @@ namespace NodeMarkup
 #else
         private static string Version => Mod.VersionMajor;
 #endif
-        private static string URL { get; } = "https://discord.gg/SHwDZY";
+        private static string URL { get; } = "https://discord.gg/QRYq8m2";
         public static string Id { get; } = Crypt.GetHash($"{PlatformService.userID}{Version}");
 
         public static bool Status { get; private set; }
