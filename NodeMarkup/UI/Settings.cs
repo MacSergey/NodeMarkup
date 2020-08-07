@@ -111,61 +111,9 @@ namespace NodeMarkup.UI
         private static void AddAccess(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup("Early access") as UIHelper;
-            //AddAccessId(group);
-            //AddAccessKey(group);
             if (group.self is UIComponent component)
                 component.AddUIComponent<EarlyAccessPanel>();
         }
-        //private static void AddAccessId(UIHelper group)
-        //{
-        //    var accessIdField = default(UITextField);
-        //    var process = false;
-        //    accessIdField = group.AddTextfield("Your access ID", EarlyAccess.Id, Set, Set) as UITextField;
-        //    accessIdField.width = 400;
-
-        //    void Set(string text)
-        //    {
-        //        if (!process)
-        //        {
-        //            process = true;
-        //            accessIdField.text = EarlyAccess.Id;
-        //            process = false;
-        //        }
-        //    }
-        //}
-        //private static void AddAccessKey(UIHelper group)
-        //{
-        //    UITextField accessKeyField = null;
-        //    accessKeyField = group.AddTextfield("Access key", AccessKey.value, OnKeyChanged, OnKeySubmitted) as UITextField;
-        //    accessKeyField.width = 400;
-        //    accessKeyField.readOnly = EarlyAccess.Allowed;
-
-        //    void OnKeyChanged(string key) { }
-        //    void OnKeySubmitted(string key)
-        //    {
-        //        if (EarlyAccess.Allowed)
-        //            return;
-
-        //        if (EarlyAccess.CheckSign(key))
-        //        {
-        //            AccessKey.value = key;
-        //            accessKeyField.readOnly = true;
-        //            var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
-        //            messageBox.CaprionText = "The key is correct";
-        //            messageBox.MessageText = "Thank you for your support, now you can enjoy all the features";
-        //        }
-        //        else
-        //        {
-        //            accessKeyField.text = string.Empty;
-        //            var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-        //            messageBox.CaprionText = "The key is incorrect";
-        //            messageBox.MessageText = "The key you entered is not correct";
-        //            messageBox.Button1Text = "OK";
-        //            messageBox.Button2Text = "Get key";
-        //            messageBox.OnButton2Click = EarlyAccess.GetAccess;
-        //        }
-        //    }
-        //}
 
         #endregion
 

@@ -45,9 +45,7 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
-
-            //if (!EarlyAccess.CheckSign(UI.Settings.AccessKey.value))
-            //    UI.Settings.AccessKey.value = string.Empty;
+            EarlyAccess.CheckAccess();
         }
         public void OnDisabled()
         {

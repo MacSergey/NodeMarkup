@@ -69,7 +69,7 @@ GetURL(PatreonOAuthURL, new Dictionary<string, string> { { "response_type", "cod
                 Logger.LogDebug(nameof(ProcessTokenRequest));
 
                 request = UnityWebRequest.Post(url, string.Empty);
-                request.timeout = 1;
+                request.timeout = 3;
                 request.Send();
 
                 while (!request.isDone) { }
@@ -113,7 +113,7 @@ GetURL(PatreonOAuthURL, new Dictionary<string, string> { { "response_type", "cod
                 var url = GetURL(PatreonIdentityURL, args);
 
                 request = UnityWebRequest.Get(url);
-                request.timeout = 1;
+                request.timeout = 3;
                 request.SetRequestHeader("Authorization", $"Bearer {token}");
                 request.Send();
 

@@ -61,6 +61,269 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Activate with key.
+        /// </summary>
+        public static string EarlyAccess_ActivateButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ActivateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activation failed.
+        /// </summary>
+        public static string EarlyAccess_ActivationFailed {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ActivationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activation success.
+        /// </summary>
+        public static string EarlyAccess_ActivationSuccess {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ActivationSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Chevron style.
+        /// </summary>
+        public static string EarlyAccess_Function_ChevronStyle {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_ChevronStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy style.
+        /// </summary>
+        public static string EarlyAccess_Function_CopyStyle {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_CopyStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste style.
+        /// </summary>
+        public static string EarlyAccess_Function_PasteStyle {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_PasteStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Perpendicular lines.
+        /// </summary>
+        public static string EarlyAccess_Function_PerpendicularLines {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_PerpendicularLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This function is unavailable.
+        /// </summary>
+        public static string EarlyAccess_FunctionUnavailableCaption {
+            get {
+                return ResourceManager.GetString("EarlyAccess_FunctionUnavailableCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Function «{0}» is currently only available for Patreons early access.
+        ///It will be available to everyone later.
+        ///By registering early access, you will support the ability to develop this mod at the same speed..
+        /// </summary>
+        public static string EarlyAccess_FunctionUnavailableMessage {
+            get {
+                return ResourceManager.GetString("EarlyAccess_FunctionUnavailableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Get early access.
+        /// </summary>
+        public static string EarlyAccess_GetButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_GetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Your access ID.
+        /// </summary>
+        public static string EarlyAccess_ID {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Access key.
+        /// </summary>
+        public static string EarlyAccess_Key {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activate.
+        /// </summary>
+        public static string EarlyAccess_KeyActivateButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyActivateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Early access activation.
+        /// </summary>
+        public static string EarlyAccess_KeyActivationCaption {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyActivationCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на To activate early access you need to enter a key.
+        /// </summary>
+        public static string EarlyAccess_KeyActivationMessage {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyActivationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string EarlyAccess_KeyCancelButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The key you entered is not valid.
+        /// </summary>
+        public static string EarlyAccess_KeyNotValid {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Link in process....
+        /// </summary>
+        public static string EarlyAccess_LinkInProcess {
+            get {
+                return ResourceManager.GetString("EarlyAccess_LinkInProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Link Patreon account.
+        /// </summary>
+        public static string EarlyAccess_LinkPatreonButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_LinkPatreonButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Link Patreon account.
+        /// </summary>
+        public static string EarlyAccess_LinkPatreonCaption {
+            get {
+                return ResourceManager.GetString("EarlyAccess_LinkPatreonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The Patreon account can&apos;t be linked because you denied access request..
+        /// </summary>
+        public static string EarlyAccess_PatreonCantLinked {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonCantLinked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на An error occurred when linking the account, try again..
+        /// </summary>
+        public static string EarlyAccess_PatreonLinkedError {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonLinkedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Your account is linked, but you don&apos;t have early access..
+        /// </summary>
+        public static string EarlyAccess_PatreonLinkedNotMember {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonLinkedNotMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You can close this page and return to the game..
+        /// </summary>
+        public static string EarlyAccess_PatreonRedirect {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonRedirect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string EarlyAccess_ProcessCancel {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ProcessCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Status: {0}.
+        /// </summary>
+        public static string EarlyAccess_Status {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activated.
+        /// </summary>
+        public static string EarlyAccess_StatusActivated {
+            get {
+                return ResourceManager.GetString("EarlyAccess_StatusActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not activated.
+        /// </summary>
+        public static string EarlyAccess_StatusNotActivated {
+            get {
+                return ResourceManager.GetString("EarlyAccess_StatusNotActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Thank you for your support, now you can enjoy all the features..
+        /// </summary>
+        public static string EarlyAccess_ThanksMessage {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ThanksMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete {0}.
         /// </summary>
         public static string Editor_DeleteCaption {
@@ -646,7 +909,8 @@ namespace NodeMarkup {
         ///- You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
         ///- Copy/paste lines and fillers style.
         ///- Improved stop lines.
-        ///- Added perpendicular lines..
+        ///- Added perpendicular lines.
+        ///- Linked Patreon account for early access..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
