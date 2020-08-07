@@ -1100,6 +1100,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Early access.
+        /// </summary>
+        public static string Settings_EarlyAccess {
+            get {
+                return ResourceManager.GetString("Settings_EarlyAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на General.
         /// </summary>
         public static string Settings_General {
