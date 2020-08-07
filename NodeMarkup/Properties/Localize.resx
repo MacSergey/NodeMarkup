@@ -630,4 +630,7 @@ By registering early access, you will support the ability to develop this mod at
   <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
     <value>Thank you for your support, now you can enjoy all the features.</value>
   </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Early access</value>
+  </data>
 </root>

@@ -497,7 +497,14 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
+- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
+- Kopieren/Einfügen von Linien und Füllungs-Stilen.
+- Haltelinien verbessert.
+- Weiterführende (or­tho­go­nale) Linien hinzugefügt.
+- Verlinkung von Patreon-Accounts für Vorabzugriff.</value>
+  </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelte Haltelinie</value>
   </data>
@@ -534,37 +541,94 @@ Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
     <value>Die Liste mit Vorlagen ist leer.
 Um eine Vorlage zu erstellen klicke «{0}» beim Linien-Stil.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Aktivierungscode eingeben</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Aktivierung fehlgeschlagen</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Aktivierung erfolgreich</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Die Funktion ist nicht verfügbar</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>Die Funktion «{0}» ist im Moment für Unterstützer vorab verfügbar.
+Sie wird zu einem späteren Zeitpunkt für alle freigeschaltet werden. 
+Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Möglichkeit den Mod in dieser Geschwindigkeit weiter zu entwickeln.</value>
+  </data>
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Winkel-Stil</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Stil kopieren</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Stile einfügen</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Orthogonal weitergeführte Linien</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Vorabzugriff erhalten</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Deine Zugangs-ID</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Zugriffsschlüssel</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Aktivieren</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Vorabzugriff-Aktivierung</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Um den Vorabzugriff zu aktivieren, musst du einen Zugriffsschlüssel eingeben</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>Der eingegeben Schlüssel ist nicht gültig</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Verlinkung in Bearbeitung...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Patreon-Account verlinken</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Patreon-Account verlinken</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Der Patreon-Account kann nicht verlinkt werden, da du die Anfrage abgelehnt hast.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Beim Verlinken des Accounts trat ein Fehler auf. Bitte versuche es erneut.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Dein Account wurde verlinkt, aber du hast keinen Vorabzugriff.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Du kannst diese Seite nun schließen und zum Spiel zurückkehren.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Status: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Aktiviert</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Nicht aktiviert</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Danke dir für deine Unterstützung, du kannst nun alle Funktionen genießen.</value>
+  </data>
   
 </root>
