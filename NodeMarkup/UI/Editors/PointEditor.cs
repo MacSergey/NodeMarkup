@@ -13,6 +13,7 @@ namespace NodeMarkup.UI.Editors
     public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
+        public override string EmptyMessage => string.Empty;
 
         private FloatPropertyPanel Offset { get; set; }
 
@@ -66,7 +67,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Description => NodeMarkup.Localize.PointEditor_ItemDescription;
 
-        public PointItem() : base(true, false) { }
+        public override void Init() => Init(true, false);
 
         protected override void OnObjectSet()
         {

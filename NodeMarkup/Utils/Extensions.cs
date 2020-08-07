@@ -94,8 +94,8 @@ namespace NodeMarkup.Utils
 
         public static Vector2 Turn90(this Vector2 v, bool isClockWise) => isClockWise ? new Vector2(v.y, -v.x) : new Vector2(-v.y, v.x);
         public static Vector3 Turn90(this Vector3 v, bool isClockWise) => isClockWise ? new Vector3(v.z, v.y, -v.x) : new Vector3(-v.z, v.y, v.x);
-        public static Vector3 TurnDeg(this Vector3 vector, float turnAngle, bool isClockWise) => vector.Turn(turnAngle * Mathf.Deg2Rad, isClockWise);
-        public static Vector3 Turn(this Vector3 vector, float turnAngle, bool isClockWise)
+        public static Vector3 TurnDeg(this Vector3 vector, float turnAngle, bool isClockWise) => vector.TurnRad(turnAngle * Mathf.Deg2Rad, isClockWise);
+        public static Vector3 TurnRad(this Vector3 vector, float turnAngle, bool isClockWise)
         {
             turnAngle = isClockWise ? -turnAngle : turnAngle;
             var newX = vector.x * Mathf.Cos(turnAngle) - vector.z * Mathf.Sin(turnAngle);
@@ -107,7 +107,7 @@ namespace NodeMarkup.Utils
         public static NetSegment GetSegment(ushort segmentId) => NetManager.m_segments.m_buffer[segmentId];
         public static NetLane GetLane(uint laneId) => NetManager.m_lanes.m_buffer[laneId];
 
-        public static float Length(this Bezier3 bezier, float minAngleDelta = 10, int depth = 0)
+        public static float Length(this Bezier3 bezier, float minAngleDelta = 10, int depth = 0, int maxDepth = 5)
         {
             var start = bezier.b - bezier.a;
             var end = bezier.c - bezier.d;
@@ -115,11 +115,11 @@ namespace NodeMarkup.Utils
                 return 0;
 
             var angle = Vector3.Angle(start, end);
-            if (depth < 5 && 180 - angle > minAngleDelta)
+            if (depth < maxDepth && 180 - angle > minAngleDelta)
             {
                 bezier.Divide(out Bezier3 first, out Bezier3 second);
-                var firstLength = first.Length(depth: depth + 1);
-                var secondLength = second.Length(depth: depth + 1);
+                var firstLength = first.Length(depth: depth + 1, maxDepth: maxDepth);
+                var secondLength = second.Length(depth: depth + 1, maxDepth: maxDepth);
                 return firstLength + secondLength;
             }
             else
@@ -168,8 +168,8 @@ namespace NodeMarkup.Utils
                 return length;
             }
         }
-
-        public static Vector4 ToVector(this Color c) => new Vector4(c.r, c.g, c.b, c.a);
+        public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
+        public static float Angle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 

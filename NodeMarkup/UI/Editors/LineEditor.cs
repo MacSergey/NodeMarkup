@@ -17,11 +17,13 @@ namespace NodeMarkup.UI.Editors
     {
         public static Color WhiteAlpha { get; } = new Color(1, 1, 1, 0.5f);
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
+        public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
 
         private ButtonPanel AddButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
-        public bool CanDivide => SupportPoints.Count > 2;
+        public bool CanDivide => EditObject?.SupportRules == true && SupportPoints.Count > 2;
+        private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private ILinePartEdge HoverSupportPoint { get; set; }
         private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
@@ -74,12 +76,13 @@ namespace NodeMarkup.UI.Editors
         {
             SupportPoints.Clear();
             SupportPoints.Add(new EnterPointEdge(EditObject.Start));
-            SupportPoints.AddRange(EditObject.IntersectLines.Select(l => (ILinePartEdge)new LinesIntersectEdge(EditObject, l)));
+            foreach (var line in EditObject.IntersectLines)
+                SupportPoints.Add(new LinesIntersectEdge(EditObject, line));
             SupportPoints.Add(new EnterPointEdge(EditObject.End));
         }
         private void AddRulePanels()
         {
-            foreach (var rule in EditObject.RawRules)
+            foreach (var rule in EditObject.Rules)
                 AddRulePanel(rule);
         }
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
@@ -93,7 +96,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddAddButton()
         {
-            if (CanDivide)
+            if (AddRuleAvailable)
             {
                 AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
                 AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
@@ -110,10 +113,10 @@ namespace NodeMarkup.UI.Editors
 
         private void AddRule()
         {
-            if (EditObject == null)
+            if (!(EditObject is MarkupRegularLine regularLine))
                 return;
 
-            var newRule = EditObject.AddRule();
+            var newRule = regularLine.AddRule(CanDivide);
             DeleteAddButton();
             var rulePanel = AddRulePanel(newRule);
             AddAddButton();
@@ -136,9 +139,12 @@ namespace NodeMarkup.UI.Editors
         }
         public void DeleteRule(RulePanel rulePanel)
         {
+            if (!(EditObject is MarkupRegularLine regularLine))
+                return;
+
             if (Settings.DeleteWarnings)
             {
-                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
                 messageBox.MessageText = NodeMarkup.Localize.LineEditor_DeleteRuleMessage;
                 messageBox.OnButton1Click = Delete;
@@ -146,13 +152,14 @@ namespace NodeMarkup.UI.Editors
             else
                 Delete();
 
-            RefreshItem();
-
             bool Delete()
             {
-                EditObject.RemoveRule(rulePanel.Rule);
+                regularLine.RemoveRule(rulePanel.Rule);
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
+                RefreshItem();
+                if (!CanDivide)
+                    AddAddButton();
                 return true;
             }
         }
@@ -214,7 +221,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override void OnEvent(Event e)
         {
-            if (CanDivide && !IsSelectPartEdgeMode && NodeMarkupTool.AddRuleShortcut.IsPressed(e))
+            if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)
                 AddRule();
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)
@@ -245,11 +252,11 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverItem)
                 {
                     var bezier = HoverItem.Object.Trajectory;
-                    if (HoverItem.Object.IsEnterLine)
-                    {
-                        bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
-                        bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
-                    }
+                    //if (HoverItem.Object.IsEnterLine)
+                    //{
+                    //    bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
+                    //    bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
+                    //}
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverRulePanel)
@@ -292,7 +299,7 @@ namespace NodeMarkup.UI.Editors
 
     public class LineItem : EditableItem<MarkupLine, LineIcon>
     {
-        public LineItem() : base(true, true) { }
+        public override void Init() => Init(true, true);
 
         public override string Description => NodeMarkup.Localize.LineEditor_ItemDescription;
         protected override void OnObjectSet() => SetIcon();
@@ -306,11 +313,12 @@ namespace NodeMarkup.UI.Editors
             if (!ShowIcon)
                 return;
 
-            Icon.Count = Object.RawRules.Count;
-            if (Object.RawRules.Count == 1)
+            var rules = Object.Rules.ToArray();
+            Icon.Count = rules.Length;
+            if (rules.Length == 1)
             {
-                Icon.Type = Object.RawRules[0].Style.Type;
-                Icon.StyleColor = Object.RawRules[0].Style.Color;
+                Icon.Type = rules[0].Style.Type;
+                Icon.StyleColor = rules[0].Style.Color;
             }
         }
     }

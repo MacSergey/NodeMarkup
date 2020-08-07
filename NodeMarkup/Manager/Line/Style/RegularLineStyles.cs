@@ -14,37 +14,21 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface ISimpleLine { }
-    public interface IStopLine { }
-    public interface IDashedLine
-    {
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
-    }
-    public interface IDoubleLine
-    {
-        float Offset { get; set; }
-    }
-    public interface IAsymLine
-    {
-        bool Invert { get; set; }
-    }
-
-    public class SolidLineStyle : LineStyle, ISimpleLine
+    public class SolidLineStyle : RegularLineStyle, IRegularLine
     {
         public override StyleType Type { get; } = StyleType.LineSolid;
 
         public SolidLineStyle(Color color, float width) : base(color, width) { }
 
-        public override LineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
+        public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
         {
             yield return CalculateSolidDash(trajectory, 0f);
         }
     }
-    public class DoubleSolidLineStyle : SolidLineStyle, ISimpleLine, IDoubleLine
+    public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine
     {
         public override StyleType Type { get; } = StyleType.LineDoubleSolid;
 
@@ -64,7 +48,7 @@ namespace NodeMarkup.Manager
             Offset = offset;
         }
 
-        public override LineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
+        public override RegularLineStyle CopyRegularLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -94,10 +78,10 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config)
         {
             base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultOffser);
+            Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
-    public class DashedLineStyle : LineStyle, ISimpleLine, IDashedLine
+    public class DashedLineStyle : RegularLineStyle, IRegularLine, IDashedLine
     {
         public override StyleType Type { get; } = StyleType.LineDashed;
 
@@ -128,7 +112,7 @@ namespace NodeMarkup.Manager
             SpaceLength = spaceLength;
         }
 
-        public override LineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
+        public override RegularLineStyle CopyRegularLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -139,7 +123,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
         {
@@ -167,7 +151,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
     }
-    public class DoubleDashedLineStyle : DashedLineStyle, ISimpleLine, IDoubleLine
+    public class DoubleDashedLineStyle : DashedLineStyle, IRegularLine, IDoubleLine
     {
         public override StyleType Type { get; } = StyleType.LineDoubleDashed;
 
@@ -187,7 +171,7 @@ namespace NodeMarkup.Manager
             Offset = offset;
         }
 
-        public override LineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override RegularLineStyle CopyRegularLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -217,10 +201,10 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config)
         {
             base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultOffser);
+            Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
-    public class SolidAndDashedLineStyle : LineStyle, ISimpleLine, IDoubleLine, IDashedLine, IAsymLine
+    public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDashedLine, IAsymLine
     {
         public override StyleType Type => StyleType.LineSolidAndDashed;
 
@@ -274,7 +258,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory)
         {
             foreach (var dash in CalculateSolid(trajectory, 0, CalculateSolidDash))
             {
@@ -294,7 +278,7 @@ namespace NodeMarkup.Manager
         {
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
         }
-        public override LineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -334,118 +318,10 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config)
         {
             base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultOffser);
+            Offset = config.GetAttrValue("O", DefaultOffset);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
             Invert = config.GetAttrValue("I", 0) == 1;
-        }
-    }
-    public class SolidStopLineStyle : LineStyle, IStopLine
-    {
-        public override StyleType Type => StyleType.StopLineSolid;
-
-        public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
-
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory)
-        {
-            var offset = (trajectory.a - trajectory.b).normalized * (Width / 2);
-
-            trajectory.b = trajectory.d;
-            trajectory.c = trajectory.a;
-
-            foreach (var dash in CalculateSolid(trajectory, 0, CalculateDashes))
-            {
-                dash.Position += offset;
-                yield return dash;
-            }
-        }
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
-        {
-            yield return CalculateSolidDash(trajectory, 0f);
-        }
-
-        public override LineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
-    }
-    public class DashedStopLineStyle : LineStyle, IStopLine, IDashedLine
-    {
-        public override StyleType Type { get; } = StyleType.StopLineDashed;
-
-        float _dashLength;
-        float _spaceLength;
-
-        public float DashLength
-        {
-            get => _dashLength;
-            set
-            {
-                _dashLength = value;
-                StyleChanged();
-            }
-        }
-        public float SpaceLength
-        {
-            get => _spaceLength;
-            set
-            {
-                _spaceLength = value;
-                StyleChanged();
-            }
-        }
-
-        public DashedStopLineStyle(Color color, float width, float dashLength, float spaceLength) : base(color, width)
-        {
-            DashLength = dashLength;
-            SpaceLength = spaceLength;
-        }
-
-        public override IEnumerable<MarkupStyleDash> Calculate(Bezier3 trajectory)
-        {
-            var offset = (trajectory.a - trajectory.b).normalized * (Width / 2);
-
-            trajectory.b = trajectory.d;
-            trajectory.c = trajectory.a;
-
-            foreach (var dash in CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes))
-            {
-                dash.Position += offset;
-                yield return dash;
-            }
-        }
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
-        {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
-        }
-
-        public override LineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
-        public override void CopyTo(Style target)
-        {
-            base.CopyTo(target);
-            if (target is IDashedLine dashedTarget)
-            {
-                dashedTarget.DashLength = DashLength;
-                dashedTarget.SpaceLength = SpaceLength;
-            }
-        }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-        {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            return components;
-        }
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(new XAttribute("DL", DashLength));
-            config.Add(new XAttribute("SL", SpaceLength));
-            return config;
-        }
-        public override void FromXml(XElement config)
-        {
-            base.FromXml(config);
-            DashLength = config.GetAttrValue("DL", DefaultDashLength);
-            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
     }
 }

@@ -8,7 +8,10 @@ namespace NodeMarkup.UI.Editors
 {
     public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
+        private static FillerStyle Buffer { get; set; }
+
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
+        public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
 
         public StylePropertyPanel Style { get; private set; }
         private StyleHeaderPanel Header { get; set; }
@@ -38,6 +41,8 @@ namespace NodeMarkup.UI.Editors
             Header.Init(Manager.Style.StyleType.Filler, false);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnSelectTemplate += OnSelectTemplate;
+            Header.OnCopy += CopyStyle;
+            Header.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
@@ -55,6 +60,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
+            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_ChevronStyle))
+                return;
+
             if (style == EditObject.Style.Type)
                 return;
 
@@ -73,23 +81,40 @@ namespace NodeMarkup.UI.Editors
             if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
                 NodeMarkupPanel.EditTemplate(template);
         }
+        private void ApplyStyle(FillerStyle style)
+        {
+            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_ChevronStyle))
+                return;
+
+            var newStyle = style.CopyFillerStyle();
+
+            newStyle.MedianOffset = EditObject.Style.MedianOffset;
+            if (newStyle is IRotateFiller newSimple && EditObject.Style is IRotateFiller oldSimple)
+            {
+                newSimple.Angle = oldSimple.Angle;
+            }
+
+            EditObject.Style = newStyle;
+            Style.SelectedObject = EditObject.Style.Type;
+
+            RefreshItem();
+            ClearStyleProperties();
+            AddStyleProperties();
+        }
         private void OnSelectTemplate(StyleTemplate template)
         {
-            if (template.Style.Copy() is FillerStyle newStyle)
-            {
-                newStyle.MedianOffset = EditObject.Style.MedianOffset;
-                if (newStyle is ISimpleFiller newSimple && EditObject.Style is ISimpleFiller oldSimple)
-                {
-                    newSimple.Angle = oldSimple.Angle;
-                }
-
-                EditObject.Style = newStyle;
-                Style.SelectedObject = EditObject.Style.Type;
-
-                RefreshItem();
-                ClearStyleProperties();
-                AddStyleProperties();
-            }
+            if (template.Style is FillerStyle style)
+                ApplyStyle(style);
+        }
+        private void CopyStyle()
+        {
+            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
+                Buffer = EditObject.Style.CopyFillerStyle();
+        }
+        private void PasteStyle()
+        {
+            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is FillerStyle style)
+                ApplyStyle(style);
         }
         private void ClearStyleProperties()
         {
@@ -118,8 +143,7 @@ namespace NodeMarkup.UI.Editors
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
         public override string Description => NodeMarkup.Localize.FillerEditor_ItemDescription;
-
-        public FillerItem() : base(true, true) { }
+        public override void Init() => Init(true, true);
 
         protected override void OnObjectSet() => SetIcon();
         public override void Refresh()

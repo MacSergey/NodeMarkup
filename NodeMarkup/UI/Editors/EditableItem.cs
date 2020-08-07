@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,13 +23,14 @@ namespace NodeMarkup.UI.Editors
         public void Select() => normalBgSprite = "ButtonSmallPressed";
         public void Unselect() => normalBgSprite = "ButtonSmall";
     }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItem 
+    public abstract class EditableItem<EditableObject, IconType> : EditableItem
         where IconType : UIComponent
         where EditableObject : class
     {
         public event Action<EditableItem<EditableObject, IconType>> OnDelete;
 
         EditableObject _object;
+        private bool Inited { get; set; } = false;
         public abstract string Description { get; }
         public EditableObject Object
         {
@@ -46,18 +48,11 @@ namespace NodeMarkup.UI.Editors
         public bool ShowIcon { get; set; }
         public bool ShowDelete { get; set; }
 
-        public EditableItem(bool showIcon, bool showDelete)
+        public EditableItem()
         {
-            ShowIcon = showIcon;
-            ShowDelete = showDelete;
-
-            if (ShowIcon)
-                AddIcon();
             AddLable();
-            if (ShowDelete)
-                AddDeleteButton();
 
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
 
             normalBgSprite = "ButtonSmall";
             disabledBgSprite = "ButtonSmallPressed";
@@ -66,6 +61,24 @@ namespace NodeMarkup.UI.Editors
             pressedBgSprite = "ButtonSmallPressed";
 
             height = 25;
+        }
+        public abstract void Init();
+        public void Init(bool showIcon, bool showDelete)
+        {
+            if (Inited)
+                return;
+
+            ShowIcon = showIcon;
+            ShowDelete = showDelete;
+
+            if (ShowIcon)
+                AddIcon();
+            if (ShowDelete)
+                AddDeleteButton();
+
+            OnSizeChanged();
+
+            Inited = true;
         }
 
         private void AddIcon()
@@ -86,7 +99,7 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = NodeMarkupPanel.InGameAtlas;
+            DeleteButton.atlas = TextureUtil.InGameAtlas;
             DeleteButton.normalBgSprite = "buttonclose";
             DeleteButton.hoveredBgSprite = "buttonclosehover";
             DeleteButton.pressedBgSprite = "buttonclosepressed";
@@ -136,14 +149,14 @@ namespace NodeMarkup.UI.Editors
         public Color32 BorderColor { set => color = value; }
         public ColorIcon()
         {
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             normalBgSprite = "PieChartWhiteBg";
             disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
             color = Color.white;
 
             InnerCircule = AddUIComponent<UIButton>();
-            InnerCircule.atlas = NodeMarkupPanel.InGameAtlas;
+            InnerCircule.atlas = TextureUtil.InGameAtlas;
             InnerCircule.normalBgSprite = "PieChartWhiteBg";
             InnerCircule.normalFgSprite = "PieChartWhiteFg";
             InnerCircule.disabledBgSprite = "PieChartWhiteBg";
@@ -171,7 +184,7 @@ namespace NodeMarkup.UI.Editors
         protected UIButton Thumbnail { get; set; }
 
         public Color32 StyleColor { set => Thumbnail.color = GetStyleColor(value); }
-        public Style.StyleType Type 
+        public Style.StyleType Type
         {
             set
             {

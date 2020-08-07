@@ -19,9 +19,19 @@ namespace NodeMarkup
         public static string StaticName { get; } = "Intersection Marking Tool";
 
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
+        public static string VersionMajor => string.Join(".", Version.Split('.').Take(3).ToArray());
+
+        public static List<string> Versions { get; } = new List<string>
+        {
+            "1.2.1",
+            "1.2",
+            "1.1",
+            "1.0"
+        };
 
 #if DEBUG
-        public string Name { get; } = $"{StaticName} {Version} [BETA]";
+        public static string VersionBeta => $"{Version} [BETA]";
+        public string Name { get; } = $"{StaticName} {VersionBeta}";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public string Name { get; } = $"{StaticName} {Version}";
@@ -35,6 +45,7 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
+            EarlyAccess.CheckAccess();
         }
         public void OnDisabled()
         {
@@ -85,12 +96,14 @@ namespace NodeMarkup
             if (!UI.Settings.ShowWhatsNew || VersionComparer.Instance.Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
                 return;
 
-            var messageBox = MessageBox.ShowModal<OkMessageBox>();
-            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
-            messageBox.MessageScale = 1f;
-            messageBox.TextAlignment = UIHorizontalAlignment.Left;
-            messageBox.MessageText = Localize.Mod_WhatsNewMessage;
+            var messages = GetWhatsNewMessages();
+            if (!messages.Any())
+                return;
+
+            var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, StaticName);
             messageBox.OnButtonClick = Confirm;
+            messageBox.Init(messages);
 
             bool Confirm()
             {
@@ -98,6 +111,28 @@ namespace NodeMarkup
                 return true;
             }
         }
+        private Dictionary<string, string> GetWhatsNewMessages()
+        {
+            var messages = new Dictionary<string, string>(Versions.Count);
+#if DEBUG
+            messages[VersionBeta] = Localize.Mod_WhatsNewMessageBeta;
+#endif
+            foreach (var version in Versions)
+            {
+                if (VersionComparer.Instance.Compare(version, UI.Settings.WhatsNewVersion) <= 0)
+                    break;
+
+                if (UI.Settings.ShowOnlyMajor && !IsImportantVersion(version))
+                    continue;
+
+                if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
+                    messages[version] = message;
+            }
+
+            return messages;
+        }
+        private string GetWhatsNew(string version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.Replace('.', '_')}", Localize.Culture);
+        private bool IsImportantVersion(string version) => version.Split('.').Length <= 2;
     }
     public class VersionComparer : Comparer<string>
     {

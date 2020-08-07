@@ -1,15 +1,13 @@
 ﻿using ColossalFramework;
-using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
+using ColossalFramework.Threading;
+using System.Threading;
 
 namespace NodeMarkup.UI
 {
@@ -17,13 +15,15 @@ namespace NodeMarkup.UI
     {
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
-        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, string.Empty, true);
+        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version, true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
+        public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
+        //public static SavedString AccessKey { get; } = new SavedString(nameof(AccessKey), SettingsFile, string.Empty, true);
 
         static Settings()
         {
@@ -35,8 +35,12 @@ namespace NodeMarkup.UI
         {
             AddKeyMapping(helper);
             AddGeneral(helper);
+            AddAccess(helper);
+            AddNotifications(helper);
             AddOther(helper);
         }
+
+        #region KEYMAPPING
         private static void AddKeyMapping(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper;
@@ -46,7 +50,11 @@ namespace NodeMarkup.UI
             keymappings.AddKeymapping(Localize.Settings_ActivateTool, NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
+            keymappings.AddKeymapping(Localize.Settings_AddNewFiller, NodeMarkupTool.AddFillerShortcut);
         }
+        #endregion
+
+        #region GENERAL
         private static void AddGeneral(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_General) as UIHelper;
@@ -55,7 +63,7 @@ namespace NodeMarkup.UI
             AddShowToolTipsSetting(group);
             AddDeleteRequest(group);
             AddQuickRuleSetup(group);
-            AddShowWhatsNew(group);
+
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -97,12 +105,41 @@ namespace NodeMarkup.UI
 
             void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetup.value = request;
         }
+        #endregion
+
+        #region ACCESS
+        private static void AddAccess(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup("Early access") as UIHelper;
+            if (group.self is UIComponent component)
+                component.AddUIComponent<EarlyAccessPanel>();
+        }
+
+        #endregion
+
+        #region NOTIFICATIONS
+        private static void AddNotifications(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
+
+            AddShowWhatsNew(group);
+            AddShowOnlyMajor(group);
+        }
         private static void AddShowWhatsNew(UIHelper group)
         {
             var showWhatsNewCheckBox = group.AddCheckbox(Localize.Settings_ShowWhatsNew, ShowWhatsNew, OnShowWhatsNewChanged) as UICheckBox;
 
             void OnShowWhatsNewChanged(bool request) => ShowWhatsNew.value = request;
         }
+        private static void AddShowOnlyMajor(UIHelper group)
+        {
+            var showOnlyMajorCheckBox = group.AddCheckbox(Localize.Settings_ShowOnlyMajor, ShowOnlyMajor, OnShowOnlyMajorChanged) as UICheckBox;
+
+            void OnShowOnlyMajorChanged(bool request) => ShowOnlyMajor.value = request;
+        }
+        #endregion
+
+        #region OTHER
         private static void AddOther(UIHelperBase helper)
         {
             if (SceneManager.GetActiveScene().name is string scene && (scene == "MainMenu" || scene == "IntroScreen"))
@@ -121,7 +158,7 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Settings_DeleteMarkingCaption;
                 messageBox.MessageText = Localize.Settings_DeleteMarkingMessage;
                 messageBox.OnButton1Click = Сonfirmed;
@@ -142,7 +179,7 @@ namespace NodeMarkup.UI
 
                 if (result)
                 {
-                    var messageBox = MessageBox.ShowModal<TwoButtonMessageBox>();
+                    var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                     messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
                     messageBox.MessageText = Localize.Settings_DumpMarkingMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_DumpMarkingButton1;
@@ -157,7 +194,7 @@ namespace NodeMarkup.UI
                 }
                 else
                 {
-                    var messageBox = MessageBox.ShowModal<OkMessageBox>();
+                    var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
                     messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
                     messageBox.MessageText = Localize.Settings_DumpMarkingMessageFailed;
                 }
@@ -169,11 +206,12 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                var messageBox = MessageBox.ShowModal<ImportMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<ImportMessageBox>();
                 messageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
                 messageBox.MessageText = Localize.Settings_ImportMarkingMessage;
 
             }
         }
+        #endregion
     }
 }

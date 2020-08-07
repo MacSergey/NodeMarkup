@@ -23,8 +23,11 @@ namespace NodeMarkup.Manager
             try
             {
                 var xml = UI.Settings.Templates.value;
-                var config = Serializer.Parse(xml);
-                FromXml(config);
+                if (!string.IsNullOrEmpty(xml))
+                {
+                    var config = Serializer.Parse(xml);
+                    FromXml(config);
+                }
 
                 Logger.LogDebug($"Templates was loaded: {TemplatesDictionary.Count} items");
             }

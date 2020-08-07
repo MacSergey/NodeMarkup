@@ -24,21 +24,17 @@ namespace NodeMarkup.Manager
         public static float DefaultStepGrid { get; } = 6f;
         public static float DefaultOffset { get; } = 0f;
         public static float StripeDefaultWidth { get; } = 0.5f;
+        public static float DefaultAngleBetween { get; } = 90f;
 
-        public static StripeFillerStyle DefaultStripe => new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset);
-        public static GridFillerStyle DefaultGrid => new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset);
-        public static SolidFillerStyle DefaultSolid => new SolidFillerStyle(DefaultColor, DefaultOffset);
-
-        public static FillerStyle GetDefault(FillerType type)
+        static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            switch (type)
-            {
-                case FillerType.Stripe: return DefaultStripe;
-                case FillerType.Grid: return DefaultGrid;
-                case FillerType.Solid: return DefaultSolid;
-                default: return null;
-            }
-        }
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset)},
+            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+        };
+
+        public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
 
         float _medianOffset;
         public float MedianOffset
@@ -76,33 +72,40 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
-            var trajectories = filler.Trajectories.ToArray();
-            if (filler.IsMedian)
-                GetTrajectoriesWithoutMedian(trajectories, filler.Parts.ToArray());
-
+            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Trajectories.ToArray();
             var rect = GetRect(trajectories);
             return GetDashes(trajectories, rect, filler.Markup.Height);
         }
-        public IEnumerable<Bezier3> GetTrajectoriesWithoutMedian(Bezier3[] trajectories, MarkupLinePart[] lineParts)
+        public Bezier3[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
+            var lineParts = filler.Parts.ToArray();
+            var trajectories = filler.TrajectoriesRaw.ToArray();
+
             for (var i = 0; i < lineParts.Length; i += 1)
             {
+                if (trajectories[i] == null)
+                    continue;
+
                 var line = lineParts[i].Line;
                 if (line is MarkupFakeLine)
                     continue;
 
                 var prevI = i == 0 ? lineParts.Length - 1 : i - 1;
-                if (lineParts[prevI].Line is MarkupFakeLine)
+                if (lineParts[prevI].Line is MarkupFakeLine && trajectories[prevI] != null)
                 {
-                    trajectories[i] = Shift(trajectories[i]);
-                    trajectories[prevI].d = trajectories[prevI].b = trajectories[i].a;
+                    trajectories[i] = Shift(trajectories[i].Value);
+                    var temp = trajectories[prevI].Value;
+                    temp.d = temp.b = trajectories[i].Value.a;
+                    trajectories[prevI] = temp;
                 }
 
                 var nextI = i + 1 == lineParts.Length ? 0 : i + 1;
-                if (lineParts[nextI].Line is MarkupFakeLine)
+                if (lineParts[nextI].Line is MarkupFakeLine && trajectories[nextI] != null)
                 {
-                    trajectories[i] = Shift(trajectories[i].Invert()).Invert();
-                    trajectories[nextI].a = trajectories[nextI].c = trajectories[i].d;
+                    trajectories[i] = Shift(trajectories[i].Value.Invert()).Invert();
+                    var temp = trajectories[nextI].Value;
+                    temp.a = temp.c = trajectories[i].Value.d;
+                    trajectories[nextI] = temp;
                 }
 
                 Bezier3 Shift(Bezier3 trajectory)
@@ -112,13 +115,13 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            return trajectories;
+            return trajectories.Where(t => t != null).Select(t => t.Value).ToArray();
         }
         protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height);
 
         protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
         {
-            foreach (var point in GetLines(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
+            foreach (var point in GetItems(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
             {
                 var intersectSet = new HashSet<MarkupFillerIntersect>();
                 foreach (var trajectory in trajectories)
@@ -136,32 +139,27 @@ namespace NodeMarkup.Manager
 
                     if (offset != 0)
                     {
-                        var startOffset = GetOffset(intersects[i - 1]);
-                        var endOffset = GetOffset(intersects[i]);
+                        var startOffset = GetOffset(intersects[i - 1], offset);
+                        var endOffset = GetOffset(intersects[i], offset);
 
                         if ((end - start).magnitude - Width < startOffset + endOffset)
                             continue;
 
-                        var sToE = intersects[i].FirstT >= intersects[i - 1].FirstT;
-                        start += normal * (sToE ? startOffset : -startOffset);
-                        end += normal * (sToE ? -endOffset : endOffset);
+                        var isStartToEnd = intersects[i].FirstT >= intersects[i - 1].FirstT;
+                        start += normal * (isStartToEnd ? startOffset : -startOffset);
+                        end += normal * (isStartToEnd ? -endOffset : endOffset);
                     }
 
-                    var pos = (start + end) / 2;
-                    var angle = Mathf.Atan2(normal.z, normal.x);
-                    var length = (end - start).magnitude;
-
-                    yield return new MarkupStyleDash(pos, angle, length, partWidth, Color);
-
-                    float GetOffset(MarkupFillerIntersect intersect)
-                    {
-                        var sin = Mathf.Sin(intersect.Angle);
-                        return sin != 0 ? offset / sin : 1000f;
-                    }
+                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color);
                 }
             }
         }
-        protected List<Vector3> GetLines(float angle, Rect rect, float height, float width, float step, float offset, out Vector3 normal, out float partWidth)
+        protected float GetOffset(MarkupFillerIntersect intersect, float offset)
+        {
+            var sin = Mathf.Sin(intersect.Angle);
+            return sin != 0 ? offset / sin : 1000f;
+        }
+        protected List<Vector3> GetItems(float angle, Rect rect, float height, float width, float step, float offset, out Vector3 normal, out float partWidth)
         {
             var results = new List<Vector3>();
 
@@ -178,12 +176,12 @@ namespace NodeMarkup.Manager
             normal = dir.Turn90(false);
 
             var itemLength = width * step;
-            var stripeCount = Math.Max((int)(length / itemLength) - 1, 0);
-            var start = (length - (itemLength * stripeCount)) / 2;
+            var itemsCount = Math.Max((int)(length / itemLength) - 1, 0);
+            var start = (length - (itemLength * itemsCount)) / 2;
 
             GetParts(width, offset, out int partsCount, out partWidth);
 
-            for (var i = 0; i < stripeCount; i += 1)
+            for (var i = 0; i < itemsCount; i += 1)
             {
                 var stripStart = start + partWidth / 2 + i * itemLength;
                 for (var j = 0; j < partsCount; j += 1)
@@ -194,20 +192,25 @@ namespace NodeMarkup.Manager
 
             return results;
         }
-        private bool GetRail(float angle, Rect rect, float height, out Line3 rail)
+        protected bool GetRail(float SceneAngle, Rect rect, float height, out Line3 rail)
         {
-            var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
+            if (SceneAngle > 90)
+                SceneAngle -= 180;
+            else if (SceneAngle < -90)
+                SceneAngle += 180;
+
+            var absAngle = Mathf.Abs(SceneAngle) * Mathf.Deg2Rad;
             var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
             var dx = railLength * Mathf.Sin(absAngle);
             var dy = railLength * Mathf.Cos(absAngle);
 
-            if (angle == -90 || angle == 90)
+            if (SceneAngle == -90 || SceneAngle == 90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
-            else if (90 > angle && angle > 0)
+            else if (90 > SceneAngle && SceneAngle > 0)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
-            else if (angle == 0)
+            else if (SceneAngle == 0)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
-            else if (0 > angle && angle > -90)
+            else if (0 > SceneAngle && SceneAngle > -90)
                 rail = new Line3(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
             else
             {
@@ -217,7 +220,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        private void GetParts(float width, float offset, out int count, out float partWidth)
+        protected void GetParts(float width, float offset, out int count, out float partWidth)
         {
             if (width < 0.2f || offset != 0f)
             {
@@ -287,50 +290,6 @@ namespace NodeMarkup.Manager
             MedianOffset = config.GetAttrValue("MO", DefaultOffset);
         }
 
-        protected static FloatPropertyPanel AddStepProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            stepProperty.Text = Localize.Filler_Step;
-            stepProperty.UseWheel = true;
-            stepProperty.WheelStep = 0.1f;
-            stepProperty.CheckMin = true;
-            stepProperty.MinValue = 1.5f;
-            stepProperty.Init();
-            stepProperty.Value = stripeStyle.Step;
-            stepProperty.OnValueChanged += (float value) => stripeStyle.Step = value;
-            AddOnHoverLeave(stepProperty, onHover, onLeave);
-            return stepProperty;
-        }
-        protected static FloatPropertyPanel AddAngleProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            angleProperty.Text = Localize.Filler_Angle;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.CheckMin = true;
-            angleProperty.MinValue = -90;
-            angleProperty.CheckMax = true;
-            angleProperty.MaxValue = 90;
-            angleProperty.Init();
-            angleProperty.Value = stripeStyle.Angle;
-            angleProperty.OnValueChanged += (float value) => stripeStyle.Angle = value;
-            AddOnHoverLeave(angleProperty, onHover, onLeave);
-            return angleProperty;
-        }
-        protected static FloatPropertyPanel AddOffsetProperty(ISimpleFiller stripeStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.Filler_Offset;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
-            offsetProperty.Init();
-            offsetProperty.Value = stripeStyle.Offset;
-            offsetProperty.OnValueChanged += (float value) => stripeStyle.Offset = value;
-            AddOnHoverLeave(offsetProperty, onHover, onLeave);
-            return offsetProperty;
-        }
         protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
@@ -345,6 +304,50 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
+        protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            angleProperty.Text = Localize.Filler_Angle;
+            angleProperty.UseWheel = true;
+            angleProperty.WheelStep = 1f;
+            angleProperty.CheckMin = true;
+            angleProperty.MinValue = -90;
+            angleProperty.CheckMax = true;
+            angleProperty.MaxValue = 90;
+            angleProperty.Init();
+            angleProperty.Value = rotateStyle.Angle;
+            angleProperty.OnValueChanged += (float value) => rotateStyle.Angle = value;
+            AddOnHoverLeave(angleProperty, onHover, onLeave);
+            return angleProperty;
+        }
+        protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            stepProperty.Text = Localize.Filler_Step;
+            stepProperty.UseWheel = true;
+            stepProperty.WheelStep = 0.1f;
+            stepProperty.CheckMin = true;
+            stepProperty.MinValue = 1.5f;
+            stepProperty.Init();
+            stepProperty.Value = periodicStyle.Step;
+            stepProperty.OnValueChanged += (float value) => periodicStyle.Step = value;
+            AddOnHoverLeave(stepProperty, onHover, onLeave);
+            return stepProperty;
+        }
+        protected static FloatPropertyPanel AddOffsetProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            offsetProperty.Text = Localize.Filler_Offset;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0f;
+            offsetProperty.Init();
+            offsetProperty.Value = periodicStyle.Offset;
+            offsetProperty.OnValueChanged += (float value) => periodicStyle.Offset = value;
+            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+            return offsetProperty;
+        }
 
         public enum FillerType
         {
@@ -356,6 +359,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Solid))]
             Solid = StyleType.FillerSolid,
+
+            [Description(nameof(Localize.FillerStyle_Chevron))]
+            Chevron = StyleType.FillerChevron,
         }
     }
 }

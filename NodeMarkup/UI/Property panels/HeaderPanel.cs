@@ -11,31 +11,73 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class HeaderPanel : EditorItem
     {
+        public static UITextureAtlas ButtonAtlas { get; } = GetStylesIcons();
+        private static UITextureAtlas GetStylesIcons()
+        {
+            var spriteNames = new string[]
+            {
+                "Hovered",
+                "Pressed",
+                "Normal",
+                "AddTemplate",
+                "ApplyTemplate",
+                "Copy",
+                "Paste",
+                "SetDefault",
+                "UnsetDefault",
+            };
+
+            var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));
+            if (atlas == UIView.GetAView().defaultAtlas)
+            {
+                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames);
+            }
+
+            return atlas;
+        }
+
+
         public event Action OnDelete;
 
+        protected UIPanel Content { get; set; }
         protected UIButton DeleteButton { get; set; }
 
         public HeaderPanel()
         {
             AddDeleteButton();
+            AddContent();
         }
 
-        public virtual void Init(bool isDeletable = true)
+        public virtual void Init(float height = defaultHeight, bool isDeletable = true)
         {
-            base.Init();
+            base.Init(height);
             DeleteButton.enabled = isDeletable;
         }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
+            Content.size = new Vector2(DeleteButton.enabled ? width - DeleteButton.width - 10 : width, height);
+            Content.autoLayout = true;
+            Content.autoLayout = false;
             DeleteButton.relativePosition = new Vector2(width - DeleteButton.width - 5, (height - DeleteButton.height) / 2);
+
+            foreach (var item in Content.components)
+                item.relativePosition = new Vector2(item.relativePosition.x, (Content.height - item.height) / 2);
+        }
+
+        private void AddContent()
+        {
+            Content = AddUIComponent<UIPanel>();
+            Content.relativePosition = new Vector2(0, 0);
+            Content.autoLayoutDirection = LayoutDirection.Horizontal;
+            Content.autoLayoutPadding = new RectOffset(0, 5, 0, 0);
         }
 
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = NodeMarkupPanel.InGameAtlas;
+            DeleteButton.atlas = TextureUtil.InGameAtlas;
             DeleteButton.normalBgSprite = "buttonclose";
             DeleteButton.hoveredBgSprite = "buttonclosehover";
             DeleteButton.pressedBgSprite = "buttonclosepressed";
@@ -43,139 +85,232 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.eventClick += DeleteClick;
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
+
+        protected UIButton AddButton(string sprite, string text = null, MouseEventHandler onClick = null)
+        {
+            var button = Content.AddUIComponent<UIButton>();
+            button.hoveredBgSprite = "Hovered";
+            button.pressedBgSprite = "Pressed";
+            SetSprite(button, sprite);
+            button.size = new Vector2(25, 25);
+            button.atlas = ButtonAtlas;
+            button.tooltip = text;
+            if (onClick != null)
+                button.eventClick += onClick;
+
+            return button;
+        }
+        protected void SetSprite(UIButton button, string sprite)
+        {
+            button.normalFgSprite = sprite;
+            button.hoveredFgSprite = sprite;
+            button.pressedFgSprite = sprite;
+        }
     }
     public class StyleHeaderPanel : HeaderPanel
     {
-        private static StyleTemplate EmptyTemplate { get; set; } = new StyleTemplate(string.Empty, LineStyle.DefaultSolid);
-
         public event Action OnSaveTemplate;
         public event Action<StyleTemplate> OnSelectTemplate;
+        public event Action OnCopy;
+        public event Action OnPaste;
 
-
-        UIButton SaveTemplateButton { get; set; }
-        TemplateDropDown SelectTemplate { get; set; }
         Style.StyleType StyleGroup { get; set; }
+        TemplateSelectPanel Popup { get; set; }
+
+        UIButton SaveTemplate { get; set; }
+        UIButton ApplyTemplate { get; set; }
+        UIButton Copy { get; set; }
+        UIButton Paste { get; set; }
 
         public StyleHeaderPanel()
         {
-            AddSaveTemplate();
-            AddApplyTemplate();
+            SaveTemplate = AddButton("AddTemplate", NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick);
+            ApplyTemplate = AddButton("ApplyTemplate", NodeMarkup.Localize.HeaderPanel_ApplyTemplate, ApplyTemplateClick);
+            Copy = AddButton("Copy", NodeMarkup.Localize.LineEditor_StyleCopy, CopyClick);
+            Paste = AddButton("Paste", NodeMarkup.Localize.LineEditor_StylePaste, PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, bool isDeletable = true)
         {
-            base.Init(isDeletable);
+            base.Init(35, isDeletable);
+
             StyleGroup = styleGroup & Style.StyleType.GroupMask;
-            Fill();
-            SelectTemplate.selectedIndex = 0;
         }
-        protected override void OnSizeChanged()
+        protected override void OnVisibilityChanged()
         {
-            base.OnSizeChanged();
-
-            SaveTemplateButton.relativePosition = new Vector2(5, (height - SaveTemplateButton.height) / 2);
-            SelectTemplate.relativePosition = new Vector2(SaveTemplateButton.relativePosition.x + SaveTemplateButton.width + 5, (height - SelectTemplate.height) / 2);
-        }
-
-
-        private void AddSaveTemplate()
-        {
-            SaveTemplateButton = AddUIComponent<UIButton>();
-            SaveTemplateButton.atlas = NodeMarkupPanel.InMapEditorAtlas;
-            SaveTemplateButton.normalBgSprite = "InfoDisplay";
-            SaveTemplateButton.hoveredBgSprite = "InfoDisplayHover";
-            SaveTemplateButton.pressedBgSprite = "InfoDisplayFocused";
-            SaveTemplateButton.text = NodeMarkup.Localize.HeaderPanel_SaveAsTemplate;
-            SaveTemplateButton.textScale = 0.7f;
-            SaveTemplateButton.textPadding = new RectOffset(0, 0, 2, 0);
-            SaveTemplateButton.size = new Vector2(120, 20);
-            SaveTemplateButton.textColor = Color.black;
-            SaveTemplateButton.hoveredTextColor = Color.black;
-            SaveTemplateButton.pressedTextColor = Color.black;
-            SaveTemplateButton.focusedTextColor = Color.black;
-            SaveTemplateButton.eventClick += SaveTemplateClick;
-        }
-        private void AddApplyTemplate()
-        {
-            SelectTemplate = AddUIComponent<TemplateDropDown>();
-
-            SelectTemplate.atlas = NodeMarkupPanel.InMapEditorAtlas;
-            SelectTemplate.height = 20;
-            SelectTemplate.width = 150;
-            SelectTemplate.listBackground = "TextFieldPanel";
-            SelectTemplate.itemHeight = 20;
-            SelectTemplate.itemHover = "TextFieldPanelHovered";
-            SelectTemplate.itemHighlight = "ListItemHighlight";
-            SelectTemplate.normalBgSprite = "InfoDisplay";
-            SelectTemplate.hoveredBgSprite = "InfoDisplayHover";
-            SelectTemplate.listWidth = 150;
-            SelectTemplate.listHeight = 700;
-            SelectTemplate.listPosition = UIDropDown.PopupListPosition.Below;
-            SelectTemplate.clampListToScreen = true;
-            SelectTemplate.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
-            SelectTemplate.popupColor = new Color32(45, 52, 61, 255);
-            SelectTemplate.popupTextColor = new Color32(170, 170, 170, 255);
-            SelectTemplate.textScale = 0.7f;
-            SelectTemplate.textFieldPadding = new RectOffset(8, 0, 6, 0);
-            SelectTemplate.textColor = Color.black;
-            SelectTemplate.popupColor = Color.white;
-            SelectTemplate.popupTextColor = Color.black;
-            SelectTemplate.verticalAlignment = UIVerticalAlignment.Middle;
-            SelectTemplate.horizontalAlignment = UIHorizontalAlignment.Left;
-            SelectTemplate.itemPadding = new RectOffset(5, 0, 5, 0);
-            SelectTemplate.filteredItems = new int[] { 0 };
-            SelectTemplate.eventDropdownOpen += DropdownOpen;
-            SelectTemplate.eventDropdownClose += DropdownClose;
-
-            var button = SelectTemplate.AddUIComponent<UIButton>();
-            button.atlas = NodeMarkupPanel.InGameAtlas;
-            button.text = string.Empty;
-            button.size = SelectTemplate.size;
-            button.relativePosition = new Vector3(0f, 0f);
-            button.textVerticalAlignment = UIVerticalAlignment.Middle;
-            button.textHorizontalAlignment = UIHorizontalAlignment.Left;
-            button.normalFgSprite = "IconDownArrow";
-            button.hoveredFgSprite = "IconDownArrowHovered";
-            button.pressedFgSprite = "IconDownArrowPressed";
-            button.focusedFgSprite = "IconDownArrowFocused";
-            button.disabledFgSprite = "IconDownArrowDisabled";
-            button.foregroundSpriteMode = UIForegroundSpriteMode.Scale;
-            button.horizontalAlignment = UIHorizontalAlignment.Right;
-            button.verticalAlignment = UIVerticalAlignment.Middle;
-            button.textScale = 0.8f;
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Fill();
-
-            SelectTemplate.triggerButton = button;
+            base.OnVisibilityChanged();
+            if(!isVisible)
+                ClosePopup();
         }
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
-        private void DropdownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
+        private void ApplyTemplateClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            popup.items = popup.items.ToArray();
-            popup.items[0] = string.Empty;
-            SelectTemplate.eventSelectedIndexChanged += DropDownIndexChanged;
+            if (Popup == null)
+                OpenPopup();
+            else
+                ClosePopup();
         }
-        private void DropDownIndexChanged(UIComponent component, int value)
+        private void OnPopupLostFocus(UIComponent component, UIFocusEventParameter eventParam)
         {
-            if (value != -1)
-                OnSelectTemplate?.Invoke(SelectTemplate.SelectedObject);
+            var uiView = Popup.GetUIView();
+            var mouse = uiView.ScreenPointToGUI(Input.mousePosition / uiView.inputScale);
+            var popupRect = new Rect(Popup.absolutePosition, Popup.size);
+            var buttonRect = new Rect(ApplyTemplate.absolutePosition, ApplyTemplate.size);
+            if (!popupRect.Contains(mouse) && !buttonRect.Contains(mouse))
+                ClosePopup();
+            else
+                Popup.Focus();
         }
-        private void DropdownClose(UIDropDown dropdown, UIListBox popup, ref bool overridden)
+        private void OnTemplateSelect(StyleTemplate template)
         {
-            SelectTemplate.eventSelectedIndexChanged -= DropDownIndexChanged;
-            SelectTemplate.selectedIndex = 0;
+            OnSelectTemplate?.Invoke(template);
+            ClosePopup();
         }
-        private void Fill()
+        private void OpenPopup()
         {
-            SelectTemplate.Clear();
-            SelectTemplate.AddItem(EmptyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            foreach(var template in TemplateManager.GetTemplates(StyleGroup))
+            var root = GetRootContainer();
+            Popup = root.AddUIComponent<TemplateSelectPanel>();
+            Popup.Init(StyleGroup);
+            Popup.OnSelect += OnTemplateSelect;
+            Popup.eventLostFocus += OnPopupLostFocus;
+            SetPopupPosition();
+            Popup.Focus();
+
+            Popup.parent.eventPositionChanged += SetPopupPosition;
+        }
+        private void ClosePopup()
+        {
+            if (Popup != null)
             {
-                SelectTemplate.AddItem(template, template.ToStringWithShort());
+                Popup.parent.eventPositionChanged -= SetPopupPosition;
+
+                Popup.OnSelect -= OnTemplateSelect;
+                Popup.eventLostFocus -= OnPopupLostFocus;
+                Popup.parent.RemoveUIComponent(Popup);
+                Destroy(Popup.gameObject);
+                Popup = null;
             }
         }
+        private void SetPopupPosition(UIComponent component = null, Vector2 value = default)
+        {
+            if (Popup != null)
+            {
+                UIView uiView = Popup.GetUIView();
+                var screen = uiView.GetScreenResolution();
+                var position = ApplyTemplate.absolutePosition + new Vector3(0, ApplyTemplate.height);
+                position.x = MathPos(position.x, Popup.width, screen.x);
+                position.y = MathPos(position.y, Popup.height, screen.y);
 
-        public class TemplateDropDown : CustomUIDropDown<StyleTemplate> { }
+                Popup.relativePosition = position - Popup.parent.absolutePosition;
+            }
+
+            float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
+        }
+
+        private void CopyClick(UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke();
+        private void PasteClick(UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke();
+
+
+        public class TemplateSelectPanel : UIPanel
+        {
+            public event Action<StyleTemplate> OnSelect;
+
+            private static float MaxContentHeight { get; } = 200;
+            protected UIScrollablePanel ScrollableContent { get; private set; }
+            private float Padding => 2f;
+
+            private float _width = 250f;
+            public float Width
+            {
+                get => _width;
+                set
+                {
+                    _width = value;
+                    FitContentChildren();
+                }
+            }
+            public Vector2 MaxSize
+            {
+                get => ScrollableContent.maximumSize;
+                set => ScrollableContent.maximumSize = value;
+            }
+
+            public TemplateSelectPanel()
+            {
+                isVisible = true;
+                canFocus = true;
+                isInteractive = true;
+                color = new Color32(58, 88, 104, 255);
+                atlas = TextureUtil.InGameAtlas;
+                backgroundSprite = "OptionsDropboxListbox";
+            }
+            public void Init(Style.StyleType styleGroup)
+            {
+                AddPanel();
+                styleGroup &= Style.StyleType.GroupMask;
+                Fill(styleGroup);
+                ContentSizeChanged();
+
+                ScrollableContent.eventSizeChanged += ContentSizeChanged;
+            }
+
+            private void AddPanel()
+            {
+                ScrollableContent = AddUIComponent<UIScrollablePanel>();
+                ScrollableContent.autoLayout = true;
+                ScrollableContent.autoLayoutDirection = LayoutDirection.Vertical;
+                ScrollableContent.autoLayoutPadding = new RectOffset(0, 0, 0, 0);
+                ScrollableContent.clipChildren = true;
+                ScrollableContent.builtinKeyNavigation = true;
+                ScrollableContent.scrollWheelDirection = UIOrientation.Vertical;
+                ScrollableContent.maximumSize = new Vector2(250, 500);
+                ScrollableContent.relativePosition = new Vector2(Padding, Padding);
+                UIUtils.AddScrollbar(this, ScrollableContent);
+
+                ScrollableContent.eventComponentAdded += (UIComponent container, UIComponent child) =>
+                {
+                    child.eventVisibilityChanged += (UIComponent component, bool value) => FitContentChildren();
+                    child.eventSizeChanged += (UIComponent component, Vector2 value) => FitContentChildren();
+                };
+            }
+            private void Fill(Style.StyleType styleGroup)
+            {
+                foreach (var template in TemplateManager.GetTemplates(styleGroup))
+                {
+                    var item = ScrollableContent.AddUIComponent<TemplateItem>();
+                    item.Init(true, false);
+                    item.name = template.ToString();
+                    item.Object = template;
+                    item.eventClick += ItemClick;
+                }
+            }
+
+            private void ItemClick(UIComponent component, UIMouseEventParameter eventParam)
+            {
+                if (component is TemplateItem item)
+                    OnSelect?.Invoke(item.Object);
+            }
+
+            private void FitContentChildren()
+            {
+                ScrollableContent.FitChildrenVertically();
+                ScrollableContent.width = ScrollableContent.verticalScrollbar.isVisible ? Width - ScrollableContent.verticalScrollbar.width : Width;
+            }
+            private void ContentSizeChanged(UIComponent component = null, Vector2 value = default)
+            {
+                if (ScrollableContent != null)
+                {
+                    size = ScrollableContent.size + new Vector2(Padding * 2, Padding * 2);
+                    ScrollableContent.verticalScrollbar.relativePosition = ScrollableContent.relativePosition + new Vector3(ScrollableContent.width, 0);
+                    ScrollableContent.verticalScrollbar.height = ScrollableContent.height;
+
+                    foreach (var item in ScrollableContent.components)
+                        item.width = ScrollableContent.width;
+                }
+            }
+        }
     }
+
     public class TemplateHeaderPanel : HeaderPanel
     {
         public event Action OnSetAsDefault;
@@ -184,13 +319,14 @@ namespace NodeMarkup.UI.Editors
 
         public TemplateHeaderPanel()
         {
-            AddSetAsDefault();
+            SetAsDefaultButton = AddButton(string.Empty, onClick: SetAsDefaultClick);
         }
-        public new void Init(bool isDefault)
+        public void Init(bool isDefault)
         {
-            base.Init(false);
+            base.Init(isDeletable: false);
 
-            SetAsDefaultButton.text = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
+            SetSprite(SetAsDefaultButton, isDefault ? "UnsetDefault" : "SetDefault");
+            SetAsDefaultButton.tooltip = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
 
         protected override void OnSizeChanged()
@@ -199,23 +335,7 @@ namespace NodeMarkup.UI.Editors
 
             SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
         }
-
-        private void AddSetAsDefault()
-        {
-            SetAsDefaultButton = AddUIComponent<UIButton>();
-            SetAsDefaultButton.atlas = NodeMarkupPanel.InMapEditorAtlas;
-            SetAsDefaultButton.normalBgSprite = "InfoDisplay";
-            SetAsDefaultButton.hoveredBgSprite = "InfoDisplayHover";
-            SetAsDefaultButton.pressedBgSprite = "InfoDisplayFocused";
-            SetAsDefaultButton.textScale = 0.7f;
-            SetAsDefaultButton.textPadding = new RectOffset(0, 0, 2, 0);
-            SetAsDefaultButton.size = new Vector2(180, 20);
-            SetAsDefaultButton.textColor = Color.black;
-            SetAsDefaultButton.hoveredTextColor = Color.black;
-            SetAsDefaultButton.pressedTextColor = Color.black;
-            SetAsDefaultButton.focusedTextColor = Color.black;
-            SetAsDefaultButton.eventClick += SetAsDefaultClick;
-        }
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
     }
+
 }

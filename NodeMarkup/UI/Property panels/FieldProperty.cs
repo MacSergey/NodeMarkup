@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
         public FieldPropertyPanel()
         {
             Field = Control.AddUIComponent<UITextField>();
-            Field.atlas = NodeMarkupPanel.InGameAtlas;
+            Field.atlas = TextureUtil.InGameAtlas;
             Field.normalBgSprite = "TextFieldPanel";
             Field.hoveredBgSprite = "TextFieldPanelHovered";
             Field.focusedBgSprite = "TextFieldPanel";
@@ -91,7 +91,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (CanUseWheel && UseWheel)
             {
-                var mode = Event.current.shift ? WheelMode.High : Event.current.control ? WheelMode.Low : WheelMode.Normal;
+                var mode = NodeMarkupTool.ShiftIsPressed ? WheelMode.High : NodeMarkupTool.CtrlIsPressed ? WheelMode.Low : WheelMode.Normal;
                 if (eventParam.wheelDelta < 0)
                     Value = Increment(Value, WheelStep, mode);
                 else

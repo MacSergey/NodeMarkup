@@ -56,17 +56,22 @@ namespace NodeMarkup.Manager
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
         public bool IsMedian => LineParts.Any(p => p.Line is MarkupFakeLine);
 
-        public IEnumerable<Bezier3> Trajectories
+        public IEnumerable<Bezier3?> TrajectoriesRaw
         {
             get
             {
-                foreach(var part in LineParts)
+                foreach (var part in LineParts)
                 {
                     if (part.GetTrajectory(out Bezier3 bezier))
                         yield return bezier;
+                    else
+                        yield return null;
                 }
             }
         }
+
+        public IEnumerable<Bezier3> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t.Value);
+
         public string XmlSection => XmlName;
 
         public MarkupFiller(Markup markup, FillerStyle style)
@@ -212,10 +217,10 @@ namespace NodeMarkup.Manager
                     break;
             }
 
-            if (t != 0 && minT < 0 && 0 < maxT)
+            if (line.Start.Type == MarkupPoint.PointType.Enter && t != 0 && minT < 0 && 0 < maxT)
                 yield return new EnterFillerVertex(line.Start);
 
-            if (t != 1 && minT < 1 && 1 < maxT)
+            if (line.End.Type == MarkupPoint.PointType.Enter && t != 1 && minT < 1 && 1 < maxT)
                 yield return new EnterFillerVertex(line.End);
         }
 
@@ -279,20 +284,16 @@ namespace NodeMarkup.Manager
         public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
     }
 
-    public class MarkupFakeLine : MarkupLine
+    public class MarkupFakeLine : MarkupStraightLine
     {
+        public override LineType Type => throw new NotImplementedException();
+
         public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
-        public override void UpdateTrajectory()
+
+        protected override void AddDefaultRule()
         {
-            Trajectory = new Bezier3
-            {
-                a = PointPair.First.Position,
-                b = PointPair.Second.Position,
-                c = PointPair.First.Position,
-                d = PointPair.Second.Position,
-            };
+            throw new NotImplementedException();
         }
     }
-
 }
 

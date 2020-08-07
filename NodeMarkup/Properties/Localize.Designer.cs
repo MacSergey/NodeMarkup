@@ -61,6 +61,269 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Activate with key.
+        /// </summary>
+        public static string EarlyAccess_ActivateButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ActivateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activation failed.
+        /// </summary>
+        public static string EarlyAccess_ActivationFailed {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ActivationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activation success.
+        /// </summary>
+        public static string EarlyAccess_ActivationSuccess {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ActivationSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Chevron style.
+        /// </summary>
+        public static string EarlyAccess_Function_ChevronStyle {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_ChevronStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy style.
+        /// </summary>
+        public static string EarlyAccess_Function_CopyStyle {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_CopyStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste style.
+        /// </summary>
+        public static string EarlyAccess_Function_PasteStyle {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_PasteStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Perpendicular lines.
+        /// </summary>
+        public static string EarlyAccess_Function_PerpendicularLines {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Function_PerpendicularLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This function is unavailable.
+        /// </summary>
+        public static string EarlyAccess_FunctionUnavailableCaption {
+            get {
+                return ResourceManager.GetString("EarlyAccess_FunctionUnavailableCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Function «{0}» is currently only available for Patreons early access.
+        ///It will be available to everyone later.
+        ///By registering early access, you will support the ability to develop this mod at the same speed..
+        /// </summary>
+        public static string EarlyAccess_FunctionUnavailableMessage {
+            get {
+                return ResourceManager.GetString("EarlyAccess_FunctionUnavailableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Get early access.
+        /// </summary>
+        public static string EarlyAccess_GetButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_GetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Your access ID.
+        /// </summary>
+        public static string EarlyAccess_ID {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Access key.
+        /// </summary>
+        public static string EarlyAccess_Key {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activate.
+        /// </summary>
+        public static string EarlyAccess_KeyActivateButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyActivateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Early access activation.
+        /// </summary>
+        public static string EarlyAccess_KeyActivationCaption {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyActivationCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на To activate early access you need to enter a key.
+        /// </summary>
+        public static string EarlyAccess_KeyActivationMessage {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyActivationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string EarlyAccess_KeyCancelButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The key you entered is not valid.
+        /// </summary>
+        public static string EarlyAccess_KeyNotValid {
+            get {
+                return ResourceManager.GetString("EarlyAccess_KeyNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Link in process....
+        /// </summary>
+        public static string EarlyAccess_LinkInProcess {
+            get {
+                return ResourceManager.GetString("EarlyAccess_LinkInProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Link Patreon account.
+        /// </summary>
+        public static string EarlyAccess_LinkPatreonButton {
+            get {
+                return ResourceManager.GetString("EarlyAccess_LinkPatreonButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Link Patreon account.
+        /// </summary>
+        public static string EarlyAccess_LinkPatreonCaption {
+            get {
+                return ResourceManager.GetString("EarlyAccess_LinkPatreonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The Patreon account can&apos;t be linked because you denied access request..
+        /// </summary>
+        public static string EarlyAccess_PatreonCantLinked {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonCantLinked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на An error occurred when linking the account, try again..
+        /// </summary>
+        public static string EarlyAccess_PatreonLinkedError {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonLinkedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Your account is linked, but you don&apos;t have early access..
+        /// </summary>
+        public static string EarlyAccess_PatreonLinkedNotMember {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonLinkedNotMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You can close this page and return to the game..
+        /// </summary>
+        public static string EarlyAccess_PatreonRedirect {
+            get {
+                return ResourceManager.GetString("EarlyAccess_PatreonRedirect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string EarlyAccess_ProcessCancel {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ProcessCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Status: {0}.
+        /// </summary>
+        public static string EarlyAccess_Status {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activated.
+        /// </summary>
+        public static string EarlyAccess_StatusActivated {
+            get {
+                return ResourceManager.GetString("EarlyAccess_StatusActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not activated.
+        /// </summary>
+        public static string EarlyAccess_StatusNotActivated {
+            get {
+                return ResourceManager.GetString("EarlyAccess_StatusNotActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Thank you for your support, now you can enjoy all the features..
+        /// </summary>
+        public static string EarlyAccess_ThanksMessage {
+            get {
+                return ResourceManager.GetString("EarlyAccess_ThanksMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete {0}.
         /// </summary>
         public static string Editor_DeleteCaption {
@@ -99,6 +362,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle between.
+        /// </summary>
+        public static string Filler_AngleBetween {
+            get {
+                return ResourceManager.GetString("Filler_AngleBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string Filler_Invert {
+            get {
+                return ResourceManager.GetString("Filler_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Offset from median.
         /// </summary>
         public static string Filler_MedianOffset {
@@ -126,6 +407,25 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn.
+        /// </summary>
+        public static string Filler_Turn {
+            get {
+                return ResourceManager.GetString("Filler_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet.
+        ///To create a filler, hold Alt or press {0}..
+        /// </summary>
+        public static string FillerEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("FillerEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Fillers.
         /// </summary>
         public static string FillerEditor_Fillers {
@@ -144,20 +444,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Chevron.
+        /// </summary>
+        public static string FillerStyle_Chevron {
+            get {
+                return ResourceManager.GetString("FillerStyle_Chevron", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Grid.
         /// </summary>
         public static string FillerStyle_Grid {
             get {
                 return ResourceManager.GetString("FillerStyle_Grid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на G.
-        /// </summary>
-        public static string FillerStyle_GridShort {
-            get {
-                return ResourceManager.GetString("FillerStyle_GridShort", resourceCulture);
             }
         }
         
@@ -171,29 +471,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на S.
-        /// </summary>
-        public static string FillerStyle_SolidShort {
-            get {
-                return ResourceManager.GetString("FillerStyle_SolidShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Stripes.
         /// </summary>
         public static string FillerStyle_Stripe {
             get {
                 return ResourceManager.GetString("FillerStyle_Stripe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на ST.
-        /// </summary>
-        public static string FillerStyle_StripeShort {
-            get {
-                return ResourceManager.GetString("FillerStyle_StripeShort", resourceCulture);
             }
         }
         
@@ -307,6 +589,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на There are no lines at this intersection yet.
+        ///To create a line connect two points..
+        /// </summary>
+        public static string LineEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("LineEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на From.
         /// </summary>
         public static string LineEditor_From {
@@ -388,6 +680,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string LineEditor_StyleCopy {
+            get {
+                return ResourceManager.GetString("LineEditor_StyleCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste.
+        /// </summary>
+        public static string LineEditor_StylePaste {
+            get {
+                return ResourceManager.GetString("LineEditor_StylePaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на To.
         /// </summary>
         public static string LineEditor_To {
@@ -433,15 +743,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на D.
-        /// </summary>
-        public static string LineStyle_DashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Double dashed.
         /// </summary>
         public static string LineStyle_DoubleDashed {
@@ -451,29 +752,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DD.
-        /// </summary>
-        public static string LineStyle_DoubleDashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DoubleDashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Double solid.
         /// </summary>
         public static string LineStyle_DoubleSolid {
             get {
                 return ResourceManager.GetString("LineStyle_DoubleSolid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на DS.
-        /// </summary>
-        public static string LineStyle_DoubleSolidShort {
-            get {
-                return ResourceManager.GetString("LineStyle_DoubleSolidShort", resourceCulture);
             }
         }
         
@@ -496,24 +779,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SD.
-        /// </summary>
-        public static string LineStyle_SolidAndDashedShort {
-            get {
-                return ResourceManager.GetString("LineStyle_SolidAndDashedShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на S.
-        /// </summary>
-        public static string LineStyle_SolidShort {
-            get {
-                return ResourceManager.GetString("LineStyle_SolidShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Stop line.
         /// </summary>
         public static string LineStyle_Stop {
@@ -532,20 +797,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DSL.
+        ///   Ищет локализованную строку, похожую на Double stop line.
         /// </summary>
-        public static string LineStyle_StopDashedShort {
+        public static string LineStyle_StopDouble {
             get {
-                return ResourceManager.GetString("LineStyle_StopDashedShort", resourceCulture);
+                return ResourceManager.GetString("LineStyle_StopDouble", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SL.
+        ///   Ищет локализованную строку, похожую на Double dashed stop line.
         /// </summary>
-        public static string LineStyle_StopShort {
+        public static string LineStyle_StopDoubleDashed {
             get {
-                return ResourceManager.GetString("LineStyle_StopShort", resourceCulture);
+                return ResourceManager.GetString("LineStyle_StopDoubleDashed", resourceCulture);
             }
         }
         
@@ -604,15 +869,61 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - &quot;What`s New&quot; message this will pop-up one time after an update and can be disabled in the Options menu.
+        ///- Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish (Please contact the mod author to assist with translation into your own language).
+        ///- End Points can now be dragged from one to another by holding Ctrl.
+        ///- Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if y [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на - Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
         ///- Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
         ///- New line style: &quot;Solid &amp; Dashed&quot;.
         ///- Lines and templates in the list now have icons that show style and colour.
         ///- Markings will be now copied when the road is copied with MoveIt (function will [остаток строки не уместился]&quot;;.
         /// </summary>
-        public static string Mod_WhatsNewMessage {
+        public static string Mod_WhatsNewMessage1_2 {
             get {
-                return ResourceManager.GetString("Mod_WhatsNewMessage", resourceCulture);
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
+        ///- Added &quot;Double solid&quot; and &quot;Double Dashed&quot; stop line styles.
+        ///- Added Italian and Portuguese translations..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_2_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added chevron filler style
+        ///- You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
+        ///- Copy/paste lines and fillers style.
+        ///- Improved stop lines.
+        ///- Added perpendicular lines.
+        ///- Linked Patreon account for early access..
+        /// </summary>
+        public static string Mod_WhatsNewMessageBeta {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessageBeta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Version {0}.
+        /// </summary>
+        public static string Mod_WhatsNewVersion {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewVersion", resourceCulture);
             }
         }
         
@@ -676,6 +987,15 @@ namespace NodeMarkup {
         public static string Settings_ActivateTool {
             get {
                 return ResourceManager.GetString("Settings_ActivateTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new filler.
+        /// </summary>
+        public static string Settings_AddNewFiller {
+            get {
+                return ResourceManager.GetString("Settings_AddNewFiller", resourceCulture);
             }
         }
         
@@ -845,6 +1165,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Notifications.
+        /// </summary>
+        public static string Settings_Notifications {
+            get {
+                return ResourceManager.GetString("Settings_Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Other.
         /// </summary>
         public static string Settings_Other {
@@ -890,6 +1219,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Notification only about major updates.
+        /// </summary>
+        public static string Settings_ShowOnlyMajor {
+            get {
+                return ResourceManager.GetString("Settings_ShowOnlyMajor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Show tooltips.
         /// </summary>
         public static string Settings_ShowTooltips {
@@ -931,6 +1269,16 @@ namespace NodeMarkup {
         public static string TemplateEditor_DashedLength {
             get {
                 return ResourceManager.GetString("TemplateEditor_DashedLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The list of templates is empty.
+        ///To create a template, click «{0}» at the line style..
+        /// </summary>
+        public static string TemplateEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_EmptyMessage", resourceCulture);
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : UIPanel
     {
+        private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
 
@@ -21,7 +23,7 @@ namespace NodeMarkup.UI.Editors
 
         public RulePanel()
         {
-            atlas = NodeMarkupPanel.InGameAtlas;
+            atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "AssetEditorItemBackground";
             autoLayout = true;
             autoFitChildrenVertically = true;
@@ -57,10 +59,12 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = AddUIComponent<StyleHeaderPanel>();
-            header.Init(Rule.Style.Type, Editor.CanDivide);
+            header.Init(Rule.Style.Type, Editor.EditObject.SupportRules);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
             header.OnSelectTemplate += OnSelectTemplate;
+            header.OnCopy += CopyStyle;
+            header.OnPaste += PasteStyle;
         }
         private void AddFromProperty()
         {
@@ -91,17 +95,18 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            switch (Rule.Style.Type & Manager.Style.StyleType.GroupMask)
+            switch (Editor.EditObject)
             {
-                case Manager.Style.StyleType.RegularLine:
+                case MarkupRegularLine regularLine:
                     Style = AddUIComponent<RegularStylePropertyPanel>();
                     break;
-                case Manager.Style.StyleType.StopLine:
+                case MarkupStopLine stopLine:
                     Style = AddUIComponent<StopStylePropertyPanel>();
                     break;
                 default:
                     return;
             }
+
             Style.Text = NodeMarkup.Localize.LineEditor_Style;
             Style.Init();
             Style.SelectedObject = Rule.Style.Type;
@@ -128,17 +133,32 @@ namespace NodeMarkup.UI.Editors
             if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template))
                 Editor.NodeMarkupPanel.EditTemplate(template);
         }
+        private void ApplyStyle(LineStyle style)
+        {
+            if ((Rule.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
+                return;
+
+            Rule.Style = style.CopyLineStyle();
+            Style.SelectedObject = Rule.Style.Type;
+
+            Editor.RefreshItem();
+            ClearStyleProperties();
+            AddStyleProperties();
+        }
         private void OnSelectTemplate(StyleTemplate template)
         {
-            if (template.Style.Copy() is LineStyle style)
-            {
-                Rule.Style = style;
-                Style.SelectedObject = Rule.Style.Type;
-
-                Editor.RefreshItem();
-                ClearStyleProperties();
-                AddStyleProperties();
-            }
+            if (template.Style is LineStyle style)
+                ApplyStyle(style);
+        }
+        private void CopyStyle()
+        {
+            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
+                Buffer = Rule.Style.CopyLineStyle();
+        }
+        private void PasteStyle()
+        {
+            if(EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is LineStyle style)
+                ApplyStyle(style);
         }
 
         private void FromChanged(ILinePartEdge from) => Rule.From = from;

@@ -33,6 +33,26 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug noWorkshop|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug noWorkshop\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release noWorkshop|AnyCPU'">
+    <OutputPath>bin\Release noWorkshop\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.2.0.1\lib\net35\0Harmony.dll</HintPath>
@@ -58,7 +78,12 @@
       <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq">
       <Private>True</Private>
@@ -72,6 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EarlyAccess.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Manager\Filler\Filler.cs" />
     <Compile Include="Manager\Filler\FillerStyle.cs" />
@@ -79,13 +105,15 @@
     <Compile Include="Manager\Filler\FillerVertex.cs" />
     <Compile Include="Manager\Line\Line.cs" />
     <Compile Include="Manager\Line\LineRule.cs" />
-    <Compile Include="Manager\Line\LineStyles.cs" />
+    <Compile Include="Manager\Line\Style\CrosswalkLineStyle.cs" />
+    <Compile Include="Manager\Line\Style\StopLineStyle.cs" />
+    <Compile Include="Manager\Line\Style\RegularLineStyles.cs" />
     <Compile Include="Manager\Markup.cs" />
     <Compile Include="Manager\Line\LinePartEdge.cs" />
     <Compile Include="Manager\Point\Point.cs" />
     <Compile Include="Manager\Point\Enter.cs" />
     <Compile Include="Manager\Point\SupportPoint.cs" />
-    <Compile Include="Manager\Line\LineStyleBase.cs" />
+    <Compile Include="Manager\Line\Style\LineStyleBase.cs" />
     <Compile Include="Manager\Style.cs" />
     <Compile Include="Manager\Templates.cs" />
     <Compile Include="Mod.cs" />
@@ -104,10 +132,14 @@
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\Message boxes\EarlyAccessMessageBox.cs" />
+    <Compile Include="UI\Message boxes\ImportMessageBox.cs" />
+    <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
+    <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
     <Compile Include="UI\Property panels\RulePanel.cs" />
     <Compile Include="UI\Editors\TemplateEditor.cs" />
     <Compile Include="UI\Keymapping.cs" />
-    <Compile Include="UI\MessageBox.cs" />
+    <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
     <Compile Include="UI\Property panels\BoolProperty.cs" />
@@ -125,6 +157,7 @@
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\MoveItIntegration.cs" />
     <Compile Include="Utils\ObjectId.cs" />
+    <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
@@ -138,9 +171,11 @@
     <EmbeddedResource Include="Properties\Localize.es.resx" />
     <EmbeddedResource Include="Properties\Localize.fi.resx" />
     <EmbeddedResource Include="Properties\Localize.fr.resx" />
+    <EmbeddedResource Include="Properties\Localize.it.resx" />
     <EmbeddedResource Include="Properties\Localize.ja.resx" />
     <EmbeddedResource Include="Properties\Localize.nl.resx" />
     <EmbeddedResource Include="Properties\Localize.pl.resx" />
+    <EmbeddedResource Include="Properties\Localize.pt.resx" />
     <EmbeddedResource Include="Properties\Localize.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>
@@ -163,10 +198,17 @@
   <ItemGroup>
     <Content Include="Preview\PreviewImage.png" />
     <Content Include="Preview\PreviewImageBeta.png" />
+    <EmbeddedResource Include="Resources\Buttons.png" />
     <EmbeddedResource Include="Resources\Styles.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EarlyAccess\EarlyAccessLibrary.csproj">
+      <Project>{8fa0a542-b2d4-4e00-abd6-e7470906351d}</Project>
+      <Name>EarlyAccessLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
     <PostBuildEvent>
 set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\"
 set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403\"
@@ -185,7 +227,7 @@ copy $(ProjectDir)Preview\PreviewImage.png  "%ModDir%"
 copy $(ProjectDir)Preview\PreviewImage.png  "%WorkshopDir%"
 	</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Debug noWorkshop'">
     <PostBuildEvent>
 set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta\"
 set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2159934925\"
@@ -206,7 +248,7 @@ copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

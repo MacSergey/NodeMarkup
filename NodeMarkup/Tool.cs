@@ -21,6 +21,10 @@ namespace NodeMarkup
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
+        public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
+        public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+        public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        public static bool CtrlIsPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
 
         private Mode ToolMode { get; set; } = Mode.SelectNode;
 
@@ -35,6 +39,7 @@ namespace NodeMarkup
         ushort SelectNodeId { get; set; } = 0;
         MarkupPoint HoverPoint { get; set; } = null;
         MarkupPoint SelectPoint { get; set; } = null;
+        List<MarkupPoint> TargetPoints { get; set; } = new List<MarkupPoint>();
         MarkupPoint DragPoint { get; set; } = null;
 
         bool IsHoverNode => HoverNodeId != 0;
@@ -56,6 +61,7 @@ namespace NodeMarkup
         private ToolBase PrevTool { get; set; }
         UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
 
+        private bool DisableByAlt { get; set; }
 
         #region BASIC
         public static NodeMarkupTool Instance
@@ -127,6 +133,7 @@ namespace NodeMarkup
             SelectNodeId = 0;
             HoverPoint = null;
             SelectPoint = null;
+            TargetPoints.Clear();
             DragPoint = null;
             FillerPoints.Clear();
             HoverFillerPoint = null;
@@ -234,15 +241,12 @@ namespace NodeMarkup
         {
             if (MouseRayValid)
             {
-                foreach (var enter in EditMarkup.Enters)
+                foreach(var point in TargetPoints)
                 {
-                    foreach (var point in enter.Points)
+                    if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
                     {
-                        if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
-                        {
-                            HoverPoint = point;
-                            return;
-                        }
+                        HoverPoint = point;
+                        return;
                     }
                 }
             }
@@ -270,7 +274,7 @@ namespace NodeMarkup
         {
             var position = GetInfoPosition();
 
-            if(!UI.Settings.ShowToolTip || (Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position)))
+            if (!UI.Settings.ShowToolTip || (Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position)))
             {
                 cursorInfoLabel.isVisible = false;
                 return;
@@ -370,11 +374,8 @@ namespace NodeMarkup
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     OnSecondaryMouseClicked();
                     break;
-                case EventType.keyDown:
-                    OnKeyDown(e);
-                    break;
-                case EventType.keyUp:
-                    OnKeyUp(e);
+                default:
+                    ProcessShortcuts(e);
                     break;
             }
 
@@ -382,7 +383,7 @@ namespace NodeMarkup
         }
         private void OnMouseDown(Event e)
         {
-            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && IsHoverPoint && e.control)
+            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && IsHoverPoint && CtrlIsPressed)
             {
                 ToolMode = Mode.DragPoint;
                 DragPoint = HoverPoint;
@@ -403,39 +404,39 @@ namespace NodeMarkup
 
             var normal = point.Enter.CornerDir.Turn90(true);
 
-            Line2.Intersect(VectorUtils.XZ(point.Position), VectorUtils.XZ(point.Position + point.Enter.CornerDir), VectorUtils.XZ(output.m_hitPos), VectorUtils.XZ(output.m_hitPos + normal), out float offsetChange, out _);
+            Line2.Intersect(point.Position.XZ(), (point.Position + point.Enter.CornerDir).XZ(), output.m_hitPos.XZ(), (output.m_hitPos + normal).XZ(), out float offsetChange, out _);
 
-            point.Offset = (point.Offset + offsetChange).RoundToNearest(0.01f);
+            point.Offset = (point.Offset + offsetChange * Mathf.Sin(point.Enter.CornerDeltaAngle)).RoundToNearest(0.01f);
         }
-        private void OnKeyDown(Event e)
+        private void ProcessShortcuts(Event e)
         {
             switch (ToolMode)
             {
-                case Mode.ConnectLine when !IsSelectPoint && e.alt:
-                    ToolMode = Mode.SelectFiller;
-                    TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
-                    GetFillerPoints();
+                case Mode.ConnectLine when !IsSelectPoint && AltIsPressed:
+                    DisableByAlt = true;
+                    EnableSelectFiller();
                     break;
-                default:
-                    if (DeleteAllShortcut.IsPressed(e))
-                    {
-                        DeleteAllLines();
-                        e.Use();
-                    }
-                    else
-                        Panel?.OnEvent(e);
+                case Mode.ConnectLine when !IsSelectPoint && AddFillerShortcut.IsPressed(e):
+                    DisableByAlt = false;
+                    EnableSelectFiller();
                     break;
-            }
-        }
-        private void OnKeyUp(Event e)
-        {
-            switch (ToolMode)
-            {
-                case Mode.SelectFiller when TempFiller.IsEmpty:
+                case Mode.ConnectLine when !IsSelectPoint && DeleteAllShortcut.IsPressed(e):
+                    DeleteAllLines();
+                    break;
+                case Mode.ConnectLine:
+                    Panel?.OnEvent(e);
+                    break;
+                case Mode.SelectFiller when DisableByAlt && !AltIsPressed && TempFiller.IsEmpty:
                     ToolMode = Mode.ConnectLine;
                     TempFiller = null;
                     break;
             }
+        }
+        private void EnableSelectFiller()
+        {
+            ToolMode = Mode.SelectFiller;
+            TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
+            GetFillerPoints();
         }
         private void OnPrimaryMouseClicked(Event e)
         {
@@ -470,21 +471,38 @@ namespace NodeMarkup
 
             ToolMode = Mode.ConnectLine;
             Panel.SetNode(SelectNodeId);
+            SetTarget();
+        }
+        private void SetTarget(MarkupPoint ignore = null)
+        {
+            TargetPoints.Clear();
+            foreach (var enter in EditMarkup.Enters)
+            {
+                foreach (var point in enter.Points.Where(p => p != ignore))
+                    TargetPoints.Add(point);
+            }
         }
         private void OnSelectPoint(Event e)
         {
             if (e.shift)
                 Panel.EditPoint(HoverPoint);
             else
+            {
                 SelectPoint = HoverPoint;
+
+                SetTarget(SelectPoint);
+                if (SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                    TargetPoints.Add(normalPoint);
+            }
         }
         private void OnMakeLine(Event e)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var lineType = pointPair.IsSomeEnter ? e.GetStopStyle() : e.GetSimpleStyle();
+            var lineType = pointPair.IsSomeEnter && !pointPair.IsNormal ? e.GetStopStyle() : e.GetSimpleStyle();
             var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;
+            SetTarget();
         }
         private void OnSelectFillerPoint(Event e)
         {
@@ -497,6 +515,7 @@ namespace NodeMarkup
                     ToolMode = Mode.ConnectLine;
                     return;
                 }
+                DisableByAlt = false;
                 GetFillerPoints();
             }
         }
@@ -556,7 +575,11 @@ namespace NodeMarkup
                 GetFillerPoints();
             }
         }
-        private void OnUnselectPoint() => SelectPoint = null;
+        private void OnUnselectPoint()
+        {
+            SelectPoint = null;
+            SetTarget();
+        }
         private void OnUnselectNode()
         {
             ToolMode = Mode.SelectNode;
@@ -577,7 +600,7 @@ namespace NodeMarkup
             {
                 if (UI.Settings.DeleteWarnings)
                 {
-                    var messageBox = MessageBox.ShowModal<YesNoMessageBox>();
+                    var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                     messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
                     messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, SelectNodeId);
                     messageBox.OnButton1Click = Delete;
@@ -633,7 +656,7 @@ namespace NodeMarkup
             if (IsHoverPoint)
                 RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
 
-            RenderNodeEnterPointsOverlay(cameraInfo, SelectPoint);
+            RenderPointsOverlay(cameraInfo);
             RenderConnectLineOverlay(cameraInfo);
             Panel.Render(cameraInfo);
         }
@@ -647,22 +670,20 @@ namespace NodeMarkup
                 }
             }
         }
-        private void RenderNodeEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint ignore = null)
+        private void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            foreach (var enter in EditMarkup.Enters)
-            {
-                foreach (var point in enter.Points.Where(p => p != ignore))
-                {
-                    RenderPointOverlay(cameraInfo, point);
-                }
-            }
+            foreach(var point in TargetPoints)
+                RenderPointOverlay(cameraInfo, point);
         }
         private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
         {
+            if (enter.Position == null)
+                return;
+
             var bezier = new Bezier3
             {
-                a = enter.Position - enter.CornerDir * enter.RoadHalfWidth,
-                d = enter.Position + enter.CornerDir * enter.RoadHalfWidth
+                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth,
+                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth
             };
             NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
 

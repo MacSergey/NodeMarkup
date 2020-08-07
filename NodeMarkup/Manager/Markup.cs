@@ -38,6 +38,7 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         private Vector4 Index { get; }
         public float Height { get; private set; }
+        public float HalfWidth { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
@@ -105,6 +106,8 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in EntersList)
                 enter.Update();
+
+            HalfWidth = EntersList.Max(e => e.RoadHalfWidth);
         }
         private void UpdateLines()
         {
@@ -187,7 +190,7 @@ namespace NodeMarkup.Manager
         #region LINES
 
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType lineType)
+        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
         {
             if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
             {
@@ -196,7 +199,10 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                line = new MarkupLine(this, pointPair, lineType);
+                if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
+                    return null;
+
+                line = MarkupLine.FromStyle(this, pointPair, style);
                 LinesDictionary[pointPair.Hash] = line;
                 NeedRecalculateBatches = true;
                 return line;
@@ -211,7 +217,9 @@ namespace NodeMarkup.Manager
         {
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                intersect.Pair.GetOther(line).RemoveRules(line);
+                if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
+                    regularLine.RemoveRules(line);
+
                 LineIntersects.Remove(intersect.Pair);
             }
             foreach (var filler in GetLineFillers(line).ToArray())
@@ -236,7 +244,15 @@ namespace NodeMarkup.Manager
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
         public IEnumerable<MarkupLineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
-        public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line) => Lines.Where(l => l != line).Select(l => GetIntersect(new MarkupLinePair(line, l)));
+        public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line)
+        {
+            foreach(var otherLine in Lines)
+            {
+                if (otherLine != line)
+                    yield return GetIntersect(new MarkupLinePair(line, otherLine));
+            }
+        }
+
         public MarkupLineIntersect GetIntersect(MarkupLinePair linePair)
         {
             if (!LineIntersects.TryGetValue(linePair, out MarkupLineIntersect intersect))
@@ -276,6 +292,8 @@ namespace NodeMarkup.Manager
 
         #endregion
 
+        #region FILLERS
+
         public void AddFiller(MarkupFiller filler)
         {
             FillersList.Add(filler);
@@ -287,6 +305,8 @@ namespace NodeMarkup.Manager
             FillersList.Remove(filler);
             NeedRecalculateBatches = true;
         }
+
+        #endregion
 
         #region XML
 
@@ -359,6 +379,12 @@ namespace NodeMarkup.Manager
 
         #endregion XML
 
-
+        public enum Item
+        {
+            RegularLine = 0x100,
+            StopLine = 0x200,
+            Filler = 0x400,
+            Crosswalk = 0x800,
+        }
     }
 }

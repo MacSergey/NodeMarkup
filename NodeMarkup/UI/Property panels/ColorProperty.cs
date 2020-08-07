@@ -70,7 +70,7 @@ namespace NodeMarkup.UI.Editors
             lable.textScale = 0.7f;
 
             var field = Control.AddUIComponent<UITextField>();
-            field.atlas = NodeMarkupPanel.InGameAtlas;
+            field.atlas = TextureUtil.InGameAtlas;
             field.normalBgSprite = "TextFieldPanel";
             field.hoveredBgSprite = "TextFieldPanelHovered";
             field.focusedBgSprite = "TextFieldPanel";
@@ -123,7 +123,7 @@ namespace NodeMarkup.UI.Editors
         {
             var opacitySlider = parent.AddUIComponent<UISlider>();
 
-            opacitySlider.atlas = NodeMarkupPanel.InGameAtlas;
+            opacitySlider.atlas = TextureUtil.InGameAtlas;
             opacitySlider.size = new Vector2(18, 200);
             opacitySlider.relativePosition = new Vector3(254, 12);
             opacitySlider.orientation = UIOrientation.Vertical;
@@ -160,7 +160,7 @@ namespace NodeMarkup.UI.Editors
             button.horizontalAlignment = UIHorizontalAlignment.Center;
             button.textVerticalAlignment = UIVerticalAlignment.Middle;
             button.textScale = 0.6f;
-            button.atlas = NodeMarkupPanel.InGameAtlas;
+            button.atlas = TextureUtil.InGameAtlas;
             button.normalBgSprite = "ButtonMenu";
             button.disabledBgSprite = "ButtonMenuDisabled";
             button.hoveredBgSprite = "ButtonMenuHovered";

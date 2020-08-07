@@ -9,11 +9,13 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupPoint : IToXml, IFromXml
+    public abstract class MarkupPoint : IToXml, IFromXml
     {
-        static int GetId(ushort enter, byte num) => enter + (num << 16);
+        public event Action<MarkupPoint> OnUpdate;
+        static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type << 24);
         static ushort GetEnter(int id) => (ushort)id;
         static byte GetNum(int id) => (byte)(id >> 16);
+        static PointType GetType(int id) => (PointType)(id >> 24);
         public static string XmlName { get; } = "P";
         public static bool FromId(int id, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPoint point)
         {
@@ -21,39 +23,20 @@ namespace NodeMarkup.Manager
 
             var enterId = GetEnter(id);
             var num = GetNum(id);
+            var type = GetType(id);
 
-            if(map != null)
+            if (map != null)
             {
                 if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
                     enterId = targetSegment.Segment;
-                if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num) }, out ObjectId targetPoint))
+                if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
                     num = GetNum(targetPoint.Point);
             }
 
-            return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, out point);
+            return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, type, out point);
         }
 
         float _offset = 0;
-
-        public byte Num { get; }
-        public int Id { get; }
-        public Color32 Color => Markup.OverlayColors[(Num - 1) % Markup.OverlayColors.Length];
-
-        public static Vector3 MarkerSize { get; } = Vector3.one * 1f;
-        public Vector3 Position { get; private set; }
-        public Vector3 Direction { get; private set; }
-        public Type PointType { get; private set; }
-        public Bounds Bounds { get; private set; }
-
-        SegmentMarkupLine MarkupLine { get; }
-        public Enter Enter => MarkupLine.SegmentEnter;
-        public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
-        public Markup Markup => Enter.Markup;
-
-        public bool IsFirst => Num == 1;
-        public bool IsLast => Num == Enter.PointCount;
-        public bool IsEdge => IsFirst || IsLast;
-
         public float Offset
         {
             get => _offset;
@@ -64,37 +47,53 @@ namespace NodeMarkup.Manager
             }
         }
 
+        public byte Num { get; }
+        public int Id { get; }
+        public abstract PointType Type { get; }
+        public Color32 Color => Markup.OverlayColors[(Num - 1) % Markup.OverlayColors.Length];
+
+        public static Vector3 MarkerSize { get; } = Vector3.one * 1f;
+        public Vector3 Position
+        {
+            get => Bounds.center;
+            protected set => Bounds = new Bounds(value, MarkerSize);
+        }
+        public Vector3 Direction { get; protected set; }
+        public LocationType Location { get; private set; }
+        public Bounds Bounds { get; protected set; }
+
+        public SegmentMarkupLine SegmentLine { get; }
+        public Enter Enter => SegmentLine.Enter;
+        public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
+        public Markup Markup => Enter.Markup;
+
+        public bool IsFirst => Num == 1;
+        public bool IsLast => Num == Enter.PointCount;
+        public bool IsEdge => IsFirst || IsLast;
+
+
         public string XmlSection => XmlName;
 
-        public MarkupPoint(SegmentMarkupLine markupLine, Type pointType)
-        {
-            MarkupLine = markupLine;
-            PointType = pointType;
-            Num = Enter.PointNum;
-            Id = GetId(Enter.Id, Num);
 
-            Update();
+        protected MarkupPoint(byte num, SegmentMarkupLine markupLine, LocationType location, bool update = true)
+        {
+            SegmentLine = markupLine;
+            Location = location;
+            Num = num;
+            Id = GetId(Enter.Id, Num, Type);
+
+            if (update)
+                Update();
         }
+        public MarkupPoint(SegmentMarkupLine segmentLine, LocationType location) : this(segmentLine.Enter.PointNum, segmentLine, location) { }
+
         public void Update()
         {
-            MarkupLine.GetPositionAndDirection(PointType, Offset, out Vector3 position, out Vector3 direction);
-            Position = position;
-            Direction = direction;
-            Bounds = new Bounds(Position, MarkerSize);
+            UpdateProcess();
+            OnUpdate?.Invoke(this);
         }
+        public abstract void UpdateProcess();
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
-
-        public enum Type
-        {
-            None = 0,
-            Edge = 1,
-            LeftEdge = 2 + Edge,
-            RightEdge = 4 + Edge,
-            Between = 8,
-            BetweenSomeDir = 16 + Between,
-            BetweenDiffDir = 32 + Between,
-        }
-
         public override string ToString() => $"{Enter}-{Num}";
         public override int GetHashCode() => Id;
 
@@ -116,7 +115,70 @@ namespace NodeMarkup.Manager
         {
             _offset = config.GetAttrValue<float>("O");
         }
+
+        public enum PointType
+        {
+            Enter = 0,
+            Crosswalk = 1,
+            Normal = 2,
+        }
+        public enum LocationType
+        {
+            None = 0,
+            Edge = 1,
+            LeftEdge = 2 + Edge,
+            RightEdge = 4 + Edge,
+            Between = 8,
+            BetweenSomeDir = 16 + Between,
+            BetweenDiffDir = 32 + Between,
+        }
     }
+
+    public class MarkupEnterPoint : MarkupPoint
+    {
+        public override PointType Type => PointType.Enter;
+        public MarkupEnterPoint(SegmentMarkupLine markupLine, LocationType location) : base(markupLine, location)
+        {
+        }
+        public override void UpdateProcess()
+        {
+            SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
+            Position = position;
+            Direction = direction;
+        }
+    }
+    public class MarkupCrosswalkPoint : MarkupPoint
+    {
+        public override PointType Type => PointType.Crosswalk;
+        public MarkupCrosswalkPoint(byte num, SegmentMarkupLine markupLine, LocationType location) : base(num, markupLine, location) { }
+
+        public override void UpdateProcess()
+        {
+            SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
+            Position = position + direction * 2;
+            Direction = direction;
+        }
+    }
+    public class MarkupNormalPoint : MarkupPoint
+    {
+        public override PointType Type => PointType.Normal;
+        public MarkupEnterPoint SourcePoint { get; }
+        public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
+        {
+            SourcePoint = sourcePoint;
+            SourcePoint.OnUpdate += SourcePointUpdate;
+            Update();
+        }
+
+        private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
+
+        public override void UpdateProcess()
+        {
+            Position = SourcePoint.Position + SourcePoint.Direction * (Markup.HalfWidth * 2);
+            Direction = -SourcePoint.Direction;
+        }
+    }
+
     public struct MarkupPointPair
     {
         public static string XmlName { get; } = "PP";
@@ -143,6 +205,7 @@ namespace NodeMarkup.Manager
         public MarkupPoint First { get; }
         public MarkupPoint Second { get; }
         public bool IsSomeEnter => First.Enter == Second.Enter;
+        public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {
@@ -161,6 +224,7 @@ namespace NodeMarkup.Manager
             else
                 return point == First ? Second : First;
         }
+        public MarkupLine.LineType DefaultType => IsSomeEnter ? MarkupLine.LineType.Stop : MarkupLine.LineType.Regular;
 
         public override string ToString() => $"{First}—{Second}";
 
