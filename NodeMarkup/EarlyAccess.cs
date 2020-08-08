@@ -49,11 +49,10 @@ namespace NodeMarkup
 
         public static bool CheckFunctionAccess(string function, bool alert = true)
         {
-#if !DEBUG
+
             if (Status)
                 return true;
-#endif
-            if (alert)
+            else if (alert)
                 ShowNoEarlyAccess(Localize.EarlyAccess_FunctionUnavailableCaption, string.Format(Localize.EarlyAccess_FunctionUnavailableMessage, function));
 #if !DEBUG
             return false;
