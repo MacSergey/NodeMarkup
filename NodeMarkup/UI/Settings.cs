@@ -96,7 +96,7 @@ namespace NodeMarkup.UI
             {
                 var localizeString = $"Mod_Locale_{locale}";
                 var localeText = Localize.ResourceManager.GetString(localizeString, Localize.Culture);
-                if (Localize.Culture.Name != locale)
+                if (Localize.Culture.Name.ToLower() != locale)
                     localeText += $" ({Localize.ResourceManager.GetString(localizeString, new CultureInfo(locale))})";
 
                 dropDown.AddItem(locale, localeText);

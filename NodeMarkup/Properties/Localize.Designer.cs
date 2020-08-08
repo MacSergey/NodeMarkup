@@ -1081,7 +1081,8 @@ namespace NodeMarkup {
         ///- Copy/paste lines and fillers style.
         ///- Improved stop lines.
         ///- Added perpendicular lines.
-        ///- Linked Patreon account for early access..
+        ///- Linked Patreon account for early access.
+        ///- Added the ability to select the language separately from the game language..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
