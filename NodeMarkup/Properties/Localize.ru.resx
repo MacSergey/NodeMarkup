@@ -626,4 +626,23 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Ранний доступ</value>
   </data>
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Центрировать сплошную</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Я согласен</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Предупреждение о BETA версии</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Получить стабильную</value>
+    <comment>Mod_BetaWarningGetStable
+</comment>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Вы используете BETA версию {0}. Она предназначена для тестирования новых функций и может содержать ошибки которые приведут к поломке или удалению вашей разметки. Если вы подписались по ошибки, то перейдите на стабильную версию.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
+  </data>
 </root>
