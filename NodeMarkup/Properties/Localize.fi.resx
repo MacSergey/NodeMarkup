@@ -183,8 +183,12 @@ Tätä toimintoa ei voi kumota</value>
   <data name="LineEditor_To" xml:space="preserve">
     <value>Loppupiste</value>
   </data>
-  
-  
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Risteää {0}:n kanssa</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Reunapiste {0}</value>
+  </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>Katkoviiva</value>
   </data>
@@ -212,7 +216,9 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
   </data>
-  
+  <data name="Panel_Caption" xml:space="preserve">
+    <value>Muokkaa risteyksen #{0} merkintöjä</value>
+  </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>piste</value>
   </data>
@@ -327,7 +333,9 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>Uusi malline</value>
   </data>
-  
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Poista risteyksen merkinnät</value>
+  </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Haluatko varmasti poistaa kaikki risteyksen #{0} tiemerkinnät?
 Tätä toimintoa ei voi kumota</value>
@@ -344,7 +352,9 @@ Tätä toimintoa ei voi kumota</value>
     <value>Risteys #{0}
 Napauta muokataksesi merkintöjä</value>
   </data>
-  
+  <data name="Tool_InfoNode" xml:space="preserve">
+    <value>Valitse risteys muokataksesi merkintöjä</value>
+  </data>
   <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
     <value>Valitse päätepiste
 +Shift - Sulku-
@@ -356,7 +366,9 @@ Napauta muokataksesi merkintöjä</value>
 +Shift muokataksesi pistettä
 Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   </data>
-  
+  <data name="Mod_WhatsNewCaption" xml:space="preserve">
+    <value>Uutta versiossa {0}</value>
+  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
   </data>
@@ -489,38 +501,109 @@ Yhdistä kaksi pistettä luodaksesi viivan.</value>
 Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
   
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Aktivoi avaimella</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Aktivointi epäonnistui</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Aktivointi onnistui</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Tämä toiminto ei ole käytettävissä</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>Toiminto {0} on tällä hetkellä saatavilla ennakkoon Patreon-tukijoille.
+Toiminto on saatavilla kaikille myöhemmin.
+Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nopeudella kuin aiemminkin.</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Kopioi tyyli</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Liitä tyyli</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Kohtisuorat viivat</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Hanki ennakkopääsy</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Käyttöoikeustunnuksesi</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Käyttöoikeusavain</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Aktivoi</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Ennakkopääsyn aktivointi</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Aktivoidaksesi ennakkopääsyn sinun on annettava avain</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Peruuta</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>Antamasi avain ei ole kelvollinen</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Yhdistetään...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Yhdistä Patreon-tili</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Yhdistä Patreon-tili</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Patreon-tiliä ei voitu yhdistää, koska hylkäsit pääsypyynnön.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Tiliä yhdistäessä tapahtui virhe. Yritä uudestaan.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Tilisi on yhdistetty, mutta sinulla ei ole ennakkopääsyä.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Voit sulkea tämän sivun ja palata peliin.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Tila: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Aktivoitu</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Ei aktivoitu</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Kiitos tuestasi! Nyt voit nauttia kaikista ominaisuuksista.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Ennakkopääsy</value>
+  </data>
   
   
-  
-  
-  
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Varoitus BETA-versiosta</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Hanki vakaa versio</value>
+    <comment>Mod_BetaWarningGetStable
+</comment>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Käytät beta-versiota {0}:sta. Se on tarkoitettu uusien ominaisuuksien testaamiseen ja siinä voi olla virheitä, jotka rikkovat tai poistavat merkintöjäsi. Jos tilasit sen vahingossa, vaihda vakaaseen versioon.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
+  </data>
 </root>

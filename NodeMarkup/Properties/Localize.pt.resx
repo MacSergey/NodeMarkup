@@ -538,15 +538,32 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
     <value>Cancelar</value>
   </data>
   
-  
-  
-  
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Conexão em curso...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Conectar Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Conectar Patreon</value>
+  </data>
   
   
   
   
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Cancelar</value>
+  </data>
+  
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Ativado</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Não activado</value>
+  </data>
+  
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Acesso antecipado</value>
   </data>
   
   

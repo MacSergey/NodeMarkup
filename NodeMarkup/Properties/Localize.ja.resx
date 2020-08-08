@@ -603,4 +603,11 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>早期アクセス</value>
   </data>
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>実線を中央にオフセット</value>
+  </data>
+  
+  
+  
+  
 </root>
