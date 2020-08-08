@@ -509,23 +509,14 @@ Para crear un relleno, mantenga presionada la tecla Alt o presione {0}.</value>
     <value>La lista de plantillas está vacía.
 Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Anular</value>
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Activar con clave</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Activación fallida</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Activación finalizada con éxito</value>
   </data>
   
   
@@ -533,6 +524,41 @@ Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
   
   
   
+  
+  
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Clave de acceso</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Activar</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Activación del acceso anticipado</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Para activar el acceso anticipado, debe ingresar una clave</value>
+  </data>
+  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
+    <value>Anular</value>
+  </data>
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>La clave que ha introducido no es válida</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Procesando la vinculación...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Vincular cuenta de Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Vincular la cuenta de Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>La cuenta de Patreon no se puede vincular porque denegó la solicitud de acceso.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Se produjo un error al vincular la cuenta, inténtelo de nuevo.</value>
+  </data>
   
   
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
@@ -548,19 +574,49 @@ Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Idioma del Juego</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Checo</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Alemán</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Español</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Finés</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Francés</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italiano</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japonés</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Holandés</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polaco</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portugués</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Ruso</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Chino simplificado</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
 </root>

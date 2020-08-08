@@ -619,20 +619,52 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>現在、 {0} のβ版を使用しています。
 これは新機能をテストするMODで、マーキングの破損や消えるエラーが含まれている可能性があります。
 間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>ゲームの既定言語</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>チェコ語</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>ドイツ語</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>英語</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>スペイン語</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>フィンランド語</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>フランス語</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>イタリア語</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>オランダ語</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>ポーランド語</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>ポルトガル語</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>ロシア語</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>簡体中国語</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>言語設定</value>
+  </data>
 </root>

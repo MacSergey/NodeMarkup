@@ -615,6 +615,8 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Je gebruikt de bèta versie van {0}. Deze wordt gebruikt voor het testen van nieuwe functies en kan fouten bevatten die je huidige markeringen kunnen verwijderen of veranderen. Als je per ongeluk geabonneerd op de bèta, kan je naar de stabiele versie overstappen.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Gebruik zelfde taal als spel</value>
@@ -656,7 +658,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Russisch</value>
   </data>
   <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinees (vereenvoudigd)</value>
+    <value>Chinees vereenvoudigd</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Taal</value>
