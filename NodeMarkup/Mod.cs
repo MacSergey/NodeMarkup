@@ -21,7 +21,7 @@ namespace NodeMarkup
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
         public static string StaticName { get; } = "Intersection Marking Tool";
 
-        public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
+        public static string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static string VersionMajor => string.Join(".", Version.Split('.').Take(3).ToArray());
 
         public static List<string> Versions { get; } = new List<string>
@@ -43,8 +43,17 @@ namespace NodeMarkup
         public string Description => Localize.Mod_Description;
 #endif
 
-        static CultureInfo Culture => new CultureInfo(SingletonLite<LocaleManager>.instance.language == "zh" ? "zh-cn" : SingletonLite<LocaleManager>.instance.language);
+        static CultureInfo Culture
+        {
+            get
+            {
+                var locale = string.IsNullOrEmpty(UI.Settings.Locale.value) ? SingletonLite<LocaleManager>.instance.language : UI.Settings.Locale.value;
+                if (locale == "zh")
+                    locale = "zh-cn";
 
+                return new CultureInfo(locale);
+            }
+        }
 
         public void OnEnabled()
         {

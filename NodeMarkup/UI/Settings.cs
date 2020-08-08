@@ -8,6 +8,17 @@ using UnityEngine.SceneManagement;
 using System.Diagnostics;
 using ColossalFramework.Threading;
 using System.Threading;
+using System.Reflection;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System;
+using System.Globalization;
+using NodeMarkup.UI.Editors;
+using UnityEngine.SocialPlatforms;
+using static ColossalFramework.UI.UIDropDown;
+using ColossalFramework.Globalization;
 
 namespace NodeMarkup.UI
 {
@@ -24,6 +35,7 @@ namespace NodeMarkup.UI
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
+        public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
 
         static Settings()
         {
@@ -33,12 +45,92 @@ namespace NodeMarkup.UI
 
         public static void OnSettingsUI(UIHelperBase helper)
         {
+            AddLanguage(helper);
             AddKeyMapping(helper);
             AddGeneral(helper);
             AddAccess(helper);
             AddNotifications(helper);
             AddOther(helper);
         }
+
+        #region LANGUAGE
+
+        private static void AddLanguage(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup(Localize.Settings_Language) as UIHelper;
+            AddLanguageList(group);
+        }
+        private static void AddLanguageList(UIHelper group)
+        {
+            var locales = GetSupportLanguages().ToArray();
+            var dropDown = (group.self as UIComponent).AddUIComponent<LanguageDropDown>();
+
+            dropDown.atlas = TextureUtil.InGameAtlas;
+            dropDown.size = new Vector2(400, 38);
+            dropDown.listBackground = "OptionsDropboxListbox";
+            dropDown.itemHeight = 24;
+            dropDown.itemHover = "ListItemHover";
+            dropDown.itemHighlight = "ListItemHighlight";
+            dropDown.normalBgSprite = "OptionsDropbox";
+            dropDown.hoveredBgSprite = "OptionsDropboxHovered";
+            dropDown.focusedBgSprite = "OptionsDropboxFocused";
+            dropDown.autoListWidth = true;
+            dropDown.listHeight = 700;
+            dropDown.listPosition = PopupListPosition.Below;
+            dropDown.clampListToScreen = false;
+            dropDown.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            dropDown.popupColor = Color.white;
+            dropDown.popupTextColor = new Color32(170, 170, 170, 255);
+            dropDown.textScale = 1.25f;
+            dropDown.textFieldPadding = new RectOffset(14, 40, 7, 0);
+            dropDown.popupColor = Color.white;
+            dropDown.popupTextColor = new Color32(170, 170, 170, 255);
+            dropDown.verticalAlignment = UIVerticalAlignment.Middle;
+            dropDown.horizontalAlignment = UIHorizontalAlignment.Left;
+            dropDown.itemPadding = new RectOffset(14, 14, 0, 0);
+            dropDown.triggerButton = dropDown;
+
+            dropDown.AddItem(string.Empty, Localize.Mod_LocaleGame);
+
+            foreach(var locale in locales)
+            {
+                var localizeString = $"Mod_Locale_{locale}";
+                var localeText = Localize.ResourceManager.GetString(localizeString, Localize.Culture);
+                if (Localize.Culture.Name != locale)
+                    localeText += $" ({Localize.ResourceManager.GetString(localizeString, new CultureInfo(locale))})";
+
+                dropDown.AddItem(locale, localeText);
+            }
+
+            dropDown.SelectedObject = Locale.value;
+
+            dropDown.eventSelectedIndexChanged += IndexChanged;
+
+            void IndexChanged(UIComponent component, int value)
+            {
+                var locale = dropDown.SelectedObject;
+                Locale.value = locale;
+                LocaleManager.ForceReload();
+            }
+        }
+
+        private static string[] GetSupportLanguages()
+        {
+            var languages = new HashSet<string> { "en" };
+
+            var resourceAssembly = $"{Assembly.GetExecutingAssembly().GetName().Name}.resources";
+
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var assemblyName = assembly.GetName();
+                if (assemblyName.Name == resourceAssembly)
+                    languages.Add(assemblyName.CultureInfo.Name.ToLower());
+            }
+
+            return languages.OrderBy(l => l).ToArray();
+        }
+
+        #endregion
 
         #region KEYMAPPING
         private static void AddKeyMapping(UIHelperBase helper)
@@ -214,4 +306,6 @@ namespace NodeMarkup.UI
         }
         #endregion
     }
+
+    public class LanguageDropDown : CustomUIDropDown<string> { }
 }

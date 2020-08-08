@@ -869,7 +869,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Get stable.
+        ///   Ищет локализованную строку, похожую на Get stable version.
         /// </summary>
         public static string Mod_BetaWarningGetStable {
             get {
@@ -878,7 +878,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You are using the beta version of {0}. It is for testing new features and may contain errors that will break or delete your marking. If you subscribed to it by mistake, then switch to the stable version.
+        ///   Ищет локализованную строку, похожую на You are using the BETA version of {0}. It is for testing new features and may contain errors that will break or delete your marking. If you subscribed to it by mistake, then switch to the stable version..
         /// </summary>
         public static string Mod_BetaWarningMessage {
             get {
@@ -901,6 +901,132 @@ namespace NodeMarkup {
         public static string Mod_DescriptionBeta {
             get {
                 return ResourceManager.GetString("Mod_DescriptionBeta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Czech.
+        /// </summary>
+        public static string Mod_Locale_cs {
+            get {
+                return ResourceManager.GetString("Mod_Locale_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на German.
+        /// </summary>
+        public static string Mod_Locale_de {
+            get {
+                return ResourceManager.GetString("Mod_Locale_de", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на English.
+        /// </summary>
+        public static string Mod_Locale_en {
+            get {
+                return ResourceManager.GetString("Mod_Locale_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Spanish.
+        /// </summary>
+        public static string Mod_Locale_es {
+            get {
+                return ResourceManager.GetString("Mod_Locale_es", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Finnish.
+        /// </summary>
+        public static string Mod_Locale_fi {
+            get {
+                return ResourceManager.GetString("Mod_Locale_fi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на French.
+        /// </summary>
+        public static string Mod_Locale_fr {
+            get {
+                return ResourceManager.GetString("Mod_Locale_fr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Italian.
+        /// </summary>
+        public static string Mod_Locale_it {
+            get {
+                return ResourceManager.GetString("Mod_Locale_it", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Japanese.
+        /// </summary>
+        public static string Mod_Locale_ja {
+            get {
+                return ResourceManager.GetString("Mod_Locale_ja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dutch.
+        /// </summary>
+        public static string Mod_Locale_nl {
+            get {
+                return ResourceManager.GetString("Mod_Locale_nl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Polish.
+        /// </summary>
+        public static string Mod_Locale_pl {
+            get {
+                return ResourceManager.GetString("Mod_Locale_pl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Portuguese.
+        /// </summary>
+        public static string Mod_Locale_pt {
+            get {
+                return ResourceManager.GetString("Mod_Locale_pt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Russian.
+        /// </summary>
+        public static string Mod_Locale_ru {
+            get {
+                return ResourceManager.GetString("Mod_Locale_ru", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Chinese Simplified.
+        /// </summary>
+        public static string Mod_Locale_zh_cn {
+            get {
+                return ResourceManager.GetString("Mod_Locale_zh-cn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Game Language.
+        /// </summary>
+        public static string Mod_LocaleGame {
+            get {
+                return ResourceManager.GetString("Mod_LocaleGame", resourceCulture);
             }
         }
         
@@ -1215,6 +1341,15 @@ namespace NodeMarkup {
         public static string Settings_ImportMarkingMessageSuccess {
             get {
                 return ResourceManager.GetString("Settings_ImportMarkingMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Language.
+        /// </summary>
+        public static string Settings_Language {
+            get {
+                return ResourceManager.GetString("Settings_Language", resourceCulture);
             }
         }
         
