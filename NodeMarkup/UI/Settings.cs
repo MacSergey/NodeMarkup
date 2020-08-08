@@ -23,7 +23,7 @@ namespace NodeMarkup.UI
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
-        //public static SavedString AccessKey { get; } = new SavedString(nameof(AccessKey), SettingsFile, string.Empty, true);
+        public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
 
         static Settings()
         {

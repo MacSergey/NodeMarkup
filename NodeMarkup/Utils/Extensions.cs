@@ -6,6 +6,7 @@ using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -45,6 +46,14 @@ namespace NodeMarkup.Utils
 
     public static class Utilities
     {
+        public static void OpenUrl(string url)
+        {
+            if (PlatformService.IsOverlayEnabled())
+                PlatformService.ActivateGameOverlayToWebPage(url);
+            else
+                Process.Start(url);
+        }
+
         private static NetManager NetManager => Singleton<NetManager>.instance;
         private static RenderManager RenderManager => Singleton<RenderManager>.instance;
         public static IEnumerable<NetSegment> Segments(this NetNode node)

@@ -306,10 +306,6 @@ namespace NodeMarkup.Manager
             {
                 doubleTarget.Offset = Offset;
             }
-            //if(target is IAsymLine asymTarget)
-            //{
-            //    asymTarget.Invert = Invert;
-            //}
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {

@@ -636,4 +636,16 @@ By registering early access, you will support the ability to develop this mod at
   <data name="LineEditor_CenterSolid" xml:space="preserve">
     <value>Center solid</value>
   </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>I agree</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>BETA version warning</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Get stable</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>You are using the beta version of {0}. It is for testing new features and may contain errors that will break or delete your marking. If you subscribed to it by mistake, then switch to the stable version</value>
+  </data>
 </root>

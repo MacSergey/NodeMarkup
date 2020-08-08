@@ -3,6 +3,7 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using NodeMarkup.UI;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +25,7 @@ namespace NodeMarkup
 #else
         private static string Version => Mod.VersionMajor;
 #endif
-        private static string URL { get; } = "https://discord.gg/QRYq8m2";
+        private static string GetEarlyAccessURL { get; } = "https://discord.gg/QRYq8m2";
         public static string Id { get; } = Crypt.GetHash($"{PlatformService.userID}{Version}");
 
         public static bool Status { get; private set; }
@@ -79,7 +80,7 @@ namespace NodeMarkup
 
         public static bool GetAccess()
         {
-            PlatformService.ActivateGameOverlayToWebPage(URL);
+            Utilities.OpenUrl(GetEarlyAccessURL);
             return true;
         }
         public static void SaveAccess(string token = null, bool check = true)
@@ -170,10 +171,7 @@ namespace NodeMarkup
                 Listen();
 
                 var url = Patreon.GetOAuthURLWithState(State);
-                if (PlatformService.IsOverlayEnabled())
-                    PlatformService.ActivateGameOverlayToWebPage(url);
-                else
-                    Process.Start(url);
+                Utilities.OpenUrl(url);
             }
         }
         private void AddActivateKey(UIHelper helper)

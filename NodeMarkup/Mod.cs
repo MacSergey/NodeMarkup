@@ -11,11 +11,14 @@ using ColossalFramework.Globalization;
 using ColossalFramework;
 using ColossalFramework.UI;
 using ColossalFramework.PlatformServices;
+using NodeMarkup.Utils;
 
 namespace NodeMarkup
 {
     public class Mod : LoadingExtensionBase, IUserMod
     {
+        public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
+        public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
         public static string StaticName { get; } = "Intersection Marking Tool";
 
         public static string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
@@ -30,10 +33,12 @@ namespace NodeMarkup
         };
 
 #if DEBUG
+        public static bool IsBeta => true;
         public static string VersionBeta => $"{Version} [BETA]";
         public string Name { get; } = $"{StaticName} {VersionBeta}";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
+        public static bool IsBeta => false;
         public string Name { get; } = $"{StaticName} {Version}";
         public string Description => Localize.Mod_Description;
 #endif
@@ -65,6 +70,7 @@ namespace NodeMarkup
                 MarkupManager.Init();
 
                 ShowWhatsNew();
+                ShowBetaWarning();
             }
         }
 
@@ -91,6 +97,32 @@ namespace NodeMarkup
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
+        private void ShowBetaWarning()
+        {
+            if(!IsBeta)
+                UI.Settings.BetaWarning.value = true;
+            else if (UI.Settings.BetaWarning.value)
+            {
+                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+                messageBox.CaprionText = Localize.Mod_BetaWarningCaption;
+                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, StaticName);
+                messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
+                messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
+                messageBox.OnButton1Click = AgreeClick;
+                messageBox.OnButton2Click = GetStable;
+
+                bool AgreeClick()
+                {
+                    UI.Settings.BetaWarning.value = false;
+                    return true;
+                }
+                bool GetStable()
+                {
+                    Utilities.OpenUrl(StableURL);
+                    return true;
+                }
+            }
+        }
         private void ShowWhatsNew()
         {
             if (!UI.Settings.ShowWhatsNew || VersionComparer.Instance.Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
