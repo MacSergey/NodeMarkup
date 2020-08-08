@@ -499,45 +499,108 @@ Altキー押下で塗り潰しを開始</value>
     <value>左右に回転</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>交差点（ノード）にラインの設定がありません。2つのポイントを繋げて作りましょう。</value>
+    <value>交差点（ノード）にラインの設定がありません。
+2つのポイントを繋げて作りましょう。</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>交差点（ノード）に塗り潰しの設定がありません。Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
+    <value>交差点（ノード）に塗り潰しの設定がありません。
+Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>テンプレートの一覧は空です。作成するにはラインのスタイルで、 {0} をクリックします。</value>
+    <value>テンプレートの一覧は空です。
+作成するにはラインのスタイルで、 {0} をクリックします。</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>アクセスIDで有効化する</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>有効化に失敗しました</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>有効化に成功しました</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>この操作は利用できません</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>追加機能 {0} は現在、Patreonsの早期アクセスで利用可能です。
+後日、誰でも利用できるようになります。
+早期アクセスに登録することで、いち早く新機能の利用とMODの開発をサポートします。</value>
+  </data>
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>V字のスタイル</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>スタイルのコピー</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>スタイルのペースト</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>垂直線</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>早期アクセスを受け取る</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>あなたのアクセスID</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>アクセスID</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>有効化</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>早期アクセスを有効化</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>早期アクセスを有効にするには、アクセスIDを入力する必要があります</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>キャンセル</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>入力されたアクセスIDが、有効ではありません</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>接続中...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Patreonアカウントと接続</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Patreonアカウントと接続する</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Patreonアカウントがリクエストを拒否したため、アカウントと連携できません。</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>アカウントを接続する際に、エラーが発生しました</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>アカウントは接続されていますが、早期アクセスが開始できません</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>このページを閉じて、ゲームに戻ることができます。</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
-  
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>ステータス: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>有効化</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>未認証</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>ご支援頂いて、ありがとうございます。
+現在、あなたは全ての機能を利用することが出来ます。</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>早期アクセス</value>
+  </data>
 </root>

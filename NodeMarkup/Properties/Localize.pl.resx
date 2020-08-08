@@ -509,37 +509,96 @@ Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
     <value>Lista szablonów jest pusta.
 Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Aktywuj za pomocą klucza</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Aktywacja nie powiodła się</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Aktywacja pomyślna</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Ta funkcja jest niedostępna</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>Funkcja «{0}» jest aktualnie dostępna tylko dla Patronów wczesnego dostępu.
+Będzie ona dostępna dla wszystkich w późniejszym czasie.
+Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju tego moda.</value>
+  </data>
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Szewrony</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Skopiuj styl</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Wklej styl</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Linie prostopadłe</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Uzyskaj wcześniejszy dostęp</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Twoje ID dostępu</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Klucz dostępu</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Aktywuj</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Aktywacja wczesnego dostępu</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Aby aktywować wczesny dostęp musisz prowadzić klucz dostępu</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Anuluj</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>Wprowadzony klucz jest niepoprawny</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Trwa łączenie...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Połącz z kontem Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Połącz z kontem Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Konto Patreon nie może zostać połączone, ponieważ żądanie zostało przez Ciebie odrzucone.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Wystąpił błąd podczas łączenia konta, spróbuj ponownie.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Konto zostało połączone, ale nie jesteś uprawniony do wczesnego dostępu.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Możesz zamknąć stronę i powrócić do gry.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
-  
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Status: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Aktywowany</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Nieaktywny</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Dziękuję za wsparcie, teraz możesz się cieszyć dostępem do wszystkich funkcji.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Wczesny dostęp</value>
+  </data>
 </root>

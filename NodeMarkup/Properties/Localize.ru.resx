@@ -623,4 +623,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
     <value>Спасибо за вашу поддержку, теперь вы можете пользоваться всеми функциями.</value>
   </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Ранний доступ</value>
+  </data>
 </root>
