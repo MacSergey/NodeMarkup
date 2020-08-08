@@ -601,9 +601,64 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Wczesny dostęp</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Wyśrodkuj linię ciągłą</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Zgadzam się</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Ostrzeżenie o wersji BETA</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Subskrybuj wersję stabilną</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Używasz {0} w wersji BETA. Została ona stworzona w celu testowania nowych funkcjonalności i może zawierać błędy lub skasować wcześniej zapisane wypełnienia. Jeśli została ona zasubskrybowana przypadkiem, przejdź na wersję stabilną.</value>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Język gry</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Czeski</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Niemiecki</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Angielski</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Hiszpański</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Fiński</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Francuski</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Włoski</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japoński</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Holenderski</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portugalski</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Rosyjski</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Chiński uproszczony</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
 </root>

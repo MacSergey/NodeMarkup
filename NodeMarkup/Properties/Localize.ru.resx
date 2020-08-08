@@ -636,13 +636,54 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Mod_BetaWarningGetStable" xml:space="preserve">
     <value>Получить стабильную</value>
-    <comment>Mod_BetaWarningGetStable
-</comment>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Вы используете BETA версию {0}. Она предназначена для тестирования новых функций и может содержать ошибки которые приведут к поломке или удалению вашей разметки. Если вы подписались по ошибки, то перейдите на стабильную версию.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Язык игры</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Чешский</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Немецкий</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Английский</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Испанский</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Финский</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Французский</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Итальянский</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Японский</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Голландский</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Польский</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Португальский</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Китайский упрощенный</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Язык</value>
   </data>
   <data name="Mod_Locale_cs" xml:space="preserve">
     <value>Чешский</value>

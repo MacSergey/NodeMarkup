@@ -606,6 +606,31 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="LineEditor_CenterSolid" xml:space="preserve">
     <value>実線を中央にオフセット</value>
   </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>同意します</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>警告 これはβ版です</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>安定版を入手</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>現在、 {0} のβ版を使用しています。
+これは新機能をテストするMODで、マーキングの破損や消えるエラーが含まれている可能性があります。
+間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
