@@ -525,6 +525,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Center solid.
+        /// </summary>
+        public static string LineEditor_CenterSolid {
+            get {
+                return ResourceManager.GetString("LineEditor_CenterSolid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Color.
         /// </summary>
         public static string LineEditor_Color {

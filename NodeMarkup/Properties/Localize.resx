@@ -633,4 +633,7 @@ By registering early access, you will support the ability to develop this mod at
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Early access</value>
   </data>
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Center solid</value>
+  </data>
 </root>

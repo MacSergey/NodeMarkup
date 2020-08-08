@@ -210,12 +210,25 @@ namespace NodeMarkup.Manager
         }
 
         public override FillerStyle CopyFillerStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if(target is ChevronFillerStyle chevronTarget)
+            {
+                chevronTarget.AngleBetween = AngleBetween;
+                chevronTarget.Step = Step;
+                chevronTarget.Invert = Invert;
+                chevronTarget.Output = Output;
+            }
+        }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
-            components.Add(AddInvertAndTurnProperty(this, parent));
+            if (!isTemplate)
+                components.Add(AddInvertAndTurnProperty(this, parent));
+
             return components;
         }
         protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent, Action onHover, Action onLeave)
@@ -253,8 +266,6 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-
-
         protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height)
         {
             if (trajectories.Length < 3)
@@ -275,7 +286,7 @@ namespace NodeMarkup.Manager
                                 intersectSet.Add(t);
                     }
 
-                    if(intersectSet.Count % 2 == 1)
+                    if (intersectSet.Count % 2 == 1)
                         intersectSet.Add(new MarkupFillerIntersect(0, 0, 0));
 
                     var intersects = intersectSet.OrderBy(j => j).ToArray();
@@ -290,7 +301,6 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-
         private void GetItems(Bezier3[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
         {
             var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;

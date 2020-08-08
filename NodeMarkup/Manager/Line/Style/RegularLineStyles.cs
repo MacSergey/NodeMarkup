@@ -2,6 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -212,6 +213,7 @@ namespace NodeMarkup.Manager
         float _dashLength;
         float _spaceLength;
         bool _invert;
+        bool _centerSolid;
         public float Offset
         {
             get => _offset;
@@ -248,13 +250,23 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public bool CenterSolid
+        {
+            get => _centerSolid;
+            set
+            {
+                _centerSolid = value;
+                StyleChanged();
+            }
+        }
 
-        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
+        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert, bool centerSolid) : base(color, width)
         {
             Offset = offset;
             DashLength = dashLength;
             SpaceLength = spaceLength;
             Invert = invert;
+            CenterSolid = centerSolid;
         }
 
 
@@ -272,13 +284,16 @@ namespace NodeMarkup.Manager
 
         protected IEnumerable<MarkupStyleDash> CalculateSolidDash(Bezier3 trajectory)
         {
-            yield return CalculateSolidDash(trajectory, Invert ? Offset : -Offset);
+            var offset = CenterSolid ? 0 : Invert ? Offset : -Offset;
+
+            yield return CalculateSolidDash(trajectory, offset);
         }
         protected IEnumerable<MarkupStyleDash> CalculateDashedDash(Bezier3 trajectory, float startT, float endT)
         {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Invert ? -Offset : Offset);
+            var offset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
+            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, offset);
         }
-        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert, CenterSolid);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -291,10 +306,10 @@ namespace NodeMarkup.Manager
             {
                 doubleTarget.Offset = Offset;
             }
-            if(target is IAsymLine asymTarget)
-            {
-                asymTarget.Invert = Invert;
-            }
+            //if(target is IAsymLine asymTarget)
+            //{
+            //    asymTarget.Invert = Invert;
+            //}
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -302,8 +317,21 @@ namespace NodeMarkup.Manager
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            components.Add(AddInvertProperty(this, parent));
+            if (!isTemplate)
+            {
+                components.Add(AddCenterSolidProperty(this, parent));
+                components.Add(AddInvertProperty(this, parent));
+            }
             return components;
+        }
+        protected static BoolPropertyPanel AddCenterSolidProperty(SolidAndDashedLineStyle solidAndDashedStyle, UIComponent parent)
+        {
+            var centerSolidProperty = parent.AddUIComponent<BoolPropertyPanel>();
+            centerSolidProperty.Text = Localize.LineEditor_CenterSolid;
+            centerSolidProperty.Init();
+            centerSolidProperty.Value = solidAndDashedStyle.CenterSolid;
+            centerSolidProperty.OnValueChanged += (bool value) => solidAndDashedStyle.CenterSolid = value;
+            return centerSolidProperty;
         }
 
         public override XElement ToXml()
