@@ -509,43 +509,154 @@ Shift x10，Ctrl x0.1</value>
     <value>没有模板可选。
 在线段页点击 «{0}» 来创建新模板。</value>
   </data>
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>使用密钥激活</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>激活失败</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>激活成功</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>该功能不可用。</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>此功能：“{0}” 目前直供Patreon抢先体验用户使用。
+一段时间后会面向大众开放。
+加入抢先体验后，你可以支持作者开发本mod。</value>
+  </data>
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>锯齿形样式</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>复制样式</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>粘贴样式</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>获取抢先访问</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>您的激活ID</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>访问密钥</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>激活</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>激活抢先体验</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>需要激活码才可获取抢先体验</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>取消</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>输入的激活码无效。</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>连接中……</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>链接到Patreon帐户</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>链接到Patreon帐户</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Patreon账号无法连接，因为您据否了连接请求。</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>连接账号时出错，请重试。</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Pateron账号已连接，但没有抢先体验权限。</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>现在可以关闭此窗口并返回游戏。</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>状态：{0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>已激活</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>未激活</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>多谢支持。全部功能已为您启用。</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>抢先体验版本</value>
+  </data>
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>实线对齐</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>我同意</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>警告：BETA版本</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>获取稳定版本</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>你在使用 {0} BETA版。此版本为测试新功能用，且可能含有会使标记破损或消失的BUG。如果是不小心订阅到了此版本，请订阅回稳定版。</value>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>游戏语言</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>捷克语</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>德语</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>英语</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>西班牙语</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>芬兰语</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>法语</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>意大利语</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>日语</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>荷兰语</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>波兰语</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>葡萄牙语</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>俄语</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
 </root>

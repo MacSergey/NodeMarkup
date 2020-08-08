@@ -601,9 +601,64 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Vroegtijdige toegang</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Centreer niet onderbroken</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Ik ga akkoord</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Bèta versie waarschuwing</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Overstappen naar stabiele versie</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Je gebruikt de bèta versie van {0}. Deze wordt gebruikt voor het testen van nieuwe functies en kan fouten bevatten die je huidige markeringen kunnen verwijderen of veranderen. Als je per ongeluk geabonneerd op de bèta, kan je naar de stabiele versie overstappen.</value>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Gebruik zelfde taal als spel</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Tsjechisch</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Duits</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Engels</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Spaans</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Fins</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Frans</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italiaans</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japans</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Nederlands</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Pools</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portugees</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Russisch</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Chinees (vereenvoudigd)</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Taal</value>
+  </data>
 </root>
