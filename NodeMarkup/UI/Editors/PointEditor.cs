@@ -23,19 +23,14 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void FillItems()
         {
-#if STOPWATCH
-            var sw = Stopwatch.StartNew();
-#endif
             foreach (var enter in Markup.Enters)
             {
                 foreach (var point in enter.Points)
-                {
-                    var item = AddItem(point);
-                }
+                    AddItem(point);
+
+                foreach (var point in enter.Crosswalks)
+                    AddItem(point);
             }
-#if STOPWATCH
-            Logger.LogDebug($"{nameof(PointsEditor)}.{nameof(FillItems)}: {sw.ElapsedMilliseconds}ms");
-#endif
         }
         protected override void OnObjectSelect()
         {

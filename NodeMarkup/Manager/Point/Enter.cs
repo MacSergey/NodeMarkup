@@ -64,7 +64,7 @@ namespace NodeMarkup.Manager
 
             var points = Lines.SelectMany(l => l.GetMarkupPoints()).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
-            CrosswalkPointsDic = points.Where(p => p.IsEdge).ToDictionary(p => p.Num, p => new MarkupCrosswalkPoint(p.Num, p.SegmentLine, p.Location));
+            CrosswalkPointsDic = points.Where(p => (p.Location & MarkupPoint.LocationType.Edge) != 0).ToDictionary(p => p.Num, p => new MarkupCrosswalkPoint(p.Num, p.SegmentLine, p.Location));
             NormalPointsDic = points.ToDictionary(p => p.Num, p => new MarkupNormalPoint(p));
         }
         private void Init()

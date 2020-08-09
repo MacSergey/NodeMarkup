@@ -8,14 +8,6 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public interface IRuleable
-    {
-        List<MarkupLineRawRule> RawRules { get; }
-    }
-    public interface IOnceStyle
-    {
-        LineStyle Style { get; }
-    }
     public abstract class MarkupLine : IToXml
     {
         public static string XmlName { get; } = "L";
@@ -31,6 +23,8 @@ namespace NodeMarkup.Manager
         public MarkupPoint End => PointPair.Second;
         public bool IsEnterLine => PointPair.IsSomeEnter;
         public bool IsNormal => PointPair.IsNormal;
+        public bool IsStopLine => PointPair.IsStopLine;
+        public bool IsCrosswalk => PointPair.IsCrosswalk;
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
 
@@ -39,14 +33,15 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        protected MarkupLine(Markup markup, MarkupPointPair pointPair)
+        protected MarkupLine(Markup markup, MarkupPointPair pointPair, bool update = true)
         {
             Markup = markup;
             PointPair = pointPair;
 
-            UpdateTrajectory();
+            if (update)
+                UpdateTrajectory();
         }
-        protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second) : this(markup, new MarkupPointPair(first, second)) { }
+        protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
         protected void RuleChanged() => Markup.Update(this);
 
         public void UpdateTrajectory() => Trajectory = GetTrajectory();
@@ -73,7 +68,7 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                foreach(var intersect in Markup.GetIntersects(this))
+                foreach (var intersect in Markup.GetIntersects(this))
                 {
                     if (intersect.IsIntersect)
                         yield return intersect.Pair.GetOther(this);
@@ -238,8 +233,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
-        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
+        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
+        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : base(markup, first, second, update) { }
 
         public override Bezier3 GetTrajectory()
         {
@@ -299,9 +294,10 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
         {
             AddDefaultRule(crosswalkType);
+            //UpdateTrajectory();
         }
         protected override void AddDefaultRule() => AddDefaultRule();
-        private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Dashed)
+        private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Zebra)
         {
             var style = TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType);
             SetRule(new MarkupLineRawRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
@@ -312,9 +308,9 @@ namespace NodeMarkup.Manager
             var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
 
             var trajectory = default(Bezier3);
-            trajectory.a = PointPair.First.Position + PointPair.First.Direction * Rule.Style.Width;
+            trajectory.a = PointPair.First.Position + PointPair.First.Direction * ((Rule?.Style.Width ?? CrosswalkStyle.DefaultCrosswalkWidth) - 2);
             trajectory.b = trajectory.a + dir;
-            trajectory.d = PointPair.Second.Position + PointPair.Second.Direction * Rule.Style.Width;
+            trajectory.d = PointPair.Second.Position + PointPair.Second.Direction * ((Rule?.Style.Width ?? CrosswalkStyle.DefaultCrosswalkWidth) - 2);
             trajectory.c = trajectory.d - dir;
 
             return trajectory;
@@ -336,13 +332,7 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                if (IsSelf)
-                    return false;
-
-                if (First.IsEnterLine && !First.IsNormal)
-                    return false;
-
-                if (Second.IsEnterLine && !Second.IsNormal)
+                if (IsSelf || First.IsStopLine || Second.IsStopLine)
                     return false;
 
                 if (First.ContainsPoint(Second.Start) || First.ContainsPoint(Second.End))

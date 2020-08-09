@@ -484,13 +484,18 @@ namespace NodeMarkup
             Panel.SetNode(SelectNodeId);
             SetTarget();
         }
-        private void SetTarget(MarkupPoint ignore = null)
+        private void SetTarget(MarkupPoint.PointType pointType = MarkupPoint.PointType.Enter | MarkupPoint.PointType.Crosswalk, MarkupPoint ignore = null)
         {
             TargetPoints.Clear();
             foreach (var enter in EditMarkup.Enters)
             {
-                foreach (var point in enter.Points.Where(p => p != ignore))
-                    TargetPoints.Add(point);
+                if ((pointType & MarkupPoint.PointType.Enter) == MarkupPoint.PointType.Enter)
+                    foreach (var point in enter.Points.Where(p => p != ignore))
+                        TargetPoints.Add(point);
+
+                if ((ignore == null || enter == ignore.Enter) && (pointType & MarkupPoint.PointType.Crosswalk) == MarkupPoint.PointType.Crosswalk)
+                    foreach (var point in enter.Crosswalks.Where(p => p != ignore))
+                        TargetPoints.Add(point);
             }
         }
         private void OnSelectPoint(Event e)
@@ -500,13 +505,13 @@ namespace NodeMarkup
             else
             {
                 SelectPoint = HoverPoint;
-                SetTarget(SelectPoint);
+                SetTarget(SelectPoint.Type, SelectPoint);
             }
         }
         private void OnMakeLine(Event e)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var lineType = pointPair.IsSomeEnter && !pointPair.IsNormal ? e.GetStopStyle() : e.GetSimpleStyle();
+            var lineType = pointPair.IsStopLine ? e.GetStopStyle() : pointPair.IsCrosswalk ? e.GetCrosswalkStyle() : e.GetSimpleStyle();
             var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
             Panel.EditLine(newLine);
             SelectPoint = null;

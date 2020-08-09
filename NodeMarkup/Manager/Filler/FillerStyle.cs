@@ -426,8 +426,8 @@ namespace NodeMarkup.Manager
             var dirRight = middleDir.TurnRad(halfAngelRad, true);
             var dirLeft = middleDir.TurnRad(halfAngelRad, false);
 
-            GetRail(dirRight.Angle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
-            GetRail(dirLeft.Angle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
+            GetRail(dirRight.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
+            GetRail(dirLeft.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
 
             var t = 0f;
             t = Mathf.Max(t, GetT(rightRail.a, dirRight));

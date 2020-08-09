@@ -28,6 +28,10 @@ namespace NodeMarkup.Manager
     {
         bool Invert { get; set; }
     }
+    public interface IParallel : ILineStyle
+    {
+        bool Parallel { get; set; }
+    }
 
     public abstract class LineStyle : Style, ILineStyle
     {
@@ -45,34 +49,6 @@ namespace NodeMarkup.Manager
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
-        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            dashLengthProperty.Text = Localize.LineEditor_DashedLength;
-            dashLengthProperty.UseWheel = true;
-            dashLengthProperty.WheelStep = 0.1f;
-            dashLengthProperty.CheckMin = true;
-            dashLengthProperty.MinValue = 0.1f;
-            dashLengthProperty.Init();
-            dashLengthProperty.Value = dashedStyle.DashLength;
-            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength = value;
-            AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
-            return dashLengthProperty;
-        }
-        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
-            spaceLengthProperty.UseWheel = true;
-            spaceLengthProperty.WheelStep = 0.1f;
-            spaceLengthProperty.CheckMin = true;
-            spaceLengthProperty.MinValue = 0.1f;
-            spaceLengthProperty.Init();
-            spaceLengthProperty.Value = dashedStyle.SpaceLength;
-            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength = value;
-            AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
-            return spaceLengthProperty;
-        }
         protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
@@ -181,7 +157,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset);
             }
         }
-        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset)
+        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float? angle = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -189,7 +165,10 @@ namespace NodeMarkup.Manager
             startPosition += startOffset;
             endPosition += endOffset;
 
-            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, Width, Color);
+            if (angle == null)
+                return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, Width, Color);
+            else
+                return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, Width, Color);
         }
 
         protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, float offset)
@@ -287,8 +266,13 @@ namespace NodeMarkup.Manager
     }
     public abstract class CrosswalkStyle : LineStyle
     {
+        public static float DefaultCrosswalkWidth { get; } = 2f;
+        public static float DefaultCrosswalkDashLength { get; } = 0.4f;
+        public static float DefaultCrosswalkSpaceLength { get; } = 0.6f;
+
         static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
+            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) }
         };
 
         public static LineStyle GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
@@ -296,11 +280,21 @@ namespace NodeMarkup.Manager
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
         public override LineStyle CopyLineStyle() => CopyCrosswalkStyle();
-        public abstract StopLineStyle CopyCrosswalkStyle();
+        public abstract CrosswalkStyle CopyCrosswalkStyle();
+
+        protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
+        {
+            var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
+            parallelProperty.Text = Localize.LineEditor_CenterSolid;
+            parallelProperty.Init();
+            parallelProperty.Value = parallelStyle.Parallel;
+            parallelProperty.OnValueChanged += (bool value) => parallelStyle.Parallel = value;
+            return parallelProperty;
+        }
 
         public enum CrosswalkType
         {
-            Dashed = StyleType.CrosswalkDashed,
+            Zebra = StyleType.CrosswalkZebra,
 
             DoubleSolid = StyleType.CrosswalkDoubleSolid,
 

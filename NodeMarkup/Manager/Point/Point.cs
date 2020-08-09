@@ -13,11 +13,12 @@ namespace NodeMarkup.Manager
     public abstract class MarkupPoint : IToXml, IFromXml
     {
         public event Action<MarkupPoint> OnUpdate;
-        static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type << 24);
+        static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
         static ushort GetEnter(int id) => (ushort)id;
         static byte GetNum(int id) => (byte)(id >> 16);
-        static PointType GetType(int id) => (PointType)(id >> 24);
+        static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
         public static string XmlName { get; } = "P";
+
         public static bool FromId(int id, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPoint point)
         {
             point = null;
@@ -119,9 +120,9 @@ namespace NodeMarkup.Manager
 
         public enum PointType
         {
-            Enter = 0,
-            Crosswalk = 1,
-            Normal = 2,
+            Enter = 1,
+            Crosswalk = 2,
+            Normal = 4,
         }
         public enum LocationType
         {
@@ -228,7 +229,9 @@ namespace NodeMarkup.Manager
         public MarkupPoint First { get; }
         public MarkupPoint Second { get; }
         public bool IsSomeEnter => First.Enter == Second.Enter;
+        public bool IsStopLine => IsSomeEnter && First.Type == MarkupPoint.PointType.Enter && Second.Type == MarkupPoint.PointType.Enter;
         public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;
+        public bool IsCrosswalk => First.Type == MarkupPoint.PointType.Crosswalk && Second.Type == MarkupPoint.PointType.Crosswalk;
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {

@@ -166,6 +166,34 @@ namespace NodeMarkup.Manager
 
             return widthProperty;
         }
+        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            dashLengthProperty.Text = Localize.LineEditor_DashedLength;
+            dashLengthProperty.UseWheel = true;
+            dashLengthProperty.WheelStep = 0.1f;
+            dashLengthProperty.CheckMin = true;
+            dashLengthProperty.MinValue = 0.1f;
+            dashLengthProperty.Init();
+            dashLengthProperty.Value = dashedStyle.DashLength;
+            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength = value;
+            AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
+            return dashLengthProperty;
+        }
+        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
+            spaceLengthProperty.UseWheel = true;
+            spaceLengthProperty.WheelStep = 0.1f;
+            spaceLengthProperty.CheckMin = true;
+            spaceLengthProperty.MinValue = 0.1f;
+            spaceLengthProperty.Init();
+            spaceLengthProperty.Value = dashedStyle.SpaceLength;
+            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength = value;
+            AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
+            return spaceLengthProperty;
+        }
         protected static void AddOnHoverLeave<T>(FieldPropertyPanel<T> fieldPanel, Action onHover, Action onLeave)
         {
             if (onHover != null)
@@ -230,7 +258,7 @@ namespace NodeMarkup.Manager
 
             Crosswalk = Markup.Item.Crosswalk,
 
-            CrosswalkDashed,
+            CrosswalkZebra,
             CrosswalkDoubleSolid,
             CrosswalkDoubleDashed,
 
@@ -245,14 +273,15 @@ namespace NodeMarkup.Manager
         public float Width { get; set; }
         public Color Color { get; set; }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color)
+        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color)
         {
             Position = (start + end) / 2;
-            Angle = dir.Angle();
+            Angle = angle;
             Length = length;
             Width = width;
             Color = color;
         }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color) : this(start, end, dir.AbsoluteAngle(), length, width, color) { }
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color) : this(start, end, dir, (end - start).magnitude, width, color) { }
     }
     public class StyleTemplate : IToXml

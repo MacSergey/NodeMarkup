@@ -178,7 +178,7 @@ namespace NodeMarkup.Utils
             }
         }
         public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
-        public static float Angle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
+        public static float AbsoluteAngle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 
@@ -192,6 +192,7 @@ namespace NodeMarkup.Utils
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) : 
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleDashed : Style.StyleType.LineDashed);
         public static Style.StyleType GetStopStyle(this Event e) => NodeMarkupTool.ShiftIsPressed ? Style.StyleType.StopLineDashed : Style.StyleType.StopLineSolid;
+        public static Style.StyleType GetCrosswalkStyle(this Event e) => Style.StyleType.CrosswalkZebra;
     }
 
     public struct BezierPoint
