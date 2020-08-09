@@ -417,7 +417,7 @@ namespace NodeMarkup
 
             Line2.Intersect(point.Position.XZ(), (point.Position + point.Enter.CornerDir).XZ(), MouseWorldPosition.XZ(), (MouseWorldPosition + normal).XZ(), out float offsetChange, out _);
 
-            point.Offset = (point.Offset + offsetChange * Mathf.Sin(point.Enter.CornerDeltaAngle)).RoundToNearest(0.01f);
+            point.Offset = (point.Offset + offsetChange * Mathf.Sin(point.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
         }
         private void ProcessShortcuts(Event e)
         {

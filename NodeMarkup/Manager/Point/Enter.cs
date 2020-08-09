@@ -20,6 +20,8 @@ namespace NodeMarkup.Manager
         public bool IsLaneInvert { get; private set; }
         public float RoadHalfWidth { get; private set; }
         public Vector3? Position { get; private set; } = null;
+        public Vector3 LeftSide { get; set; }
+        public Vector3 RightSide { get; set; }
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
@@ -29,10 +31,10 @@ namespace NodeMarkup.Manager
 
         public byte PointNum => ++_pointNum;
 
-        public float CornerAngle { get; private set; }
-        public float CornerDeltaAngle { get; private set; }
+        public float AbsoluteAngle { get; private set; }
+        public float CornerAndNormalAngle { get; private set; }
         public Vector3 CornerDir { get; private set; }
-        public Vector3 CornerNormal { get; private set; }
+        public Vector3 NormalDir { get; private set; }
 
         public Enter Next => Markup.GetNextEnter(this);
         public Enter Prev => Markup.GetPrevEnter(this);
@@ -58,6 +60,7 @@ namespace NodeMarkup.Manager
 
             Init();
             Update();
+            UpdatePoints();
 
             var points = Lines.SelectMany(l => l.GetMarkupPoints()).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
@@ -126,7 +129,9 @@ namespace NodeMarkup.Manager
 
             CalculateCorner(segment);
             CalculatePosition(segment);
-
+        }
+        public void UpdatePoints()
+        {
             foreach (var point in EnterPointsDic.Values)
                 point.Update();
             foreach (var point in CrosswalkPointsDic.Values)
@@ -139,10 +144,11 @@ namespace NodeMarkup.Manager
             var cornerAngle = (IsStartSide ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd) / 255f * 360f;
             if (IsLaneInvert)
                 cornerAngle = cornerAngle >= 180 ? cornerAngle - 180 : cornerAngle + 180;
-            CornerAngle = cornerAngle * Mathf.Deg2Rad;
-            CornerDir = Vector3.right.TurnRad(CornerAngle, false).normalized;
-            CornerNormal = CornerDir.Turn90(true);
-            CornerDeltaAngle = DriveLanes.Average(d => Vector3.Angle(d.NetLane.CalculateDirection(T), CornerDir) * Mathf.Deg2Rad);
+            AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
+            CornerDir = Vector3.right.TurnRad(AbsoluteAngle, false).normalized;
+            NormalDir = DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized;
+            NormalDir = IsStartSide ? -NormalDir : NormalDir;
+            CornerAndNormalAngle = Vector3.Angle(NormalDir, CornerDir) * Mathf.Deg2Rad;
         }
         private void CalculatePosition(NetSegment segment)
         {
@@ -151,10 +157,13 @@ namespace NodeMarkup.Manager
             if (DriveLanes.FirstOrDefault() is DriveLane driveLane)
             {
                 var position = driveLane.NetLane.CalculatePosition(T);
-                var coef = Mathf.Sin(CornerDeltaAngle);
+                var coef = Mathf.Sin(CornerAndNormalAngle);
+
+                RoadHalfWidth = (segment.Info.m_halfWidth - segment.Info.m_pavementWidth) / coef;
 
                 Position = position + (IsLaneInvert ? -CornerDir : CornerDir) * driveLane.Position / coef;
-                RoadHalfWidth = segment.Info.m_halfWidth / coef;
+                RightSide = Position.Value - RoadHalfWidth * CornerDir;
+                LeftSide = Position.Value + RoadHalfWidth * CornerDir;
             }
             else
                 Position = null;
@@ -240,7 +249,7 @@ namespace NodeMarkup.Manager
             direction = ((rightDir + leftDir) / (Enter.IsStartSide ? -2 : 2)).normalized;
 
             var part = (RightLane.HalfWidth + HalfSideDelta) / CenterDelte;
-            position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Mathf.Sin(Enter.CornerDeltaAngle));
+            position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Mathf.Sin(Enter.CornerAndNormalAngle));
         }
         void GetEdgePosition(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
@@ -260,7 +269,7 @@ namespace NodeMarkup.Manager
             }
             direction = (Enter.IsStartSide ? -direction : direction).normalized;
 
-            var shift = (lineShift + offset) / Mathf.Sin(Enter.CornerDeltaAngle);
+            var shift = (lineShift + offset) / Mathf.Sin(Enter.CornerAndNormalAngle);
 
             position += Enter.CornerDir * shift;
         }

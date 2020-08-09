@@ -38,7 +38,6 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         private Vector4 Index { get; }
         public float Height { get; private set; }
-        public float HalfWidth { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
@@ -87,7 +86,7 @@ namespace NodeMarkup.Manager
 
             var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
-            newEnters.Sort((e1, e2) => e1.CornerAngle.CompareTo(e2.CornerAngle));
+            newEnters.Sort((e1, e2) => e1.AbsoluteAngle.CompareTo(e2.AbsoluteAngle));
 
             if (delete.Length == 1 && add.Length == 1 && oldEnters.Find(e => e.Id == delete[0]).PointCount == newEnters.Find(e => e.Id == add[0]).PointCount)
             {
@@ -106,8 +105,8 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in EntersList)
                 enter.Update();
-
-            HalfWidth = EntersList.Max(e => e.RoadHalfWidth);
+            foreach (var enter in EntersList)
+                enter.UpdatePoints();
         }
         private void UpdateLines()
         {
