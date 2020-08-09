@@ -32,6 +32,7 @@ namespace NodeMarkup.Manager
         public float CornerAngle { get; private set; }
         public float CornerDeltaAngle { get; private set; }
         public Vector3 CornerDir { get; private set; }
+        public Vector3 CornerNormal { get; private set; }
 
         public Enter Next => Markup.GetNextEnter(this);
         public Enter Prev => Markup.GetPrevEnter(this);
@@ -140,6 +141,7 @@ namespace NodeMarkup.Manager
                 cornerAngle = cornerAngle >= 180 ? cornerAngle - 180 : cornerAngle + 180;
             CornerAngle = cornerAngle * Mathf.Deg2Rad;
             CornerDir = Vector3.right.TurnRad(CornerAngle, false).normalized;
+            CornerNormal = CornerDir.Turn90(true);
             CornerDeltaAngle = DriveLanes.Average(d => Vector3.Angle(d.NetLane.CalculateDirection(T), CornerDir) * Mathf.Deg2Rad);
         }
         private void CalculatePosition(NetSegment segment)

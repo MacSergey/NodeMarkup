@@ -32,6 +32,7 @@ namespace NodeMarkup
         public static float MouseRayLength { get; private set; }
         public static bool MouseRayValid { get; private set; }
         public static Vector3 MousePosition { get; private set; }
+        public static Vector3 MouseWorldPosition { get; private set; }
 
         Markup EditMarkup { get; set; }
 
@@ -193,6 +194,9 @@ namespace NodeMarkup
             MouseRay = Camera.main.ScreenPointToRay(MousePosition);
             MouseRayLength = Camera.main.farClipPlane;
             MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
+            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
+            RayCast(input, out RaycastOutput output);
+            MouseWorldPosition = output.m_hitPos;
 
             switch (ToolMode)
             {
@@ -241,13 +245,23 @@ namespace NodeMarkup
         {
             if (MouseRayValid)
             {
-                foreach(var point in TargetPoints)
+                foreach (var point in TargetPoints)
                 {
                     if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
                     {
                         HoverPoint = point;
                         return;
                     }
+                }
+            }
+
+            if (IsSelectPoint)
+            {
+                var connectLine = MouseWorldPosition - SelectPoint.Position;
+                if (connectLine.magnitude >= 5 && Vector3.Angle(SelectPoint.Direction, connectLine) <= 3 && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                {
+                        HoverPoint = normalPoint;
+                        return;
                 }
             }
 
@@ -399,12 +413,9 @@ namespace NodeMarkup
         }
         private void OnPointDrag(MarkupPoint point)
         {
-            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
-            RayCast(input, out RaycastOutput output);
-
             var normal = point.Enter.CornerDir.Turn90(true);
 
-            Line2.Intersect(point.Position.XZ(), (point.Position + point.Enter.CornerDir).XZ(), output.m_hitPos.XZ(), (output.m_hitPos + normal).XZ(), out float offsetChange, out _);
+            Line2.Intersect(point.Position.XZ(), (point.Position + point.Enter.CornerDir).XZ(), MouseWorldPosition.XZ(), (MouseWorldPosition + normal).XZ(), out float offsetChange, out _);
 
             point.Offset = (point.Offset + offsetChange * Mathf.Sin(point.Enter.CornerDeltaAngle)).RoundToNearest(0.01f);
         }
@@ -489,10 +500,7 @@ namespace NodeMarkup
             else
             {
                 SelectPoint = HoverPoint;
-
                 SetTarget(SelectPoint);
-                if (SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
-                    TargetPoints.Add(normalPoint);
             }
         }
         private void OnMakeLine(Event e)
@@ -648,13 +656,13 @@ namespace NodeMarkup
             if (IsHoverNode)
             {
                 var node = Utilities.GetNode(HoverNodeId);
-                RenderManager.OverlayEffect.DrawCircle(cameraInfo, HoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f), -1f, 1280f, false, true);
+                RenderCircle(cameraInfo, HoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
         }
         private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
         {
-            if (IsHoverPoint)
-                RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f, -1f, 1280f, false, true);
+            if (IsHoverPoint && HoverPoint.Type != MarkupPoint.PointType.Normal)
+                RenderCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
             RenderConnectLineOverlay(cameraInfo);
@@ -672,7 +680,7 @@ namespace NodeMarkup
         }
         private void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            foreach(var point in TargetPoints)
+            foreach (var point in TargetPoints)
                 RenderPointOverlay(cameraInfo, point);
         }
         private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
@@ -687,49 +695,95 @@ namespace NodeMarkup
             };
             NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
 
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
+            RenderBezier(cameraInfo, Color.white, bezier, 2f);
         }
-        private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point)
-        {
-            RenderManager.OverlayEffect.DrawCircle(cameraInfo, point.Color, point.Position, 1f, -1f, 1280f, false, true);
-        }
+        private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderCircle(cameraInfo, point.Color, point.Position, 1f);
         private void RenderConnectLineOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (!IsSelectPoint)
                 return;
 
-            var bezier = new Bezier3();
-            Color color;
-
-            if (IsHoverPoint)
+            switch (IsHoverPoint)
             {
-                var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-                color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.green;
-
-                bezier.a = SelectPoint.Position;
-                bezier.b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.Position - SelectPoint.Position : SelectPoint.Direction;
-                bezier.c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.Position - HoverPoint.Position : HoverPoint.Direction;
-                bezier.d = HoverPoint.Position;
+                case true when HoverPoint.Type != MarkupPoint.PointType.Normal:
+                    RenderRegularConnectLine(cameraInfo);
+                    break;
+                case true:
+                    RenderNormalConnectLine(cameraInfo);
+                    break;
+                case false:
+                    RenderNotConnectLine(cameraInfo);
+                    break;
             }
-            else
+        }
+        private void RenderRegularConnectLine(RenderManager.CameraInfo cameraInfo)
+        {
+            var bezier = new Bezier3()
             {
-                color = Color.white;
+                a = SelectPoint.Position,
+                b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.Position - SelectPoint.Position : SelectPoint.Direction,
+                c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.Position - HoverPoint.Position : HoverPoint.Direction,
+                d = HoverPoint.Position,
+            };
 
-                RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
-                RayCast(input, out RaycastOutput output);
-
-                bezier.a = SelectPoint.Position;
-                bezier.b = SelectPoint.Direction;
-                bezier.c = SelectPoint.Direction.Turn90(true);
-                bezier.d = output.m_hitPos;
-
-                Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
-                bezier.c = v >= 0 ? bezier.c : -bezier.c;
-            }
+            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+            var color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+            RenderBezier(cameraInfo, color, bezier);
         }
+        private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
+        {
+            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+            var color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.green;
+
+            var length = (MouseWorldPosition - SelectPoint.Position).magnitude;
+            var lineBezier = new Bezier3()
+            {
+                a = SelectPoint.Position,
+                d = SelectPoint.Position + SelectPoint.Direction * length,
+            };
+            lineBezier.b = lineBezier.d;
+            lineBezier.c = lineBezier.a;
+            RenderBezier(cameraInfo, color, lineBezier);
+
+            var normal = SelectPoint.Direction.Turn90(false);
+            var p1Bezier = new Bezier3()
+            {
+                a = SelectPoint.Position + normal * 2,
+                d = SelectPoint.Position + normal * 2 + SelectPoint.Direction * 2
+            };
+            p1Bezier.b = p1Bezier.d;
+            p1Bezier.c = p1Bezier.a;
+            RenderBezier(cameraInfo, color, p1Bezier, 0.2f);
+
+            var p2Bezier = new Bezier3()
+            {
+                a = SelectPoint.Position + SelectPoint.Direction * 2,
+                d = SelectPoint.Position + normal * 2 + SelectPoint.Direction * 2
+            };
+            p2Bezier.b = p2Bezier.d;
+            p2Bezier.c = p2Bezier.a;
+            RenderBezier(cameraInfo, color, p2Bezier, 0.2f);
+        }
+        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
+        {
+            var bezier = new Bezier3()
+            {
+                a = SelectPoint.Position,
+                b = SelectPoint.Direction,
+                c = SelectPoint.Direction.Turn90(true),
+                d = MouseWorldPosition,
+            };
+
+            Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
+            bezier.c = v >= 0 ? bezier.c : -bezier.c;
+
+            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+            RenderBezier(cameraInfo, Color.white, bezier);
+        }
+
+
         private void RenderPanelActionMode(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
         private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
         {
@@ -742,20 +796,18 @@ namespace NodeMarkup
             RenderFillerBounds(cameraInfo);
             RenderFillerConnectLine(cameraInfo);
             if (IsHoverFillerPoint)
-                RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverFillerPoint.Position, 1f, -1f, 1280f, false, true);
+                RenderCircle(cameraInfo, Color.white, HoverFillerPoint.Position, 1f);
         }
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
             var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? Color.green : Color.white;
             foreach (var trajectory in TempFiller.Trajectories)
-                RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+                RenderBezier(cameraInfo, color, trajectory);
         }
         private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var supportPoint in FillerPoints)
-            {
-                RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.red, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
-            }
+                RenderCircle(cameraInfo, Color.red, supportPoint.Position, 0.5f);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -775,19 +827,21 @@ namespace NodeMarkup
             }
             else
             {
-                RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
-                RayCast(input, out RaycastOutput output);
-
                 bezier.a = TempFiller.Last.Position;
-                bezier.b = output.m_hitPos;
+                bezier.b = MouseWorldPosition;
                 bezier.c = TempFiller.Last.Position;
-                bezier.d = output.m_hitPos;
+                bezier.d = MouseWorldPosition;
 
                 color = Color.white;
             }
 
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+            RenderBezier(cameraInfo, color, bezier);
         }
+
+        private void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.5f) =>
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, 0f, 0f, -1f, 1280f, false, true);
+        private void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width) =>
+            RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, true);
 
         #endregion
 
