@@ -509,58 +509,158 @@ Para crear un relleno, mantenga presionada la tecla Alt o presione {0}.</value>
     <value>La lista de plantillas está vacía.
 Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Activar con clave</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Activación fallida</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Activación finalizada con éxito</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Esta función no está disponible</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>La función «{0}» actualmente solo está disponible para el acceso anticipado de Patreons.
+Estará disponible para todos más tarde.
+Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod a la misma velocidad.</value>
+  </data>
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Estilo de Cebreado</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Copiar estilo</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Pegar estilo</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Líneas perpendiculares</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Obtener acceso anticipado</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Su ID de acceso</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Clave de acceso</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Activar</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Activación del acceso anticipado</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Para activar el acceso anticipado, debe ingresar una clave</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Anular</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>La clave que ha introducido no es válida</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Procesando la vinculación...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Vincular la cuenta de Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Vincular la cuenta de Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>La cuenta de Patreon no se puede vincular porque denegó la solicitud de acceso.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Se ha producido un error al vincular la cuenta, inténtelo de nuevo.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Su cuenta está vinculada, pero no tiene acceso anticipado.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Puede cerrar esta página y volver al juego.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Anular</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Estado: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>No activado</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Gracias por su apoyo, ahora puede disfrutar de todas las funciones.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Acceso anticipado</value>
+  </data>
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Continua centrada</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Acepto</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Aviso de versión BETA</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Obtener la versión estable</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Está utilizando la versión BETA de {0}. Es para probar nuevas funciones y puede contener errores que romperán o eliminarán sus marcas. Si se suscribió por error, cambie a la versión estable.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Idioma del Juego</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Checo</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Alemán</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Español</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Finés</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Francés</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italiano</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japonés</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Holandés</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polaco</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portugués</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Ruso</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Chino Simplificado</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
 </root>

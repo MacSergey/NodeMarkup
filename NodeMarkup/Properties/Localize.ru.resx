@@ -587,7 +587,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Введенный ключ не действителен</value>
   </data>
   <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Привязка в процессе...</value>
+    <value>Прикрепление в процессе...</value>
   </data>
   <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
     <value>Прикрепить аккаунт Patreon</value>
@@ -602,7 +602,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Во время прикрепления произошла ошибка, попробуйте снова.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Ваш аккаунт привязан, но вы не оформили ранней доступ.</value>
+    <value>Ваш аккаунт прикреплен, но вы не оформили ранней доступ.</value>
   </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
     <value>Вы можете закрыть эту страницу и вернуться в игру.</value>
@@ -639,6 +639,8 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Вы используете BETA версию {0}. Она предназначена для тестирования новых функций и может содержать ошибки которые приведут к поломке или удалению вашей разметки. Если вы подписались по ошибки, то перейдите на стабильную версию.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Язык игры</value>
