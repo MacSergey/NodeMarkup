@@ -54,6 +54,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class RegularStylePropertyPanel : StylePropertyPanel<RegularLineStyle.RegularLineType> { }
     public class StopStylePropertyPanel : StylePropertyPanel<StopLineStyle.StopLineType> { }
+    public class CrosswalkPropertyPanel : StylePropertyPanel<CrosswalkStyle.CrosswalkType> { }
     public class FillerStylePropertyPanel : StylePropertyPanel<FillerStyle.FillerType> { }
 
 

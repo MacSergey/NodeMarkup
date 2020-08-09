@@ -294,11 +294,12 @@ namespace NodeMarkup.Manager
 
         public enum CrosswalkType
         {
+            [Description(nameof(Localize.CrosswalkStyle_Zebra))]
             Zebra = StyleType.CrosswalkZebra,
 
-            DoubleSolid = StyleType.CrosswalkDoubleSolid,
+            //DoubleSolid = StyleType.CrosswalkDoubleSolid,
 
-            DoubleDashed = StyleType.CrosswalkDoubleDashed,
+            //DoubleDashed = StyleType.CrosswalkDoubleDashed,
         }
     }
 }

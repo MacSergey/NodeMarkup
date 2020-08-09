@@ -61,6 +61,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Zebra.
+        /// </summary>
+        public static string CrosswalkStyle_Zebra {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_Zebra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Activate with key.
         /// </summary>
         public static string EarlyAccess_ActivateButton {

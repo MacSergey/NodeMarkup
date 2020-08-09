@@ -707,4 +707,7 @@ By registering early access, you will support the ability to develop this mod at
   <data name="LineEditor_Parallel" xml:space="preserve">
     <value>Parallel to lanes</value>
   </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
 </root>
