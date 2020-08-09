@@ -145,7 +145,10 @@ namespace NodeMarkup.Manager
             if (IsLaneInvert)
                 cornerAngle = cornerAngle >= 180 ? cornerAngle - 180 : cornerAngle + 180;
             AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
-            CornerDir = Vector3.right.TurnRad(AbsoluteAngle, false).normalized;
+
+            CornerDir = DriveLanes.Length <= 1 ? 
+                Vector3.right.TurnRad(AbsoluteAngle, false).normalized : 
+                (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
             NormalDir = DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized;
             NormalDir = IsStartSide ? -NormalDir : NormalDir;
             CornerAndNormalAngle = Vector3.Angle(NormalDir, CornerDir) * Mathf.Deg2Rad;

@@ -168,19 +168,18 @@ namespace NodeMarkup.Manager
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;
-            Update();
         }
 
         private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
 
         public override void UpdateProcess()
         {
-            var t = 1000f;
-            foreach(var enter in Markup.Enters.Where(e => e != Enter))
+            var ts = new HashSet<float>();
+            foreach(var enter in Markup.Enters)
             {
-                if (Line2.Intersect(enter.LeftSide.XZ(), enter.RightSide.XZ(), SourcePoint.Position.XZ(), (SourcePoint.Position + SourcePoint.Direction).XZ(), out float u, out float v) 
-                    && 0 <= u && u <= 1 && v < t)
-                    t = v;
+                if (Line2.Intersect(enter.LeftSide.XZ(), enter.RightSide.XZ(), SourcePoint.Position.XZ(), (SourcePoint.Position + SourcePoint.Direction).XZ(), out float u, out float v)
+                    && 0 <= u && u <= 1)
+                    ts.Add(v);
             }
             foreach(var prev in Markup.Enters)
             {
@@ -193,11 +192,10 @@ namespace NodeMarkup.Manager
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
                 var intersects = MarkupFillerIntersect.Intersect(betweenBezier, SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction);
                 foreach(var intersect in intersects)
-                {
-                    if (intersect.FirstT < t)
-                        t = intersect.FirstT;
-                }
+                    ts.Add(intersect.FirstT);
             }
+
+            var t = ts.Count == 0 ? 0 : ts.Count == 1 ? ts.First() : ts.OrderBy(i => i).Skip(1).First();
 
             Position = SourcePoint.Position + SourcePoint.Direction * t;
             Direction = -SourcePoint.Direction;
