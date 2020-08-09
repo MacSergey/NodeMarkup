@@ -1575,6 +1575,17 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to create a perpendicular line
+        ///+Shift - Solid
+        ///+Ctrl - Double.
+        /// </summary>
+        public static string Tool_InfoCreateNormalLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoCreateNormalLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to create a stop line.
         /// </summary>
         public static string Tool_InfoCreateStopLine {
@@ -1589,6 +1600,15 @@ namespace NodeMarkup {
         public static string Tool_InfoDeleteLine {
             get {
                 return ResourceManager.GetString("Tool_InfoDeleteLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to delete the perpendicular line.
+        /// </summary>
+        public static string Tool_InfoDeleteNormalLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoDeleteNormalLine", resourceCulture);
             }
         }
         

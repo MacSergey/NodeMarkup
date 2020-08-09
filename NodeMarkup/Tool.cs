@@ -260,8 +260,8 @@ namespace NodeMarkup
                 var connectLine = MouseWorldPosition - SelectPoint.Position;
                 if (connectLine.magnitude >= 5 && Vector3.Angle(SelectPoint.Direction, connectLine) <= 3 && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
                 {
-                        HoverPoint = normalPoint;
-                        return;
+                    HoverPoint = normalPoint;
+                    return;
                 }
             }
 
@@ -306,9 +306,9 @@ namespace NodeMarkup
                     var markup = MarkupManager.Get(SelectNodeId);
                     var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                     if (markup.ExistConnection(pointPair))
-                        ShowToolInfo(pointPair.IsSomeEnter ? Localize.Tool_InfoDeleteStopLine : Localize.Tool_InfoDeleteLine, position);
+                        ShowToolInfo(pointPair.IsSomeEnter ? (pointPair.IsNormal ? Localize.Tool_InfoDeleteNormalLine : Localize.Tool_InfoDeleteStopLine) : Localize.Tool_InfoDeleteLine, position);
                     else
-                        ShowToolInfo(pointPair.IsSomeEnter ? Localize.Tool_InfoCreateStopLine : Localize.Tool_InfoCreateLine, position);
+                        ShowToolInfo(pointPair.IsSomeEnter ? (pointPair.IsNormal ? Localize.Tool_InfoCreateNormalLine : Localize.Tool_InfoCreateStopLine) : Localize.Tool_InfoCreateLine, position);
                     break;
                 case Mode.ConnectLine when IsSelectPoint:
                     ShowToolInfo(Localize.Tool_InfoSelectEndPoint, position);
@@ -735,16 +735,15 @@ namespace NodeMarkup
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.green;
+            var color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.blue;
 
-            var length = (MouseWorldPosition - SelectPoint.Position).magnitude;
             var lineBezier = new Bezier3()
             {
                 a = SelectPoint.Position,
-                d = SelectPoint.Position + SelectPoint.Direction * length,
+                b = HoverPoint.Position,
+                c = SelectPoint.Position,
+                d = HoverPoint.Position,
             };
-            lineBezier.b = lineBezier.d;
-            lineBezier.c = lineBezier.a;
             RenderBezier(cameraInfo, color, lineBezier);
 
             var normal = SelectPoint.Direction.Turn90(false);
