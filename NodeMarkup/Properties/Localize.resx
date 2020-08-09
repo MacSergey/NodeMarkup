@@ -648,8 +648,6 @@ By registering early access, you will support the ability to develop this mod at
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>You are using the BETA version of {0}. It is for testing new features and may contain errors that will break or delete your markings. If you subscribed to it by mistake, then switch to the stable version.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Game Language</value>

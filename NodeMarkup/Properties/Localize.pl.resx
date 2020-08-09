@@ -615,8 +615,6 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Używasz {0} w wersji BETA. Została ona stworzona w celu testowania nowych funkcjonalności i może zawierać błędy lub skasować wcześniej zapisane wypełnienia. Jeśli została ona zasubskrybowana przypadkiem, przejdź na wersję stabilną.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Język gry</value>

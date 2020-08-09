@@ -485,7 +485,9 @@ nebo smazání čáry
   <data name="LineEditor_StylePaste" xml:space="preserve">
     <value>Vložit</value>
   </data>
-  
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Tvar</value>
+  </data>
   <data name="Filler_AngleBetween" xml:space="preserve">
     <value>Úhel mezi</value>
   </data>
@@ -507,62 +509,170 @@ Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
     <value>Nejsou vytvořeny žádné šablony.
 Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Aktivujte klávesou</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Aktivace selhala</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Aktivace úspěšná</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Tato funkce není dostupná</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>Funkce «{0}» je dostupná pouze pro Patreony balíčku early access.
+Funkce bude později přístupna všem.
+Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete vývojářům pokračovat stejnou rychlostí.</value>
+  </data>
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Styl výplně</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Kopírovat styl</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Vložit styl</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Kolmé čáry</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Získat early access</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Získat přístupové ID (Access ID)</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Přístupový klíč (Access key)</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Aktivovat</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Aktivace early access</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Pro aktivaci early access musíte vložit klíč</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Zrušit</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>Zadaný klíč není platný</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Příprava odkazu...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Propojení účtu Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Propojení účtu Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Účet Patreon nemohl být propojen, protože nebyl povolen přístup.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Při propojování účtu nastala chyba, zkuste to znovu.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Váš účet byl propojen, ale nemáte early access.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Můžete zavřít tuto stránku a vrátit se do hry.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Status: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Aktivní</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Neaktivní</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Děkujeme za podporu, nyní můžete využívat všechny funkce modu.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Early access</value>
+  </data>
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Prostřední plná</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Souhlasím</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>upozornění na BETA verzi</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Získat stabilní verzi</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Používáte BETA verzi {0}. Slouží k testování nových funkcí a může obsahovat chyby které mohou poškodit nebo smazat vaše značení. Pokud nemáte zájem být součástí BETA programu, přepněte na stabilní verzi.</value>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Jazyk hry</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Čeština</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Němčina</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Angličtina</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Španělština</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Finština</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Francouzština</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italština</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japonština</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Holandština</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polština</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portugalština</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Ruština</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Zjednodušená čínština</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Klikněte pro vytvoření kolmé čáry
++Shift - plná
++Ctrl - dvojitá</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Klikněte pro odstranění kolmé čáry</value>
+  </data>
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Souběžná s pruhy</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
 </root>

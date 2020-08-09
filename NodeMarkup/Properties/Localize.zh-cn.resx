@@ -615,8 +615,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>你在使用 {0} BETA版。此版本为测试新功能用，且可能含有会使标记破损或消失的BUG。如果是不小心订阅到了此版本，请订阅回稳定版。</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>游戏语言</value>

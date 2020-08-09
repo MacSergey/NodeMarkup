@@ -497,7 +497,15 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
+    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
+- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
+- Kopieren/Einfügen von Linien und Füllungs-Stilen.
+- Haltelinien verbessert.
+- Weiterführende (or­tho­go­nale) Linien hinzugefügt.
+- Verlinkung von Patreon-Accounts für Vorabzugriff.
+- Möglichkeit hinzugefügt, die Mod-Sprache unabhängig von der Spielsprache zu ändern.</value>
+  </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelte Haltelinie</value>
   </data>
@@ -640,8 +648,6 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Du verwendest die BETA Version von {0}. Diese ist zum Testen neuer Funktionen gedacht und kann Fehler beinhalten, die deine erstellten Markierungen verändern oder löschen könnten. Wenn du diese Version ungewollt abonniert haben solltest, wechsele zur stabilen Version.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Spiel-Sprache</value>
@@ -696,6 +702,10 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klicken, um die orthogonale Linie zu löschen</value>
   </data>
-  
-  
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Parallel zu Fahrspuren</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
 </root>
