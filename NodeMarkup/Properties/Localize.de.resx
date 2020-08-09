@@ -497,14 +497,7 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
-- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
-- Kopieren/Einfügen von Linien und Füllungs-Stilen.
-- Haltelinien verbessert.
-- Weiterführende (or­tho­go­nale) Linien hinzugefügt.
-- Verlinkung von Patreon-Accounts für Vorabzugriff.</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelte Haltelinie</value>
   </data>
@@ -695,4 +688,14 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Settings_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Klicken, um eine orthogonale Linie zu erstellen
++Shift - Durchgezogen
++Strg - Doppelt</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Klicken, um die orthogonale Linie zu löschen</value>
+  </data>
+  
+  
 </root>
