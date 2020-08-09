@@ -602,7 +602,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Acceso anticipado</value>
   </data>
   <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Continua centrada</value>
+    <value>Centrar línea continua</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Acepto</value>
@@ -663,4 +663,8 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="Settings_Language" xml:space="preserve">
     <value>Idioma</value>
   </data>
+  
+  
+  
+  
 </root>

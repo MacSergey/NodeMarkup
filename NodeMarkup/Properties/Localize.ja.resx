@@ -188,7 +188,7 @@
     <value>交差点・ノード内 {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>交点・接点 {0}</value>
+    <value>端点・原点 {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
     <value>破線</value>
@@ -406,7 +406,7 @@ Altキー押下で塗り潰しを開始</value>
     <value>クリックして停止線の追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗り潰し一覧</value>
+    <value>塗り潰しの一覧</value>
   </data>
   <data name="FillerEditor_ItemDescription" xml:space="preserve">
     <value>塗り潰し</value>
@@ -528,7 +528,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
 早期アクセスに登録することで、いち早く新機能の利用とMODの開発をサポートします。</value>
   </data>
   <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>V字のスタイル</value>
+    <value>V字の塗り潰し</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>スタイルのコピー</value>
@@ -667,4 +667,14 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Settings_Language" xml:space="preserve">
     <value>言語設定</value>
   </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>クリックして垂直線の追加
++Shift - 実線
++Ctrl - 2重線</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>クリックして垂直線を削除</value>
+  </data>
+  
+  
 </root>

@@ -519,25 +519,55 @@ Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
     <value>A lista de modelos está vazia.
 Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value>
   </data>
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Activar com chave</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Activação falhada</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Ativação bem-sucedida</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Esta funcionalidade está indisponível</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Estilo Chevron</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Copiar estilo</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Colar estilo</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Linhas perpendiculares</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Obtenha acesso antecipado</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>O seu ID de acesso</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Chave de acesso</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Activar</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Activação de acesso antecipado</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Para activar acesso antecipado necessita de preencher com uma chave</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>A chave que usou não é válida</value>
+  </data>
   <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
     <value>Conexão em curso...</value>
   </data>
@@ -547,42 +577,104 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
   <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
     <value>Conectar Patreon</value>
   </data>
-  
-  
-  
-  
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>A conta do Patreon não pode ser conectada porque você recusou o acesso.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Ocorreu um erro ao conectar a conta, tente novamente.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>A sua conta está conectada mas você não tem acesso antecipado.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Pode fechar esta página e voltar ao jogo.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Estado: {0}</value>
+  </data>
   <data name="EarlyAccess_StatusActivated" xml:space="preserve">
     <value>Ativado</value>
   </data>
   <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
     <value>Não activado</value>
   </data>
-  
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Obrigado pelo seu apoio, agora pode usufruir de todas as funcionalidades.</value>
+  </data>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Acesso antecipado</value>
   </data>
   
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Concordo</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Aviso de versão BETA</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Usar versão estável</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Língua do jogo</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Checo</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Alemão</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglês</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Espanhol</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Finlandês</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Francês</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italiano</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japonês</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Holandês</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polaco</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Português</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Russo</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Chinês (Simplificado)</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Linguagem</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Clique para criar uma linha perpendicular
++ Shift - Solid
++ Ctrl - Double</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Clique para remover linha perpendicular</value>
+  </data>
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Paralelo as vias</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
 </root>
