@@ -878,7 +878,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You are using the BETA version of {0}. It is for testing new features and may contain errors that will break or delete your marking. If you subscribed to it by mistake, then switch to the stable version..
+        ///   Ищет локализованную строку, похожую на You are using the BETA version of {0}. It is for testing new features and may contain errors that will break or delete your markings. If you subscribed to it by mistake, then switch to the stable version..
         /// </summary>
         public static string Mod_BetaWarningMessage {
             get {
