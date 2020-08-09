@@ -40,7 +40,7 @@ namespace NodeMarkup.Manager
         public float Height { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, MarkupLineIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLineIntersect>(MarkupLinePair.Comparer);
+        Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
 
         public bool NeedRecalculateBatches { get; set; }
@@ -49,7 +49,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
-        public IEnumerable<MarkupLineIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+        public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
 
         #endregion
 
@@ -242,8 +242,8 @@ namespace NodeMarkup.Manager
         public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupLineIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
-        public IEnumerable<MarkupLineIntersect> GetIntersects(MarkupLine line)
+        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
+        public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkupLine line)
         {
             foreach(var otherLine in Lines)
             {
@@ -252,17 +252,17 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public MarkupLineIntersect GetIntersect(MarkupLinePair linePair)
+        public MarkupLinesIntersect GetIntersect(MarkupLinePair linePair)
         {
-            if (!LineIntersects.TryGetValue(linePair, out MarkupLineIntersect intersect))
+            if (!LineIntersects.TryGetValue(linePair, out MarkupLinesIntersect intersect))
             {
-                MarkupLineIntersect.Calculate(linePair, out intersect);
+                MarkupLinesIntersect.Calculate(linePair, out intersect);
                 LineIntersects.Add(linePair, intersect);
             }
 
             return intersect;
         }
-        public IEnumerable<MarkupLineIntersect> GetAllIntersect()
+        public IEnumerable<MarkupLinesIntersect> GetAllIntersect()
         {
             var lines = Lines.ToArray();
             for (var i = 0; i < lines.Length; i += 1)

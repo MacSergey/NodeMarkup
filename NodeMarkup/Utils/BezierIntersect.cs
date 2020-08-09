@@ -46,7 +46,7 @@ namespace NodeMarkup.Utils
             }
         }
     }
-    public class MarkupLineIntersect : MarkupIntersect
+    public class MarkupLinesIntersect : MarkupIntersect
     {
         public MarkupLinePair Pair { get; private set; }
 
@@ -54,14 +54,14 @@ namespace NodeMarkup.Utils
         public float this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
         public Vector3 Position => (Pair.First.Trajectory.Position(FirstT) + Pair.Second.Trajectory.Position(SecondT)) / 2;
 
-        public MarkupLineIntersect(MarkupLinePair pair, float firstT, float secondT) : base (firstT, secondT)
+        public MarkupLinesIntersect(MarkupLinePair pair, float firstT, float secondT) : base (firstT, secondT)
         {
             Pair = pair;
         }
 
-        public static MarkupLineIntersect NotIntersect(MarkupLinePair pair) => new MarkupLineIntersect(pair, -1, -1);
+        public static MarkupLinesIntersect NotIntersect(MarkupLinePair pair) => new MarkupLinesIntersect(pair, -1, -1);
 
-        public static bool Calculate(MarkupLinePair pair, out MarkupLineIntersect intersect)
+        public static bool Calculate(MarkupLinePair pair, out MarkupLinesIntersect intersect)
         {
             intersect = NotIntersect(pair);
 
@@ -78,7 +78,7 @@ namespace NodeMarkup.Utils
 
         public static bool Intersect(Bezier3 first, Bezier3 second, out float firstT, out float secondT)
         {
-            if (IntersectSections(first.a, first.d, second.a, second.d, out _, out _) && Intersect(first, second, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf))
+            if (/*IntersectSections(first.a, first.d, second.a, second.d, out _, out _) && */Intersect(first, second, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf))
             {
                 firstT = 1f / firstOf * firstIndex;
                 secondT = 1f / secondOf * secondIndex;

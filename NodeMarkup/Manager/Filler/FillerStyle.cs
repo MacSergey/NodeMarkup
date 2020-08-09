@@ -414,7 +414,7 @@ namespace NodeMarkup.Manager
             {
                 if (i == left || i == right)
                     continue;
-                if (MarkupLineIntersect.Intersect(middle, trajectories[i], out float t, out _) && t < cutT)
+                if (MarkupLinesIntersect.Intersect(middle, trajectories[i], out float t, out _) && t < cutT)
                     cutT = t;
             }
 
