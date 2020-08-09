@@ -671,6 +671,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel to lanes.
+        /// </summary>
+        public static string LineEditor_Parallel {
+            get {
+                return ResourceManager.GetString("LineEditor_Parallel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Space length.
         /// </summary>
         public static string LineEditor_SpaceLength {

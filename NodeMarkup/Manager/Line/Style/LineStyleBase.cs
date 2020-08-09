@@ -285,7 +285,7 @@ namespace NodeMarkup.Manager
         protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
             var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            parallelProperty.Text = Localize.LineEditor_CenterSolid;
+            parallelProperty.Text = "Parallel to lanes";
             parallelProperty.Init();
             parallelProperty.Value = parallelStyle.Parallel;
             parallelProperty.OnValueChanged += (bool value) => parallelStyle.Parallel = value;

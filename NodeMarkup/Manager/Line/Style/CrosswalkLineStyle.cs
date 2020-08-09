@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -57,7 +58,7 @@ namespace NodeMarkup.Manager
         {
             var offset = ((line.Start.Direction + line.End.Direction) / -2).normalized * (Width / 2);
             var spaceLength = Parallel ? SpaceLength / Mathf.Sin(line.Start.Enter.CornerAndNormalAngle) : SpaceLength;
-            var angle = line.Start.Enter.NormalDir.Turn90(true).AbsoluteAngle();
+            var angle = Parallel ? (float?)line.Start.Enter.NormalDir.Turn90(true).AbsoluteAngle() : null;
             return CalculateDashed(trajectory, DashLength, spaceLength, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory, float startT, float endT)
@@ -73,6 +74,22 @@ namespace NodeMarkup.Manager
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddParallelProperty(this, parent));
             return components;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("DL", DashLength));
+            config.Add(new XAttribute("SL", SpaceLength));
+            config.Add(new XAttribute("P", Parallel));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            DashLength = config.GetAttrValue("DL", DefaultDashLength);
+            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
+            Parallel = config.GetAttrValue("P", true);
         }
     }
 }
