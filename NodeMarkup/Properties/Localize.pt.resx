@@ -531,7 +531,11 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
     <value>Esta funcionalidade está indisponível</value>
   </data>
-  
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>Funcionalidade {0} está disponível para acesso antecipado dos Patreons.
+Ir ficar disponível para todos mais tarde.
+Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste mod.</value>
+  </data>
   <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
     <value>Estilo Chevron</value>
   </data>
@@ -596,7 +600,7 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
     <value>Estado: {0}</value>
   </data>
   <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Ativado</value>
+    <value>Activado</value>
   </data>
   <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
     <value>Não activado</value>
@@ -607,7 +611,9 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Acesso antecipado</value>
   </data>
-  
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Linha central sólida</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Concordo</value>
   </data>
@@ -615,9 +621,11 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
     <value>Aviso de versão BETA</value>
   </data>
   <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Usar versão estável</value>
+    <value>Obter versão estável</value>
   </data>
-  
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Está a usar a versão BETA da {0}. Serve para testar novas funcionalidades e pode conter erros que façam você perder todas as marcações. Se subscreveu por engano troque para a versão estável.</value>
+  </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Língua do jogo</value>
   </data>
@@ -658,7 +666,7 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
     <value>Russo</value>
   </data>
   <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinês (Simplificado)</value>
+    <value>Chinês Simplificado</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Linguagem</value>
