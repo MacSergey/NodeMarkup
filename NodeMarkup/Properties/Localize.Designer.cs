@@ -1408,6 +1408,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Group lines.
+        /// </summary>
+        public static string Settings_GroupLines {
+            get {
+                return ResourceManager.GetString("Settings_GroupLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Group templates.
+        /// </summary>
+        public static string Settings_GroupTemplates {
+            get {
+                return ResourceManager.GetString("Settings_GroupTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Import.
         /// </summary>
         public static string Settings_Import {

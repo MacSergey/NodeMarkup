@@ -217,19 +217,28 @@ namespace NodeMarkup.UI.Editors
         }
         public virtual EditableItemType AddItem(EditableObject editableObject)
         {
-            var item = ItemsPanel.AddUIComponent<EditableItemType>();
+            var item = NewItem();
+            InitItem(item, editableObject);
+
+            SwitchEmpty();
+
+            return item;
+        }
+        protected EditableItemType NewItem()
+        {
+            var newItem = ItemsPanel.AddUIComponent<EditableItemType>();
+            newItem.width = ItemsPanel.width;
+            return newItem;
+        }
+        protected void InitItem(EditableItemType item, EditableObject editableObject)
+        {
             item.Init();
             item.name = editableObject.ToString();
-            item.width = ItemsPanel.width;
             item.Object = editableObject;
             item.eventClick += ItemClick;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
             item.OnDelete += ItemDelete;
-
-            SwitchEmpty();
-
-            return item;
         }
 
         protected void ItemDelete(EditableItem<EditableObject, ItemIcon> deleteItem)
@@ -264,20 +273,26 @@ namespace NodeMarkup.UI.Editors
         protected override void ClearItems()
         {
             var componets = ItemsPanel.components.ToArray();
-            foreach (EditableItemType item in componets)
-            {
-                DeleteItem(item);
-            }
+            foreach (var item in componets)
+                DeleteUIComponent(item);
         }
         protected virtual void DeleteItem(EditableItemType item)
+        {
+            DeInitItem(item);
+            DeleteUIComponent(item);
+
+            SwitchEmpty();
+        }
+        protected void DeInitItem(EditableItemType item)
         {
             item.eventClick -= ItemClick;
             item.eventMouseEnter -= ItemHover;
             item.eventMouseLeave -= ItemLeave;
+        }
+        protected void DeleteUIComponent(UIComponent item)
+        {
             ItemsPanel.RemoveUIComponent(item);
             Destroy(item.gameObject);
-
-            SwitchEmpty();
         }
         private EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
         public void UpdateEditor(EditableObject selectObject = null)
@@ -368,46 +383,38 @@ namespace NodeMarkup.UI.Editors
         where EditableGroupType : EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon>
     {
         private Dictionary<GroupType, EditableGroupType> Groups { get; } = new Dictionary<GroupType, EditableGroupType>();
+        protected abstract bool GroupingEnabled { get; }
 
         public override EditableItemType AddItem(EditableObject editableObject)
         {
-            var group = GetGroup(editableObject);
-            var item = group.AddItem(editableObject);
-
-            item.eventClick += ItemClick;
-            item.eventMouseEnter += ItemHover;
-            item.eventMouseLeave += ItemLeave;
-            item.OnDelete += ItemDelete;
+            var item = GroupingEnabled ? GetGroup(editableObject).NewItem() : NewItem();
+            InitItem(item, editableObject);
 
             SwitchEmpty();
 
             return item;
         }
-        protected override void ClearItems()
-        {
-            var componets = ItemsPanel.components.ToArray();
-            foreach (EditableGroupType group in componets)
-                DeleteGroup(group);
-        }
         protected override void DeleteItem(EditableItemType item)
         {
-            item.eventClick -= ItemClick;
-            item.eventMouseEnter -= ItemHover;
-            item.eventMouseLeave -= ItemLeave;
+            DeInitItem(item);
 
-            var group = GetGroup(item.Object);
-            group.DeleteItem(item);
+            if (GroupingEnabled)
+            {
+                var group = GetGroup(item.Object);
+                group.DeleteItem(item);
 
-            if(group.IsEmpty)
-                DeleteGroup(group);
+                if (group.IsEmpty)
+                    DeleteGroup(group);
+            }
+            else
+                DeleteUIComponent(item);
 
             SwitchEmpty();
         }
         private void DeleteGroup(EditableGroupType group)
         {
             Groups.Remove(group.Selector);
-            ItemsPanel.RemoveUIComponent(group);
-            Destroy(group.gameObject);
+            DeleteUIComponent(group);
         }
         private EditableGroupType AddGroup(GroupType groupType)
         {
@@ -425,6 +432,12 @@ namespace NodeMarkup.UI.Editors
                 group = AddGroup(groupType);
             return group;
         }
+        protected override void ClearItems()
+        {
+            base.ClearItems();
+            Groups.Clear();
+        }
+
         protected abstract GroupType SelectGroup(EditableObject editableItem);
         protected abstract string GroupName(GroupType group);
     }

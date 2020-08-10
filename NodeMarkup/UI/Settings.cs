@@ -36,6 +36,8 @@ namespace NodeMarkup.UI
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
         public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
+        public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
+        public static SavedBool GroupTemplates { get; } = new SavedBool(nameof(GroupTemplates), SettingsFile, true, true);
 
         static Settings()
         {
@@ -155,7 +157,8 @@ namespace NodeMarkup.UI
             AddShowToolTipsSetting(group);
             AddDeleteRequest(group);
             AddQuickRuleSetup(group);
-
+            AddGroupLines(group);
+            AddGroupTemplates(group);
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -193,9 +196,21 @@ namespace NodeMarkup.UI
         }
         private static void AddQuickRuleSetup(UIHelper group)
         {
-            var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetup, OnQuickRuleSetuptChanged) as UICheckBox;
+            var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetup, OnQuickRuleSetupChanged) as UICheckBox;
 
-            void OnQuickRuleSetuptChanged(bool request) => QuickRuleSetup.value = request;
+            void OnQuickRuleSetupChanged(bool request) => QuickRuleSetup.value = request;
+        }
+        private static void AddGroupLines(UIHelper group)
+        {
+            var groupLinesCheckBox = group.AddCheckbox(Localize.Settings_GroupLines, GroupLines, OnQuickRuleSetupChanged) as UICheckBox;
+
+            void OnQuickRuleSetupChanged(bool request) => GroupLines.value = request;
+        }
+        private static void AddGroupTemplates(UIHelper group)
+        {
+            var groupTemplatesCheckBox = group.AddCheckbox(Localize.Settings_GroupTemplates, GroupTemplates, OnQuickRuleSetupChanged) as UICheckBox;
+
+            void OnQuickRuleSetupChanged(bool request) => GroupTemplates.value = request;
         }
         #endregion
 

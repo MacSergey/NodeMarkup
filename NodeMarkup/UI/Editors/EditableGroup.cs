@@ -58,13 +58,10 @@ namespace NodeMarkup.UI.Editors
             Item.Text = groupName;
         }
 
-        public EditableItemType AddItem(EditableObject editableObject)
+        public EditableItemType NewItem()
         {
             var item = AddUIComponent<EditableItemType>();
-            item.Init();
-            item.name = editableObject.ToString();
             item.width = width;
-            item.Object = editableObject;
             item.isVisible = _isExpand;
 
             return item;

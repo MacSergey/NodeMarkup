@@ -744,4 +744,10 @@ To create a crosswalk connect two points.</value>
   <data name="LineStyle_StopGroup" xml:space="preserve">
     <value>Stop lines</value>
   </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Group lines</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Group templates</value>
+  </data>
 </root>
