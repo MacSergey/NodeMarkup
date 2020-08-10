@@ -66,9 +66,9 @@ namespace NodeMarkup
             var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
             messageBox.CaprionText = caption;
             messageBox.MessageText = message;
-            messageBox.Button1Text = "OK";
+            messageBox.Button1Text = Localize.MessageBox_OK;
             messageBox.OnButton1Click = () => true;
-            messageBox.Button2Text = "Get early access";
+            messageBox.Button2Text = Localize.EarlyAccess_GetButton;
             messageBox.OnButton2Click = GetAccess;
         }
         public static void ShowEarlyAccess(string caption)
@@ -152,7 +152,7 @@ namespace NodeMarkup
             GetAccessButton = helper.AddButton(NodeMarkup.Localize.EarlyAccess_GetButton, Click) as UIButton;
             GetAccessButton.autoSize = false;
             GetAccessButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-            GetAccessButton.width = 300;
+            GetAccessButton.width = 400;
 
             void Click() => EarlyAccess.GetAccess();
         }
@@ -161,7 +161,7 @@ namespace NodeMarkup
             PatreonButton = helper.AddButton(NodeMarkup.Localize.EarlyAccess_LinkPatreonButton, Click) as UIButton;
             PatreonButton.autoSize = false;
             PatreonButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-            PatreonButton.width = 300;
+            PatreonButton.width = 400;
             PatreonButton.hoveredTextColor = PatreonButton.pressedTextColor = Color.red;
 
             void Click()
@@ -179,7 +179,7 @@ namespace NodeMarkup
             ActivateButton = helper.AddButton(NodeMarkup.Localize.EarlyAccess_ActivateButton, Click) as UIButton;
             ActivateButton.autoSize = false;
             ActivateButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-            ActivateButton.width = 300;
+            ActivateButton.width = 400;
 
             void Click()
             {

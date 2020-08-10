@@ -9,19 +9,27 @@ namespace NodeMarkup.UI
 {
     public class WhatsNewMessageBox : MessageBoxBase
     {
-        private UIButton Button { get; set; }
+        private UIButton OkButton { get; set; }
+        private UIButton GetEarlyAccessButton { get; set; }
         public Func<bool> OnButtonClick { get; set; }
 
         public WhatsNewMessageBox()
         {
-            Button = AddButton(1, 1, ButtonClick);
-            Button.text = NodeMarkup.Localize.MessageBox_OK;
+            OkButton = AddButton(1, EarlyAccess.Status ? 1 : 2, OkClick);
+            OkButton.text = NodeMarkup.Localize.MessageBox_OK;
+
+            if(!EarlyAccess.Status)
+            {
+                GetEarlyAccessButton = AddButton(2, 2, GetEarlyAccessClick);
+                GetEarlyAccessButton.text = NodeMarkup.Localize.EarlyAccess_GetButton;
+            }
         }
-        protected virtual void ButtonClick()
+        protected virtual void OkClick()
         {
             if (OnButtonClick?.Invoke() != false)
                 Cancel();
         }
+        protected virtual void GetEarlyAccessClick() => EarlyAccess.GetAccess();
 
         public void Init(Dictionary<string, string> messages)
         {
