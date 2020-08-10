@@ -40,11 +40,7 @@ namespace NodeMarkup.UI.Editors
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
         }
         protected override Style.StyleType SelectGroup(StyleTemplate editableItem) => editableItem.Style.Type & Style.StyleType.GroupMask;
-        protected override string GroupName(Style.StyleType group)
-        {
-            var description = typeof(Style.StyleType).GetField(group.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? group.ToString();
-            return NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
-        }
+        protected override string GroupName(Style.StyleType group) => Utilities.EnumDescription(group);
 
         private void AddHeader()
         {

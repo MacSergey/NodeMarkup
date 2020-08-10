@@ -27,13 +27,8 @@ namespace NodeMarkup.UI.Editors
         {
             foreach (var value in Enum.GetValues(typeof(EnumType)).OfType<EnumType>())
             {
-                DropDown.AddItem(value, GetDescription(value.ToString()));
+                DropDown.AddItem(value, Utilities.EnumDescription(value));
             }
-        }
-        protected string GetDescription(string item)
-        {
-            var description = typeof(EnumType).GetField(item).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? item;
-            return NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
         }
     }
     public abstract class StylePropertyPanel : EnumPropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
@@ -48,7 +43,7 @@ namespace NodeMarkup.UI.Editors
         {
             foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<Style.StyleType>())
             {
-                DropDown.AddItem(value, GetDescription(value.ToString()));
+                DropDown.AddItem(value, Utilities.EnumDescription(value));
             }
         }
     }

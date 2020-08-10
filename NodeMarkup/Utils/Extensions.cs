@@ -53,6 +53,12 @@ namespace NodeMarkup.Utils
             else
                 Process.Start(url);
         }
+        public static string EnumDescription<T>(T value)
+            where T: Enum
+        {
+            var description = typeof(T).GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? value.ToString();
+            return Localize.ResourceManager.GetString(description, Localize.Culture);
+        }
 
         private static NetManager NetManager => Singleton<NetManager>.instance;
         private static RenderManager RenderManager => Singleton<RenderManager>.instance;
