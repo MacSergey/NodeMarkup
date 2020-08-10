@@ -710,14 +710,14 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Vorhandene Zebrastreifen</value>
-    <comment>CrosswalkStyle_Existent
-</comment>
   </data>
   <data name="LineEditor_OffsetAfter" xml:space="preserve">
     <value>Abstand dahinter</value>
   </data>
   <data name="LineEditor_OffsetBefor" xml:space="preserve">
     <value>Abstand davor</value>
+    <comment>LineEditor_OffsetBefore
+</comment>
   </data>
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel zu Fahrspuren</value>

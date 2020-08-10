@@ -661,15 +661,32 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_Language" xml:space="preserve">
     <value>语言</value>
   </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>点击以创建垂直线
++Shift 实线
++Ctrl 双线</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>点击以擦除垂直线</value>
+  </data>
+  
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>斑马线</value>
+  </data>
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>人行横道</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>此交叉路口没有人行道。
+连接两点以创建人行道。</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>人行横道</value>
+  </data>
 </root>
