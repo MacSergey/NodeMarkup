@@ -15,6 +15,7 @@ namespace NodeMarkup.Manager
     public interface ILineStyle : IWidthStyle, IColorStyle { }
     public interface IRegularLine : ILineStyle { }
     public interface IStopLine : ILineStyle { }
+    public interface ICrosswalkStyle : ILineStyle { }
     public interface IDashedLine : ILineStyle
     {
         float DashLength { get; set; }
@@ -33,7 +34,7 @@ namespace NodeMarkup.Manager
         bool Parallel { get; set; }
     }
 
-    public abstract class LineStyle : Style, ILineStyle
+    public abstract class LineStyle : Style
     {
         public static float DefaultDashLength { get; } = 1.5f;
         public static float DefaultSpaceLength { get; } = 1.5f;
@@ -269,31 +270,31 @@ namespace NodeMarkup.Manager
         public static float DefaultCrosswalkWidth { get; } = 2f;
         public static float DefaultCrosswalkDashLength { get; } = 0.4f;
         public static float DefaultCrosswalkSpaceLength { get; } = 0.6f;
+        public static float DefaultCrosswalkOffset { get; } = 0.3f;
 
         static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
-            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) }
+            {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
+            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) }
         };
 
         public static LineStyle GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
+
+        public abstract float GetTotalWidth(MarkupCrosswalk crosswalk);
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
         public override LineStyle CopyLineStyle() => CopyCrosswalkStyle();
         public abstract CrosswalkStyle CopyCrosswalkStyle();
 
-        protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
-        {
-            var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            parallelProperty.Text = "Parallel to lanes";
-            parallelProperty.Init();
-            parallelProperty.Value = parallelStyle.Parallel;
-            parallelProperty.OnValueChanged += (bool value) => parallelStyle.Parallel = value;
-            return parallelProperty;
-        }
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => line is MarkupCrosswalk crosswalk ? Calculate(crosswalk, trajectory) : new MarkupStyleDash[0];
+        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory);
 
         public enum CrosswalkType
         {
+            [Description(nameof(Localize.CrosswalkStyle_Existent))]
+            Existent = StyleType.CrosswalkExistent,
+
             [Description(nameof(Localize.CrosswalkStyle_Zebra))]
             Zebra = StyleType.CrosswalkZebra,
 

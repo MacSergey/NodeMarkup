@@ -167,7 +167,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
     }
-    public class DoubleDashedStopLineStyle : DashedStopLineStyle, IDoubleLine
+    public class DoubleDashedStopLineStyle : DashedStopLineStyle, IStopLine, IDoubleLine
     {
         public override StyleType Type { get; } = StyleType.StopLineDoubleDashed;
 

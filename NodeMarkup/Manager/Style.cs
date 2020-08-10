@@ -107,13 +107,12 @@ namespace NodeMarkup.Manager
             Color = color;
             Width = width;
         }
+        protected XElement BaseToXml() =>  new XElement(XmlSection,new XAttribute("T", TypeToInt(Type)));
         public virtual XElement ToXml()
         {
-            var config = new XElement(XmlSection,
-                new XAttribute("T", TypeToInt(Type)),
-                new XAttribute("C", Color.ToInt()),
-                new XAttribute("W", Width)
-            );
+            var config = BaseToXml();
+            config.Add(new XAttribute("C", Color.ToInt()));
+            config.Add(new XAttribute("W", Width));
             return config;
         }
         public virtual void FromXml(XElement config)
@@ -151,14 +150,14 @@ namespace NodeMarkup.Manager
             colorProperty.OnValueChanged += (Color32 color) => Color = color;
             return colorProperty;
         }
-        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
+        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave, float wheelStep = 0.01f, float minValue = 0.05f)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
             widthProperty.Text = Localize.LineEditor_Width;
             widthProperty.UseWheel = true;
-            widthProperty.WheelStep = 0.01f;
+            widthProperty.WheelStep = wheelStep;
             widthProperty.CheckMin = true;
-            widthProperty.MinValue = 0.05f;
+            widthProperty.MinValue = minValue;
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width = value;
@@ -257,6 +256,9 @@ namespace NodeMarkup.Manager
 
 
             Crosswalk = Markup.Item.Crosswalk,
+
+            [Description(nameof(Localize.CrosswalkStyle_Existent))]
+            CrosswalkExistent,
 
             [Description(nameof(Localize.CrosswalkStyle_Zebra))]
             CrosswalkZebra,

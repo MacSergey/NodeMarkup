@@ -284,7 +284,7 @@ namespace NodeMarkup.Manager
         public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
     }
 
-    public class MarkupFakeLine : MarkupStraightLine
+    public class MarkupFakeLine : MarkupStraightLine<LineStyle>
     {
         public override LineType Type => throw new NotImplementedException();
 

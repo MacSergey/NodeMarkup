@@ -708,4 +708,16 @@ By registering early access, you will support the ability to develop this mod at
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Exist road crosswalk</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Offset after</value>
+  </data>
+  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+    <value>Offset befor</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallel to lanes</value>
+  </data>
 </root>

@@ -9,10 +9,8 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupLineRawRule : MarkupLinePart
+    public abstract class MarkupLineRawRule : MarkupLinePart
     {
-        public static string XmlName { get; } = "R";
-
         LineStyle _style;
 
         public LineStyle Style
@@ -35,13 +33,25 @@ namespace NodeMarkup.Manager
             get => base.To as ILinePartEdge;
             set => base.To = value;
         }
+        public MarkupLineRawRule(MarkupLine line, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to) { }
+    }
+    public class MarkupLineRawRule<StyleType> : MarkupLineRawRule
+        where StyleType : LineStyle
+    {
+        public static string XmlName { get; } = "R";
+
+        public new StyleType Style
+        {
+            get => base.Style as StyleType;
+            set => base.Style = value;
+        }
         public override string XmlSection => XmlName;
 
-        public MarkupLineRawRule(MarkupLine line, LineStyle style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
+        public MarkupLineRawRule(MarkupLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
         {
             Style = style;
         }
-        public static MarkupLineRule[] GetRules(List<MarkupLineRawRule> rawRules)
+        public static MarkupLineRule[] GetRules(List<MarkupLineRawRule<StyleType>> rawRules)
         {
             var rules = new List<MarkupLineRule>();
 
@@ -122,9 +132,9 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out MarkupLineRawRule rule)
+        public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out MarkupLineRawRule<StyleType> rule)
         {
-            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, out LineStyle style))
+            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml<StyleType>(styleConfig, out StyleType style))
             {
                 rule = default;
                 return false;
@@ -137,7 +147,7 @@ namespace NodeMarkup.Manager
                     edges.Add(edge);
             }
 
-            rule = new MarkupLineRawRule(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
+            rule = new MarkupLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
             return true;
         }
     }

@@ -61,6 +61,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Exist road crosswalk.
+        /// </summary>
+        public static string CrosswalkStyle_Existent {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_Existent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Zebra.
         /// </summary>
         public static string CrosswalkStyle_Zebra {
@@ -680,11 +689,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset after.
+        /// </summary>
+        public static string LineEditor_OffsetAfter {
+            get {
+                return ResourceManager.GetString("LineEditor_OffsetAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset befor.
+        /// </summary>
+        public static string LineEditor_OffsetBefor {
+            get {
+                return ResourceManager.GetString("LineEditor_OffsetBefor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Parallel to lanes.
         /// </summary>
         public static string LineEditor_Parallel {
             get {
                 return ResourceManager.GetString("LineEditor_Parallel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel to lanes.
+        /// </summary>
+        public static string LineEditor_ParallelToLanes {
+            get {
+                return ResourceManager.GetString("LineEditor_ParallelToLanes", resourceCulture);
             }
         }
         

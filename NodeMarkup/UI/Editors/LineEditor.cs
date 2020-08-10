@@ -154,7 +154,7 @@ namespace NodeMarkup.UI.Editors
 
             bool Delete()
             {
-                regularLine.RemoveRule(rulePanel.Rule);
+                regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
                 RefreshItem();
