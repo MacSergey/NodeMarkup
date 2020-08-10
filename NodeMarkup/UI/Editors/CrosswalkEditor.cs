@@ -115,7 +115,7 @@ namespace NodeMarkup.UI.Editors
         public void RefreshItem() => SelectItem.Refresh();
     }
 
-    public class CrosswalkItem : EditableItem<MarkupCrosswalk, LineIcon>
+    public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>
     {
         public override void Init() => Init(true, true);
 
@@ -128,10 +128,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetIcon()
         {
-            if (!ShowIcon)
-                return;
-
-            Icon.Count = 1;
             Icon.Type = Object.Rule.Style.Type;
             Icon.StyleColor = Object.Rule.Style.Color;
         }

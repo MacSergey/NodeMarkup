@@ -210,4 +210,35 @@ namespace NodeMarkup.UI.Editors
                 Thumbnail.size = size;
         }
     }
+    public class LineIcon : StyleIcon
+    {
+        protected UILabel CountLabel { get; }
+        public int Count
+        {
+            set
+            {
+                CountLabel.isVisible = value > 1;
+                Thumbnail.isVisible = value == 1;
+                CountLabel.text = value.ToString();
+            }
+        }
+
+        public LineIcon()
+        {
+            CountLabel = AddUIComponent<UILabel>();
+            CountLabel.textColor = Color.white;
+            CountLabel.textScale = 0.7f;
+            CountLabel.relativePosition = new Vector3(0, 0);
+            CountLabel.autoSize = false;
+            CountLabel.textAlignment = UIHorizontalAlignment.Center;
+            CountLabel.verticalAlignment = UIVerticalAlignment.Middle;
+            CountLabel.padding = new RectOffset(0, 0, 5, 0);
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            if (CountLabel != null)
+                CountLabel.size = size;
+        }
+    }
 }
