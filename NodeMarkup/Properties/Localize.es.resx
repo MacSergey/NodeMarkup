@@ -661,15 +661,44 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="Settings_Language" xml:space="preserve">
     <value>Idioma</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Haga clic para crear una línea perpendicular
++Mayús - Continua
++Ctrl - Doble</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Haga clic para eliminar la línea perpendicular</value>
+  </data>
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Paralelo a los carriles</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Cebra</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Paso de peatones existente</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Desplazamiento delante</value>
+  </data>
+  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+    <value>Desplazamiento detrás</value>
+    <comment>LineEditor_OffsetBefore
+</comment>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Paralelo a los carriles</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Paso de Peatones</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Todavía no hay pasos de peatones en este cruce.
+Para crear un paso de peatones, conecta dos puntos.</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>paso de peatones</value>
+  </data>
 </root>

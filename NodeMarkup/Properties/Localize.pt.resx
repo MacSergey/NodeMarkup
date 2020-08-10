@@ -685,11 +685,30 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Passadeira existente</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Deslocamento depois</value>
+  </data>
+  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+    <value>Deslocamento antes</value>
+    <comment>LineEditor_OffsetBefore
+</comment>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Paralelo as vias</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Passadeiras</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Ainda não existem passadeiras nesta intercessão.
+Para criar uma passadeira conecte dois pontos.</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>passadeira</value>
+  </data>
 </root>

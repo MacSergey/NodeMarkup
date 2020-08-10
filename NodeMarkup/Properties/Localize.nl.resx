@@ -661,15 +661,44 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Settings_Language" xml:space="preserve">
     <value>Taal</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Klik om een loodrechte lijn te maken
++Shift - Niet onderbroken
++Ctrl - Dubbel</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Klik om de loodrechte lijn te verwijderen</value>
+  </data>
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Parallel aan rijstroken</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Bestaande zebrapad</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Correctieafstand na</value>
+  </data>
+  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+    <value>Correctieafstand voor</value>
+    <comment>LineEditor_OffsetBefore
+</comment>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallel aan rijstroken</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Zebrapaden</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Er zijn nog geen zebrapaden op deze kruising.
+Verbind twee punten om een zebrapad te maken.</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>zebrapad</value>
+  </data>
 </root>

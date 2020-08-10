@@ -715,7 +715,9 @@ By registering early access, you will support the ability to develop this mod at
     <value>Offset after</value>
   </data>
   <data name="LineEditor_OffsetBefor" xml:space="preserve">
-    <value>Offset befor</value>
+    <value>Offset before</value>
+    <comment>LineEditor_OffsetBefore
+</comment>
   </data>
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel to lanes</value>

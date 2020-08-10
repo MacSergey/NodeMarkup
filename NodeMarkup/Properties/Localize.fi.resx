@@ -647,15 +647,30 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Settings_Language" xml:space="preserve">
     <value>Kieli</value>
   </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Napauta luodaksesi kohtisuora viiva
++Shift - Sulku-
++Ctrl - Kaksois-</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Napauta poistaaksesi kohtisuoran viivan</value>
+  </data>
   
   
   
   
   
   
-  
-  
-  
-  
-  
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Suojatiet</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Risteyksessä ei ole vielä suojateitä.
+Yhdistä kaksi pistettä luodaksesi suojatien.</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>suojatie</value>
+  </data>
 </root>
