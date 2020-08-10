@@ -700,4 +700,30 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Зебра</value>
   </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Существующий переход</value>
+    <comment>CrosswalkStyle_Existent
+</comment>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Отступ после</value>
+  </data>
+  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+    <value>Отступ до</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Параллельно линиям</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Переходы</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>У этого перекрестка еще нет переходов.
+Для создания перехода соедините две точки.</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>переход</value>
+  </data>
 </root>
