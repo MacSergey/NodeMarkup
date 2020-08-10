@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetBeforeProperty(CustomCrosswalkStyle customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetBeforeProperty = AddOffsetProperty(parent, onHover, onLeave);
-            offsetBeforeProperty.Text = Localize.LineEditor_OffsetBefor;
+            offsetBeforeProperty.Text = Localize.LineEditor_OffsetBefore;
             offsetBeforeProperty.Value = customStyle.OffsetBefore;
             offsetBeforeProperty.OnValueChanged += (float value) => customStyle.OffsetBefore = value;
             return offsetBeforeProperty;

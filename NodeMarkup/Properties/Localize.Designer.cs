@@ -70,7 +70,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на There are no crosswalks at this intersection yet.
+        ///To create a crosswalk connect two points..
         /// </summary>
         public static string CrosswalkEditor_EmptyMessage {
             get {
@@ -88,11 +89,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Exist road crosswalk.
+        ///   Ищет локализованную строку, похожую на Existing crosswalk.
         /// </summary>
         public static string CrosswalkStyle_Existent {
             get {
                 return ResourceManager.GetString("CrosswalkStyle_Existent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalks.
+        /// </summary>
+        public static string CrosswalkStyle_Group {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_Group", resourceCulture);
             }
         }
         
@@ -507,6 +517,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers.
+        /// </summary>
+        public static string FillerStyle_Group {
+            get {
+                return ResourceManager.GetString("FillerStyle_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid.
         /// </summary>
         public static string FillerStyle_Solid {
@@ -725,11 +744,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset befor.
+        ///   Ищет локализованную строку, похожую на Offset before.
         /// </summary>
-        public static string LineEditor_OffsetBefor {
+        public static string LineEditor_OffsetBefore {
             get {
-                return ResourceManager.GetString("LineEditor_OffsetBefor", resourceCulture);
+                return ResourceManager.GetString("LineEditor_OffsetBefore", resourceCulture);
             }
         }
         
@@ -851,6 +870,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Regular lines.
+        /// </summary>
+        public static string LineStyle_RegularGroup {
+            get {
+                return ResourceManager.GetString("LineStyle_RegularGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid.
         /// </summary>
         public static string LineStyle_Solid {
@@ -901,6 +929,15 @@ namespace NodeMarkup {
         public static string LineStyle_StopDoubleDashed {
             get {
                 return ResourceManager.GetString("LineStyle_StopDoubleDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stop lines.
+        /// </summary>
+        public static string LineStyle_StopGroup {
+            get {
+                return ResourceManager.GetString("LineStyle_StopGroup", resourceCulture);
             }
         }
         

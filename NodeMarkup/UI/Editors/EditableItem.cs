@@ -81,11 +81,7 @@ namespace NodeMarkup.UI.Editors
             Inited = true;
         }
 
-        private void AddIcon()
-        {
-            Icon = AddUIComponent<IconType>();
-            Icon.isEnabled = ShowIcon;
-        }
+        private void AddIcon() => Icon = AddUIComponent<IconType>();
         private void AddLable()
         {
             Label = AddUIComponent<UILabel>();

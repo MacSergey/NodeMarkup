@@ -198,7 +198,6 @@ namespace NodeMarkup.UI.Editors
         }
         public EditableObject EditObject => SelectItem?.Object;
 
-
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -216,7 +215,7 @@ namespace NodeMarkup.UI.Editors
             EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);
             EmptyLabel.relativePosition = SettingsPanel.relativePosition;
         }
-        public EditableItemType AddItem(EditableObject editableObject)
+        public virtual EditableItemType AddItem(EditableObject editableObject)
         {
             var item = ItemsPanel.AddUIComponent<EditableItemType>();
             item.Init();
@@ -233,7 +232,7 @@ namespace NodeMarkup.UI.Editors
             return item;
         }
 
-        private void ItemDelete(EditableItem<EditableObject, ItemIcon> deleteItem)
+        protected void ItemDelete(EditableItem<EditableObject, ItemIcon> deleteItem)
         {
             if (!(deleteItem is EditableItemType item))
                 return;
@@ -270,7 +269,7 @@ namespace NodeMarkup.UI.Editors
                 DeleteItem(item);
             }
         }
-        private void DeleteItem(EditableItemType item)
+        protected virtual void DeleteItem(EditableItemType item)
         {
             item.eventClick -= ItemClick;
             item.eventMouseEnter -= ItemHover;
@@ -360,5 +359,73 @@ namespace NodeMarkup.UI.Editors
                 item.Refresh();
             }
         }
+    }
+
+    public abstract class GroupedEditor<EditableItemType, EditableObject, ItemIcon, EditableGroupType, GroupType> : Editor<EditableItemType, EditableObject, ItemIcon>
+        where EditableItemType : EditableItem<EditableObject, ItemIcon>
+        where ItemIcon : UIComponent
+        where EditableObject : class
+        where EditableGroupType : EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon>
+    {
+        private Dictionary<GroupType, EditableGroupType> Groups { get; } = new Dictionary<GroupType, EditableGroupType>();
+
+        public override EditableItemType AddItem(EditableObject editableObject)
+        {
+            var group = GetGroup(editableObject);
+            var item = group.AddItem(editableObject);
+
+            item.eventClick += ItemClick;
+            item.eventMouseEnter += ItemHover;
+            item.eventMouseLeave += ItemLeave;
+            item.OnDelete += ItemDelete;
+
+            SwitchEmpty();
+
+            return item;
+        }
+        protected override void ClearItems()
+        {
+            var componets = ItemsPanel.components.ToArray();
+            foreach (EditableGroupType group in componets)
+                DeleteGroup(group);
+        }
+        protected override void DeleteItem(EditableItemType item)
+        {
+            item.eventClick -= ItemClick;
+            item.eventMouseEnter -= ItemHover;
+            item.eventMouseLeave -= ItemLeave;
+
+            var group = GetGroup(item.Object);
+            group.DeleteItem(item);
+
+            if(group.IsEmpty)
+                DeleteGroup(group);
+
+            SwitchEmpty();
+        }
+        private void DeleteGroup(EditableGroupType group)
+        {
+            Groups.Remove(group.Selector);
+            ItemsPanel.RemoveUIComponent(group);
+            Destroy(group.gameObject);
+        }
+        private EditableGroupType AddGroup(GroupType groupType)
+        {
+            var group = ItemsPanel.AddUIComponent<EditableGroupType>();
+            group.Init(groupType, GroupName(groupType));
+            group.width = ItemsPanel.width;
+            Groups[groupType] = group;
+            return group;
+        }
+
+        private EditableGroupType GetGroup(EditableObject editableObject)
+        {
+            var groupType = SelectGroup(editableObject);
+            if (!Groups.TryGetValue(groupType, out EditableGroupType group))
+                group = AddGroup(groupType);
+            return group;
+        }
+        protected abstract GroupType SelectGroup(EditableObject editableItem);
+        protected abstract string GroupName(GroupType group);
     }
 }

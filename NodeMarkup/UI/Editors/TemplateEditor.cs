@@ -3,6 +3,7 @@ using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class TemplateEditor : Editor<TemplateItem, StyleTemplate, TemplateIcon>
+    public class TemplateEditor : GroupedEditor<TemplateItem, StyleTemplate, TemplateIcon, TemplateGroup, Style.StyleType>
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
@@ -27,9 +28,7 @@ namespace NodeMarkup.UI.Editors
         protected override void FillItems()
         {
             foreach (var templates in TemplateManager.Templates.OrderBy(t => t.Style.Type))
-            {
                 AddItem(templates);
-            }
         }
 
         protected override void OnObjectSelect()
@@ -39,6 +38,12 @@ namespace NodeMarkup.UI.Editors
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
+        }
+        protected override Style.StyleType SelectGroup(StyleTemplate editableItem) => editableItem.Style.Type & Style.StyleType.GroupMask;
+        protected override string GroupName(Style.StyleType group)
+        {
+            var description = typeof(Style.StyleType).GetField(group.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? group.ToString();
+            return NodeMarkup.Localize.ResourceManager.GetString(description, NodeMarkup.Localize.Culture);
         }
 
         private void AddHeader()
@@ -102,4 +107,5 @@ namespace NodeMarkup.UI.Editors
     {
         public bool IsDefault { set => BorderColor = value ? new Color32(255, 215, 0, 255) : (Color32)Color.white; }
     }
+    public class TemplateGroup : EditableGroup<Style.StyleType, TemplateItem, StyleTemplate, TemplateIcon> { }
 }

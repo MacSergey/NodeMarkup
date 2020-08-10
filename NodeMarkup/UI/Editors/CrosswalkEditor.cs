@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class CrosswalkEditor : Editor<CrosswalkItem, MarkupCrosswalk, LineIcon>
+    public class CrosswalkEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
         private static CrosswalkStyle Buffer { get; set; }
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;

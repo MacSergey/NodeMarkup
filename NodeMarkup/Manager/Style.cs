@@ -207,6 +207,7 @@ namespace NodeMarkup.Manager
             ItemMask = 0xFF,
             GroupMask = ~ItemMask,
 
+            [Description(nameof(Localize.LineStyle_RegularGroup))]
             RegularLine = Markup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
@@ -225,6 +226,7 @@ namespace NodeMarkup.Manager
             LineSolidAndDashed,
 
 
+            [Description(nameof(Localize.LineStyle_StopGroup))]
             StopLine = Markup.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_Stop))]
@@ -240,6 +242,7 @@ namespace NodeMarkup.Manager
             StopLineDoubleDashed,
 
 
+            [Description(nameof(Localize.FillerStyle_Group))]
             Filler = Markup.Item.Filler,
 
             [Description(nameof(Localize.FillerStyle_Stripe))]
@@ -255,6 +258,7 @@ namespace NodeMarkup.Manager
             FillerChevron,
 
 
+            [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = Markup.Item.Crosswalk,
 
             [Description(nameof(Localize.CrosswalkStyle_Existent))]
