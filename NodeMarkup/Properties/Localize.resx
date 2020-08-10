@@ -504,7 +504,9 @@ Hold Alt to create a filler</value>
 - Improved stop lines.
 - Added perpendicular lines.
 - Linked Patreon account for early access.
-- Added the ability to select the language separately from the game language.</value>
+- Added the ability to select the language separately from the game language.
+- Added zebra crosswalk.
+- Added lines and templates groups.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double stop line</value>
@@ -743,5 +745,11 @@ To create a crosswalk connect two points.</value>
   </data>
   <data name="LineStyle_StopGroup" xml:space="preserve">
     <value>Stop lines</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Group lines</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Group templates</value>
   </data>
 </root>

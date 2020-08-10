@@ -681,10 +681,8 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="LineEditor_OffsetAfter" xml:space="preserve">
     <value>Correctieafstand na</value>
   </data>
-  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
     <value>Correctieafstand voor</value>
-    <comment>LineEditor_OffsetBefore
-</comment>
   </data>
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel aan rijstroken</value>
@@ -700,5 +698,23 @@ Verbind twee punten om een zebrapad te maken.</value>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>zebrapad</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Zebrapaden</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Opvullingen</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Normale lijnen</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Stoplijnen</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Groepeer lijnen</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Groepeer sjablonen</value>
   </data>
 </root>

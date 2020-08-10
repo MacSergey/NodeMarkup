@@ -588,22 +588,22 @@ Shift X10, Ctrl X0.1</value>
     <value>Введенный ключ не действителен</value>
   </data>
   <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Прикрепление в процессе...</value>
+    <value>Привязывание в процессе...</value>
   </data>
   <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Прикрепить аккаунт Patreon</value>
+    <value>Привязать аккаунт Patreon</value>
   </data>
   <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Прикрепление аккаунта Patreon</value>
+    <value>Привязывание аккаунта Patreon</value>
   </data>
   <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Аккаунт Patreon не может быть прикреплен так как вы отказали в доступе.</value>
+    <value>Аккаунт Patreon не может быть привязан так как вы отказали в доступе.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Во время прикрепления произошла ошибка, попробуйте снова.</value>
+    <value>Во время привязывания аккаунта произошла ошибка, попробуйте снова.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Ваш аккаунт прикреплен, но вы не оформили ранней доступ.</value>
+    <value>Ваш аккаунт привязан, но вы не оформили ранней доступ.</value>
   </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
     <value>Вы можете закрыть эту страницу и вернуться в игру.</value>
@@ -706,10 +706,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_OffsetAfter" xml:space="preserve">
     <value>Отступ после</value>
   </data>
-  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
     <value>Отступ до</value>
-    <comment>LineEditor_OffsetBefore
-</comment>
   </data>
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Параллельно линиям</value>
@@ -725,5 +723,23 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>переход</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Переходы</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Заполнения</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Обычные линии</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Стоп линии</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Группировать линии</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Группировать шаблоны</value>
   </data>
 </root>
