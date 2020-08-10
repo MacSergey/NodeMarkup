@@ -226,7 +226,7 @@ namespace NodeMarkup.Manager
         where StyleType: LineStyle
     {
         public override bool SupportRules => false;
-        protected MarkupLineRawRule<StyleType> Rule { get; set; }
+        public MarkupLineRawRule<StyleType> Rule { get; set; }
         public override IEnumerable<MarkupLineRawRule> Rules
         {
             get

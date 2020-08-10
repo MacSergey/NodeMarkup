@@ -511,9 +511,19 @@ namespace NodeMarkup
         private void OnMakeLine(Event e)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var lineType = pointPair.IsStopLine ? e.GetStopStyle() : pointPair.IsCrosswalk ? e.GetCrosswalkStyle() : e.GetSimpleStyle();
-            var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
-            Panel.EditLine(newLine);
+
+            if(pointPair.IsCrosswalk)
+            {
+                var newCrosswalk = EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalk;
+                Panel.EditCrosswalk(newCrosswalk);
+            }
+            else
+            {
+                var lineType = pointPair.IsStopLine ? e.GetStopStyle() : e.GetRegularStyle();
+                var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
+                Panel.EditLine(newLine);
+            }
+
             SelectPoint = null;
             SetTarget();
         }

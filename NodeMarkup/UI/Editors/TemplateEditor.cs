@@ -76,10 +76,7 @@ namespace NodeMarkup.UI.Editors
             RefreshItems();
             HeaderPanel.Init(EditObject.IsDefault());
         }
-        protected override void OnObjectDelete(StyleTemplate template)
-        {
-            TemplateManager.DeleteTemplate(template);
-        }
+        protected override void OnObjectDelete(StyleTemplate template) => TemplateManager.DeleteTemplate(template);
     }
 
     public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>

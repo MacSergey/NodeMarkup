@@ -61,6 +61,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalks.
+        /// </summary>
+        public static string CrosswalkEditor_Crosswalks {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_Crosswalks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string CrosswalkEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на crosswalk.
+        /// </summary>
+        public static string CrossWalkEditor_ItemDescription {
+            get {
+                return ResourceManager.GetString("CrossWalkEditor_ItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Exist road crosswalk.
         /// </summary>
         public static string CrosswalkStyle_Existent {

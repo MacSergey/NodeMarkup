@@ -61,10 +61,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var line in Markup.Lines)
-            {
+            foreach (var line in Markup.Lines.Where(l => (l.Type & (MarkupLine.LineType.Regular | MarkupLine.LineType.Stop)) != 0))
                 AddItem(line);
-            }
         }
         protected override void OnObjectSelect()
         {
@@ -134,7 +132,7 @@ namespace NodeMarkup.UI.Editors
         }
         private bool SetStyle(RulePanel rulePanel, Event e)
         {
-            rulePanel.Style.SelectedObject = e.GetSimpleStyle();
+            rulePanel.Style.SelectedObject = e.GetRegularStyle();
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)
@@ -252,11 +250,6 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverItem)
                 {
                     var bezier = HoverItem.Object.Trajectory;
-                    //if (HoverItem.Object.IsEnterLine)
-                    //{
-                    //    bezier.b = bezier.a + (bezier.d - bezier.a).normalized;
-                    //    bezier.c = bezier.d + (bezier.a - bezier.d).normalized;
-                    //}
                     NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
                 }
                 if (IsHoverRulePanel)

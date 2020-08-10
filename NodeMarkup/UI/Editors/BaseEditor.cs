@@ -207,13 +207,11 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.height = size.y;
             ItemsPanel.relativePosition = new Vector2(0, 0);
             ItemsPanel.verticalScrollbar.height = size.y;
-            //ItemsPanel.verticalScrollbar.relativePosition = ItemsPanel.relativePosition + new Vector3(ItemsPanel.width, 0);
 
             SettingsPanel.width = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
             SettingsPanel.height = size.y;
             SettingsPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
             SettingsPanel.verticalScrollbar.height = size.y;
-            //SettingsPanel.verticalScrollbar.relativePosition = SettingsPanel.relativePosition + new Vector3(SettingsPanel.width, 0);
 
             EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);
             EmptyLabel.relativePosition = SettingsPanel.relativePosition;

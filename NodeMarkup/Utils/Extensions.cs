@@ -187,7 +187,7 @@ namespace NodeMarkup.Utils
         public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
         public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
 
-        public static Style.StyleType GetSimpleStyle(this Event e) =>
+        public static Style.StyleType GetRegularStyle(this Event e) =>
             NodeMarkupTool.ShiftIsPressed ? 
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) : 
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleDashed : Style.StyleType.LineDashed);

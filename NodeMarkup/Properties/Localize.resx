@@ -720,4 +720,13 @@ By registering early access, you will support the ability to develop this mod at
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel to lanes</value>
   </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Crosswalks</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>crosswalk</value>
+  </data>
 </root>

@@ -89,6 +89,7 @@ namespace NodeMarkup.UI
         {
             CreateEditor<PointsEditor>();
             CreateEditor<LinesEditor>();
+            CreateEditor<CrosswalkEditor>();
             CreateEditor<FillerEditor>();
             CreateEditor<TemplateEditor>();
         }
@@ -152,6 +153,11 @@ namespace NodeMarkup.UI
         {
             var editor = SelectEditor<LinesEditor>();
             editor?.UpdateEditor(line);
+        }
+        public void EditCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            var editor = SelectEditor<CrosswalkEditor>();
+            editor?.UpdateEditor(crosswalk);
         }
         public void EditTemplate(StyleTemplate template)
         {

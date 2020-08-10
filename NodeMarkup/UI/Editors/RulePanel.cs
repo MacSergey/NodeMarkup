@@ -103,9 +103,9 @@ namespace NodeMarkup.UI.Editors
                 case MarkupStopLine stopLine:
                     Style = AddUIComponent<StopStylePropertyPanel>();
                     break;
-                case MarkupCrosswalk crosswalk:
-                    Style = AddUIComponent<CrosswalkPropertyPanel>();
-                    break;
+                //case MarkupCrosswalk crosswalk:
+                //    Style = AddUIComponent<CrosswalkPropertyPanel>();
+                //    break;
                 default:
                     return;
             }
