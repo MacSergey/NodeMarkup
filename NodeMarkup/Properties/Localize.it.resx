@@ -534,15 +534,31 @@ Per creare uno riempimento, tieni premuto Alt o premi {0}.</value>
     <value>La lista dei modelli è vuota.
 Per creare una modello, clicca «{0}» sullo stile linea.</value>
   </data>
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Attiva con codice</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Attivazione fallita</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Attivazione riuscita</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Questa funzione non è disponibile</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Stile a Spina di pesce o a Galloni</value>
+  </data>
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Copia stile</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Incolla stile</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Linee perpendicolari</value>
+  </data>
   
   
   
@@ -580,29 +596,78 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   
   
   
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italiano</value>
+  </data>
   
   
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Lingua</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Clicca per creare una linea perpendicolare
++Shift - Continua
++Ctrl - Doppia</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Clicca per cancellare le linea perpendicolare</value>
+  </data>
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Parallelo alle corsie</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Atttraversamento esistente</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Compensa dopo</value>
+  </data>
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
+    <value>Compesa prima</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallelo alle corsie</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Attraversamenti</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Non ci sono ancora attarversamenti in questo incrocio.
+Per creare un attraversamento connetti due punti.</value>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>attraversamento</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Attraversamenti</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Riempimenti</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Linee regolari</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Linee di Stop</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Gruppo di linee</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Gruppo di modelli</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Clicca per creare un attraversamento</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Clicca per cancellare l'attraversamento</value>
+  </data>
   
   
 </root>

@@ -693,8 +693,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>此交叉路口没有人行道。
 连接两点以创建人行道。</value>
-    <comment>CrosswalkEditor_EmptyMessage
-</comment>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>人行横道</value>
@@ -717,4 +715,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>模板整合成组</value>
   </data>
+  
+  
+  
+  
 </root>
