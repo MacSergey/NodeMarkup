@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -373,6 +373,7 @@ nebo smazání čáry
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
   </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importovat</value>
   </data>
@@ -457,6 +458,8 @@ nebo smazání čáry
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Verze {0}</value>
   </data>
@@ -469,6 +472,7 @@ nebo smazání čáry
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dvojítá čára hranice</value>
   </data>
@@ -671,7 +675,9 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existující přechod</value>
   </data>
-  
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Odsazení mezi</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Přechody</value>
   </data>
@@ -700,13 +706,24 @@ Pro vytvoření přechodu spojte dva body.</value>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>Skupinové šablony</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Klikněte pro vytvoření přechodu</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Klikněte pro odstranění přechodu</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Podle stylu</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Podle typu</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Dvojitá zebra</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Tloušťka čáry</value>
+  </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Odsazení za</value>
   </data>
@@ -716,5 +733,19 @@ Pro vytvoření přechodu spojte dva body.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Souběžná s pruhy</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Souběžné čáry</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Levý roh</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Pravý roh</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Vyber levý roh přechodu</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Vyber pravý roh přechodu</value>
+  </data>
 </root>

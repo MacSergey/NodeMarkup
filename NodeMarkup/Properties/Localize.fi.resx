@@ -380,7 +380,7 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
     <value>Peruuta</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
-    <value>Käänteinen</value>
+    <value>Käännä</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Leveys</value>
@@ -668,13 +668,36 @@ Yhdistä kaksi pistettä luodaksesi suojatien.</value>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>suojatie</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Suojatiet</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Sulkualueet</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Tavalliset viivat</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Pysäytysviivat</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Lajittele viivat</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Lajittele mallineet</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Napauta luodaksesi suojatien</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Napauta poistaaksesi suojatien</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Tyylin mukaan</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Tyypin mukaan</value>
+  </data>
   
   
   

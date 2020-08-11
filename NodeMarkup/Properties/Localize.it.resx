@@ -561,8 +561,12 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   </data>
   
   
-  
-  
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Chiave d'accesso</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Attiva</value>
+  </data>
   
   
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
@@ -579,10 +583,18 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
-  
-  
-  
-  
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Stato: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Attivato</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Non attivato</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Grazie per il tuo supporto, ora puoi goderti tutte le funzionalità.</value>
+  </data>
   
   
   
@@ -657,6 +669,9 @@ Per creare un attraversamento connetti due punti.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Clicca per cancellare l'attraversamento</value>
   </data>
+  
+  
+  
   
   
   

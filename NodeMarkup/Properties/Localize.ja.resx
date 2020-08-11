@@ -679,7 +679,9 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>既存の横断歩道</value>
   </data>
-  
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>横断歩道の始点</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>横断歩道の一覧</value>
   </data>
@@ -714,11 +716,18 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>クリックして横断歩道を削除</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>スタイル別</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>タイプ別</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>2重の縞模様</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>ラインの太さ</value>
+  </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>終点のオフセット</value>
   </data>
@@ -728,5 +737,19 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>車線と平行にする</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>平行線</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>左枠線</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>右枠線</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>横断歩道の左枠線を選択</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>横断歩道の右枠線を選択</value>
+  </data>
 </root>

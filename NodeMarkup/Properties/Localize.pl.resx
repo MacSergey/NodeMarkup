@@ -718,7 +718,6 @@ Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
   </data>
   
   
-  
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Odstęp za</value>
   </data>
@@ -728,5 +727,9 @@ Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Równolegle do pasów</value>
   </data>
+  
+  
+  
+  
   
 </root>
