@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,21 @@ namespace NodeMarkup.UI.Editors
             }
         }
         public void RefreshItem() => SelectItem.Refresh();
+
+        public override void Render(RenderManager.CameraInfo cameraInfo)
+        {
+            if (IsHoverItem)
+            {
+                var bezier = new Bezier3()
+                {
+                    a = HoverItem.Object.Start.Position,
+                    b = HoverItem.Object.End.Position,
+                    c = HoverItem.Object.Start.Position,
+                    d = HoverItem.Object.End.Position,
+                };
+                NodeMarkupTool.RenderBezier(cameraInfo, Color.white, bezier, 3f);
+            }
+        }
     }
 
     public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>

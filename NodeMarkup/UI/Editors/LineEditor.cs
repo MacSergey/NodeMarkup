@@ -242,29 +242,24 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var supportPoint in SupportPoints)
                 {
-                    var color = (SelectPartEdgePanel.Position == RulePosition.Start ? Color.green : Color.red);
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
+                    var color = SelectPartEdgePanel.Position == RulePosition.Start ? Color.green : Color.red;
+                    NodeMarkupTool.RenderCircle(cameraInfo, color, supportPoint.Position, 0.5f);
                 }
 
                 if (IsHoverSupportPoint)
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverSupportPoint.Position, 1f, -1f, 1280f, false, true);
+                    NodeMarkupTool.RenderCircle(cameraInfo, Color.white, HoverSupportPoint.Position, 1f);
             }
             else
             {
                 if (IsHoverItem)
-                {
-                    var bezier = HoverItem.Object.Trajectory;
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
-                }
+                    NodeMarkupTool.RenderBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f);
                 if (IsHoverRulePanel)
                 {
                     if (HoverRulePanel.Rule.GetTrajectory(out Bezier3 bezier))
-                        NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, WhiteAlpha, bezier, 2f, 0f, 0f, -1f, 1280f, false, true);
+                        NodeMarkupTool.RenderBezier(cameraInfo, WhiteAlpha, bezier, 2f);
                 }
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
-                {
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, supportPoint.Position, 0.5f, -1f, 1280f, false, true);
-                }
+                    NodeMarkupTool.RenderCircle(cameraInfo, Color.white, supportPoint.Position, 0.5f);
             }
         }
         public override string GetInfo()

@@ -258,7 +258,7 @@ namespace NodeMarkup
             if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter)
             {
                 var connectLine = MouseWorldPosition - SelectPoint.Position;
-                if (connectLine.magnitude >= 5 && 160 <= Vector3.Angle(SelectPoint.Direction, connectLine) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                if (connectLine.magnitude >= 5 && 160 <= Vector3.Angle(SelectPoint.Direction.XZ(), connectLine.XZ()) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
                     return;
@@ -519,7 +519,7 @@ namespace NodeMarkup
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-            if(pointPair.IsCrosswalk)
+            if (pointPair.IsCrosswalk)
             {
                 var newCrosswalk = EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalk;
                 Panel.EditCrosswalk(newCrosswalk);
@@ -649,7 +649,7 @@ namespace NodeMarkup
 
         #endregion
 
-        #region Overlay
+        #region OVERLAY
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             switch (ToolMode)
@@ -684,7 +684,7 @@ namespace NodeMarkup
         private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint && HoverPoint.Type != MarkupPoint.PointType.Normal)
-                RenderCircle(cameraInfo, Color.white, HoverPoint.Position, 0.5f);
+                RenderPointOverlay(cameraInfo, HoverPoint, Color.white, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
             RenderConnectLineOverlay(cameraInfo);
@@ -705,21 +705,37 @@ namespace NodeMarkup
             foreach (var point in TargetPoints)
                 RenderPointOverlay(cameraInfo, point);
         }
-        private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter)
+        private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter, Vector3 shift, float width)
         {
             if (enter.Position == null)
                 return;
 
             var bezier = new Bezier3
             {
-                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth,
-                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth
+                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift,
+                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift
             };
             NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
 
-            RenderBezier(cameraInfo, Color.white, bezier, 2f);
+            RenderBezier(cameraInfo, Color.white, bezier, width);
         }
-        private void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderCircle(cameraInfo, point.Color, point.Position, 1f);
+        public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderPointOverlay(cameraInfo, point, point.Color, 1f);
+        public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point, Color color, float width)
+        {
+            if (point.Type == MarkupPoint.PointType.Crosswalk)
+            {
+                var bezier = new Bezier3()
+                {
+                    a = point.Position - point.Direction,
+                    b = point.Position + point.Direction,
+                    c = point.Position - point.Direction,
+                    d = point.Position + point.Direction,
+                };
+                RenderBezier(cameraInfo, color, bezier, width);
+            }
+            else
+                RenderCircle(cameraInfo, color, point.Position, width);
+        }
         private void RenderConnectLineOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (!IsSelectPoint)
@@ -808,7 +824,11 @@ namespace NodeMarkup
         private void RenderPanelActionMode(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
         private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
         {
-            RenderEnterOverlay(cameraInfo, DragPoint.Enter);
+            if(DragPoint.Type != MarkupPoint.PointType.Crosswalk)
+                RenderEnterOverlay(cameraInfo, DragPoint.Enter, Vector3.zero, 2f);
+            else
+                RenderEnterOverlay(cameraInfo, DragPoint.Enter, DragPoint.Direction * MarkupCrosswalkPoint.Shift, 3f);
+
             RenderPointOverlay(cameraInfo, DragPoint);
         }
         private void RenderSelectFillerMode(RenderManager.CameraInfo cameraInfo)
@@ -859,9 +879,9 @@ namespace NodeMarkup
             RenderBezier(cameraInfo, color, bezier);
         }
 
-        private void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.5f) =>
+        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.5f) =>
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, 0f, 0f, -1f, 1280f, false, true);
-        private void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width) =>
+        public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width) =>
             RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, true);
 
         #endregion

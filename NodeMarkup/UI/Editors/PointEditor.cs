@@ -52,10 +52,8 @@ namespace NodeMarkup.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            if (HoverItem != null)
-            {
-                NodeMarkupTool.RenderManager.OverlayEffect.DrawCircle(cameraInfo, Color.white, HoverItem.Object.Position, 2f, -1f, 1280f, false, true);
-            }
+            if (IsHoverItem)
+                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverItem.Object, Color.white, 2f);
         }
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>

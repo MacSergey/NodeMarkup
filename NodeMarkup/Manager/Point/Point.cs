@@ -54,8 +54,8 @@ namespace NodeMarkup.Manager
         public abstract PointType Type { get; }
         public Color32 Color => Markup.OverlayColors[(Num - 1) % Markup.OverlayColors.Length];
 
-        public static Vector3 MarkerSize { get; } = Vector3.one * 1f;
-        public Vector3 Position
+        private static Vector3 MarkerSize { get; } = Vector3.one * 1f;
+        public virtual Vector3 Position
         {
             get => Bounds.center;
             protected set => Bounds = new Bounds(value, MarkerSize);
@@ -152,13 +152,21 @@ namespace NodeMarkup.Manager
     }
     public class MarkupCrosswalkPoint : MarkupPoint
     {
+        private static Vector3 MarkerSize { get; } = Vector3.one * 2f;
+        public static float Shift { get; } = 3;
         public override PointType Type => PointType.Crosswalk;
+        public override Vector3 Position
+        {
+            get => base.Position;
+            protected set => Bounds = new Bounds(value, MarkerSize);
+        }
+
         public MarkupCrosswalkPoint(byte num, SegmentMarkupLine markupLine, LocationType location) : base(num, markupLine, location) { }
 
         public override void UpdateProcess()
         {
             SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
-            Position = position + direction * 2;
+            Position = position + direction * Shift;
             Direction = direction;
         }
     }

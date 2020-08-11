@@ -310,7 +310,7 @@ namespace NodeMarkup.Manager
         public override Bezier3 GetTrajectory()
         {
             var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
-            var offset = NormalDir * ((Rule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - 2);
+            var offset = NormalDir * ((Rule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
 
             var trajectory = default(Bezier3);
             trajectory.a = PointPair.First.Position + offset;
