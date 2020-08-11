@@ -146,12 +146,13 @@ namespace NodeMarkup.Manager
                 cornerAngle = cornerAngle >= 180 ? cornerAngle - 180 : cornerAngle + 180;
             AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
 
-            CornerDir = DriveLanes.Length <= 1 ? 
-                Vector3.right.TurnRad(AbsoluteAngle, false).normalized : 
+            CornerDir = DriveLanes.Length <= 1 ?
+                Vector3.right.TurnRad(AbsoluteAngle, false).normalized :
                 (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
             NormalDir = DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero;
             NormalDir = IsStartSide ? -NormalDir : NormalDir;
-            CornerAndNormalAngle = Vector3.Angle(NormalDir, CornerDir) * Mathf.Deg2Rad;
+            var angle = Vector3.Angle(NormalDir, CornerDir);
+            CornerAndNormalAngle = (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad;
         }
         private void CalculatePosition(NetSegment segment)
         {

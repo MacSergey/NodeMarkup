@@ -756,9 +756,6 @@ To create a crosswalk connect two points.</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>Double zebra</value>
   </data>
-  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>Ladder</value>
-  </data>
   <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
     <value>Line width</value>
   </data>

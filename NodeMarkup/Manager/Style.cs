@@ -272,9 +272,6 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelLines))]
             CrosswalkParallelLines,
-
-            [Description(nameof(Localize.CrosswalkStyle_Ladder))]
-            CrosswalkLadder,
         }
     }
 
