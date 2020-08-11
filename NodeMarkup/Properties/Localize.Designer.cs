@@ -116,6 +116,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel lines.
+        /// </summary>
+        public static string CrosswalkStyle_ParallelLines {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_ParallelLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Zebra.
         /// </summary>
         public static string CrosswalkStyle_Zebra {

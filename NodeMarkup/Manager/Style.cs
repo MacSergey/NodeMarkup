@@ -269,6 +269,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
             CrosswalkDoubleZebra,
+
+            [Description(nameof(Localize.CrosswalkStyle_ParallelLines))]
+            CrosswalkParallelLines,
         }
     }
 

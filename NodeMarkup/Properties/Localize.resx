@@ -768,4 +768,7 @@ To create a crosswalk connect two points.</value>
   <data name="LineEditor_OffsetBetween" xml:space="preserve">
     <value>Offset between</value>
   </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Parallel lines</value>
+  </data>
 </root>

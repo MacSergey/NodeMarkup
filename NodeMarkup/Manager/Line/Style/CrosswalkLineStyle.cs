@@ -189,7 +189,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Parallel ? Width : Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
+        protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
 
         public ZebraCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel) : base(color, width, offsetBefore, offsetAfter)
         {
@@ -273,7 +274,7 @@ namespace NodeMarkup.Manager
         {
             Offset = offset;
         }
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width * 2 / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle)) + Offset;
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
         public override CrosswalkStyle CopyCrosswalkStyle() => new DoubleZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
         public override void CopyTo(Style target)
         {
@@ -285,9 +286,9 @@ namespace NodeMarkup.Manager
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
-            var deltaOffset = (base.GetVisibleWidth(crosswalk) + Offset) / 2;
+            var deltaOffset = GetLengthCoef((Width + Offset) / 2, crosswalk);
             var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
-            var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset); ;
+            var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
 
             var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
             var dashLength = Parallel ? DashLength / coef : DashLength;
@@ -313,6 +314,69 @@ namespace NodeMarkup.Manager
             return components;
         }
 
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("O", Offset));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            Offset = config.GetAttrValue("O", DefaultCrosswalkOffset);
+        }
+    }
+    public class ParallelLinesCrosswalkStyle : CustomCrosswalkStyle, IDoubleLine
+    {
+        public override StyleType Type => StyleType.CrosswalkParallelLines;
+
+        float _offset;
+        public float Offset
+        {
+            get => _offset;
+            set
+            {
+                _offset = value;
+                StyleChanged();
+            }
+        }
+
+        public ParallelLinesCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float offset) :
+            base(color, width, offsetBefore, offsetAfter)
+        {
+            Offset = offset;
+        }
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => (Width * 2 + Offset) / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, Offset);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDoubleLine doubleTarget)
+                doubleTarget.Offset = Offset;
+        }
+
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
+        {
+            var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
+            var deltaOffset = (Width + Offset) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+            var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
+            var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
+
+            return CalculateSolid(trajectory, 0, CalculateDashes);
+
+            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory)
+            {
+                yield return CalculateSolidDash(dashTrajectory, firstOffset, firstOffset);
+                yield return CalculateSolidDash(dashTrajectory, secondOffset, secondOffset);
+            }
+        }
+
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddOffsetBetweenProperty(this, parent, onHover, onLeave));
+            return components;
+        }
         public override XElement ToXml()
         {
             var config = base.ToXml();
