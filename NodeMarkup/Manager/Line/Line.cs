@@ -2,6 +2,7 @@
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -131,8 +132,13 @@ namespace NodeMarkup.Manager
 
         public enum LineType
         {
+            [Description(nameof(Localize.LineStyle_RegularGroup))]
             Regular = Markup.Item.RegularLine,
+
+            [Description(nameof(Localize.LineStyle_StopGroup))]
             Stop = Markup.Item.StopLine,
+
+            [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = Markup.Item.Crosswalk,
         }
     }

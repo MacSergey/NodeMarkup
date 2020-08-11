@@ -13,7 +13,7 @@ using static ToolBase;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class LinesEditor : GroupedEditor<LineItem, MarkupLine, LineIcon, LineGroup, Style.StyleType>
+    public class LinesEditor : GroupedEditor<LineItem, MarkupLine, LineIcon, LineGroup, MarkupLine.LineType>
     {
         public static Color WhiteAlpha { get; } = new Color(1, 1, 1, 0.5f);
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
@@ -60,8 +60,8 @@ namespace NodeMarkup.UI.Editors
 
         public LinesEditor() { }
 
-        protected override Style.StyleType SelectGroup(MarkupLine editableItem) => editableItem is MarkupStopLine ? Style.StyleType.StopLine : Style.StyleType.RegularLine;
-        protected override string GroupName(Style.StyleType group) => Utilities.EnumDescription(group);
+        protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
+        protected override string GroupName(MarkupLine.LineType group) => Utilities.EnumDescription(group);
 
         protected override void FillItems()
         {
@@ -314,5 +314,5 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class LineGroup : EditableGroup<Style.StyleType, LineItem, MarkupLine, LineIcon> { }
+    public class LineGroup : EditableGroup<MarkupLine.LineType, LineItem, MarkupLine, LineIcon> { }
 }

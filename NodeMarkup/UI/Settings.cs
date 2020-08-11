@@ -38,6 +38,7 @@ namespace NodeMarkup.UI
         public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
         public static SavedBool GroupTemplates { get; } = new SavedBool(nameof(GroupTemplates), SettingsFile, true, true);
+        public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
 
         static Settings()
         {
@@ -202,15 +203,50 @@ namespace NodeMarkup.UI
         }
         private static void AddGroupLines(UIHelper group)
         {
-            var groupLinesCheckBox = group.AddCheckbox(Localize.Settings_GroupLines, GroupLines, OnQuickRuleSetupChanged) as UICheckBox;
+            var groupLinesCheckBox = group.AddCheckbox(Localize.Settings_GroupLines, GroupLines, OnGroupLinesChanged) as UICheckBox;
 
-            void OnQuickRuleSetupChanged(bool request) => GroupLines.value = request;
+            void OnGroupLinesChanged(bool groupLines) => GroupLines.value = groupLines;
         }
         private static void AddGroupTemplates(UIHelper group)
         {
-            var groupTemplatesCheckBox = group.AddCheckbox(Localize.Settings_GroupTemplates, GroupTemplates, OnQuickRuleSetupChanged) as UICheckBox;
+            var inProcess = false;
+            var groupByType = default(UICheckBox);
+            var groupByStyle = default(UICheckBox);
+            var byPanel = default(UIPanel);
 
-            void OnQuickRuleSetupChanged(bool request) => GroupTemplates.value = request;
+            var groupTemplatesCheckBox = group.AddCheckbox(Localize.Settings_GroupTemplates, GroupTemplates, OnGroupTemplatesChanged) as UICheckBox;
+
+            byPanel = (group.self as UIComponent).AddUIComponent<UIPanel>();
+            byPanel.autoLayout = true;
+            byPanel.autoLayoutDirection = LayoutDirection.Vertical;
+            byPanel.autoFitChildrenHorizontally = true;
+            byPanel.autoFitChildrenVertically = true;
+            byPanel.autoLayoutPadding = new RectOffset(25, 0, 0, 5);
+            var panelHelper = new UIHelper(byPanel);
+
+            groupByType = panelHelper.AddCheckbox(Localize.Settings_GroupTemplatesByType, GroupTemplatesType == 0, OnByTypeChanged) as UICheckBox;
+            groupByStyle = panelHelper.AddCheckbox(Localize.Settings_GroupTemplatesByStyle, GroupTemplatesType == 1, OnByStyleChanged) as UICheckBox;
+            SetVisible();
+
+            void OnGroupTemplatesChanged(bool groupTemplates)
+            {
+                GroupTemplates.value = groupTemplates;
+                SetVisible();
+            }
+            void SetVisible() => byPanel.isVisible = GroupTemplates;
+            void OnByTypeChanged(bool by) => Set(by ? 0 : 1);
+            void OnByStyleChanged(bool by) => Set(by ? 1 : 0);
+            void Set(int value)
+            {
+                if (!inProcess)
+                {
+                    inProcess = true;
+                    GroupTemplatesType.value = value;
+                    groupByType.isChecked = GroupTemplatesType == 0;
+                    groupByStyle.isChecked = GroupTemplatesType == 1;
+                    inProcess = false;
+                }
+            }
         }
         #endregion
 

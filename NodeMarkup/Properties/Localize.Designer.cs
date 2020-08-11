@@ -1428,6 +1428,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на By style.
+        /// </summary>
+        public static string Settings_GroupTemplatesByStyle {
+            get {
+                return ResourceManager.GetString("Settings_GroupTemplatesByStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By type.
+        /// </summary>
+        public static string Settings_GroupTemplatesByType {
+            get {
+                return ResourceManager.GetString("Settings_GroupTemplatesByType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Import.
         /// </summary>
         public static string Settings_Import {

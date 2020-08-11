@@ -40,8 +40,10 @@ namespace NodeMarkup.UI.Editors
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
         }
-        protected override Style.StyleType SelectGroup(StyleTemplate editableItem) => editableItem.Style.Type & Style.StyleType.GroupMask;
-        protected override string GroupName(Style.StyleType group) => Utilities.EnumDescription(group);
+        protected override Style.StyleType SelectGroup(StyleTemplate editableItem) 
+            => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
+        protected override string GroupName(Style.StyleType group) 
+            => Settings.GroupTemplatesType == 0 ? Utilities.EnumDescription(group) : $"{Utilities.EnumDescription(group & Style.StyleType.GroupMask)}\n{Utilities.EnumDescription(group)}";
 
         private void AddHeader()
         {

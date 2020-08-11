@@ -756,4 +756,10 @@ To create a crosswalk connect two points.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Click to delete the crosswalk</value>
   </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>By style</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>By type</value>
+  </data>
 </root>

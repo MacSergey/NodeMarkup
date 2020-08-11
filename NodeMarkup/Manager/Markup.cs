@@ -4,6 +4,7 @@ using NodeMarkup.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -380,9 +381,16 @@ namespace NodeMarkup.Manager
 
         public enum Item
         {
+            [Description(nameof(Localize.LineStyle_RegularGroup))]
             RegularLine = 0x100,
+
+            [Description(nameof(Localize.LineStyle_StopGroup))]
             StopLine = 0x200,
+
+            [Description(nameof(Localize.FillerStyle_Group))]
             Filler = 0x400,
+
+            [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = 0x800,
         }
     }

@@ -123,6 +123,8 @@ namespace NodeMarkup.UI.Editors
             Label.autoHeight = false;
             Label.textScale = 0.6f;
             Label.padding = new RectOffset(0, 0, 2, 0);
+            Label.autoHeight = true;
+            Label.wordWrap = true;
         }
         private void AddExpandIcon()
         {
@@ -138,8 +140,8 @@ namespace NodeMarkup.UI.Editors
             ExpandIcon.size = new Vector2(size.y - 6, size.y - 6);
             ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
 
-            Label.size = new Vector2(size.x - 28, size.y);
-            Label.relativePosition = new Vector3(3, 0);
+            Label.size = new Vector2(size.x - 6, size.y);
+            Label.relativePosition = new Vector3(3, (height - Label.height) / 2);
         }
     }
 }
