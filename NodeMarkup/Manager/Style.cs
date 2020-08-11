@@ -267,9 +267,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_Zebra))]
             CrosswalkZebra,
 
-            //CrosswalkDoubleSolid,
-            //CrosswalkDoubleDashed,
-
+            [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
+            CrosswalkDoubleZebra,
         }
     }
 

@@ -34,6 +34,7 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.FillerChevron, nameof(Style.StyleType.FillerChevron) },
                 {Style.StyleType.CrosswalkExistent, nameof(Style.StyleType.CrosswalkExistent) },
                 {Style.StyleType.CrosswalkZebra, nameof(Style.StyleType.CrosswalkZebra) },
+                {Style.StyleType.CrosswalkDoubleZebra, nameof(Style.StyleType.CrosswalkDoubleZebra) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));

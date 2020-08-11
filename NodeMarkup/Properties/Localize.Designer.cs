@@ -89,6 +89,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Double zebra.
+        /// </summary>
+        public static string CrosswalkStyle_DoubleZebra {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_DoubleZebra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Existing crosswalk.
         /// </summary>
         public static string CrosswalkStyle_Existent {
@@ -749,6 +758,15 @@ namespace NodeMarkup {
         public static string LineEditor_OffsetBefore {
             get {
                 return ResourceManager.GetString("LineEditor_OffsetBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset between.
+        /// </summary>
+        public static string LineEditor_OffsetBetween {
+            get {
+                return ResourceManager.GetString("LineEditor_OffsetBetween", resourceCulture);
             }
         }
         

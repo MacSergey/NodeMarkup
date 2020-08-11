@@ -250,6 +250,9 @@ namespace NodeMarkup.Manager
         public override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDash[0];
+        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, Bezier3 trajectory);
+
         public enum StopLineType
         {
             [Description(nameof(Localize.LineStyle_Stop))]
@@ -275,7 +278,8 @@ namespace NodeMarkup.Manager
         static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
-            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) }
+            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) },
+            {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true, DefaultCrosswalkOffset) }
         };
 
         public static LineStyle GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
@@ -298,9 +302,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_Zebra))]
             Zebra = StyleType.CrosswalkZebra,
 
-            //DoubleSolid = StyleType.CrosswalkDoubleSolid,
-
-            //DoubleDashed = StyleType.CrosswalkDoubleDashed,
+            [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
+            DoubleZebra = StyleType.CrosswalkDoubleZebra,
         }
     }
 }
