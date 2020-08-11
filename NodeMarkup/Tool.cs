@@ -247,7 +247,7 @@ namespace NodeMarkup
             {
                 foreach (var point in TargetPoints)
                 {
-                    if (point.IsIntersect(MouseRay) && (!IsSelectPoint || point != SelectPoint))
+                    if (point.IsHover(MouseRay))
                     {
                         HoverPoint = point;
                         return;
@@ -255,10 +255,10 @@ namespace NodeMarkup
                 }
             }
 
-            if (IsSelectPoint)
+            if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter)
             {
                 var connectLine = MouseWorldPosition - SelectPoint.Position;
-                if (connectLine.magnitude >= 5 && Vector3.Angle(SelectPoint.Direction, connectLine) <= 3 && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                if (connectLine.magnitude >= 5 && 160 <= Vector3.Angle(SelectPoint.Direction, connectLine) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
                     return;
@@ -305,10 +305,17 @@ namespace NodeMarkup
                 case Mode.ConnectLine when IsSelectPoint && IsHoverPoint:
                     var markup = MarkupManager.Get(SelectNodeId);
                     var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-                    if (markup.ExistConnection(pointPair))
-                        ShowToolInfo(pointPair.IsSomeEnter ? (pointPair.IsNormal ? Localize.Tool_InfoDeleteNormalLine : Localize.Tool_InfoDeleteStopLine) : Localize.Tool_InfoDeleteLine, position);
+                    var exist = markup.ExistConnection(pointPair);
+
+                    if (pointPair.IsStopLine)
+                        ShowToolInfo(exist ? Localize.Tool_InfoDeleteStopLine : Localize.Tool_InfoCreateStopLine, position);
+                    else if (pointPair.IsCrosswalk)
+                        ShowToolInfo(exist ? Localize.Tool_InfoDeleteCrosswalk : Localize.Tool_InfoCreateCrosswalk, position);
+                    else if (pointPair.IsNormal)
+                        ShowToolInfo(exist ? Localize.Tool_InfoDeleteNormalLine : Localize.Tool_InfoCreateNormalLine, position);
                     else
-                        ShowToolInfo(pointPair.IsSomeEnter ? (pointPair.IsNormal ? Localize.Tool_InfoCreateNormalLine : Localize.Tool_InfoCreateStopLine) : Localize.Tool_InfoCreateLine, position);
+                        ShowToolInfo(exist ? Localize.Tool_InfoDeleteLine : Localize.Tool_InfoCreateLine, position);
+
                     break;
                 case Mode.ConnectLine when IsSelectPoint:
                     ShowToolInfo(Localize.Tool_InfoSelectEndPoint, position);

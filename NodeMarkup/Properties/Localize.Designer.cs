@@ -1702,6 +1702,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to create a crosswalk.
+        /// </summary>
+        public static string Tool_InfoCreateCrosswalk {
+            get {
+                return ResourceManager.GetString("Tool_InfoCreateCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to create a line
         ///+Shift - Solid
         ///+Ctrl - Double.
@@ -1729,6 +1738,15 @@ namespace NodeMarkup {
         public static string Tool_InfoCreateStopLine {
             get {
                 return ResourceManager.GetString("Tool_InfoCreateStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to delete the crosswalk.
+        /// </summary>
+        public static string Tool_InfoDeleteCrosswalk {
+            get {
+                return ResourceManager.GetString("Tool_InfoDeleteCrosswalk", resourceCulture);
             }
         }
         

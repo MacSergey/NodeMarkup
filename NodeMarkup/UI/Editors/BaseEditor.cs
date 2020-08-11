@@ -26,12 +26,14 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.LineSolidAndDashed, nameof(Style.StyleType.LineSolidAndDashed) },
                 {Style.StyleType.StopLineSolid, nameof(Style.StyleType.StopLineSolid) },
                 {Style.StyleType.StopLineDashed, nameof(Style.StyleType.StopLineDashed) },
+                {Style.StyleType.StopLineDoubleSolid, nameof(Style.StyleType.StopLineDoubleSolid) },
+                {Style.StyleType.StopLineDoubleDashed, nameof(Style.StyleType.StopLineDoubleDashed) },
                 {Style.StyleType.FillerStripe, nameof(Style.StyleType.FillerStripe) },
                 {Style.StyleType.FillerGrid, nameof(Style.StyleType.FillerGrid) },
                 {Style.StyleType.FillerSolid, nameof(Style.StyleType.FillerSolid) },
-                {Style.StyleType.StopLineDoubleSolid, nameof(Style.StyleType.StopLineDoubleSolid) },
-                {Style.StyleType.StopLineDoubleDashed, nameof(Style.StyleType.StopLineDoubleDashed) },
                 {Style.StyleType.FillerChevron, nameof(Style.StyleType.FillerChevron) },
+                {Style.StyleType.CrosswalkExistent, nameof(Style.StyleType.CrosswalkExistent) },
+                {Style.StyleType.CrosswalkZebra, nameof(Style.StyleType.CrosswalkZebra) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));

@@ -63,6 +63,7 @@ namespace NodeMarkup.Manager
         public Vector3 Direction { get; protected set; }
         public LocationType Location { get; private set; }
         public Bounds Bounds { get; protected set; }
+        public Bounds SaveBounds { get; private set; }
 
         public SegmentMarkupLine SegmentLine { get; }
         public Enter Enter => SegmentLine.Enter;
@@ -95,7 +96,7 @@ namespace NodeMarkup.Manager
             OnUpdate?.Invoke(this);
         }
         public abstract void UpdateProcess();
-        public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
+        public bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
         public override string ToString() => $"{Enter}-{Num}";
         public override int GetHashCode() => Id;
 
