@@ -44,7 +44,7 @@ namespace NodeMarkup.Manager
                 UpdateTrajectory();
         }
         protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
-        protected void RuleChanged() => Markup.Update(this);
+        protected virtual void RuleChanged() => Markup.Update(this);
 
         public void UpdateTrajectory() => Trajectory = GetTrajectory();
         public virtual Bezier3 GetTrajectory()
@@ -304,8 +304,8 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
         {
             AddDefaultRule(crosswalkType);
-            //UpdateTrajectory();
         }
+        protected override void RuleChanged() => Markup.Update(this, true);
         protected override void AddDefaultRule() => AddDefaultRule();
         private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Zebra)
         {

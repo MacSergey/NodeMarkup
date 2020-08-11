@@ -140,10 +140,19 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
-        public void Update(MarkupLine line)
+        public void Update(MarkupLine line, bool updateIntersect = false)
         {
             line.UpdateTrajectory();
             line.RecalculateDashes();
+            if(updateIntersect)
+            {
+                foreach (var intersect in GetExistIntersects(line, true).ToArray())
+                {
+                    LineIntersects.Remove(intersect.Pair);
+                    Update(intersect.Pair.GetOther(line));
+                }
+            }
+
             NeedRecalculateBatches = true;
         }
         public void Update(MarkupFiller filler)
@@ -215,7 +224,7 @@ namespace NodeMarkup.Manager
         }
         private void RemoveLine(MarkupLine line)
         {
-            foreach (var intersect in GetExistIntersects(line).ToArray())
+            foreach (var intersect in GetExistIntersects(line, false).ToArray())
             {
                 if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
                     regularLine.RemoveRules(line);
@@ -243,7 +252,8 @@ namespace NodeMarkup.Manager
         public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line) => LineIntersects.Values.Where(i => i.Pair.ContainLine(line));
+        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false) 
+            => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
         public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkupLine line)
         {
             foreach(var otherLine in Lines)
