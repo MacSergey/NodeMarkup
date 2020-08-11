@@ -333,6 +333,11 @@ namespace NodeMarkup.Manager
                     var pointConfig = point.ToXml();
                     config.Add(pointConfig);
                 }
+                foreach (var point in enter.Crosswalks)
+                {
+                    var pointConfig = point.ToXml();
+                    config.Add(pointConfig);
+                }
             }
             foreach (var line in Lines)
             {
