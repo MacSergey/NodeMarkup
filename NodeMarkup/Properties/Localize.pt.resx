@@ -685,7 +685,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Deslocamento depois</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>Deslocamento antes</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

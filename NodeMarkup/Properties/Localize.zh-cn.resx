@@ -674,7 +674,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>从后方偏移</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>从前方偏移</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

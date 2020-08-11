@@ -674,7 +674,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Odsazení za</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>Odsazení před</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

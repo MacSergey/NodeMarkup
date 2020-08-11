@@ -702,7 +702,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Отступ после</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>Отступ до</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

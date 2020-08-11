@@ -116,7 +116,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset before.
+        ///   Ищет локализованную строку, похожую на Offset between.
         /// </summary>
         public static string CrosswalkEditor_OffsetBetween {
             get {

@@ -674,7 +674,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Odstęp za</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>Odstęp przed</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

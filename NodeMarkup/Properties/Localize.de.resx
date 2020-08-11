@@ -702,7 +702,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Abstand dahinter</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>Abstand davor</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

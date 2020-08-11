@@ -674,7 +674,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Correctieafstand na</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>Correctieafstand voor</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">

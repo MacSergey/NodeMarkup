@@ -678,7 +678,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>終点のオフセット</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
     <value>始点のオフセット</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
