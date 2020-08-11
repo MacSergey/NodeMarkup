@@ -679,24 +679,13 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Paralelo as vias</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Passadeira existente</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Deslocamento depois</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Deslocamento antes</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Paralelo as vias</value>
-  </data>
+  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Passadeiras</value>
   </data>
@@ -731,6 +720,31 @@ Para criar uma passadeira conecte dois pontos.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Clique para remover a passadeira</value>
   </data>
-  
-  
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Por estilo</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Por tipo</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Zebra dupla</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Escada</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Largura da linha</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Deslocamento depois</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Deslocamento antes</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Paralelo as vias</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Linhas paralelas</value>
+  </data>
 </root>

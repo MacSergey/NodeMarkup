@@ -616,24 +616,13 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clicca per cancellare le linea perpendicolare</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Parallelo alle corsie</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Atttraversamento esistente</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Compensa dopo</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Compesa prima</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Parallelo alle corsie</value>
-  </data>
+  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Attraversamenti</value>
   </data>
@@ -668,6 +657,13 @@ Per creare un attraversamento connetti due punti.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Clicca per cancellare l'attraversamento</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
 </root>

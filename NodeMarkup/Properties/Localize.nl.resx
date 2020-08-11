@@ -669,23 +669,14 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klik om de loodrechte lijn te verwijderen</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Parallel aan rijstroken</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Bestaande zebrapad</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Correctieafstand na</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Correctieafstand voor</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Parallel aan rijstroken</value>
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Correctieafstand tussen</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Zebrapaden</value>
@@ -721,6 +712,25 @@ Verbind twee punten om een zebrapad te maken.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Klik om een zebrapad te verwijderen</value>
   </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Op stijl</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Op type</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Dubbel zebra</value>
+  </data>
   
+  
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Correctieafstand na</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Correctieafstand voor</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallel aan rijstroken</value>
+  </data>
   
 </root>

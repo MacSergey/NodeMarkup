@@ -669,24 +669,13 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Kliknij, aby usunąć prostopadłą linię</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Równolegle do pasów</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Istniejące przejście dla pieszych</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Odstęp za</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Odstęp przed</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Równolegle do pasów</value>
-  </data>
+  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Przejścia dla pieszych</value>
   </data>
@@ -727,4 +716,17 @@ Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>Według typu</value>
   </data>
+  
+  
+  
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Odstęp za</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Odstęp przed</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Równolegle do pasów</value>
+  </data>
+  
 </root>

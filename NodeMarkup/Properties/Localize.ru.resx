@@ -694,23 +694,14 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Нажмите для удаления перпендикулярной линии</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Параллельно линиям</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Зебра</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Существующий переход</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Отступ после</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Отступ до</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Параллельно линиям</value>
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Отступ между</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Переходы</value>
@@ -751,5 +742,26 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>По типу</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Двойная зебра</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Лестница</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Ширина линии</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Отступ после</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Отступ до</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Параллельно линиям</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Параллельные линии</value>
   </data>
 </root>

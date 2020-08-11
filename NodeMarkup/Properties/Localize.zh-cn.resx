@@ -669,23 +669,14 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>点击以擦除垂直线</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>与车道平行</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>斑马线</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>现存人行横道</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>从后方偏移</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>从前方偏移</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>与车道平行</value>
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>中心偏移</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>人行横道</value>
@@ -715,8 +706,31 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>模板整合成组</value>
   </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>点击以创建人行横道</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>点击以擦除人行横道</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>按样式</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>按类型</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>双斑马线</value>
+  </data>
   
   
-  
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>从后方偏移</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>从前方偏移</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>与车道平行</value>
+  </data>
   
 </root>

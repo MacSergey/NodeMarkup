@@ -694,23 +694,14 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klicken, um die orthogonale Linie zu löschen</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Parallel zu Fahrspuren</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Vorhandene Zebrastreifen</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Abstand dahinter</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Abstand davor</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Parallel zu Fahrspuren</value>
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Abstand dazwischen</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Zebrastreifen</value>
@@ -751,5 +742,22 @@ Zum Erstellen eines Zebrastreifens zwei Punkte miteinander verbinden.</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>Nach Typ</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Zweigeteilter Zebrastreifen</value>
+  </data>
+  
+  
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Abstand dahinter</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Abstand davor</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallel zu Fahrspuren</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Parallele Linien</value>
   </data>
 </root>

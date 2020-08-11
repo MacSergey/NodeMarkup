@@ -658,9 +658,6 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   
   
   
-  
-  
-  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Suojatiet</value>
   </data>
@@ -671,6 +668,13 @@ Yhdistä kaksi pistettä luodaksesi suojatien.</value>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>suojatie</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

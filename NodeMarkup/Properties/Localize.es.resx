@@ -669,24 +669,13 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Haga clic para eliminar la línea perpendicular</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Paralelo a los carriles</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Cebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Paso de peatones existente</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Desplazamiento delante</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Desplazamiento detrás</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Paralelo a los carriles</value>
-  </data>
+  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Paso de Peatones</value>
   </data>
@@ -706,5 +695,18 @@ Para crear un paso de peatones, conecta dos puntos.</value>
   
   
   
+  
+  
+  
+  
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Desplazamiento delante</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Desplazamiento detrás</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Paralelo a los carriles</value>
+  </data>
   
 </root>

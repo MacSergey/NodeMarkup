@@ -704,23 +704,14 @@ By registering early access, you will support the ability to develop this mod at
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Click to delete the perpendicular line</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Parallel to lanes</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existing crosswalk</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
-    <value>Offset after</value>
-  </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
-    <value>Offset before</value>
-  </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
-    <value>Parallel to lanes</value>
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Offset between</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Crosswalks</value>
@@ -761,5 +752,26 @@ To create a crosswalk connect two points.</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>By type</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Double zebra</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Ladder</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Line width</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Offset after</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Offset before</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallel to lanes</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Parallel lines</value>
   </data>
 </root>
