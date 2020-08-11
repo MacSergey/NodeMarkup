@@ -37,7 +37,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public abstract class CustomCrosswalkStyle : CrosswalkStyle, ICrosswalkStyle
+    public abstract class CustomCrosswalkStyle : CrosswalkStyle
     {
         float _offsetBefore;
         float _offsetAfter;
@@ -97,7 +97,7 @@ namespace NodeMarkup.Manager
         protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
             var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            parallelProperty.Text = Localize.LineEditor_ParallelToLanes;
+            parallelProperty.Text = Localize.CrosswalkEditor_ParallelToLanes;
             parallelProperty.Init();
             parallelProperty.Value = parallelStyle.Parallel;
             parallelProperty.OnValueChanged += (bool value) => parallelStyle.Parallel = value;
@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetBeforeProperty(CustomCrosswalkStyle customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetBeforeProperty = AddOffsetProperty(parent, onHover, onLeave);
-            offsetBeforeProperty.Text = Localize.LineEditor_OffsetBefore;
+            offsetBeforeProperty.Text = Localize.CrosswalkEditor_OffsetBefore;
             offsetBeforeProperty.Value = customStyle.OffsetBefore;
             offsetBeforeProperty.OnValueChanged += (float value) => customStyle.OffsetBefore = value;
             return offsetBeforeProperty;
@@ -114,15 +114,15 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetAfterProperty(CustomCrosswalkStyle customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetAfterProperty = AddOffsetProperty(parent, onHover, onLeave);
-            offsetAfterProperty.Text = Localize.LineEditor_OffsetAfter;
+            offsetAfterProperty.Text = Localize.CrosswalkEditor_OffsetAfter;
             offsetAfterProperty.Value = customStyle.OffsetAfter;
             offsetAfterProperty.OnValueChanged += (float value) => customStyle.OffsetAfter = value;
             return offsetAfterProperty;
         }
-        protected static FloatPropertyPanel AddOffsetBetweenProperty(IDoubleLine customStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddOffsetBetweenProperty(IDoubleCrosswalk customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetAfterProperty = AddOffsetProperty(parent, onHover, onLeave, 0.1f);
-            offsetAfterProperty.Text = Localize.LineEditor_OffsetBetween;
+            offsetAfterProperty.Text = Localize.CrosswalkEditor_OffsetBetween;
             offsetAfterProperty.Value = customStyle.Offset;
             offsetAfterProperty.OnValueChanged += (float value) => customStyle.Offset = value;
             return offsetAfterProperty;
@@ -137,6 +137,38 @@ namespace NodeMarkup.Manager
             offsetProperty.Init();
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
+        }
+        protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            widthProperty.Text = Localize.CrosswalkEditor_LineWidth;
+            widthProperty.UseWheel = true;
+            widthProperty.WheelStep = 0.1f;
+            widthProperty.CheckMin = true;
+            widthProperty.MinValue = 0.05f;
+            widthProperty.Init();
+            widthProperty.Value = linedStyle.LineWidth;
+            widthProperty.OnValueChanged += (float value) => linedStyle.LineWidth = value;
+            AddOnHoverLeave(widthProperty, onHover, onLeave);
+
+            return widthProperty;
+        }
+        protected bool Cut(MarkupCrosswalk crosswalk, Bezier3 trajectory, float width, out Bezier3 cutTrajectory)
+        {
+            var delta = width / Mathf.Tan(crosswalk.CornerAndNormalAngle) / 2;
+            var magnitude = (trajectory.d - trajectory.a).magnitude;
+            if (2 * delta >= magnitude)
+            {
+                cutTrajectory = default;
+                return false;
+            }
+            else
+            {
+                var startCut = trajectory.Travel(0, delta);
+                var endCut = trajectory.Invert().Travel(0, delta);
+                cutTrajectory = trajectory.Cut(startCut, 1 - endCut);
+                return true;
+            }
         }
 
         public override XElement ToXml()
@@ -154,7 +186,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class ZebraCrosswalkStyle : CustomCrosswalkStyle, IDashedLine, IParallel
+    public class ZebraCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IParallel
     {
         public override StyleType Type => StyleType.CrosswalkZebra;
 
@@ -203,7 +235,7 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
 
-            if (target is IDashedLine dashedTarget)
+            if (target is IDashedCrosswalk dashedTarget)
             {
                 dashedTarget.DashLength = DashLength;
                 dashedTarget.SpaceLength = SpaceLength;
@@ -220,6 +252,9 @@ namespace NodeMarkup.Manager
             var dashLength = Parallel ? DashLength / coef : DashLength;
             var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
             var angle = Parallel ? (float?)crosswalk.NormalDir.Turn90(true).AbsoluteAngle() : null;
+
+            if (!Parallel)
+                Cut(crosswalk, trajectory, Width, out trajectory);
 
             return CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
@@ -254,7 +289,7 @@ namespace NodeMarkup.Manager
             Parallel = config.GetAttrValue("P", true);
         }
     }
-    public class DoubleZebraCrosswalkStyle : ZebraCrosswalkStyle, IDoubleLine
+    public class DoubleZebraCrosswalkStyle : ZebraCrosswalkStyle, ICrosswalkStyle, IDoubleCrosswalk
     {
         public override StyleType Type => StyleType.CrosswalkDoubleZebra;
 
@@ -279,7 +314,7 @@ namespace NodeMarkup.Manager
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
-            if (target is IDoubleLine doubleTarget)
+            if (target is IDoubleCrosswalk doubleTarget)
                 doubleTarget.Offset = Offset;
         }
 
@@ -294,6 +329,9 @@ namespace NodeMarkup.Manager
             var dashLength = Parallel ? DashLength / coef : DashLength;
             var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
             var angle = Parallel ? (float?)crosswalk.NormalDir.Turn90(true).AbsoluteAngle() : null;
+
+            if (!Parallel)
+                Cut(crosswalk, trajectory, Width, out trajectory);
 
             return CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
@@ -326,39 +364,39 @@ namespace NodeMarkup.Manager
             Offset = config.GetAttrValue("O", DefaultCrosswalkOffset);
         }
     }
-    public class ParallelLinesCrosswalkStyle : CustomCrosswalkStyle, IDoubleLine
+    public class ParallelLinesCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, ILinedCrosswalk
     {
         public override StyleType Type => StyleType.CrosswalkParallelLines;
 
-        float _offset;
-        public float Offset
+        float _lineWidth;
+        public float LineWidth
         {
-            get => _offset;
+            get => _lineWidth;
             set
             {
-                _offset = value;
+                _lineWidth = value;
                 StyleChanged();
             }
         }
 
-        public ParallelLinesCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float offset) :
+        public ParallelLinesCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth) :
             base(color, width, offsetBefore, offsetAfter)
         {
-            Offset = offset;
+            LineWidth = lineWidth;
         }
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => (Width * 2 + Offset) / Mathf.Sin(crosswalk.CornerAndNormalAngle);
-        public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, Offset);
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
-            if (target is IDoubleLine doubleTarget)
-                doubleTarget.Offset = Offset;
+            if (target is ILinedCrosswalk linedTarget)
+                linedTarget.LineWidth = LineWidth;
         }
 
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
-            var deltaOffset = (Width + Offset) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+            var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
             var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
             var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
 
@@ -366,27 +404,109 @@ namespace NodeMarkup.Manager
 
             IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory)
             {
-                yield return CalculateSolidDash(dashTrajectory, firstOffset, firstOffset);
-                yield return CalculateSolidDash(dashTrajectory, secondOffset, secondOffset);
+                yield return CalculateSolidDash(dashTrajectory, firstOffset, firstOffset, LineWidth);
+                yield return CalculateSolidDash(dashTrajectory, secondOffset, secondOffset, LineWidth);
             }
         }
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetBetweenProperty(this, parent, onHover, onLeave));
+            components.Add(AddLineWidthProperty(this, parent, onHover, onLeave));
             return components;
         }
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
+            config.Add(new XAttribute("LW", LineWidth));
             return config;
         }
         public override void FromXml(XElement config)
         {
             base.FromXml(config);
-            Offset = config.GetAttrValue("O", DefaultCrosswalkOffset);
+            LineWidth = config.GetAttrValue("LW", DefaultCrosswalkOffset);
+        }
+    }
+    public class LadderCrosswalkStyle : ParallelLinesCrosswalkStyle, IDashedCrosswalk
+    {
+        public override StyleType Type => StyleType.CrosswalkLadder;
+
+        float _dashLength;
+        float _spaceLength;
+        public float DashLength
+        {
+            get => _dashLength;
+            set
+            {
+                _dashLength = value;
+                StyleChanged();
+            }
+        }
+        public float SpaceLength
+        {
+            get => _spaceLength;
+            set
+            {
+                _spaceLength = value;
+                StyleChanged();
+            }
+        }
+        public LadderCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth, float dashLength, float spaceLength) :
+    base(color, width, offsetBefore, offsetAfter, lineWidth)
+        {
+            DashLength = dashLength;
+            SpaceLength = spaceLength;
+        }
+
+        public override CrosswalkStyle CopyCrosswalkStyle() => new LadderCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is IDashedCrosswalk dashedTarget)
+            {
+                dashedTarget.DashLength = DashLength;
+                dashedTarget.SpaceLength = SpaceLength;
+            }
+        }
+
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
+        {
+            foreach (var dash in base.Calculate(crosswalk, trajectory))
+                yield return dash;
+
+            var width = Width - 2 * LineWidth;
+            if (width <= 0 || !Cut(crosswalk, trajectory, width, out Bezier3 cutTrajectory))
+                yield break;
+
+            var offset = -crosswalk.NormalDir * (GetVisibleWidth(crosswalk) / 2 + OffsetAfter);
+            foreach (var dash in CalculateDashed(cutTrajectory, DashLength, SpaceLength, CalculateDashes))
+                yield return dash;
+
+            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory, float startT, float endT)
+            {
+                yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset, width: width);
+            }
+        }
+
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
+            return components;
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("DL", DashLength));
+            config.Add(new XAttribute("SL", SpaceLength));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            DashLength = config.GetAttrValue("DL", DefaultDashLength);
+            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
     }
 }

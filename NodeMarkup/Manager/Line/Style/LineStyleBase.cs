@@ -33,6 +33,15 @@ namespace NodeMarkup.Manager
     {
         bool Parallel { get; set; }
     }
+    public interface IDoubleCrosswalk
+    {
+        float Offset { get; set; }
+    }
+    public interface ILinedCrosswalk
+    {
+        float LineWidth { get; set; }
+    }
+    public interface IDashedCrosswalk : IDashedLine { }
 
     public abstract class LineStyle : Style
     {
@@ -158,7 +167,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset);
             }
         }
-        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float? angle = null)
+        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float? angle = null, float? width = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -167,9 +176,9 @@ namespace NodeMarkup.Manager
             endPosition += endOffset;
 
             if (angle == null)
-                return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, Width, Color);
+                return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, width ?? Width, Color);
             else
-                return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, Width, Color);
+                return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, width ?? Width, Color);
         }
 
         protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, float offset)
@@ -183,7 +192,7 @@ namespace NodeMarkup.Manager
                 return CalculateSolidDash(trajectory, startOffset, endOffset);
             }
         }
-        protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, Vector3 startOffset, Vector3 endOffset)
+        protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, Vector3 startOffset, Vector3 endOffset, float? width = null)
         {
             var startPosition = trajectory.a;
             var endPosition = trajectory.d;
@@ -191,7 +200,7 @@ namespace NodeMarkup.Manager
             startPosition += startOffset;
             endPosition += endOffset;
 
-            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, Width, Color);
+            return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, width ?? Width, Color);
         }
     }
 
@@ -280,7 +289,8 @@ namespace NodeMarkup.Manager
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
             {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) },
             {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true, DefaultCrosswalkOffset) },
-            {CrosswalkType.ParallelLines, new ParallelLinesCrosswalkStyle(DefaultColor, DefaultWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkWidth) }
+            {CrosswalkType.ParallelLines, new ParallelLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth) },
+            {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength) }
         };
 
         public static LineStyle GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
@@ -308,6 +318,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelLines))]
             ParallelLines = StyleType.CrosswalkParallelLines,
+
+            [Description(nameof(Localize.CrosswalkStyle_Ladder))]
+            Ladder = StyleType.CrosswalkLadder,
         }
     }
 }

@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -497,7 +497,6 @@ Con Alt premuto, per creare un riempimento</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia linea di stop</value>
   </data>
@@ -546,7 +545,6 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
     <value>Questa funzione non è disponibile</value>
   </data>
-  
   <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
     <value>Stile a Spina di pesce o a Galloni</value>
   </data>
@@ -559,52 +557,15 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
     <value>Linee perpendicolari</value>
   </data>
-  
-  
-  
-  
-  
-  
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Annulla</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="Mod_Locale_it" xml:space="preserve">
     <value>Italiano</value>
   </data>
-  
-  
-  
-  
-  
-  
   <data name="Settings_Language" xml:space="preserve">
     <value>Lingua</value>
   </data>
@@ -616,22 +577,19 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clicca per cancellare le linea perpendicolare</value>
   </data>
-  <data name="LineEditor_Parallel" xml:space="preserve">
-    <value>Parallelo alle corsie</value>
-  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Atttraversamento esistente</value>
   </data>
-  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Compensa dopo</value>
   </data>
-  <data name="LineEditor_OffsetBefore" xml:space="preserve">
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
     <value>Compesa prima</value>
   </data>
-  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallelo alle corsie</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
@@ -668,6 +626,4 @@ Per creare un attraversamento connetti due punti.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Clicca per cancellare l'attraversamento</value>
   </data>
-  
-  
 </root>

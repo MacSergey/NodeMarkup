@@ -247,13 +247,13 @@ namespace NodeMarkup.Manager
         public override Bezier3 GetTrajectory()
         {
             var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
-            return new Bezier3
+            var trajectory = new Bezier3
             {
                 a = PointPair.First.Position,
-                b = PointPair.First.Position + dir,
-                c = PointPair.Second.Position - dir,
                 d = PointPair.Second.Position,
             };
+            NetSegment.CalculateMiddlePoints(trajectory.a, dir, trajectory.d, -dir, true, true, out trajectory.b, out trajectory.c);
+            return trajectory;
         }
         protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, Trajectory);
         protected void SetRule(MarkupLineRawRule<StyleType> rule)
@@ -318,11 +318,12 @@ namespace NodeMarkup.Manager
             var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
             var offset = NormalDir * ((Rule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
 
-            var trajectory = default(Bezier3);
-            trajectory.a = PointPair.First.Position + offset;
-            trajectory.b = trajectory.a + dir;
-            trajectory.d = PointPair.Second.Position + offset;
-            trajectory.c = trajectory.d - dir;
+            var trajectory = new Bezier3
+            {
+                a = PointPair.First.Position + offset,
+                d = PointPair.Second.Position + offset,
+            };
+            NetSegment.CalculateMiddlePoints(trajectory.a, dir, trajectory.d, -dir, true, true, out trajectory.b, out trajectory.c);
 
             return trajectory;
         }

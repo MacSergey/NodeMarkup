@@ -89,6 +89,51 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Line width.
+        /// </summary>
+        public static string CrosswalkEditor_LineWidth {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_LineWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset after.
+        /// </summary>
+        public static string CrosswalkEditor_OffsetAfter {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_OffsetAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset before.
+        /// </summary>
+        public static string CrosswalkEditor_OffsetBefore {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_OffsetBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset before.
+        /// </summary>
+        public static string CrosswalkEditor_OffsetBetween {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_OffsetBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel to lanes.
+        /// </summary>
+        public static string CrosswalkEditor_ParallelToLanes {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_ParallelToLanes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Double zebra.
         /// </summary>
         public static string CrosswalkStyle_DoubleZebra {
@@ -112,6 +157,15 @@ namespace NodeMarkup {
         public static string CrosswalkStyle_Group {
             get {
                 return ResourceManager.GetString("CrosswalkStyle_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ladder.
+        /// </summary>
+        public static string CrosswalkStyle_Ladder {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_Ladder", resourceCulture);
             }
         }
         
@@ -749,51 +803,6 @@ namespace NodeMarkup {
         public static string LineEditor_Offset {
             get {
                 return ResourceManager.GetString("LineEditor_Offset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset after.
-        /// </summary>
-        public static string LineEditor_OffsetAfter {
-            get {
-                return ResourceManager.GetString("LineEditor_OffsetAfter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset before.
-        /// </summary>
-        public static string LineEditor_OffsetBefore {
-            get {
-                return ResourceManager.GetString("LineEditor_OffsetBefore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset between.
-        /// </summary>
-        public static string LineEditor_OffsetBetween {
-            get {
-                return ResourceManager.GetString("LineEditor_OffsetBetween", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Parallel to lanes.
-        /// </summary>
-        public static string LineEditor_Parallel {
-            get {
-                return ResourceManager.GetString("LineEditor_Parallel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Parallel to lanes.
-        /// </summary>
-        public static string LineEditor_ParallelToLanes {
-            get {
-                return ResourceManager.GetString("LineEditor_ParallelToLanes", resourceCulture);
             }
         }
         
