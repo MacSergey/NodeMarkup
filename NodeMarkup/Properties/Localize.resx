@@ -728,8 +728,6 @@ By registering early access, you will support the ability to develop this mod at
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>There are no crosswalks at this intersection yet.
 To create a crosswalk connect two points.</value>
-    <comment>CrosswalkEditor_EmptyMessage
-</comment>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>crosswalk</value>
@@ -751,5 +749,17 @@ To create a crosswalk connect two points.</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>Group templates</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Click to create a crosswalk</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Click to delete the crosswalk</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>By style</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>By type</value>
   </data>
 </root>

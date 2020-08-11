@@ -697,8 +697,6 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>交差点（ノード）に、横断歩道の設定がありません。
 2つのポイントを繋げて作りましょう。</value>
-    <comment>CrosswalkEditor_EmptyMessage
-</comment>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>横断歩道</value>
@@ -721,4 +719,12 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>テンプレートのタブで折り畳む</value>
   </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>クリックして横断歩道の追加</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>クリックして横断歩道を削除</value>
+  </data>
+  
+  
 </root>

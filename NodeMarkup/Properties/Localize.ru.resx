@@ -718,8 +718,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>У этого перекрестка еще нет переходов.
 Для создания перехода соедините две точки.</value>
-    <comment>CrosswalkEditor_EmptyMessage
-</comment>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>переход</value>
@@ -728,7 +726,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Переходы</value>
   </data>
   <data name="FillerStyle_Group" xml:space="preserve">
-    <value>Заполнения</value>
+    <value>Заполнители</value>
   </data>
   <data name="LineStyle_RegularGroup" xml:space="preserve">
     <value>Обычные линии</value>
@@ -741,5 +739,17 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>Группировать шаблоны</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Нажмите для создания перехода</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Нажмите для удаления перехода</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>По стилю</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>По типу</value>
   </data>
 </root>

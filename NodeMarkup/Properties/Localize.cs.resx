@@ -693,8 +693,6 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Na této křižovatce nejsou žádné přechody.
 Pro vytvoření přechodu spojte dva body.</value>
-    <comment>CrosswalkEditor_EmptyMessage
-</comment>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>přechod</value>
@@ -717,4 +715,8 @@ Pro vytvoření přechodu spojte dva body.</value>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>Skupinové šablony</value>
   </data>
+  
+  
+  
+  
 </root>

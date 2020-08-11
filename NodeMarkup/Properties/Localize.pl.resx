@@ -661,21 +661,70 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Settings_Language" xml:space="preserve">
     <value>Język</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Kliknij, aby utworzyć prostopadłą linię
++Shift - ciągła
++Ctrl - podwójna</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Kliknij, aby usunąć prostopadłą linię</value>
+  </data>
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>Równolegle do pasów</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Istniejące przejście dla pieszych</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Odstęp za</value>
+  </data>
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
+    <value>Odstęp przed</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Równolegle do pasów</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Przejścia dla pieszych</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>To skrzyżowanie nie ma jeszcze przejścia dla pieszych.
+Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>przejście dla pieszych</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Przejścia dla pieszych</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Wypełnienia</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Zwykłe linie</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Linie zatrzymania</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Grupuj linie</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Grupuj szablony</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Kliknij, aby utworzyć przejście dla pieszych</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Kliknij, aby usunąć przejście dla pieszych</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Według stylu</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Według typu</value>
+  </data>
 </root>
