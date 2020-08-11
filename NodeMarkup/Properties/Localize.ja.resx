@@ -673,13 +673,52 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>車線と平行にする</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>縞模様</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>既存の横断歩道</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>終点のオフセット</value>
+  </data>
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
+    <value>始点のオフセット</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>車線と平行にする</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>横断歩道の一覧</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>交差点（ノード）に、横断歩道の設定がありません。
+2つのポイントを繋げて作りましょう。</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>横断歩道</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>横断歩道のタブ</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>塗り潰しのタブ</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>ラインのタブ</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>停止線のタブ</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>ラインのタブで折り畳む</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>テンプレートのタブで折り畳む</value>
+  </data>
 </root>

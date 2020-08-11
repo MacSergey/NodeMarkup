@@ -497,15 +497,7 @@ Alt halten um eine Füllung zu erstellen</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
-- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
-- Kopieren/Einfügen von Linien und Füllungs-Stilen.
-- Haltelinien verbessert.
-- Weiterführende (or­tho­go­nale) Linien hinzugefügt.
-- Verlinkung von Patreon-Accounts für Vorabzugriff.
-- Möglichkeit hinzugefügt, die Mod-Sprache unabhängig von der Spielsprache zu ändern.</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelte Haltelinie</value>
   </data>
@@ -714,10 +706,8 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="LineEditor_OffsetAfter" xml:space="preserve">
     <value>Abstand dahinter</value>
   </data>
-  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
     <value>Abstand davor</value>
-    <comment>LineEditor_OffsetBefore
-</comment>
   </data>
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel zu Fahrspuren</value>
@@ -729,4 +719,18 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>Zebrastreifen</value>
   </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Zebrastreifen</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Füllungen</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Normale Linien</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Haltelinie</value>
+  </data>
+  
+  
 </root>

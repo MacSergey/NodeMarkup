@@ -691,10 +691,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="LineEditor_OffsetAfter" xml:space="preserve">
     <value>Deslocamento depois</value>
   </data>
-  <data name="LineEditor_OffsetBefor" xml:space="preserve">
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
     <value>Deslocamento antes</value>
-    <comment>LineEditor_OffsetBefore
-</comment>
   </data>
   <data name="LineEditor_ParallelToLanes" xml:space="preserve">
     <value>Paralelo as vias</value>
@@ -711,4 +709,10 @@ Para criar uma passadeira conecte dois pontos.</value>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>passadeira</value>
   </data>
+  
+  
+  
+  
+  
+  
 </root>

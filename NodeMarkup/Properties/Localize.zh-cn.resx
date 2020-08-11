@@ -669,14 +669,24 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>点击以擦除垂直线</value>
   </data>
-  
+  <data name="LineEditor_Parallel" xml:space="preserve">
+    <value>与车道平行</value>
+  </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>斑马线</value>
   </data>
-  
-  
-  
-  
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>现存人行横道</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>从后方偏移</value>
+  </data>
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
+    <value>从前方偏移</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>与车道平行</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>人行横道</value>
   </data>
@@ -688,5 +698,23 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>人行横道</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>人行横道</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>填充图案</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>普通标线</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>停止线</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>线段整合成组</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>模板整合成组</value>
   </data>
 </root>

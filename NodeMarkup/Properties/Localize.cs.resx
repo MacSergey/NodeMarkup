@@ -675,11 +675,46 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zebra</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Existující přechod</value>
+  </data>
+  <data name="LineEditor_OffsetAfter" xml:space="preserve">
+    <value>Odsazení za</value>
+  </data>
+  <data name="LineEditor_OffsetBefore" xml:space="preserve">
+    <value>Odsazení před</value>
+  </data>
+  <data name="LineEditor_ParallelToLanes" xml:space="preserve">
+    <value>Souběžná s pruhy</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Přechody</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Na této křižovatce nejsou žádné přechody.
+Pro vytvoření přechodu spojte dva body.</value>
+    <comment>CrosswalkEditor_EmptyMessage
+</comment>
+  </data>
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>přechod</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Přechody</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Výplně</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Normální čáry</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Hranice křižovatky</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Skupinové čáry</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Skupinové šablony</value>
+  </data>
 </root>
