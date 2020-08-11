@@ -671,15 +671,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existující přechod</value>
   </data>
-  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
-    <value>Odsazení za</value>
-  </data>
-  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
-    <value>Odsazení před</value>
-  </data>
-  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
-    <value>Souběžná s pruhy</value>
-  </data>
+  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Přechody</value>
   </data>
@@ -708,4 +700,21 @@ Pro vytvoření přechodu spojte dva body.</value>
   <data name="Settings_GroupTemplates" xml:space="preserve">
     <value>Skupinové šablony</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Odsazení za</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Odsazení před</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Souběžná s pruhy</value>
+  </data>
+  
 </root>
