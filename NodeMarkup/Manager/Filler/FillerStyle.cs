@@ -449,7 +449,7 @@ namespace NodeMarkup.Manager
             var config = base.ToXml();
             config.Add(new XAttribute("A", AngleBetween));
             config.Add(new XAttribute("S", Step));
-            config.Add(new XAttribute("I", Invert));
+            config.Add(new XAttribute("I", Invert ? 1 : 0));
             config.Add(new XAttribute("O", Output));
             return config;
         }
@@ -458,7 +458,7 @@ namespace NodeMarkup.Manager
             base.FromXml(config);
             AngleBetween = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStepGrid);
-            Invert = config.GetAttrValue("I", false);
+            Invert = config.GetAttrValue("I", 0) == 1;
             Output = config.GetAttrValue("O", 0);
         }
     }
