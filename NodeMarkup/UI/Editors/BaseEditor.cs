@@ -299,7 +299,7 @@ namespace NodeMarkup.UI.Editors
             Destroy(item.gameObject);
         }
         private EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
-        public void UpdateEditor(EditableObject selectObject = null)
+        public virtual void UpdateEditor(EditableObject selectObject = null)
         {
             var editObject = EditObject;
 
@@ -451,6 +451,18 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var group in ItemsPanel.components.OfType<EditableGroupType>())
                     group.Refresh();
+            }
+        }
+        public override void UpdateEditor(EditableObject selectObject = null)
+        {
+            var expandedGroups = Groups.Where(i => i.Value.IsExpand).Select(i => i.Key).ToArray();
+
+            base.UpdateEditor(selectObject);
+
+            foreach(var expandedGroup in expandedGroups)
+            {
+                if (Groups.TryGetValue(expandedGroup, out EditableGroupType group))
+                    group.IsExpand = true;
             }
         }
     }

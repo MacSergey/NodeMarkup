@@ -724,12 +724,13 @@ namespace NodeMarkup
         {
             if (point.Type == MarkupPoint.PointType.Crosswalk)
             {
+                var dir = point.Enter.CornerDir.Turn90(true) / 2;
                 var bezier = new Bezier3()
                 {
-                    a = point.Position - point.Direction,
-                    b = point.Position + point.Direction,
-                    c = point.Position - point.Direction,
-                    d = point.Position + point.Direction,
+                    a = point.Position - dir,
+                    b = point.Position + dir,
+                    c = point.Position - dir,
+                    d = point.Position + dir,
                 };
                 RenderBezier(cameraInfo, color, bezier, width);
             }
@@ -824,10 +825,10 @@ namespace NodeMarkup
         private void RenderPanelActionMode(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
         private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
         {
-            if(DragPoint.Type != MarkupPoint.PointType.Crosswalk)
-                RenderEnterOverlay(cameraInfo, DragPoint.Enter, Vector3.zero, 2f);
-            else
+            if(DragPoint.Type == MarkupPoint.PointType.Crosswalk)
                 RenderEnterOverlay(cameraInfo, DragPoint.Enter, DragPoint.Direction * MarkupCrosswalkPoint.Shift, 3f);
+            else
+                RenderEnterOverlay(cameraInfo, DragPoint.Enter, Vector3.zero, 2f);
 
             RenderPointOverlay(cameraInfo, DragPoint);
         }

@@ -173,6 +173,7 @@ namespace NodeMarkup.Manager
             Position = position + direction * Shift;
             Direction = direction;
         }
+        public override string ToString() => $"{base.ToString()}C";
     }
     public class MarkupNormalPoint : MarkupPoint
     {
@@ -214,6 +215,7 @@ namespace NodeMarkup.Manager
             Position = SourcePoint.Position + SourcePoint.Direction * t;
             Direction = -SourcePoint.Direction;
         }
+        public override string ToString() => $"{base.ToString()}N";
     }
 
     public struct MarkupPointPair
