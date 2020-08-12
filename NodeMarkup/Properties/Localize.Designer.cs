@@ -80,11 +80,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select the crosswalk&apos;s left border.
+        /// </summary>
+        public static string CrosswalkEditor_InfoSelectLeftBorder {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_InfoSelectLeftBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select the crosswalk&apos;s right border.
+        /// </summary>
+        public static string CrosswalkEditor_InfoSelectRightBorder {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_InfoSelectRightBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на crosswalk.
         /// </summary>
         public static string CrossWalkEditor_ItemDescription {
             get {
                 return ResourceManager.GetString("CrossWalkEditor_ItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left border.
+        /// </summary>
+        public static string CrosswalkEditor_LeftBorder {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_LeftBorder", resourceCulture);
             }
         }
         
@@ -134,6 +161,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Right border.
+        /// </summary>
+        public static string CrosswalkEditor_RightBorder {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_RightBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Double zebra.
         /// </summary>
         public static string CrosswalkStyle_DoubleZebra {
@@ -157,15 +193,6 @@ namespace NodeMarkup {
         public static string CrosswalkStyle_Group {
             get {
                 return ResourceManager.GetString("CrosswalkStyle_Group", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Ladder.
-        /// </summary>
-        public static string CrosswalkStyle_Ladder {
-            get {
-                return ResourceManager.GetString("CrosswalkStyle_Ladder", resourceCulture);
             }
         }
         

@@ -244,6 +244,20 @@ namespace NodeMarkup.Manager
         #region GET & CONTAINS
 
         public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
+        public bool TryGetLine<LineType>(ulong lineId, out LineType line)
+            where LineType : MarkupLine
+        {
+            if (LinesDictionary.TryGetValue(lineId, out MarkupLine rawLine) && rawLine is LineType)
+            {
+                line = rawLine as LineType;
+                return true;
+            }
+            else
+            {
+                line = null;
+                return false;
+            }
+        }
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {
             enter = EntersList.Find(e => e.Id == enterId);

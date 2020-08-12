@@ -203,24 +203,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
-        public override void OnUpdate()
-        {
-            if (!UIView.IsInsideUI() && Cursor.visible)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                foreach (var supportPoint in SupportPoints)
-                {
-                    if (supportPoint.IsIntersect(ray))
-                    {
-                        HoverSupportPoint = supportPoint;
-                        return;
-                    }
-                }
-            }
-
-            HoverSupportPoint = null;
-        }
+        public override void OnUpdate() => HoverSupportPoint = NodeMarkupTool.MouseRayValid ? SupportPoints.FirstOrDefault(i => i.IsIntersect(NodeMarkupTool.MouseRay)) : null;
         public override void OnEvent(Event e)
         {
             if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)
@@ -242,7 +225,7 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var supportPoint in SupportPoints)
                 {
-                    var color = SelectPartEdgePanel.Position == RulePosition.Start ? Color.green : Color.red;
+                    var color = SelectPartEdgePanel.Position == MarkupLineSelectPropertyPanel.RulePosition.Start ? Color.green : Color.red;
                     NodeMarkupTool.RenderCircle(cameraInfo, color, supportPoint.Position, 0.5f);
                 }
 
@@ -268,9 +251,9 @@ namespace NodeMarkup.UI.Editors
             {
                 switch (SelectPartEdgePanel.Position)
                 {
-                    case RulePosition.Start:
+                    case MarkupLineSelectPropertyPanel.RulePosition.Start:
                         return NodeMarkup.Localize.LineEditor_InfoSelectFrom;
-                    case RulePosition.End:
+                    case MarkupLineSelectPropertyPanel.RulePosition.End:
                         return NodeMarkup.Localize.LineEditor_InfoSelectTo;
                 }
             }

@@ -34,11 +34,12 @@ namespace NodeMarkup.UI.Editors
                 }
             }
         }
-        List<Type> Objects { get; set; } = new List<Type>();
+        List<Type> ObjectsList { get; set; } = new List<Type>();
+        public IEnumerable<Type> Objects => ObjectsList;
         public Type SelectedObject
         {
-            get => SelectIndex == -1 ? default : Objects[SelectIndex];
-            set => SelectIndex = Objects.FindIndex(o => IsEqual(value, o));
+            get => SelectIndex == -1 ? default : ObjectsList[SelectIndex];
+            set => SelectIndex = ObjectsList.FindIndex(o => IsEqual(value, o));
         }
 
         public SelectPropertyPanel()
@@ -94,11 +95,11 @@ namespace NodeMarkup.UI.Editors
 
         public void Add(Type item)
         {
-            Objects.Add(item);
+            ObjectsList.Add(item);
         }
         public void AddRange(IEnumerable<Type> items)
         {
-            Objects.AddRange(items);
+            ObjectsList.AddRange(items);
         }
 
         protected abstract bool IsEqual(Type first, Type second);
@@ -118,5 +119,31 @@ namespace NodeMarkup.UI.Editors
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
 
         protected override bool IsEqual(ILinePartEdge first, ILinePartEdge second) => (first == null && second == null) || first?.Equals(second) == true;
+
+        public enum RulePosition
+        {
+            Start,
+            End
+        }
+    }
+    public class MarkupCrosswalkSelectPropertyPanel : SelectPropertyPanel<MarkupRegularLine>
+    {
+        public new event Action<MarkupCrosswalkSelectPropertyPanel> OnSelect;
+        public new event Action<MarkupCrosswalkSelectPropertyPanel> OnHover;
+        public new event Action<MarkupCrosswalkSelectPropertyPanel> OnLeave;
+
+        public BorderPosition Position { get; set; }
+
+        protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
+        protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
+        protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
+
+        protected override bool IsEqual(MarkupRegularLine first, MarkupRegularLine second) => ReferenceEquals(first, second);
+
+        public enum BorderPosition
+        {
+            Right,
+            Left
+        }
     }
 }

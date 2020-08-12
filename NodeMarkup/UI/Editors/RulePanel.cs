@@ -70,12 +70,12 @@ namespace NodeMarkup.UI.Editors
         {
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
             From.Text = NodeMarkup.Localize.LineEditor_From;
-            From.Position = RulePosition.Start;
+            From.Position = MarkupLineSelectPropertyPanel.RulePosition.Start;
             From.Init();
             From.AddRange(Editor.SupportPoints);
             From.SelectedObject = Rule.From;
-            From.OnSelectChanged += FromChanged;
-            From.OnSelect += ((panel) => Editor.SelectRuleEdge(panel));
+            From.OnSelectChanged += (ILinePartEdge from) => Rule.From = from;
+            From.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
             From.OnHover += Editor.HoverRuleEdge;
             From.OnLeave += Editor.LeaveRuleEdge;
         }
@@ -84,11 +84,11 @@ namespace NodeMarkup.UI.Editors
         {
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
             To.Text = NodeMarkup.Localize.LineEditor_To;
-            To.Position = RulePosition.End;
+            To.Position = MarkupLineSelectPropertyPanel.RulePosition.End;
             To.Init();
             To.AddRange(Editor.SupportPoints);
             To.SelectedObject = Rule.To;
-            To.OnSelectChanged += ToChanged;
+            To.OnSelectChanged += (ILinePartEdge to) => Rule.To = to;
             To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
@@ -164,8 +164,6 @@ namespace NodeMarkup.UI.Editors
                 ApplyStyle(style);
         }
 
-        private void FromChanged(ILinePartEdge from) => Rule.From = from;
-        private void ToChanged(ILinePartEdge to) => Rule.To = to;
         private void StyleChanged(Style.StyleType style)
         {
             if (style == Rule.Style.Type)

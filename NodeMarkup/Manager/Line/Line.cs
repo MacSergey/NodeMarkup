@@ -229,7 +229,7 @@ namespace NodeMarkup.Manager
         }
     }
     public abstract class MarkupStraightLine<StyleType> : MarkupLine
-        where StyleType: LineStyle
+        where StyleType : LineStyle
     {
         public override bool SupportRules => false;
         public MarkupLineRawRule<StyleType> Rule { get; set; }
@@ -299,6 +299,8 @@ namespace NodeMarkup.Manager
         public override LineType Type => LineType.Crosswalk;
         public float CornerAndNormalAngle => Start.Enter.CornerAndNormalAngle;
         public Vector3 NormalDir => Start.Enter.NormalDir;
+        public MarkupRegularLine RightBorder { get; set; }
+        public MarkupRegularLine LeftBorder { get; set; }
 
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
@@ -326,6 +328,29 @@ namespace NodeMarkup.Manager
             NetSegment.CalculateMiddlePoints(trajectory.a, dir, trajectory.d, -dir, true, true, out trajectory.b, out trajectory.c);
 
             return trajectory;
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            if (RightBorder != null)
+                config.Add(new XAttribute("RB", RightBorder.PointPair.Hash));
+            if (LeftBorder != null)
+                config.Add(new XAttribute("LB", LeftBorder.PointPair.Hash));
+            return config;
+        }
+        public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
+        {
+            base.FromXml(config, map);
+            RightBorder = GetBorder("RB");
+            LeftBorder = GetBorder("LB");
+
+            MarkupRegularLine GetBorder(string key)
+            {
+                if (config.GetAttrValue<string>(key) is string hashString && ulong.TryParse(hashString, out ulong hash) && Markup.TryGetLine(hash, out MarkupRegularLine border))
+                    return border;
+                else
+                    return null;
+            }
         }
     }
 
@@ -453,6 +478,14 @@ namespace NodeMarkup.Manager
                 config.Add(To.ToXml());
 
             return config;
+        }
+    }
+    public class MarkupLineBound : BezierBounds
+    {
+        public MarkupLine Line { get; }
+        public MarkupLineBound(MarkupLine line, float size) : base(line.Trajectory, size)
+        {
+            Line = line;
         }
     }
 }

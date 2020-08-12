@@ -171,9 +171,4 @@ namespace NodeMarkup.Manager
             LineStyle = lineStyle;
         }
     }
-    public enum RulePosition
-    {
-        Start,
-        End
-    }
 }

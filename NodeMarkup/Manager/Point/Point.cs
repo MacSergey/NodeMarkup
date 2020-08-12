@@ -155,13 +155,17 @@ namespace NodeMarkup.Manager
         private static Vector3 MarkerSize { get; } = Vector3.one * 2f;
         public static float Shift { get; } = 3;
         public override PointType Type => PointType.Crosswalk;
+        public MarkupEnterPoint SourcePoint { get; }
         public override Vector3 Position
         {
             get => base.Position;
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
 
-        public MarkupCrosswalkPoint(byte num, SegmentMarkupLine markupLine, LocationType location) : base(num, markupLine, location) { }
+        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location) 
+        {
+            SourcePoint = sourcePoint;
+        }
 
         public override void UpdateProcess()
         {
