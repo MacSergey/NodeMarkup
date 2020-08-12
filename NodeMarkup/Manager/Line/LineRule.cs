@@ -149,7 +149,7 @@ namespace NodeMarkup.Manager
     }
     public class MarkupCrosswalkRule : MarkupLineRawRule
     {
-        public static string XmlName { get; } = "R";
+        public static string XmlName { get; } = "CR";
         public override string XmlSection => XmlName;
         public MarkupRegularLine RightBorder { get; set; }
         public MarkupRegularLine LeftBorder { get; set; }
@@ -169,6 +169,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
+            config.Add(Style.ToXml());
             if (RightBorder != null)
                 config.Add(new XAttribute("RB", RightBorder.PointPair.Hash));
             if (LeftBorder != null)
