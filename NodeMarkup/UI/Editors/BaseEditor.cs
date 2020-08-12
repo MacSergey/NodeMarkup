@@ -298,7 +298,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.RemoveUIComponent(item);
             Destroy(item.gameObject);
         }
-        private EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+        protected virtual EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
         public virtual void UpdateEditor(EditableObject selectObject = null)
         {
             var editObject = EditObject;
@@ -360,7 +360,7 @@ namespace NodeMarkup.UI.Editors
             if (ItemsPanel.components.Count > index && ItemsPanel.components[index] is EditableItemType item)
                 Select(item);
         }
-        public void Select(EditableItemType item)
+        public virtual void Select(EditableItemType item)
         {
             item.SimulateClick();
             item.Focus();
@@ -453,6 +453,14 @@ namespace NodeMarkup.UI.Editors
                     group.Refresh();
             }
         }
+        protected override EditableItemType GetItem(EditableObject editObject)
+        {
+            var groupKey = SelectGroup(editObject);
+            if (Groups.TryGetValue(groupKey, out EditableGroupType group))
+                return group.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+            else
+                return null;
+        }
         public override void UpdateEditor(EditableObject selectObject = null)
         {
             var expandedGroups = Groups.Where(i => i.Value.IsExpand).Select(i => i.Key).ToArray();
@@ -464,6 +472,14 @@ namespace NodeMarkup.UI.Editors
                 if (Groups.TryGetValue(expandedGroup, out EditableGroupType group))
                     group.IsExpand = true;
             }
+        }
+        public override void Select(EditableItemType item)
+        {
+            var groupKey = SelectGroup(item.Object);
+            if (Groups.TryGetValue(groupKey, out EditableGroupType group))
+                group.IsExpand = true;
+
+            base.Select(item);
         }
     }
 }
