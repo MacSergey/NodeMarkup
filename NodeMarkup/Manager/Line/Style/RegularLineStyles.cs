@@ -337,6 +337,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("DL", DashLength));
             config.Add(new XAttribute("SL", SpaceLength));
             config.Add(new XAttribute("I", Invert ? 1 : 0));
+            config.Add(new XAttribute("CS", CenterSolid ? 1 : 0));
             return config;
         }
         public override void FromXml(XElement config)
@@ -346,6 +347,7 @@ namespace NodeMarkup.Manager
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
             Invert = config.GetAttrValue("I", 0) == 1;
+            CenterSolid = config.GetAttrValue("CS", 0) == 1;
         }
     }
 }
