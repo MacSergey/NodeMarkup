@@ -522,7 +522,7 @@ Shift x10，Ctrl x0.1</value>
     <value>该功能不可用。</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>此功能：“{0}” 目前直供Patreon抢先体验用户使用。
+    <value>此功能 “{0}” 目前只供Patreon抢先体验用户使用。
 一段时间后会面向大众开放。
 加入抢先体验后，你可以支持作者开发本mod。</value>
   </data>
@@ -676,7 +676,7 @@ Shift x10，Ctrl x0.1</value>
     <value>现存人行横道</value>
   </data>
   <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
-    <value>中心偏移</value>
+    <value>间隔大小</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>人行横道</value>
@@ -721,8 +721,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>双斑马线</value>
   </data>
-  
-  
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>线条宽度</value>
+  </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>从后方偏移</value>
   </data>
@@ -732,5 +733,19 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>与车道平行</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>平行线</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>左边界</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>右边界</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>选择人行横道左边界</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>选择人行横道右边界</value>
+  </data>
 </root>

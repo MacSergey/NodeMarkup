@@ -675,7 +675,9 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Paso de peatones existente</value>
   </data>
-  
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Desplazamiento detrás</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Paso de Peatones</value>
   </data>
@@ -686,19 +688,42 @@ Para crear un paso de peatones, conecta dos puntos.</value>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>paso de peatones</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Paso de Peatones</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Rellenos</value>
+  </data>
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Líneas normales</value>
+  </data>
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Líneas transversales</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Agrupar líneas</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Agrupar rellenos</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Haga clic para crear un paso de peatones</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Haga clic para borrar un paso de peatones</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Por estilo</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Por tipo</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Cebra doble</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Ancho de línea</value>
+  </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Desplazamiento delante</value>
   </data>
@@ -708,5 +733,11 @@ Para crear un paso de peatones, conecta dos puntos.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Paralelo a los carriles</value>
   </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Líneas paralelas</value>
+  </data>
+  
+  
+  
   
 </root>

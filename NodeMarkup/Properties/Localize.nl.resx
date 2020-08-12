@@ -721,8 +721,9 @@ Verbind twee punten om een zebrapad te maken.</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>Dubbel zebra</value>
   </data>
-  
-  
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Lijnbreedte</value>
+  </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Correctieafstand na</value>
   </data>
@@ -732,5 +733,11 @@ Verbind twee punten om een zebrapad te maken.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel aan rijstroken</value>
   </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Parallelle lijnen</value>
+  </data>
+  
+  
+  
   
 </root>

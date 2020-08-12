@@ -500,81 +500,214 @@ Maintenez Alt pour créer un filler</value>
   
   
   
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Activer avec la clé</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Échec de l'activation</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Activation réussie</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Cette fonction n'est pas disponible</value>
+  </data>
   
   
+  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
+    <value>Copier le style</value>
+  </data>
+  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
+    <value>Coller le style</value>
+  </data>
+  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
+    <value>Lignes perpendiculaires</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Obtenir l'accès anticipé</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Votre ID d'accès</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Clé d'accès</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Activer</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Pour activer l'accès anticiper vous devez entrer une clé</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>La clé que vous avez entrée n'est pas valide</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Lien en cours...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Lier votre compte Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Lier votre compte Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Votre compte Patreon n'a pas pu être lié car vous avez refusé la demande d'accès.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Une erreur est survenue au moment du lien, veuillez réessayer.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Votre compte est relié, mais vous n'avez pas l'accès anticipé.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Vous pouvez fermer cette page et retourner au jeu.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Status : {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Activé</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Désactivé</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Merci pour votre soutien, vous pouvez maintenant profiter de toutes les fonctionnalités.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Accès anticipé</value>
+  </data>
   
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>J'accepte</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Alerte de version BETA</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Obtenez la version stable</value>
+  </data>
   
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Langue du jeu</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Tchèque</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Allemand</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Espagnol</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Finnois</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Français</value>
+  </data>
+  <data name="Mod_Locale_it" xml:space="preserve">
+    <value>Italien</value>
+  </data>
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Japonais</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Néerlandais</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polonais</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portugais</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Russe</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Chinois simplifié</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Cliquez pour créer une ligne perpendiculaire
++Maj - Solide
++Ctrl - Double</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Cliquez pour supprimer la ligne perpendiculaire</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zébra</value>
+  </data>
   
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Décalage entre</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Passage piéton</value>
+  </data>
   
+  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+    <value>passage piéton</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Passages piétons</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Fillers</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_StopGroup" xml:space="preserve">
+    <value>Lignes de stop</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Grouper les lignes</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Grouper les modèles</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Cliquez pour créer un passage piéton</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Cliquez pour supprimer le passage piéton</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Par style</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Par type</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Double zébra</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Largeur de la ligne</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Décalage avant</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Décalage après</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallèle aux voies</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Lignes parallèles</value>
+  </data>
   
   
   
