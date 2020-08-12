@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class CrosswalkEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
+    public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
         private static CrosswalkStyle Buffer { get; set; }
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
@@ -42,7 +42,7 @@ namespace NodeMarkup.UI.Editors
 
         private MarkupLineBound[] BorderLines { get; set; }
 
-        public CrosswalkEditor()
+        public CrosswalksEditor()
         {
             SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
         }
@@ -117,10 +117,10 @@ namespace NodeMarkup.UI.Editors
         {
             LeftBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
             LeftBorder.Text = NodeMarkup.Localize.CrosswalkEditor_LeftBorder;
-            LeftBorder.Position = MarkupCrosswalkSelectPropertyPanel.BorderPosition.Right;
+            LeftBorder.Position = MarkupCrosswalkSelectPropertyPanel.BorderPosition.Left;
             LeftBorder.Init();
             LeftBorder.AddRange(borders);
-            LeftBorder.SelectedObject = EditObject.CrosswalkRule.RightBorder;
+            LeftBorder.SelectedObject = EditObject.CrosswalkRule.LeftBorder;
             LeftBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.CrosswalkRule.LeftBorder = line;
             LeftBorder.OnSelect += SelectBorder;
             LeftBorder.OnHover += HoverBorder;
