@@ -226,8 +226,8 @@ mkdir "%ModDir%"
 xcopy /y /e "$(TargetDir)*"  "%ModDir%"
 xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
 
-copy $(ProjectDir)Preview\PreviewImage.png  "%ModDir%"
-copy $(ProjectDir)Preview\PreviewImage.png  "%WorkshopDir%"
+copy $(ProjectDir)Resources\PreviewImage.png  "%ModDir%"
+copy $(ProjectDir)Resources\PreviewImage.png  "%WorkshopDir%"
 	</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Debug noWorkshop'">
@@ -246,8 +246,8 @@ mkdir "%ModDir%"
 xcopy /y /e "$(TargetDir)*"  "%ModDir%"
 xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
 
-copy $(ProjectDir)Preview\PreviewImageBeta.png  "%ModDir%PreviewImage.png"
-copy $(ProjectDir)Preview\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
+copy $(ProjectDir)Resources\PreviewImageBeta.png  "%ModDir%PreviewImage.png"
+copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
 	</PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>
