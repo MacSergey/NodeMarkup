@@ -500,9 +500,78 @@ namespace NodeMarkup
                     foreach (var point in enter.Points.Where(p => p != ignore))
                         TargetPoints.Add(point);
 
-                if ((ignore == null || enter == ignore.Enter) && (pointType & MarkupPoint.PointType.Crosswalk) == MarkupPoint.PointType.Crosswalk)
-                    foreach (var point in enter.Crosswalks.Where(p => p != ignore))
-                        TargetPoints.Add(point);
+                if ((pointType & MarkupPoint.PointType.Crosswalk) == MarkupPoint.PointType.Crosswalk)
+                    SetCrosswalkTarget(enter, ignore);
+            }
+        }
+        private void SetEnterTarget(Enter enter, MarkupPoint ignore)
+        {
+
+        }
+        private void SetCrosswalkTarget(Enter enter, MarkupPoint ignore)
+        {
+            if (ignore != null && ignore.Enter != enter)
+                return;
+
+            var allow = enter.Crosswalks.Select(i => 1).ToArray();
+            var bridge = new Dictionary<MarkupPoint, int>();
+            foreach (var crosswalk in enter.Crosswalks)
+                bridge.Add(crosswalk, bridge.Count);
+
+            var isIgnore = ignore?.Enter == enter;
+            var ignoreIds = isIgnore ? bridge[ignore] : 0;
+
+            var leftIdx = ignoreIds;
+            var rightIdx = ignoreIds;
+
+            foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Crosswalk && l.Start.Enter == enter))
+            {
+                if (isIgnore && line.ContainsPoint(ignore))
+                {
+                    var otherIdx = bridge[line.PointPair.GetOther(ignore)];
+                    if (otherIdx < ignoreIds)
+                        leftIdx = otherIdx;
+                    else if (otherIdx > ignoreIds)
+                        rightIdx = otherIdx;
+                }
+
+                var from = Math.Min(bridge[line.Start], bridge[line.End]);
+                var to = Math.Max(bridge[line.Start], bridge[line.End]);
+                allow[from] = 2;
+                allow[to] = 2;
+                for (var i = from + 1; i <= to - 1; i += 1)
+                    allow[i] = 0;
+            }
+
+            if (isIgnore)
+            {
+                SetNotAllow(leftIdx == ignoreIds ? Find(ignoreIds, -1) : leftIdx, -1);
+                SetNotAllow(rightIdx == ignoreIds ? Find(ignoreIds, 1) : rightIdx, 1);
+                allow[ignoreIds] = 0;
+            }
+
+            foreach (var point in bridge)
+            {
+                if (allow[point.Value] != 0)
+                    TargetPoints.Add(point.Key);
+            }
+
+            int Find(int idx, int sign)
+            {
+                do
+                    idx += sign;
+                while (idx >= 0 && idx < allow.Length && allow[idx] != 2);
+
+                return idx;
+            }
+            void SetNotAllow(int idx, int sign)
+            {
+                idx += sign;
+                while (idx >=0 && idx < allow.Length)
+                {
+                    allow[idx] = 0;
+                    idx += sign;
+                }
             }
         }
         private void OnSelectPoint(Event e)
@@ -750,6 +819,9 @@ namespace NodeMarkup
                 case true:
                     RenderNormalConnectLine(cameraInfo);
                     break;
+                case false when SelectPoint.Type == MarkupPoint.PointType.Crosswalk:
+                    RenderNotConnectCrosswalk(cameraInfo);
+                    break;
                 case false:
                     RenderNotConnectLine(cameraInfo);
                     break;
@@ -804,13 +876,20 @@ namespace NodeMarkup
             p2Bezier.c = p2Bezier.a;
             RenderBezier(cameraInfo, color, p2Bezier, 0.2f);
         }
-        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
+        private void RenderNotConnectCrosswalk(RenderManager.CameraInfo cameraInfo)
+        {
+            var dir = SelectPoint.Enter.CornerDir;
+            var angle = Vector3.Angle(dir.XZ(), (MouseWorldPosition - SelectPoint.Position).XZ());
+            RenderNotConnectLine(cameraInfo, angle <= 90 ? dir : -dir);
+        }
+        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo) => RenderNotConnectLine(cameraInfo, SelectPoint.Direction);
+        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo, Vector3 dir)
         {
             var bezier = new Bezier3()
             {
                 a = SelectPoint.Position,
-                b = SelectPoint.Direction,
-                c = SelectPoint.Direction.Turn90(true),
+                b = dir,
+                c = dir.Turn90(true),
                 d = MouseWorldPosition,
             };
 
@@ -825,7 +904,7 @@ namespace NodeMarkup
         private void RenderPanelActionMode(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
         private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
         {
-            if(DragPoint.Type == MarkupPoint.PointType.Crosswalk)
+            if (DragPoint.Type == MarkupPoint.PointType.Crosswalk)
                 RenderEnterOverlay(cameraInfo, DragPoint.Enter, DragPoint.Direction * MarkupCrosswalkPoint.Shift, 3f);
             else
                 RenderEnterOverlay(cameraInfo, DragPoint.Enter, Vector3.zero, 2f);
