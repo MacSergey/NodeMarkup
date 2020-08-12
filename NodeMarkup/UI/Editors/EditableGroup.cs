@@ -71,6 +71,11 @@ namespace NodeMarkup.UI.Editors
             RemoveUIComponent(item);
             Destroy(item.gameObject);
         }
+        public virtual void Refresh()
+        {
+            foreach (var item in components.OfType<EditableItemType>())
+                item.Refresh();
+        }
 
         protected override void OnSizeChanged()
         {

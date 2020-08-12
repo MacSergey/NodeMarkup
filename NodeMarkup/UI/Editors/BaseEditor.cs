@@ -371,12 +371,10 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.ScrollToBottom();
             ItemsPanel.ScrollIntoView(item);
         }
-        protected void RefreshItems()
+        protected virtual void RefreshItems()
         {
-            foreach (EditableItemType item in ItemsPanel.components)
-            {
+            foreach (var item in ItemsPanel.components.OfType<EditableItemType>())
                 item.Refresh();
-            }
         }
     }
 
@@ -444,5 +442,16 @@ namespace NodeMarkup.UI.Editors
 
         protected abstract GroupType SelectGroup(EditableObject editableItem);
         protected abstract string GroupName(GroupType group);
+
+        protected override void RefreshItems()
+        {
+            if(!GroupingEnabled)
+                base.RefreshItems();
+            else
+            {
+                foreach (var group in ItemsPanel.components.OfType<EditableGroupType>())
+                    group.Refresh();
+            }
+        }
     }
 }
