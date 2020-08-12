@@ -294,31 +294,37 @@ namespace NodeMarkup.Manager
             SetRule(new MarkupLineRawRule<StopLineStyle>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
         }
     }
-    public class MarkupCrosswalk : MarkupStraightLine<CrosswalkStyle>
+    public class MarkupCrosswalk : MarkupRegularLine
     {
         public override LineType Type => LineType.Crosswalk;
+        public MarkupCrosswalkRule CrosswalkRule { get; set; }
         public float CornerAndNormalAngle => Start.Enter.CornerAndNormalAngle;
         public Vector3 NormalDir => Start.Enter.NormalDir;
-        public MarkupRegularLine RightBorder { get; set; }
-        public MarkupRegularLine LeftBorder { get; set; }
 
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
         {
             AddDefaultRule(crosswalkType);
         }
-        protected override void RuleChanged() => Markup.Update(this, true);
-        protected override void AddDefaultRule() => AddDefaultRule();
-        private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Zebra)
+
+        private void SetCrosswalkRule(MarkupCrosswalkRule crosswalkRule)
+        {
+            crosswalkRule.OnRuleChanged = RuleChanged;
+            CrosswalkRule = crosswalkRule;
+
+            RuleChanged();
+        }
+        private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent)
         {
             var style = TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType);
-            SetRule(new MarkupLineRawRule<CrosswalkStyle>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
+            SetCrosswalkRule(new MarkupCrosswalkRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
         }
+        protected override void RuleChanged() => Markup.Update(this, true);
 
         public override Bezier3 GetTrajectory()
         {
             var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
-            var offset = NormalDir * ((Rule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
+            var offset = NormalDir * ((CrosswalkRule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
 
             var trajectory = new Bezier3
             {
@@ -329,28 +335,29 @@ namespace NodeMarkup.Manager
 
             return trajectory;
         }
+        protected override IEnumerable<MarkupStyleDash> GetDashes()
+        {
+            foreach (var dash in base.GetDashes())
+                yield return dash;
+
+            foreach (var dash in CrosswalkRule.Style.Calculate(this, Trajectory))
+                yield return dash;
+        }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            if (RightBorder != null)
-                config.Add(new XAttribute("RB", RightBorder.PointPair.Hash));
-            if (LeftBorder != null)
-                config.Add(new XAttribute("LB", LeftBorder.PointPair.Hash));
+            config.Add(CrosswalkRule.ToXml());
             return config;
         }
         public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
         {
             base.FromXml(config, map);
-            RightBorder = GetBorder("RB");
-            LeftBorder = GetBorder("LB");
 
-            MarkupRegularLine GetBorder(string key)
-            {
-                if (config.GetAttrValue<string>(key) is string hashString && ulong.TryParse(hashString, out ulong hash) && Markup.TryGetLine(hash, out MarkupRegularLine border))
-                    return border;
-                else
-                    return null;
-            }
+            if (config.Element(MarkupCrosswalkRule.XmlName) is XElement ruleConfig && MarkupCrosswalkRule.FromXml(ruleConfig, this, map, out MarkupCrosswalkRule rule))
+                SetCrosswalkRule(rule);
+            else
+                AddDefaultRule();
         }
     }
 
@@ -478,6 +485,14 @@ namespace NodeMarkup.Manager
                 config.Add(To.ToXml());
 
             return config;
+        }
+        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map)
+        {
+            foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
+            {
+                if (LinePartEdge.FromXml(supportConfig, line, map, out ILinePartEdge edge))
+                    yield return edge;
+            }
         }
     }
     public class MarkupLineBound : BezierBounds

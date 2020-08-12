@@ -65,7 +65,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var line in Markup.Lines.Where(l => (l.Type & (MarkupLine.LineType.Regular | MarkupLine.LineType.Stop)) != 0))
+            foreach (var line in Markup.Lines)
                 AddItem(line);
         }
         protected override void OnObjectSelect()

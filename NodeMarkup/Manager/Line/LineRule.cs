@@ -33,7 +33,10 @@ namespace NodeMarkup.Manager
             get => base.To as ILinePartEdge;
             set => base.To = value;
         }
-        public MarkupLineRawRule(MarkupLine line, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to) { }
+        public MarkupLineRawRule(MarkupLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to) 
+        {
+            Style = style;
+        }
     }
     public class MarkupLineRawRule<StyleType> : MarkupLineRawRule
         where StyleType : LineStyle
@@ -47,10 +50,7 @@ namespace NodeMarkup.Manager
         }
         public override string XmlSection => XmlName;
 
-        public MarkupLineRawRule(MarkupLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, from, to)
-        {
-            Style = style;
-        }
+        public MarkupLineRawRule(MarkupLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, style, from, to) { }
         public static MarkupLineRule[] GetRules(List<MarkupLineRawRule<StyleType>> rawRules)
         {
             var rules = new List<MarkupLineRule>();
@@ -134,21 +134,72 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out MarkupLineRawRule<StyleType> rule)
         {
-            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml<StyleType>(styleConfig, out StyleType style))
+            if(config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out StyleType style))
+            {
+                var edges = GetEdges(config, line, map).ToArray();
+                rule = new MarkupLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
+                return true;
+            }
+            else
+            {
+                rule = default;
+                return false;
+            }
+        }
+    }
+    public class MarkupCrosswalkRule : MarkupLineRawRule
+    {
+        public static string XmlName { get; } = "R";
+        public override string XmlSection => XmlName;
+        public MarkupRegularLine RightBorder { get; set; }
+        public MarkupRegularLine LeftBorder { get; set; }
+        public new CrosswalkStyle Style
+        {
+            get => base.Style as CrosswalkStyle;
+            set => base.Style = value;
+        }
+
+        public MarkupCrosswalkRule(MarkupLine line, CrosswalkStyle style, ILinePartEdge from = null, ILinePartEdge to = null, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null) : 
+            base(line, style, from, to)
+        {
+            RightBorder = rightBorder;
+            LeftBorder = leftBorder;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            if (RightBorder != null)
+                config.Add(new XAttribute("RB", RightBorder.PointPair.Hash));
+            if (LeftBorder != null)
+                config.Add(new XAttribute("LB", LeftBorder.PointPair.Hash));
+            return config;
+        }
+
+        public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out MarkupCrosswalkRule rule)
+        {
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out CrosswalkStyle style))
+            {
+                var edges = GetEdges(config, line, map).ToArray();
+                var rightBorder = GetBorder("RB");
+                var leftBorder = GetBorder("LB");
+
+                rule = new MarkupCrosswalkRule(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1), rightBorder, leftBorder);
+                return true;
+            }
+            else
             {
                 rule = default;
                 return false;
             }
 
-            var edges = new List<ILinePartEdge>();
-            foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
+            MarkupRegularLine GetBorder(string key)
             {
-                if (LinePartEdge.FromXml(supportConfig, line, map, out ILinePartEdge edge))
-                    edges.Add(edge);
+                if (config.GetAttrValue<string>(key) is string hashString && ulong.TryParse(hashString, out ulong hash) && line.Markup.TryGetLine(hash, out MarkupRegularLine border))
+                    return border;
+                else
+                    return null;
             }
-
-            rule = new MarkupLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
-            return true;
         }
     }
     public struct MarkupLineRule
