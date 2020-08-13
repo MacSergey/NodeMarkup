@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
                     a = prev.LeftSide,
                     d = prev.RightSide
                 };
-                var currentDir = currentBezier.d - currentBezier.a;
+                var currentDir = (currentBezier.d - currentBezier.a).normalized;
                 NetSegment.CalculateMiddlePoints(currentBezier.a, currentDir, currentBezier.d, -currentDir, true, true, out currentBezier.b, out currentBezier.c);
                 contourParts.Add(currentBezier);
 

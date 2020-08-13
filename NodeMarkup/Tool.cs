@@ -53,8 +53,6 @@ namespace NodeMarkup
         private IFillerVertex HoverFillerPoint { get; set; }
         private bool IsHoverFillerPoint => HoverFillerPoint != null;
 
-        Color32 HoverColor { get; } = new Color32(255, 136, 0, 224);
-
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
         NodeMarkupButton Button => NodeMarkupButton.Instance;
@@ -258,7 +256,7 @@ namespace NodeMarkup
             if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter)
             {
                 var connectLine = MouseWorldPosition - SelectPoint.Position;
-                if (connectLine.magnitude >= 5 && 160 <= Vector3.Angle(SelectPoint.Direction.XZ(), connectLine.XZ()) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(SelectPoint.Direction.XZ(), connectLine.XZ()) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
                     return;
@@ -505,7 +503,7 @@ namespace NodeMarkup
         }
         private void SetEnterTarget(Enter enter, MarkupPoint ignore)
         {
-            if(ignore == null || ignore.Enter != enter)
+            if (ignore == null || ignore.Enter != enter)
             {
                 TargetPoints.AddRange(enter.Points.Cast<MarkupPoint>());
                 return;
@@ -786,7 +784,7 @@ namespace NodeMarkup
             if (IsHoverNode)
             {
                 var node = Utilities.GetNode(HoverNodeId);
-                RenderCircle(cameraInfo, HoverColor, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
+                RenderCircle(cameraInfo, MarkupColors.Orange, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
         }
         private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
@@ -852,14 +850,17 @@ namespace NodeMarkup
 
             switch (IsHoverPoint)
             {
-                case true when HoverPoint.Type != MarkupPoint.PointType.Normal:
-                    RenderRegularConnectLine(cameraInfo);
+                case true when HoverPoint.Type == MarkupPoint.PointType.Crosswalk:
+                    RenderConnectCrosswalkLine(cameraInfo);
                     break;
-                case true:
+                case true when HoverPoint.Type == MarkupPoint.PointType.Normal:
                     RenderNormalConnectLine(cameraInfo);
                     break;
+                case true:
+                    RenderRegularConnectLine(cameraInfo);
+                    break;
                 case false when SelectPoint.Type == MarkupPoint.PointType.Crosswalk:
-                    RenderNotConnectCrosswalk(cameraInfo);
+                    RenderNotConnectCrosswalkLine(cameraInfo);
                     break;
                 case false:
                     RenderNotConnectLine(cameraInfo);
@@ -897,25 +898,32 @@ namespace NodeMarkup
             RenderBezier(cameraInfo, color, lineBezier);
 
             var normal = SelectPoint.Direction.Turn90(false);
-            var p1Bezier = new Bezier3()
-            {
-                a = SelectPoint.Position + normal * 2,
-                d = SelectPoint.Position + normal * 2 + SelectPoint.Direction * 2
-            };
-            p1Bezier.b = p1Bezier.d;
-            p1Bezier.c = p1Bezier.a;
-            RenderBezier(cameraInfo, color, p1Bezier, 0.2f);
 
-            var p2Bezier = new Bezier3()
+            var normalBezier = new Bezier3
             {
-                a = SelectPoint.Position + SelectPoint.Direction * 2,
-                d = SelectPoint.Position + normal * 2 + SelectPoint.Direction * 2
+                a = SelectPoint.Position + 0.75f * SelectPoint.Direction + 0.25f * normal,
+                d = SelectPoint.Position + 1.25f * normal - 0.25f * SelectPoint.Direction
             };
-            p2Bezier.b = p2Bezier.d;
-            p2Bezier.c = p2Bezier.a;
-            RenderBezier(cameraInfo, color, p2Bezier, 0.2f);
+            normalBezier.b = normalBezier.a + normal / 2;
+            normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
+            RenderBezier(cameraInfo, color, normalBezier, 2f, true);
         }
-        private void RenderNotConnectCrosswalk(RenderManager.CameraInfo cameraInfo)
+        private void RenderConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
+        {
+            var dir = (HoverPoint.Position - SelectPoint.Position).normalized;
+            var bezier = new Bezier3()
+            {
+                a = SelectPoint.Position,
+                d = HoverPoint.Position,
+            };
+
+            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+            var color = EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
+
+            NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
+            RenderBezier(cameraInfo, color, bezier, 2f, true);
+        }
+        private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
             var dir = (MouseWorldPosition - SelectPoint.Position);
             var lenght = dir.magnitude;
@@ -952,7 +960,7 @@ namespace NodeMarkup
         private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
         {
             if (DragPoint.Type == MarkupPoint.PointType.Crosswalk)
-                RenderEnterOverlay(cameraInfo, DragPoint.Enter, DragPoint.Direction * MarkupCrosswalkPoint.Shift, 3f);
+                RenderEnterOverlay(cameraInfo, DragPoint.Enter, DragPoint.Direction * MarkupCrosswalkPoint.Shift, 4f);
             else
                 RenderEnterOverlay(cameraInfo, DragPoint.Enter, Vector3.zero, 2f);
 
@@ -970,7 +978,7 @@ namespace NodeMarkup
         {
             var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? MarkupColors.Green : MarkupColors.White;
             foreach (var trajectory in TempFiller.Trajectories)
-                RenderBezier(cameraInfo, color, trajectory);
+                RenderBezier(cameraInfo, color, trajectory, 0.2f);
         }
         private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
         {

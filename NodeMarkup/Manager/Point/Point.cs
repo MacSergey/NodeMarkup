@@ -189,16 +189,18 @@ namespace NodeMarkup.Manager
 
         public override void UpdateProcess()
         {
-            var ts = new HashSet<float>();
+            var tSet = new HashSet<float>();
 
             foreach(var bezier in Markup.Contour)
             {
                 var intersects = MarkupBezierLineIntersect.Intersect(bezier, SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction);
                 foreach(var intersect in intersects)
-                    ts.Add(intersect.FirstT);
+                    tSet.Add(intersect.FirstT);
             }
+            
+            var tSetSort = tSet.OrderBy(i => i).ToArray();
 
-            var t = ts.Count == 0 ? 0 : ts.Count == 1 ? ts.First() : ts.OrderBy(i => i).Skip(1).First();
+            var t = tSetSort.Length == 0 ? 0 : tSetSort.Length == 1 ? tSetSort.First() : tSetSort.OrderBy(i => i).Skip(1).First();
 
             Position = SourcePoint.Position + SourcePoint.Direction * t;
             Direction = -SourcePoint.Direction;
