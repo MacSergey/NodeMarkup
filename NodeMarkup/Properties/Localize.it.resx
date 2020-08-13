@@ -579,7 +579,9 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   
   
   
-  
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Puoi chiudere questa pagina e tornare al gioco.</value>
+  </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
@@ -596,27 +598,63 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
     <value>Grazie per il tuo supporto, ora puoi goderti tutte le funzionalità.</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Centrale continua</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Accetto</value>
+  </data>
+  <data name="Mod_BetaWarningCaption" xml:space="preserve">
+    <value>Avviso versione BETA</value>
+  </data>
+  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
+    <value>Ottieni la versione stabile</value>
+  </data>
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Stai utilizzando la versione BETA di {0}. Serve per testare nuove funzionalità e potrebbe contenere errori che interromperanno o cancelleranno i contrassegni. Se ti sei iscritto per errore, passa alla versione stabile.</value>
+  </data>
+  <data name="Mod_LocaleGame" xml:space="preserve">
+    <value>Lingua del gioco</value>
+  </data>
+  <data name="Mod_Locale_cs" xml:space="preserve">
+    <value>Ceco</value>
+  </data>
+  <data name="Mod_Locale_de" xml:space="preserve">
+    <value>Tedesco</value>
+  </data>
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglese</value>
+  </data>
+  <data name="Mod_Locale_es" xml:space="preserve">
+    <value>Spagnolo</value>
+  </data>
+  <data name="Mod_Locale_fi" xml:space="preserve">
+    <value>Finlandese</value>
+  </data>
+  <data name="Mod_Locale_fr" xml:space="preserve">
+    <value>Francese</value>
+  </data>
   <data name="Mod_Locale_it" xml:space="preserve">
     <value>Italiano</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Mod_Locale_ja" xml:space="preserve">
+    <value>Giapponese</value>
+  </data>
+  <data name="Mod_Locale_nl" xml:space="preserve">
+    <value>Olandese</value>
+  </data>
+  <data name="Mod_Locale_pl" xml:space="preserve">
+    <value>Polacco</value>
+  </data>
+  <data name="Mod_Locale_pt" xml:space="preserve">
+    <value>Portoghese</value>
+  </data>
+  <data name="Mod_Locale_ru" xml:space="preserve">
+    <value>Russo</value>
+  </data>
+  <data name="Mod_Locale_zh-cn" xml:space="preserve">
+    <value>Cinese Semplificato</value>
+  </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Lingua</value>
   </data>
@@ -634,7 +672,9 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Atttraversamento esistente</value>
   </data>
-  
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Compensa tra</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Attraversamenti</value>
   </data>
@@ -669,16 +709,40 @@ Per creare un attraversamento connetti due punti.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Clicca per cancellare l'attraversamento</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Per stile</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Per tipo</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Doppia zebratura</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Spessore linea</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Compensa dopo</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Compensa prima</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Parallelo alle corsie</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Linee parallele</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Bordo sinistro</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Bordo destro</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Seleziona il bordo sinistro dell'attraversamento</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Seleziona il bordo destro dell'attraversamento</value>
+  </data>
 </root>
