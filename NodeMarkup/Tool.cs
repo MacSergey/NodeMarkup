@@ -832,7 +832,7 @@ namespace NodeMarkup
         {
             if (point.Type == MarkupPoint.PointType.Crosswalk)
             {
-                var dir = point.Enter.CornerDir.Turn90(true) / 2;
+                var dir = point.Enter.CornerDir.Turn90(true);
                 var bezier = new Bezier3()
                 {
                     a = point.Position - dir,
@@ -917,18 +917,26 @@ namespace NodeMarkup
         }
         private void RenderNotConnectCrosswalk(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = SelectPoint.Enter.CornerDir;
-            var angle = Vector3.Angle(dir.XZ(), (MouseWorldPosition - SelectPoint.Position).XZ());
-            RenderNotConnectLine(cameraInfo, angle <= 90 ? dir : -dir);
+            var dir = (MouseWorldPosition - SelectPoint.Position);
+            var lenght = dir.magnitude;
+            dir.Normalize();
+
+            var bezier = new Bezier3()
+            {
+                a = SelectPoint.Position,
+                d = SelectPoint.Position + dir * Mathf.Max(lenght, 1f)
+            };
+
+            NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
+            RenderBezier(cameraInfo, Color.white, bezier, 2f, true);
         }
-        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo) => RenderNotConnectLine(cameraInfo, SelectPoint.Direction);
-        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo, Vector3 dir)
+        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var bezier = new Bezier3()
             {
                 a = SelectPoint.Position,
-                b = dir,
-                c = dir.Turn90(true),
+                b = SelectPoint.Direction,
+                c = SelectPoint.Direction.Turn90(true),
                 d = MouseWorldPosition,
             };
 
@@ -998,8 +1006,8 @@ namespace NodeMarkup
             RenderBezier(cameraInfo, color, bezier);
         }
 
-        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.5f) =>
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, 0f, 0f, -1f, 1280f, false, true);
+        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.5f, bool cut = false) =>
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, cut ? width / 2 : 0f, cut ? width / 2 : 0f, -1f, 1280f, false, true);
         public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width) =>
             RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, true);
 
