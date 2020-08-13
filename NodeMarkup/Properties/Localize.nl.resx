@@ -736,8 +736,16 @@ Verbind twee punten om een zebrapad te maken.</value>
   <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
     <value>Parallelle lijnen</value>
   </data>
-  
-  
-  
-  
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Linker grens</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Rechter grens</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Selecteer de linker zebrapad grens</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Selecteer de rechter zebrapad grens</value>
+  </data>
 </root>
