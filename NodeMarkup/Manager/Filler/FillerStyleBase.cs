@@ -123,10 +123,10 @@ namespace NodeMarkup.Manager
         {
             foreach (var point in GetItems(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
             {
-                var intersectSet = new HashSet<MarkupFillerIntersect>();
+                var intersectSet = new HashSet<MarkupBezierLineIntersect>();
                 foreach (var trajectory in trajectories)
                 {
-                    foreach (var t in MarkupFillerIntersect.Intersect(trajectory, point, point + normal))
+                    foreach (var t in MarkupBezierLineIntersect.Intersect(trajectory, point, point + normal))
                         intersectSet.Add(t);
                 }
 
@@ -154,7 +154,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected float GetOffset(MarkupFillerIntersect intersect, float offset)
+        protected float GetOffset(MarkupBezierLineIntersect intersect, float offset)
         {
             var sin = Mathf.Sin(intersect.Angle);
             return sin != 0 ? offset / sin : 1000f;

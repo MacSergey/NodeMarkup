@@ -18,19 +18,6 @@ namespace NodeMarkup.Manager
 
         public static string XmlName { get; } = "M";
 
-        public static Color32[] OverlayColors { get; } = new Color32[]
-        {
-            new Color32(204, 0, 0, 224),
-            new Color32(0, 204, 0, 224),
-            new Color32(0, 0, 204, 224),
-            new Color32(204, 0, 255, 224),
-            new Color32(255, 204, 0, 224),
-            new Color32(0, 255, 204, 224),
-            new Color32(204, 255, 0, 224),
-            new Color32(0, 204, 255, 224),
-            new Color32(255, 0, 204, 224),
-        };
-
         #endregion
 
         #region PROPERTIES
@@ -41,8 +28,9 @@ namespace NodeMarkup.Manager
         public float Height { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
+        Dictionary<MarkupLinePair, MarkupBeziersIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupBeziersIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
+        List<Bezier3> ContourParts { get; set; } = new List<Bezier3>();
 
         public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
@@ -50,7 +38,8 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
-        public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+        public IEnumerable<MarkupBeziersIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+        public IEnumerable<Bezier3> Contour => ContourParts;
 
         #endregion
 
@@ -106,9 +95,42 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in EntersList)
                 enter.Update();
+
+            UpdateNodeСontour();
+
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
         }
+        private void UpdateNodeСontour()
+        {
+            var contourParts = new List<Bezier3>();
+
+            for(var i = 0; i < EntersList.Count; i += 1)
+            {
+                var prev = EntersList[i];
+                var currentBezier = new Bezier3()
+                {
+                    a = prev.LeftSide,
+                    d = prev.RightSide
+                };
+                var currentDir = currentBezier.d - currentBezier.a;
+                NetSegment.CalculateMiddlePoints(currentBezier.a, currentDir, currentBezier.d, -currentDir, true, true, out currentBezier.b, out currentBezier.c);
+                contourParts.Add(currentBezier);
+
+
+                var next = GetNextEnter(i);
+                var betweenBezier = new Bezier3()
+                {
+                    a = prev.RightSide,
+                    d = next.LeftSide
+                };
+                NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
+                contourParts.Add(betweenBezier);
+            }
+
+            ContourParts = contourParts;
+        }
+
         private void UpdateLines()
         {
             foreach (var line in LinesDictionary.Values.ToArray())
@@ -266,9 +288,9 @@ namespace NodeMarkup.Manager
         public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false) 
+        public IEnumerable<MarkupBeziersIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false) 
             => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
-        public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkupLine line)
+        public IEnumerable<MarkupBeziersIntersect> GetIntersects(MarkupLine line)
         {
             foreach(var otherLine in Lines)
             {
@@ -277,17 +299,17 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public MarkupLinesIntersect GetIntersect(MarkupLinePair linePair)
+        public MarkupBeziersIntersect GetIntersect(MarkupLinePair linePair)
         {
-            if (!LineIntersects.TryGetValue(linePair, out MarkupLinesIntersect intersect))
+            if (!LineIntersects.TryGetValue(linePair, out MarkupBeziersIntersect intersect))
             {
-                MarkupLinesIntersect.Calculate(linePair, out intersect);
+                MarkupBeziersIntersect.Calculate(linePair, out intersect);
                 LineIntersects.Add(linePair, intersect);
             }
 
             return intersect;
         }
-        public IEnumerable<MarkupLinesIntersect> GetAllIntersect()
+        public IEnumerable<MarkupBeziersIntersect> GetAllIntersect()
         {
             var lines = Lines.ToArray();
             for (var i = 0; i < lines.Length; i += 1)
@@ -299,16 +321,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public Enter GetNextEnter(Enter current)
-        {
-            var index = EntersList.IndexOf(current);
-            return EntersList[index == EntersList.Count - 1 ? 0 : index + 1];
-        }
-        public Enter GetPrevEnter(Enter current)
-        {
-            var index = EntersList.IndexOf(current);
-            return EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
-        }
+        public Enter GetNextEnter(Enter current) => GetNextEnter(EntersList.IndexOf(current));
+        public Enter GetNextEnter(int index) => EntersList[index == EntersList.Count - 1 ? 0 : index + 1];
+        public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
+        public Enter GetPrevEnter(int index) => EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => LinesDictionary.Values.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));

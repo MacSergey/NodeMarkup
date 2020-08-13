@@ -792,7 +792,7 @@ namespace NodeMarkup
         private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint && HoverPoint.Type != MarkupPoint.PointType.Normal)
-                RenderPointOverlay(cameraInfo, HoverPoint, Color.white, 0.5f);
+                RenderPointOverlay(cameraInfo, HoverPoint, MarkupColors.White, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
             RenderConnectLineOverlay(cameraInfo);
@@ -825,7 +825,7 @@ namespace NodeMarkup
             };
             NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
 
-            RenderBezier(cameraInfo, Color.white, bezier, width);
+            RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
         }
         public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderPointOverlay(cameraInfo, point, point.Color, 1f);
         public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point, Color color, float width)
@@ -877,7 +877,7 @@ namespace NodeMarkup
             };
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.green;
+            var color = EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             RenderBezier(cameraInfo, color, bezier);
@@ -885,7 +885,7 @@ namespace NodeMarkup
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = EditMarkup.ExistConnection(pointPair) ? Color.red : Color.blue;
+            var color = EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Blue;
 
             var lineBezier = new Bezier3()
             {
@@ -928,7 +928,7 @@ namespace NodeMarkup
             };
 
             NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
-            RenderBezier(cameraInfo, Color.white, bezier, 2f, true);
+            RenderBezier(cameraInfo, MarkupColors.White, bezier, 2f, true);
         }
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -944,7 +944,7 @@ namespace NodeMarkup
             bezier.c = v >= 0 ? bezier.c : -bezier.c;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            RenderBezier(cameraInfo, Color.white, bezier);
+            RenderBezier(cameraInfo, MarkupColors.White, bezier);
         }
 
 
@@ -964,18 +964,18 @@ namespace NodeMarkup
             RenderFillerBounds(cameraInfo);
             RenderFillerConnectLine(cameraInfo);
             if (IsHoverFillerPoint)
-                RenderCircle(cameraInfo, Color.white, HoverFillerPoint.Position, 1f);
+                RenderCircle(cameraInfo, MarkupColors.White, HoverFillerPoint.Position, 1f);
         }
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? Color.green : Color.white;
+            var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? MarkupColors.Green : MarkupColors.White;
             foreach (var trajectory in TempFiller.Trajectories)
                 RenderBezier(cameraInfo, color, trajectory);
         }
         private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var supportPoint in FillerPoints)
-                RenderCircle(cameraInfo, Color.red, supportPoint.Position, 0.5f);
+                RenderCircle(cameraInfo, MarkupColors.Red, supportPoint.Position, 0.5f);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -991,7 +991,7 @@ namespace NodeMarkup
                 if (!linePart.GetTrajectory(out bezier))
                     return;
 
-                color = Color.green;
+                color = MarkupColors.Green;
             }
             else
             {
@@ -1000,7 +1000,7 @@ namespace NodeMarkup
                 bezier.c = TempFiller.Last.Position;
                 bezier.d = MouseWorldPosition;
 
-                color = Color.white;
+                color = MarkupColors.White;
             }
 
             RenderBezier(cameraInfo, color, bezier);

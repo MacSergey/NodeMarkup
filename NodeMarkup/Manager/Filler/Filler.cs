@@ -139,7 +139,7 @@ namespace NodeMarkup.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupLinesIntersect intersect && intersect.IsIntersect)
+                else if (Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupBeziersIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[linePart.Line];
 

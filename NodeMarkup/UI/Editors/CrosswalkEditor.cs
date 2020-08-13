@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -235,10 +236,10 @@ namespace NodeMarkup.UI.Editors
             if (IsSelectBorderPanelMode)
             {
                 foreach (var borderLine in BorderLines)
-                    NodeMarkupTool.RenderBezier(cameraInfo, Color.red, borderLine.Bezier);
+                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.Red, borderLine.Bezier);
 
                 if (IsHoverLine)
-                    NodeMarkupTool.RenderBezier(cameraInfo, Color.white, HoverLine.Bezier, 1f);
+                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, HoverLine.Bezier, 1f);
             }
             else
             {
@@ -251,10 +252,10 @@ namespace NodeMarkup.UI.Editors
                         c = HoverItem.Object.Start.Position,
                         d = HoverItem.Object.End.Position,
                     };
-                    NodeMarkupTool.RenderBezier(cameraInfo, Color.white, bezier, 3f);
+                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, 3f);
                 }
                 if(IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
-                    NodeMarkupTool.RenderBezier(cameraInfo, Color.white, borderLine.Trajectory);
+                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, borderLine.Trajectory);
             }
         }
         public override string GetInfo()

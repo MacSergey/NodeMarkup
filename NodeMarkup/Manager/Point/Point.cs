@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         public byte Num { get; }
         public int Id { get; }
         public abstract PointType Type { get; }
-        public Color32 Color => Markup.OverlayColors[(Num - 1) % Markup.OverlayColors.Length];
+        public Color32 Color => MarkupColors.GetOverlayColor(Num - 1);
 
         private static Vector3 MarkerSize { get; } = Vector3.one * 1f;
         public virtual Vector3 Position
@@ -190,22 +190,10 @@ namespace NodeMarkup.Manager
         public override void UpdateProcess()
         {
             var ts = new HashSet<float>();
-            foreach(var enter in Markup.Enters)
+
+            foreach(var bezier in Markup.Contour)
             {
-                if (Line2.Intersect(enter.LeftSide.XZ(), enter.RightSide.XZ(), SourcePoint.Position.XZ(), (SourcePoint.Position + SourcePoint.Direction).XZ(), out float u, out float v)
-                    && 0 <= u && u <= 1)
-                    ts.Add(v);
-            }
-            foreach(var prev in Markup.Enters)
-            {
-                var next = Markup.GetNextEnter(prev);
-                var betweenBezier = new Bezier3()
-                {
-                    a = prev.RightSide,
-                    d = next.LeftSide
-                };
-                NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
-                var intersects = MarkupFillerIntersect.Intersect(betweenBezier, SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction);
+                var intersects = MarkupBezierLineIntersect.Intersect(bezier, SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction);
                 foreach(var intersect in intersects)
                     ts.Add(intersect.FirstT);
             }

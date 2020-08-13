@@ -46,7 +46,7 @@ namespace NodeMarkup.Utils
             }
         }
     }
-    public class MarkupLinesIntersect : MarkupIntersect
+    public class MarkupBeziersIntersect : MarkupIntersect
     {
         public MarkupLinePair Pair { get; private set; }
 
@@ -54,14 +54,14 @@ namespace NodeMarkup.Utils
         public float this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
         public Vector3 Position => (Pair.First.Trajectory.Position(FirstT) + Pair.Second.Trajectory.Position(SecondT)) / 2;
 
-        public MarkupLinesIntersect(MarkupLinePair pair, float firstT, float secondT) : base (firstT, secondT)
+        public MarkupBeziersIntersect(MarkupLinePair pair, float firstT, float secondT) : base (firstT, secondT)
         {
             Pair = pair;
         }
 
-        public static MarkupLinesIntersect NotIntersect(MarkupLinePair pair) => new MarkupLinesIntersect(pair, -1, -1);
+        public static MarkupBeziersIntersect NotIntersect(MarkupLinePair pair) => new MarkupBeziersIntersect(pair, -1, -1);
 
-        public static bool Calculate(MarkupLinePair pair, out MarkupLinesIntersect intersect)
+        public static bool Calculate(MarkupLinePair pair, out MarkupBeziersIntersect intersect)
         {
             intersect = NotIntersect(pair);
 
@@ -167,21 +167,21 @@ namespace NodeMarkup.Utils
                 yield return i + 1;
         }
     }
-    public class MarkupFillerIntersect : MarkupIntersect, IComparable<MarkupFillerIntersect>
+    public class MarkupBezierLineIntersect : MarkupIntersect, IComparable<MarkupBezierLineIntersect>
     {
         public float Angle { get; private set; }
-        public MarkupFillerIntersect(float firstT, float secondT, float angle) : base(firstT, secondT)
+        public MarkupBezierLineIntersect(float firstT, float secondT, float angle) : base(firstT, secondT)
         {
             Angle = angle;
         }
 
-        public static List<MarkupFillerIntersect> Intersect(Bezier3 bezier, Vector3 from, Vector3 to)
+        public static List<MarkupBezierLineIntersect> Intersect(Bezier3 bezier, Vector3 from, Vector3 to)
         {
-            var ts = new List<MarkupFillerIntersect>();
+            var ts = new List<MarkupBezierLineIntersect>();
             Intersect(bezier, from, to, ts);
             return ts;
         }
-        private static bool Intersect(Bezier3 bezier, Vector3 from, Vector3 to, List<MarkupFillerIntersect> results)
+        private static bool Intersect(Bezier3 bezier, Vector3 from, Vector3 to, List<MarkupBezierLineIntersect> results)
         {
             CalcParts(bezier, out int parts, out float[] points, out Vector3[] pos);
 
@@ -191,7 +191,7 @@ namespace NodeMarkup.Utils
                 {
                     var tangent = bezier.Tangent(p);
                     var angle = Vector3.Angle(tangent, to - from);
-                    var result = new MarkupFillerIntersect(t, -1, (angle > 90 ? 180 -angle : angle) * Mathf.Deg2Rad);
+                    var result = new MarkupBezierLineIntersect(t, -1, (angle > 90 ? 180 -angle : angle) * Mathf.Deg2Rad);
                     results.Add(result);
                     return true;
                 }
@@ -217,9 +217,9 @@ namespace NodeMarkup.Utils
                     return true;
             return false;
         }
-        public override bool Equals(object obj) => obj is MarkupFillerIntersect fillerIntersect && fillerIntersect.FirstT == FirstT;
+        public override bool Equals(object obj) => obj is MarkupBezierLineIntersect fillerIntersect && fillerIntersect.FirstT == FirstT;
         public override int GetHashCode() => FirstT.GetHashCode();
 
-        public int CompareTo(MarkupFillerIntersect other) => FirstT.CompareTo(other.FirstT);
+        public int CompareTo(MarkupBezierLineIntersect other) => FirstT.CompareTo(other.FirstT);
     }
 }

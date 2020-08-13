@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -131,7 +132,7 @@ namespace NodeMarkup.UI.Editors
             if (IsHoverItem)
             {
                 foreach (var trajectory in HoverItem.Object.Trajectories)
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, Color.white, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, MarkupColors.White, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();

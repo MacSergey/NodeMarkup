@@ -278,16 +278,16 @@ namespace NodeMarkup.Manager
                 var dir = directions[i];
                 foreach (var pos in positions[i])
                 {
-                    var intersectSet = new HashSet<MarkupFillerIntersect>();
+                    var intersectSet = new HashSet<MarkupBezierLineIntersect>();
                     foreach (var trajectory in trajectories)
                     {
-                        foreach (var t in MarkupFillerIntersect.Intersect(trajectory, pos, pos + dir))
+                        foreach (var t in MarkupBezierLineIntersect.Intersect(trajectory, pos, pos + dir))
                             if (t.FirstT > 0)
                                 intersectSet.Add(t);
                     }
 
                     if (intersectSet.Count % 2 == 1)
-                        intersectSet.Add(new MarkupFillerIntersect(0, 0, 0));
+                        intersectSet.Add(new MarkupBezierLineIntersect(0, 0, 0));
 
                     var intersects = intersectSet.OrderBy(j => j).ToArray();
 
@@ -414,7 +414,7 @@ namespace NodeMarkup.Manager
             {
                 if (i == left || i == right)
                     continue;
-                if (MarkupLinesIntersect.Intersect(middle, trajectories[i], out float t, out _) && t < cutT)
+                if (MarkupBeziersIntersect.Intersect(middle, trajectories[i], out float t, out _) && t < cutT)
                     cutT = t;
             }
 

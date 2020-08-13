@@ -53,7 +53,7 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverItem.Object, Color.white, 2f);
+                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverItem.Object, MarkupColors.White, 2f);
         }
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>

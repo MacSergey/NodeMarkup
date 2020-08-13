@@ -225,24 +225,24 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var supportPoint in SupportPoints)
                 {
-                    var color = SelectPartEdgePanel.Position == MarkupLineSelectPropertyPanel.RulePosition.Start ? Color.green : Color.red;
+                    var color = SelectPartEdgePanel.Position == MarkupLineSelectPropertyPanel.RulePosition.Start ? MarkupColors.Green : MarkupColors.Red;
                     NodeMarkupTool.RenderCircle(cameraInfo, color, supportPoint.Position, 0.5f);
                 }
 
                 if (IsHoverSupportPoint)
-                    NodeMarkupTool.RenderCircle(cameraInfo, Color.white, HoverSupportPoint.Position, 1f);
+                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, HoverSupportPoint.Position, 1f);
             }
             else
             {
                 if (IsHoverItem)
-                    NodeMarkupTool.RenderBezier(cameraInfo, Color.white, HoverItem.Object.Trajectory, 2f);
+                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, HoverItem.Object.Trajectory, 2f);
                 if (IsHoverRulePanel)
                 {
                     if (HoverRulePanel.Rule.GetTrajectory(out Bezier3 bezier))
                         NodeMarkupTool.RenderBezier(cameraInfo, WhiteAlpha, bezier, 2f);
                 }
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
-                    NodeMarkupTool.RenderCircle(cameraInfo, Color.white, supportPoint.Position, 0.5f);
+                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, supportPoint.Position, 0.5f);
             }
         }
         public override string GetInfo()
