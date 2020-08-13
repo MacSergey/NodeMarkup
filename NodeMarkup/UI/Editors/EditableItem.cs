@@ -89,8 +89,8 @@ namespace NodeMarkup.UI.Editors
             Label.verticalAlignment = UIVerticalAlignment.Middle;
             Label.autoSize = false;
             Label.autoHeight = false;
-            Label.textScale = 0.6f;
-            Label.padding = new RectOffset(0, 0, 2, 0);
+            Label.textScale = 0.55f;
+            Label.padding = new RectOffset(0, 0, 3, 0);
         }
         private void AddDeleteButton()
         {
@@ -124,7 +124,7 @@ namespace NodeMarkup.UI.Editors
             {
                 DeleteButton.size = new Vector2(size.y - 6, size.y - 6);
                 DeleteButton.relativePosition = new Vector2(size.x - (size.y - 3), 3);
-                labelWidth -= 25;
+                labelWidth -= 19;
             }
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);

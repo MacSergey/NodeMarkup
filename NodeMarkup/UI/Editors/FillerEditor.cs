@@ -132,14 +132,11 @@ namespace NodeMarkup.UI.Editors
             if (IsHoverItem)
             {
                 foreach (var trajectory in HoverItem.Object.Trajectories)
-                    NodeMarkupTool.RenderManager.OverlayEffect.DrawBezier(cameraInfo, MarkupColors.White, trajectory, 0.5f, 0f, 0f, -1f, 1280f, false, true);
+                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, trajectory, 0.2f);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();
-        protected override void OnObjectDelete(MarkupFiller filler)
-        {
-            Markup.RemoveFiller(filler);
-        }
+        protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);
     }
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {

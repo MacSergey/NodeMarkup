@@ -15,7 +15,6 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "L";
 
         public abstract LineType Type { get; }
-        public abstract bool SupportRules { get; }
 
         public Markup Markup { get; private set; }
         public ulong Id => PointPair.Hash;
@@ -65,6 +64,24 @@ namespace NodeMarkup.Manager
         public override string ToString() => PointPair.ToString();
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
+
+        public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
+        protected IEnumerable<ILinePartEdge> RulesEnterPointEdge
+        {
+            get
+            {
+                yield return new EnterPointEdge(Start);
+                yield return new EnterPointEdge(End);
+            }
+        }
+        protected IEnumerable<ILinePartEdge> RulesLinesIntersectEdge
+        {
+            get
+            {
+                foreach (var line in IntersectLines)
+                    yield return new LinesIntersectEdge(this, line);
+            }
+        }
 
         public IEnumerable<MarkupLine> IntersectLines
         {
@@ -145,7 +162,6 @@ namespace NodeMarkup.Manager
     public class MarkupRegularLine : MarkupLine
     {
         public override LineType Type => LineType.Regular;
-        public override bool SupportRules => true;
 
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
@@ -206,6 +222,17 @@ namespace NodeMarkup.Manager
 
             return dashes;
         }
+        public override IEnumerable<ILinePartEdge> RulesEdges
+        {
+            get
+            {
+                foreach (var edge in RulesEnterPointEdge)
+                    yield return edge;
+
+                foreach (var edge in RulesLinesIntersectEdge)
+                    yield return edge;
+            }
+        }
 
         public override XElement ToXml()
         {
@@ -231,7 +258,6 @@ namespace NodeMarkup.Manager
     public abstract class MarkupStraightLine<StyleType> : MarkupLine
         where StyleType : LineStyle
     {
-        public override bool SupportRules => false;
         public MarkupLineRawRule<StyleType> Rule { get; set; }
         public override IEnumerable<MarkupLineRawRule> Rules
         {
@@ -293,6 +319,14 @@ namespace NodeMarkup.Manager
             var style = TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
             SetRule(new MarkupLineRawRule<StopLineStyle>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
         }
+        public override IEnumerable<ILinePartEdge> RulesEdges
+        {
+            get
+            {
+                foreach (var edge in RulesEnterPointEdge)
+                    yield return edge;
+            }
+        }
     }
     public class MarkupCrosswalk : MarkupRegularLine
     {
@@ -342,6 +376,14 @@ namespace NodeMarkup.Manager
 
             foreach (var dash in CrosswalkRule.Style.Calculate(this, Trajectory))
                 yield return dash;
+        }
+        public override IEnumerable<ILinePartEdge> RulesEdges
+        {
+            get
+            {
+                foreach (var edge in RulesLinesIntersectEdge)
+                    yield return edge;
+            }
         }
 
         public override XElement ToXml()

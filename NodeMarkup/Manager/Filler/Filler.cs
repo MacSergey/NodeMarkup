@@ -288,6 +288,8 @@ namespace NodeMarkup.Manager
     {
         public override LineType Type => throw new NotImplementedException();
 
+        public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
+
         public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
 
         protected override void AddDefaultRule()
