@@ -22,12 +22,10 @@ namespace NodeMarkup.UI.Editors
 
         private ButtonPanel AddButton { get; set; }
 
-        public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
+        public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
+        public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();      
         public bool CanDivide => SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
-
-        private ILinePartEdge HoverSupportPoint { get; set; }
-        private bool IsHoverSupportPoint => IsSelectPartEdgeMode && HoverSupportPoint != null;
 
         private MarkupLineSelectPropertyPanel _selectPartEdgePanel;
         private MarkupLineSelectPropertyPanel SelectPartEdgePanel
@@ -45,6 +43,7 @@ namespace NodeMarkup.UI.Editors
 
                 if (_selectPartEdgePanel != null)
                 {
+                    PointsSelector = new PointsSelector<ILinePartEdge>(SupportPoints, _selectPartEdgePanel.Position == MarkupLineSelectPropertyPanel.RulePosition.Start ? MarkupColors.Green : MarkupColors.Red);
                     _selectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
                     _selectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
                 }
@@ -200,7 +199,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
-        public override void OnUpdate() => HoverSupportPoint = NodeMarkupTool.MouseRayValid ? SupportPoints.FirstOrDefault(i => i.IsIntersect(NodeMarkupTool.MouseRay)) : null;
+        public override void OnUpdate() => PointsSelector.OnUpdate(); /*HoverSupportPoint = NodeMarkupTool.MouseRayValid ? SupportPoints.FirstOrDefault(i => i.IsIntersect(NodeMarkupTool.MouseRay)) : null;*/
         public override void OnEvent(Event e)
         {
             if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)
@@ -208,9 +207,9 @@ namespace NodeMarkup.UI.Editors
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
-            if (IsHoverSupportPoint)
+            if (PointsSelector.IsHoverPoint)
             {
-                SelectPartEdgePanel.SelectedObject = HoverSupportPoint;
+                SelectPartEdgePanel.SelectedObject = PointsSelector.HoverPoint;
                 isDone = AfterSelectPartEdgePanel?.Invoke(e) ?? true;
             }
             else
@@ -219,16 +218,7 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsSelectPartEdgeMode)
-            {
-                foreach (var supportPoint in SupportPoints)
-                {
-                    var color = SelectPartEdgePanel.Position == MarkupLineSelectPropertyPanel.RulePosition.Start ? MarkupColors.Green : MarkupColors.Red;
-                    NodeMarkupTool.RenderCircle(cameraInfo, color, supportPoint.Position, 0.5f);
-                }
-
-                if (IsHoverSupportPoint)
-                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, HoverSupportPoint.Position, 1f);
-            }
+                PointsSelector.Render(cameraInfo);
             else
             {
                 if (IsHoverItem)

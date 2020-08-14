@@ -1482,6 +1482,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Group point overlay.
+        /// </summary>
+        public static string Settings_GroupPoints {
+            get {
+                return ResourceManager.GetString("Settings_GroupPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Arrange in a circle.
+        /// </summary>
+        public static string Settings_GroupPointsArrangeCircle {
+            get {
+                return ResourceManager.GetString("Settings_GroupPointsArrangeCircle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Arrange in a line.
+        /// </summary>
+        public static string Settings_GroupPointsArrangeLine {
+            get {
+                return ResourceManager.GetString("Settings_GroupPointsArrangeLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Group templates.
         /// </summary>
         public static string Settings_GroupTemplates {

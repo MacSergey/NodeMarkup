@@ -33,6 +33,7 @@ namespace NodeMarkup
         public static bool MouseRayValid { get; private set; }
         public static Vector3 MousePosition { get; private set; }
         public static Vector3 MouseWorldPosition { get; private set; }
+        public static Vector3 CameraDirection { get; private set; }
 
         Markup EditMarkup { get; set; }
 
@@ -50,8 +51,7 @@ namespace NodeMarkup
 
         MarkupFiller TempFiller { get; set; }
         public List<IFillerVertex> FillerPoints { get; } = new List<IFillerVertex>();
-        private IFillerVertex HoverFillerPoint { get; set; }
-        private bool IsHoverFillerPoint => HoverFillerPoint != null;
+        private PointsSelector<IFillerVertex> FillerPointsSelector { get; set; }
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
@@ -135,7 +135,7 @@ namespace NodeMarkup
             TargetPoints.Clear();
             DragPoint = null;
             FillerPoints.Clear();
-            HoverFillerPoint = null;
+            FillerPointsSelector = null;
             ToolMode = Mode.SelectNode;
             cursorInfoLabel.isVisible = false;
             Panel?.EndPanelAction();
@@ -195,6 +195,7 @@ namespace NodeMarkup
             RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
             RayCast(input, out RaycastOutput output);
             MouseWorldPosition = output.m_hitPos;
+            CameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
 
             switch (ToolMode)
             {
@@ -208,7 +209,7 @@ namespace NodeMarkup
                     Panel.OnUpdate();
                     break;
                 case Mode.SelectFiller:
-                    GetHoverFillerPoint();
+                    FillerPointsSelector.OnUpdate();
                     break;
             }
 
@@ -265,22 +266,6 @@ namespace NodeMarkup
 
             HoverPoint = null;
         }
-        private void GetHoverFillerPoint()
-        {
-            if (MouseRayValid)
-            {
-                foreach (var supportPoint in FillerPoints)
-                {
-                    if (supportPoint.IsIntersect(MouseRay))
-                    {
-                        HoverFillerPoint = supportPoint;
-                        return;
-                    }
-                }
-            }
-
-            HoverFillerPoint = null;
-        }
 
         private void Info()
         {
@@ -324,13 +309,13 @@ namespace NodeMarkup
                 case Mode.PanelAction when Panel.GetInfo() is string panelInfo && !string.IsNullOrEmpty(panelInfo):
                     ShowToolInfo(panelInfo, position);
                     break;
-                case Mode.SelectFiller when IsHoverFillerPoint && TempFiller.IsEmpty:
+                case Mode.SelectFiller when FillerPointsSelector.IsHoverPoint && TempFiller.IsEmpty:
                     ShowToolInfo(Localize.Tool_InfoFillerClickStart, position);
                     break;
-                case Mode.SelectFiller when IsHoverFillerPoint && HoverFillerPoint == TempFiller.First:
+                case Mode.SelectFiller when FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint == TempFiller.First:
                     ShowToolInfo(Localize.Tool_InfoFillerClickEnd, position);
                     break;
-                case Mode.SelectFiller when IsHoverFillerPoint:
+                case Mode.SelectFiller when FillerPointsSelector.IsHoverPoint:
                     ShowToolInfo(Localize.Tool_InfoFillerClickNext, position);
                     break;
                 case Mode.SelectFiller when TempFiller.IsEmpty:
@@ -642,9 +627,9 @@ namespace NodeMarkup
         }
         private void OnSelectFillerPoint(Event e)
         {
-            if (IsHoverFillerPoint)
+            if (FillerPointsSelector.IsHoverPoint)
             {
-                if (TempFiller.Add(HoverFillerPoint))
+                if (TempFiller.Add(FillerPointsSelector.HoverPoint))
                 {
                     EditMarkup.AddFiller(TempFiller);
                     Panel.EditFiller(TempFiller);
@@ -723,11 +708,7 @@ namespace NodeMarkup
             SelectNodeId = 0;
             Panel?.Hide();
         }
-        private void GetFillerPoints()
-        {
-            FillerPoints.Clear();
-            FillerPoints.AddRange(TempFiller.GetNextСandidates());
-        }
+        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(TempFiller.GetNextСandidates(), MarkupColors.Red);
         private void DeleteAllLines()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllLines)}");
@@ -901,8 +882,8 @@ namespace NodeMarkup
 
             var normalBezier = new Bezier3
             {
-                a = SelectPoint.Position + 0.75f * SelectPoint.Direction + 0.25f * normal,
-                d = SelectPoint.Position + 1.25f * normal - 0.25f * SelectPoint.Direction
+                a = SelectPoint.Position + SelectPoint.Direction + normal,
+                d = SelectPoint.Position + normal - SelectPoint.Direction
             };
             normalBezier.b = normalBezier.a + normal / 2;
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
@@ -969,21 +950,14 @@ namespace NodeMarkup
         private void RenderSelectFillerMode(RenderManager.CameraInfo cameraInfo)
         {
             RenderFillerLines(cameraInfo);
-            RenderFillerBounds(cameraInfo);
+            FillerPointsSelector.Render(cameraInfo);
             RenderFillerConnectLine(cameraInfo);
-            if (IsHoverFillerPoint)
-                RenderCircle(cameraInfo, MarkupColors.White, HoverFillerPoint.Position, 1f);
         }
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = IsHoverFillerPoint && HoverFillerPoint.Equals(TempFiller.First) ? MarkupColors.Green : MarkupColors.White;
+            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(TempFiller.First) ? MarkupColors.Green : MarkupColors.White;
             foreach (var trajectory in TempFiller.Trajectories)
-                RenderBezier(cameraInfo, color, trajectory, 0.2f);
-        }
-        private void RenderFillerBounds(RenderManager.CameraInfo cameraInfo)
-        {
-            foreach (var supportPoint in FillerPoints)
-                RenderCircle(cameraInfo, MarkupColors.Red, supportPoint.Position, 0.5f);
+                RenderBezier(cameraInfo, color, trajectory);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -993,9 +967,9 @@ namespace NodeMarkup
             Bezier3 bezier;
             Color color;
 
-            if (IsHoverFillerPoint)
+            if (FillerPointsSelector.IsHoverPoint)
             {
-                var linePart = TempFiller.GetFillerLine(TempFiller.Last, HoverFillerPoint);
+                var linePart = TempFiller.GetFillerLine(TempFiller.Last, FillerPointsSelector.HoverPoint);
                 if (!linePart.GetTrajectory(out bezier))
                     return;
 
@@ -1014,11 +988,10 @@ namespace NodeMarkup
             RenderBezier(cameraInfo, color, bezier);
         }
 
-        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.5f, bool cut = false) =>
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, cut ? width / 2 : 0f, cut ? width / 2 : 0f, -1f, 1280f, false, true);
-        public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width) =>
-            RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, true);
-
+        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.2f, bool cut = false, bool alphaBlend = true) =>
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, cut ? width / 2 : 0f, cut ? width / 2 : 0f, -1f, 1280f, false, alphaBlend);
+        public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width, bool alphaBlend = true) =>
+            RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, alphaBlend);
         #endregion
 
         enum Mode

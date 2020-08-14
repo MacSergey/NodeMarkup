@@ -220,7 +220,7 @@ namespace NodeMarkup.UI.Editors
                 SelectBorderPanel = selectPanel;
             }
         }
-        public override void OnUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IsIntersect(NodeMarkupTool.MouseRay)) : null;
+        public override void OnUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
             if (IsHoverLine)

@@ -143,6 +143,7 @@
     <Compile Include="UI\Keymapping.cs" />
     <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel.cs" />
+    <Compile Include="UI\PointsSelector.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
     <Compile Include="UI\Property panels\BoolProperty.cs" />
     <Compile Include="UI\Property panels\ButtonPanel.cs" />
@@ -252,7 +253,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

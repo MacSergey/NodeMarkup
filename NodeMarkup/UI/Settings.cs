@@ -39,6 +39,8 @@ namespace NodeMarkup.UI
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
         public static SavedBool GroupTemplates { get; } = new SavedBool(nameof(GroupTemplates), SettingsFile, true, true);
         public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
+        public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
+        public static SavedInt GroupPointsType { get; } = new SavedInt(nameof(GroupPointsType), SettingsFile, 0, true);
 
         static Settings()
         {
@@ -95,7 +97,7 @@ namespace NodeMarkup.UI
 
             dropDown.AddItem(string.Empty, Localize.Mod_LocaleGame);
 
-            foreach(var locale in locales)
+            foreach (var locale in locales)
             {
                 var localizeString = $"Mod_Locale_{locale}";
                 var localeText = Localize.ResourceManager.GetString(localizeString, Localize.Culture);
@@ -159,7 +161,8 @@ namespace NodeMarkup.UI
             AddDeleteRequest(group);
             AddQuickRuleSetup(group);
             AddGroupLines(group);
-            AddGroupTemplates(group);
+            AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle });
+            AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
         }
         private static void AddDistanceSetting(UIHelper group)
         {
@@ -206,47 +209,6 @@ namespace NodeMarkup.UI
             var groupLinesCheckBox = group.AddCheckbox(Localize.Settings_GroupLines, GroupLines, OnGroupLinesChanged) as UICheckBox;
 
             void OnGroupLinesChanged(bool groupLines) => GroupLines.value = groupLines;
-        }
-        private static void AddGroupTemplates(UIHelper group)
-        {
-            var inProcess = false;
-            var groupByType = default(UICheckBox);
-            var groupByStyle = default(UICheckBox);
-            var byPanel = default(UIPanel);
-
-            var groupTemplatesCheckBox = group.AddCheckbox(Localize.Settings_GroupTemplates, GroupTemplates, OnGroupTemplatesChanged) as UICheckBox;
-
-            byPanel = (group.self as UIComponent).AddUIComponent<UIPanel>();
-            byPanel.autoLayout = true;
-            byPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            byPanel.autoFitChildrenHorizontally = true;
-            byPanel.autoFitChildrenVertically = true;
-            byPanel.autoLayoutPadding = new RectOffset(25, 0, 0, 5);
-            var panelHelper = new UIHelper(byPanel);
-
-            groupByType = panelHelper.AddCheckbox(Localize.Settings_GroupTemplatesByType, GroupTemplatesType == 0, OnByTypeChanged) as UICheckBox;
-            groupByStyle = panelHelper.AddCheckbox(Localize.Settings_GroupTemplatesByStyle, GroupTemplatesType == 1, OnByStyleChanged) as UICheckBox;
-            SetVisible();
-
-            void OnGroupTemplatesChanged(bool groupTemplates)
-            {
-                GroupTemplates.value = groupTemplates;
-                SetVisible();
-            }
-            void SetVisible() => byPanel.isVisible = GroupTemplates;
-            void OnByTypeChanged(bool by) => Set(by ? 0 : 1);
-            void OnByStyleChanged(bool by) => Set(by ? 1 : 0);
-            void Set(int value)
-            {
-                if (!inProcess)
-                {
-                    inProcess = true;
-                    GroupTemplatesType.value = value;
-                    groupByType.isChecked = GroupTemplatesType == 0;
-                    groupByStyle.isChecked = GroupTemplatesType == 1;
-                    inProcess = false;
-                }
-            }
         }
         #endregion
 
@@ -356,6 +318,49 @@ namespace NodeMarkup.UI
             }
         }
         #endregion
+
+        private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels)
+        {
+            var inProcess = false;
+            var checkBoxes = new UICheckBox[labels.Length];
+            var optionsPanel = default(UIPanel);
+
+            var mainCheckBox = group.AddCheckbox(mainLabel, mainSaved, OnMainChanged) as UICheckBox;
+
+            optionsPanel = (group.self as UIComponent).AddUIComponent<UIPanel>();
+            optionsPanel.autoLayout = true;
+            optionsPanel.autoLayoutDirection = LayoutDirection.Vertical;
+            optionsPanel.autoFitChildrenHorizontally = true;
+            optionsPanel.autoFitChildrenVertically = true;
+            optionsPanel.autoLayoutPadding = new RectOffset(25, 0, 0, 5);
+            var panelHelper = new UIHelper(optionsPanel);
+
+            for (var i = 0; i < checkBoxes.Length; i += 1)
+            {
+                var index = i;
+                checkBoxes[i] = panelHelper.AddCheckbox(labels[i], optionsSaved == i, (value) => Set(index, value)) as UICheckBox;
+            }
+
+            SetVisible();
+
+            void OnMainChanged(bool value)
+            {
+                mainSaved.value = value;
+                SetVisible();
+            }
+            void SetVisible() => optionsPanel.isVisible = mainSaved;
+            void Set(int index, bool value)
+            {
+                if (!inProcess)
+                {
+                    inProcess = true;
+                    optionsSaved.value = index;
+                    for (var i = 0; i < checkBoxes.Length; i += 1)
+                        checkBoxes[i].isChecked = optionsSaved == i;
+                    inProcess = false;
+                }
+            }
+        }
     }
 
     public class LanguageDropDown : CustomUIDropDown<string> { }

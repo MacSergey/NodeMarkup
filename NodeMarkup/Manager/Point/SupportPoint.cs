@@ -13,6 +13,7 @@ namespace NodeMarkup.Manager
         Vector3 Position { get; }
         bool GetT(MarkupLine line, out float t);
         bool IsIntersect(Ray ray);
+        void Render(RenderManager.CameraInfo cameraInfo, Color color);
     }
     public enum SupportType
     {
@@ -36,6 +37,7 @@ namespace NodeMarkup.Manager
 
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
+        public abstract void Render(RenderManager.CameraInfo cameraInfo, Color color);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
 
@@ -72,6 +74,7 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
 
         public override XElement ToXml()
         {
@@ -107,5 +110,10 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        {
+            NodeMarkupTool.RenderBezier(cameraInfo, color, First.Trajectory);
+            NodeMarkupTool.RenderBezier(cameraInfo, color, Second.Trajectory);
+        }
     }
 }

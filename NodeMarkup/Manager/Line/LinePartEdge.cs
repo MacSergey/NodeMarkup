@@ -52,6 +52,7 @@ namespace NodeMarkup.Manager
         public EnterPointEdge(MarkupPoint point) : base(point) { }
 
         public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
 
         public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
     }
@@ -90,5 +91,11 @@ namespace NodeMarkup.Manager
         }
 
         public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Second);
+
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        {
+            NodeMarkupTool.RenderBezier(cameraInfo, color, Slave.Trajectory);
+            //NodeMarkupTool.RenderBezier(cameraInfo, color, Second.Trajectory);
+        }
     }
 }

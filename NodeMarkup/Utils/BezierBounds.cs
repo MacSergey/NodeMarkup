@@ -31,6 +31,7 @@ namespace NodeMarkup.Utils
                 Bounds.Add(bounds);
             }
         }
-        public bool IsIntersect(Ray ray) => Bounds.Any(b => b.IntersectRay(ray));
+        public bool IntersectRay(Ray ray) => Bounds.Any(b => b.IntersectRay(ray));
+        public bool Intersects(Bounds bounds) => Bounds.Any(b => b.Intersects(bounds));
     }
 }
