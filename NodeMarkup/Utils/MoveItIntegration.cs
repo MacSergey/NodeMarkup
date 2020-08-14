@@ -1,10 +1,10 @@
 ﻿using MoveItIntegration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NodeMarkup.Manager;
 using System.Xml.Linq;
+using System.Xml;
+using System.IO;
 
 namespace NodeMarkup.Utils
 {
@@ -14,51 +14,84 @@ namespace NodeMarkup.Utils
 
         public string Description => throw new NotImplementedException();
 
-        public IMoveItIntegration GetInstance() => new MoveItIntegration();
+        public MoveItIntegrationBase GetInstance() => new MoveItIntegration();
     }
 
-    public class MoveItIntegration : IMoveItIntegration
+    public class MoveItIntegration : MoveItIntegrationBase
     {
-        public object CopyNode(ushort nodeID)
+        public override string ID => "CS.macsergey.NodeMarkup";
+
+        public override string Name => Mod.StaticName;
+
+        public override string Description => Localize.Mod_Description;
+
+        public override Version DataVersion => new Version(1, 0);
+
+        public override object Copy(InstanceID sourceInstanceID)
         {
-            if (MarkupManager.TryGetMarkup(nodeID, out Markup markup))
+            if (sourceInstanceID.Type == InstanceType.NetNode)
             {
-                var data = markup.ToXml();
-                return data;
-            }
-            else
-                return null;
-        }
-
-        public object CopySegment(ushort segmentId) => null;
-        public object Decode64(string base64Data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Encode64(object record)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PasteNode(ushort nodeID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
-        {
-            var map = new Dictionary<ObjectId, ObjectId>();
-            foreach (var source in sourceMap)
-            {
-                if (source.Key.Type == InstanceType.NetSegment && source.Value.Type == InstanceType.NetSegment)
+                ushort nodeID = sourceInstanceID.NetNode;
+                if (MarkupManager.TryGetMarkup(nodeID, out Markup markup))
                 {
-                    map.Add(new ObjectId() { Segment = source.Key.NetSegment }, new ObjectId() { Segment = source.Value.NetSegment });
+                    var data = markup.ToXml();
+                    return data;
+                }
+                else
+                    return null;
+            }
+            return null;
+        }
+
+        public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
+        {
+            if (targetInstanceID.Type == InstanceType.NetNode)
+            {
+                ushort nodeID = targetInstanceID.NetNode;
+                var map = new Dictionary<ObjectId, ObjectId>();
+                foreach (var source in sourceMap)
+                {
+                    if (source.Key.Type == InstanceType.NetSegment && source.Value.Type == InstanceType.NetSegment)
+                    {
+                        map.Add(new ObjectId() { Segment = source.Key.NetSegment }, new ObjectId() { Segment = source.Value.NetSegment });
+                    }
+                }
+
+                if (record is XElement config)
+                {
+                    var markup = MarkupManager.Get(nodeID);
+                    markup.FromXml(Mod.Version, config, map);
                 }
             }
-
-            if (record is XElement config)
-            {
-                var markup = MarkupManager.Get(nodeID);
-                markup.FromXml(Mod.Version, config, map);
-            }
         }
 
-        public void PasteSegment(ushort segmentId, object record, Dictionary<InstanceID, InstanceID> map) { }
+        public override string Encode64(object record)
+        {
+            if (record == null) return null;
+            return EncodeUtil.Encode64(record.ToString());
+        }
+
+        public override object Decode64(string record, Version dataVersion)
+        {
+            if (record == null || record.Length == 0) return null;
+
+            // XElement.Parse throws MissingMethodException
+            // Method not found: System.Xml.XmlReaderSettings.set_MaxCharactersFromEntities
+            XElement xml;
+            using (StringReader input = new StringReader((string)EncodeUtil.Decode64(record)))
+            {
+                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
+                {
+                    IgnoreWhitespace = true,
+                    ProhibitDtd = false,
+                    XmlResolver = null
+                };
+                using (XmlReader reader = XmlReader.Create(input, xmlReaderSettings))
+                {
+                    xml = XElement.Load(reader, LoadOptions.None);
+                }
+            }
+            return xml;
+        }
     }
 }
