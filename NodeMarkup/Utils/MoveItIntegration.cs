@@ -68,7 +68,7 @@ namespace NodeMarkup.Utils
         public override string Encode64(object record)
         {
             if (record == null) return null;
-            return EncodeUtil.Encode64(record.ToString());
+            return EncodeUtil.BinaryEncode64(record.ToString());
         }
 
         public override object Decode64(string record, Version dataVersion)
@@ -78,7 +78,7 @@ namespace NodeMarkup.Utils
             // XElement.Parse throws MissingMethodException
             // Method not found: System.Xml.XmlReaderSettings.set_MaxCharactersFromEntities
             XElement xml;
-            using (StringReader input = new StringReader((string)EncodeUtil.Decode64(record)))
+            using (StringReader input = new StringReader((string)EncodeUtil.BinaryDecode64(record)))
             {
                 XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
                 {
