@@ -752,4 +752,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>横断歩道の右枠線を選択</value>
   </data>
+  
+  
+  
 </root>
