@@ -397,8 +397,6 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Ciągła</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Kliknij aby usunąć linię zatrzymania</value>
@@ -420,8 +418,6 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Przerywana</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Krok</value>
@@ -479,13 +475,9 @@ Przytrzymaj Alt aby utworzyć wypełnienie</value>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Podwójna ciągła</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Podwójna przerywana</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopiuj</value>
@@ -735,6 +727,7 @@ Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Równolegle do pasów</value>
   </data>
+  
   
   
   

@@ -398,8 +398,6 @@ Altキー押下で塗り潰しを開始</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>実線</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>クリックして停止線を削除</value>
@@ -421,8 +419,6 @@ Altキー押下で塗り潰しを開始</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>破線</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>間隔</value>
@@ -480,13 +476,9 @@ Altキー押下で塗り潰しを開始</value>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>2重線</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>2重破線</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>コピー</value>
@@ -760,13 +752,12 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>横断歩道の右枠線を選択</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>ポイントをグループ化して表示</value>
-  </data>
+  
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>円形で表示</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
     <value>ラインで表示</value>
   </data>
+  
 </root>

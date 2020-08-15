@@ -784,7 +784,9 @@ To create a crosswalk connect two points.</value>
     <value>Select the crosswalk's right border</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Group point overlay</value>
+    <value>Group points overlay</value>
+    <comment>Settings_GroupPoints
+</comment>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Arrange in a circle</value>

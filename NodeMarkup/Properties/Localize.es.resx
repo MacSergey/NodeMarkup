@@ -397,8 +397,6 @@ Mantenga Alt para crear un relleno</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Continua</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Haga clic para borrar la línea transversal</value>
@@ -420,8 +418,6 @@ Mantenga Alt para crear un relleno</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Discontinua</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Grado</value>
@@ -479,13 +475,9 @@ Mantenga Alt para crear un relleno</value>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Continua doble</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Discontinua Doble</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Copiar</value>
@@ -744,11 +736,24 @@ Para crear un paso de peatones, conecta dos puntos.</value>
   <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
     <value>Líneas paralelas</value>
   </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Borde izquierdo</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Borde derecho</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Seleccione el borde izquierdo del paso de peatones</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Seleccione el borde derecho del paso de peatones</value>
+  </data>
   
-  
-  
-  
-  
-  
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Organizar en un círculo</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Organizar en una línea</value>
+  </data>
   
 </root>

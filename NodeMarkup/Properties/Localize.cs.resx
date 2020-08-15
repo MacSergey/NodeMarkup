@@ -397,8 +397,6 @@ nebo smazání čáry
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Nepřerušovná</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
@@ -420,8 +418,6 @@ nebo smazání čáry
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Přerušovaná</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Mezera</value>
@@ -479,13 +475,9 @@ nebo smazání čáry
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dvojitá nepřerušovaná</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopírovat</value>
@@ -757,6 +749,11 @@ Pro vytvoření přechodu spojte dva body.</value>
     <value>Vyber pravý roh přechodu</value>
   </data>
   
-  
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Uspořádat do kruhu</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Uspořádat do řady</value>
+  </data>
   
 </root>
