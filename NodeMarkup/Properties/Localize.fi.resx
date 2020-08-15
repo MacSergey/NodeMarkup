@@ -395,7 +395,9 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
     <value>Sulkuviiva ja Katkoviiva</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Pysäytysviiva</value>
+    <value>Viiva</value>
+    <comment>LineStyle_Stop
+</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Napauta poistaaksesi pysäytysviivan</value>
@@ -416,7 +418,9 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
     <value>Ruudukko</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Katkonainen pysäytysviiva</value>
+    <value>Katkoviiva</value>
+    <comment>LineStyle_StopDashed
+</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Väli</value>
@@ -473,10 +477,14 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Kaksoispysäytysviiva</value>
+    <value>Kaksoissulkuviiva</value>
+    <comment>LineStyle_StopDouble
+</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Katkonainen kaksoispysäytysviiva</value>
+    <value>Kaksoiskatkoviiva</value>
+    <comment>LineStyle_StopDoubleDashed
+</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopioi</value>

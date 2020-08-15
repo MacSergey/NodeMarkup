@@ -396,7 +396,9 @@ nebo smazání čáry
     <value>Plná i přerušovaná</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Hranice křižovatky</value>
+    <value>Nepřerušovná</value>
+    <comment>LineStyle_Stop
+</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
@@ -417,7 +419,9 @@ nebo smazání čáry
     <value>Mřížka</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Přerušovaná hranice křižovatky</value>
+    <value>Přerušovaná</value>
+    <comment>LineStyle_StopDashed
+</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Mezera</value>
@@ -474,10 +478,14 @@ nebo smazání čáry
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Dvojítá čára hranice</value>
+    <value>Dvojitá nepřerušovaná</value>
+    <comment>LineStyle_StopDouble
+</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Dvojitá přerušovaná hranice</value>
+    <value>Dvojitá přerušovaná</value>
+    <comment>LineStyle_StopDoubleDashed
+</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopírovat</value>
