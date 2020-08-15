@@ -73,21 +73,26 @@ namespace NodeMarkup.UI.Editors
 
         protected override void RefreshItems()
         {
-            if (!GroupingEnabled)
-                base.RefreshItems();
-            else
+            if (GroupingEnabled)
             {
                 foreach (var group in ItemsPanel.components.OfType<EditableGroupType>())
                     group.Refresh();
             }
+            else
+                base.RefreshItems();
         }
         protected override EditableItemType GetItem(EditableObject editObject)
         {
-            var groupKey = SelectGroup(editObject);
-            if (Groups.TryGetValue(groupKey, out EditableGroupType group))
-                return group.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+            if (GroupingEnabled)
+            {
+                var groupKey = SelectGroup(editObject);
+                if (Groups.TryGetValue(groupKey, out EditableGroupType group))
+                    return group.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+                else
+                    return null;
+            }
             else
-                return null;
+                return base.GetItem(editObject);
         }
         public override void UpdateEditor(EditableObject selectObject = null)
         {
@@ -106,11 +111,11 @@ namespace NodeMarkup.UI.Editors
         }
         public override void Select(EditableItemType item)
         {
-            var groupKey = SelectGroup(item.Object);
-            if (Groups.TryGetValue(groupKey, out EditableGroupType group))
-                group.IsExpand = true;
+                var groupKey = SelectGroup(item.Object);
+                if (Groups.TryGetValue(groupKey, out EditableGroupType group))
+                    group.IsExpand = true;
 
-            base.Select(item);
+                base.Select(item);
         }
         public override void ScrollTo(EditableItemType item)
         {
