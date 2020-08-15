@@ -47,7 +47,7 @@ namespace NodeMarkup.UI
         }
         public void Render(RenderManager.CameraInfo cameraInfo)
         {
-            foreach (var group in Groups.Where(g => !IsHoverGroup || HoverGroup.Count <= 1 || !HoverGroup.Intersects(g.HoverBounds)))
+            foreach (var group in Groups)
                 group.Render(cameraInfo);
 
             if (IsHoverGroup)
@@ -108,7 +108,7 @@ namespace NodeMarkup.UI
             return IsHover;
         }
         protected abstract bool OnLeave(Ray ray);
-        public abstract bool Intersects(Bounds bounds);
+        public abstract bool Intersects(PointsGroup<PointType> group);
 
         public void Render(RenderManager.CameraInfo cameraInfo)
         {
@@ -164,7 +164,7 @@ namespace NodeMarkup.UI
         }
 
         protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
-        public override bool Intersects(Bounds bounds) => LeaveBounds.Intersects(bounds);
+        public override bool Intersects(PointsGroup<PointType> group) => 2 * (group.HoverBounds.center - LeaveBounds.center).magnitude <= group.HoverBounds.size.XZ().magnitude + LeaveBounds.size.XZ().magnitude;
     }
     public class LinePointsGroup<PointType> : PointsGroup<PointType>
         where PointType : ISupportPoint
@@ -201,6 +201,6 @@ namespace NodeMarkup.UI
         }
 
         protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
-        public override bool Intersects(Bounds bounds) => LeaveBounds.Intersects(bounds);
+        public override bool Intersects(PointsGroup<PointType> group) => LeaveBounds.Bounds.Any(b => 2 * (group.HoverBounds.center - b.center).magnitude <= group.HoverBounds.size.XZ().magnitude + b.size.XZ().magnitude);
     }
 }

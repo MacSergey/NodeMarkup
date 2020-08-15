@@ -12,7 +12,9 @@ namespace NodeMarkup.Utils
         private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
         public Bezier3 Bezier { get; }
         public float Size { get; }
-        private List<Bounds> Bounds { get; } = new List<Bounds>();
+        private List<Bounds> BoundsList { get; } = new List<Bounds>();
+        public IEnumerable<Bounds> Bounds => BoundsList;
+
 
         public BezierBounds(Bezier3 bezier, float size)
         {
@@ -28,10 +30,10 @@ namespace NodeMarkup.Utils
             {
                 t = Bezier.Travel(t, size / 2);
                 var bounds = new Bounds(Bezier.Position(t), Vector3.one * size);
-                Bounds.Add(bounds);
+                BoundsList.Add(bounds);
             }
         }
-        public bool IntersectRay(Ray ray) => Bounds.Any(b => b.IntersectRay(ray));
-        public bool Intersects(Bounds bounds) => Bounds.Any(b => b.Intersects(bounds));
+        public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
+        public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
     }
 }
