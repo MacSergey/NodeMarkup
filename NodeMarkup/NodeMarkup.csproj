@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Tool.cs" />
     <Compile Include="UI\Editors\BaseEditor.cs" />
+    <Compile Include="UI\Editors\BaseGroupEditor.cs" />
     <Compile Include="UI\Editors\CrosswalkEditor.cs" />
     <Compile Include="UI\Editors\EditableGroup.cs" />
     <Compile Include="UI\Editors\EditableItem.cs" />
@@ -253,7 +254,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

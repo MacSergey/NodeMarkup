@@ -8,21 +8,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class UIUtils
+    public static class UIUtils
     {
-        public static UIUtils Instance
-        {
-            get
-            {
-                bool flag = instance == null;
-                if (flag)
-                {
-                    instance = new UIUtils();
-                }
-                return instance;
-            }
-        }
-        private void FindUIRoot()
+        private static UIView uiRoot { get; set; } = null;
+        private static void FindUIRoot()
         {
             uiRoot = null;
             foreach (UIView uiview in UnityEngine.Object.FindObjectsOfType<UIView>())
@@ -35,7 +24,7 @@ namespace NodeMarkup.UI
                 }
             }
         }
-        public string GetTransformPath(Transform transform)
+        public static string GetTransformPath(Transform transform)
         {
             string text = transform.name;
             Transform parent = transform.parent;
@@ -46,53 +35,26 @@ namespace NodeMarkup.UI
             }
             return text;
         }
-        public T FindComponent<T>(string name, UIComponent parent = null, FindOptions options = FindOptions.None) where T : UIComponent
+        public static T FindComponent<T>(string name, UIComponent parent = null, FindOptions options = FindOptions.None) where T : UIComponent
         {
-            bool flag = uiRoot == null;
-            if (flag)
+            if (uiRoot == null)
             {
                 FindUIRoot();
-                bool flag2 = uiRoot == null;
-                if (flag2)
-                {
+                if (uiRoot == null)
                     return default;
-                }
             }
             foreach (T t in UnityEngine.Object.FindObjectsOfType<T>())
             {
-                bool flag3 = (options & FindOptions.NameContains) > FindOptions.None;
-                bool flag4;
-                if (flag3)
+                bool flag4 = (options & FindOptions.NameContains) > FindOptions.None ? t.name.Contains(name) : t.name == name;
+                if (flag4)
                 {
-                    flag4 = t.name.Contains(name);
-                }
-                else
-                {
-                    flag4 = (t.name == name);
-                }
-                bool flag5 = !flag4;
-                if (!flag5)
-                {
-                    bool flag6 = parent != null;
-                    Transform transform;
-                    if (flag6)
-                    {
-                        transform = parent.transform;
-                    }
-                    else
-                    {
-                        transform = uiRoot.transform;
-                    }
+                    Transform transform = parent != null ? parent.transform : uiRoot.transform;
                     Transform parent2 = t.transform.parent;
                     while (parent2 != null && parent2 != transform)
-                    {
                         parent2 = parent2.parent;
-                    }
-                    bool flag7 = parent2 == null;
-                    if (!flag7)
-                    {
+
+                    if (parent2 != null)
                         return t;
-                    }
                 }
             }
             return default;
@@ -107,8 +69,8 @@ namespace NodeMarkup.UI
                     yield return component;
             }
         }
-        private static UIUtils instance = null;
-        private UIView uiRoot = null;
+
+
         [Flags]
         public enum FindOptions
         {
@@ -157,6 +119,34 @@ namespace NodeMarkup.UI
             };
 
             scrollablePanel.verticalScrollbar = scrollbar;
+        }
+        public static void ScrollIntoViewRecursive(this UIScrollablePanel panel, UIComponent component)
+        {
+            var rect = new Rect(panel.scrollPosition.x + panel.scrollPadding.left, panel.scrollPosition.y + panel.scrollPadding.top, panel.size.x - panel.scrollPadding.horizontal, panel.size.y - panel.scrollPadding.vertical).RoundToInt();
+      
+            var relativePosition = Vector3.zero;
+            for (var current = component; current != null && current != panel; current = current.parent)
+            {
+                relativePosition += current.relativePosition;
+            }
+
+            var size = component.size;
+            var other = new Rect(panel.scrollPosition.x + relativePosition.x, panel.scrollPosition.y + relativePosition.y, size.x, size.y).RoundToInt();
+            if (!rect.Intersects(other))
+            {
+                Vector2 scrollPosition = panel.scrollPosition;
+                if (other.xMin < rect.xMin)
+                    scrollPosition.x = other.xMin - panel.scrollPadding.left;
+                else if (other.xMax > rect.xMax)
+                    scrollPosition.x = other.xMax - Mathf.Max(panel.size.x, size.x) + panel.scrollPadding.horizontal;
+
+                if (other.y < rect.y)
+                    scrollPosition.y = other.yMin - panel.scrollPadding.top;
+                else if (other.yMax > rect.yMax)
+                    scrollPosition.y = other.yMax - Mathf.Max(panel.size.y, size.y) + panel.scrollPadding.vertical;
+
+                panel.scrollPosition = scrollPosition;
+            }
         }
     }
 }

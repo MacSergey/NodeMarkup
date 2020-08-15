@@ -24,7 +24,7 @@ namespace NodeMarkup.UI
 
         static UIComponent GetContainingPanel()
         {
-            var ret = UIUtils.Instance.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
+            var ret = UIUtils.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
             return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
         }
 
@@ -36,7 +36,7 @@ namespace NodeMarkup.UI
             name = nameof(NodeMarkupButton);
             playAudioEvents = true;
 
-            if(!(UIUtils.Instance.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None) is UITabstrip builtinTabstrip))
+            if(!(UIUtils.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None) is UITabstrip builtinTabstrip))
                 return;
 
             string[] spriteNames = new string[]

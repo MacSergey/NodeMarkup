@@ -960,7 +960,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Stop line.
+        ///   Ищет локализованную строку, похожую на Solid.
         /// </summary>
         public static string LineStyle_Stop {
             get {
@@ -969,7 +969,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dashed stop line.
+        ///   Ищет локализованную строку, похожую на Dashed.
         /// </summary>
         public static string LineStyle_StopDashed {
             get {
@@ -978,7 +978,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Double stop line.
+        ///   Ищет локализованную строку, похожую на Double solid.
         /// </summary>
         public static string LineStyle_StopDouble {
             get {
@@ -987,7 +987,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Double dashed stop line.
+        ///   Ищет локализованную строку, похожую на Double dashed.
         /// </summary>
         public static string LineStyle_StopDoubleDashed {
             get {
