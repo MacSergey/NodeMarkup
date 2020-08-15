@@ -77,7 +77,7 @@ namespace NodeMarkup.UI.Editors
             Button.normalFgSprite = "IconDownArrow";
             Button.hoveredFgSprite = "IconDownArrowHovered";
             Button.pressedFgSprite = "IconDownArrowPressed";
-            Button.focusedFgSprite = "IconDownArrowFocused";
+            Button.focusedFgSprite = "IconDownArrow";
             Button.disabledFgSprite = "IconDownArrowDisabled";
             Button.foregroundSpriteMode = UIForegroundSpriteMode.Scale;
             Button.horizontalAlignment = UIHorizontalAlignment.Right;
