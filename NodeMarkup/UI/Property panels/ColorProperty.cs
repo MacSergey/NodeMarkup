@@ -10,7 +10,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class ColorPropertyPanel : EditorPropertyPanel
     {
-        private static Color32 Buffer { get; set; } = Manager.Style.DefaultColor;
+        private static Color32? Buffer { get; set; }
 
         public event Action<Color32> OnValueChanged;
 
@@ -115,9 +115,9 @@ namespace NodeMarkup.UI.Editors
             var slider = AddOpacitySlider(popup.component);
             slider.value = Value.a;
 
-            AddCopyButton(popup.component);
-            AddPasteButton(popup.component);
-            AddSetDefaultButton(popup.component);
+            AddCopyButton(popup);
+            AddPasteButton(popup);
+            AddSetDefaultButton(popup);
         }
         private UISlider AddOpacitySlider(UIComponent parent)
         {
@@ -169,24 +169,39 @@ namespace NodeMarkup.UI.Editors
 
             return button;
         }
-        private void AddCopyButton(UIComponent parent)
+        private void AddCopyButton(UIColorPicker popup)
         {
-            var button = CreateButton(parent, 1, 3);
+            var button = CreateButton(popup.component, 1, 3);
             button.text = NodeMarkup.Localize.LineEditor_ColorCopy;
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Buffer = Value;
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy(popup);
         }
 
-        private void AddPasteButton(UIComponent parent)
+        private void AddPasteButton(UIColorPicker popup)
         {
-            var button = CreateButton(parent, 2, 3);
+            var button = CreateButton(popup.component, 2, 3);
+            button.isEnabled = Buffer.HasValue;
             button.text = NodeMarkup.Localize.LineEditor_ColorPaste;
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Buffer;
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste(popup);
         }
-        private void AddSetDefaultButton(UIComponent parent)
+        private void AddSetDefaultButton(UIColorPicker popup)
         {
-            var button = CreateButton(parent, 3, 3);
+            var button = CreateButton(popup.component, 3, 3);
             button.text = NodeMarkup.Localize.LineEditor_ColorDefault;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Manager.Style.DefaultColor;
+        }
+
+        private void Copy(UIColorPicker popup)
+        {
+            Buffer = Value;
+            popup.component.Hide();
+        }
+        private void Paste(UIColorPicker popup)
+        {
+            if (Buffer != null)
+            {
+                Value = Buffer.Value;
+                popup.component.Hide();
+            }
         }
 
 
