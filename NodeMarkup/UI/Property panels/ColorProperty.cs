@@ -70,7 +70,7 @@ namespace NodeMarkup.UI.Editors
             lable.textScale = 0.7f;
 
             var field = Control.AddUIComponent<UITextField>();
-            field.atlas = TextureUtil.InGameAtlas;
+            field.atlas = EditorItemAtlas;
             field.normalBgSprite = "TextFieldPanel";
             field.hoveredBgSprite = "TextFieldPanelHovered";
             field.focusedBgSprite = "TextFieldPanel";

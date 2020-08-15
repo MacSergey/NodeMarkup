@@ -834,6 +834,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на The rule is overlapped by another rule.
+        ///Check other rule&apos;s &quot;From&quot; and &quot;To&quot; points..
+        /// </summary>
+        public static string LineEditor_RuleOverlappedWarning {
+            get {
+                return ResourceManager.GetString("LineEditor_RuleOverlappedWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Space length.
         /// </summary>
         public static string LineEditor_SpaceLength {

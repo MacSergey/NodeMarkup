@@ -17,8 +17,7 @@ namespace NodeMarkup.UI.Editors
             var spriteNames = new string[]
             {
                 "Hovered",
-                "Pressed",
-                "Normal",
+                "_",
                 "AddTemplate",
                 "ApplyTemplate",
                 "Copy",
@@ -30,12 +29,11 @@ namespace NodeMarkup.UI.Editors
             var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));
             if (atlas == UIView.GetAView().defaultAtlas)
             {
-                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames);
+                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames, new RectOffset(2,2,2,2));
             }
 
             return atlas;
         }
-
 
         public event Action OnDelete;
 
@@ -90,22 +88,25 @@ namespace NodeMarkup.UI.Editors
         {
             var button = Content.AddUIComponent<UIButton>();
             button.hoveredBgSprite = "Hovered";
-            button.pressedBgSprite = "Pressed";
-            SetSprite(button, sprite);
+            button.pressedBgSprite = "Hovered";
             button.size = new Vector2(25, 25);
             button.atlas = ButtonAtlas;
+            button.hoveredColor = Color.black;
+            button.pressedColor = new Color32(32, 32, 32, 255);
             button.tooltip = text;
             if (onClick != null)
                 button.eventClick += onClick;
 
+            var panel = button.AddUIComponent<UIPanel>();
+            panel.size = button.size;
+            panel.atlas = button.atlas;
+            panel.relativePosition = Vector2.zero;
+
+            SetSprite(button, sprite);
+
             return button;
         }
-        protected void SetSprite(UIButton button, string sprite)
-        {
-            button.normalFgSprite = sprite;
-            button.hoveredFgSprite = sprite;
-            button.pressedFgSprite = sprite;
-        }
+        protected void SetSprite(UIButton button, string sprite) => (button.components.First() as UIPanel).backgroundSprite = sprite;
     }
     public class StyleHeaderPanel : HeaderPanel
     {

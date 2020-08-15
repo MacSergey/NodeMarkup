@@ -214,6 +214,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\ListItem.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TextFieldPanel.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
     <PostBuildEvent>

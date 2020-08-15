@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,24 @@ namespace NodeMarkup.UI
     {
         protected const float defaultHeight = 30f;
 
+        public static UITextureAtlas EditorItemAtlas { get; } = GetAtlas();
+        private static UITextureAtlas GetAtlas()
+        {
+            var spriteNames = new string[]
+            {
+                "TextFieldPanel",
+                "TextFieldPanelHovered",
+                "TextFieldPanelFocus",
+            };
+
+            var atlas = TextureUtil.GetAtlas(nameof(EditorItemAtlas));
+            if (atlas == UIView.GetAView().defaultAtlas)
+            {
+                atlas = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, spriteNames, new RectOffset(4, 4, 4, 4));
+            }
+
+            return atlas;
+        }
         public virtual void Init() => Init(defaultHeight);
         public void Init(float height)
         {

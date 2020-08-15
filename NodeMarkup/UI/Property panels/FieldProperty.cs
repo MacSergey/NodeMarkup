@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
         public FieldPropertyPanel()
         {
             Field = Control.AddUIComponent<UITextField>();
-            Field.atlas = TextureUtil.InGameAtlas;
+            Field.atlas = EditorItemAtlas;
             Field.normalBgSprite = "TextFieldPanel";
             Field.hoveredBgSprite = "TextFieldPanelHovered";
             Field.focusedBgSprite = "TextFieldPanel";
@@ -76,9 +76,7 @@ namespace NodeMarkup.UI.Editors
             Field.textScale = 0.7f;
             Field.verticalAlignment = UIVerticalAlignment.Middle;
             Field.padding = new RectOffset(0, 0, 6, 0);
-
         }
-
 
 
         protected abstract ValueType Increment(ValueType value, ValueType step, WheelMode mode);

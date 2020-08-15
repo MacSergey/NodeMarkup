@@ -18,7 +18,7 @@ namespace NodeMarkup.UI.Editors
 
         int _selectIndex = -1;
 
-        UILabel Label { get; set; }
+        UIButton Label { get; set; }
         UIButton Button { get; set; }
 
         int SelectIndex
@@ -49,19 +49,20 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddLable()
         {
-            Label = Control.AddUIComponent<UILabel>();
+            Label = Control.AddUIComponent<UIButton>();
             Label.text = NodeMarkup.Localize.SelectPanel_NotSet;
-            Label.atlas = TextureUtil.InGameAtlas;
-            Label.backgroundSprite = "TextFieldPanel";
+            Label.atlas = EditorItemAtlas;
+            Label.normalBgSprite = "TextFieldPanel";
+            Label.hoveredBgSprite = "TextFieldPanelHovered";
             Label.isInteractive = true;
             Label.enabled = true;
             Label.autoSize = false;
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
+            Label.textHorizontalAlignment = UIHorizontalAlignment.Left;
+            Label.textVerticalAlignment = UIVerticalAlignment.Middle;
             Label.height = 20;
             Label.width = 230;
-            Label.textScale = 0.7f;
-            Label.padding = new RectOffset(8, 0, 2, 0);
+            Label.textScale = 0.6f;
+            Label.textPadding = new RectOffset(8, 0, 4, 0);
         }
 
         private void AddButton()

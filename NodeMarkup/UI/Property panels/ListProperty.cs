@@ -99,12 +99,12 @@ namespace NodeMarkup.UI.Editors
 
         public static UIButton SetDefault(UIDropDown dropDown, Vector2? size = null)
         {
-            dropDown.atlas = TextureUtil.InGameAtlas;
+            dropDown.atlas = EditorItem.EditorItemAtlas;
             dropDown.size = size ?? new Vector2(230, 20);
-            dropDown.listBackground = "TextFieldPanel";
+            dropDown.listBackground = "TextFieldPanelHovered";
             dropDown.itemHeight = 20;
-            dropDown.itemHover = "TextFieldPanelHovered";
-            dropDown.itemHighlight = "ListItemHighlight";
+            dropDown.itemHover = "TextFieldPanel";
+            dropDown.itemHighlight = "TextFieldPanelFocus";
             dropDown.normalBgSprite = "TextFieldPanel";
             dropDown.hoveredBgSprite = "TextFieldPanelHovered";
             dropDown.listWidth = 230;

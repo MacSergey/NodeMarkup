@@ -161,7 +161,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void PasteStyle()
         {
-            if(EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is LineStyle style)
+            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is LineStyle style)
                 ApplyStyle(style);
         }
 
@@ -181,7 +181,16 @@ namespace NodeMarkup.UI.Editors
         }
         public void Refresh()
         {
-            color = Rule.IsOverlapped ? ErrorColor : NormalColor;
+            if (Rule.IsOverlapped)
+            {
+                color = ErrorColor;
+                tooltip = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            }
+            else
+            {
+                color = NormalColor;
+                tooltip = string.Empty;
+            }
         }
 
         protected override void OnSizeChanged()
