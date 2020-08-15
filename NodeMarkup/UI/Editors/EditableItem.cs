@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ICities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -10,20 +11,82 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class EditableItem : UIButton
+    public abstract class EditableItemBase : UIButton
     {
-        protected UILabel Label { get; set; }
+        public static UITextureAtlas ItemAtlas { get; } = GetStylesIcons();
+        private static UITextureAtlas GetStylesIcons()
+        {
+            var spriteNames = new string[] { "Item" };
 
+            var atlas = TextureUtil.GetAtlas(nameof(ItemAtlas));
+            if (atlas == UIView.GetAView().defaultAtlas)
+                atlas = TextureUtil.CreateTextureAtlas("ListItem.png", nameof(ItemAtlas), 21, 26, spriteNames, new RectOffset(1, 1, 1, 1));
+
+            return atlas;
+        }
+
+        public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
+        public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
+        public virtual Color32 PressedColor => new Color32(51, 100, 132, 255);
+        public virtual Color32 FocusColor => new Color32(171, 185, 196, 255);
+        public virtual Color32 TextColor => Color.white;
+
+        private bool _isSelect;
+        public bool IsSelect
+        {
+            get => _isSelect;
+            set
+            {
+                if (_isSelect != value)
+                {
+                    _isSelect = value;
+                    OnSelectChanged();
+                }
+            }
+        }
+
+        protected UILabel Label { get; set; }
         public string Text
         {
             get => Label.text;
             set => Label.text = value;
         }
 
-        public void Select() => normalBgSprite = "ButtonSmallPressed";
-        public void Unselect() => normalBgSprite = "ButtonSmall";
+        public EditableItemBase()
+        {
+            AddLable();
+
+            atlas = ItemAtlas;
+            normalBgSprite = "Item";
+            height = 25;
+
+            OnSelectChanged();
+        }
+
+        private void AddLable()
+        {
+            Label = AddUIComponent<UILabel>();
+            Label.textAlignment = UIHorizontalAlignment.Left;
+            Label.verticalAlignment = UIVerticalAlignment.Middle;
+            Label.autoSize = false;
+            Label.autoHeight = false;
+            Label.textScale = 0.55f;
+            Label.padding = new RectOffset(0, 0, 3, 0);
+            Label.autoHeight = true;
+            Label.wordWrap = true;
+        }
+
+        protected virtual void OnSelectChanged()
+        {
+            color = NormalColor;
+            hoveredColor = HoveredColor;
+            pressedColor = PressedColor;
+            focusedColor = FocusColor;
+
+            Label.textColor = TextColor;
+        }
     }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItem
+    public abstract class EditableItem<EditableObject, IconType> : EditableItemBase
         where IconType : UIComponent
         where EditableObject : class
     {
@@ -48,20 +111,6 @@ namespace NodeMarkup.UI.Editors
         public bool ShowIcon { get; set; }
         public bool ShowDelete { get; set; }
 
-        public EditableItem()
-        {
-            AddLable();
-
-            atlas = TextureUtil.InGameAtlas;
-
-            normalBgSprite = "ButtonSmall";
-            disabledBgSprite = "ButtonSmallPressed";
-            focusedBgSprite = "ButtonSmallPressed";
-            hoveredBgSprite = "ButtonSmallHovered";
-            pressedBgSprite = "ButtonSmallPressed";
-
-            height = 25;
-        }
         public abstract void Init();
         public void Init(bool showIcon, bool showDelete)
         {
@@ -82,16 +131,7 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void AddIcon() => Icon = AddUIComponent<IconType>();
-        private void AddLable()
-        {
-            Label = AddUIComponent<UILabel>();
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.autoSize = false;
-            Label.autoHeight = false;
-            Label.textScale = 0.55f;
-            Label.padding = new RectOffset(0, 0, 3, 0);
-        }
+
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
@@ -103,11 +143,21 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.isEnabled = ShowDelete;
             DeleteButton.eventClick += DeleteClick;
         }
-        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
-        protected virtual void OnObjectSet()
+        protected override void OnSelectChanged()
         {
+            if (IsSelect)
+            {
+                color = FocusColor;
+                hoveredColor = FocusColor;
+                pressedColor = FocusColor;
 
+                Label.textColor = TextColor;
+            }
+            else
+                base.OnSelectChanged();
         }
+        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
+        protected virtual void OnObjectSet() { }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -128,13 +178,10 @@ namespace NodeMarkup.UI.Editors
             }
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
-            Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, 0);
+            Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
         }
 
-        public virtual void Refresh()
-        {
-            Text = Object.ToString();
-        }
+        public virtual void Refresh() => Text = Object.ToString();
     }
 
     public class ColorIcon : UIButton

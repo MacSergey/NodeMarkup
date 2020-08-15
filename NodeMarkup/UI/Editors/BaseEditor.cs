@@ -192,12 +192,12 @@ namespace NodeMarkup.UI.Editors
             private set
             {
                 if (_selectItem != null)
-                    _selectItem.Unselect();
+                    _selectItem.IsSelect = false;
 
                 _selectItem = value;
 
                 if (_selectItem != null)
-                    _selectItem.Select();
+                    _selectItem.IsSelect = true;
             }
         }
         public EditableObject EditObject => SelectItem?.Object;

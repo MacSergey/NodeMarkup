@@ -86,51 +86,23 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class GroupItem : UIButton
+    public class GroupItem : EditableItemBase
     {
-        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? "PropertyGroupOpen" : "PropertyGroupClosed"; }
-        protected UILabel Label { get; set; }
+        public override Color32 NormalColor => new Color32(108, 169, 218, 255);
+        public override Color32 HoveredColor => new Color32(93, 145, 213, 255);
+        public override Color32 PressedColor => new Color32(75, 127, 192, 255);
+        public override Color32 FocusColor => NormalColor;
 
-        public string Text
-        {
-            get => Label.text;
-            set => Label.text = value;
-        }
+        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? "PropertyGroupOpen" : "PropertyGroupClosed"; }
+
         private UIPanel ExpandIcon { get; set; }
 
         public GroupItem()
         {
-            AddLable();
             AddExpandIcon();
-
-            atlas = TextureUtil.InGameAtlas;
-
-            normalBgSprite = "ButtonSmallPressed";
-            colorizeSprites = true;
-
-            focusedColor = color = new Color32(165, 255, 255, 255);
-            hoveredColor = new Color32(145, 208, 208, 255);
-            pressedColor = new Color32(125, 160, 160, 255);
-
-            height = 25;
         }
 
-        public void Init()
-        {
-            OnSizeChanged();
-        }
-        private void AddLable()
-        {
-            Label = AddUIComponent<UILabel>();
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.autoSize = false;
-            Label.autoHeight = false;
-            Label.textScale = 0.6f;
-            Label.padding = new RectOffset(0, 0, 2, 0);
-            Label.autoHeight = true;
-            Label.wordWrap = true;
-        }
+        public void Init() => OnSizeChanged();
         private void AddExpandIcon()
         {
             ExpandIcon = AddUIComponent<UIPanel>();
@@ -142,8 +114,11 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            ExpandIcon.size = new Vector2(size.y - 6, size.y - 6);
-            ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
+            if (ExpandIcon != null)
+            {
+                ExpandIcon.size = new Vector2(size.y - 6, size.y - 6);
+                ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
+            }
 
             Label.size = new Vector2(size.x - 6, size.y);
             Label.relativePosition = new Vector3(3, (height - Label.height) / 2);

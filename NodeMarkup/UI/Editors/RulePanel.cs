@@ -11,6 +11,9 @@ namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : UIPanel
     {
+        private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
+        private static Color32 ErrorColor { get; } = new Color32(211, 69, 69, 255);
+
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
@@ -24,7 +27,8 @@ namespace NodeMarkup.UI.Editors
         public RulePanel()
         {
             atlas = TextureUtil.InGameAtlas;
-            backgroundSprite = "AssetEditorItemBackground";
+            backgroundSprite = "ButtonWhite";
+            color = NormalColor;
             autoLayout = true;
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;

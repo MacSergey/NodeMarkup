@@ -199,7 +199,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
-        public override void OnUpdate() => PointsSelector.OnUpdate(); /*HoverSupportPoint = NodeMarkupTool.MouseRayValid ? SupportPoints.FirstOrDefault(i => i.IsIntersect(NodeMarkupTool.MouseRay)) : null;*/
+        public override void OnUpdate() => PointsSelector.OnUpdate();
         public override void OnEvent(Event e)
         {
             if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)

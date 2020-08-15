@@ -86,20 +86,24 @@ namespace NodeMarkup.UI.Editors
     public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>
     {
         public override string Description => NodeMarkup.Localize.TemplateEditor_ItemDescription;
+        private bool IsDefault { get; set; }
+        public override Color32 NormalColor => IsDefault ? new Color32(255, 212, 0, 255) : base.NormalColor;
+        public override Color32 HoveredColor => IsDefault ? new Color32(255, 221, 51, 255) : base.HoveredColor;
+        public override Color32 PressedColor => IsDefault ? new Color32(255, 229, 102, 255) : base.PressedColor;
+        public override Color32 FocusColor => IsDefault ? new Color32(255, 233, 129, 255) : base.FocusColor;
+
 
         public override void Init() => Init(true, true);
 
-        protected override void OnObjectSet() => SetIcon();
+        protected override void OnObjectSet() => Refresh();
         public override void Refresh()
         {
             base.Refresh();
-            SetIcon();
-        }
-        private void SetIcon()
-        {
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style.Color;
-            Icon.IsDefault = Object.IsDefault();
+
+            IsDefault = Object.IsDefault();
+            OnSelectChanged();
         }
     }
     public class TemplateIcon : StyleIcon

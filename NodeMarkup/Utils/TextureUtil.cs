@@ -19,40 +19,37 @@ namespace NodeMarkup.Utils
             }
         }
         public static UITextureAtlas InMapEditorAtlas
-                {
+        {
             get
             {
                 if (_inMapEditorAtlas == null)
                     _inMapEditorAtlas = GetAtlas("InMapEditor");
                 return _inMapEditorAtlas;
             }
-}
+        }
 
-static readonly string path = $"{nameof(NodeMarkup)}.Resources.";
-        public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames)
+        static readonly string path = $"{nameof(NodeMarkup)}.Resources.";
+        public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames, RectOffset border = null)
         {
-            Texture2D texture2D = LoadTextureFromAssembly(
-                textureFile, spriteWidth * spriteNames.Length, spriteHeight);
+            Texture2D texture2D = LoadTextureFromAssembly(textureFile, spriteWidth * spriteNames.Length, spriteHeight);
 
             UITextureAtlas uitextureAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            //Assert(uitextureAtlas != null, "uitextureAtlas");
-            Material material = Object.Instantiate<Material>(UIView.GetAView().defaultAtlas.material);
-            //Assert(material != null, "material");
+            Material material = Object.Instantiate(UIView.GetAView().defaultAtlas.material);
             material.mainTexture = texture2D;
             uitextureAtlas.material = material;
             uitextureAtlas.name = atlasName;
-            int num2;
-            for (int i = 0; i < spriteNames.Length; i = num2)
+
+            for (int i = 0; i < spriteNames.Length; i += 1)
             {
-                float num = 1f / (float)spriteNames.Length;
+                float num = 1f / spriteNames.Length;
                 UITextureAtlas.SpriteInfo spriteInfo = new UITextureAtlas.SpriteInfo
                 {
                     name = spriteNames[i],
                     texture = texture2D,
-                    region = new Rect((float)i * num, 0f, num, 1f)
+                    region = new Rect(i * num, 0f, num, 1f),
+                    border = border ?? new RectOffset()
                 };
                 uitextureAtlas.AddSprite(spriteInfo);
-                num2 = i + 1;
             }
             return uitextureAtlas;
         }
