@@ -16,7 +16,7 @@ namespace NodeMarkup.UI.Editors
         public static UITextureAtlas ItemAtlas { get; } = GetStylesIcons();
         private static UITextureAtlas GetStylesIcons()
         {
-            var spriteNames = new string[] { "Item" };
+            var spriteNames = new string[] { "Item"};
 
             var atlas = TextureUtil.GetAtlas(nameof(ItemAtlas));
             if (atlas == UIView.GetAView().defaultAtlas)

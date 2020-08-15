@@ -40,9 +40,9 @@ namespace NodeMarkup.UI.Editors
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
         }
-        protected override Style.StyleType SelectGroup(StyleTemplate editableItem) 
+        protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
             => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
-        protected override string GroupName(Style.StyleType group) 
+        protected override string GroupName(Style.StyleType group)
             => Settings.GroupTemplatesType == 0 ? Utilities.EnumDescription(group) : $"{Utilities.EnumDescription(group & Style.StyleType.GroupMask)}\n{Utilities.EnumDescription(group)}";
 
         private void AddHeader()
@@ -87,10 +87,10 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Description => NodeMarkup.Localize.TemplateEditor_ItemDescription;
         private bool IsDefault { get; set; }
-        public override Color32 NormalColor => IsDefault ? new Color32(255, 212, 0, 255) : base.NormalColor;
-        public override Color32 HoveredColor => IsDefault ? new Color32(255, 221, 51, 255) : base.HoveredColor;
-        public override Color32 PressedColor => IsDefault ? new Color32(255, 229, 102, 255) : base.PressedColor;
-        public override Color32 FocusColor => IsDefault ? new Color32(255, 233, 129, 255) : base.FocusColor;
+        public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
+        public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
+        public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
+        public override Color32 FocusColor => IsDefault ? new Color32(255, 228, 92, 255) : base.FocusColor;
 
 
         public override void Init() => Init(true, true);

@@ -236,8 +236,8 @@ namespace NodeMarkup.UI.Editors
         }
         protected void InitItem(EditableItemType item, EditableObject editableObject)
         {
+            item.Text = editableObject.ToString();
             item.Init();
-            item.name = editableObject.ToString();
             item.Object = editableObject;
             item.eventClick += ItemClick;
             item.eventMouseEnter += ItemHover;
