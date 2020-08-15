@@ -26,10 +26,14 @@ namespace NodeMarkup.UI.Editors
 
             Button.atlas = TextureUtil.InGameAtlas;
             Button.normalBgSprite = "ButtonWhite";
-            Button.disabledBgSprite = "ButtonWhiteDisabled";
-            Button.hoveredBgSprite = "ButtonWhiteHovered";
-            Button.pressedBgSprite = "ButtonWhitePressed";
-            Button.textColor = Color.black;
+            Button.disabledBgSprite = "ButtonWhite";
+            Button.hoveredBgSprite = "ButtonWhite";
+            Button.pressedBgSprite = "ButtonWhite";
+            Button.color = Color.white;
+            Button.hoveredColor = new Color32(224, 224, 224, 255);
+            Button.pressedColor = new Color32(192, 192, 192, 255);
+            Button.textColor = Button.hoveredTextColor = Button.focusedTextColor = Color.black;
+            Button.pressedTextColor = Color.white;
 
             Button.eventClick += ButtonClick;
         }
