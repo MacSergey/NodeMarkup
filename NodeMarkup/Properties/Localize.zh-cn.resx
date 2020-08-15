@@ -396,7 +396,9 @@ Shift x10，Ctrl x0.1</value>
     <value>虚实线</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>停止线</value>
+    <value>实线</value>
+    <comment>LineStyle_Stop
+</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>点击以擦除停止线</value>
@@ -417,7 +419,9 @@ Shift x10，Ctrl x0.1</value>
     <value>网格</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>虚线停止线</value>
+    <value>虚线</value>
+    <comment>LineStyle_StopDashed
+</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>间隔</value>
@@ -474,10 +478,14 @@ Shift x10，Ctrl x0.1</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>双停止线</value>
+    <value>双实线</value>
+    <comment>LineStyle_StopDouble
+</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>双虚停止线</value>
+    <value>双虚线</value>
+    <comment>LineStyle_StopDoubleDashed
+</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>复制</value>

@@ -406,7 +406,9 @@ Con Alt premuto, per creare un riempimento</value>
     <value>Continua e Tratteggiata</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Linea di Stop</value>
+    <value>Continua</value>
+    <comment>LineStyle_Stop
+</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Clicca per cancellare la linea di Stop</value>
@@ -427,7 +429,9 @@ Con Alt premuto, per creare un riempimento</value>
     <value>Griglia</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Linea di Stop tratteggiata</value>
+    <value>Tratteggiata</value>
+    <comment>LineStyle_StopDashed
+</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Passo</value>
@@ -499,10 +503,14 @@ Con Alt premuto, per creare un riempimento</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Doppia linea di stop</value>
+    <value>Doppia continua</value>
+    <comment>LineStyle_StopDouble
+</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Doppia linea di stop tratteggiata</value>
+    <value>Doppia tratteggiata</value>
+    <comment>LineStyle_StopDoubleDashed
+</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Copia</value>

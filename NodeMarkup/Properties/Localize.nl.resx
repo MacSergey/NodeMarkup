@@ -135,7 +135,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Opslaan als sjabloon</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Stel in als standaard</value>
+    <value>Als standaard instellen</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
     <value>Verwijder als standaard</value>
@@ -184,28 +184,28 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Naar</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Kruising met {0}</value>
+    <value>Knooppunt met {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Kantpunt {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Onderbroken</value>
+    <value>Streeplijn</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Dubbel onderbroken</value>
+    <value>Dubbele streep</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Dubbel niet onderbroken</value>
+    <value>Dubbel ononderbroken</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Niet onderbroken</value>
+    <value>Ononderbroken</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Nee</value>
   </data>
   <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>Ok</value>
   </data>
   <data name="MessageBox_Yes" xml:space="preserve">
     <value>Ja</value>
@@ -214,10 +214,10 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Maak gewoon markeringen op kruispunten</value>
   </data>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dit is een bèta-versie, er kunnen fouten optreden en stabiliteit is niet gegarandeerd!</value>
+    <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Bewerk markering van punt #{0}</value>
+    <value>Bewerk markering punt #{0}</value>
   </data>
   <data name="PointEditor_ItemDescription" xml:space="preserve">
     <value>punt</value>
@@ -241,7 +241,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Verwijder markering van alle kruispunten</value>
+    <value>Verwijder markering van alle knooppunten</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Verwijder alle markeringen</value>
@@ -251,13 +251,13 @@ Deze actie kan niet ongedaan worden gemaakt</value>
 Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Exporteer markeringsdata naar bestand</value>
+    <value>Exporteer markeringsdata als bestand</value>
   </data>
   <data name="Settings_DumpMarkingButton1" xml:space="preserve">
     <value>Kopieer bestandslocatie naar klembord</value>
   </data>
   <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
+    <value>Oké</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exporteer markeringsdata</value>
@@ -331,7 +331,7 @@ Deze actie kan niet ongedaan worden gedaan</value>
     <value>Sjablonen</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Nieuw sjabloon</value>
+    <value>Nieuwe template</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
     <value>Verwijder puntmarkeringen</value>
@@ -349,8 +349,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Klik om de lijn te verwijderen</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Punt #{0}
-Klik om de markering te wijzigen</value>
+    <value>Punt #{0}</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>
@@ -393,10 +392,12 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
     <value>Omkeren</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Niet onderbroken en onderbroken</value>
+    <value>Ononderbroken en Streeplijn</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Stoplijn</value>
+    <value>Niet onderbroken</value>
+    <comment>LineStyle_Stop
+</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klik om de stoplijn te verwijderen</value>
@@ -417,7 +418,9 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
     <value>Raster</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Onderbroken stoplijn</value>
+    <value>Onderbroken</value>
+    <comment>LineStyle_StopDashed
+</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Stapgrootte</value>
@@ -456,7 +459,7 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
     <value>Standaard</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Solide</value>
+    <value>Ononderbroken</value>
   </data>
   
   
@@ -474,10 +477,14 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Dubbele stoplijn</value>
+    <value>Dubbel niet onderbroken</value>
+    <comment>LineStyle_StopDouble
+</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Dubbele onderbroken stoplijn</value>
+    <value>Dubbel onderbroken</value>
+    <comment>LineStyle_StopDoubleDashed
+</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopiëren</value>
