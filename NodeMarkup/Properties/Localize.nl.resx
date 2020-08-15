@@ -396,8 +396,6 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Niet onderbroken</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klik om de stoplijn te verwijderen</value>
@@ -419,8 +417,6 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Onderbroken</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Stapgrootte</value>
@@ -478,13 +474,9 @@ Houd Alt ingedrukt om een opvulling te creëren</value>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dubbel niet onderbroken</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dubbel onderbroken</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopiëren</value>
@@ -756,6 +748,11 @@ Verbind twee punten om een zebrapad te maken.</value>
     <value>Selecteer de rechter zebrapad grens</value>
   </data>
   
-  
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Stel samen in een cirkel</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Stel samen in een rij</value>
+  </data>
   
 </root>

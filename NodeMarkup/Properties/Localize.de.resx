@@ -407,8 +407,6 @@ Alt halten um eine Füllung zu erstellen</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Durchgezogen</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Zum Löschen der Haltelinie klicken</value>
@@ -430,8 +428,6 @@ Alt halten um eine Füllung zu erstellen</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Gestrichelt</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Schritt</value>
@@ -504,13 +500,9 @@ Alt halten um eine Füllung zu erstellen</value>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelt durchgezogen</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Doppelt gestrichelt</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Kopieren</value>
@@ -782,6 +774,11 @@ Zum Erstellen eines Zebrastreifens zwei Punkte miteinander verbinden.</value>
     <value>Wähle den rechten Rand des Zebrastreifens</value>
   </data>
   
-  
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Im Kreis anordnen</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>In einer Linie anordnen</value>
+  </data>
   
 </root>

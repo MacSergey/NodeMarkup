@@ -397,8 +397,6 @@ Maintenez Alt pour créer un filler</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Solide</value>
-    <comment>LineStyle_Stop
-</comment>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Cliquez pour supprimer la ligne de stop</value>
@@ -420,8 +418,6 @@ Maintenez Alt pour créer un filler</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Tiret</value>
-    <comment>LineStyle_StopDashed
-</comment>
   </data>
   <data name="Filler_Step" xml:space="preserve">
     <value>Intervalle</value>
@@ -479,13 +475,9 @@ Maintenez Alt pour créer un filler</value>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solide</value>
-    <comment>LineStyle_StopDouble
-</comment>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Double tiret</value>
-    <comment>LineStyle_StopDoubleDashed
-</comment>
   </data>
   <data name="LineEditor_StyleCopy" xml:space="preserve">
     <value>Copier</value>
@@ -521,7 +513,9 @@ Maintenez Alt pour créer un filler</value>
     <value>Cette fonction n'est pas disponible</value>
   </data>
   
-  
+  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
+    <value>Style chevrons</value>
+  </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copier le style</value>
   </data>
@@ -716,6 +710,7 @@ Maintenez Alt pour créer un filler</value>
   <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
     <value>Lignes parallèles</value>
   </data>
+  
   
   
   
