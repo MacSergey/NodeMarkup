@@ -33,7 +33,34 @@ namespace NodeMarkup.Manager
             get => base.To as ILinePartEdge;
             set => base.To = value;
         }
-        public MarkupLineRawRule(MarkupLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to) 
+        public bool IsOverlapped
+        {
+            get
+            {
+                if (!GetFromT(out float thisFromT) || !GetToT(out float thisToT))
+                    return false;
+
+
+                foreach (var rule in Line.Rules)
+                {
+                    if (rule == this)
+                        continue;
+
+                    if (rule.GetFromT(out float fromT) && rule.GetToT(out float toT))
+                    {
+                        var min = Mathf.Min(fromT, toT);
+                        var max = Mathf.Max(fromT, toT);
+                        if ((min < thisFromT && thisFromT < max) || (min < thisToT && thisToT < max))
+                            return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+
+        public MarkupLineRawRule(MarkupLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
         {
             Style = style;
         }
@@ -134,7 +161,7 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out MarkupLineRawRule<StyleType> rule)
         {
-            if(config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out StyleType style))
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out StyleType style))
             {
                 var edges = GetEdges(config, line, map).ToArray();
                 rule = new MarkupLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
@@ -159,7 +186,7 @@ namespace NodeMarkup.Manager
             set => base.Style = value;
         }
 
-        public MarkupCrosswalkRule(MarkupLine line, CrosswalkStyle style, ILinePartEdge from = null, ILinePartEdge to = null, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null) : 
+        public MarkupCrosswalkRule(MarkupLine line, CrosswalkStyle style, ILinePartEdge from = null, ILinePartEdge to = null, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null) :
             base(line, style, from, to)
         {
             RightBorder = rightBorder;

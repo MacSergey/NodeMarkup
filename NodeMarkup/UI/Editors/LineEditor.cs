@@ -253,10 +253,16 @@ namespace NodeMarkup.UI.Editors
             {
                 SelectPartEdgePanel = null;
                 AfterSelectPartEdgePanel = null;
+                RefreshRulePanels();
             }
         }
         protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveConnect(line);
         public void RefreshItem() => SelectItem.Refresh();
+        public void RefreshRulePanels()
+        {
+            foreach (var rulePanel in SettingsPanel.components.OfType<RulePanel>())
+                rulePanel.Refresh();
+        }
     }
 
     public class LineItem : EditableItem<MarkupLine, LineIcon>

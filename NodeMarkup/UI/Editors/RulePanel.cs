@@ -12,7 +12,7 @@ namespace NodeMarkup.UI.Editors
     public class RulePanel : UIPanel
     {
         private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
-        private static Color32 ErrorColor { get; } = new Color32(211, 69, 69, 255);
+        private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
 
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
@@ -28,7 +28,6 @@ namespace NodeMarkup.UI.Editors
         {
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "ButtonWhite";
-            color = NormalColor;
             autoLayout = true;
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
@@ -38,6 +37,7 @@ namespace NodeMarkup.UI.Editors
         {
             Editor = editor;
             Rule = rule;
+            Refresh();
 
             SetSize();
 
@@ -107,9 +107,6 @@ namespace NodeMarkup.UI.Editors
                 case MarkupStopLine stopLine:
                     Style = AddUIComponent<StopStylePropertyPanel>();
                     break;
-                //case MarkupCrosswalk crosswalk:
-                //    Style = AddUIComponent<CrosswalkPropertyPanel>();
-                //    break;
                 default:
                     return;
             }
@@ -181,6 +178,10 @@ namespace NodeMarkup.UI.Editors
             Editor.RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+        }
+        public void Refresh()
+        {
+            color = Rule.IsOverlapped ? ErrorColor : NormalColor;
         }
 
         protected override void OnSizeChanged()
