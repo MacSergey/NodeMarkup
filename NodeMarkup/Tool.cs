@@ -18,6 +18,9 @@ namespace NodeMarkup
 {
     public class NodeMarkupTool : ToolBase
     {
+        #region PROPERTIES
+
+        #region STATIC
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
@@ -26,8 +29,6 @@ namespace NodeMarkup
         public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         public static bool CtrlIsPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
 
-        private Mode ToolMode { get; set; } = Mode.SelectNode;
-
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
         public static bool MouseRayValid { get; private set; }
@@ -35,6 +36,9 @@ namespace NodeMarkup
         public static Vector3 MouseWorldPosition { get; private set; }
         public static Vector3 CameraDirection { get; private set; }
 
+        #endregion
+
+        private Mode ToolMode { get; set; } = Mode.SelectNode;
         Markup EditMarkup { get; set; }
 
         ushort HoverNodeId { get; set; } = 0;
@@ -61,6 +65,8 @@ namespace NodeMarkup
         UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
 
         private bool DisableByAlt { get; set; }
+
+        #endregion
 
         #region BASIC
         public static NodeMarkupTool Instance
@@ -267,6 +273,8 @@ namespace NodeMarkup
             HoverPoint = null;
         }
 
+        #region INFO
+
         private void Info()
         {
             var position = GetInfoPosition();
@@ -357,6 +365,7 @@ namespace NodeMarkup
             return mouse;
         }
 
+        #endregion
 
         #endregion
 
@@ -385,6 +394,9 @@ namespace NodeMarkup
 
             base.OnToolGUI(e);
         }
+        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(TempFiller.GetNextСandidates(), MarkupColors.Red);
+
+        #region MOUSE DOWN
         private void OnMouseDown(Event e)
         {
             if (ToolMode == Mode.ConnectLine && !IsSelectPoint && IsHoverPoint && CtrlIsPressed)
@@ -393,6 +405,9 @@ namespace NodeMarkup
                 DragPoint = HoverPoint;
             }
         }
+        #endregion
+
+        #region MOUSE DRAG
         private void OnMouseDrag(Event e)
         {
             if (ToolMode == Mode.DragPoint)
@@ -409,6 +424,9 @@ namespace NodeMarkup
 
             point.Offset = (point.Offset + offsetChange * Mathf.Sin(point.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
         }
+        #endregion
+
+        #region PROCESS SHORTCUTS
         private void ProcessShortcuts(Event e)
         {
             switch (ToolMode)
@@ -439,6 +457,35 @@ namespace NodeMarkup
             TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
             GetFillerPoints();
         }
+        private void DeleteAllLines()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllLines)}");
+
+            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && MarkupManager.TryGetMarkup(SelectNodeId, out Markup markup))
+            {
+                if (UI.Settings.DeleteWarnings)
+                {
+                    var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                    messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
+                    messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, SelectNodeId);
+                    messageBox.OnButton1Click = Delete;
+                }
+                else
+                    Delete();
+
+                bool Delete()
+                {
+                    markup.Clear();
+                    Panel.UpdatePanel();
+                    return true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region PRIMARY CLICKED
+
         private void OnPrimaryMouseClicked(Event e)
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnPrimaryMouseClicked)}");
@@ -465,15 +512,9 @@ namespace NodeMarkup
                     break;
             }
         }
-        private void OnSelectNode()
-        {
-            SelectNodeId = HoverNodeId;
-            EditMarkup = MarkupManager.Get(SelectNodeId);
 
-            ToolMode = Mode.ConnectLine;
-            Panel.SetNode(SelectNodeId);
-            SetTarget();
-        }
+        #region SET TARGET
+
         private void SetTarget(MarkupPoint.PointType pointType = MarkupPoint.PointType.Enter | MarkupPoint.PointType.Crosswalk, MarkupPoint ignore = null)
         {
             TargetPoints.Clear();
@@ -596,6 +637,19 @@ namespace NodeMarkup
                 idx += sign;
             }
         }
+
+        #endregion
+
+        private void OnSelectNode()
+        {
+            SelectNodeId = HoverNodeId;
+            EditMarkup = MarkupManager.Get(SelectNodeId);
+
+            ToolMode = Mode.ConnectLine;
+            Panel.SetNode(SelectNodeId);
+            SetTarget();
+        }
+
         private void OnSelectPoint(Event e)
         {
             if (e.shift)
@@ -606,6 +660,7 @@ namespace NodeMarkup
                 SetTarget(SelectPoint.Type, SelectPoint);
             }
         }
+
         private void OnMakeLine(Event e)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
@@ -651,6 +706,11 @@ namespace NodeMarkup
             }
 
         }
+
+        #endregion
+
+        #region SECONDARY CLICKED
+
         private void OnSecondaryMouseClicked()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnSecondaryMouseClicked)}");
@@ -708,35 +768,17 @@ namespace NodeMarkup
             SelectNodeId = 0;
             Panel?.Hide();
         }
-        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(TempFiller.GetNextСandidates(), MarkupColors.Red);
-        private void DeleteAllLines()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllLines)}");
-
-            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && MarkupManager.TryGetMarkup(SelectNodeId, out Markup markup))
-            {
-                if (UI.Settings.DeleteWarnings)
-                {
-                    var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                    messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
-                    messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, SelectNodeId);
-                    messageBox.OnButton1Click = Delete;
-                }
-                else
-                    Delete();
-
-                bool Delete()
-                {
-                    markup.Clear();
-                    Panel.UpdatePanel();
-                    return true;
-                }
-            }
-        }
+        #endregion
 
         #endregion
 
         #region OVERLAY
+
+        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.2f, bool cut = false, bool alphaBlend = true) =>
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, cut ? width / 2 : 0f, cut ? width / 2 : 0f, -1f, 1280f, false, alphaBlend);
+        public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width, bool alphaBlend = true) =>
+            RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, alphaBlend);
+
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             switch (ToolMode)
@@ -760,6 +802,42 @@ namespace NodeMarkup
 
             base.RenderOverlay(cameraInfo);
         }
+
+        public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderPointOverlay(cameraInfo, point, point.Color, 1f);
+        public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point, Color color, float width)
+        {
+            if (point.Type == MarkupPoint.PointType.Crosswalk)
+            {
+                var dir = point.Enter.CornerDir.Turn90(true);
+                var bezier = new Bezier3()
+                {
+                    a = point.Position - dir,
+                    b = point.Position + dir,
+                    c = point.Position - dir,
+                    d = point.Position + dir,
+                };
+                RenderBezier(cameraInfo, color, bezier, width);
+            }
+            else
+                RenderCircle(cameraInfo, color, point.Position, width);
+        }
+        private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter, Vector3 shift, float width)
+        {
+            if (enter.Position == null)
+                return;
+
+            var bezier = new Bezier3
+            {
+                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift,
+                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift
+            };
+            NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
+
+            RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
+        }
+
+        #region SELECT NODE
+
         private void RenderSelectNodeMode(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverNode)
@@ -768,6 +846,11 @@ namespace NodeMarkup
                 RenderCircle(cameraInfo, MarkupColors.Orange, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
         }
+
+        #endregion
+
+        #region CONNECT LINE
+
         private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint && HoverPoint.Type != MarkupPoint.PointType.Normal)
@@ -791,38 +874,6 @@ namespace NodeMarkup
         {
             foreach (var point in TargetPoints)
                 RenderPointOverlay(cameraInfo, point);
-        }
-        private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter, Vector3 shift, float width)
-        {
-            if (enter.Position == null)
-                return;
-
-            var bezier = new Bezier3
-            {
-                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift,
-                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift
-            };
-            NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
-
-            RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
-        }
-        public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderPointOverlay(cameraInfo, point, point.Color, 1f);
-        public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point, Color color, float width)
-        {
-            if (point.Type == MarkupPoint.PointType.Crosswalk)
-            {
-                var dir = point.Enter.CornerDir.Turn90(true);
-                var bezier = new Bezier3()
-                {
-                    a = point.Position - dir,
-                    b = point.Position + dir,
-                    c = point.Position - dir,
-                    d = point.Position + dir,
-                };
-                RenderBezier(cameraInfo, color, bezier, width);
-            }
-            else
-                RenderCircle(cameraInfo, color, point.Position, width);
         }
         private void RenderConnectLineOverlay(RenderManager.CameraInfo cameraInfo)
         {
@@ -936,8 +987,13 @@ namespace NodeMarkup
             RenderBezier(cameraInfo, MarkupColors.White, bezier);
         }
 
+        #endregion
 
+        #region PANEL ACTION
         private void RenderPanelActionMode(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
+        #endregion
+
+        #region DRAG POINT
         private void RenderDragPointMode(RenderManager.CameraInfo cameraInfo)
         {
             if (DragPoint.Type == MarkupPoint.PointType.Crosswalk)
@@ -947,6 +1003,10 @@ namespace NodeMarkup
 
             RenderPointOverlay(cameraInfo, DragPoint);
         }
+        #endregion
+
+        #region FILLER
+
         private void RenderSelectFillerMode(RenderManager.CameraInfo cameraInfo)
         {
             RenderFillerLines(cameraInfo);
@@ -988,10 +1048,8 @@ namespace NodeMarkup
             RenderBezier(cameraInfo, color, bezier);
         }
 
-        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.2f, bool cut = false, bool alphaBlend = true) =>
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, cut ? width / 2 : 0f, cut ? width / 2 : 0f, -1f, 1280f, false, alphaBlend);
-        public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width, bool alphaBlend = true) =>
-            RenderManager.OverlayEffect.DrawCircle(cameraInfo, color, position, width, -1f, 1280f, false, alphaBlend);
+        #endregion
+
         #endregion
 
         enum Mode
