@@ -353,7 +353,7 @@ namespace NodeMarkup.Manager
             var style = TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType);
             SetCrosswalkRule(new MarkupCrosswalkRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
         }
-        protected override void RuleChanged() => Markup.Update(this, true);
+        protected override void RuleChanged() => Markup.Update(this, true, true);
 
         public override Bezier3 GetTrajectory()
         {

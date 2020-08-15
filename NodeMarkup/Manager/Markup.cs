@@ -162,7 +162,7 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
-        public void Update(MarkupLine line, bool updateIntersect = false)
+        public void Update(MarkupLine line, bool updateIntersect = false, bool updateFillers = false)
         {
             line.UpdateTrajectory();
             line.RecalculateDashes();
@@ -173,6 +173,11 @@ namespace NodeMarkup.Manager
                     LineIntersects.Remove(intersect.Pair);
                     Update(intersect.Pair.GetOther(line));
                 }
+            }
+            if(updateFillers)
+            {
+                foreach (var filler in GetLineFillers(line))
+                    Update(filler);
             }
 
             NeedRecalculateBatches = true;
