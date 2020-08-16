@@ -355,22 +355,21 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Valitse risteys muokataksesi merkintöjä</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Valitse päätepiste
 +Shift - Sulku-
 +Ctrl - Kaksois-</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Valitse piste luodaksesi tai poistaaksesi viivan
-+Ctrl siirtääksesi pistettä
-+Shift muokataksesi pistettä
-Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Uutta versiossa {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -698,6 +697,11 @@ Yhdistä kaksi pistettä luodaksesi suojatien.</value>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>Tyypin mukaan</value>
   </data>
+  
+  
+  
+  
+  
   
   
   

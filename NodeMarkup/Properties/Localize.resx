@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -355,23 +355,27 @@ Click to edit marking</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Select a node to change marking</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint
 +Shift - Solid
 +Ctrl - Double</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Select a point to
 create or delete a line
 +Ctrl to move the point
-+Shift to edit the point
-Hold Alt to create a filler</value>
+Hold Alt to create a filler
+Hold Shift to create a crosswalk</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>What`s new in {0}</value>
+    <value>What's new in {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Show what`s new</value>
+    <value>Show what's new</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
@@ -785,8 +789,6 @@ To create a crosswalk connect two points.</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Group points overlay</value>
-    <comment>Settings_GroupPoints
-</comment>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Arrange in a circle</value>
@@ -797,5 +799,25 @@ To create a crosswalk connect two points.</value>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
     <value>The rule is overlapped by another rule.
 Check other rule's "From" and "To" points.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Crosswalk's left border</value>
+    <comment>LineRule_LeftBorder
+</comment>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Crosswalk's right border</value>
+    <comment>LineRule_RightBorder
+</comment>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Select endpoint</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Select a point to
+create or delete a crosswalk</value>
   </data>
 </root>

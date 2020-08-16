@@ -355,23 +355,21 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleccione el punto final
 +Mayús - Continua
 +Ctrl - Discontinua</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Seleccione el punto para
-crear o eliminar la línea
-+Ctrl para mover el punto
-+Mayús para editar el punto
-Mantenga Alt para crear un relleno</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar las novedades</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -755,5 +753,10 @@ Para crear un paso de peatones, conecta dos puntos.</value>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
     <value>Organizar en una línea</value>
   </data>
+  
+  
+  
+  
+  
   
 </root>

@@ -355,23 +355,21 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Wybierz punkt końcowy
 +Shift - ciągła
 +Ctrl - podwójna</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Wybierz punkt aby
-utworzyć lub usunąć linię
-+Ctrl - aby przesunąć punkt
-+Shift - aby edytować punkt
-Przytrzymaj Alt aby utworzyć wypełnienie</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Pokaż "Co nowego?"</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -675,7 +673,9 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Istniejące przejście dla pieszych</value>
   </data>
-  
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Odstęp pomiędzy</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Przejścia dla pieszych</value>
   </data>
@@ -716,8 +716,12 @@ Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>Według typu</value>
   </data>
-  
-  
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Podwójna zebra</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Szerokość linii</value>
+  </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>Odstęp za</value>
   </data>
@@ -727,10 +731,34 @@ Aby utworzyć przejście dla pieszych połącz ze sobą dwa punkty.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Równolegle do pasów</value>
   </data>
-  
-  
-  
-  
+  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
+    <value>Linie równoległe</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Lewa krawędź</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Prawa krawędź</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Wybierz lewą krawędź przejścia dla pieszych</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Wybierz prawą krawędź przejścia dla pieszych</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Grupuj punkty nakładki</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Ułóż w okrąg</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Ułóż w linii</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>Reguła jest nadpisywana przez inną regułę.
+Sprawdź punkty "Z" i "Do" innych reguł.</value>
+  </data>
   
   
   
