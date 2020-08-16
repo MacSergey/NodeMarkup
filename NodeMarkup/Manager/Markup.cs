@@ -387,24 +387,20 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(string version, XElement config, out Markup markup)
+        public static bool FromXml(Version version, XElement config, out Markup markup)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
             markup = MarkupManager.Get(nodeId);
             markup.FromXml(version, config);
             return true;
         }
-        public void FromXml(string version, XElement config, Dictionary<ObjectId, ObjectId> map = null)
+        public void FromXml(Version version, XElement config, Dictionary<ObjectId, ObjectId> map = null)
         {
-            if (VersionComparer.Instance.Compare(version, "1.2") < 0)
-            {
+            if (version < new Version("1.2"))
                 map = VersionMigration.Befor1_2(this, map);
-            }
 
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
-            {
                 MarkupPoint.FromXml(pointConfig, this, map);
-            }
 
             var toInit = new Dictionary<MarkupLine, XElement>();
             foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
@@ -415,10 +411,9 @@ namespace NodeMarkup.Manager
                     toInit[line] = lineConfig;
                 }
             }
+
             foreach (var pair in toInit)
-            {
                 pair.Key.FromXml(pair.Value, map);
-            }
 
             foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
             {

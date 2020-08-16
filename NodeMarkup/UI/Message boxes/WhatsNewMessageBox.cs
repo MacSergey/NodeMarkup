@@ -31,7 +31,7 @@ namespace NodeMarkup.UI
         }
         protected virtual void GetEarlyAccessClick() => EarlyAccess.GetAccess();
 
-        public void Init(Dictionary<string, string> messages)
+        public void Init(Dictionary<Version, string> messages)
         {
             var first = default(VersionMessage);
             foreach (var message in messages)
@@ -92,7 +92,7 @@ namespace NodeMarkup.UI
                 Message.eventVisibilityChanged += (UIComponent component, bool value) => SetLabel();
             }
 
-            public void Init(string version, string message)
+            public void Init(Version version, string message)
             {
                 Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, version);
                 Message.text = message;

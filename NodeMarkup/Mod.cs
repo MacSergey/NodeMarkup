@@ -21,21 +21,20 @@ namespace NodeMarkup
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
         public static string StaticName { get; } = "Intersection Marking Tool";
 
-        public static string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static string VersionMajor => string.Join(".", Version.Split('.').Take(3).ToArray());
+        public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
+        public static Version VersionMajor => new Version(Version.Major, Version.Minor, Version.Build);
 
-        public static List<string> Versions { get; } = new List<string>
+        public static List<Version> Versions { get; } = new List<Version>
         {
-            "1.2.1",
-            "1.2",
-            "1.1",
-            "1.0"
+            new Version("1.2.1"),
+            new Version("1.2"),
+            new Version("1.1"),
+            new Version("1.0")
         };
 
 #if DEBUG
         public static bool IsBeta => true;
-        public static string VersionBeta => $"{Version} [BETA]";
-        public string Name { get; } = $"{StaticName} {VersionBeta}";
+        public string Name { get; } = $"{StaticName} {Version} [BETA]";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public static bool IsBeta => false;
@@ -134,10 +133,12 @@ namespace NodeMarkup
         }
         private void ShowWhatsNew()
         {
-            if (!UI.Settings.ShowWhatsNew || VersionComparer.Instance.Compare(Version, UI.Settings.WhatsNewVersion) <= 0)
+            var whatNewVersion = new Version(UI.Settings.WhatsNewVersion);
+
+            if (!UI.Settings.ShowWhatsNew || Version <= whatNewVersion)
                 return;
 
-            var messages = GetWhatsNewMessages();
+            var messages = GetWhatsNewMessages(whatNewVersion);
             if (!messages.Any())
                 return;
 
@@ -148,22 +149,22 @@ namespace NodeMarkup
 
             bool Confirm()
             {
-                UI.Settings.WhatsNewVersion.value = Version;
+                UI.Settings.WhatsNewVersion.value = Version.ToString();
                 return true;
             }
         }
-        private Dictionary<string, string> GetWhatsNewMessages()
+        private Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
         {
-            var messages = new Dictionary<string, string>(Versions.Count);
+            var messages = new Dictionary<Version, string>(Versions.Count);
 #if DEBUG
-            messages[VersionBeta] = Localize.Mod_WhatsNewMessageBeta;
+            messages[Version] = Localize.Mod_WhatsNewMessageBeta;
 #endif
             foreach (var version in Versions)
             {
-                if (VersionComparer.Instance.Compare(version, UI.Settings.WhatsNewVersion) <= 0)
+                if (version <= whatNewVersion)
                     break;
 
-                if (UI.Settings.ShowOnlyMajor && !IsImportantVersion(version))
+                if (UI.Settings.ShowOnlyMajor && (version.Build != 0 || version.Revision != 0))
                     continue;
 
                 if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
@@ -172,40 +173,6 @@ namespace NodeMarkup
 
             return messages;
         }
-        private string GetWhatsNew(string version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.Replace('.', '_')}", Localize.Culture);
-        private bool IsImportantVersion(string version) => version.Split('.').Length <= 2;
-    }
-    public class VersionComparer : Comparer<string>
-    {
-        public static VersionComparer Instance { get; } = new VersionComparer();
-
-        public override int Compare(string x, string y)
-        {
-            var xVer = Parse(x);
-            var yVer = Parse(y);
-
-            for (var i = 0; i < Math.Max(xVer.Length, yVer.Length); i += 1)
-            {
-                var xVerPart = i < xVer.Length ? xVer[i] : 0;
-                var yVerPart = i < yVer.Length ? yVer[i] : 0;
-                if (xVerPart != yVerPart)
-                    return xVerPart - yVerPart;
-            }
-
-            return 0;
-        }
-
-        private int[] Parse(string versionString)
-        {
-            var parts = new List<int>();
-            foreach (var versionPart in versionString.Split('.'))
-            {
-                if (!int.TryParse(versionPart, out int part))
-                    return new int[0];
-                else
-                    parts.Add(part);
-            }
-            return parts.ToArray();
-        }
+        private string GetWhatsNew(Version version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.ToString().Replace('.', '_')}", Localize.Culture);
     }
 }
