@@ -42,23 +42,23 @@ namespace NodeMarkup.Utils
             if (trajectory1.TrajectoryType == TrajectoryType.Bezier)
             {
                 if (trajectory2.TrajectoryType == TrajectoryType.Bezier)
-                    return Calculate((trajectory1 as BezierTrajectory).Trajectory, (trajectory2 as BezierTrajectory).Trajectory);
+                    return Calculate(trajectory1 as BezierTrajectory, trajectory2 as BezierTrajectory);
                 else if (trajectory2.TrajectoryType == TrajectoryType.Line)
-                    return Calculate((trajectory1 as BezierTrajectory).Trajectory, (trajectory2 as StraightTrajectory).Trajectory);
+                    return Calculate(trajectory1 as BezierTrajectory, trajectory2 as StraightTrajectory);
             }
             else if (trajectory1.TrajectoryType == TrajectoryType.Line)
             {
                 if (trajectory2.TrajectoryType == TrajectoryType.Bezier)
-                    return Calculate((trajectory1 as StraightTrajectory).Trajectory, (trajectory2 as BezierTrajectory).Trajectory);
+                    return Calculate(trajectory1 as StraightTrajectory, trajectory2 as BezierTrajectory);
                 else if (trajectory2.TrajectoryType == TrajectoryType.Line)
-                    return Calculate((trajectory1 as StraightTrajectory).Trajectory, (trajectory2 as StraightTrajectory).Trajectory);
+                    return Calculate(trajectory1 as StraightTrajectory, trajectory2 as StraightTrajectory);
             }
 
             return new List<MarkupIntersect>();
         }
 
         #region BEZIER - BEZIER
-        public static List<MarkupIntersect> Calculate(Bezier3 bezier1, Bezier3 bezier2)
+        public static List<MarkupIntersect> Calculate(BezierTrajectory bezier1, BezierTrajectory bezier2)
         {
             var intersects = new List<MarkupIntersect>();
             if (Intersect(bezier1, bezier2, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf, out float angle))
@@ -145,60 +145,57 @@ namespace NodeMarkup.Utils
 
         #region BEZIER - STRAIGHT
 
-        public static List<MarkupIntersect> Calculate(Line3 straight, Bezier3 bezier)
+        public static List<MarkupIntersect> Calculate(StraightTrajectory straight, BezierTrajectory bezier)
         {
             var intersects = new List<MarkupIntersect>();
             Intersect(straight, bezier, intersects, false);
             return intersects;
         }
-        public static List<MarkupIntersect> Calculate(Bezier3 bezier, Line3 straight)
+        public static List<MarkupIntersect> Calculate(BezierTrajectory bezier, StraightTrajectory straight)
         {
             var intersects = new List<MarkupIntersect>();
             Intersect(straight, bezier, intersects, true);
             return intersects;
         }
 
-        private static bool Intersect(Line3 line, Bezier3 bezier, List<MarkupIntersect> results, bool invert)
+        private static void Intersect(StraightTrajectory line, BezierTrajectory bezier, List<MarkupIntersect> results, bool invert, int idx = 0, int of = 1)
         {
             CalcParts(bezier, out int parts, out float[] points, out Vector3[] pos);
 
-            if (parts == 1)
+            if(parts > 1)
             {
-                if (IntersectSectionAndRay(line, bezier.a, bezier.d, out float p, out float t))
+                for (var i = 0; i < parts; i += 1)
                 {
-                    var tangent = bezier.Tangent(p);
-                    var angle = Vector3.Angle(tangent, line.b - line.a);
-                    var result = new MarkupIntersect(invert ? t : p, invert ? p : t, (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad);
-                    results.Add(result);
-                    return true;
-                }
-                else
-                    return false;
-            }
-
-            bool intersect = false;
-            for (var i = 0; i < parts; i += 1)
-            {
-                if (IntersectSectionAndRay(line, pos[i], pos[i + 1], out _, out _))
-                {
-                    var cut = bezier.Cut(points[i], points[i + 1]);
-                    intersect |= Intersect(line, cut, results, invert);
+                    if (IntersectSectionAndRay(line, pos[i], pos[i + 1], out _, out _))
+                    {
+                        var cut = bezier.Cut(points[i], points[i + 1]) as BezierTrajectory;
+                        Intersect(line, cut, results, invert, idx * parts + i, of * parts);
+                    }
                 }
             }
-            return intersect;
+            else if (IntersectSectionAndRay(line, bezier.StartPosition, bezier.EndPosition, out float p, out float q))
+            {
+                var tangent = bezier.Tangent(p);
+                var angle = Vector3.Angle(tangent, line.Direction);
+                q = 1f / of * (idx + q);
+                var result = new MarkupIntersect(invert ? q : p, invert ? p : q, (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad);
+                results.Add(result);
+            }
         }
-        private static bool IntersectSectionAndRay(Line3 line, Vector3 start, Vector3 end, out float p, out float t) =>
-            Line2.Intersect(line.a.XZ(), line.b.XZ(), start.XZ(), end.XZ(), out p, out t) && 0 <= t && t <= 1;
+        private static bool IntersectSectionAndRay(StraightTrajectory line, Vector3 start, Vector3 end, out float p, out float q) =>
+            Line2.Intersect(line.StartPosition.XZ(), line.EndPosition.XZ(), start.XZ(), end.XZ(), out p, out q) && (!line.IsSection || CorrectT(p)) && CorrectT(q);
 
         #endregion
 
         #region STRAIGHT - STRAIGHT
-        public static List<MarkupIntersect> Calculate(Line3 straight1, Line3 straight2)
+        public static List<MarkupIntersect> Calculate(StraightTrajectory straight1, StraightTrajectory straight2)
         {
             var intersects = new List<MarkupIntersect>();
-            if (Line2.Intersect(straight1.a.XZ(), straight1.b.XZ(), straight2.a.XZ(), straight2.b.XZ(), out float p, out float q))
+            var trajectory1 = straight1.Trajectory;
+            var trajectory2 = straight2.Trajectory;
+            if (Line2.Intersect(trajectory1.a.XZ(), trajectory1.b.XZ(), trajectory2.a.XZ(), trajectory2.b.XZ(), out float p, out float q) && (!straight1.IsSection || CorrectT(p)) && (!straight2.IsSection || CorrectT(q)))
             {
-                var angle = Vector2.Angle(straight1.b.XZ() - straight1.a.XZ(), straight2.b.XZ() - straight2.a.XZ()) * Mathf.Deg2Rad;
+                var angle = Vector2.Angle(trajectory1.b.XZ() - trajectory1.a.XZ(), trajectory2.b.XZ() - trajectory2.a.XZ()) * Mathf.Deg2Rad;
                 var intersect = new MarkupIntersect(p, q, angle);
                 intersects.Add(intersect);
             }
@@ -227,6 +224,7 @@ namespace NodeMarkup.Utils
                 positons[i] = bezier.Position(points[i]);
             }
         }
+        private static bool CorrectT(float t) => 0 <= t && t <= 1;
     }
     public class MarkupLinesIntersect : MarkupIntersect
     {
@@ -243,7 +241,7 @@ namespace NodeMarkup.Utils
 
         public static MarkupLinesIntersect Calculate(MarkupLinePair pair)
         {
-            if (Calculate(pair.First.Trajectory, pair.Second.Trajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect)
+            if (pair.CanIntersect && Calculate(pair.First.Trajectory, pair.Second.Trajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect)
                 return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT, intersect.Angle);
             else
                 return new MarkupLinesIntersect(pair);

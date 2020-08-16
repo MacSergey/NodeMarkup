@@ -945,8 +945,8 @@ namespace NodeMarkup
 
             var normalBezier = new Bezier3
             {
-                a = SelectPoint.Position + SelectPoint.Direction + normal,
-                d = SelectPoint.Position + normal - SelectPoint.Direction
+                a = SelectPoint.Position + SelectPoint.Direction,
+                d = SelectPoint.Position + normal
             };
             normalBezier.b = normalBezier.a + normal / 2;
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;

@@ -61,11 +61,15 @@ namespace NodeMarkup.Manager
         public float Travel(float start, float distance) => Trajectory.Travel(start, distance);
         public ILineTrajectory Invert() => new BezierTrajectory(Trajectory.Invert());
         public ILineTrajectory Copy() => new BezierTrajectory(Trajectory);
+
+        public static implicit operator Bezier3(BezierTrajectory trajectory) => trajectory.Trajectory;
+        public static explicit operator BezierTrajectory(Bezier3 bezier) => new BezierTrajectory(bezier);
     }
     public class StraightTrajectory : ILineTrajectory
     {
         public TrajectoryType TrajectoryType => TrajectoryType.Line;
         public Line3 Trajectory { get; }
+        public bool IsSection { get; }
         public float Length => Direction.magnitude;
         public float Magnitude => Length;
         public float DeltaAngle => 0f;
@@ -74,11 +78,12 @@ namespace NodeMarkup.Manager
         public Vector3 EndDirection => -Direction;
         public Vector3 StartPosition => Trajectory.a;
         public Vector3 EndPosition => Trajectory.b;
-        public StraightTrajectory(Line3 trajectory)
+        public StraightTrajectory(Line3 trajectory, bool isSection = true)
         {
             Trajectory = trajectory;
+            IsSection = isSection;
         }
-        public StraightTrajectory(Vector3 start, Vector3 end) : this(new Line3(start, end)) { }
+        public StraightTrajectory(Vector3 start, Vector3 end, bool isSection = true) : this(new Line3(start, end), isSection) { }
 
         public ILineTrajectory Cut(float t0, float t1) => new StraightTrajectory(Position(t0), Position(t1));
 
@@ -93,5 +98,8 @@ namespace NodeMarkup.Manager
         public float Travel(float start, float distance) => start + (distance / Length);
         public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a);
         public ILineTrajectory Copy() => new StraightTrajectory(Trajectory);
+
+        public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
+        public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);
     }
 }

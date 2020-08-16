@@ -278,7 +278,7 @@ namespace NodeMarkup.Manager
                 var dir = directions[i];
                 foreach (var pos in positions[i])
                 {
-                    var line = new StraightTrajectory(pos, pos + dir);
+                    var line = new StraightTrajectory(pos, pos + dir, false);
                     var intersectSet = new HashSet<MarkupIntersect>();
                     foreach (var trajectory in trajectories)
                         intersectSet.AddRange(MarkupIntersect.Calculate(line, trajectory).Where(k => k.FirstT > 0));

@@ -120,7 +120,7 @@ namespace NodeMarkup.Manager
             foreach (var point in GetItems(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
             {
                 var intersectSet = new HashSet<MarkupIntersect>();
-                var straight = new StraightTrajectory(point, point + normal);
+                var straight = new StraightTrajectory(point, point + normal, false);
                 foreach (var trajectory in trajectories)
                     intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
 
