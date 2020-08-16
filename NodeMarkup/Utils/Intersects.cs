@@ -61,77 +61,53 @@ namespace NodeMarkup.Utils
         public static List<MarkupIntersect> Calculate(BezierTrajectory bezier1, BezierTrajectory bezier2)
         {
             var intersects = new List<MarkupIntersect>();
-            if (Intersect(bezier1, bezier2, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf, out float angle))
-            {
-                var intersect = new MarkupIntersect(1f / firstOf * firstIndex, 1f / secondOf * secondIndex, angle);
-                intersects.Add(intersect);
-            }
+            Intersect(intersects, bezier1, bezier2);
             return intersects;
         }
-        private static bool Intersect(Bezier3 first, Bezier3 second, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf, out float angle)
+        private static bool Intersect(List<MarkupIntersect> results, Bezier3 first, Bezier3 second, int fIdx = 0, int fOf = 1, int sIdx = 0, int sOf = 1)
         {
-            CalcParts(first, out int firstParts, out float[] firstPoints, out Vector3[] firstPos);
-            CalcParts(second, out int secondParts, out float[] secondPoints, out Vector3[] secondPos);
+            CalcParts(first, out int fParts, out float[] fPoints, out Vector3[] fPos);
+            CalcParts(second, out int sParts, out float[] sPoints, out Vector3[] sPos);
 
-            if (firstParts == 1 && secondParts == 1)
+            if (fParts == 1 && sParts == 1)
             {
                 IntersectSections(first.a, first.d, second.a, second.d, out float firstT, out float secondT);
-                firstIndex = (int)(firstT * 100).RoundToNearest(1f);
-                firstOf = 100;
-                secondIndex = (int)(secondT * 100).RoundToNearest(1f);
-                secondOf = 100;
-                angle = Vector2.Angle(first.d.XZ() - first.a.XZ(), second.d.XZ() - second.a.XZ()) * Mathf.Deg2Rad;
+                firstT = 1f / fOf * (fIdx + firstT);
+                secondT = 1f / sOf * (sIdx + secondT);
+                var angle = Vector2.Angle(first.d.XZ() - first.a.XZ(), second.d.XZ() - second.a.XZ()) * Mathf.Deg2Rad;
+                results.Add(new MarkupIntersect(firstT, secondT, angle));
                 return true;
             }
 
-            for (var i = 0; i < firstParts; i += 1)
+            for (var i = 0; i < fParts; i += 1)
             {
-                for (var j = 0; j < secondParts; j += 1)
+                for (var j = 0; j < sParts; j += 1)
                 {
-                    if (IntersectSections(firstPos[i], firstPos[i + 1], secondPos[j], secondPos[j + 1], out float p, out float q))
-                    {
-                        if (Intersect(first, second, firstPoints, secondPoints, WillTryParts(i, firstParts, p), WillTryParts(j, secondParts, q), out int resI, out int resJ, out firstIndex, out firstOf, out secondIndex, out secondOf, out angle))
-                        {
-                            firstIndex += resI * firstOf;
-                            firstOf *= firstParts;
-                            secondIndex += resJ * secondOf;
-                            secondOf *= secondParts;
-                            return true;
-                        }
-                        else
-                            return false;
-                    }
+                    if (IntersectSections(fPos[i], fPos[i + 1], sPos[j], sPos[j + 1], out float p, out float q))
+                        return Intersect(results, first, second, fParts, sParts, fPoints, sPoints, WillTryParts(i, fParts, p), WillTryParts(j, sParts, q), fIdx, fOf, sIdx, sOf);
                 }
             }
 
-            firstIndex = firstOf = secondIndex = secondOf = 0;
-            angle = 0;
             return false;
         }
-        private static bool Intersect(Bezier3 first, Bezier3 second, float[] firstPoints, float[] secondPoints, IEnumerable<int> firstIs, IEnumerable<int> secondJs, out int resI, out int resJ, out int firstIndex, out int firstOf, out int secondIndex, out int secondOf, out float angle)
+        private static bool Intersect(List<MarkupIntersect> results, Bezier3 first, Bezier3 second, int fParts, int sParts, float[] fPoints, float[] sPoints, IEnumerable<int> fIs, IEnumerable<int> sJs, int fIdx, int fOf, int sIdx, int sOf)
         {
-            foreach (var i in firstIs)
+            foreach (var i in fIs)
             {
-                foreach (var j in secondJs)
+                foreach (var j in sJs)
                 {
-                    var firstCut = first.Cut(firstPoints[i], firstPoints[i + 1]);
-                    var secondCut = second.Cut(secondPoints[j], secondPoints[j + 1]);
+                    var firstCut = first.Cut(fPoints[i], fPoints[i + 1]);
+                    var secondCut = second.Cut(sPoints[j], sPoints[j + 1]);
 
-                    if (Intersect(firstCut, secondCut, out firstIndex, out firstOf, out secondIndex, out secondOf, out angle))
-                    {
-                        resI = i;
-                        resJ = j;
+                    if (Intersect(results, firstCut, secondCut, fIdx * fParts + i, fOf * fParts, sIdx * sParts + j, sOf * sParts))
                         return true;
-                    }
                 }
             }
 
-            firstIndex = firstOf = secondIndex = secondOf = resI = resJ = 0;
-            angle = 0;
             return false;
         }
         private static bool IntersectSections(Vector3 a, Vector3 b, Vector3 c, Vector3 d, out float p, out float q)
-            => Line2.Intersect(a.XZ(), b.XZ(), c.XZ(), d.XZ(), out p, out q) && (0 <= p && p <= 1) && (0 <= q && q <= 1);
+            => Line2.Intersect(a.XZ(), b.XZ(), c.XZ(), d.XZ(), out p, out q) && CorrectT(p) && CorrectT(q);
         private static IEnumerable<int> WillTryParts(int i, int count, float p)
         {
             yield return i;
@@ -148,17 +124,17 @@ namespace NodeMarkup.Utils
         public static List<MarkupIntersect> Calculate(StraightTrajectory straight, BezierTrajectory bezier)
         {
             var intersects = new List<MarkupIntersect>();
-            Intersect(straight, bezier, intersects, false);
+            Intersect(intersects, straight, bezier, false);
             return intersects;
         }
         public static List<MarkupIntersect> Calculate(BezierTrajectory bezier, StraightTrajectory straight)
         {
             var intersects = new List<MarkupIntersect>();
-            Intersect(straight, bezier, intersects, true);
+            Intersect(intersects, straight, bezier, true);
             return intersects;
         }
 
-        private static void Intersect(StraightTrajectory line, BezierTrajectory bezier, List<MarkupIntersect> results, bool invert, int idx = 0, int of = 1)
+        private static void Intersect(List<MarkupIntersect> results, StraightTrajectory line, BezierTrajectory bezier, bool invert, int idx = 0, int of = 1)
         {
             CalcParts(bezier, out int parts, out float[] points, out Vector3[] pos);
 
@@ -169,7 +145,7 @@ namespace NodeMarkup.Utils
                     if (IntersectSectionAndRay(line, pos[i], pos[i + 1], out _, out _))
                     {
                         var cut = bezier.Cut(points[i], points[i + 1]) as BezierTrajectory;
-                        Intersect(line, cut, results, invert, idx * parts + i, of * parts);
+                        Intersect(results, line, cut,  invert, idx * parts + i, of * parts);
                     }
                 }
             }
