@@ -1010,8 +1010,8 @@ namespace NodeMarkup
         private void RenderSelectFillerMode(RenderManager.CameraInfo cameraInfo)
         {
             RenderFillerLines(cameraInfo);
-            FillerPointsSelector.Render(cameraInfo);
             RenderFillerConnectLine(cameraInfo);
+            FillerPointsSelector.Render(cameraInfo);
         }
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
@@ -1045,7 +1045,7 @@ namespace NodeMarkup
                 color = MarkupColors.White;
             }
 
-            RenderBezier(cameraInfo, color, bezier);
+            RenderBezier(cameraInfo, color, bezier/*, alphaBlend: false*/);
         }
 
         #endregion
