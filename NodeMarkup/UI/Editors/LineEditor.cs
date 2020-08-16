@@ -24,7 +24,7 @@ namespace NodeMarkup.UI.Editors
 
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();      
-        public bool CanDivide => SupportPoints.Count > 2;
+        public bool CanDivide => EditObject is MarkupRegularLine;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private MarkupLineSelectPropertyPanel _selectPartEdgePanel;
