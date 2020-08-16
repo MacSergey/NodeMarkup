@@ -174,8 +174,7 @@ namespace NodeMarkup.Manager
         }
         private List<float[]> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
         {
-            var trajectory = straightTrajectory.Trajectory;
-            var length = (trajectory.b - trajectory.a).magnitude;
+            var length = straightTrajectory.Length;
             var dashCount = (int)(length / (dashLength + spaceLength));
             var startSpace = (length + spaceLength - (dashLength + spaceLength) * dashCount) / 2;
 
@@ -185,7 +184,7 @@ namespace NodeMarkup.Manager
             var dashT = dashLength / length;
             var spaceT = spaceLength / length;
 
-            for(var i = 0; i < dashLength; i +=1 )
+            for(var i = 0; i < dashCount; i +=1 )
             {
                 var tStart = startT + (dashT + spaceT) * i;
                 var tEnd = tStart + spaceT;
