@@ -20,12 +20,13 @@ namespace NodeMarkup.UI
                 "TextFieldPanel",
                 "TextFieldPanelHovered",
                 "TextFieldPanelFocus",
+                "EmptySprite"
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(EditorItemAtlas));
             if (atlas == UIView.GetAView().defaultAtlas)
             {
-                atlas = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, spriteNames, new RectOffset(4, 4, 4, 4));
+                atlas = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, spriteNames, new RectOffset(4, 4, 4, 4), 2);
             }
 
             return atlas;

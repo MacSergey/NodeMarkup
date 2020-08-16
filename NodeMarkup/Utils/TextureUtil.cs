@@ -30,9 +30,9 @@ namespace NodeMarkup.Utils
         }
 
         static readonly string path = $"{nameof(NodeMarkup)}.Resources.";
-        public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames, RectOffset border = null)
+        public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames, RectOffset border = null, int space = 0)
         {
-            Texture2D texture2D = LoadTextureFromAssembly(textureFile, spriteWidth * spriteNames.Length, spriteHeight);
+            Texture2D texture2D = LoadTextureFromAssembly(textureFile, spriteWidth * spriteNames.Length + space * (spriteNames.Length + 1), spriteHeight + 2 * space);
 
             UITextureAtlas uitextureAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
             Material material = Object.Instantiate(UIView.GetAView().defaultAtlas.material);
@@ -40,14 +40,18 @@ namespace NodeMarkup.Utils
             uitextureAtlas.material = material;
             uitextureAtlas.name = atlasName;
 
+            var heightRatio = spriteHeight / (float)texture2D.height;
+            var widthRatio = spriteWidth / (float)texture2D.width;
+            var spaceHeightRatio = space / (float)texture2D.height;
+            var spaceWidthRatio = space / (float)texture2D.width;
+
             for (int i = 0; i < spriteNames.Length; i += 1)
             {
-                float num = 1f / spriteNames.Length;
                 UITextureAtlas.SpriteInfo spriteInfo = new UITextureAtlas.SpriteInfo
                 {
                     name = spriteNames[i],
                     texture = texture2D,
-                    region = new Rect(i * num, 0f, num, 1f),
+                    region = new Rect(i * widthRatio + (i + 1) * spaceWidthRatio, spaceHeightRatio, widthRatio, heightRatio),
                     border = border ?? new RectOffset()
                 };
                 uitextureAtlas.AddSprite(spriteInfo);
