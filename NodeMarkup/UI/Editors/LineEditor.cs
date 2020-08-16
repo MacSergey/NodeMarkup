@@ -23,8 +23,9 @@ namespace NodeMarkup.UI.Editors
         private ButtonPanel AddButton { get; set; }
 
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-        public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();      
-        public bool CanDivide => EditObject is MarkupRegularLine;
+        public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
+        public bool SupportRules => EditObject is MarkupRegularLine;
+        public bool CanDivide => SupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private MarkupLineSelectPropertyPanel _selectPartEdgePanel;
@@ -104,9 +105,12 @@ namespace NodeMarkup.UI.Editors
         }
         private void DeleteAddButton()
         {
-            AddButton.OnButtonClick -= AddRule;
-            SettingsPanel.RemoveUIComponent(AddButton);
-            Destroy(AddButton);
+            if (AddButton != null)
+            {
+                AddButton.OnButtonClick -= AddRule;
+                SettingsPanel.RemoveUIComponent(AddButton);
+                Destroy(AddButton);
+            }
         }
 
         private void AddRule()
@@ -121,15 +125,12 @@ namespace NodeMarkup.UI.Editors
 
             SettingsPanel.ScrollToBottom();
 
-            if (Settings.QuickRuleSetup)
+            if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
 
             RefreshItem();
         }
-        private void SetupRule(RulePanel rulePanel)
-        {
-            SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (e) => SetStyle(rulePanel, e)));
-        }
+        private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (e) => SetStyle(rulePanel, e)));
         private bool SetStyle(RulePanel rulePanel, Event e)
         {
             rulePanel.Style.SelectedObject = e.GetRegularStyle();
@@ -156,8 +157,8 @@ namespace NodeMarkup.UI.Editors
                 SettingsPanel.RemoveUIComponent(rulePanel);
                 Destroy(rulePanel);
                 RefreshItem();
-                if (!CanDivide)
-                    AddAddButton();
+                DeleteAddButton();
+                AddAddButton();
                 return true;
             }
         }
