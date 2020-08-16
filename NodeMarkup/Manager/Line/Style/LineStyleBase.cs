@@ -55,7 +55,7 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory);
+        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
@@ -89,15 +89,15 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-        protected IEnumerable<MarkupStyleDash> CalculateSolid(Bezier3 trajectory, int depth, Func<Bezier3, IEnumerable<MarkupStyleDash>> calculateDashes)
+        protected IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, int depth, Func<ILineTrajectory, IEnumerable<MarkupStyleDash>> calculateDashes)
         {
-            var deltaAngle = trajectory.DeltaAngle();
-            var direction = trajectory.d - trajectory.a;
+            var deltaAngle = trajectory.DeltaAngle;
+            var direction = trajectory.Direction;
             var length = direction.magnitude;
 
             if (depth < 5 && ((deltaAngle > AngleDelta && length >= MinLength) || length > MaxLength || depth == 0))
             {
-                trajectory.Divide(out Bezier3 first, out Bezier3 second);
+                trajectory.Divide(out ILineTrajectory first, out ILineTrajectory second);
 
                 foreach (var dash in CalculateSolid(first, depth + 1, calculateDashes))
                     yield return dash;
@@ -111,10 +111,31 @@ namespace NodeMarkup.Manager
                     yield return dash;
             }
         }
-        protected IEnumerable<MarkupStyleDash> CalculateDashed(Bezier3 trajectory, float dashLength, float spaceLength, Func<Bezier3, float, float, IEnumerable<MarkupStyleDash>> calculateDashes)
+        protected IEnumerable<MarkupStyleDash> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, Func<ILineTrajectory, float, float, IEnumerable<MarkupStyleDash>> calculateDashes)
+        {
+            List<float[]> dashesT;
+            switch (trajectory)
+            {
+                case BezierTrajectory bezierTrajectory:
+                    dashesT = CalculateDashesBezierT(bezierTrajectory, dashLength, spaceLength);
+                    break;
+                case StraightTrajectory straightTrajectory:
+                    dashesT = CalculateDashesStraightT(straightTrajectory, dashLength, spaceLength);
+                    break;
+                default:
+                    yield break;
+            }
+
+            foreach (var dashT in dashesT)
+            {
+                foreach (var dash in calculateDashes(trajectory, dashT[0], dashT[1]))
+                    yield return dash;
+            }
+        }
+        private List<float[]> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
         {
             var dashesT = new List<float[]>();
-
+            var trajectory = bezierTrajectory.Trajectory;
             var startSpace = spaceLength / 2;
             for (var i = 0; i < 3; i += 1)
             {
@@ -149,14 +170,33 @@ namespace NodeMarkup.Manager
                     break;
             }
 
-            foreach (var dashT in dashesT)
+            return dashesT;
+        }
+        private List<float[]> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
+        {
+            var trajectory = straightTrajectory.Trajectory;
+            var length = (trajectory.b - trajectory.a).magnitude;
+            var dashCount = (int)(length / (dashLength + spaceLength));
+            var startSpace = (length + spaceLength - (dashLength + spaceLength) * dashCount) / 2;
+
+            var dashesT = new List<float[]>(dashCount);
+
+            var startT = startSpace / length;
+            var dashT = dashLength / length;
+            var spaceT = spaceLength / length;
+
+            for(var i = 0; i < dashLength; i +=1 )
             {
-                foreach (var dash in calculateDashes(trajectory, dashT[0], dashT[1]))
-                    yield return dash;
+                var tStart = startT + (dashT + spaceT) * i;
+                var tEnd = tStart + spaceT;
+
+                dashesT.Add(new float[] { tStart, tEnd });
             }
+
+            return dashesT;
         }
 
-        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, float offset)
+        protected MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset)
         {
             if (offset == 0)
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero);
@@ -167,7 +207,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset);
             }
         }
-        protected MarkupStyleDash CalculateDashedDash(Bezier3 trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float? angle = null, float? width = null)
+        protected MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float? angle = null, float? width = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -181,25 +221,21 @@ namespace NodeMarkup.Manager
                 return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, width ?? Width, Color);
         }
 
-        protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, float offset)
+        protected MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, float offset)
         {
             if (offset == 0)
                 return CalculateSolidDash(trajectory, Vector3.zero, Vector3.zero);
             else
             {
-                var startOffset = (trajectory.b - trajectory.a).Turn90(true).normalized * offset;
-                var endOffset = (trajectory.d - trajectory.c).Turn90(true).normalized * offset;
+                var startOffset = trajectory.StartDirection.Turn90(true).normalized * offset;
+                var endOffset = trajectory.EndDirection.Turn90(false).normalized * offset;
                 return CalculateSolidDash(trajectory, startOffset, endOffset);
             }
         }
-        protected MarkupStyleDash CalculateSolidDash(Bezier3 trajectory, Vector3 startOffset, Vector3 endOffset, float? width = null)
+        protected MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float? width = null)
         {
-            var startPosition = trajectory.a;
-            var endPosition = trajectory.d;
-
-            startPosition += startOffset;
-            endPosition += endOffset;
-
+            var startPosition = trajectory.StartPosition + startOffset;
+            var endPosition = trajectory.EndPosition + endOffset;
             return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, width ?? Width, Color);
         }
     }
@@ -259,8 +295,8 @@ namespace NodeMarkup.Manager
         public override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDash[0];
-        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, Bezier3 trajectory);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDash[0];
+        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
 
         public enum StopLineType
         {
@@ -302,8 +338,8 @@ namespace NodeMarkup.Manager
         public override LineStyle CopyLineStyle() => CopyCrosswalkStyle();
         public abstract CrosswalkStyle CopyCrosswalkStyle();
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => line is MarkupCrosswalk crosswalk ? Calculate(crosswalk, trajectory) : new MarkupStyleDash[0];
-        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupCrosswalk crosswalk ? Calculate(crosswalk, trajectory) : new MarkupStyleDash[0];
+        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory);
 
         public enum CrosswalkType
         {

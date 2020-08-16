@@ -108,6 +108,7 @@
     <Compile Include="Manager\Line\Style\CrosswalkLineStyle.cs" />
     <Compile Include="Manager\Line\Style\StopLineStyle.cs" />
     <Compile Include="Manager\Line\Style\RegularLineStyles.cs" />
+    <Compile Include="Manager\Line\Trajectory.cs" />
     <Compile Include="Manager\Markup.cs" />
     <Compile Include="Manager\Line\LinePartEdge.cs" />
     <Compile Include="Manager\Point\Point.cs" />
@@ -158,7 +159,7 @@
     <Compile Include="UI\TabPanel.cs" />
     <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\BezierBounds.cs" />
-    <Compile Include="Utils\BezierIntersect.cs" />
+    <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\MoveItIntegration.cs" />
@@ -260,7 +261,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

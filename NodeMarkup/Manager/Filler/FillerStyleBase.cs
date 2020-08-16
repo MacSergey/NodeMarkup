@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IFillerStyle : IStyle, IColorStyle 
+    public interface IFillerStyle : IStyle, IColorStyle
     {
         float MedianOffset { get; set; }
     }
@@ -47,7 +47,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public FillerStyle(Color32 color, float width, float medianOffset) : base(color, width) 
+        public FillerStyle(Color32 color, float width, float medianOffset) : base(color, width)
         {
             MedianOffset = medianOffset;
         }
@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
             var rect = GetRect(trajectories);
             return GetDashes(trajectories, rect, filler.Markup.Height);
         }
-        public Bezier3[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
+        public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
             var lineParts = filler.Parts.ToArray();
             var trajectories = filler.TrajectoriesRaw.ToArray();
@@ -93,44 +93,38 @@ namespace NodeMarkup.Manager
                 var prevI = i == 0 ? lineParts.Length - 1 : i - 1;
                 if (lineParts[prevI].Line is MarkupFakeLine && trajectories[prevI] != null)
                 {
-                    trajectories[i] = Shift(trajectories[i].Value);
-                    var temp = trajectories[prevI].Value;
-                    temp.d = temp.b = trajectories[i].Value.a;
-                    trajectories[prevI] = temp;
+                    trajectories[i] = Shift(trajectories[i]);
+                    trajectories[prevI] = new StraightTrajectory(trajectories[prevI].StartPosition, trajectories[i].StartPosition);
                 }
 
                 var nextI = i + 1 == lineParts.Length ? 0 : i + 1;
                 if (lineParts[nextI].Line is MarkupFakeLine && trajectories[nextI] != null)
                 {
-                    trajectories[i] = Shift(trajectories[i].Value.Invert()).Invert();
-                    var temp = trajectories[nextI].Value;
-                    temp.a = temp.c = trajectories[i].Value.d;
-                    trajectories[nextI] = temp;
+                    trajectories[i] = Shift(trajectories[i].Invert()).Invert();
+                    trajectories[nextI] = new StraightTrajectory(trajectories[i].EndPosition, trajectories[nextI].EndPosition);
                 }
 
-                Bezier3 Shift(Bezier3 trajectory)
+                ILineTrajectory Shift(ILineTrajectory trajectory)
                 {
                     var newT = trajectory.Travel(0, MedianOffset);
                     return trajectory.Cut(newT, 1);
                 }
             }
 
-            return trajectories.Where(t => t != null).Select(t => t.Value).ToArray();
+            return trajectories.Where(t => t != null).Select(t => t).ToArray();
         }
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height);
+        protected abstract IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height);
 
-        protected IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
+        protected IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
         {
             foreach (var point in GetItems(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
             {
-                var intersectSet = new HashSet<MarkupBezierLineIntersect>();
+                var intersectSet = new HashSet<MarkupIntersect>();
+                var straight = new StraightTrajectory(point, point + normal);
                 foreach (var trajectory in trajectories)
-                {
-                    foreach (var t in MarkupBezierLineIntersect.Intersect(trajectory, point, point + normal))
-                        intersectSet.Add(t);
-                }
+                    intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
 
-                var intersects = intersectSet.OrderBy(i => i).ToArray();
+                var intersects = intersectSet.OrderBy(i => i, MarkupIntersect.FirstComparer).ToArray();
 
                 for (var i = 1; i < intersects.Length; i += 2)
                 {
@@ -154,7 +148,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected float GetOffset(MarkupBezierLineIntersect intersect, float offset)
+        protected float GetOffset(MarkupIntersect intersect, float offset)
         {
             var sin = Mathf.Sin(intersect.Angle);
             return sin != 0 ? offset / sin : 1000f;
@@ -245,20 +239,29 @@ namespace NodeMarkup.Manager
                 partWidth = num / 100f;
             }
         }
-        protected Rect GetRect(Bezier3[] trajectories)
+        protected Rect GetRect(ILineTrajectory[] trajectories)
         {
             if (!trajectories.Any())
                 return Rect.zero;
 
-            var firstPos = trajectories[0].a;
+            var firstPos = trajectories[0].StartPosition;
             var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
 
             foreach (var trajectory in trajectories)
             {
-                Set(trajectory.a);
-                Set(trajectory.b);
-                Set(trajectory.c);
-                Set(trajectory.d);
+                switch (trajectory)
+                {
+                    case BezierTrajectory bezierTrajectory:
+                        Set(bezierTrajectory.Trajectory.a);
+                        Set(bezierTrajectory.Trajectory.b);
+                        Set(bezierTrajectory.Trajectory.c);
+                        Set(bezierTrajectory.Trajectory.d);
+                        break;
+                    case StraightTrajectory straightTrajectory:
+                        Set(straightTrajectory.Trajectory.a);
+                        Set(straightTrajectory.Trajectory.b);
+                        break;
+                }
             }
 
             return rect;

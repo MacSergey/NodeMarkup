@@ -28,8 +28,10 @@ namespace NodeMarkup.Manager
         public bool IsCrosswalk => PointPair.IsCrosswalk;
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
+        public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
 
-        public Bezier3 Trajectory { get; private set; }
+        protected ILineTrajectory LineTrajectory { get; private set; }
+        public ILineTrajectory Trajectory => LineTrajectory.Copy();
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
 
         public string XmlSection => XmlName;
@@ -45,27 +47,14 @@ namespace NodeMarkup.Manager
         protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
         protected virtual void RuleChanged() => Markup.Update(this);
 
-        public void UpdateTrajectory() => Trajectory = GetTrajectory();
-        public virtual Bezier3 GetTrajectory()
-        {
-            var trajectory = new Bezier3
-            {
-                a = PointPair.First.Position,
-                d = PointPair.Second.Position,
-            };
-            NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
-
-            return trajectory;
-        }
+        public void UpdateTrajectory() => LineTrajectory = CalculateTrajectory();
+        protected abstract ILineTrajectory CalculateTrajectory();
 
         public void RecalculateDashes() => Dashes = GetDashes().ToArray();
         protected abstract IEnumerable<MarkupStyleDash> GetDashes();
 
-        public override string ToString() => PointPair.ToString();
-
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
-        public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
         protected IEnumerable<ILinePartEdge> RulesEnterPointEdge
         {
             get
@@ -158,6 +147,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = Markup.Item.Crosswalk,
         }
+        public override string ToString() => PointPair.ToString();
     }
     public class MarkupRegularLine : MarkupLine
     {
@@ -173,6 +163,17 @@ namespace NodeMarkup.Manager
             var lineStyle = TemplateManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
             AddRule(lineStyle, false, false);
             RecalculateDashes();
+        }
+        protected override ILineTrajectory CalculateTrajectory()
+        {
+            var trajectory = new Bezier3
+            {
+                a = PointPair.First.Position,
+                d = PointPair.Second.Position,
+            };
+            NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
+
+            return new BezierTrajectory(trajectory);
         }
 
         private void AddRule(MarkupLineRawRule<RegularLineStyle> rule, bool update = true)
@@ -214,7 +215,7 @@ namespace NodeMarkup.Manager
             var dashes = new List<MarkupStyleDash>();
             foreach (var rule in rules)
             {
-                var trajectoryPart = Trajectory.Cut(rule.Start, rule.End);
+                var trajectoryPart = LineTrajectory.Cut(rule.Start, rule.End);
                 var ruleDashes = rule.LineStyle.Calculate(this, trajectoryPart).ToArray();
 
                 dashes.AddRange(ruleDashes);
@@ -270,18 +271,9 @@ namespace NodeMarkup.Manager
         protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
         protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : base(markup, first, second, update) { }
 
-        public override Bezier3 GetTrajectory()
-        {
-            var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
-            var trajectory = new Bezier3
-            {
-                a = PointPair.First.Position,
-                d = PointPair.Second.Position,
-            };
-            NetSegment.CalculateMiddlePoints(trajectory.a, dir, trajectory.d, -dir, true, true, out trajectory.b, out trajectory.c);
-            return trajectory;
-        }
-        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, Trajectory);
+        protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+
+        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, LineTrajectory);
         protected void SetRule(MarkupLineRawRule<StyleType> rule)
         {
             rule.OnRuleChanged = RuleChanged;
@@ -355,26 +347,17 @@ namespace NodeMarkup.Manager
         }
         protected override void RuleChanged() => Markup.Update(this, true, true);
 
-        public override Bezier3 GetTrajectory()
+        protected override ILineTrajectory CalculateTrajectory()
         {
-            var dir = (PointPair.Second.Position - PointPair.First.Position).normalized;
             var offset = NormalDir * ((CrosswalkRule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
-
-            var trajectory = new Bezier3
-            {
-                a = PointPair.First.Position + offset,
-                d = PointPair.Second.Position + offset,
-            };
-            NetSegment.CalculateMiddlePoints(trajectory.a, dir, trajectory.d, -dir, true, true, out trajectory.b, out trajectory.c);
-
-            return trajectory;
+            return new StraightTrajectory(PointPair.First.Position + offset, PointPair.Second.Position + offset);
         }
         protected override IEnumerable<MarkupStyleDash> GetDashes()
         {
             foreach (var dash in base.GetDashes())
                 yield return dash;
 
-            foreach (var dash in CrosswalkRule.Style.Calculate(this, Trajectory))
+            foreach (var dash in CrosswalkRule.Style.Calculate(this, LineTrajectory))
                 yield return dash;
         }
         public override IEnumerable<ILinePartEdge> RulesEdges
@@ -498,7 +481,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool GetTrajectory(out Bezier3 bezier)
+        public bool GetTrajectory(out ILineTrajectory bezier)
         {
             var succes = false;
             succes |= GetFromT(out float from);
@@ -537,12 +520,34 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class MarkupLineBound : BezierBounds
+    public class MarkupLineBound
     {
+        private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
         public MarkupLine Line { get; }
-        public MarkupLineBound(MarkupLine line, float size) : base(line.Trajectory, size)
+        public ILineTrajectory Trajectory => Line.Trajectory;
+        public float Size { get; }
+        private List<Bounds> BoundsList { get; } = new List<Bounds>();
+        public IEnumerable<Bounds> Bounds => BoundsList;
+        public MarkupLineBound(MarkupLine line, float size)
         {
             Line = line;
+            Size = size;
+            CalculateBounds();
         }
+
+        private void CalculateBounds()
+        {
+            var size = Size * Coef;
+            var t = 0f;
+            while (t < 1f)
+            {
+                t = Line.Trajectory.Travel(t, size / 2);
+                var bounds = new Bounds(Trajectory.Position(t), Vector3.one * size);
+                BoundsList.Add(bounds);
+            }
+        }
+
+        public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
+        public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
     }
 }

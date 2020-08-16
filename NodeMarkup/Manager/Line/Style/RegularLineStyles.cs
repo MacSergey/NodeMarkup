@@ -23,8 +23,8 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => CalculateSolid(trajectory, 0, CalculateDashes);
+        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
             yield return CalculateSolidDash(trajectory, 0f);
         }
@@ -59,7 +59,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
             yield return CalculateSolidDash(trajectory, Offset);
             yield return CalculateSolidDash(trajectory, -Offset);
@@ -124,9 +124,9 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
+        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
         }
@@ -182,7 +182,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 trajectory, float startT, float endT)
+        protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Offset);
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset);
@@ -270,7 +270,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, Bezier3 trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
             foreach (var dash in CalculateSolid(trajectory, 0, CalculateSolidDash))
             {
@@ -282,13 +282,13 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected IEnumerable<MarkupStyleDash> CalculateSolidDash(Bezier3 trajectory)
+        protected IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory trajectory)
         {
             var offset = CenterSolid ? 0 : Invert ? Offset : -Offset;
 
             yield return CalculateSolidDash(trajectory, offset);
         }
-        protected IEnumerable<MarkupStyleDash> CalculateDashedDash(Bezier3 trajectory, float startT, float endT)
+        protected IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT)
         {
             var offset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
             yield return CalculateDashedDash(trajectory, startT, endT, DashLength, offset);

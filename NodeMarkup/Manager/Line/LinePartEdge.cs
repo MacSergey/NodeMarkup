@@ -92,10 +92,6 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Second);
 
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color)
-        {
-            NodeMarkupTool.RenderBezier(cameraInfo, color, Slave.Trajectory);
-            //NodeMarkupTool.RenderBezier(cameraInfo, color, Second.Trajectory);
-        }
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Slave.Trajectory);
     }
 }

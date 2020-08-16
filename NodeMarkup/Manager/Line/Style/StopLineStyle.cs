@@ -16,12 +16,12 @@ namespace NodeMarkup.Manager
 
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
             return CalculateSolid(trajectory, 0, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
                 yield return CalculateSolidDash(dashTrajectory, offset, offset);
             }
@@ -48,7 +48,7 @@ namespace NodeMarkup.Manager
         {
             Offset = offset;
         }
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
@@ -56,7 +56,7 @@ namespace NodeMarkup.Manager
 
             return CalculateSolid(trajectory, 0, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
                 yield return CalculateSolidDash(dashTrajectory, offsetLeft, offsetLeft);
                 yield return CalculateSolidDash(dashTrajectory, offsetRight, offsetRight);
@@ -124,12 +124,12 @@ namespace NodeMarkup.Manager
             SpaceLength = spaceLength;
         }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
             return CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
             {
                 yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset);
             }
@@ -195,7 +195,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
@@ -203,7 +203,7 @@ namespace NodeMarkup.Manager
 
             return CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
             {
                 yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft);
                 yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight);

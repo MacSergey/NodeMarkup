@@ -132,7 +132,7 @@ namespace NodeMarkup.UI.Editors
             if (IsHoverItem)
             {
                 foreach (var trajectory in HoverItem.Object.Trajectories)
-                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, trajectory, 0.2f);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, trajectory, 0.2f);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();

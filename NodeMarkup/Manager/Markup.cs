@@ -28,7 +28,7 @@ namespace NodeMarkup.Manager
         public float Height { get; private set; }
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, MarkupBeziersIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupBeziersIntersect>(MarkupLinePair.Comparer);
+        Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         List<Bezier3> ContourParts { get; set; } = new List<Bezier3>();
 
@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
-        public IEnumerable<MarkupBeziersIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+        public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
         public IEnumerable<Bezier3> Contour => ContourParts;
 
         #endregion
@@ -293,9 +293,9 @@ namespace NodeMarkup.Manager
         public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupBeziersIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false) 
+        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false) 
             => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
-        public IEnumerable<MarkupBeziersIntersect> GetIntersects(MarkupLine line)
+        public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkupLine line)
         {
             foreach(var otherLine in Lines)
             {
@@ -304,17 +304,17 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public MarkupBeziersIntersect GetIntersect(MarkupLinePair linePair)
+        public MarkupLinesIntersect GetIntersect(MarkupLinePair linePair)
         {
-            if (!LineIntersects.TryGetValue(linePair, out MarkupBeziersIntersect intersect))
+            if (!LineIntersects.TryGetValue(linePair, out MarkupLinesIntersect intersect))
             {
-                MarkupBeziersIntersect.Calculate(linePair, out intersect);
+                intersect = MarkupLinesIntersect.Calculate(linePair);
                 LineIntersects.Add(linePair, intersect);
             }
 
             return intersect;
         }
-        public IEnumerable<MarkupBeziersIntersect> GetAllIntersect()
+        public IEnumerable<MarkupLinesIntersect> GetAllIntersect()
         {
             var lines = Lines.ToArray();
             for (var i = 0; i < lines.Length; i += 1)

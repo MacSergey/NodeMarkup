@@ -100,7 +100,7 @@ namespace NodeMarkup.Manager
             var intersect = line.Markup.GetIntersect(LinePair);
             if(intersect.IsIntersect)
             {
-                t = intersect[line];
+                t = intersect[line].Value;
                 return true;
             }
             else
@@ -112,8 +112,8 @@ namespace NodeMarkup.Manager
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
         public override void Render(RenderManager.CameraInfo cameraInfo, Color color)
         {
-            NodeMarkupTool.RenderBezier(cameraInfo, color, First.Trajectory);
-            NodeMarkupTool.RenderBezier(cameraInfo, color, Second.Trajectory);
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, First.Trajectory);
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, Second.Trajectory);
         }
     }
 }

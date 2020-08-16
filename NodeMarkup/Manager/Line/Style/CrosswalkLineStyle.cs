@@ -18,7 +18,7 @@ namespace NodeMarkup.Manager
 
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory) => new MarkupStyleDash[0];
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory) => new MarkupStyleDash[0];
         public override CrosswalkStyle CopyCrosswalkStyle() => new ExistCrosswalkStyle(Width);
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -153,11 +153,10 @@ namespace NodeMarkup.Manager
 
             return widthProperty;
         }
-        protected bool Cut(MarkupCrosswalk crosswalk, Bezier3 trajectory, float width, out Bezier3 cutTrajectory)
+        protected bool Cut(MarkupCrosswalk crosswalk, ILineTrajectory trajectory, float width, out ILineTrajectory cutTrajectory)
         {
             var delta = width / Mathf.Tan(crosswalk.CornerAndNormalAngle) / 2;
-            var magnitude = (trajectory.d - trajectory.a).magnitude;
-            if (2 * delta >= magnitude)
+            if (2 * delta >= trajectory.Magnitude)
             {
                 cutTrajectory = default;
                 return false;
@@ -244,7 +243,7 @@ namespace NodeMarkup.Manager
                 parallelTarget.Parallel = Parallel;
         }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory)
         {
             var offset = -crosswalk.NormalDir * (GetVisibleWidth(crosswalk) / 2 + OffsetAfter);
 
@@ -258,7 +257,7 @@ namespace NodeMarkup.Manager
 
             return CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
             {
                 yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset, angle);
             }
@@ -318,7 +317,7 @@ namespace NodeMarkup.Manager
                 doubleTarget.Offset = Offset;
         }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
             var deltaOffset = GetLengthCoef((Width + Offset) / 2, crosswalk);
@@ -335,7 +334,7 @@ namespace NodeMarkup.Manager
 
             return CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
             {
                 yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, firstOffset, firstOffset, angle);
                 yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, secondOffset, secondOffset, angle);
@@ -393,7 +392,7 @@ namespace NodeMarkup.Manager
                 linedTarget.LineWidth = LineWidth;
         }
 
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, Bezier3 trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
             var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
@@ -402,7 +401,7 @@ namespace NodeMarkup.Manager
 
             return CalculateSolid(trajectory, 0, CalculateDashes);
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(Bezier3 dashTrajectory)
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
                 yield return CalculateSolidDash(dashTrajectory, firstOffset, firstOffset, LineWidth);
                 yield return CalculateSolidDash(dashTrajectory, secondOffset, secondOffset, LineWidth);

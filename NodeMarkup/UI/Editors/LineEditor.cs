@@ -223,11 +223,11 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 if (IsHoverItem)
-                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, HoverItem.Object.Trajectory, 2f);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, HoverItem.Object.Trajectory, 2f);
                 if (IsHoverRulePanel)
                 {
-                    if (HoverRulePanel.Rule.GetTrajectory(out Bezier3 bezier))
-                        NodeMarkupTool.RenderBezier(cameraInfo, WhiteAlpha, bezier, 2f);
+                    if (HoverRulePanel.Rule.GetTrajectory(out ILineTrajectory trajectory))
+                        NodeMarkupTool.RenderTrajectory(cameraInfo, WhiteAlpha, trajectory, 2f);
                 }
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
                     NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, supportPoint.Position, 0.5f);

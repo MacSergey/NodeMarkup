@@ -109,7 +109,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerStripe;
 
         public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
-        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height) => GetDashes(parts, Angle, rect, height, Width, Step, Offset);
+        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] parts, Rect rect, float height) => GetDashes(parts, Angle, rect, height, Width, Step, Offset);
 
         public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
     }
@@ -121,7 +121,7 @@ namespace NodeMarkup.Manager
 
         public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height)
+        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] parts, Rect rect, float height)
         {
             foreach (var dash in GetDashes(parts, Angle, rect, height, Width, Step, Offset))
                 yield return dash;
@@ -136,7 +136,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerSolid;
 
         public SolidFillerStyle(Color32 color, float medianOffset) : base(color, DefaultSolidWidth, medianOffset) { }
-        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] parts, Rect rect, float height) => GetDashes(parts, 0f, rect, height, DefaultSolidWidth, 1, 0);
+        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] parts, Rect rect, float height) => GetDashes(parts, 0f, rect, height, DefaultSolidWidth, 1, 0);
 
         public override FillerStyle CopyFillerStyle() => new SolidFillerStyle(Color, DefaultOffset);
         public override void CopyTo(Style target)
@@ -213,7 +213,7 @@ namespace NodeMarkup.Manager
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
-            if(target is ChevronFillerStyle chevronTarget)
+            if (target is ChevronFillerStyle chevronTarget)
             {
                 chevronTarget.AngleBetween = AngleBetween;
                 chevronTarget.Step = Step;
@@ -266,7 +266,7 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes(Bezier3[] trajectories, Rect rect, float height)
+        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
         {
             if (trajectories.Length < 3)
                 yield break;
@@ -278,18 +278,15 @@ namespace NodeMarkup.Manager
                 var dir = directions[i];
                 foreach (var pos in positions[i])
                 {
-                    var intersectSet = new HashSet<MarkupBezierLineIntersect>();
+                    var line = new StraightTrajectory(pos, pos + dir);
+                    var intersectSet = new HashSet<MarkupIntersect>();
                     foreach (var trajectory in trajectories)
-                    {
-                        foreach (var t in MarkupBezierLineIntersect.Intersect(trajectory, pos, pos + dir))
-                            if (t.FirstT > 0)
-                                intersectSet.Add(t);
-                    }
+                        intersectSet.AddRange(MarkupIntersect.Calculate(line, trajectory).Where(k => k.FirstT > 0));
 
                     if (intersectSet.Count % 2 == 1)
-                        intersectSet.Add(new MarkupBezierLineIntersect(0, 0, 0));
+                        intersectSet.Add(new MarkupIntersect(0, 0, 0));
 
-                    var intersects = intersectSet.OrderBy(j => j).ToArray();
+                    var intersects = intersectSet.OrderBy(j => j, MarkupIntersect.FirstComparer).ToArray();
 
                     for (var j = 1; j < intersects.Length; j += 2)
                     {
@@ -301,7 +298,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        private void GetItems(Bezier3[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
+        private void GetItems(ILineTrajectory[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
         {
             var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;
             var width = Width / Mathf.Sin(halfAngelRad);
@@ -396,26 +393,27 @@ namespace NodeMarkup.Manager
                     return (distance - (Position(1) - Position(current)).magnitude) / (line.b - line.a).magnitude + 1;
             }
         }
-        private Bezier3 GetMiddleBezier(Bezier3[] trajectories)
+        private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
         {
             var left = Output % trajectories.Length;
             var right = left == 0 ? trajectories.Length - 1 : left - 1;
             var middle = new Bezier3()
             {
-                a = (trajectories[right].d + trajectories[left].a) / 2,
-                b = (((trajectories[right].c - trajectories[right].d) + (trajectories[left].b - trajectories[left].a)) / 2).normalized,
-                c = (((trajectories[right].b - trajectories[right].a) + (trajectories[left].c - trajectories[left].d)) / 2).normalized,
-                d = (trajectories[right].a + trajectories[left].d) / 2,
+                a = (trajectories[right].EndPosition + trajectories[left].StartPosition) / 2,
+                b = (trajectories[right].EndDirection + trajectories[left].StartDirection / 2).normalized,
+                c = (trajectories[right].StartDirection + trajectories[left].EndDirection / 2).normalized,
+                d = (trajectories[right].StartPosition + trajectories[left].EndPosition) / 2,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
+            var middleTrajectory = new BezierTrajectory(middle);
 
             var cutT = 1f;
             for (var i = 0; i < trajectories.Length; i += 1)
             {
                 if (i == left || i == right)
                     continue;
-                if (MarkupBeziersIntersect.Intersect(middle, trajectories[i], out float t, out _) && t < cutT)
-                    cutT = t;
+                if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && intersect.FirstT < cutT)
+                    cutT = intersect.FirstT;
             }
 
             return cutT == 1f ? middle : middle.Cut(0, cutT);

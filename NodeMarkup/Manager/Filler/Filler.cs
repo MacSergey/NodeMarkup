@@ -56,21 +56,21 @@ namespace NodeMarkup.Manager
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
         public bool IsMedian => LineParts.Any(p => p.Line is MarkupFakeLine);
 
-        public IEnumerable<Bezier3?> TrajectoriesRaw
+        public IEnumerable<ILineTrajectory> TrajectoriesRaw
         {
             get
             {
                 foreach (var part in LineParts)
                 {
-                    if (part.GetTrajectory(out Bezier3 bezier))
-                        yield return bezier;
+                    if (part.GetTrajectory(out ILineTrajectory trajectory))
+                        yield return trajectory;
                     else
                         yield return null;
                 }
             }
         }
 
-        public IEnumerable<Bezier3> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t.Value);
+        public IEnumerable<ILineTrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t);
 
         public string XmlSection => XmlName;
 
@@ -139,12 +139,12 @@ namespace NodeMarkup.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupBeziersIntersect intersect && intersect.IsIntersect)
+                else if (Markup.GetIntersect(new MarkupLinePair(line, linePart.Line)) is MarkupLinesIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[linePart.Line];
 
                     if ((fromT <= linePartT && linePartT <= toT) || (toT <= linePartT && linePartT <= fromT))
-                        Set(intersect[line], true);
+                        Set(intersect[line].Value, true);
                 }
                 else if (linePart.Line.IsEnterLine)
                 {

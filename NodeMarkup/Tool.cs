@@ -774,6 +774,18 @@ namespace NodeMarkup
 
         #region OVERLAY
 
+        public static void RenderTrajectory(RenderManager.CameraInfo cameraInfo, Color color, ILineTrajectory trajectory, float width = 0.2f, bool cut = false, bool alphaBlend = true)
+        {
+            switch (trajectory)
+            {
+                case BezierTrajectory bezierTrajectory:
+                    RenderBezier(cameraInfo, color, bezierTrajectory.Trajectory, width, cut, alphaBlend);
+                    break;
+                case StraightTrajectory straightTrajectory:
+                    RenderBezier(cameraInfo, color, straightTrajectory.Trajectory.GetBezier(), width, cut, alphaBlend);
+                    break;
+            }
+        }
         public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Color color, Bezier3 bezier, float width = 0.2f, bool cut = false, bool alphaBlend = true) =>
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, color, bezier, width, cut ? width / 2 : 0f, cut ? width / 2 : 0f, -1f, 1280f, false, alphaBlend);
         public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Color color, Vector3 position, float width, bool alphaBlend = true) =>
@@ -1017,35 +1029,24 @@ namespace NodeMarkup
         {
             var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(TempFiller.First) ? MarkupColors.Green : MarkupColors.White;
             foreach (var trajectory in TempFiller.Trajectories)
-                RenderBezier(cameraInfo, color, trajectory);
+                RenderTrajectory(cameraInfo, color, trajectory);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             if (TempFiller.IsEmpty)
                 return;
 
-            Bezier3 bezier;
-            Color color;
-
             if (FillerPointsSelector.IsHoverPoint)
             {
                 var linePart = TempFiller.GetFillerLine(TempFiller.Last, FillerPointsSelector.HoverPoint);
-                if (!linePart.GetTrajectory(out bezier))
-                    return;
-
-                color = MarkupColors.Green;
+                if (linePart.GetTrajectory(out ILineTrajectory trajectory))
+                    RenderTrajectory(cameraInfo, MarkupColors.Green, trajectory);
             }
             else
             {
-                bezier.a = TempFiller.Last.Position;
-                bezier.b = MouseWorldPosition;
-                bezier.c = TempFiller.Last.Position;
-                bezier.d = MouseWorldPosition;
-
-                color = MarkupColors.White;
+                var bezier = new Line3(TempFiller.Last.Position, MouseWorldPosition).GetBezier();
+                RenderBezier(cameraInfo, MarkupColors.White, bezier);
             }
-
-            RenderBezier(cameraInfo, color, bezier/*, alphaBlend: false*/);
         }
 
         #endregion

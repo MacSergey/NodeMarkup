@@ -236,26 +236,20 @@ namespace NodeMarkup.UI.Editors
             if (IsSelectBorderPanelMode)
             {
                 foreach (var borderLine in BorderLines)
-                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.Red, borderLine.Bezier);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.Red, borderLine.Trajectory);
 
                 if (IsHoverLine)
-                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, HoverLine.Bezier, 1f);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, HoverLine.Trajectory, 1f);
             }
             else
             {
                 if (IsHoverItem)
                 {
-                    var bezier = new Bezier3()
-                    {
-                        a = HoverItem.Object.Start.Position,
-                        b = HoverItem.Object.End.Position,
-                        c = HoverItem.Object.Start.Position,
-                        d = HoverItem.Object.End.Position,
-                    };
+                    var bezier = new Line3(HoverItem.Object.Start.Position, HoverItem.Object.End.Position).GetBezier();
                     NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, 3f);
                 }
                 if(IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
-                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, borderLine.Trajectory);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, borderLine.Trajectory);
             }
         }
         public override string GetInfo()

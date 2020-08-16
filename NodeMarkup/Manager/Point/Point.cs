@@ -162,7 +162,7 @@ namespace NodeMarkup.Manager
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
 
-        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location) 
+        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location)
         {
             SourcePoint = sourcePoint;
         }
@@ -191,16 +191,13 @@ namespace NodeMarkup.Manager
         {
             var tSet = new HashSet<float>();
 
-            foreach(var bezier in Markup.Contour)
-            {
-                var intersects = MarkupBezierLineIntersect.Intersect(bezier, SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction);
-                foreach(var intersect in intersects)
-                    tSet.Add(intersect.FirstT);
-            }
-            
+            var line = new Line3(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction);
+            foreach (var bezier in Markup.Contour)
+                tSet.AddRange(MarkupIntersect.Calculate(line, bezier).Where(i => i.IsIntersect).Select(i => i.FirstT));
+
             var tSetSort = tSet.OrderBy(i => i).ToArray();
 
-            var t = tSetSort.Length == 0 ? 0 : tSetSort.Length == 1 ? tSetSort.First() : tSetSort.OrderBy(i => i).Skip(1).First();
+            var t = tSetSort.Length == 0 ? 0 : tSetSort.Length == 1 ? tSetSort.First() : tSetSort.Skip(1).First();
 
             Position = SourcePoint.Position + SourcePoint.Direction * t;
             Direction = -SourcePoint.Direction;

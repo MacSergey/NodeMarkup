@@ -54,7 +54,7 @@ namespace NodeMarkup.Utils
                 Process.Start(url);
         }
         public static string EnumDescription<T>(T value)
-            where T: Enum
+            where T : Enum
         {
             var description = typeof(T).GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? value.ToString();
             return Localize.ResourceManager.GetString(description, Localize.Culture);
@@ -194,11 +194,29 @@ namespace NodeMarkup.Utils
         public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
 
         public static Style.StyleType GetRegularStyle(this Event e) =>
-            NodeMarkupTool.ShiftIsPressed ? 
-            (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) : 
+            NodeMarkupTool.ShiftIsPressed ?
+            (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) :
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleDashed : Style.StyleType.LineDashed);
         public static Style.StyleType GetStopStyle(this Event e) => NodeMarkupTool.ShiftIsPressed ? Style.StyleType.StopLineDashed : Style.StyleType.StopLineSolid;
         public static Style.StyleType GetCrosswalkStyle(this Event e) => Style.StyleType.CrosswalkZebra;
+
+        public static Bezier3 GetBezier(this Line3 line)
+        {
+            var bezier = new Bezier3
+            {
+                a = line.a,
+                d = line.b,
+            };
+            var dir = line.b - line.a;
+            NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
+
+            return bezier;
+        }
+        public static void AddRange<T>(this HashSet<T> hashSet, IEnumerable<T> values)
+        {
+            foreach (var value in values)
+                hashSet.Add(value);
+        }
     }
 
     public struct BezierPoint
