@@ -84,23 +84,19 @@ namespace NodeMarkup.Utils
                 for (var j = 0; j < sParts; j += 1)
                 {
                     if (IntersectSections(fPos[i], fPos[i + 1], sPos[j], sPos[j + 1], out float p, out float q))
-                        return Intersect(results, first, second, fParts, sParts, fPoints, sPoints, WillTryParts(i, fParts, p), WillTryParts(j, sParts, q), fIdx, fOf, sIdx, sOf);
-                }
-            }
+                    {
+                        foreach (var ii in WillTryParts(i, fParts, p))
+                        {
+                            foreach (var jj in WillTryParts(j, sParts, q))
+                            {
+                                var firstCut = first.Cut(fPoints[ii], fPoints[ii + 1]);
+                                var secondCut = second.Cut(sPoints[jj], sPoints[jj + 1]);
 
-            return false;
-        }
-        private static bool Intersect(List<MarkupIntersect> results, Bezier3 first, Bezier3 second, int fParts, int sParts, float[] fPoints, float[] sPoints, IEnumerable<int> fIs, IEnumerable<int> sJs, int fIdx, int fOf, int sIdx, int sOf)
-        {
-            foreach (var i in fIs)
-            {
-                foreach (var j in sJs)
-                {
-                    var firstCut = first.Cut(fPoints[i], fPoints[i + 1]);
-                    var secondCut = second.Cut(sPoints[j], sPoints[j + 1]);
-
-                    if (Intersect(results, firstCut, secondCut, fIdx * fParts + i, fOf * fParts, sIdx * sParts + j, sOf * sParts))
-                        return true;
+                                if (Intersect(results, firstCut, secondCut, fIdx * fParts + ii, fOf * fParts, sIdx * sParts + jj, sOf * sParts))
+                                    return true;
+                            }
+                        }
+                    }
                 }
             }
 

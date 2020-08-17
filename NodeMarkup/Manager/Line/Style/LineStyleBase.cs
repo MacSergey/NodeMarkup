@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
         }
         protected IEnumerable<MarkupStyleDash> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, Func<ILineTrajectory, float, float, IEnumerable<MarkupStyleDash>> calculateDashes)
         {
-            List<float[]> dashesT;
+            List<DashT> dashesT;
             switch (trajectory)
             {
                 case BezierTrajectory bezierTrajectory:
@@ -128,13 +128,13 @@ namespace NodeMarkup.Manager
 
             foreach (var dashT in dashesT)
             {
-                foreach (var dash in calculateDashes(trajectory, dashT[0], dashT[1]))
+                foreach (var dash in calculateDashes(trajectory, dashT.Start, dashT.End))
                     yield return dash;
             }
         }
-        private List<float[]> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
+        private List<DashT> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
         {
-            var dashesT = new List<float[]>();
+            var dashesT = new List<DashT>();
             var trajectory = bezierTrajectory.Trajectory;
             var startSpace = spaceLength / 2;
             for (var i = 0; i < 3; i += 1)
@@ -149,7 +149,7 @@ namespace NodeMarkup.Manager
                 while (nextT < 1)
                 {
                     if (isDash)
-                        dashesT.Add(new float[] { currentT, nextT });
+                        dashesT.Add(new DashT { Start = currentT, End = nextT });
 
                     isDash = !isDash;
 
@@ -172,24 +172,24 @@ namespace NodeMarkup.Manager
 
             return dashesT;
         }
-        private List<float[]> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
+        private List<DashT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
         {
             var length = straightTrajectory.Length;
             var dashCount = (int)(length / (dashLength + spaceLength));
             var startSpace = (length + spaceLength - (dashLength + spaceLength) * dashCount) / 2;
 
-            var dashesT = new List<float[]>(dashCount);
+            var dashesT = new List<DashT>(dashCount);
 
             var startT = startSpace / length;
             var dashT = dashLength / length;
             var spaceT = spaceLength / length;
 
-            for(var i = 0; i < dashCount; i +=1 )
+            for (var i = 0; i < dashCount; i += 1)
             {
                 var tStart = startT + (dashT + spaceT) * i;
                 var tEnd = tStart + spaceT;
 
-                dashesT.Add(new float[] { tStart, tEnd });
+                dashesT.Add(new DashT { Start = tStart, End = tEnd });
             }
 
             return dashesT;
@@ -236,6 +236,12 @@ namespace NodeMarkup.Manager
             var startPosition = trajectory.StartPosition + startOffset;
             var endPosition = trajectory.EndPosition + endOffset;
             return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, width ?? Width, Color);
+        }
+
+        struct DashT
+        {
+            public float Start;
+            public float End;
         }
     }
 
