@@ -20,6 +20,7 @@ namespace NodeMarkup.UI.Editors
 
         UIButton Label { get; set; }
         UIButton Button { get; set; }
+        protected abstract float Width {get;}
 
         int SelectIndex
         {
@@ -60,7 +61,7 @@ namespace NodeMarkup.UI.Editors
             Label.textHorizontalAlignment = UIHorizontalAlignment.Left;
             Label.textVerticalAlignment = UIVerticalAlignment.Middle;
             Label.height = 20;
-            Label.width = 230;
+            Label.width = Width;
             Label.textScale = 0.6f;
             Label.textPadding = new RectOffset(8, 0, 4, 0);
         }
@@ -114,6 +115,7 @@ namespace NodeMarkup.UI.Editors
         public new event Action<MarkupLineSelectPropertyPanel> OnLeave;
 
         public RulePosition Position { get; set; }
+        protected override float Width => 230f;
 
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
@@ -134,6 +136,7 @@ namespace NodeMarkup.UI.Editors
         public new event Action<MarkupCrosswalkSelectPropertyPanel> OnLeave;
 
         public BorderPosition Position { get; set; }
+        protected override float Width => 150f;
 
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
