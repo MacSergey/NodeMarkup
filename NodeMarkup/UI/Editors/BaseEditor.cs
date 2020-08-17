@@ -319,6 +319,7 @@ namespace NodeMarkup.UI.Editors
             {
                 SelectItem = editItem;
                 ScrollTo(SelectItem);
+                OnObjectUpdate();
             }
             else
             {

@@ -200,7 +200,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
-        public override void OnUpdate() => PointsSelector.OnUpdate();
+        public override void OnUpdate() => PointsSelector?.OnUpdate();
         public override void OnEvent(Event e)
         {
             if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)
@@ -253,6 +253,11 @@ namespace NodeMarkup.UI.Editors
                 AfterSelectPartEdgePanel = null;
                 RefreshRulePanels();
             }
+        }
+        protected override void OnObjectUpdate()
+        {
+            GetRuleEdges();
+            RefreshRulePanels();
         }
         protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveConnect(line);
         public void RefreshItem() => SelectItem.Refresh();

@@ -98,6 +98,11 @@ namespace NodeMarkup.UI.Editors
         {
             ObjectsList.AddRange(items);
         }
+        public void Clear()
+        {
+            ObjectsList.Clear();
+            SelectedObject = default;
+        }
 
         protected abstract bool IsEqual(Type first, Type second);
         public new void Focus() => Button.Focus();

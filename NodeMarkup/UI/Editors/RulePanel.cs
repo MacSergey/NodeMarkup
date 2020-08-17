@@ -46,6 +46,7 @@ namespace NodeMarkup.UI.Editors
             {
                 AddFromProperty();
                 AddToProperty();
+                FillEdges();
             }
             AddStyleTypeProperty();
             AddStyleProperties();
@@ -76,9 +77,6 @@ namespace NodeMarkup.UI.Editors
             From.Text = NodeMarkup.Localize.LineEditor_From;
             From.Position = EdgePosition.Start;
             From.Init();
-            From.AddRange(Editor.SupportPoints);
-            From.SelectedObject = Rule.From;
-            From.OnSelectChanged += (ILinePartEdge from) => Rule.From = from;
             From.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
             From.OnHover += Editor.HoverRuleEdge;
             From.OnLeave += Editor.LeaveRuleEdge;
@@ -90,12 +88,25 @@ namespace NodeMarkup.UI.Editors
             To.Text = NodeMarkup.Localize.LineEditor_To;
             To.Position = EdgePosition.End;
             To.Init();
-            To.AddRange(Editor.SupportPoints);
-            To.SelectedObject = Rule.To;
-            To.OnSelectChanged += (ILinePartEdge to) => Rule.To = to;
             To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
             To.OnHover += Editor.HoverRuleEdge;
             To.OnLeave += Editor.LeaveRuleEdge;
+        }
+        private void FillEdges()
+        {
+            FillEdge(From, FromChanged, Rule.From);
+            FillEdge(To, ToChanged, Rule.To);
+        }
+        private void FillEdge(MarkupLineSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
+        {
+            if (panel != null)
+            {
+                panel.OnSelectChanged -= action;
+                panel.Clear();
+                panel.AddRange(Editor.SupportPoints);
+                panel.SelectedObject = value;
+                panel.OnSelectChanged += action;
+            }
         }
         private void AddStyleTypeProperty()
         {
@@ -164,7 +175,8 @@ namespace NodeMarkup.UI.Editors
             if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is LineStyle style)
                 ApplyStyle(style);
         }
-
+        private void FromChanged(ILinePartEdge from) => Rule.From = from;
+        private void ToChanged(ILinePartEdge to) => Rule.To = to;
         private void StyleChanged(Style.StyleType style)
         {
             if (style == Rule.Style.Type)
@@ -191,6 +203,8 @@ namespace NodeMarkup.UI.Editors
                 color = NormalColor;
                 tooltip = string.Empty;
             }
+
+            FillEdges();
         }
 
         protected override void OnSizeChanged()
