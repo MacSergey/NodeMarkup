@@ -178,13 +178,40 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "CR";
         public override string XmlSection => XmlName;
-        public MarkupRegularLine RightBorder { get; set; }
-        public MarkupRegularLine LeftBorder { get; set; }
+        public MarkupCrosswalk Crosswalk => Line as MarkupCrosswalk;
+
+        MarkupRegularLine _rightBorder;
+        MarkupRegularLine _leftBorder;
+
+        public MarkupRegularLine RightBorder
+        {
+            get => _rightBorder;
+            set
+            {
+                _rightBorder = value;
+                RuleChanged();
+            }
+        }
+        public MarkupRegularLine LeftBorder
+        {
+            get => _leftBorder;
+            set
+            {
+                _leftBorder = value;
+                RuleChanged();
+            }
+        }
         public new CrosswalkStyle Style
         {
             get => base.Style as CrosswalkStyle;
             set => base.Style = value;
         }
+        public Markup Markup => Line.Markup;
+
+        public float RigthT => GetT(RightBorder, !Crosswalk.IsInvert ? 0 : 1);
+        public float LeftT => GetT(LeftBorder, !Crosswalk.IsInvert ? 1 : 0);
+        public float MinT => !Crosswalk.IsInvert ? RigthT : LeftT;
+        public float MaxT => !Crosswalk.IsInvert ? LeftT : RigthT;
 
         public MarkupCrosswalkRule(MarkupLine line, CrosswalkStyle style, ILinePartEdge from = null, ILinePartEdge to = null, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null) :
             base(line, style, from, to)
@@ -192,6 +219,10 @@ namespace NodeMarkup.Manager
             RightBorder = rightBorder;
             LeftBorder = leftBorder;
         }
+        public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
+        public float GetT(BorderPosition borderType) => borderType == BorderPosition.Right ? RigthT : LeftT;
+        private float GetT(MarkupRegularLine border, float defaultT)
+            => border != null && Markup.GetIntersect(Line, border) is MarkupLinesIntersect intersect && intersect.IsIntersect ? intersect[Line] : defaultT;
 
         public override XElement ToXml()
         {

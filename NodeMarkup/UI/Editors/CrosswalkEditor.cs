@@ -82,14 +82,11 @@ namespace NodeMarkup.UI.Editors
             if (EditObject.CrosswalkRule.Style.Type == Manager.Style.StyleType.CrosswalkExistent)
                 return;
 
-            var first = EditObject.PointPair.First;
-            var second = EditObject.PointPair.Second;
-
-            var rightBorders = GetBorderLines(first.Num < second.Num ? first : second);
+            var rightBorders = GetBorderLines(!EditObject.IsInvert ? EditObject.Start : EditObject.End);
             if (rightBorders.Any())
                 AddRightBorderProperty(rightBorders);
 
-            var leftBorders = GetBorderLines(first.Num > second.Num ? first : second);
+            var leftBorders = GetBorderLines(!EditObject.IsInvert ? EditObject.End : EditObject.Start);
             if (leftBorders.Any())
                 AddLeftBorderProperty(leftBorders);
 
@@ -105,7 +102,7 @@ namespace NodeMarkup.UI.Editors
         {
             RightBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
             RightBorder.Text = NodeMarkup.Localize.CrosswalkEditor_RightBorder;
-            RightBorder.Position = MarkupCrosswalkSelectPropertyPanel.BorderPosition.Right;
+            RightBorder.Position = BorderPosition.Right;
             RightBorder.Init();
             RightBorder.AddRange(borders);
             RightBorder.SelectedObject = EditObject.CrosswalkRule.RightBorder;
@@ -118,7 +115,7 @@ namespace NodeMarkup.UI.Editors
         {
             LeftBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
             LeftBorder.Text = NodeMarkup.Localize.CrosswalkEditor_LeftBorder;
-            LeftBorder.Position = MarkupCrosswalkSelectPropertyPanel.BorderPosition.Left;
+            LeftBorder.Position = BorderPosition.Left;
             LeftBorder.Init();
             LeftBorder.AddRange(borders);
             LeftBorder.SelectedObject = EditObject.CrosswalkRule.LeftBorder;
@@ -258,9 +255,9 @@ namespace NodeMarkup.UI.Editors
             {
                 switch (SelectBorderPanel.Position)
                 {
-                    case MarkupCrosswalkSelectPropertyPanel.BorderPosition.Right:
+                    case BorderPosition.Right:
                         return NodeMarkup.Localize.CrosswalkEditor_InfoSelectRightBorder;
-                    case MarkupCrosswalkSelectPropertyPanel.BorderPosition.Left:
+                    case BorderPosition.Left:
                         return NodeMarkup.Localize.CrosswalkEditor_InfoSelectLeftBorder;
                 }
             }

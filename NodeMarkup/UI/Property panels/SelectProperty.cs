@@ -18,7 +18,7 @@ namespace NodeMarkup.UI.Editors
 
         int _selectIndex = -1;
 
-        UIButton Label { get; set; }
+        UIButton Selector { get; set; }
         UIButton Button { get; set; }
         protected abstract float Width {get;}
 
@@ -31,7 +31,7 @@ namespace NodeMarkup.UI.Editors
                 {
                     _selectIndex = value;
                     OnSelectChanged?.Invoke(SelectedObject);
-                    Label.text = SelectedObject?.ToString() ?? NodeMarkup.Localize.SelectPanel_NotSet;
+                    Selector.text = SelectedObject?.ToString() ?? NodeMarkup.Localize.SelectPanel_NotSet;
                 }
             }
         }
@@ -45,33 +45,29 @@ namespace NodeMarkup.UI.Editors
 
         public SelectPropertyPanel()
         {
-            AddLable();
-            AddButton();
+            AddSelector();
         }
-        private void AddLable()
+        private void AddSelector()
         {
-            Label = Control.AddUIComponent<UIButton>();
-            Label.text = NodeMarkup.Localize.SelectPanel_NotSet;
-            Label.atlas = EditorItemAtlas;
-            Label.normalBgSprite = "TextFieldPanel";
-            Label.hoveredBgSprite = "TextFieldPanelHovered";
-            Label.isInteractive = true;
-            Label.enabled = true;
-            Label.autoSize = false;
-            Label.textHorizontalAlignment = UIHorizontalAlignment.Left;
-            Label.textVerticalAlignment = UIVerticalAlignment.Middle;
-            Label.height = 20;
-            Label.width = Width;
-            Label.textScale = 0.6f;
-            Label.textPadding = new RectOffset(8, 0, 4, 0);
-        }
+            Selector = Control.AddUIComponent<UIButton>();
+            Selector.text = NodeMarkup.Localize.SelectPanel_NotSet;
+            Selector.atlas = EditorItemAtlas;
+            Selector.normalBgSprite = "TextFieldPanel";
+            Selector.hoveredBgSprite = "TextFieldPanelHovered";
+            Selector.isInteractive = true;
+            Selector.enabled = true;
+            Selector.autoSize = false;
+            Selector.textHorizontalAlignment = UIHorizontalAlignment.Left;
+            Selector.textVerticalAlignment = UIVerticalAlignment.Middle;
+            Selector.height = 20;
+            Selector.width = Width;
+            Selector.textScale = 0.6f;
+            Selector.textPadding = new RectOffset(8, 0, 4, 0);
 
-        private void AddButton()
-        {
-            Button = Label.AddUIComponent<UIButton>();
+            Button = Selector.AddUIComponent<UIButton>();
             Button.atlas = TextureUtil.InGameAtlas;
             Button.text = string.Empty;
-            Button.size = Label.size;
+            Button.size = Selector.size;
             Button.relativePosition = new Vector3(0f, 0f);
             Button.textVerticalAlignment = UIVerticalAlignment.Middle;
             Button.textHorizontalAlignment = UIHorizontalAlignment.Left;
@@ -89,7 +85,6 @@ namespace NodeMarkup.UI.Editors
             Button.eventMouseEnter += ButtonMouseEnter;
             Button.eventMouseLeave += ButtonMouseLeave;
         }
-
 
         protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke();
         protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke();
@@ -114,7 +109,7 @@ namespace NodeMarkup.UI.Editors
         public new event Action<MarkupLineSelectPropertyPanel> OnHover;
         public new event Action<MarkupLineSelectPropertyPanel> OnLeave;
 
-        public RulePosition Position { get; set; }
+        public EdgePosition Position { get; set; }
         protected override float Width => 230f;
 
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
@@ -122,12 +117,6 @@ namespace NodeMarkup.UI.Editors
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
 
         protected override bool IsEqual(ILinePartEdge first, ILinePartEdge second) => (first == null && second == null) || first?.Equals(second) == true;
-
-        public enum RulePosition
-        {
-            Start,
-            End
-        }
     }
     public class MarkupCrosswalkSelectPropertyPanel : SelectPropertyPanel<MarkupRegularLine>
     {
@@ -138,16 +127,26 @@ namespace NodeMarkup.UI.Editors
         public BorderPosition Position { get; set; }
         protected override float Width => 150f;
 
+        public MarkupCrosswalkSelectPropertyPanel()
+        {
+            AddReset();
+        }
+        private void AddReset()
+        {
+            var button = AddButton(Control);
+
+            button.size = new Vector2(20f, 20f);
+            button.text = "×";
+            button.textScale = 1.3f;
+            button.textPadding = new RectOffset(0, 0, 0, 0);
+            button.eventClick += ResetClick;
+        }
+        private void ResetClick(UIComponent component, UIMouseEventParameter eventParam) => SelectedObject = null;
+
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
 
         protected override bool IsEqual(MarkupRegularLine first, MarkupRegularLine second) => ReferenceEquals(first, second);
-
-        public enum BorderPosition
-        {
-            Right,
-            Left
-        }
     }
 }

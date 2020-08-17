@@ -304,6 +304,7 @@ namespace NodeMarkup.Manager
             }
         }
 
+        public MarkupLinesIntersect GetIntersect(MarkupLine first, MarkupLine second) => GetIntersect(new MarkupLinePair(first, second));
         public MarkupLinesIntersect GetIntersect(MarkupLinePair linePair)
         {
             if (!LineIntersects.TryGetValue(linePair, out MarkupLinesIntersect intersect))

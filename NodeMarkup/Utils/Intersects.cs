@@ -219,7 +219,7 @@ namespace NodeMarkup.Utils
                 return new MarkupLinesIntersect(pair);
         }
 
-        public float? this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
+        public float this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
     }
 
     public class MarkupIntersectComparer : IComparer<MarkupIntersect>

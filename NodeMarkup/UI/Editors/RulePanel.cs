@@ -74,7 +74,7 @@ namespace NodeMarkup.UI.Editors
         {
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
             From.Text = NodeMarkup.Localize.LineEditor_From;
-            From.Position = MarkupLineSelectPropertyPanel.RulePosition.Start;
+            From.Position = EdgePosition.Start;
             From.Init();
             From.AddRange(Editor.SupportPoints);
             From.SelectedObject = Rule.From;
@@ -88,7 +88,7 @@ namespace NodeMarkup.UI.Editors
         {
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
             To.Text = NodeMarkup.Localize.LineEditor_To;
-            To.Position = MarkupLineSelectPropertyPanel.RulePosition.End;
+            To.Position = EdgePosition.End;
             To.Init();
             To.AddRange(Editor.SupportPoints);
             To.SelectedObject = Rule.To;

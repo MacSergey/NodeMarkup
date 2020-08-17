@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
@@ -83,6 +84,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width = 0.2f) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
 
         public static MarkupLine FromStyle(Markup makrup, MarkupPointPair pointPair, Style.StyleType style)
         {
@@ -186,10 +188,17 @@ namespace NodeMarkup.Manager
         }
         public MarkupLineRawRule<RegularLineStyle> AddRule(RegularLineStyle lineStyle, bool empty = true, bool update = true)
         {
-            var newRule = new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, empty ? null : new EnterPointEdge(Start), empty ? null : new EnterPointEdge(End));
+            var newRule = GetDefaultRule(lineStyle, empty);
             AddRule(newRule, update);
             return newRule;
         }
+        protected virtual MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
+        {
+            var from = empty ? null : new EnterPointEdge(Start);
+            var to = empty ? null : new EnterPointEdge(End);
+            return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
+        }
+
         public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true) => AddRule(TemplateManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty);
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
@@ -326,13 +335,19 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalkRule CrosswalkRule { get; set; }
         public float CornerAndNormalAngle => Start.Enter.CornerAndNormalAngle;
         public Vector3 NormalDir => Start.Enter.NormalDir;
+        public bool IsInvert => End.Num < Start.Num;
 
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupCrosswalk(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
         {
-            AddDefaultRule(crosswalkType);
+            AddDefaultCrosswalkRule(crosswalkType);
         }
-
+        protected override MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
+        {
+            var from = empty ? null : new CrosswalkBorderEdge(this, BorderPosition.Right);
+            var to = empty ? null : new CrosswalkBorderEdge(this, BorderPosition.Left);
+            return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
+        }
         private void SetCrosswalkRule(MarkupCrosswalkRule crosswalkRule)
         {
             crosswalkRule.OnRuleChanged = RuleChanged;
@@ -340,7 +355,7 @@ namespace NodeMarkup.Manager
 
             RuleChanged();
         }
-        private void AddDefaultRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent)
+        private void AddDefaultCrosswalkRule(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent)
         {
             var style = TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType);
             SetCrosswalkRule(new MarkupCrosswalkRule(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
@@ -350,7 +365,7 @@ namespace NodeMarkup.Manager
         protected override ILineTrajectory CalculateTrajectory()
         {
             var offset = NormalDir * ((CrosswalkRule?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
-            return new StraightTrajectory(PointPair.First.Position + offset, PointPair.Second.Position + offset);
+            return new StraightTrajectory(PointPair.First.Position + offset, PointPair.Second.Position + offset, false);
         }
         protected override IEnumerable<MarkupStyleDash> GetDashes()
         {
@@ -364,11 +379,23 @@ namespace NodeMarkup.Manager
         {
             get
             {
+                yield return new CrosswalkBorderEdge(this, BorderPosition.Right);
+                yield return new CrosswalkBorderEdge(this, BorderPosition.Left);
+
+                var min = CrosswalkRule.MinT;
+                var max = CrosswalkRule.MaxT;
                 foreach (var edge in RulesLinesIntersectEdge)
-                    yield return edge;
+                {
+                    if (edge.GetT(this, out float t) && min < t && t < max)
+                        yield return edge;
+                }
             }
         }
-
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color, float width)
+        {
+            var trajectory = Trajectory.Cut(CrosswalkRule.MinT, CrosswalkRule.MaxT);
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory, width);
+        }
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -377,12 +404,12 @@ namespace NodeMarkup.Manager
         }
         public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
         {
-            base.FromXml(config, map);
-
             if (config.Element(MarkupCrosswalkRule.XmlName) is XElement ruleConfig && MarkupCrosswalkRule.FromXml(ruleConfig, this, map, out MarkupCrosswalkRule rule))
                 SetCrosswalkRule(rule);
             else
-                AddDefaultRule();
+                AddDefaultCrosswalkRule();
+
+            base.FromXml(config, map);
         }
     }
 
@@ -498,6 +525,11 @@ namespace NodeMarkup.Manager
                 return false;
             }
 
+        }
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width)
+        {
+            if (GetTrajectory(out ILineTrajectory trajectory))
+                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory, width);
         }
 
         public virtual XElement ToXml()

@@ -44,7 +44,7 @@ namespace NodeMarkup.UI.Editors
 
                 if (_selectPartEdgePanel != null)
                 {
-                    PointsSelector = new PointsSelector<ILinePartEdge>(SupportPoints, _selectPartEdgePanel.Position == MarkupLineSelectPropertyPanel.RulePosition.Start ? MarkupColors.Green : MarkupColors.Red);
+                    PointsSelector = new PointsSelector<ILinePartEdge>(SupportPoints, _selectPartEdgePanel.Position == EdgePosition.Start ? MarkupColors.Green : MarkupColors.Red);
                     _selectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
                     _selectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
                 }
@@ -223,14 +223,11 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 if (IsHoverItem)
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, HoverItem.Object.Trajectory, 2f);
+                    HoverItem.Object.Render(cameraInfo, MarkupColors.White, 2f);
                 if (IsHoverRulePanel)
-                {
-                    if (HoverRulePanel.Rule.GetTrajectory(out ILineTrajectory trajectory))
-                        NodeMarkupTool.RenderTrajectory(cameraInfo, WhiteAlpha, trajectory, 2f);
-                }
-                if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is ISupportPoint supportPoint)
-                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, supportPoint.Position, 0.5f);
+                    HoverRulePanel.Rule.Render(cameraInfo, WhiteAlpha, 2f);
+                if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is SupportPoint supportPoint)
+                    supportPoint.Render(cameraInfo, MarkupColors.White);
             }
         }
         public override string GetInfo()
@@ -239,9 +236,9 @@ namespace NodeMarkup.UI.Editors
             {
                 switch (SelectPartEdgePanel.Position)
                 {
-                    case MarkupLineSelectPropertyPanel.RulePosition.Start:
+                    case EdgePosition.Start:
                         return NodeMarkup.Localize.LineEditor_InfoSelectFrom;
-                    case MarkupLineSelectPropertyPanel.RulePosition.End:
+                    case EdgePosition.End:
                         return NodeMarkup.Localize.LineEditor_InfoSelectTo;
                 }
             }

@@ -206,6 +206,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset.
+        /// </summary>
+        public static string CrosswalkStyle_ResetBorder {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_ResetBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Zebra.
         /// </summary>
         public static string CrosswalkStyle_Zebra {
@@ -907,6 +916,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на crosswalk&apos;s left border.
+        /// </summary>
+        public static string LineRule_LeftBorder {
+            get {
+                return ResourceManager.GetString("LineRule_LeftBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на crosswalk&apos;s right border.
+        /// </summary>
+        public static string LineRule_RightBorder {
+            get {
+                return ResourceManager.GetString("LineRule_RightBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Self-edge point {0}.
         /// </summary>
         public static string LineRule_SelfEdgePoint {
@@ -1492,7 +1519,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Group point overlay.
+        ///   Ищет локализованную строку, похожую на Group points overlay.
         /// </summary>
         public static string Settings_GroupPoints {
             get {

@@ -798,4 +798,13 @@ To create a crosswalk connect two points.</value>
     <value>The rule is overlapped by another rule.
 Check other rule's "From" and "To" points.</value>
   </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>crosswalk's left border</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>crosswalk's right border</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Reset</value>
+  </data>
 </root>

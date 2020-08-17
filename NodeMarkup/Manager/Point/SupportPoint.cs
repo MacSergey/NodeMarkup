@@ -18,7 +18,8 @@ namespace NodeMarkup.Manager
     public enum SupportType
     {
         EnterPoint,
-        LinesIntersect
+        LinesIntersect,
+        CrosswalkBorder
     }
 
     public abstract class SupportPoint : ISupportPoint
@@ -37,7 +38,7 @@ namespace NodeMarkup.Manager
 
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
-        public abstract void Render(RenderManager.CameraInfo cameraInfo, Color color);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
 
@@ -74,7 +75,7 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
+        //public new void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
 
         public override XElement ToXml()
         {
@@ -100,7 +101,7 @@ namespace NodeMarkup.Manager
             var intersect = line.Markup.GetIntersect(LinePair);
             if(intersect.IsIntersect)
             {
-                t = intersect[line].Value;
+                t = intersect[line];
                 return true;
             }
             else
@@ -110,10 +111,12 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color color)
         {
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, First.Trajectory);
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, Second.Trajectory);
+            First.Render(cameraInfo, color);
+            Second.Render(cameraInfo, color);
+            //NodeMarkupTool.RenderTrajectory(cameraInfo, color, First.Trajectory);
+            //NodeMarkupTool.RenderTrajectory(cameraInfo, color, Second.Trajectory);
         }
     }
 }

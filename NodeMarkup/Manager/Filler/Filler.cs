@@ -144,7 +144,7 @@ namespace NodeMarkup.Manager
                     var linePartT = intersect[linePart.Line];
 
                     if ((fromT <= linePartT && linePartT <= toT) || (toT <= linePartT && linePartT <= fromT))
-                        Set(intersect[line].Value, true);
+                        Set(intersect[line], true);
                 }
                 else if (linePart.Line.IsEnterLine)
                 {

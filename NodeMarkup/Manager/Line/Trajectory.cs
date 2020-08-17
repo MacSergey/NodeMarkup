@@ -96,8 +96,8 @@ namespace NodeMarkup.Manager
         public Vector3 Tangent(float t) => Direction.normalized;
         public Vector3 Position(float t) => Trajectory.a + Direction * t;
         public float Travel(float start, float distance) => start + (distance / Length);
-        public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a);
-        public ILineTrajectory Copy() => new StraightTrajectory(Trajectory);
+        public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
+        public ILineTrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
 
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);

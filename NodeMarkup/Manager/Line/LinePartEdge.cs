@@ -24,6 +24,9 @@ namespace NodeMarkup.Manager
                 case SupportType.LinesIntersect when LinesIntersectEdge.FromXml(config, mainLine, map, out LinesIntersectEdge linePoint):
                     supportPoint = linePoint;
                     return true;
+                case SupportType.CrosswalkBorder when CrosswalkBorderEdge.FromXml(config, mainLine, map, out CrosswalkBorderEdge borderPoint):
+                    supportPoint = borderPoint;
+                    return true;
                 default:
                     supportPoint = null;
                     return false;
@@ -52,7 +55,6 @@ namespace NodeMarkup.Manager
         public EnterPointEdge(MarkupPoint point) : base(point) { }
 
         public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
 
         public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
     }
@@ -91,7 +93,71 @@ namespace NodeMarkup.Manager
         }
 
         public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Second);
+    }
+    public class CrosswalkBorderEdge : SupportPoint, ILinePartEdge
+    {
+        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out CrosswalkBorderEdge borderPoint)
+        {
+            if(mainLine is MarkupCrosswalk crosswalk)
+            {
+                var border = (BorderPosition)config.GetAttrValue("B", (int)BorderPosition.Right);
+                borderPoint = new CrosswalkBorderEdge(crosswalk, border);
+                return true;
+            }
+            else
+            {
+                borderPoint = null;
+                return false;
+            }
+        }
 
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Slave.Trajectory);
+        public override string XmlSection => LinePartEdge.XmlName;
+        public override SupportType Type => SupportType.CrosswalkBorder;
+        public BorderPosition Border { get; }
+
+        public CrosswalkBorderEdge(MarkupCrosswalk crosswalk, BorderPosition border) : base(crosswalk.Trajectory.Position(crosswalk.CrosswalkRule.GetT(border)))
+        {
+            Border = border;
+        }
+
+        public override bool GetT(MarkupLine line, out float t)
+        {
+            if (!(line is MarkupCrosswalk crosswalk))
+            {
+                t = -1;
+                return false;
+            }
+            else
+            {
+                t = crosswalk.CrosswalkRule.GetT(Border);
+                return true;
+            }
+        }
+
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        {
+
+        }
+
+        public override bool Equals(ISupportPoint other) => other is CrosswalkBorderEdge otherBorder && otherBorder.Border == Border;
+        public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("B", (int)Border));
+            return config;
+        }
+        public override string ToString() => Border == BorderPosition.Right ? Localize.LineRule_RightBorder : Localize.LineRule_LeftBorder;
+    }
+    public enum EdgePosition
+    {
+        Start,
+        End
+    }
+    public enum BorderPosition
+    {
+        Right,
+        Left
     }
 }

@@ -22,19 +22,7 @@ namespace NodeMarkup.UI.Editors
 
         public ButtonPanel()
         {
-            Button = AddUIComponent<UIButton>();
-
-            Button.atlas = TextureUtil.InGameAtlas;
-            Button.normalBgSprite = "ButtonWhite";
-            Button.disabledBgSprite = "ButtonWhite";
-            Button.hoveredBgSprite = "ButtonWhite";
-            Button.pressedBgSprite = "ButtonWhite";
-            Button.color = Color.white;
-            Button.hoveredColor = new Color32(224, 224, 224, 255);
-            Button.pressedColor = new Color32(192, 192, 192, 255);
-            Button.textColor = Button.hoveredTextColor = Button.focusedTextColor = Color.black;
-            Button.pressedTextColor = Color.white;
-
+            Button = AddButton(this);
             Button.eventClick += ButtonClick;
         }
 
@@ -57,20 +45,11 @@ namespace NodeMarkup.UI.Editors
 
         public int AddButton(string text)
         {
-            var button = AddUIComponent<UIButton>();
+            var button = AddButton(this);
 
-            button.atlas = TextureUtil.InGameAtlas;
-            button.normalBgSprite = "ButtonWhite";
-            button.disabledBgSprite = "ButtonWhiteDisabled";
-            button.hoveredBgSprite = "ButtonWhiteHovered";
-            button.pressedBgSprite = "ButtonWhitePressed";
             button.text = text;
             button.textScale = 0.8f;
             button.textPadding = new RectOffset(0, 0, 3, 0);
-            button.textColor = Color.black;
-            button.focusedTextColor = Color.black;
-            button.hoveredTextColor = Color.black;
-            button.pressedTextColor = Color.black;
             button.eventClick += ButtonClick;
 
             Buttons.Add(button);

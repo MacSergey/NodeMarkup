@@ -43,6 +43,23 @@ namespace NodeMarkup.UI
 
             this.height = height;
         }
+
+        protected UIButton AddButton(UIComponent parent)
+        {
+            var button = parent.AddUIComponent<UIButton>();
+            button.atlas = TextureUtil.InGameAtlas;
+            button.normalBgSprite = "ButtonWhite";
+            button.disabledBgSprite = "ButtonWhite";
+            button.hoveredBgSprite = "ButtonWhite";
+            button.pressedBgSprite = "ButtonWhite";
+            button.color = Color.white;
+            button.hoveredColor = new Color32(224, 224, 224, 255);
+            button.pressedColor = new Color32(192, 192, 192, 255);
+            button.textColor = button.hoveredTextColor = button.focusedTextColor = Color.black;
+            button.pressedTextColor = Color.white;
+
+            return button;
+        }
     }
     public abstract class EditorPropertyPanel : EditorItem
     {
