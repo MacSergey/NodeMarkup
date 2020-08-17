@@ -355,23 +355,21 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Vyberte koncový bod
 +Shift - plná čára
 +Ctrl - dvojitá čára</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření
-nebo smazání čáry
-+Ctrl pro posunutí bodu
-+Shift pro upravení bodu
-+Alt pro vytvoření výplně</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazit novinky</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -486,7 +484,7 @@ nebo smazání čáry
     <value>Vložit</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Tvar</value>
+    <value>Lomené pruhy</value>
   </data>
   <data name="Filler_AngleBetween" xml:space="preserve">
     <value>Úhel mezi</value>
@@ -527,7 +525,7 @@ Funkce bude později přístupna všem.
 Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete vývojářům pokračovat stejnou rychlostí.</value>
   </data>
   <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Styl výplně</value>
+    <value>Styl lomených pruhů</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Kopírovat styl</value>
@@ -748,12 +746,22 @@ Pro vytvoření přechodu spojte dva body.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Vyber pravý roh přechodu</value>
   </data>
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Seskupovat body</value>
+  </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Uspořádat do kruhu</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
     <value>Uspořádat do řady</value>
   </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>Pravidlo se překrývá s jiným pravidlem.
+Zkontrolujte počáteční a koncové body ostatních pravidel.</value>
+  </data>
+  
+  
+  
+  
   
 </root>

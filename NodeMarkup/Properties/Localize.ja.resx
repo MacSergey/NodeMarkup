@@ -356,23 +356,21 @@
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>マーキングを編集するノードを選択します</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>終点側のポイントを選択
 +Shift - 実線
 +Ctrl - 2重線</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>ポイントを選択して
-ラインを作成・削除する
-+Ctrlでポイントを移動
-+Shiftでポイントの編集
-Altキー押下で塗り潰しを開始</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -674,10 +672,10 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>クリックして垂直線を削除</value>
   </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
-    <value>縞模様</value>
+    <value>ゼブラ模様</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
-    <value>既存の横断歩道</value>
+    <value>バニラの横断歩道</value>
   </data>
   <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
     <value>横断歩道の始点</value>
@@ -723,22 +721,22 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>タイプ別</value>
   </data>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
-    <value>2重の縞模様</value>
+    <value>2重のゼブラ模様</value>
   </data>
   <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
-    <value>ラインの太さ</value>
+    <value>横断歩道の幅</value>
   </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
-    <value>終点のオフセット</value>
+    <value>縦方向のオフセット</value>
   </data>
   <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
-    <value>始点のオフセット</value>
+    <value>横方向のオフセット</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>車線と平行にする</value>
   </data>
   <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>平行線</value>
+    <value>2本の平行線</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>左枠線</value>
@@ -752,12 +750,22 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>横断歩道の右枠線を選択</value>
   </data>
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>ポイントをグループ化して表示</value>
+  </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>円形で表示</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
     <value>ラインで表示</value>
   </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>追加したルールが重なっています。
+他と重なっている、始点と終点のポイントを確認してください。</value>
+  </data>
+  
+  
+  
+  
   
 </root>

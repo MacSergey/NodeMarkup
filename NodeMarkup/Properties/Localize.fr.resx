@@ -355,23 +355,21 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Sélectionnez un point de fin
 +Maj - Solide
 +Ctrl - Double</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Sélectionnez un point pour 
-créer ou supprimer une ligne
-+Ctrl pour bouger le point
-+Maj pour éditer le point
-Maintenez Alt pour créer un filler</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Afficher les nouveautés</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -710,6 +708,11 @@ Maintenez Alt pour créer un filler</value>
   <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
     <value>Lignes parallèles</value>
   </data>
+  
+  
+  
+  
+  
   
   
   

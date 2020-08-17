@@ -355,23 +355,21 @@ Clique para editar marcações</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione um nó para editar marcações</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleccionar ponto final
 +Shift - Sólida
 +Ctrl - Dupla</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
-    <value>Seleccione um ponto para
-criar ou remover a uma linha
-+Ctrl para mover o ponto
-+Shift para editar o ponto
-Prima Alt para criar um preenchimento</value>
-  </data>
+  
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar as novidades</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
@@ -758,6 +756,20 @@ Para criar uma passadeira conecte dois pontos.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleccionar a borda direita da passadeira</value>
   </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Destaque de grupo de pontos</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Organizar em um circulo</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Organizar em uma linha</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>A regra é sobreposta por outra regra.
+Verifique os pontos "De" e "Para" de outras regras.</value>
+  </data>
+  
   
   
   

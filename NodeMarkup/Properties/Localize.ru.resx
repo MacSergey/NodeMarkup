@@ -355,23 +355,27 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Выберите перекресток для редактирования разметки</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Выберите конечную точку
 +Shift - Сплошная
 +Ctrl - Двойная</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
 для создания или удаления линии
 +Ctrl для перемещения точки
-+Shift для редактирования точки
-Зажмите Alt для создания заполнителя</value>
+Зажмите Alt для создания заполнителя
+Зажмите Shift для создания перехода</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Что нового в {0}</value>
+    <comment>Mod_WhatsNewCaption
+</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Показывать что нового</value>
+    <comment>Settings_ShowWhatsNew
+</comment>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Заполнители. Пространство между линиями можно заполнить, обозначив место куда нельзя заезжать или останавливаться. Доступно 3 стиля: Полоски, сетка и сплошная заливка. Для создания удерживайте клавишу ALT.
@@ -775,8 +779,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Группировать подсветку точек</value>
-    <comment>Settings_GroupPoints
-</comment>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Выстраивать в круг</value>
@@ -787,5 +789,25 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
     <value>Это правило перекрывается другим правилом.
 Проверьте "От" и "До" у других правил.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Левая граница перехода</value>
+    <comment>LineRule_LeftBorder
+</comment>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Правая граница перехода</value>
+    <comment>LineRule_RightBorder
+</comment>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Выберите конечную точку</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Выберите начальную точку
+для создания или удаления перехода</value>
   </data>
 </root>
