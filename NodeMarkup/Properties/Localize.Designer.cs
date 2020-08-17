@@ -1987,13 +1987,32 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select endpoint.
+        /// </summary>
+        public static string Tool_InfoSelectCrosswalkEndPoint {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectCrosswalkEndPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a point to
+        ///create or delete a crosswalk.
+        /// </summary>
+        public static string Tool_InfoSelectCrosswalkStartPoint {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectCrosswalkStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Select endpoint
         ///+Shift - Solid
         ///+Ctrl - Double.
         /// </summary>
-        public static string Tool_InfoSelectEndPoint {
+        public static string Tool_InfoSelectLineEndPoint {
             get {
-                return ResourceManager.GetString("Tool_InfoSelectEndPoint", resourceCulture);
+                return ResourceManager.GetString("Tool_InfoSelectLineEndPoint", resourceCulture);
             }
         }
         
@@ -2001,12 +2020,12 @@ namespace NodeMarkup {
         ///   Ищет локализованную строку, похожую на Select a point to
         ///create or delete a line
         ///+Ctrl to move the point
-        ///+Shift to edit the point
-        ///Hold Alt to create a filler.
+        ///Hold Alt to create a filler
+        ///Hold Shift to create a crosswalk.
         /// </summary>
-        public static string Tool_InfoSelectStartPoint {
+        public static string Tool_InfoSelectLineStartPoint {
             get {
-                return ResourceManager.GetString("Tool_InfoSelectStartPoint", resourceCulture);
+                return ResourceManager.GetString("Tool_InfoSelectLineStartPoint", resourceCulture);
             }
         }
     }

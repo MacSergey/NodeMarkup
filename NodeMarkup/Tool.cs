@@ -38,7 +38,7 @@ namespace NodeMarkup
 
         #endregion
 
-        private Mode ToolMode { get; set; } = Mode.SelectNode;
+        private Mode ToolMode { get; set; } = Mode.Node;
         Markup EditMarkup { get; set; }
 
         ushort HoverNodeId { get; set; } = 0;
@@ -142,7 +142,7 @@ namespace NodeMarkup
             DragPoint = null;
             FillerPoints.Clear();
             FillerPointsSelector = null;
-            ToolMode = Mode.SelectNode;
+            ToolMode = Mode.Node;
             cursorInfoLabel.isVisible = false;
             Panel?.EndPanelAction();
             Panel?.Hide();
@@ -157,7 +157,7 @@ namespace NodeMarkup
 
         public void StartPanelAction(out bool isAccept)
         {
-            if (ToolMode == Mode.ConnectLine)
+            if (ToolMode == Mode.Line)
             {
                 ToolMode = Mode.PanelAction;
                 isAccept = true;
@@ -170,7 +170,7 @@ namespace NodeMarkup
             if (ToolMode == Mode.PanelAction)
             {
                 Panel.EndPanelAction();
-                ToolMode = Mode.ConnectLine;
+                ToolMode = Mode.Line;
             }
         }
 
@@ -205,16 +205,17 @@ namespace NodeMarkup
 
             switch (ToolMode)
             {
-                case Mode.SelectNode:
+                case Mode.Node:
                     GetHoveredNode();
                     break;
-                case Mode.ConnectLine:
+                case Mode.Line:
+                case Mode.Crosswalk:
                     GetHoverPoint();
                     break;
                 case Mode.PanelAction:
                     Panel.OnUpdate();
                     break;
-                case Mode.SelectFiller:
+                case Mode.Filler:
                     FillerPointsSelector.OnUpdate();
                     break;
             }
@@ -279,7 +280,7 @@ namespace NodeMarkup
         {
             var position = GetInfoPosition();
 
-            if (!UI.Settings.ShowToolTip || (Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position)))
+            if ((!UI.Settings.ShowToolTip && ToolMode != Mode.Node) || (Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position)))
             {
                 cursorInfoLabel.isVisible = false;
                 return;
@@ -287,13 +288,14 @@ namespace NodeMarkup
 
             switch (ToolMode)
             {
-                case Mode.SelectNode when IsHoverNode:
+                case Mode.Node when IsHoverNode:
                     ShowToolInfo(string.Format(Localize.Tool_InfoHoverNode, HoverNodeId), position);
                     break;
-                case Mode.SelectNode:
+                case Mode.Node:
                     ShowToolInfo(Localize.Tool_InfoNode, position);
                     break;
-                case Mode.ConnectLine when IsSelectPoint && IsHoverPoint:
+                case Mode.Line when IsSelectPoint && IsHoverPoint:
+                case Mode.Crosswalk when IsSelectPoint && IsHoverPoint:
                     var markup = MarkupManager.Get(SelectNodeId);
                     var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
                     var exist = markup.ExistConnection(pointPair);
@@ -306,30 +308,35 @@ namespace NodeMarkup
                         ShowToolInfo(exist ? Localize.Tool_InfoDeleteNormalLine : Localize.Tool_InfoCreateNormalLine, position);
                     else
                         ShowToolInfo(exist ? Localize.Tool_InfoDeleteLine : Localize.Tool_InfoCreateLine, position);
-
                     break;
-                case Mode.ConnectLine when IsSelectPoint:
-                    ShowToolInfo(Localize.Tool_InfoSelectEndPoint, position);
+                case Mode.Line when IsSelectPoint:
+                    ShowToolInfo(Localize.Tool_InfoSelectLineEndPoint, position);
                     break;
-                case Mode.ConnectLine:
-                    ShowToolInfo(Localize.Tool_InfoSelectStartPoint, position);
+                case Mode.Crosswalk when IsSelectPoint:
+                    ShowToolInfo(Localize.Tool_InfoSelectCrosswalkEndPoint, position);
+                    break;
+                case Mode.Line:
+                    ShowToolInfo(Localize.Tool_InfoSelectLineStartPoint, position);
+                    break;
+                case Mode.Crosswalk:
+                    ShowToolInfo(Localize.Tool_InfoSelectCrosswalkStartPoint, position);
                     break;
                 case Mode.PanelAction when Panel.GetInfo() is string panelInfo && !string.IsNullOrEmpty(panelInfo):
                     ShowToolInfo(panelInfo, position);
                     break;
-                case Mode.SelectFiller when FillerPointsSelector.IsHoverPoint && TempFiller.IsEmpty:
+                case Mode.Filler when FillerPointsSelector.IsHoverPoint && TempFiller.IsEmpty:
                     ShowToolInfo(Localize.Tool_InfoFillerClickStart, position);
                     break;
-                case Mode.SelectFiller when FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint == TempFiller.First:
+                case Mode.Filler when FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint == TempFiller.First:
                     ShowToolInfo(Localize.Tool_InfoFillerClickEnd, position);
                     break;
-                case Mode.SelectFiller when FillerPointsSelector.IsHoverPoint:
+                case Mode.Filler when FillerPointsSelector.IsHoverPoint:
                     ShowToolInfo(Localize.Tool_InfoFillerClickNext, position);
                     break;
-                case Mode.SelectFiller when TempFiller.IsEmpty:
+                case Mode.Filler when TempFiller.IsEmpty:
                     ShowToolInfo(Localize.Tool_InfoFillerSelectStart, position);
                     break;
-                case Mode.SelectFiller:
+                case Mode.Filler:
                     ShowToolInfo(Localize.Tool_InfoFillerSelectNext, position);
                     break;
                 default:
@@ -399,7 +406,7 @@ namespace NodeMarkup
         #region MOUSE DOWN
         private void OnMouseDown(Event e)
         {
-            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && IsHoverPoint && CtrlIsPressed)
+            if (ToolMode == Mode.Line && !IsSelectPoint && IsHoverPoint && CtrlIsPressed)
             {
                 ToolMode = Mode.DragPoint;
                 DragPoint = HoverPoint;
@@ -431,29 +438,35 @@ namespace NodeMarkup
         {
             switch (ToolMode)
             {
-                case Mode.ConnectLine when !IsSelectPoint && AltIsPressed:
+                case Mode.Line when !IsSelectPoint && AltIsPressed:
                     DisableByAlt = true;
                     EnableSelectFiller();
                     break;
-                case Mode.ConnectLine when !IsSelectPoint && AddFillerShortcut.IsPressed(e):
+                case Mode.Line when !IsSelectPoint && AddFillerShortcut.IsPressed(e):
                     DisableByAlt = false;
                     EnableSelectFiller();
                     break;
-                case Mode.ConnectLine when !IsSelectPoint && DeleteAllShortcut.IsPressed(e):
+                case Mode.Line when !IsSelectPoint && DeleteAllShortcut.IsPressed(e):
                     DeleteAllLines();
                     break;
-                case Mode.ConnectLine:
+                case Mode.Line when !IsSelectPoint && ShiftIsPressed:
+                    EnableCrosswalk();
+                    break;
+                case Mode.Line:
                     Panel?.OnEvent(e);
                     break;
-                case Mode.SelectFiller when DisableByAlt && !AltIsPressed && TempFiller.IsEmpty:
-                    ToolMode = Mode.ConnectLine;
+                case Mode.Crosswalk when !IsSelectPoint && !ShiftIsPressed:
+                    DisableCrosswalk();
+                    break;
+                case Mode.Filler when DisableByAlt && !AltIsPressed && TempFiller.IsEmpty:
+                    ToolMode = Mode.Line;
                     TempFiller = null;
                     break;
             }
         }
         private void EnableSelectFiller()
         {
-            ToolMode = Mode.SelectFiller;
+            ToolMode = Mode.Filler;
             TempFiller = new MarkupFiller(EditMarkup, Style.StyleType.FillerStripe);
             GetFillerPoints();
         }
@@ -461,7 +474,7 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllLines)}");
 
-            if (ToolMode == Mode.ConnectLine && !IsSelectPoint && MarkupManager.TryGetMarkup(SelectNodeId, out Markup markup))
+            if (ToolMode == Mode.Line && !IsSelectPoint && MarkupManager.TryGetMarkup(SelectNodeId, out Markup markup))
             {
                 if (UI.Settings.DeleteWarnings)
                 {
@@ -481,6 +494,16 @@ namespace NodeMarkup
                 }
             }
         }
+        private void EnableCrosswalk()
+        {
+            ToolMode = Mode.Crosswalk;
+            SetTarget(MarkupPoint.PointType.Crosswalk);
+        }
+        private void DisableCrosswalk()
+        {
+            ToolMode = Mode.Line;
+            SetTarget();
+        }
 
         #endregion
 
@@ -492,30 +515,35 @@ namespace NodeMarkup
 
             switch (ToolMode)
             {
-                case Mode.SelectNode when IsHoverNode:
+                case Mode.Node when IsHoverNode:
                     OnSelectNode();
                     break;
-                case Mode.ConnectLine when IsHoverPoint && !IsSelectPoint:
+                case Mode.Line when IsHoverPoint && !IsSelectPoint:
+                case Mode.Crosswalk when IsHoverPoint && !IsSelectPoint:
                     OnSelectPoint(e);
                     break;
-                case Mode.ConnectLine when IsHoverPoint && IsSelectPoint:
+                case Mode.Line when IsHoverPoint && IsSelectPoint:
                     OnMakeLine(e);
                     break;
-                case Mode.SelectFiller:
+                case Mode.Crosswalk when IsHoverPoint && IsSelectPoint:
+                    OnMakeCrosswalk(e);
+                    break;
+                case Mode.Filler:
                     OnSelectFillerPoint(e);
                     break;
                 case Mode.PanelAction:
                     OnPanelActionPrimaryClick(e);
                     break;
                 case Mode.DragPoint:
-                    ToolMode = Mode.ConnectLine;
+                    Panel.EditPoint(DragPoint);
+                    ToolMode = Mode.Line;
                     break;
             }
         }
 
         #region SET TARGET
 
-        private void SetTarget(MarkupPoint.PointType pointType = MarkupPoint.PointType.Enter | MarkupPoint.PointType.Crosswalk, MarkupPoint ignore = null)
+        private void SetTarget(MarkupPoint.PointType pointType = MarkupPoint.PointType.Enter, MarkupPoint ignore = null)
         {
             TargetPoints.Clear();
             foreach (var enter in EditMarkup.Enters)
@@ -645,41 +673,39 @@ namespace NodeMarkup
             SelectNodeId = HoverNodeId;
             EditMarkup = MarkupManager.Get(SelectNodeId);
 
-            ToolMode = Mode.ConnectLine;
+            ToolMode = Mode.Line;
             Panel.SetNode(SelectNodeId);
             SetTarget();
         }
 
         private void OnSelectPoint(Event e)
         {
-            if (e.shift)
-                Panel.EditPoint(HoverPoint);
-            else
-            {
-                SelectPoint = HoverPoint;
-                SetTarget(SelectPoint.Type, SelectPoint);
-            }
+            SelectPoint = HoverPoint;
+            SetTarget(SelectPoint.Type, SelectPoint);
         }
 
         private void OnMakeLine(Event e)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-            if (pointPair.IsCrosswalk)
-            {
-                var newCrosswalk = EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalk;
-                Panel.EditCrosswalk(newCrosswalk);
-            }
-            else
-            {
-                var lineType = pointPair.IsStopLine ? e.GetStopStyle() : e.GetRegularStyle();
-                var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
-                Panel.EditLine(newLine);
-            }
+            var lineType = pointPair.IsStopLine ? e.GetStopStyle() : e.GetRegularStyle();
+            var newLine = EditMarkup.ToggleConnection(pointPair, lineType);
+            Panel.EditLine(newLine);
 
             SelectPoint = null;
             SetTarget();
         }
+        private void OnMakeCrosswalk(Event e)
+        {
+            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+
+            var newCrosswalk = EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalk;
+            Panel.EditCrosswalk(newCrosswalk);
+
+            SelectPoint = null;
+            SetTarget();
+        }
+
         private void OnSelectFillerPoint(Event e)
         {
             if (FillerPointsSelector.IsHoverPoint)
@@ -688,7 +714,7 @@ namespace NodeMarkup
                 {
                     EditMarkup.AddFiller(TempFiller);
                     Panel.EditFiller(TempFiller);
-                    ToolMode = Mode.ConnectLine;
+                    ToolMode = Mode.Line;
                     return;
                 }
                 DisableByAlt = false;
@@ -702,7 +728,7 @@ namespace NodeMarkup
             if (isDone)
             {
                 Panel.EndPanelAction();
-                ToolMode = Mode.ConnectLine;
+                ToolMode = Mode.Line;
             }
 
         }
@@ -720,16 +746,18 @@ namespace NodeMarkup
                 case Mode.PanelAction:
                     OnPanelActionSecondaryClick();
                     break;
-                case Mode.SelectFiller:
+                case Mode.Filler:
                     OnUnselectFillerPoint();
                     break;
-                case Mode.ConnectLine when IsSelectPoint:
+                case Mode.Crosswalk when IsSelectPoint:
+
+                case Mode.Line when IsSelectPoint:
                     OnUnselectPoint();
                     break;
-                case Mode.ConnectLine when !IsSelectPoint:
+                case Mode.Line when !IsSelectPoint:
                     OnUnselectNode();
                     break;
-                case Mode.SelectNode:
+                case Mode.Node:
                     DisableTool();
                     break;
             }
@@ -740,14 +768,14 @@ namespace NodeMarkup
             if (isDone)
             {
                 Panel.EndPanelAction();
-                ToolMode = Mode.ConnectLine;
+                ToolMode = Mode.Line;
             }
         }
         private void OnUnselectFillerPoint()
         {
             if (TempFiller.IsEmpty)
             {
-                ToolMode = Mode.ConnectLine;
+                ToolMode = Mode.Line;
                 TempFiller = null;
             }
             else
@@ -761,9 +789,15 @@ namespace NodeMarkup
             SelectPoint = null;
             SetTarget();
         }
+        private void OnUnselectCrosswalkPoint()
+        {
+            ToolMode = Mode.Line;
+            SelectPoint = null;
+            SetTarget();
+        }
         private void OnUnselectNode()
         {
-            ToolMode = Mode.SelectNode;
+            ToolMode = Mode.Node;
             EditMarkup = null;
             SelectNodeId = 0;
             Panel?.Hide();
@@ -795,11 +829,14 @@ namespace NodeMarkup
         {
             switch (ToolMode)
             {
-                case Mode.SelectNode:
+                case Mode.Node:
                     RenderSelectNodeMode(cameraInfo);
                     break;
-                case Mode.ConnectLine:
-                    RenderConnectLineMode(cameraInfo);
+                case Mode.Line:
+                    RenderLineMode(cameraInfo);
+                    break;
+                case Mode.Crosswalk:
+                    RenderCrosswalkMode(cameraInfo);
                     break;
                 case Mode.PanelAction:
                     RenderPanelActionMode(cameraInfo);
@@ -807,7 +844,7 @@ namespace NodeMarkup
                 case Mode.DragPoint:
                     RenderDragPointMode(cameraInfo);
                     break;
-                case Mode.SelectFiller:
+                case Mode.Filler:
                     RenderSelectFillerMode(cameraInfo);
                     break;
             }
@@ -815,6 +852,11 @@ namespace NodeMarkup
             base.RenderOverlay(cameraInfo);
         }
 
+        private void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
+        {
+            foreach (var point in TargetPoints)
+                RenderPointOverlay(cameraInfo, point);
+        }
         public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point) => RenderPointOverlay(cameraInfo, point, point.Color, 1f);
         public static void RenderPointOverlay(RenderManager.CameraInfo cameraInfo, MarkupPoint point, Color color, float width)
         {
@@ -861,55 +903,32 @@ namespace NodeMarkup
 
         #endregion
 
-        #region CONNECT LINE
+        #region LINE
 
-        private void RenderConnectLineMode(RenderManager.CameraInfo cameraInfo)
+        private void RenderLineMode(RenderManager.CameraInfo cameraInfo)
         {
-            if (IsHoverPoint && HoverPoint.Type != MarkupPoint.PointType.Normal)
+            if (IsHoverPoint)
                 RenderPointOverlay(cameraInfo, HoverPoint, MarkupColors.White, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
-            RenderConnectLineOverlay(cameraInfo);
-            Panel.Render(cameraInfo);
-        }
-        private void RenderNodeEnterPointsOverlay(RenderManager.CameraInfo cameraInfo, Enter ignore = null)
-        {
-            foreach (var enter in EditMarkup.Enters.Where(m => m != ignore))
+
+            if (IsSelectPoint)
             {
-                foreach (var point in enter.Points)
+                switch (IsHoverPoint)
                 {
-                    RenderPointOverlay(cameraInfo, point);
+                    case true when HoverPoint.Type == MarkupPoint.PointType.Normal:
+                        RenderNormalConnectLine(cameraInfo);
+                        break;
+                    case true:
+                        RenderRegularConnectLine(cameraInfo);
+                        break;
+                    case false:
+                        RenderNotConnectLine(cameraInfo);
+                        break;
                 }
             }
-        }
-        private void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            foreach (var point in TargetPoints)
-                RenderPointOverlay(cameraInfo, point);
-        }
-        private void RenderConnectLineOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            if (!IsSelectPoint)
-                return;
 
-            switch (IsHoverPoint)
-            {
-                case true when HoverPoint.Type == MarkupPoint.PointType.Crosswalk:
-                    RenderConnectCrosswalkLine(cameraInfo);
-                    break;
-                case true when HoverPoint.Type == MarkupPoint.PointType.Normal:
-                    RenderNormalConnectLine(cameraInfo);
-                    break;
-                case true:
-                    RenderRegularConnectLine(cameraInfo);
-                    break;
-                case false when SelectPoint.Type == MarkupPoint.PointType.Crosswalk:
-                    RenderNotConnectCrosswalkLine(cameraInfo);
-                    break;
-                case false:
-                    RenderNotConnectLine(cameraInfo);
-                    break;
-            }
+            Panel.Render(cameraInfo);
         }
         private void RenderRegularConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -952,6 +971,42 @@ namespace NodeMarkup
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
             RenderBezier(cameraInfo, color, normalBezier, 2f, true);
         }
+        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
+        {
+            var bezier = new Bezier3()
+            {
+                a = SelectPoint.Position,
+                b = SelectPoint.Direction,
+                c = SelectPoint.Direction.Turn90(true),
+                d = MouseWorldPosition,
+            };
+
+            Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
+            bezier.c = v >= 0 ? bezier.c : -bezier.c;
+
+            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+            RenderBezier(cameraInfo, MarkupColors.White, bezier);
+        }
+
+        #endregion
+
+        #region CROSSWALK
+
+        private void RenderCrosswalkMode(RenderManager.CameraInfo cameraInfo)
+        {
+            if (IsHoverPoint)
+                RenderPointOverlay(cameraInfo, HoverPoint, MarkupColors.White, 0.5f);
+
+            RenderPointsOverlay(cameraInfo);
+
+            if (IsSelectPoint)
+            {
+                if (IsHoverPoint)
+                    RenderConnectCrosswalkLine(cameraInfo);
+                else
+                    RenderNotConnectCrosswalkLine(cameraInfo);
+            }
+        }
         private void RenderConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
             var dir = (HoverPoint.Position - SelectPoint.Position).normalized;
@@ -981,22 +1036,6 @@ namespace NodeMarkup
 
             NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
             RenderBezier(cameraInfo, MarkupColors.White, bezier, 2f, true);
-        }
-        private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
-        {
-            var bezier = new Bezier3()
-            {
-                a = SelectPoint.Position,
-                b = SelectPoint.Direction,
-                c = SelectPoint.Direction.Turn90(true),
-                d = MouseWorldPosition,
-            };
-
-            Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
-            bezier.c = v >= 0 ? bezier.c : -bezier.c;
-
-            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            RenderBezier(cameraInfo, MarkupColors.White, bezier);
         }
 
         #endregion
@@ -1055,11 +1094,12 @@ namespace NodeMarkup
 
         enum Mode
         {
-            SelectNode,
-            ConnectLine,
-            SelectFiller,
+            Node,
+            Line,
+            Filler,
             PanelAction,
-            DragPoint
+            DragPoint,
+            Crosswalk
         }
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
     }

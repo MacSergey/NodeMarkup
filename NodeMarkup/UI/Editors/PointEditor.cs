@@ -28,8 +28,8 @@ namespace NodeMarkup.UI.Editors
                 foreach (var point in enter.Points)
                     AddItem(point);
 
-                foreach (var point in enter.Crosswalks)
-                    AddItem(point);
+                //foreach (var point in enter.Crosswalks)
+                //    AddItem(point);
             }
         }
         protected override void OnObjectSelect()

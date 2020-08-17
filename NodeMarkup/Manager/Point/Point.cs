@@ -162,16 +162,16 @@ namespace NodeMarkup.Manager
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
 
-        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location)
+        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
         {
             SourcePoint = sourcePoint;
+            SourcePoint.OnUpdate += SourcePointUpdate;
         }
-
+        private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
         public override void UpdateProcess()
         {
-            SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
-            Position = position + direction * Shift;
-            Direction = direction;
+            Position = SourcePoint.Position + SourcePoint.Direction * Shift;
+            Direction = SourcePoint.Direction;
         }
         public override string ToString() => $"{base.ToString()}C";
     }

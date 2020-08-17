@@ -355,17 +355,17 @@ Click to edit marking</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Select a node to change marking</value>
   </data>
-  <data name="Tool_InfoSelectEndPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint
 +Shift - Solid
 +Ctrl - Double</value>
   </data>
-  <data name="Tool_InfoSelectStartPoint" xml:space="preserve">
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Select a point to
 create or delete a line
 +Ctrl to move the point
-+Shift to edit the point
-Hold Alt to create a filler</value>
+Hold Alt to create a filler
+Hold Shift to create a crosswalk</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>What`s new in {0}</value>
@@ -785,8 +785,6 @@ To create a crosswalk connect two points.</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Group points overlay</value>
-    <comment>Settings_GroupPoints
-</comment>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Arrange in a circle</value>
@@ -806,5 +804,12 @@ Check other rule's "From" and "To" points.</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>Reset</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Select endpoint</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Select a point to
+create or delete a crosswalk</value>
   </data>
 </root>
