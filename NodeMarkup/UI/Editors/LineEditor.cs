@@ -201,10 +201,15 @@ namespace NodeMarkup.UI.Editors
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => NodeMarkupPanel.EndEditorAction();
 
         public override void OnUpdate() => PointsSelector?.OnUpdate();
-        public override void OnEvent(Event e)
+        public override bool OnShortcut(Event e)
         {
             if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable && !IsSelectPartEdgeMode)
+            {
                 AddRule();
+                return true;
+            }
+            else
+                return false;
         }
         public override void OnPrimaryMouseClicked(Event e, out bool isDone)
         {

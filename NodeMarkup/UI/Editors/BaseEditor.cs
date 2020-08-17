@@ -157,7 +157,7 @@ namespace NodeMarkup.UI.Editors
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
         public virtual string GetInfo() => string.Empty;
         public virtual void OnUpdate() { }
-        public virtual void OnEvent(Event e) { }
+        public virtual bool OnShortcut(Event e) => false;
         public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
             isDone = true;

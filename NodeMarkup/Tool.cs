@@ -28,6 +28,9 @@ namespace NodeMarkup
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         public static bool CtrlIsPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+        public static bool OnlyAltIsPressed => AltIsPressed && !ShiftIsPressed && !CtrlIsPressed;
+        public static bool OnlyShiftIsPressed => ShiftIsPressed && !AltIsPressed && !CtrlIsPressed;
+        public static bool OnlyCtrlIsPressed => CtrlIsPressed && !AltIsPressed && !ShiftIsPressed;
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -380,6 +383,9 @@ namespace NodeMarkup
 
         protected override void OnToolGUI(Event e)
         {
+            if (ProcessShortcuts(e))
+                return;
+
             switch (e.type)
             {
                 case EventType.MouseDown when MouseRayValid && e.button == 0:
@@ -394,12 +400,7 @@ namespace NodeMarkup
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     OnSecondaryMouseClicked();
                     break;
-                default:
-                    ProcessShortcuts(e);
-                    break;
             }
-
-            base.OnToolGUI(e);
         }
         private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(TempFiller.GetNextСandidates(), MarkupColors.Red);
 
@@ -434,35 +435,44 @@ namespace NodeMarkup
         #endregion
 
         #region PROCESS SHORTCUTS
-        private void ProcessShortcuts(Event e)
+        private bool ProcessShortcuts(Event e)
         {
-            switch (ToolMode)
+            if((ToolMode == Mode.Line || ToolMode == Mode.Crosswalk) && !IsSelectPoint)
             {
-                case Mode.Line when !IsSelectPoint && AltIsPressed:
-                    DisableByAlt = true;
-                    EnableSelectFiller();
-                    break;
-                case Mode.Line when !IsSelectPoint && AddFillerShortcut.IsPressed(e):
+                if(AddFillerShortcut.IsPressed(e))
+                {
                     DisableByAlt = false;
                     EnableSelectFiller();
-                    break;
-                case Mode.Line when !IsSelectPoint && DeleteAllShortcut.IsPressed(e):
+                    return true;
+                }
+                if(DeleteAllShortcut.IsPressed(e))
+                {
                     DeleteAllLines();
-                    break;
-                case Mode.Line when !IsSelectPoint && ShiftIsPressed:
+                    return true;
+                }
+                if(Panel?.OnShortcut(e) == true)
+                    return true;
+            }
+
+            switch (ToolMode)
+            {
+                case Mode.Line when !IsSelectPoint && OnlyAltIsPressed:
+                    DisableByAlt = true;
+                    EnableSelectFiller();
+                    return true;
+                case Mode.Line when !IsSelectPoint && OnlyShiftIsPressed:
                     EnableCrosswalk();
-                    break;
-                case Mode.Line:
-                    Panel?.OnEvent(e);
-                    break;
+                    return true;
                 case Mode.Crosswalk when !IsSelectPoint && !ShiftIsPressed:
                     DisableCrosswalk();
-                    break;
+                    return true;
                 case Mode.Filler when DisableByAlt && !AltIsPressed && TempFiller.IsEmpty:
                     ToolMode = Mode.Line;
                     TempFiller = null;
-                    break;
+                    return true;
             }
+
+            return false;
         }
         private void EnableSelectFiller()
         {

@@ -114,7 +114,7 @@ namespace NodeMarkup.UI
 
             Markup = MarkupManager.Get(nodeId);
             TabStrip.selectedIndex = -1;
-            TabStrip.selectedIndex = 0;
+            SelectEditor<LinesEditor>();
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
         private void TabStripSelectedIndexChanged(UIComponent component, int index)
@@ -172,7 +172,7 @@ namespace NodeMarkup.UI
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
         public string GetInfo() => CurrentEditor?.GetInfo();
         public void OnUpdate() => CurrentEditor?.OnUpdate();
-        public void OnEvent(Event e) => CurrentEditor?.OnEvent(e);
+        public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void OnPrimaryMouseClicked(Event e, out bool isDone)
         {
             if (CurrentEditor is Editor editor)

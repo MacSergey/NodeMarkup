@@ -71,7 +71,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на There are no crosswalks at this intersection yet.
-        ///To create a crosswalk connect two points..
+        ///To create a crosswalk hold Shift..
         /// </summary>
         public static string CrosswalkEditor_EmptyMessage {
             get {
@@ -580,7 +580,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet.
-        ///To create a filler, hold Alt or press {0}..
+        ///To create a filler hold Alt or press {0}..
         /// </summary>
         public static string FillerEditor_EmptyMessage {
             get {
@@ -916,7 +916,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на crosswalk&apos;s left border.
+        ///   Ищет локализованную строку, похожую на Crosswalk&apos;s left border.
         /// </summary>
         public static string LineRule_LeftBorder {
             get {
@@ -925,7 +925,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на crosswalk&apos;s right border.
+        ///   Ищет локализованную строку, похожую на Crosswalk&apos;s right border.
         /// </summary>
         public static string LineRule_RightBorder {
             get {
@@ -1249,7 +1249,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на What`s new in {0}.
+        ///   Ищет локализованную строку, похожую на What&apos;s new in {0}.
         /// </summary>
         public static string Mod_WhatsNewCaption {
             get {
@@ -1710,7 +1710,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Show what`s new.
+        ///   Ищет локализованную строку, похожую на Show what&apos;s new.
         /// </summary>
         public static string Settings_ShowWhatsNew {
             get {
