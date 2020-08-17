@@ -99,6 +99,7 @@ namespace NodeMarkup.UI.Editors
 
         public GroupItem()
         {
+            height = 35;
             AddExpandIcon();
         }
 
@@ -116,7 +117,7 @@ namespace NodeMarkup.UI.Editors
 
             if (ExpandIcon != null)
             {
-                ExpandIcon.size = new Vector2(size.y - 6, size.y - 6);
+                ExpandIcon.size = new Vector2(size.y - 11, size.y - 11);
                 ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
             }
 
