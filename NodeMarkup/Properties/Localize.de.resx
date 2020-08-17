@@ -710,10 +710,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Zebrastreifen</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Es befinden sich noch keine Zebrastreifen auf dieser Kreuzung.
-Zum Erstellen eines Zebrastreifens zwei Punkte miteinander verbinden.</value>
-  </data>
+  
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>Zebrastreifen</value>
   </data>

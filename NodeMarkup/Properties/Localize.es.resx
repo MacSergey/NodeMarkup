@@ -675,10 +675,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Paso de Peatones</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Todavía no hay pasos de peatones en este cruce.
-Para crear un paso de peatones, conecta dos puntos.</value>
-  </data>
+  
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>paso de peatones</value>
   </data>

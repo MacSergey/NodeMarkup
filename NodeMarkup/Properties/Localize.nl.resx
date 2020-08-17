@@ -674,10 +674,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Zebrapaden</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Er zijn nog geen zebrapaden op deze kruising.
-Verbind twee punten om een zebrapad te maken.</value>
-  </data>
+  
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>zebrapad</value>
   </data>

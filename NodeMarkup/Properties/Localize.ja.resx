@@ -361,7 +361,13 @@
 +Shift - 実線
 +Ctrl - 2重線</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>ポイントを選択して
+ラインを作成・削除する
++Ctrlでポイントを移動
+Alt押下で塗り潰しを開始
+Shift押下で横断歩道の作成</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
   </data>
@@ -679,10 +685,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>横断歩道の一覧</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>交差点（ノード）に、横断歩道の設定がありません。
-2つのポイントを繋げて作りましょう。</value>
-  </data>
+  
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>横断歩道</value>
   </data>
@@ -759,9 +762,24 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>追加したルールが重なっています。
 他と重なっている、始点と終点のポイントを確認してください。</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>横断歩道の左境界線</value>
+    <comment>
+</comment>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>横断歩道の右境界線</value>
+    <comment>
+</comment>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>終わりのポイントを選択</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>ポイントを選択して
+横断歩道の作成・削除する</value>
+  </data>
 </root>

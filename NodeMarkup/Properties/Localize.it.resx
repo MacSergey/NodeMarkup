@@ -672,10 +672,7 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Attraversamenti</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Non ci sono ancora attarversamenti in questo incrocio.
-Per creare un attraversamento connetti due punti.</value>
-  </data>
+  
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>attraversamento</value>
   </data>
