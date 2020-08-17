@@ -685,10 +685,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Passadeiras</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Ainda não existem passadeiras nesta intercessão.
-Para criar uma passadeira conecte dois pontos.</value>
-  </data>
+  
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>passadeira</value>
   </data>

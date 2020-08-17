@@ -360,7 +360,13 @@ Shift x10，Ctrl x0.1</value>
 +Shift 实线
 +Ctrl 双线</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>点选起始点
+来创建/擦除线段
++Ctrl 偏移端点
+按住Alt创建填充图案
+按住Shift创建人行横道</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
   </data>
@@ -677,7 +683,7 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>此交叉路口没有人行道。
-连接两点以创建人行道。</value>
+按住Shift以创建人行道。</value>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>人行横道</value>
@@ -755,11 +761,24 @@ Shift x10，Ctrl x0.1</value>
     <value>此规则与另一规则重突。
 请检查规则的起点与终点。</value>
   </data>
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>人行横道左边界</value>
+    <comment>
+</comment>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>人行横道右边界</value>
+    <comment>
+</comment>
+  </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>重置</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>选择端点</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>点选起始点
+来创建/删除人行横道</value>
+  </data>
 </root>

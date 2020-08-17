@@ -708,7 +708,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>У этого перекрестка еще нет переходов.
-Для создания перехода соедините две точки.</value>
+Для создания перехода удерживайте Shift.</value>
   </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>переход</value>
@@ -788,12 +788,12 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>Левая граница перехода</value>
-    <comment>LineRule_LeftBorder
+    <comment>
 </comment>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>Правая граница перехода</value>
-    <comment>LineRule_RightBorder
+    <comment>
 </comment>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
