@@ -363,13 +363,9 @@ Klicken um Markierung zu bearbeiten</value>
   
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
-    <comment>Mod_WhatsNewCaption
-</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>"Was gibt es neues" zeigen</value>
-    <comment>Settings_ShowWhatsNew
-</comment>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.

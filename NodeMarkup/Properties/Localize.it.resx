@@ -363,13 +363,9 @@ Clicca per modificare il marcatore</value>
   
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Cosa c'è di nuovo in {0}</value>
-    <comment>Mod_WhatsNewCaption
-</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostra cosa c'è di nuovo</value>
-    <comment>Settings_ShowWhatsNew
-</comment>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>Riempimento. Lo spazio tra le linee può essere riempito per indicare le aree vietate per l'arresto o la guida. Sono disponibili 3 stili: Linee, Griglia e Riempimento solido. Per creare tenere premuto Alt.

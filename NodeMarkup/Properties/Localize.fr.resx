@@ -363,13 +363,9 @@ Cliquez pour modifier le marquage</value>
   
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
-    <comment>Mod_WhatsNewCaption
-</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Afficher les nouveautés</value>
-    <comment>Settings_ShowWhatsNew
-</comment>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">

@@ -363,13 +363,9 @@ Clique para editar marcações</value>
   
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
-    <comment>Mod_WhatsNewCaption
-</comment>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Mostrar as novidades</value>
-    <comment>Settings_ShowWhatsNew
-</comment>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
