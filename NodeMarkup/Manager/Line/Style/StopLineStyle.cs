@@ -19,11 +19,11 @@ namespace NodeMarkup.Manager
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return CalculateSolid(trajectory, CalculateDashes);
+            return StyleHelper.CalculateSolid(trajectory, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
-                yield return CalculateSolidDash(dashTrajectory, offset, offset);
+                yield return StyleHelper.CalculateSolidDash(dashTrajectory, offset, offset, Width, Color);
             }
         }
 
@@ -54,12 +54,12 @@ namespace NodeMarkup.Manager
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return CalculateSolid(trajectory, CalculateDashes);
+            return StyleHelper.CalculateSolid(trajectory, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
-                yield return CalculateSolidDash(dashTrajectory, offsetLeft, offsetLeft);
-                yield return CalculateSolidDash(dashTrajectory, offsetRight, offsetRight);
+                yield return StyleHelper.CalculateSolidDash(dashTrajectory, offsetLeft, offsetLeft, Width, Color);
+                yield return StyleHelper.CalculateSolidDash(dashTrajectory, offsetRight, offsetRight, Width, Color);
             }
         }
 
@@ -127,11 +127,11 @@ namespace NodeMarkup.Manager
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+            return StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
             {
-                yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset);
+                yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset, Width, Color);
             }
         }
 
@@ -201,12 +201,12 @@ namespace NodeMarkup.Manager
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+            return StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
             {
-                yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft);
-                yield return CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight);
+                yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft, Width, Color);
+                yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, Color);
             }
         }
 

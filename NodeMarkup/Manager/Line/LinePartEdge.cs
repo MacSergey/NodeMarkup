@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
     {
         public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out CrosswalkBorderEdge borderPoint)
         {
-            if(mainLine is MarkupCrosswalk crosswalk)
+            if(mainLine is MarkupCrosswalkLine crosswalk)
             {
                 var border = (BorderPosition)config.GetAttrValue("B", (int)BorderPosition.Right);
                 borderPoint = new CrosswalkBorderEdge(crosswalk, border);
@@ -115,22 +115,22 @@ namespace NodeMarkup.Manager
         public override SupportType Type => SupportType.CrosswalkBorder;
         public BorderPosition Border { get; }
 
-        public CrosswalkBorderEdge(MarkupCrosswalk crosswalk, BorderPosition border) : base(crosswalk.Trajectory.Position(crosswalk.CrosswalkRule.GetT(border)))
+        public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalk, BorderPosition border) : base(crosswalk.Trajectory.Position(crosswalk.Crosswalk.GetT(border)))
         {
             Border = border;
         }
 
         public override bool GetT(MarkupLine line, out float t)
         {
-            if (!(line is MarkupCrosswalk crosswalk))
+            if (line is MarkupCrosswalkLine crosswalk)
             {
-                t = -1;
-                return false;
+                t = crosswalk.Crosswalk.GetT(Border);
+                return true;
             }
             else
             {
-                t = crosswalk.CrosswalkRule.GetT(Border);
-                return true;
+                t = -1;
+                return false;
             }
         }
 

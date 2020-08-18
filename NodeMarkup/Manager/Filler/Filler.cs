@@ -54,7 +54,7 @@ namespace NodeMarkup.Manager
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
         public IEnumerable<MarkupLinePart> Parts => LineParts;
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
-        public bool IsMedian => LineParts.Any(p => p.Line is MarkupFakeLine);
+        public bool IsMedian => LineParts.Any(p => p.Line is MarkupEnterLine);
 
         public IEnumerable<ILineTrajectory> TrajectoriesRaw
         {
@@ -228,7 +228,7 @@ namespace NodeMarkup.Manager
         {
             foreach (var part in LineParts)
             {
-                if (part.Line is MarkupFakeLine fakeLine)
+                if (part.Line is MarkupEnterLine fakeLine)
                     fakeLine.UpdateTrajectory();
             }
         }
@@ -282,20 +282,6 @@ namespace NodeMarkup.Manager
             set => base.To = value;
         }
         public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
-    }
-
-    public class MarkupFakeLine : MarkupStraightLine<LineStyle>
-    {
-        public override LineType Type => throw new NotImplementedException();
-
-        public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
-
-        public MarkupFakeLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
-
-        protected override void AddDefaultRule()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

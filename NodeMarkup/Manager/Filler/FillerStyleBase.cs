@@ -87,18 +87,18 @@ namespace NodeMarkup.Manager
                     continue;
 
                 var line = lineParts[i].Line;
-                if (line is MarkupFakeLine)
+                if (line is MarkupEnterLine)
                     continue;
 
                 var prevI = i == 0 ? lineParts.Length - 1 : i - 1;
-                if (lineParts[prevI].Line is MarkupFakeLine && trajectories[prevI] != null)
+                if (lineParts[prevI].Line is MarkupEnterLine && trajectories[prevI] != null)
                 {
                     trajectories[i] = Shift(trajectories[i]);
                     trajectories[prevI] = new StraightTrajectory(trajectories[prevI].StartPosition, trajectories[i].StartPosition);
                 }
 
                 var nextI = i + 1 == lineParts.Length ? 0 : i + 1;
-                if (lineParts[nextI].Line is MarkupFakeLine && trajectories[nextI] != null)
+                if (lineParts[nextI].Line is MarkupEnterLine && trajectories[nextI] != null)
                 {
                     trajectories[i] = Shift(trajectories[i].Invert()).Invert();
                     trajectories[nextI] = new StraightTrajectory(trajectories[i].EndPosition, trajectories[nextI].EndPosition);

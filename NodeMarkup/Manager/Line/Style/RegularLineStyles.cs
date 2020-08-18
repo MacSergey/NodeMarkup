@@ -23,10 +23,10 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => CalculateSolid(trajectory, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateSolid(trajectory, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
-            yield return CalculateSolidDash(trajectory, 0f);
+            yield return StyleHelper.CalculateSolidDash(trajectory, 0f, Width, Color);
         }
     }
     public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine
@@ -61,8 +61,8 @@ namespace NodeMarkup.Manager
 
         protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
-            yield return CalculateSolidDash(trajectory, Offset);
-            yield return CalculateSolidDash(trajectory, -Offset);
+            yield return StyleHelper.CalculateSolidDash(trajectory, Offset, Width, Color);
+            yield return StyleHelper.CalculateSolidDash(trajectory, -Offset, Width, Color);
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -124,11 +124,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
 
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, 0);
+            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, 0, Width, Color);
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -184,8 +184,8 @@ namespace NodeMarkup.Manager
 
         protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, Offset);
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset);
+            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, Offset, Width, Color);
+            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset, Width, Color);
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -272,11 +272,11 @@ namespace NodeMarkup.Manager
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
-            foreach (var dash in CalculateSolid(trajectory, CalculateSolidDash))
+            foreach (var dash in StyleHelper.CalculateSolid(trajectory, CalculateSolidDash))
             {
                 yield return dash;
             }
-            foreach (var dash in CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
+            foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
             {
                 yield return dash;
             }
@@ -286,12 +286,12 @@ namespace NodeMarkup.Manager
         {
             var offset = CenterSolid ? 0 : Invert ? Offset : -Offset;
 
-            yield return CalculateSolidDash(trajectory, offset);
+            yield return StyleHelper.CalculateSolidDash(trajectory, offset, Width, Color);
         }
         protected IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT)
         {
             var offset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
-            yield return CalculateDashedDash(trajectory, startT, endT, DashLength, offset);
+            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, offset, Width, Color);
         }
         public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert, CenterSolid);
         public override void CopyTo(Style target)

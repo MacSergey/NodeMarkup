@@ -99,13 +99,16 @@
   <ItemGroup>
     <Compile Include="EarlyAccess.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Manager\Crosswalk\Crosswalk.cs" />
+    <Compile Include="Manager\Crosswalk\CrosswalkStyleBase.cs" />
     <Compile Include="Manager\Filler\Filler.cs" />
     <Compile Include="Manager\Filler\FillerStyle.cs" />
     <Compile Include="Manager\Filler\FillerStyleBase.cs" />
     <Compile Include="Manager\Filler\FillerVertex.cs" />
     <Compile Include="Manager\Line\Line.cs" />
+    <Compile Include="Manager\Line\LinePart.cs" />
     <Compile Include="Manager\Line\LineRule.cs" />
-    <Compile Include="Manager\Line\Style\CrosswalkLineStyle.cs" />
+    <Compile Include="Manager\Crosswalk\CrosswalkStyle.cs" />
     <Compile Include="Manager\Line\Style\StopLineStyle.cs" />
     <Compile Include="Manager\Line\Style\RegularLineStyles.cs" />
     <Compile Include="Manager\Line\Trajectory.cs" />
@@ -261,7 +264,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

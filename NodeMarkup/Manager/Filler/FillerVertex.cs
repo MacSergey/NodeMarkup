@@ -59,7 +59,7 @@ namespace NodeMarkup.Manager
             {
                 case EnterSupportPoint otherE:
                     if (Enter == otherE.Enter || !(Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line))
-                        line = new MarkupFakeLine(Point.Markup, Point, otherE.Point);
+                        line = new MarkupEnterLine(Point.Markup, Point, otherE.Point);
                     return line;
                 case IntersectSupportPoint otherI:
                     return otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second;
