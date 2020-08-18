@@ -327,6 +327,8 @@ namespace NodeMarkup.UI.Editors
                 ClearSettings();
                 Select(0);
             }
+
+            SwitchEmpty();
         }
         public override void UpdateEditor() => UpdateEditor(null);
 

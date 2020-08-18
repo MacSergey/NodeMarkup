@@ -19,13 +19,14 @@ namespace NodeMarkup.Manager
         {
             var length = trajectory.Magnitude;
 
-            if (depth < MaxDepth && ((MinAngleDelta < deltaAngle && MinLength <= length) || MaxLength < length || depth == 0))
+            var needDivide = (MinAngleDelta < deltaAngle && MinLength <= length) || MaxLength < length;
+            if (depth < MaxDepth && (needDivide || depth == 0))
             {
                 trajectory.Divide(out ILineTrajectory first, out ILineTrajectory second);
                 var firstDeltaAngle = first.DeltaAngle;
                 var secondDeltaAngle = second.DeltaAngle;
 
-                if (depth != 0 || MaxLength < length || MinAngleDelta < deltaAngle || MinAngleDelta < firstDeltaAngle + secondDeltaAngle)
+                if (needDivide || MinAngleDelta < deltaAngle || MinAngleDelta < firstDeltaAngle + secondDeltaAngle)
                 {
                     foreach (var dash in CalculateSolid(depth + 1, first, firstDeltaAngle, calculateDashes))
                         yield return dash;
