@@ -75,7 +75,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
-        //public new void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
 
         public override XElement ToXml()
         {
@@ -115,8 +114,6 @@ namespace NodeMarkup.Manager
         {
             First.Render(cameraInfo, color);
             Second.Render(cameraInfo, color);
-            //NodeMarkupTool.RenderTrajectory(cameraInfo, color, First.Trajectory);
-            //NodeMarkupTool.RenderTrajectory(cameraInfo, color, Second.Trajectory);
         }
     }
 }

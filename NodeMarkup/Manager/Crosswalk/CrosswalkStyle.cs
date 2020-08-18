@@ -23,7 +23,7 @@ namespace NodeMarkup.Manager
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            return new List<UIComponent> { AddWidthProperty(parent, onHover, onLeave) };
+            return new List<UIComponent> { AddWidthProperty(parent, onHover, onLeave, 0.1f, 0.1f) };
         }
         public override XElement ToXml()
         {

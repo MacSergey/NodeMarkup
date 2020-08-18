@@ -165,10 +165,9 @@ namespace NodeMarkup.Manager
         public void Update(MarkupLine line, bool updateIntersect = false, bool updateFillers = false)
         {
             line.UpdateTrajectory();
-            line.RecalculateDashes();
             if(updateIntersect)
             {
-                foreach (var intersect in GetExistIntersects(line, true).ToArray())
+                foreach (var intersect in GetExistIntersects(line).ToArray())
                 {
                     LineIntersects.Remove(intersect.Pair);
                     Update(intersect.Pair.GetOther(line));
@@ -179,7 +178,7 @@ namespace NodeMarkup.Manager
                 foreach (var filler in GetLineFillers(line))
                     Update(filler);
             }
-
+            line.RecalculateDashes();
             NeedRecalculateBatches = true;
         }
         public void Update(MarkupFiller filler)
@@ -251,7 +250,7 @@ namespace NodeMarkup.Manager
         }
         private void RemoveLine(MarkupLine line)
         {
-            foreach (var intersect in GetExistIntersects(line, false).ToArray())
+            foreach (var intersect in GetExistIntersects(line).ToArray())
             {
                 if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
                     regularLine.RemoveRules(line);

@@ -9,11 +9,14 @@ namespace NodeMarkup.Manager
 {
     public class MarkupCrosswalk : IToXml
     {
+        #region PROPERTIES
+
         public static string XmlName { get; } = "C";
         public string XmlSection => XmlName;
 
+        public Markup Markup { get; }
         public Action OnCrosswalkChanged { private get; set; }
-        public MarkupCrosswalkLine Line { get; }
+        public MarkupCrosswalkLine CrosswalkLine { get; }
 
         MarkupRegularLine _rightBorder;
         MarkupRegularLine _leftBorder;
@@ -47,16 +50,15 @@ namespace NodeMarkup.Manager
                 CrosswalkChanged();
             }
         }
-        public Markup Markup => Line.Markup;
 
-        public float RigthT => GetT(RightBorder, !Line.IsInvert ? 0 : 1);
-        public float LeftT => GetT(LeftBorder, !Line.IsInvert ? 1 : 0);
-        public float MinT => !Line.IsInvert ? RigthT : LeftT;
-        public float MaxT => !Line.IsInvert ? LeftT : RigthT;
 
-        public MarkupCrosswalk(MarkupCrosswalkLine line, CrosswalkStyle style, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null)
+
+        #endregion
+
+        public MarkupCrosswalk(Markup markup, MarkupCrosswalkLine crosswalkLine, CrosswalkStyle style, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null)
         {
-            Line = line;
+            Markup = markup;
+            CrosswalkLine = crosswalkLine;
             Style = style;
             RightBorder = rightBorder;
             LeftBorder = leftBorder;
@@ -65,13 +67,13 @@ namespace NodeMarkup.Manager
         protected void CrosswalkChanged() => OnCrosswalkChanged?.Invoke();
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
-        public float GetT(BorderPosition borderType) => borderType == BorderPosition.Right ? RigthT : LeftT;
-        private float GetT(MarkupRegularLine border, float defaultT)
-            => border != null && Markup.GetIntersect(Line, border) is MarkupLinesIntersect intersect && intersect.IsIntersect ? intersect[Line] : defaultT;
+
+        #region XML
 
         public XElement ToXml()
         {
             var config = new XElement(XmlName);
+            config.Add(new XAttribute(MarkupLine.XmlName, CrosswalkLine.PointPair.Hash));
             if (RightBorder != null)
                 config.Add(new XAttribute("RB", RightBorder.PointPair.Hash));
             if (LeftBorder != null)
@@ -86,14 +88,14 @@ namespace NodeMarkup.Manager
                 var rightBorder = GetBorder("RB", config, line);
                 var leftBorder = GetBorder("LB", config, line);
 
-                rule = new MarkupCrosswalk(line, style, rightBorder, leftBorder);
+                rule = new MarkupCrosswalk(line.Markup, line, style, rightBorder, leftBorder);
                 return true;
             }
             else
             {
                 rule = default;
                 return false;
-            }         
+            }
         }
         public static MarkupRegularLine GetBorder(string key, XElement config, MarkupCrosswalkLine line)
         {
@@ -102,5 +104,7 @@ namespace NodeMarkup.Manager
             else
                 return null;
         }
+
+        #endregion
     }
 }

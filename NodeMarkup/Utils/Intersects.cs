@@ -211,6 +211,7 @@ namespace NodeMarkup.Utils
             Pair = pair;
         }
 
+        public static MarkupLinesIntersect Calculate(MarkupLine first, MarkupLine second) => Calculate(new MarkupLinePair(first, second));
         public static MarkupLinesIntersect Calculate(MarkupLinePair pair)
         {
             if (pair.CanIntersect && Calculate(pair.First.Trajectory, pair.Second.Trajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect)

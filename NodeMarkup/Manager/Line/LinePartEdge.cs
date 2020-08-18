@@ -96,12 +96,12 @@ namespace NodeMarkup.Manager
     }
     public class CrosswalkBorderEdge : SupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out CrosswalkBorderEdge borderPoint)
-        {
-            if(mainLine is MarkupCrosswalkLine crosswalk)
+        public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out CrosswalkBorderEdge borderPoint)
+        {            
+            if (line is MarkupCrosswalkLine crosswalkLine)
             {
                 var border = (BorderPosition)config.GetAttrValue("B", (int)BorderPosition.Right);
-                borderPoint = new CrosswalkBorderEdge(crosswalk, border);
+                borderPoint = new CrosswalkBorderEdge(crosswalkLine, border);
                 return true;
             }
             else
@@ -113,18 +113,20 @@ namespace NodeMarkup.Manager
 
         public override string XmlSection => LinePartEdge.XmlName;
         public override SupportType Type => SupportType.CrosswalkBorder;
+        public MarkupCrosswalkLine CrosswalkLine { get; }
         public BorderPosition Border { get; }
 
-        public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalk, BorderPosition border) : base(crosswalk.Trajectory.Position(crosswalk.Crosswalk.GetT(border)))
+        public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalkLine, BorderPosition border) : base(crosswalkLine.Trajectory.Position(crosswalkLine.GetT(border)))
         {
+            CrosswalkLine = crosswalkLine;
             Border = border;
         }
 
         public override bool GetT(MarkupLine line, out float t)
         {
-            if (line is MarkupCrosswalkLine crosswalk)
+            if (line is MarkupCrosswalkLine crosswalkLine)
             {
-                t = crosswalk.Crosswalk.GetT(Border);
+                t = crosswalkLine.GetT(Border);
                 return true;
             }
             else
