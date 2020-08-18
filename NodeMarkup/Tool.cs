@@ -710,8 +710,8 @@ namespace NodeMarkup
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-            var newCrosswalk = EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalkLine;
-            Panel.EditCrosswalk(newCrosswalk);
+            var newCrosswalkLine = EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalkLine;
+            Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
 
             SelectPoint = null;
             SetTarget();

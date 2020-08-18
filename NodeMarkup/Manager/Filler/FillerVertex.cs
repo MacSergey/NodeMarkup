@@ -116,11 +116,9 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out IntersectFillerVertex linePoint)
         {
             var lineId1 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName1);
-            MarkupPointPair.FromHash(lineId1, markup, map, out MarkupPointPair pair1);
             var lineId2 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName2);
-            MarkupPointPair.FromHash(lineId2, markup, map, out MarkupPointPair pair2);
 
-            if (markup.TryGetLine(pair1.Hash, out MarkupLine line1) && markup.TryGetLine(pair2.Hash, out MarkupLine line2))
+            if (markup.TryGetLine(lineId1, map, out MarkupLine line1) && markup.TryGetLine(lineId2, map, out MarkupLine line2))
             {
                 linePoint = new IntersectFillerVertex(line1, line2);
                 return true;

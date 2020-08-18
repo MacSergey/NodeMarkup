@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalkLine, StyleIcon>
+    public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
         private static CrosswalkStyle Buffer { get; set; }
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
@@ -50,11 +50,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var line in Markup.Lines)
-            {
-                if (line is MarkupCrosswalkLine crosswalk)
+            foreach (var crosswalk in Markup.Crosswalks)
                     AddItem(crosswalk);
-            }
         }
         protected override void OnObjectSelect()
         {
@@ -71,7 +68,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
-            header.Init(EditObject.Crosswalk.Style.Type, false);
+            header.Init(EditObject.Style.Type, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnSelectTemplate += SelectTemplate;
             header.OnCopy += CopyStyle;
@@ -79,14 +76,14 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddBordersProperties()
         {
-            if (EditObject.Crosswalk.Style.Type == Manager.Style.StyleType.CrosswalkExistent)
+            if (EditObject.Style.Type == Manager.Style.StyleType.CrosswalkExistent)
                 return;
 
-            var rightBorders = GetBorderLines(!EditObject.IsInvert ? EditObject.Start : EditObject.End);
+            var rightBorders = GetBorderLines(!EditObject.Line.IsInvert ? EditObject.Line.Start : EditObject.Line.End);
             if (rightBorders.Any())
                 AddRightBorderProperty(rightBorders);
 
-            var leftBorders = GetBorderLines(!EditObject.IsInvert ? EditObject.End : EditObject.Start);
+            var leftBorders = GetBorderLines(!EditObject.Line.IsInvert ? EditObject.Line.End : EditObject.Line.Start);
             if (leftBorders.Any())
                 AddLeftBorderProperty(leftBorders);
 
@@ -105,8 +102,8 @@ namespace NodeMarkup.UI.Editors
             RightBorder.Position = BorderPosition.Right;
             RightBorder.Init();
             RightBorder.AddRange(borders);
-            RightBorder.SelectedObject = EditObject.Crosswalk.RightBorder;
-            RightBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.Crosswalk.RightBorder = line;
+            RightBorder.SelectedObject = EditObject.RightBorder;
+            RightBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.RightBorder = line;
             RightBorder.OnSelect += SelectBorder;
             RightBorder.OnHover += HoverBorder;
             RightBorder.OnLeave += LeaveBorder;
@@ -118,8 +115,8 @@ namespace NodeMarkup.UI.Editors
             LeftBorder.Position = BorderPosition.Left;
             LeftBorder.Init();
             LeftBorder.AddRange(borders);
-            LeftBorder.SelectedObject = EditObject.Crosswalk.LeftBorder;
-            LeftBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.Crosswalk.LeftBorder = line;
+            LeftBorder.SelectedObject = EditObject.LeftBorder;
+            LeftBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.LeftBorder = line;
             LeftBorder.OnSelect += SelectBorder;
             LeftBorder.OnHover += HoverBorder;
             LeftBorder.OnLeave += LeaveBorder;
@@ -130,25 +127,25 @@ namespace NodeMarkup.UI.Editors
             Style = SettingsPanel.AddUIComponent<CrosswalkPropertyPanel>();
             Style.Text = NodeMarkup.Localize.LineEditor_Style;
             Style.Init();
-            Style.SelectedObject = EditObject.Crosswalk.Style.Type;
+            Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Crosswalk.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: true);
+        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: true);
 
         #endregion
 
         private void SaveTemplate()
         {
-            if (TemplateManager.AddTemplate(EditObject.Crosswalk.Style, out StyleTemplate template))
+            if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
                 NodeMarkupPanel.EditTemplate(template);
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            if ((EditObject.Crosswalk.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
+            if ((EditObject.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
                 return;
 
-            EditObject.Crosswalk.Style = style.CopyCrosswalkStyle();
-            Style.SelectedObject = EditObject.Crosswalk.Style.Type;
+            EditObject.Style = style.CopyCrosswalkStyle();
+            Style.SelectedObject = EditObject.Style.Type;
 
             RefreshItem();
             ClearStyleProperties();
@@ -162,7 +159,7 @@ namespace NodeMarkup.UI.Editors
         private void CopyStyle()
         {
             if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
-                Buffer = EditObject.Crosswalk.Style.CopyCrosswalkStyle();
+                Buffer = EditObject.Style.CopyCrosswalkStyle();
         }
         private void PasteStyle()
         {
@@ -172,13 +169,13 @@ namespace NodeMarkup.UI.Editors
 
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == EditObject.Crosswalk.Style.Type)
+            if (style == EditObject.Style.Type)
                 return;
 
             var newStyle = TemplateManager.GetDefault<CrosswalkStyle>(style);
-            EditObject.Crosswalk.Style.CopyTo(newStyle);
+            EditObject.Style.CopyTo(newStyle);
 
-            EditObject.Crosswalk.Style = newStyle;
+            EditObject.Style = newStyle;
 
             RefreshItem();
             ClearStyleProperties();
@@ -192,7 +189,7 @@ namespace NodeMarkup.UI.Editors
                 Destroy(property);
             }
         }
-        protected override void OnObjectDelete(MarkupCrosswalkLine crosswalk) => Markup.RemoveConnect(crosswalk);
+        protected override void OnObjectDelete(MarkupCrosswalk crosswalk) => Markup.RemoveCrosswalk(crosswalk);
 
         public void RefreshItem() => SelectItem.Refresh();
 
@@ -241,10 +238,8 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 if (IsHoverItem)
-                {
-                    var bezier = new Line3(HoverItem.Object.Start.Position, HoverItem.Object.End.Position).GetBezier();
-                    NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, 3f);
-                }
+                    HoverItem.Object.Render(cameraInfo, MarkupColors.White);
+
                 if(IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
                     NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, borderLine.Trajectory);
             }
@@ -273,7 +268,7 @@ namespace NodeMarkup.UI.Editors
         #endregion
     }
 
-    public class CrosswalkItem : EditableItem<MarkupCrosswalkLine, StyleIcon>
+    public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>
     {
         public override void Init() => Init(true, true);
 
@@ -286,8 +281,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetIcon()
         {
-            Icon.Type = Object.Crosswalk.Style.Type;
-            Icon.StyleColor = Object.Crosswalk.Style.Color;
+            Icon.Type = Object.Style.Type;
+            Icon.StyleColor = Object.Style.Color;
         }
     }
 }

@@ -167,7 +167,7 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size, Vector4 index)
+        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size)
         {
             Count = count;
             Locations = new Vector4[Count];
@@ -187,7 +187,7 @@ namespace NodeMarkup.Utils
             Mesh = RenderHelper.CreateMesh(Count, size);
         }
 
-        public static IEnumerable<RenderBatch> FromDashes(IEnumerable<MarkupStyleDash> dashes, Vector4 index)
+        public static IEnumerable<RenderBatch> FromDashes(IEnumerable<MarkupStyleDash> dashes)
         {
             var groups = dashes.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(Round(d.Length), 1f, d.Width));
 
@@ -206,7 +206,7 @@ namespace NodeMarkup.Utils
                     isEnd = !groupEnumerator.MoveNext();
                     if (isEnd || count == 16)
                     {
-                        var batch = new RenderBatch(buffer, count, group.Key, index);
+                        var batch = new RenderBatch(buffer, count, group.Key);
                         yield return batch;
                         count = 0;
                     }

@@ -64,8 +64,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out LinesIntersectEdge linePoint)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
-            MarkupPointPair.FromHash(lineId, mainLine.Markup, map, out MarkupPointPair pair);
-            if (mainLine.Markup.TryGetLine(pair.Hash, out MarkupLine line))
+            if (mainLine.Markup.TryGetLine(lineId, map, out MarkupLine line))
             {
                 linePoint = new LinesIntersectEdge(mainLine, line);
                 return true;

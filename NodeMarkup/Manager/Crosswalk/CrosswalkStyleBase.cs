@@ -25,14 +25,14 @@ namespace NodeMarkup.Manager
 
         public static Style GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
 
-        public abstract float GetTotalWidth(MarkupCrosswalkLine crosswalk);
+        public abstract float GetTotalWidth(MarkupCrosswalk crosswalk);
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
         public override Style Copy() => CopyCrosswalkStyle();
         public abstract CrosswalkStyle CopyCrosswalkStyle();
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalkLine crosswalk, ILineTrajectory trajectory);
+        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory);
 
         public enum CrosswalkType
         {

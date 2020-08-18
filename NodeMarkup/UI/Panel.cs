@@ -154,7 +154,7 @@ namespace NodeMarkup.UI
             var editor = SelectEditor<LinesEditor>();
             editor?.UpdateEditor(line);
         }
-        public void EditCrosswalk(MarkupCrosswalkLine crosswalk)
+        public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
             var editor = SelectEditor<CrosswalksEditor>();
             editor?.UpdateEditor(crosswalk);

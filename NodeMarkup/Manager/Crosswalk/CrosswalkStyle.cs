@@ -14,11 +14,11 @@ namespace NodeMarkup.Manager
     public class ExistCrosswalkStyle : CrosswalkStyle
     {
         public override StyleType Type => StyleType.CrosswalkExistent;
-        public override float GetTotalWidth(MarkupCrosswalkLine crosswalk) => Width;
+        public override float GetTotalWidth(MarkupCrosswalk crosswalk) => Width;
 
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalkLine crosswalk, ILineTrajectory trajectory) => new MarkupStyleDash[0];
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory) => new MarkupStyleDash[0];
         public override CrosswalkStyle CopyCrosswalkStyle() => new ExistCrosswalkStyle(Width);
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -61,8 +61,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override float GetTotalWidth(MarkupCrosswalkLine crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
-        protected abstract float GetVisibleWidth(MarkupCrosswalkLine crosswalk);
+        public override float GetTotalWidth(MarkupCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
+        protected abstract float GetVisibleWidth(MarkupCrosswalk crosswalk);
 
         public CustomCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width)
         {
@@ -220,8 +220,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override float GetVisibleWidth(MarkupCrosswalkLine crosswalk) => GetLengthCoef(Width, crosswalk);
-        protected float GetLengthCoef(float length, MarkupCrosswalkLine crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
+        protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.Line.CornerAndNormalAngle));
 
         public ZebraCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel) : base(color, width, offsetBefore, offsetAfter)
         {
@@ -243,17 +243,17 @@ namespace NodeMarkup.Manager
                 parallelTarget.Parallel = Parallel;
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalkLine crosswalk, ILineTrajectory trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory)
         {
-            var offset = -crosswalk.NormalDir * (GetVisibleWidth(crosswalk) / 2 + OffsetAfter);
+            var offset = -crosswalk.Line.NormalDir * (GetVisibleWidth(crosswalk) / 2 + OffsetAfter);
 
-            var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
+            var coef = Mathf.Sin(crosswalk.Line.CornerAndNormalAngle);
             var dashLength = Parallel ? DashLength / coef : DashLength;
             var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
-            var angle = Parallel ? (float?)crosswalk.NormalDir.Turn90(true).AbsoluteAngle() : null;
+            var angle = Parallel ? (float?)crosswalk.Line.NormalDir.Turn90(true).AbsoluteAngle() : null;
 
             if (!Parallel)
-                Cut(crosswalk, trajectory, Width, out trajectory);
+                Cut(crosswalk.Line, trajectory, Width, out trajectory);
 
             return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
@@ -308,7 +308,7 @@ namespace NodeMarkup.Manager
         {
             Offset = offset;
         }
-        protected override float GetVisibleWidth(MarkupCrosswalkLine crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
         public override CrosswalkStyle CopyCrosswalkStyle() => new DoubleZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
         public override void CopyTo(Style target)
         {
@@ -317,20 +317,20 @@ namespace NodeMarkup.Manager
                 doubleTarget.Offset = Offset;
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalkLine crosswalk, ILineTrajectory trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
             var deltaOffset = GetLengthCoef((Width + Offset) / 2, crosswalk);
-            var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
-            var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
+            var firstOffset = -crosswalk.Line.NormalDir * (middleOffset - deltaOffset);
+            var secondOffset = -crosswalk.Line.NormalDir * (middleOffset + deltaOffset);
 
-            var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
+            var coef = Mathf.Sin(crosswalk.Line.CornerAndNormalAngle);
             var dashLength = Parallel ? DashLength / coef : DashLength;
             var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
-            var angle = Parallel ? (float?)crosswalk.NormalDir.Turn90(true).AbsoluteAngle() : null;
+            var angle = Parallel ? (float?)crosswalk.Line.NormalDir.Turn90(true).AbsoluteAngle() : null;
 
             if (!Parallel)
-                Cut(crosswalk, trajectory, Width, out trajectory);
+                Cut(crosswalk.Line, trajectory, Width, out trajectory);
 
             return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
@@ -383,7 +383,7 @@ namespace NodeMarkup.Manager
         {
             LineWidth = lineWidth;
         }
-        protected override float GetVisibleWidth(MarkupCrosswalkLine crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.Line.CornerAndNormalAngle);
         public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth);
         public override void CopyTo(Style target)
         {
@@ -392,12 +392,12 @@ namespace NodeMarkup.Manager
                 linedTarget.LineWidth = LineWidth;
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalkLine crosswalk, ILineTrajectory trajectory)
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
-            var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
-            var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
-            var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
+            var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.Line.CornerAndNormalAngle);
+            var firstOffset = -crosswalk.Line.NormalDir * (middleOffset - deltaOffset);
+            var secondOffset = -crosswalk.Line.NormalDir * (middleOffset + deltaOffset);
 
             return StyleHelper.CalculateSolid(trajectory, CalculateDashes);
 

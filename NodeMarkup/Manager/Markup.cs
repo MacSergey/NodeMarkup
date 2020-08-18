@@ -24,29 +24,30 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
         public ushort Id { get; }
-        private Vector4 Index { get; }
         public float Height { get; private set; }
+
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
+        Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
         List<Bezier3> ContourParts { get; set; } = new List<Bezier3>();
-
-        public bool NeedRecalculateBatches { get; set; }
-        public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
 
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
+        public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
         public IEnumerable<Bezier3> Contour => ContourParts;
+
+        public bool NeedRecalculateBatches { get; set; }
+        public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
 
         #endregion
 
         public Markup(ushort nodeId)
         {
             Id = nodeId;
-            Index = RenderManager.GetColorLocation((uint)(86016 + Id)) + new Vector4(0, 0, 0, 1);
             Update();
         }
 
@@ -57,6 +58,7 @@ namespace NodeMarkup.Manager
             UpdateEnters();
             UpdateLines();
             UpdateFillers();
+            UpdateCrosswalks();
 
             RecalculateDashes();
         }
@@ -105,7 +107,7 @@ namespace NodeMarkup.Manager
         {
             var contourParts = new List<Bezier3>();
 
-            for(var i = 0; i < EntersList.Count; i += 1)
+            for (var i = 0; i < EntersList.Count; i += 1)
             {
                 var prev = EntersList[i];
                 var currentBezier = new Bezier3()
@@ -146,6 +148,11 @@ namespace NodeMarkup.Manager
             foreach (var filler in FillersList)
                 filler.Update();
         }
+        private void UpdateCrosswalks()
+        {
+            foreach (var crosswalk in Crosswalks)
+                crosswalk.Update();
+        }
 
         public void Update(MarkupPoint point)
         {
@@ -165,7 +172,7 @@ namespace NodeMarkup.Manager
         public void Update(MarkupLine line, bool updateIntersect = false, bool updateFillers = false)
         {
             line.UpdateTrajectory();
-            if(updateIntersect)
+            if (updateIntersect)
             {
                 foreach (var intersect in GetExistIntersects(line).ToArray())
                 {
@@ -173,7 +180,7 @@ namespace NodeMarkup.Manager
                     Update(intersect.Pair.GetOther(line));
                 }
             }
-            if(updateFillers)
+            if (updateFillers)
             {
                 foreach (var filler in GetLineFillers(line))
                     Update(filler);
@@ -186,11 +193,18 @@ namespace NodeMarkup.Manager
             filler.RecalculateDashes();
             NeedRecalculateBatches = true;
         }
+        public void Update(MarkupCrosswalk crosswalk)
+        {
+            Update(crosswalk.Line, true, true);
+            crosswalk.RecalculateDashes();
+            NeedRecalculateBatches = true;
+        }
 
         public void Clear()
         {
             LinesDictionary.Clear();
             FillersList.Clear();
+            CrosswalksDictionary.Clear();
 
             RecalculateDashes();
         }
@@ -203,13 +217,14 @@ namespace NodeMarkup.Manager
         {
             LineIntersects.Clear();
             foreach (var line in Lines)
-            {
                 line.RecalculateDashes();
-            }
+
             foreach (var filler in Fillers)
-            {
                 filler.RecalculateDashes();
-            }
+
+            foreach (var crosswalk in Crosswalks)
+                crosswalk.RecalculateDashes();
+
             NeedRecalculateBatches = true;
         }
         public void RecalculateBatches()
@@ -217,7 +232,7 @@ namespace NodeMarkup.Manager
             var dashes = new List<MarkupStyleDash>();
             dashes.AddRange(Lines.SelectMany(l => l.Dashes));
             dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
-            RenderBatches = RenderBatch.FromDashes(dashes, Index).ToArray();
+            RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
         }
 
         #endregion
@@ -258,9 +273,10 @@ namespace NodeMarkup.Manager
                 LineIntersects.Remove(intersect.Pair);
             }
             foreach (var filler in GetLineFillers(line).ToArray())
-            {
                 FillersList.Remove(filler);
-            }
+
+            if (CrosswalksDictionary.ContainsKey(line))
+                CrosswalksDictionary.Remove(line);
 
             LinesDictionary.Remove(line.PointPair.Hash);
         }
@@ -284,6 +300,13 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
+        public bool TryGetLine<LineType>(ulong lineId, Dictionary<ObjectId, ObjectId> map, out LineType line)
+            where LineType : MarkupLine
+        {
+            MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair);
+            return TryGetLine(pair.Hash, out line);
+        }
+
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {
             enter = EntersList.Find(e => e.Id == enterId);
@@ -292,11 +315,11 @@ namespace NodeMarkup.Manager
         public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false) 
+        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false)
             => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
         public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkupLine line)
         {
-            foreach(var otherLine in Lines)
+            foreach (var otherLine in Lines)
             {
                 if (otherLine != line)
                     yield return GetIntersect(new MarkupLinePair(line, otherLine));
@@ -353,37 +376,37 @@ namespace NodeMarkup.Manager
 
         #endregion
 
+        #region CROSSWALK
+
+        public void AddCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            CrosswalksDictionary[crosswalk.Line] = crosswalk;
+            crosswalk.RecalculateDashes();
+            NeedRecalculateBatches = true;
+        }
+        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
+
+        #endregion
+
         #region XML
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlSection,
-                new XAttribute(nameof(Id), Id.ToString())
-            );
+            var config = new XElement(XmlSection, new XAttribute(nameof(Id), Id));
 
             foreach (var enter in Enters)
             {
                 foreach (var point in enter.Points)
-                {
-                    var pointConfig = point.ToXml();
-                    config.Add(pointConfig);
-                }
-                //foreach (var point in enter.Crosswalks)
-                //{
-                //    var pointConfig = point.ToXml();
-                //    config.Add(pointConfig);
-                //}
+                    config.Add(point.ToXml());
             }
             foreach (var line in Lines)
-            {
-                var lineConfig = line.ToXml();
-                config.Add(lineConfig);
-            }
+                config.Add(line.ToXml());
+
             foreach (var filler in Fillers)
-            {
-                var fillerConfig = filler.ToXml();
-                config.Add(fillerConfig);
-            }
+                config.Add(filler.ToXml());
+
+            foreach (var crosswalk in Crosswalks)
+                config.Add(crosswalk.ToXml());
 
             return config;
         }
@@ -419,6 +442,11 @@ namespace NodeMarkup.Manager
             {
                 if (MarkupFiller.FromXml(fillerConfig, this, map, out MarkupFiller filler))
                     FillersList.Add(filler);
+            }
+            foreach (var crosswalkConfig in config.Elements(MarkupCrosswalk.XmlName))
+            {
+                if (MarkupCrosswalk.FromXml(crosswalkConfig, this, map, out MarkupCrosswalk crosswalk))
+                    CrosswalksDictionary[crosswalk.Line] = crosswalk;
             }
         }
 

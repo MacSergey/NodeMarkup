@@ -86,21 +86,21 @@ namespace NodeMarkup.Manager
         }
         public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width = 0.2f) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
 
-        public static MarkupLine FromStyle(Markup makrup, MarkupPointPair pointPair, Style.StyleType style)
+        public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
         {
             switch (style & Style.StyleType.GroupMask)
             {
                 case Style.StyleType.StopLine:
-                    return new MarkupStopLine(makrup, pointPair, (StopLineStyle.StopLineType)(int)style);
+                    return new MarkupStopLine(markup, pointPair, (StopLineStyle.StopLineType)(int)style);
                 case Style.StyleType.Crosswalk:
-                    return new MarkupCrosswalkLine(makrup, pointPair, (CrosswalkStyle.CrosswalkType)(int)style);
+                    return new MarkupCrosswalkLine(markup, pointPair, (CrosswalkStyle.CrosswalkType)(int)style);
                 case Style.StyleType.RegularLine:
                 default:
                     var regularStyle = (RegularLineStyle.RegularLineType)(int)style;
                     if (pointPair.IsNormal)
-                        return new MarkupNormalLine(makrup, pointPair, regularStyle);
+                        return new MarkupNormalLine(markup, pointPair, regularStyle);
                     else
-                        return new MarkupRegularLine(makrup, pointPair, regularStyle);
+                        return new MarkupRegularLine(markup, pointPair, regularStyle);
             }
         }
         public virtual XElement ToXml()
@@ -114,14 +114,12 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, Markup makrup, Dictionary<ObjectId, ObjectId> map, out MarkupLine line)
         {
-
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
             MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair);
 
-            var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
-
             if (!makrup.TryGetLine(pointPair.Hash, out line))
             {
+                var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
                 switch (type)
                 {
                     case LineType.Regular:
@@ -327,10 +325,10 @@ namespace NodeMarkup.Manager
         public float MinT => GetT(!IsInvert ? BorderPosition.Right : BorderPosition.Left);
         public float MaxT => GetT(!IsInvert ? BorderPosition.Left : BorderPosition.Right);
 
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair) : this(markup, pointPair, CrosswalkStyle.CrosswalkType.Existent) { }
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType) : base(markup, pointPair)
+        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair) 
         {
-            AddDefaultCrosswalk(crosswalkType);
+            Crosswalk = new MarkupCrosswalk(Markup, this, crosswalkType);
+            Markup.AddCrosswalk(Crosswalk);
         }
         protected override MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
         {
@@ -338,32 +336,12 @@ namespace NodeMarkup.Manager
             var to = empty ? null : new CrosswalkBorderEdge(this, BorderPosition.Left);
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
-        private void SetCrosswalk(MarkupCrosswalk crosswalkRule)
-        {
-            crosswalkRule.OnCrosswalkChanged = RuleChanged;
-            Crosswalk = crosswalkRule;
-
-            RuleChanged();
-        }
-        private void AddDefaultCrosswalk(CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent)
-        {
-            var style = TemplateManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType);
-            SetCrosswalk(new MarkupCrosswalk(Markup, this, style));
-        }
         protected override void RuleChanged() => Markup.Update(this, true, true);
 
         protected override ILineTrajectory CalculateTrajectory()
         {
-            var offset = NormalDir * ((Crosswalk?.Style.GetTotalWidth(this) ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
+            var offset = NormalDir * ((Crosswalk?.TotalWidth ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
             return new StraightTrajectory(PointPair.First.Position + offset, PointPair.Second.Position + offset, false);
-        }
-        protected override IEnumerable<MarkupStyleDash> GetDashes()
-        {
-            foreach (var dash in base.GetDashes())
-                yield return dash;
-
-            foreach (var dash in Crosswalk.Style.Calculate(this, LineTrajectory))
-                yield return dash;
         }
         public float GetT(BorderPosition borderPosition) 
             => Crosswalk.GetBorder(borderPosition) is MarkupRegularLine border && Markup.GetIntersect(this, border) is MarkupLinesIntersect intersect && intersect.IsIntersect ? intersect[this] : DefaultT(borderPosition);
