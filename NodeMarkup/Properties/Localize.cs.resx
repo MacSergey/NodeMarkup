@@ -360,7 +360,13 @@ Klikněte pro změnu značení</value>
 +Shift - plná čára
 +Ctrl - dvojitá čára</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Vyber bod pro vytvoření
+nebo odstranění čáry
++Ctrl pro posunutí bodu
+Drž Alt pro vytvoření výplně
+Drž Shift pro vytvoření přechodu</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
   </data>
@@ -675,7 +681,10 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Přechody</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Na této křižovatce nejsou žádné přechody.
+Pro vytvoření přechodu drž Shift.</value>
+  </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>přechod</value>
   </data>
@@ -724,9 +733,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Souběžná s pruhy</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Souběžné čáry</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Levý roh</value>
   </data>
@@ -752,8 +759,22 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Pravidlo se překrývá s jiným pravidlem.
 Zkontrolujte počáteční a koncové body ostatních pravidel.</value>
   </data>
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Levý roh přechodu</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Pravý roh přechodu</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Resetovat</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Vyber koncový bod</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Vyber bod pro vytvoření
+nebo odstranění přechodu</value>
+  </data>
   
   
   

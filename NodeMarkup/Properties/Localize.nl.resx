@@ -359,7 +359,13 @@ Deze actie kan niet ongedaan worden gemaakt</value>
 +Shift - Ononderbroken
 +Ctrl - Dubbel</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Selecteer een punt om
+een lijn te creëren of te verwijderen
++Ctrl om een punt te verplaatsen
+Houd Alt ingedrukt om een opvulling te creëren
+Houd Shift ingedrukt om een zebrapad te creëren</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Wat is er nieuw in {0}</value>
   </data>
@@ -674,7 +680,10 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Zebrapaden</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Er zijn nog geen zebrapaden op deze kruising.
+Houd Shift ingedrukt om een zebrapad te maken.</value>
+  </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>zebrapad</value>
   </data>
@@ -723,9 +732,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel aan rijstroken</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Parallelle lijnen</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Linker grens</value>
   </data>
@@ -751,8 +758,22 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>De regel wordt overlapt door een andere regel.
 Controleer de "Van" en "Naar" punten van andere regels.</value>
   </data>
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Zebrapad rand links</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Zebrapad rand rechts</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Selecteer eindpunt</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Selecteer een punt om
+een zebrapad te creëren of te verwijderen</value>
+  </data>
   
   
   

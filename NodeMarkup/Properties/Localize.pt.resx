@@ -734,9 +734,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Paralelo as vias</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Linhas paralelas</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Borda esquerda</value>
   </data>
@@ -762,6 +760,9 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
     <value>A regra é sobreposta por outra regra.
 Verifique os pontos "De" e "Para" de outras regras.</value>
   </data>
+  
+  
+  
   
   
   

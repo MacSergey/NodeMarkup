@@ -721,9 +721,7 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallelo alle corsie</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Linee parallele</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Bordo sinistro</value>
   </data>
@@ -736,6 +734,9 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleziona il bordo destro dell'attraversamento</value>
   </data>
+  
+  
+  
   
   
   
