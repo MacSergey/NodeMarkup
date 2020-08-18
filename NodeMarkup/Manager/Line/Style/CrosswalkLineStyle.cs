@@ -399,7 +399,7 @@ namespace NodeMarkup.Manager
             var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
             var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
 
-            return CalculateSolid(trajectory, 0, CalculateDashes);
+            return CalculateSolid(trajectory, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {

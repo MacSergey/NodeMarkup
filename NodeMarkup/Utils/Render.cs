@@ -189,7 +189,7 @@ namespace NodeMarkup.Utils
 
         public static IEnumerable<RenderBatch> FromDashes(IEnumerable<MarkupStyleDash> dashes, Vector4 index)
         {
-            var groups = dashes.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(d.Length.RoundToNearest(0.05f), 1f, d.Width));
+            var groups = dashes.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(Round(d.Length), 1f, d.Width));
 
             foreach (var group in groups)
             {
@@ -213,6 +213,13 @@ namespace NodeMarkup.Utils
                 }
                 while (!isEnd);
             }
+        }
+        private static int RoundTo => 5;
+        public static float Round(float length)
+        {
+            var cm = (int)(length * 100);
+            var mod = cm % RoundTo;
+            return (mod == 0 ? cm : cm - mod + RoundTo) / 100f;
         }
 
         public override string ToString() => $"{Count}: {Size}";

@@ -49,9 +49,10 @@ namespace NodeMarkup.Manager
         public static float DefaultSpaceLength { get; } = 1.5f;
         public static float DefaultOffset { get; } = 0.15f;
 
-        public static float AngleDelta { get; } = 5f;
+        public static float MinAngleDelta { get; } = 5f;
         public static float MaxLength { get; } = 10f;
         public static float MinLength { get; } = 1f;
+        private static int MaxDepth => 5;
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -89,28 +90,35 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-        protected IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, int depth, Func<ILineTrajectory, IEnumerable<MarkupStyleDash>> calculateDashes)
+        protected IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, Func<ILineTrajectory, IEnumerable<MarkupStyleDash>> calculateDashes)
+            => CalculateSolid(0, trajectory, trajectory.DeltaAngle, calculateDashes);
+        private IEnumerable<MarkupStyleDash> CalculateSolid(int depth, ILineTrajectory trajectory, float deltaAngle, Func<ILineTrajectory, IEnumerable<MarkupStyleDash>> calculateDashes)
         {
-            var deltaAngle = trajectory.DeltaAngle;
-            var direction = trajectory.Direction;
-            var length = direction.magnitude;
+            var length = trajectory.Magnitude;
 
-            if (depth < 5 && ((deltaAngle > AngleDelta && length >= MinLength) || length > MaxLength || depth == 0))
+            if (depth < MaxDepth && ((MinAngleDelta < deltaAngle && MinLength <= length) || MaxLength < length || depth == 0))
             {
                 trajectory.Divide(out ILineTrajectory first, out ILineTrajectory second);
+                var firstDeltaAngle = first.DeltaAngle;
+                var secondDeltaAngle = second.DeltaAngle;
 
-                foreach (var dash in CalculateSolid(first, depth + 1, calculateDashes))
-                    yield return dash;
+                if (depth != 0 || MinAngleDelta < deltaAngle || MinAngleDelta < firstDeltaAngle + secondDeltaAngle)
+                {
+                    foreach (var dash in CalculateSolid(depth + 1, first, firstDeltaAngle, calculateDashes))
+                        yield return dash;
 
-                foreach (var dash in CalculateSolid(second, depth + 1, calculateDashes))
-                    yield return dash;
+                    foreach (var dash in CalculateSolid(depth + 1, second, secondDeltaAngle, calculateDashes))
+                        yield return dash;
+
+                    yield break;
+                }
             }
-            else
-            {
-                foreach (var dash in calculateDashes(trajectory))
-                    yield return dash;
-            }
+
+            foreach (var dash in calculateDashes(trajectory))
+                yield return dash;
         }
+
+
         protected IEnumerable<MarkupStyleDash> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, Func<ILineTrajectory, float, float, IEnumerable<MarkupStyleDash>> calculateDashes)
         {
             List<DashT> dashesT;

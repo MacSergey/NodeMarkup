@@ -19,7 +19,7 @@ namespace NodeMarkup.Manager
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return CalculateSolid(trajectory, 0, CalculateDashes);
+            return CalculateSolid(trajectory, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
@@ -54,7 +54,7 @@ namespace NodeMarkup.Manager
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return CalculateSolid(trajectory, 0, CalculateDashes);
+            return CalculateSolid(trajectory, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
             {
