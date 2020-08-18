@@ -147,6 +147,7 @@ namespace NodeMarkup
             FillerPointsSelector = null;
             ToolMode = Mode.Node;
             cursorInfoLabel.isVisible = false;
+            cursorInfoLabel.text = string.Empty;
             Panel?.EndPanelAction();
             Panel?.Hide();
         }
