@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodeMarkup.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -47,6 +48,40 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelLines))]
             ParallelLines = StyleType.CrosswalkParallelLines,
+        }
+
+
+        protected float GetOffset(MarkupIntersect intersect, float offset)
+        {
+            var tan = Mathf.Tan(intersect.Angle);
+            return tan != 0 ? offset / tan : 1000f;
+        }
+
+        protected IEnumerable<MarkupStyleDash> CalculateCroswalkDash(ILineTrajectory trajectory, float startT, float endT, Vector3 direction, ILineTrajectory[] borders, float length, float width)
+        {
+            var position = trajectory.Position((startT + endT) / 2);
+            var dashTrajectory = new StraightTrajectory(position, position + direction, false);
+            var intersects = MarkupIntersect.Calculate(dashTrajectory, borders, true);
+            intersects = intersects.OrderBy(i => i.FirstT).ToList();
+
+            var halfLength = length / 2;
+            var halfWidth = width / 2;
+            for (var i = 1; i < intersects.Count; i += 2)
+            {
+                var startOffset = GetOffset(intersects[i - 1], halfWidth);
+                var endOffset = GetOffset(intersects[i], halfWidth);
+
+                var start = Mathf.Clamp(intersects[i - 1].FirstT + startOffset, -halfLength, halfLength);
+                var end = Mathf.Clamp(intersects[i].FirstT - endOffset, -halfLength, halfLength);
+
+                if ((end - start) < width)
+                    continue;
+
+                var startPosition = position + direction * start;
+                var endPosition = position + direction * end;
+
+                yield return new MarkupStyleDash(startPosition, endPosition, direction, width, Color);
+            }
         }
     }
 }

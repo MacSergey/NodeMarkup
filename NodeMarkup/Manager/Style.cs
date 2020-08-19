@@ -283,14 +283,15 @@ namespace NodeMarkup.Manager
         public float Width { get; set; }
         public Color Color { get; set; }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color)
+        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color)
         {
-            Position = (start + end) / 2;
+            Position = position;
             Angle = angle;
             Length = length;
             Width = width;
             Color = color;
         }
+        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color) : this((start + end) / 2, angle, length, width, color) { }
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color) : this(start, end, dir.AbsoluteAngle(), length, width, color) { }
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color) : this(start, end, dir, (end - start).magnitude, width, color) { }
     }

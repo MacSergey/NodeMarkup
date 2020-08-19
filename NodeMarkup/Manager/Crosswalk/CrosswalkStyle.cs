@@ -245,23 +245,23 @@ namespace NodeMarkup.Manager
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk)
         {
-            yield break;
-            //var offset = -crosswalk.NormalDir * (GetVisibleWidth(crosswalk) / 2 + OffsetAfter);
+            var offset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
 
-            //var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
-            //var dashLength = Parallel ? DashLength / coef : DashLength;
-            //var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
-            //var angle = Parallel ? (float?)crosswalk.NormalDir.Turn90(true).AbsoluteAngle() : null;
+            var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
+            var dashLength = Parallel ? DashLength / coef : DashLength;
+            var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
+            var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
+            var angle = direction.AbsoluteAngle();
+            var borders = crosswalk.BorderTrajectories;
+            var halfLength = Width / 2;
+            var halfWidth = DashLength / 2;
 
-            //if (!Parallel)
-            //    Cut(crosswalk.Line, trajectory, Width, out trajectory);
+            var trajectory = crosswalk.GetFullTrajectory(offset, direction);
 
-            //return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
+            return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
-            //IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
-            //{
-            //    yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset, Width, Color, angle);
-            //}
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory crosswalkTrajectory, float startT, float endT)
+                => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -320,27 +320,31 @@ namespace NodeMarkup.Manager
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk)
         {
-            yield break;
-            //var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetAfter;
-            //var deltaOffset = GetLengthCoef((Width + Offset) / 2, crosswalk);
-            //var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
-            //var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
+            var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
+            var deltaOffset = GetLengthCoef((Width + Offset) / 2, crosswalk);
+            var firstOffset = -crosswalk.NormalDir * (middleOffset - deltaOffset);
+            var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
 
-            //var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
-            //var dashLength = Parallel ? DashLength / coef : DashLength;
-            //var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
-            //var angle = Parallel ? (float?)crosswalk.NormalDir.Turn90(true).AbsoluteAngle() : null;
+            var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
+            var dashLength = Parallel ? DashLength / coef : DashLength;
+            var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
+            var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
+            var angle = direction.AbsoluteAngle();
+            var borders = crosswalk.BorderTrajectories;
+            var halfLength = Width / 2;
+            var halfWidth = DashLength / 2;
 
-            //if (!Parallel)
-            //    Cut(crosswalk.Line, trajectory, Width, out trajectory);
+            var trajectoryFirst = crosswalk.GetFullTrajectory(middleOffset - deltaOffset, direction);
+            var trajectorySecond = crosswalk.GetFullTrajectory(middleOffset + deltaOffset, direction);
 
-            //return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
+            foreach (var dash in StyleHelper.CalculateDashed(trajectoryFirst, dashLength, spaceLength, CalculateDashes))
+                yield return dash;
 
-            //IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
-            //{
-            //    yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, firstOffset, firstOffset, Width, Color, angle);
-            //    yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, secondOffset, secondOffset, Width, Color, angle);
-            //}
+            foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, dashLength, spaceLength, CalculateDashes))
+                yield return dash;
+
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory crosswalkTrajectory, float startT, float endT)
+                => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)

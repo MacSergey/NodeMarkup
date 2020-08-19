@@ -53,9 +53,15 @@ namespace NodeMarkup.Manager
                 CrosswalkChanged();
             }
         }
+
+        public ILineTrajectory RightBorderTrajectory => RightBorder?.Trajectory ?? new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
+        public ILineTrajectory LeftBorderTrajectory => LeftBorder?.Trajectory ?? new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
+        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, new StraightTrajectory((StraightTrajectory)Line.Trajectory), RightBorderTrajectory, LeftBorderTrajectory };
+
         public float TotalWidth => Style.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
         public Vector3 NormalDir => EnterLine.Start.Enter.NormalDir;
+        public Vector3 CornerDir => EnterLine.Start.Enter.CornerDir;
 
 
         #endregion
@@ -88,21 +94,44 @@ namespace NodeMarkup.Manager
         }
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
-        public StraightTrajectory GetTrajectory() => GetTrajectory(TotalWidth);
-        public StraightTrajectory GetTrajectory(float offset)
+        private StraightTrajectory GetOffsetTrajectory(float offset)
         {
             var start = EnterLine.Start.Position + NormalDir * offset;
             var end = EnterLine.End.Position + NormalDir * offset;
-            var trajectory = new StraightTrajectory(start, end, false);
+            return new StraightTrajectory(start, end, false);
+        }
+        public StraightTrajectory GetTrajectory() => GetTrajectory(TotalWidth);
+        public StraightTrajectory GetTrajectory(float offset)
+        {
+            var trajectory = GetOffsetTrajectory(offset);
 
-            var startT = GetT(trajectory, RightBorder, 0);
-            var endT = GetT(trajectory, LeftBorder, 1);
+            var startT = GetT(trajectory, RightBorderTrajectory, 0);
+            var endT = GetT(trajectory, LeftBorderTrajectory, 1);
 
             return (StraightTrajectory)trajectory.Cut(startT, endT);
         }
-        private float GetT(StraightTrajectory trajectory, MarkupLine line, float defaultT) => line != null ? GetT(trajectory, line.Trajectory, defaultT) : defaultT;
+        public StraightTrajectory GetFullTrajectory(float offset, Vector3 normal)
+        {
+            var trajectory = GetOffsetTrajectory(offset);
+
+            var startT = GetT(trajectory, normal, new Vector3[] { EnterLine.Start.Position, Line.Trajectory.StartPosition }, 0, MinAggregate);
+            var endT = GetT(trajectory, normal, new Vector3[] { EnterLine.End.Position, Line.Trajectory.EndPosition }, 1, MaxAggregate);
+
+            return (StraightTrajectory)trajectory.Cut(startT, endT);
+        }
+        private float MinAggregate(MarkupIntersect[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
+        private float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
+
         private float GetT(StraightTrajectory trajectory, ILineTrajectory lineTrajectory, float defaultT)
             => MarkupIntersect.Calculate(trajectory, lineTrajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
+
+        private float GetT(StraightTrajectory trajectory, Vector3 normal, IEnumerable<Vector3> positions, float defaultT, Func<MarkupIntersect[], float> aggregate)
+        {
+            var intersects = positions.SelectMany(p => MarkupIntersect.Calculate(trajectory, new StraightTrajectory(p, p + normal, false))).ToArray();
+            return intersects.Any() ? aggregate(intersects) : defaultT;
+        }
+
+
         public bool IsBorder(MarkupLine line) => line != null && (line == RightBorder || line == LeftBorder);
         public void RemoveBorder(MarkupLine line)
         {

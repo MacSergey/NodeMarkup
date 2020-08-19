@@ -56,6 +56,8 @@ namespace NodeMarkup.Utils
 
             return new List<MarkupIntersect>();
         }
+        public static List<MarkupIntersect> Calculate(ILineTrajectory trajectory, IEnumerable<ILineTrajectory> otherTrajectories, bool onlyIntersect = false) 
+            => otherTrajectories.SelectMany(t => Calculate(trajectory, t)).Where(i => !onlyIntersect || i.IsIntersect).ToList();
 
         #region BEZIER - BEZIER
         public static List<MarkupIntersect> Calculate(BezierTrajectory bezier1, BezierTrajectory bezier2)
@@ -196,7 +198,7 @@ namespace NodeMarkup.Utils
                 positons[i] = bezier.Position(points[i]);
             }
         }
-        private static bool CorrectT(float t) => 0 <= t && t <= 1;
+        public static bool CorrectT(float t) => 0 <= t && t <= 1;
     }
     public class MarkupLinesIntersect : MarkupIntersect
     {
