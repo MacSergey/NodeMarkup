@@ -324,8 +324,8 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false) 
         {
             Crosswalk = new MarkupCrosswalk(Markup, this, crosswalkType);
-            Markup.AddCrosswalk(Crosswalk);
             UpdateTrajectory();
+            Markup.AddCrosswalk(Crosswalk);
         }
         protected override MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
         {

@@ -679,6 +679,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на No templates.
+        /// </summary>
+        public static string HeaderPanel_NoTemplates {
+            get {
+                return ResourceManager.GetString("HeaderPanel_NoTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Save as template.
         /// </summary>
         public static string HeaderPanel_SaveAsTemplate {

@@ -818,4 +818,7 @@ create or delete a crosswalk</value>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
     <value>Ladder</value>
   </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>No templates</value>
+  </data>
 </root>

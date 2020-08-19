@@ -273,10 +273,26 @@ namespace NodeMarkup.UI.Editors
                     child.eventVisibilityChanged += (UIComponent component, bool value) => FitContentChildren();
                     child.eventSizeChanged += (UIComponent component, Vector2 value) => FitContentChildren();
                 };
+
+                FitContentChildren();
             }
             private void Fill(Style.StyleType styleGroup)
             {
-                foreach (var template in TemplateManager.GetTemplates(styleGroup))
+                var templates = TemplateManager.GetTemplates(styleGroup).ToArray();
+                if(!templates.Any())
+                {
+                    var emptyLabel = ScrollableContent.AddUIComponent<UILabel>();
+                    emptyLabel.text = NodeMarkup.Localize.HeaderPanel_NoTemplates;
+                    emptyLabel.textScale = 0.8f;
+                    emptyLabel.autoSize = false;
+                    emptyLabel.width = ScrollableContent.width;
+                    emptyLabel.autoHeight = true;
+                    emptyLabel.textAlignment = UIHorizontalAlignment.Center;
+                    emptyLabel.padding = new RectOffset(0, 0, 5, 5);
+                    return;
+                }
+
+                foreach (var template in templates)
                 {
                     var item = ScrollableContent.AddUIComponent<TemplateItem>();
                     item.Init(true, false);
