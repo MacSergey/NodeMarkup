@@ -758,8 +758,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Параллельно линиям</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Параллельные линии</value>
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Параллельные сплошные линии</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Левая граница</value>
@@ -788,13 +788,9 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>Левая граница перехода</value>
-    <comment>
-</comment>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>Правая граница перехода</value>
-    <comment>
-</comment>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>Сбросить</value>
@@ -805,5 +801,14 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
 для создания или удаления перехода</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Параллельные пунктирные линии</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Лестница</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Нет шаблонов</value>
   </data>
 </root>

@@ -724,9 +724,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Równolegle do pasów</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Linie równoległe</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Lewa krawędź</value>
   </data>
@@ -752,6 +750,9 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Reguła jest nadpisywana przez inną regułę.
 Sprawdź punkty "Z" i "Do" innych reguł.</value>
   </data>
+  
+  
+  
   
   
   

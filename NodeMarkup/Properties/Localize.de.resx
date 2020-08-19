@@ -360,7 +360,13 @@ Klicken um Markierung zu bearbeiten</value>
 +Shift - Durchgezogen
 +Strg - Doppelt</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Startpunkt wählen zum
+Linie erstellen oder löschen
++Strg um den Punkt zu verschieben
+Alt halten um eine Füllung zu erstellen
+Shift halten um einen Zebrastreifen zu erstellen</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
   </data>
@@ -710,7 +716,10 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Zebrastreifen</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Es befinden sich noch keine Zebrastreifen auf dieser Kreuzung.
+Zum Erstellen eines Zebrastreifens Shift gedrückt halten.</value>
+  </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>Zebrastreifen</value>
   </data>
@@ -759,9 +768,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel zu Fahrspuren</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Parallele Linien</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Linker Rand</value>
   </data>
@@ -787,11 +794,23 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
     <value>Diese Regel wird von einer anderen Regel überlagert.
 Überprüfe die "Von" und "Zu" Punkte der anderen Regeln.</value>
   </data>
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Linke Außenlinie des Zebrastreifens</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Rechte Außenlinie des Zebrastreifens</value>
+  </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>Zurücksetzen</value>
   </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Endpunkt auswählen</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Wähle einen Punkt zum
+Erstellen oder Löschen eines Zebrastreifens</value>
+  </data>
+  
   
   
 </root>

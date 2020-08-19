@@ -701,9 +701,10 @@ Cliquez pour modifier le marquage</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallèle aux voies</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Lignes parallèles</value>
-  </data>
+  
+  
+  
+  
   
   
   

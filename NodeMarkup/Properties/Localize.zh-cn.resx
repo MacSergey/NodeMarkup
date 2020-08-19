@@ -733,9 +733,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>与车道平行</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>平行线</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>左边界</value>
   </data>
@@ -763,13 +761,9 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>人行横道左边界</value>
-    <comment>
-</comment>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>人行横道右边界</value>
-    <comment>
-</comment>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>重置</value>
@@ -781,4 +775,7 @@ Shift x10，Ctrl x0.1</value>
     <value>点选起始点
 来创建/删除人行横道</value>
   </data>
+  
+  
+  
 </root>

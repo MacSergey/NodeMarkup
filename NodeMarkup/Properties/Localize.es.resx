@@ -724,9 +724,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Paralelo a los carriles</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Líneas paralelas</value>
-  </data>
+  
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Borde izquierdo</value>
   </data>
@@ -746,6 +744,9 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
     <value>Organizar en una línea</value>
   </data>
+  
+  
+  
   
   
   
