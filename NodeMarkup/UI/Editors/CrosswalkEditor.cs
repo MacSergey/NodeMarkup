@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
                 BorderLines = null;
 
                 _selectBorderPanel = value;
-                if(IsSelectBorderPanelMode)
+                if (IsSelectBorderPanelMode)
                     BorderLines = HoverBorderPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray();
             }
         }
@@ -51,7 +51,7 @@ namespace NodeMarkup.UI.Editors
         protected override void FillItems()
         {
             foreach (var crosswalk in Markup.Crosswalks)
-                    AddItem(crosswalk);
+                AddItem(crosswalk);
         }
         protected override void OnObjectSelect()
         {
@@ -76,48 +76,54 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddBordersProperties()
         {
-            var rightBorders = GetBorderLines(!EditObject.Line.IsInvert ? EditObject.Line.Start : EditObject.Line.End);
-            if (rightBorders.Any())
-                AddRightBorderProperty(rightBorders);
-
-            var leftBorders = GetBorderLines(!EditObject.Line.IsInvert ? EditObject.Line.End : EditObject.Line.Start);
-            if (leftBorders.Any())
-                AddLeftBorderProperty(leftBorders);
-
-            MarkupRegularLine[] GetBorderLines(MarkupPoint point)
-            {
-                if (point.Enter.TryGetPoint(point.Num, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
-                    return enterPoint.Markup.GetPointLines(enterPoint).OfType<MarkupRegularLine>().ToArray();
-                else
-                    return new MarkupRegularLine[0];
-            }
+            AddRightBorderProperty();
+            AddLeftBorderProperty();
+            FillBorders();
         }
-        private void AddRightBorderProperty(MarkupRegularLine[] borders)
+        private void FillBorders()
+        {
+            FillBorder(RightBorder, RightBorgerChanged, GetBorderLines(BorderPosition.Right), EditObject.RightBorder);
+            FillBorder(LeftBorder, LeftBorgerChanged, GetBorderLines(BorderPosition.Left), EditObject.LeftBorder);
+        }
+        private MarkupRegularLine[] GetBorderLines(BorderPosition border)
+        {
+            var point = border == BorderPosition.Right ^ EditObject.Line.IsInvert ? EditObject.Line.Start : EditObject.Line.End;
+            if (point.Enter.TryGetPoint(point.Num, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
+                return enterPoint.Markup.GetPointLines(enterPoint).OfType<MarkupRegularLine>().ToArray();
+            else
+                return new MarkupRegularLine[0];
+        }
+        private void FillBorder(MarkupCrosswalkSelectPropertyPanel panel, Action<MarkupRegularLine> action, MarkupRegularLine[] lines, MarkupRegularLine value)
+        {
+            panel.OnSelectChanged -= action;
+            panel.Clear();
+            panel.AddRange(lines);
+            panel.SelectedObject = value;
+            panel.isVisible = lines.Any();
+            panel.OnSelectChanged += action;
+        }
+        private void AddRightBorderProperty()
         {
             RightBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
             RightBorder.Text = NodeMarkup.Localize.CrosswalkEditor_RightBorder;
             RightBorder.Position = BorderPosition.Right;
             RightBorder.Init();
-            RightBorder.AddRange(borders);
-            RightBorder.SelectedObject = EditObject.RightBorder;
-            RightBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.RightBorder = line;
             RightBorder.OnSelect += SelectBorder;
             RightBorder.OnHover += HoverBorder;
             RightBorder.OnLeave += LeaveBorder;
         }
-        private void AddLeftBorderProperty(MarkupRegularLine[] borders)
+        private void AddLeftBorderProperty()
         {
             LeftBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
             LeftBorder.Text = NodeMarkup.Localize.CrosswalkEditor_LeftBorder;
             LeftBorder.Position = BorderPosition.Left;
             LeftBorder.Init();
-            LeftBorder.AddRange(borders);
-            LeftBorder.SelectedObject = EditObject.LeftBorder;
-            LeftBorder.OnSelectChanged += (MarkupRegularLine line) => EditObject.LeftBorder = line;
             LeftBorder.OnSelect += SelectBorder;
             LeftBorder.OnHover += HoverBorder;
             LeftBorder.OnLeave += LeaveBorder;
         }
+        private void RightBorgerChanged(MarkupRegularLine line) => EditObject.RightBorder = line;
+        private void LeftBorgerChanged(MarkupRegularLine line) => EditObject.LeftBorder = line;
 
         private void AddStyleTypeProperty()
         {
@@ -187,7 +193,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
         protected override void OnObjectDelete(MarkupCrosswalk crosswalk) => Markup.RemoveCrosswalk(crosswalk);
-
+        protected override void OnObjectUpdate() => FillBorders();
         public void RefreshItem() => SelectItem.Refresh();
 
         #region EDITOR ACTION
@@ -237,7 +243,7 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverItem)
                     HoverItem.Object.Render(cameraInfo, MarkupColors.White);
 
-                if(IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
+                if (IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
                     NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, borderLine.Trajectory);
             }
         }

@@ -53,9 +53,11 @@ namespace NodeMarkup.Manager
                 CrosswalkChanged();
             }
         }
+        private StraightTrajectory DefaultRightBorderTrajectory => new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
+        private StraightTrajectory DefaultLeftBorderTrajectory => new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
+        public ILineTrajectory RightBorderTrajectory => RightBorder?.Trajectory ?? DefaultRightBorderTrajectory;
+        public ILineTrajectory LeftBorderTrajectory => LeftBorder?.Trajectory ?? DefaultLeftBorderTrajectory;
 
-        public ILineTrajectory RightBorderTrajectory => RightBorder?.Trajectory ?? new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
-        public ILineTrajectory LeftBorderTrajectory => LeftBorder?.Trajectory ?? new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
         public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, new StraightTrajectory((StraightTrajectory)Line.Trajectory), RightBorderTrajectory, LeftBorderTrajectory };
 
         public float TotalWidth => Style.GetTotalWidth(this);
@@ -77,6 +79,7 @@ namespace NodeMarkup.Manager
             _leftBorder = leftBorder;
 
             GetEnterLine();
+            Update();
         }
         private void GetEnterLine()
         {
@@ -88,12 +91,22 @@ namespace NodeMarkup.Manager
         protected void CrosswalkChanged() => Markup.Update(this);
         public void Update() => EnterLine.UpdateTrajectory();
         public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
-        public void Render(RenderManager.CameraInfo cameraInfo, Color32 white)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color color)
         {
-
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, Line.Trajectory);
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, EnterLine.Trajectory);
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, GetBorderTrajectory(RightBorder) ?? DefaultRightBorderTrajectory);
+            NodeMarkupTool.RenderTrajectory(cameraInfo, color, GetBorderTrajectory(LeftBorder) ?? DefaultLeftBorderTrajectory);
         }
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
+        private ILineTrajectory GetBorderTrajectory(MarkupRegularLine borderLine)
+        {
+            if (borderLine != null && MarkupIntersect.CalculateSingle(borderLine.Trajectory, Line.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
+                return EnterLine.PointPair.ContainPoint(borderLine.Start) ? borderLine.Trajectory.Cut(0, intersect.FirstT) : borderLine.Trajectory.Cut(intersect.FirstT, 1);
+            else
+                return null;
+        }
         private StraightTrajectory GetOffsetTrajectory(float offset)
         {
             var start = EnterLine.Start.Position + NormalDir * offset;
@@ -189,5 +202,7 @@ namespace NodeMarkup.Manager
         }
 
         #endregion
+
+        public override string ToString() => Line.ToString();
     }
 }
