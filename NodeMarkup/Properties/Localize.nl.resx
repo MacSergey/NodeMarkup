@@ -777,4 +777,7 @@ een zebrapad te creëren of te verwijderen</value>
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Ononderbroken</value>
+  </data>
 </root>

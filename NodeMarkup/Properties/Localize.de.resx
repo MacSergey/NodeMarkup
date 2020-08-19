@@ -768,7 +768,9 @@ Zum Erstellen eines Zebrastreifens Shift gedrückt halten.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel zu Fahrspuren</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Parallele durchgezogene Linien</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Linker Rand</value>
   </data>
@@ -810,7 +812,16 @@ Zum Erstellen eines Zebrastreifens Shift gedrückt halten.</value>
     <value>Wähle einen Punkt zum
 Erstellen oder Löschen eines Zebrastreifens</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Parallele gestrichelte Linien</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Leiter</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Keine Vorlagen</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Durchgezogen</value>
+  </data>
 </root>

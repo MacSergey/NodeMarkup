@@ -778,4 +778,7 @@ nebo odstranění přechodu</value>
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Nepřerušovná</value>
+  </data>
 </root>
