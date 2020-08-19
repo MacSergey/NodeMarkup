@@ -35,7 +35,7 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.CrosswalkExistent, nameof(Style.StyleType.CrosswalkExistent) },
                 {Style.StyleType.CrosswalkZebra, nameof(Style.StyleType.CrosswalkZebra) },
                 {Style.StyleType.CrosswalkDoubleZebra, nameof(Style.StyleType.CrosswalkDoubleZebra) },
-                {Style.StyleType.CrosswalkParallelLines, nameof(Style.StyleType.CrosswalkParallelLines) },
+                {Style.StyleType.CrosswalkParallelSolidLines, nameof(Style.StyleType.CrosswalkParallelSolidLines) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));

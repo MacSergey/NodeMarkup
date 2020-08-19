@@ -197,11 +197,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Parallel lines.
+        ///   Ищет локализованную строку, похожую на Ladder.
         /// </summary>
-        public static string CrosswalkStyle_ParallelLines {
+        public static string CrosswalkStyle_Ladder {
             get {
-                return ResourceManager.GetString("CrosswalkStyle_ParallelLines", resourceCulture);
+                return ResourceManager.GetString("CrosswalkStyle_Ladder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel dashed lines.
+        /// </summary>
+        public static string CrosswalkStyle_ParallelDashedLines {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_ParallelDashedLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel solid lines.
+        /// </summary>
+        public static string CrosswalkStyle_ParallelSolidLines {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_ParallelSolidLines", resourceCulture);
             }
         }
         

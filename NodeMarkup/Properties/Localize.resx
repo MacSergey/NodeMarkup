@@ -768,8 +768,8 @@ To create a crosswalk hold Shift.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel to lanes</value>
   </data>
-  <data name="CrosswalkStyle_ParallelLines" xml:space="preserve">
-    <value>Parallel lines</value>
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Parallel solid lines</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Left border</value>
@@ -798,13 +798,9 @@ Check other rule's "From" and "To" points.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>Crosswalk's left border</value>
-    <comment>
-</comment>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>Crosswalk's right border</value>
-    <comment>
-</comment>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>Reset</value>
@@ -815,5 +811,11 @@ Check other rule's "From" and "To" points.</value>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
     <value>Select a point to
 create or delete a crosswalk</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Parallel dashed lines</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Ladder</value>
   </data>
 </root>

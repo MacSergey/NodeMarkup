@@ -41,7 +41,11 @@ namespace NodeMarkup.Manager
     {
         float LineWidth { get; set; }
     }
-    public interface IDashedCrosswalk : IDashedLine { }
+    public interface IDashedCrosswalk
+    {
+        float DashLength { get; set; }
+        float SpaceLength { get; set; }
+    }
 
     public abstract class LineStyle : Style
     {
