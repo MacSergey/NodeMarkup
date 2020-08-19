@@ -821,4 +821,7 @@ create or delete a crosswalk</value>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
     <value>No templates</value>
   </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Solid</value>
+  </data>
 </root>

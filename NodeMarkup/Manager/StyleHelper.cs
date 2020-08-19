@@ -168,6 +168,31 @@ namespace NodeMarkup.Manager
             var endPosition = trajectory.EndPosition + endOffset;
             return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, width, color);
         }
+        public static void GetParts(float width, float offset, out int count, out float partWidth)
+        {
+            if (width < 0.2f || offset != 0f)
+            {
+                count = 1;
+                partWidth = width;
+            }
+            else
+            {
+                var intWidth = (int)(width * 100);
+                var delta = 20;
+                var num = 0;
+                for (var i = 10; i < 20; i += 1)
+                {
+                    var iDelta = intWidth - (intWidth / i) * i;
+                    if (iDelta < delta)
+                    {
+                        delta = iDelta;
+                        num = i;
+                    }
+                }
+                count = intWidth / num;
+                partWidth = num / 100f;
+            }
+        }
 
         struct DashT
         {

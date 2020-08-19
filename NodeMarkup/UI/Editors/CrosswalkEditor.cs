@@ -59,8 +59,8 @@ namespace NodeMarkup.UI.Editors
             AddBordersProperties();
             AddStyleTypeProperty();
             AddStyleProperties();
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
+                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
 
         #region PROPERTIES PANELS

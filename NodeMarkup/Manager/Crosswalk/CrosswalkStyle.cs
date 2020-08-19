@@ -604,4 +604,25 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", LineStyle.DefaultSpaceLength);
         }
     }
+    public class SolidCrosswalkStyle : CustomCrosswalkStyle
+    {
+        public override StyleType Type => StyleType.CrosswalkSolid;
+
+        public SolidCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width, offsetBefore, offsetAfter) { }
+
+        public override CrosswalkStyle CopyCrosswalkStyle() => new SolidCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter);
+        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk)
+        {
+            StyleHelper.GetParts(Width, 0, out int count, out float partWidth);
+            var partOffset = GetVisibleWidth(crosswalk) / count;
+            var startOffset = partOffset / 2;
+            for (var i = 0; i < count; i += 1)
+            {
+                var trajectory = crosswalk.GetTrajectory(startOffset + partOffset * i + OffsetBefore);
+                yield return new MarkupStyleDash(trajectory.StartPosition, trajectory.EndPosition, trajectory.Direction, partWidth, Color);
+            }
+        }
+    }
 }

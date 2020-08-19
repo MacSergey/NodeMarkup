@@ -278,6 +278,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Ladder))]
             CrosswalkLadder,
+
+            [Description(nameof(Localize.CrosswalkStyle_Solid))]
+            CrosswalkSolid,
         }
     }
 

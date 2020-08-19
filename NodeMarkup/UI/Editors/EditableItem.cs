@@ -222,7 +222,8 @@ namespace NodeMarkup.UI.Editors
         protected static Color32 GetStyleColor(Color32 color)
         {
             var ratio = 255 / (float)Math.Max(Math.Max(color.r, color.g), color.b);
-            return new Color32((byte)(color.r * ratio), (byte)(color.g * ratio), (byte)(color.b * ratio), 255);
+            var styleColor = new Color32((byte)(color.r * ratio), (byte)(color.g * ratio), (byte)(color.b * ratio), 255);
+            return styleColor == Color.black ? (Color32)Color.white : styleColor;
         }
         protected UIButton Thumbnail { get; set; }
 

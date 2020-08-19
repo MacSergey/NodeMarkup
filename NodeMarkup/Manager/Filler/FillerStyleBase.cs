@@ -173,7 +173,7 @@ namespace NodeMarkup.Manager
             var itemsCount = Math.Max((int)(length / itemLength) - 1, 0);
             var start = (length - (itemLength * itemsCount)) / 2;
 
-            GetParts(width, offset, out int partsCount, out partWidth);
+            StyleHelper.GetParts(width, offset, out int partsCount, out partWidth);
 
             for (var i = 0; i < itemsCount; i += 1)
             {
@@ -213,31 +213,6 @@ namespace NodeMarkup.Manager
             }
 
             return true;
-        }
-        protected void GetParts(float width, float offset, out int count, out float partWidth)
-        {
-            if (width < 0.2f || offset != 0f)
-            {
-                count = 1;
-                partWidth = width;
-            }
-            else
-            {
-                var intWidth = (int)(width * 100);
-                var delta = 20;
-                var num = 0;
-                for (var i = 10; i < 20; i += 1)
-                {
-                    var iDelta = intWidth - (intWidth / i) * i;
-                    if (iDelta < delta)
-                    {
-                        delta = iDelta;
-                        num = i;
-                    }
-                }
-                count = intWidth / num;
-                partWidth = num / 100f;
-            }
         }
         protected Rect GetRect(ILineTrajectory[] trajectories)
         {

@@ -233,6 +233,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid.
+        /// </summary>
+        public static string CrosswalkStyle_Solid {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_Solid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Zebra.
         /// </summary>
         public static string CrosswalkStyle_Zebra {

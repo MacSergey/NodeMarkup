@@ -306,7 +306,7 @@ namespace NodeMarkup.Manager
             var bezier = GetMiddleBezier(trajectories);
             var line = GetMiddleLine(bezier, halfAngelRad, rect);
 
-            GetParts(width, 0, out int partsCount, out partWidth);
+            StyleHelper.GetParts(width, 0, out int partsCount, out partWidth);
 
             positions = new List<Vector3[]>();
             directions = new List<Vector3>();
