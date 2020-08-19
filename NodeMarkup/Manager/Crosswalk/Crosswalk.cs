@@ -55,8 +55,8 @@ namespace NodeMarkup.Manager
         }
         private StraightTrajectory DefaultRightBorderTrajectory => new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
         private StraightTrajectory DefaultLeftBorderTrajectory => new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
-        public ILineTrajectory RightBorderTrajectory => RightBorder?.Trajectory ?? DefaultRightBorderTrajectory;
-        public ILineTrajectory LeftBorderTrajectory => LeftBorder?.Trajectory ?? DefaultLeftBorderTrajectory;
+        public ILineTrajectory RightBorderTrajectory { get; private set; }
+        public ILineTrajectory LeftBorderTrajectory { get; private set; }
 
         public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, new StraightTrajectory((StraightTrajectory)Line.Trajectory), RightBorderTrajectory, LeftBorderTrajectory };
 
@@ -79,7 +79,6 @@ namespace NodeMarkup.Manager
             _leftBorder = leftBorder;
 
             GetEnterLine();
-            Update();
         }
         private void GetEnterLine()
         {
@@ -93,27 +92,41 @@ namespace NodeMarkup.Manager
         public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
         public void Render(RenderManager.CameraInfo cameraInfo, Color color)
         {
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, Line.Trajectory);
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, EnterLine.Trajectory);
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, GetBorderTrajectory(RightBorder) ?? DefaultRightBorderTrajectory);
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, GetBorderTrajectory(LeftBorder) ?? DefaultLeftBorderTrajectory);
+            foreach (var trajectory in BorderTrajectories)
+                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory);
         }
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
-        private ILineTrajectory GetBorderTrajectory(MarkupRegularLine borderLine)
-        {
-            if (borderLine != null && MarkupIntersect.CalculateSingle(borderLine.Trajectory, Line.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
-                return EnterLine.PointPair.ContainPoint(borderLine.Start) ? borderLine.Trajectory.Cut(0, intersect.FirstT) : borderLine.Trajectory.Cut(intersect.FirstT, 1);
-            else
-                return null;
-        }
+
         private StraightTrajectory GetOffsetTrajectory(float offset)
         {
             var start = EnterLine.Start.Position + NormalDir * offset;
             var end = EnterLine.End.Position + NormalDir * offset;
             return new StraightTrajectory(start, end, false);
         }
-        public StraightTrajectory GetTrajectory() => GetTrajectory(TotalWidth);
+        public StraightTrajectory GetTrajectory()
+        {
+            var trajectory = GetOffsetTrajectory(TotalWidth);
+
+            RightBorderTrajectory = GetBorderTrajectory(trajectory, RightBorder, 0, DefaultRightBorderTrajectory, out float startT);
+            LeftBorderTrajectory = GetBorderTrajectory(trajectory, LeftBorder, 0, DefaultLeftBorderTrajectory, out float endT);
+
+            return (StraightTrajectory)trajectory.Cut(startT, endT);
+        }
+        private ILineTrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
+        {
+            if (border != null && MarkupIntersect.CalculateSingle(trajectory, border.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
+            {
+                t = intersect.FirstT;
+                return EnterLine.PointPair.ContainPoint(border.Start) ? border.Trajectory.Cut(0, intersect.SecondT) : border.Trajectory.Cut(intersect.SecondT, 1);
+            }
+            else
+            {
+                t = defaultT;
+                return defaultTrajectory;
+            }
+        }
+
         public StraightTrajectory GetTrajectory(float offset)
         {
             var trajectory = GetOffsetTrajectory(offset);
@@ -136,7 +149,7 @@ namespace NodeMarkup.Manager
         private float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
 
         private float GetT(StraightTrajectory trajectory, ILineTrajectory lineTrajectory, float defaultT)
-            => MarkupIntersect.Calculate(trajectory, lineTrajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
+            => MarkupIntersect.CalculateSingle(trajectory, lineTrajectory) is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
 
         private float GetT(StraightTrajectory trajectory, Vector3 normal, IEnumerable<Vector3> positions, float defaultT, Func<MarkupIntersect[], float> aggregate)
         {
