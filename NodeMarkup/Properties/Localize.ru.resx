@@ -811,4 +811,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
     <value>Нет шаблонов</value>
   </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Сплошная</value>
+  </data>
 </root>

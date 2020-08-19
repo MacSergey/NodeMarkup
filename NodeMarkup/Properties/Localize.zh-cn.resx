@@ -733,7 +733,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>与车道平行</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>平行实线</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>左边界</value>
   </data>
@@ -775,7 +777,16 @@ Shift x10，Ctrl x0.1</value>
     <value>点选起始点
 来创建/删除人行横道</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>平行虚线</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>阶梯式</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>没有模板</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>实线</value>
+  </data>
 </root>

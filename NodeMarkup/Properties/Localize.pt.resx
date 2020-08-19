@@ -768,4 +768,7 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Sólida</value>
+  </data>
 </root>

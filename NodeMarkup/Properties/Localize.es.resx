@@ -753,4 +753,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Continua</value>
+  </data>
 </root>

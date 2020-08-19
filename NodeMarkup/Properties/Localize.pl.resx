@@ -758,4 +758,7 @@ Sprawdź punkty "Z" i "Do" innych reguł.</value>
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Ciągła</value>
+  </data>
 </root>

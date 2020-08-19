@@ -746,4 +746,7 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Continua</value>
+  </data>
 </root>

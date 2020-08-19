@@ -712,4 +712,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Viiva</value>
+  </data>
 </root>

@@ -685,7 +685,10 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>横断歩道の一覧</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>交差点（ノード）に、横断歩道の設定がありません。
+2つのポイントを繋げて作りましょう。</value>
+  </data>
   <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
     <value>横断歩道</value>
   </data>
@@ -723,7 +726,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>2重のゼブラ模様</value>
   </data>
   <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
-    <value>横断歩道の幅</value>
+    <value>横断歩道の線幅</value>
   </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>縦方向のオフセット</value>
@@ -732,9 +735,11 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>横方向のオフセット</value>
   </data>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
-    <value>車線と平行にする</value>
+    <value>道路と平行にする</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>2本の実線</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>左枠線</value>
   </data>
@@ -761,10 +766,10 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
 他と重なっている、始点と終点のポイントを確認してください。</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>横断歩道の左境界線</value>
+    <value>横断歩道の左枠線</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>横断歩道の右境界線</value>
+    <value>横断歩道の右枠線</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>元に戻す</value>
@@ -776,7 +781,16 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>ポイントを選択して
 横断歩道の作成・削除する</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>2本の破線</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>梯子タイプ</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>テンプレートがありません</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>実線</value>
+  </data>
 </root>

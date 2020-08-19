@@ -718,4 +718,7 @@ Cliquez pour modifier le marquage</value>
   
   
   
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
 </root>
