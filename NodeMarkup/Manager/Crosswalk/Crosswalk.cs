@@ -19,6 +19,7 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalkLine Line { get; }
 
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
         MarkupRegularLine _leftBorder;
@@ -53,7 +54,8 @@ namespace NodeMarkup.Manager
             }
         }
         public float TotalWidth => Style.GetTotalWidth(this);
-
+        public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
+        public Vector3 NormalDir => EnterLine.Start.Enter.NormalDir;
 
 
         #endregion
@@ -64,22 +66,51 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
             Line = line;
-            Style = style;
-            RightBorder = rightBorder;
-            LeftBorder = leftBorder;
+            _style = style;
+            _rightBorder = rightBorder;
+            _leftBorder = leftBorder;
+
+            GetEnterLine();
+        }
+        private void GetEnterLine()
+        {
+            Line.Start.Enter.TryGetPoint(Line.Start.Num, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
+            Line.End.Enter.TryGetPoint(Line.End.Num, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);
+            EnterLine = new MarkupEnterLine(Markup, startPoint.Num < endPoint.Num ? startPoint : endPoint, startPoint.Num < endPoint.Num ? endPoint : startPoint);
         }
 
         protected void CrosswalkChanged() => Markup.Update(this);
-
-        public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
-        public void Update()
-        {
-
-        }
-        public void RecalculateDashes() => Dashes = Style.Calculate(this, Line.Trajectory).ToArray();
+        public void Update() => EnterLine.UpdateTrajectory();
+        public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
         public void Render(RenderManager.CameraInfo cameraInfo, Color32 white)
         {
 
+        }
+
+        public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
+        public StraightTrajectory GetTrajectory() => GetTrajectory(TotalWidth);
+        public StraightTrajectory GetTrajectory(float offset)
+        {
+            var start = EnterLine.Start.Position + NormalDir * offset;
+            var end = EnterLine.End.Position + NormalDir * offset;
+            var trajectory = new StraightTrajectory(start, end, false);
+
+            var startT = GetT(trajectory, RightBorder, 0);
+            var endT = GetT(trajectory, LeftBorder, 1);
+
+            return (StraightTrajectory)trajectory.Cut(startT, endT);
+        }
+        private float GetT(StraightTrajectory trajectory, MarkupLine line, float defaultT) => line != null ? GetT(trajectory, line.Trajectory, defaultT) : defaultT;
+        private float GetT(StraightTrajectory trajectory, ILineTrajectory lineTrajectory, float defaultT)
+            => MarkupIntersect.Calculate(trajectory, lineTrajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
+        public bool IsBorder(MarkupLine line) => line != null && (line == RightBorder || line == LeftBorder);
+        public void RemoveBorder(MarkupLine line)
+        {
+            if (line == RightBorder)
+                RightBorder = null;
+
+            if (line == LeftBorder)
+                LeftBorder = null;
         }
 
         #region XML

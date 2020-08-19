@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
         public override Style Copy() => CopyCrosswalkStyle();
         public abstract CrosswalkStyle CopyCrosswalkStyle();
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk, ILineTrajectory trajectory);
+        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk);
 
         public enum CrosswalkType
         {

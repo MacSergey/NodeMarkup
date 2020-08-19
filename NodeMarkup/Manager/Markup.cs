@@ -232,6 +232,7 @@ namespace NodeMarkup.Manager
             var dashes = new List<MarkupStyleDash>();
             dashes.AddRange(Lines.SelectMany(l => l.Dashes));
             dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
+            dashes.AddRange(Crosswalks.SelectMany(c => c.Dashes));
             RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
         }
 
@@ -277,6 +278,11 @@ namespace NodeMarkup.Manager
 
             if (CrosswalksDictionary.ContainsKey(line))
                 CrosswalksDictionary.Remove(line);
+            else
+            {
+                foreach (var crosswalk in GetLinesIsBorder(line))
+                    crosswalk.RemoveBorder(line);
+            }
 
             LinesDictionary.Remove(line.PointPair.Hash);
         }
@@ -354,9 +360,10 @@ namespace NodeMarkup.Manager
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
 
-        public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => LinesDictionary.Values.Where(l => l.ContainsPoint(point));
+        public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
         public IEnumerable<MarkupFiller> GetPointFillers(MarkupPoint point) => FillersList.Where(f => f.ContainsPoint(point));
+        public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
         #endregion
 

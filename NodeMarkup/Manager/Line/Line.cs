@@ -201,6 +201,7 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
             base(markup, pointPair)
         {
@@ -318,17 +319,13 @@ namespace NodeMarkup.Manager
     {
         public override LineType Type => LineType.Crosswalk;
         public MarkupCrosswalk Crosswalk { get; set; }
-        public float CornerAndNormalAngle => Start.Enter.CornerAndNormalAngle;
-        public Vector3 NormalDir => Start.Enter.NormalDir;
         public bool IsInvert => End.Num < Start.Num;
 
-        public float MinT => GetT(!IsInvert ? BorderPosition.Right : BorderPosition.Left);
-        public float MaxT => GetT(!IsInvert ? BorderPosition.Left : BorderPosition.Right);
-
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair) 
+        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false) 
         {
             Crosswalk = new MarkupCrosswalk(Markup, this, crosswalkType);
             Markup.AddCrosswalk(Crosswalk);
+            UpdateTrajectory();
         }
         protected override MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
         {
@@ -338,15 +335,8 @@ namespace NodeMarkup.Manager
         }
         protected override void RuleChanged() => Markup.Update(this, true, true);
 
-        protected override ILineTrajectory CalculateTrajectory()
-        {
-            var offset = NormalDir * ((Crosswalk?.TotalWidth ?? CrosswalkStyle.DefaultCrosswalkWidth) - MarkupCrosswalkPoint.Shift);
-            return new StraightTrajectory(PointPair.First.Position + offset, PointPair.Second.Position + offset, false);
-        }
-        public float GetT(BorderPosition borderPosition) 
-            => Crosswalk.GetBorder(borderPosition) is MarkupRegularLine border && Markup.GetIntersect(this, border) is MarkupLinesIntersect intersect && intersect.IsIntersect ? intersect[this] : DefaultT(borderPosition);
-        private float DefaultT(BorderPosition border) => (IsInvert ? 1 : 0) ^ (int)border;
-
+        protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(Crosswalk.GetTrajectory().Trajectory, false);
+        public float GetT(BorderPosition border) => (int)border;
         public override IEnumerable<ILinePartEdge> RulesEdges
         {
             get
@@ -354,21 +344,14 @@ namespace NodeMarkup.Manager
                 yield return new CrosswalkBorderEdge(this, BorderPosition.Right);
                 yield return new CrosswalkBorderEdge(this, BorderPosition.Left);
 
-                var minT = MinT;
-                var maxT = MaxT;
-
                 foreach (var edge in RulesLinesIntersectEdge)
                 {
-                    if (edge.GetT(this, out float t) && minT < t && t < maxT)
+                    if (edge.GetT(this, out float t) && 0 < t && t < 1)
                         yield return edge;
                 }
             }
         }
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color, float width)
-        {
-            var trajectory = Trajectory.Cut(MinT, MaxT);
-            NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory, width);
-        }
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color color, float width) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
     }
     public class MarkupStopLine : MarkupStraightLine<StopLineStyle>
     {

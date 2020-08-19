@@ -76,9 +76,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddBordersProperties()
         {
-            if (EditObject.Style.Type == Manager.Style.StyleType.CrosswalkExistent)
-                return;
-
             var rightBorders = GetBorderLines(!EditObject.Line.IsInvert ? EditObject.Line.Start : EditObject.Line.End);
             if (rightBorders.Any())
                 AddRightBorderProperty(rightBorders);
