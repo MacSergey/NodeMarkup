@@ -217,6 +217,20 @@ namespace NodeMarkup.Utils
             foreach (var value in values)
                 hashSet.Add(value);
         }
+        public static Version Build(this Version version) => new Version(version.Major, version.Minor, version.Build);
+        public static Version Minor(this Version version) => new Version(version.Major, version.Minor);
+        public static Version PrevMinor(this Version version)
+        {
+            var build = version.Build();
+            var isMinor = build.IsMinor();
+            var toFind = build.Minor();
+            var index = Mod.Versions.FindIndex(v => v == toFind);
+            if (index != -1 && Mod.Versions.Skip(index + 1).FirstOrDefault(v => isMinor || v.IsMinor()) is Version minor)
+                return minor;
+            else
+                return Mod.Versions.Last();
+        }
+        public static bool IsMinor(this Version version) => version.Build <= 0 && version.Revision <= 0;
     }
 
     public struct BezierPoint

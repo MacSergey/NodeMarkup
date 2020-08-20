@@ -1366,7 +1366,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на - Added early access (EA) to new features. Some features will only be available to Patreons for a certain time. They will become available to everyone later on.
+        ///By becoming a Patreon, you will be  supporting the development of the mod at the current speed.
+        ///- (EA) Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+        ///- Added crosswalks. Hold Shift to create them. Currently available Styles: &quot;Existing crosswalk&quot;, (EA)&quot;Zebra&quot;, (EA)&quot;Double Zebra&quot;, (EA)&quot;Parallel solid lines&quot;, (EA)&quot;Parallel dashed lines&quot;, (EA)&quot;Ladder&quot;, (E [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_3 {
             get {

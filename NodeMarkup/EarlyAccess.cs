@@ -23,7 +23,7 @@ namespace NodeMarkup
 #if DEBUG
         public static string Version => $"{Mod.VersionMajor} [BETA]";
 #else
-        private static string Version => Mod.VersionMajor.ToString();
+        private static string Version => Mod.VersionBuild.ToString();
 #endif
         private static string GetEarlyAccessURL { get; } = "https://www.patreon.com/MacSergey";
         private static string DiscordURL { get; } = "https://discord.gg/QRYq8m2";

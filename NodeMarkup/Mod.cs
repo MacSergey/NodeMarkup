@@ -22,7 +22,7 @@ namespace NodeMarkup
         public static string StaticName { get; } = "Intersection Marking Tool";
 
         public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
-        public static Version VersionMajor => new Version(Version.Major, Version.Minor, Version.Build);
+        public static Version VersionBuild => Version.Build();
 
         public static List<Version> Versions { get; } = new List<Version>
         {
@@ -163,10 +163,13 @@ namespace NodeMarkup
 #endif
             foreach (var version in Versions)
             {
+                if (Version < version)
+                    continue;
+
                 if (version <= whatNewVersion)
                     break;
 
-                if (UI.Settings.ShowOnlyMajor && (version.Build != 0 || version.Revision != 0))
+                if (UI.Settings.ShowOnlyMajor && !version.IsMinor())
                     continue;
 
                 if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
