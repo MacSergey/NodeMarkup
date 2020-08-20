@@ -256,8 +256,8 @@ namespace NodeMarkup.UI.Editors
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = string.Format(NodeMarkup.Localize.Editor_DeleteCaption, item.Description);
-                messageBox.MessageText = string.Format(NodeMarkup.Localize.Editor_DeleteMessage, item.Description, item.Object);
+                messageBox.CaprionText = string.Format(NodeMarkup.Localize.Editor_DeleteCaption, item.DeleteCaptionDescription);
+                messageBox.MessageText = string.Format(NodeMarkup.Localize.Editor_DeleteMessage, item.DeleteMessageDescription, item.Object);
                 messageBox.OnButton1Click = Delete;
             }
             else

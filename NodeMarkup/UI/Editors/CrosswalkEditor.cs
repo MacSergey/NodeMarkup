@@ -281,7 +281,8 @@ namespace NodeMarkup.UI.Editors
     {
         public override void Init() => Init(true, true);
 
-        public override string Description => NodeMarkup.Localize.CrossWalkEditor_ItemDescription;
+        public override string DeleteCaptionDescription => NodeMarkup.Localize.CrossWalkEditor_DeleteCaptionDescription;
+        public override string DeleteMessageDescription => NodeMarkup.Localize.CrossWalkEditor_DeleteMessageDescription;
         protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {

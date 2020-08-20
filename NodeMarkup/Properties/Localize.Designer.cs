@@ -70,6 +70,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на crosswalk.
+        /// </summary>
+        public static string CrossWalkEditor_DeleteCaptionDescription {
+            get {
+                return ResourceManager.GetString("CrossWalkEditor_DeleteCaptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на crosswalk.
+        /// </summary>
+        public static string CrossWalkEditor_DeleteMessageDescription {
+            get {
+                return ResourceManager.GetString("CrossWalkEditor_DeleteMessageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на There are no crosswalks at this intersection yet.
         ///To create a crosswalk hold Shift..
         /// </summary>
@@ -94,15 +112,6 @@ namespace NodeMarkup {
         public static string CrosswalkEditor_InfoSelectRightBorder {
             get {
                 return ResourceManager.GetString("CrosswalkEditor_InfoSelectRightBorder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на crosswalk.
-        /// </summary>
-        public static string CrossWalkEditor_ItemDescription {
-            get {
-                return ResourceManager.GetString("CrossWalkEditor_ItemDescription", resourceCulture);
             }
         }
         
@@ -606,6 +615,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на filler.
+        /// </summary>
+        public static string FillerEditor_DeleteCaptionDescription {
+            get {
+                return ResourceManager.GetString("FillerEditor_DeleteCaptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на filler.
+        /// </summary>
+        public static string FillerEditor_DeleteMessageDescription {
+            get {
+                return ResourceManager.GetString("FillerEditor_DeleteMessageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet.
         ///To create a filler hold Alt or press {0}..
         /// </summary>
@@ -621,15 +648,6 @@ namespace NodeMarkup {
         public static string FillerEditor_Fillers {
             get {
                 return ResourceManager.GetString("FillerEditor_Fillers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на filler.
-        /// </summary>
-        public static string FillerEditor_ItemDescription {
-            get {
-                return ResourceManager.GetString("FillerEditor_ItemDescription", resourceCulture);
             }
         }
         
@@ -787,6 +805,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на line.
+        /// </summary>
+        public static string LineEditor_DeleteCaptionDescription {
+            get {
+                return ResourceManager.GetString("LineEditor_DeleteCaptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на line.
+        /// </summary>
+        public static string LineEditor_DeleteMessageDescription {
+            get {
+                return ResourceManager.GetString("LineEditor_DeleteMessageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete rule.
         /// </summary>
         public static string LineEditor_DeleteRuleCaption {
@@ -848,15 +884,6 @@ namespace NodeMarkup {
         public static string LineEditor_Invert {
             get {
                 return ResourceManager.GetString("LineEditor_Invert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на line.
-        /// </summary>
-        public static string LineEditor_ItemDescription {
-            get {
-                return ResourceManager.GetString("LineEditor_ItemDescription", resourceCulture);
             }
         }
         
@@ -1376,9 +1403,18 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на point.
         /// </summary>
-        public static string PointEditor_ItemDescription {
+        public static string PointEditor_DeleteCaptionDescription {
             get {
-                return ResourceManager.GetString("PointEditor_ItemDescription", resourceCulture);
+                return ResourceManager.GetString("PointEditor_DeleteCaptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на point.
+        /// </summary>
+        public static string PointEditor_DeleteMessageDescription {
+            get {
+                return ResourceManager.GetString("PointEditor_DeleteMessageDescription", resourceCulture);
             }
         }
         
@@ -1791,6 +1827,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на template.
+        /// </summary>
+        public static string TemplateEditor_DeleteCaptionDescription {
+            get {
+                return ResourceManager.GetString("TemplateEditor_DeleteCaptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на template.
+        /// </summary>
+        public static string TemplateEditor_DeleteMessageDescription {
+            get {
+                return ResourceManager.GetString("TemplateEditor_DeleteMessageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на The list of templates is empty.
         ///To create a template, click «{0}» at the line style..
         /// </summary>
@@ -1806,15 +1860,6 @@ namespace NodeMarkup {
         public static string TemplateEditor_Invert {
             get {
                 return ResourceManager.GetString("TemplateEditor_Invert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на template.
-        /// </summary>
-        public static string TemplateEditor_ItemDescription {
-            get {
-                return ResourceManager.GetString("TemplateEditor_ItemDescription", resourceCulture);
             }
         }
         

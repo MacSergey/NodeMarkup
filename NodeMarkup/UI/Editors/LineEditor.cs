@@ -277,7 +277,9 @@ namespace NodeMarkup.UI.Editors
     {
         public override void Init() => Init(true, true);
 
-        public override string Description => NodeMarkup.Localize.LineEditor_ItemDescription;
+        public override string DeleteCaptionDescription => NodeMarkup.Localize.LineEditor_DeleteCaptionDescription;
+        public override string DeleteMessageDescription => NodeMarkup.Localize.LineEditor_DeleteMessageDescription;
+
         protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {

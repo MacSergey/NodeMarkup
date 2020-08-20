@@ -94,7 +94,8 @@ namespace NodeMarkup.UI.Editors
 
         EditableObject _object;
         private bool Inited { get; set; } = false;
-        public abstract string Description { get; }
+        public abstract string DeleteCaptionDescription { get; }
+        public abstract string DeleteMessageDescription { get; }
         public EditableObject Object
         {
             get => _object;

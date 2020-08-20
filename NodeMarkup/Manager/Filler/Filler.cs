@@ -263,7 +263,7 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public override string ToString() => $"{Localize.FillerEditor_ItemDescription} {GetHashCode()}";
+        public override string ToString() => GetHashCode().ToString();
     }
     public class FillerLinePart : MarkupLinePart
     {

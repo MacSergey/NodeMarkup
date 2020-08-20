@@ -142,6 +142,7 @@ namespace NodeMarkup.UI.Editors
 
             button.size = new Vector2(20f, 20f);
             button.text = "×";
+            button.tooltip = NodeMarkup.Localize.CrosswalkStyle_ResetBorder;
             button.textScale = 1.3f;
             button.textPadding = new RectOffset(0, 0, 0, 0);
             button.eventClick += ResetClick;
