@@ -166,7 +166,7 @@
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>終点側のポイントを選択</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>ライン</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -220,7 +220,7 @@
   <data name="Panel_Caption" xml:space="preserve">
     <value>#{0} のノードを編集中</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>ポイント</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -313,7 +313,7 @@
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>破線の長さ</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -408,7 +408,7 @@ Shift押下で横断歩道の作成</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>塗り潰しの一覧</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>塗り潰し</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -526,9 +526,6 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>追加機能 {0} は現在、Patreonsの早期アクセスで利用可能です。
 後日、誰でも利用できるようになります。
 早期アクセスに登録することで、いち早く新機能の利用とMODの開発をサポートします。</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>V字の塗り潰し</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>スタイルのコピー</value>
@@ -689,7 +686,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>交差点（ノード）に、横断歩道の設定がありません。
 2つのポイントを繋げて作りましょう。</value>
   </data>
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>横断歩道</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -792,5 +789,22 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>実線</value>
+  </data>
+  
+  
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>横断歩道</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>塗り潰し</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>ポイント</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>テンプレート</value>
   </data>
 </root>

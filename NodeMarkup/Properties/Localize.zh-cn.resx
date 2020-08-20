@@ -165,7 +165,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>选择此段落的终止点</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>线段</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>编辑节点 #{0} 的地标线</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>点</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>虚线长度</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>模版</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -407,7 +407,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>填充图案</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>填充图案</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -525,9 +525,6 @@ Shift x10，Ctrl x0.1</value>
     <value>此功能 “{0}” 目前只供Patreon抢先体验用户使用。
 一段时间后会面向大众开放。
 加入抢先体验后，你可以支持作者开发本mod。</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>锯齿形样式</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>复制样式</value>
@@ -685,7 +682,7 @@ Shift x10，Ctrl x0.1</value>
     <value>此交叉路口没有人行道。
 按住Shift以创建人行道。</value>
   </data>
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>人行横道</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -788,5 +785,26 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>实线</value>
+  </data>
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>支持服务</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>人行横道线</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>人行横道</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>填充图案</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>线段</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>点</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>模版</value>
   </data>
 </root>

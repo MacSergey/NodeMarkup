@@ -165,7 +165,7 @@ Esta ação não pode ser desfeita</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Seleccione o ponto "Para" da regra</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>linha</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Esta ação não pode ser desfeita</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Editar marcações do nó #{0}</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>ponto</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Esta acção não pode ser desfeita</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Comprimento do traço</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modelo</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -411,7 +411,7 @@ Clique para editar marcações</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Preenchimentos</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>preenchimento</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -529,9 +529,6 @@ Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value
     <value>Funcionalidade {0} está disponível para acesso antecipado dos Patreons.
 Ir ficar disponível para todos mais tarde.
 Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste mod.</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Estilo Chevron</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copiar estilo</value>
@@ -686,7 +683,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
     <value>Passadeiras</value>
   </data>
   
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>passadeira</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -770,5 +767,22 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
   
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
+  </data>
+  
+  
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>passadeira</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>preenchimento</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>linha</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>ponto</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>modelo</value>
   </data>
 </root>
