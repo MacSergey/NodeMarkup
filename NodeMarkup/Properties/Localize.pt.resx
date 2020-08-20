@@ -360,7 +360,13 @@ Clique para editar marcações</value>
 +Shift - Sólida
 +Ctrl - Dupla</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Seleccione um ponto para
+criar ou remover a uma linha
++Ctrl para mover o ponto
+Prima Alt para criar um preenchimento
+Prima Shift para criar uma passadeira</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
   </data>
@@ -682,7 +688,10 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Passadeiras</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Ainda não existem passadeiras nesta intercessão.
+Para criar uma passadeira pressione Shift.</value>
+  </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>passadeira</value>
   </data>
@@ -731,7 +740,9 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Paralelo as vias</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Linhas solidas paralelas</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Borda esquerda</value>
   </data>
@@ -757,19 +768,39 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
     <value>A regra é sobreposta por outra regra.
 Verifique os pontos "De" e "Para" de outras regras.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Borda esquerda da passadeira</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Borda direita da passadeira</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Repor</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Seleccione um ponto</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Seleccione um ponto para criar o remover uma passadeira</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Linhas tracejadas paralelas</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Escada</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Sem modelos</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
-  
-  
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Apoio</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Linha da passadeira</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>passadeira</value>
   </data>
@@ -785,4 +816,5 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modelo</value>
   </data>
+  
 </root>

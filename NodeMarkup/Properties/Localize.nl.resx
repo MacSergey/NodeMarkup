@@ -785,8 +785,12 @@ een zebrapad te creëren of te verwijderen</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
   </data>
-  
-  
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Zebrapad lijnen</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>zebrapad</value>
   </data>
@@ -802,4 +806,5 @@ een zebrapad te creëren of te verwijderen</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>sjabloon</value>
   </data>
+  
 </root>

@@ -368,7 +368,7 @@ Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen
 Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Uutta versiossa {0}</value>
+    <value>Uutta modissa {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
@@ -456,7 +456,7 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
     <value>Oletus</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Viiva</value>
+    <value>Kiinteä</value>
   </data>
   
   
@@ -485,8 +485,12 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
   <data name="LineEditor_StylePaste" xml:space="preserve">
     <value>Liitä</value>
   </data>
-  
-  
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="Filler_AngleBetween" xml:space="preserve">
+    <value>Viivojen välinen kulma</value>
+  </data>
   <data name="Filler_Invert" xml:space="preserve">
     <value>Peilaa</value>
   </data>
@@ -501,7 +505,10 @@ Yhdistä kaksi pistettä luodaksesi viivan.</value>
     <value>Risteyksessä ei ole vielä sulkualueita.
 Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Mallinelista on tyhjä.
+Napauta {0} viivan tyylissä luodaksesi mallineen.</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivoi avaimella</value>
   </data>
@@ -591,8 +598,12 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Ennakkopääsy</value>
   </data>
-  
-  
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Keskitä sulkuviiva</value>
+  </data>
+  <data name="Mod_BetaWarningAgree" xml:space="preserve">
+    <value>Ymmärrän</value>
+  </data>
   <data name="Mod_BetaWarningCaption" xml:space="preserve">
     <value>Varoitus BETA-versiosta</value>
   </data>
@@ -655,14 +666,25 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Napauta poistaaksesi kohtisuoran viivan</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Raidat</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Olemassa oleva suojatie</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+    <value>Välimatka välissä</value>
+  </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Suojatiet</value>
   </data>
-  
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Risteyksessä ei ole vielä suojateitä.
+Pidä Shif-näppäintä pohjassa luodaksesi suojatien.</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>suojatie</value>
+  </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
     <value>Suojatiet</value>
   </data>
@@ -693,48 +715,91 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
     <value>Tyypin mukaan</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Tuplaraidat</value>
+  </data>
+  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+    <value>Viivan leveys</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+    <value>Välimatka jälkeen</value>
+  </data>
+  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+    <value>Välimatka ennen</value>
+  </data>
+  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+    <value>Kaistaviivojen suuntainen</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Samansuuntaiset viivat</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Vasen reuna</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Oikea reuna</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Valitse suojatien vasen reuna</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Valitse suojatien oikea reuna</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Pisteiden ryhmitys peittokuvaan</value>
+  </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Järjestä ympyrään</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Järjestä jonoon</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>Sääntö on päällekkäinen toisen säännön kanssa.
+Tarkista toisen säännön alku- ja loppupisteet.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Suojatien vasen reuna</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Suojatien oikea reuna</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Nollaa</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Valitse päätepiste</value>
+  </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai 
 poistaaksesi suojatien</value>
   </data>
-  
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Samansuuntaiset katkoviivat</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Tikkaat</value>
+  </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
     <value>Ei mallineita</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Viiva</value>
+    <value>Kiinteä</value>
   </data>
   <data name="EarlyAccess_Support" xml:space="preserve">
     <value>Tuki</value>
   </data>
-  
-  
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Suojatieviivat</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>suojatien</value>
+  </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
     <value>sulkualue</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>viiva</value>
+    <value>viivan</value>
   </data>
   <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
     <value>piste</value>
@@ -742,4 +807,5 @@ poistaaksesi suojatien</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>malline</value>
   </data>
+  
 </root>

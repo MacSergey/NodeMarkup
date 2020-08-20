@@ -360,7 +360,13 @@ Cliquez pour modifier le marquage</value>
 +Maj - Solide
 +Ctrl - Double</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Sélectionnez un point pour
+créer ou supprimer une ligne
++Ctrl pour bouger le point
+Maintenir Alt pour créer un remplisseur
+Maintenez Maj pour créer un passage piéton</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
   </data>
@@ -399,10 +405,10 @@ Cliquez pour modifier le marquage</value>
     <value>Cliquez pour créer une ligne de stop</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Fillers</value>
+    <value>Remplisseurs</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>filler</value>
+    <value>remplisseur</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Zebra</value>
@@ -426,13 +432,13 @@ Cliquez pour modifier le marquage</value>
     <value>Cliquez pour commencer un remplisseur</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Cliquez pour finir le filler</value>
+    <value>Cliquez pour finir le remplisseur</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
     <value>Sélectionnez le prochain point du contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Sélectionnez un point pour commencer le filler</value>
+    <value>Selectionnez un point pour commencer le remplissseur</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Sélectionnez le prochain point pour le contour</value>
@@ -464,7 +470,7 @@ Cliquez pour modifier le marquage</value>
     <value>Uniquement notifier les mise à jour majeures</value>
   </data>
   <data name="Settings_AddNewFiller" xml:space="preserve">
-    <value>Ajouter un nouveau filler</value>
+    <value>Ajouter un nouveau remplisseur</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
@@ -491,9 +497,18 @@ Cliquez pour modifier le marquage</value>
   <data name="Filler_Turn" xml:space="preserve">
     <value>Virage</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Il n'y a pas de lignes à cet intersection.
+Pour créer une ligne, connectez deux points.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Il n'y a pas de remplisseurs à cet intersection.
+Pour créer un remplisseur, maintenez Alt ou appuyez sur {0}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>La liste des modèles est vide.
+Pour créer un modèle, cliquez sur {0} sur le style de ligne.</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activer avec la clé</value>
   </data>
@@ -506,7 +521,11 @@ Cliquez pour modifier le marquage</value>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
     <value>Cette fonction n'est pas disponible</value>
   </data>
-  
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>La fonction "{0}" n'est actuellement disponible que pour les Patreons avec l'accès anticipé
+Elle sera disponible pour tout le monde plus tard.
+En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même vitesse que le développement.</value>
+  </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copier le style</value>
   </data>
@@ -528,7 +547,9 @@ Cliquez pour modifier le marquage</value>
   <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
     <value>Activer</value>
   </data>
-  
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Activation de l'accès anticipé</value>
+  </data>
   <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
     <value>Pour activer l'accès anticiper vous devez entrer une clé</value>
   </data>
@@ -577,7 +598,9 @@ Cliquez pour modifier le marquage</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Accès anticipé</value>
   </data>
-  
+  <data name="LineEditor_CenterSolid" xml:space="preserve">
+    <value>Centre solide</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>J'accepte</value>
   </data>
@@ -587,7 +610,9 @@ Cliquez pour modifier le marquage</value>
   <data name="Mod_BetaWarningGetStable" xml:space="preserve">
     <value>Obtenez la version stable</value>
   </data>
-  
+  <data name="Mod_BetaWarningMessage" xml:space="preserve">
+    <value>Vous utilisez la beta version du {0}. C'est une version de test avec de nouvelles fonctionnalités et cela peut contenir des erreurs qui vont casser ou supprimer vos marquages. Si vous vous êtes abonné par erreur, veuillez vous abonner à la version stable.</value>
+  </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Langue du jeu</value>
   </data>
@@ -644,14 +669,19 @@ Cliquez pour modifier le marquage</value>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Zébra</value>
   </data>
-  
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Passage piéton existant</value>
+  </data>
   <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
     <value>Décalage entre</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Passage piéton</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Il n'y a pas de passages piétons à cette intersection.
+Pour créer un passage piéton, maintenez Maj.</value>
+  </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>passage piéton</value>
   </data>
@@ -659,9 +689,11 @@ Cliquez pour modifier le marquage</value>
     <value>Passages piétons</value>
   </data>
   <data name="FillerStyle_Group" xml:space="preserve">
-    <value>Fillers</value>
+    <value>Remplisseurs</value>
   </data>
-  
+  <data name="LineStyle_RegularGroup" xml:space="preserve">
+    <value>Lignes régulières</value>
+  </data>
   <data name="LineStyle_StopGroup" xml:space="preserve">
     <value>Lignes de stop</value>
   </data>
@@ -698,33 +730,73 @@ Cliquez pour modifier le marquage</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallèle aux voies</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Lignes solides parallèles</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Bordure de gauche</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Bordure de droite</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Sélectionnez la bordure gauche du trottoir</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Sélectionnez la bordure droite du trottoir</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Grouper l'onglet des points</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Disposer en cercle</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Disposer en ligne</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>Cette règle est en conflit avec une autre règle.
+Regardez les points "De" et "À" des autres règles.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Bordure gauche du passage piéton</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Bordure droite du passage piéton</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Sélectionnez l'extrémité</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Sélectionnez un point pour
+créer ou supprimer un passage piéton</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Lignes parallèles en tirets</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Échelle</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Pas de modèles</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  
-  
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Passages piétons</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>passage piéton</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>filler</value>
+    <value>remplisseur</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
     <value>ligne</value>
@@ -735,4 +807,5 @@ Cliquez pour modifier le marquage</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modèle</value>
   </data>
+  
 </root>

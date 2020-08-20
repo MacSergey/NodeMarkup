@@ -807,4 +807,5 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
+  
 </root>
