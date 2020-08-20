@@ -165,7 +165,7 @@ Tätä toimintoa ei voi kumota</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Valitse säännön loppupiste</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>viiva</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Muokkaa risteyksen #{0} merkintöjä</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>piste</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Tätä toimintoa ei voi kumota</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Viivan pituus</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>malline</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -360,7 +360,13 @@ Napauta muokataksesi merkintöjä</value>
 +Shift - Sulku-
 +Ctrl - Kaksois-</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Valitse piste luodaksesi tai poistaaksesi viivan
++Ctrl siirtääksesi pistettä
++Shift muokataksesi pistettä
+Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen
+Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Uutta versiossa {0}</value>
   </data>
@@ -401,7 +407,7 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Sulkualueet</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>sulkualue</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -513,7 +519,6 @@ Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
 Toiminto on saatavilla kaikille myöhemmin.
 Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nopeudella kuin aiemminkin.</value>
   </data>
-  
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Kopioi tyyli</value>
   </data>
@@ -657,9 +662,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
     <value>Suojatiet</value>
   </data>
   
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
-    <value>suojatie</value>
-  </data>
+  
   <data name="CrosswalkStyle_Group" xml:space="preserve">
     <value>Suojatiet</value>
   </data>
@@ -701,18 +704,42 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   
   
   
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Järjestä ympyrään</value>
+  </data>
   
   
   
   
   
   
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Valitse piste luodaksesi tai 
+poistaaksesi suojatien</value>
+  </data>
   
   
-  
-  
-  
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Ei mallineita</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Viiva</value>
+  </data>
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Tuki</value>
+  </data>
+  
+  
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>sulkualue</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>viiva</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>piste</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>malline</value>
   </data>
 </root>

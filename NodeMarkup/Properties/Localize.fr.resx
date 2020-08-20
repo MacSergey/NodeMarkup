@@ -165,7 +165,7 @@ Cette action est irréversible</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Sélectionnez le point "À" de cette règle</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>ligne</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Cette action est irréversible</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Modifier le marquage du nœud #{0}</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>point</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Cette action est irréversible</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Longueur du tiret</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modèle</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -401,7 +401,7 @@ Cliquez pour modifier le marquage</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Fillers</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>filler</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -507,9 +507,6 @@ Cliquez pour modifier le marquage</value>
     <value>Cette fonction n'est pas disponible</value>
   </data>
   
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Style chevrons</value>
-  </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copier le style</value>
   </data>
@@ -655,7 +652,7 @@ Cliquez pour modifier le marquage</value>
     <value>Passage piéton</value>
   </data>
   
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>passage piéton</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -720,5 +717,22 @@ Cliquez pour modifier le marquage</value>
   
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Solide</value>
+  </data>
+  
+  
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>passage piéton</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>filler</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>ligne</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>modèle</value>
   </data>
 </root>

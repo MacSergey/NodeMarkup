@@ -165,7 +165,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Selecteer het eindpunt van de regel</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>lijn</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Bewerk markering punt #{0}</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punt</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Deze actie kan niet ongedaan worden gedaan</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Streeplengte</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>sjabloon</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -406,7 +406,7 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Opvullingen</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>opvulling</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -524,9 +524,6 @@ Klik «{0}» bij de lijnstijl om een sjabloon te maken.</value>
     <value>De functie «{0}» is op dit moment alleen beschikbaar voor Patreon's vroegtijdige toegang.
 Op een later moment is dit voor iedereen beschikbaar.
 Door je te registreren voor vroegtijdige toegang help je bij het behouden van de ontwikkelsnelheid van deze mod.</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Chevron stijl</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Stijl kopiëren</value>
@@ -684,7 +681,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Er zijn nog geen zebrapaden op deze kruising.
 Houd Shift ingedrukt om een zebrapad te maken.</value>
   </data>
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>zebrapad</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -732,7 +729,9 @@ Houd Shift ingedrukt om een zebrapad te maken.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallel aan rijstroken</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Parallelle ononderbroken lijnen</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Linker grens</value>
   </data>
@@ -774,10 +773,33 @@ Controleer de "Van" en "Naar" punten van andere regels.</value>
     <value>Selecteer een punt om
 een zebrapad te creëren of te verwijderen</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Parallelle onderbroken lijnen</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Ladder</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Geen sjablonen</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
+  </data>
+  
+  
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>zebrapad</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>opvulling</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>lijn</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>punt</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>sjabloon</value>
   </data>
 </root>

@@ -165,7 +165,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Выберите конец правила</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>линию</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Редактирование разметки перекрестка #{0}</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>точку</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Длина штриха</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>шаблон</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -417,7 +417,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Заполнители</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>Заполнитель</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -550,9 +550,6 @@ Shift X10, Ctrl X0.1</value>
     <value>Функция «{0}» сейчас доступна только оформившим ранней доступ на Patreon.
 Она будет доступна позже для всех.
 Оформляя ранний доступ, вы поддержите возможность развивать мод с той же скоростью.</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Стиль шевроны</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Копирование стиля</value>
@@ -710,7 +707,7 @@ Shift X10, Ctrl X0.1</value>
     <value>У этого перекрестка еще нет переходов.
 Для создания перехода удерживайте Shift.</value>
   </data>
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>переход</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -813,5 +810,26 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
+  </data>
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Поддержка</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Линии переходов</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>переход</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>Заполнитель</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>линию</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>точку</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>шаблон</value>
   </data>
 </root>

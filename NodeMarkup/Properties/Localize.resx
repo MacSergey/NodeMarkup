@@ -165,7 +165,7 @@ This action cannot be undone</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Select the rule's "To" point</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>line</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ This action cannot be undone</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Edit node #{0} marking</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>point</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ This action cannot be undone</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Dash length</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>template</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -417,7 +417,7 @@ Hold Shift to create a crosswalk</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Fillers</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>filler</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -560,9 +560,6 @@ To create a template, click «{0}» at the line style.</value>
     <value>Function «{0}» is currently only available for Patreons early access.
 It will be available to everyone later.
 By registering early access, you will support the ability to develop this mod at the same speed.</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Chevron style</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copy style</value>
@@ -720,7 +717,7 @@ By registering early access, you will support the ability to develop this mod at
     <value>There are no crosswalks at this intersection yet.
 To create a crosswalk hold Shift.</value>
   </data>
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>crosswalk</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -823,5 +820,26 @@ create or delete a crosswalk</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Solid</value>
+  </data>
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Crosswalk lines</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>crosswalk</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>filler</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>line</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>template</value>
   </data>
 </root>

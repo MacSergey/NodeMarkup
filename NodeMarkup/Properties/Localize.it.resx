@@ -165,7 +165,7 @@ Questa azione non può essere annullata</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Seleziona il punto "A" della regola</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>linea</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ Questa azione non può essere annullata</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Modifica il marcatore del nodo #{0}</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punto</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ Questa azione non può essere annullata</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Lunghezza del tratteggio</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modello</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -411,7 +411,7 @@ Clicca per modificare il marcatore</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Riempimenti</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>riempimento</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -541,9 +541,6 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
     <value>Questa funzione non è disponibile</value>
   </data>
   
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Stile a Spina di pesce o a Galloni</value>
-  </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copia stile</value>
   </data>
@@ -673,7 +670,7 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
     <value>Attraversamenti</value>
   </data>
   
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>attraversamento</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -748,5 +745,22 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Continua</value>
+  </data>
+  
+  
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>attraversamento</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>riempimento</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>linea</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>punto</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>modello</value>
   </data>
 </root>

@@ -165,7 +165,7 @@ No se puede deshacer esta acción</value>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
     <value>Seleccionar el punto "Hasta" de la regla</value>
   </data>
-  <data name="LineEditor_ItemDescription" xml:space="preserve">
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>línea</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
@@ -219,7 +219,7 @@ No se puede deshacer esta acción</value>
   <data name="Panel_Caption" xml:space="preserve">
     <value>Editar las marcas del node #{0}</value>
   </data>
-  <data name="PointEditor_ItemDescription" xml:space="preserve">
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punto</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
@@ -312,7 +312,7 @@ No se puede deshacer esta acción</value>
   <data name="TemplateEditor_DashedLength" xml:space="preserve">
     <value>Longitud del trazo</value>
   </data>
-  <data name="TemplateEditor_ItemDescription" xml:space="preserve">
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>plantilla</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
@@ -401,7 +401,7 @@ Haga clic para editar las marcas</value>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Rellenos</value>
   </data>
-  <data name="FillerEditor_ItemDescription" xml:space="preserve">
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>relleno</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
@@ -519,9 +519,6 @@ Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
     <value>La función «{0}» actualmente solo está disponible para el acceso anticipado de Patreons.
 Estará disponible para todos más tarde.
 Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod a la misma velocidad.</value>
-  </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Estilo de Cebreado</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copiar estilo</value>
@@ -676,7 +673,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Paso de Peatones</value>
   </data>
   
-  <data name="CrossWalkEditor_ItemDescription" xml:space="preserve">
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>paso de peatones</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
@@ -755,5 +752,22 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Continua</value>
+  </data>
+  
+  
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>paso de peatones</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>relleno</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>línea</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>punto</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>plantilla</value>
   </data>
 </root>
