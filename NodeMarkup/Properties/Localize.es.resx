@@ -360,7 +360,13 @@ Haga clic para editar las marcas</value>
 +Mayús - Continua
 +Ctrl - Discontinua</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Seleccione el punto para
+crear o eliminar la línea
++Ctrl para mover el punto
+Mantenga Alt para crear un relleno
+Mantenga Mayús para crear un paso de peatones</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
   </data>
@@ -497,7 +503,7 @@ Para crear una línea, conecta dos puntos.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Todavía no hay rellenos en este cruce.
-Para crear un relleno, mantenga presionada la tecla Alt o presione {0}.</value>
+Para crear un relleno, mantenga Alt o presione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista de plantillas está vacía.
@@ -672,7 +678,10 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Paso de Peatones</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Todavía no hay pasos de peatones en este cruce.
+Para crear un paso de peatones, mantenga Mayús.</value>
+  </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>paso de peatones</value>
   </data>
@@ -721,7 +730,9 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Paralelo a los carriles</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Líneas paralelas continuas</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Borde izquierdo</value>
   </data>
@@ -734,27 +745,53 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleccione el borde derecho del paso de peatones</value>
   </data>
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Agrupar el resaltado de puntos</value>
+  </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Organizar en un círculo</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
     <value>Organizar en una línea</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>La regla está superpuesta por otra regla.
+Compruebe los puntos "Desde" y "Hasta" de otra regla.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Borde izquierdo del paso de peatones</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Borde derecho del paso de peatones</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Seleccione el punto final</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Seleccione el punto para
+crear o eliminar el paso de peatones</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Líneas paralelas discontinuas</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Escalera</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>No hay plantillas</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  
-  
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Apoyo</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Líneas de paso de peatones</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>paso de peatones</value>
   </data>

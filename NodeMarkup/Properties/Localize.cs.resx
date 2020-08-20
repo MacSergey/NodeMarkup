@@ -773,7 +773,9 @@ Zkontrolujte počáteční a koncové body ostatních pravidel.</value>
 nebo odstranění přechodu</value>
   </data>
   
-  
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Žebřík</value>
+  </data>
   
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
