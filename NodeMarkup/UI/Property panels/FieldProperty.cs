@@ -45,7 +45,7 @@ namespace NodeMarkup.UI.Editors
                 if (!ValueProgress)
                 {
                     ValueProgress = true;
-                    Field.text = value.ToString();
+                    Field.text = GetString(value);
                     OnValueChanged?.Invoke(value);                   
                     ValueProgress = false;
                 }
@@ -78,7 +78,7 @@ namespace NodeMarkup.UI.Editors
             Field.padding = new RectOffset(0, 0, 6, 0);
         }
 
-
+        protected virtual string GetString(ValueType value) => value.ToString();
         protected abstract ValueType Increment(ValueType value, ValueType step, WheelMode mode);
         protected abstract ValueType Decrement(ValueType value, ValueType step, WheelMode mode);
 
@@ -143,6 +143,7 @@ namespace NodeMarkup.UI.Editors
             step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
             return (value - step).RoundToNearest(step);
         }
+        protected override string GetString(float value) => value.ToString("0.###");
     }
     public class StringPropertyPanel : FieldPropertyPanel<string>
     {

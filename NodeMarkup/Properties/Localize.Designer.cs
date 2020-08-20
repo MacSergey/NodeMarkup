@@ -496,6 +496,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Support.
+        /// </summary>
+        public static string EarlyAccess_Support {
+            get {
+                return ResourceManager.GetString("EarlyAccess_Support", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Thank you for your support, now you can enjoy all the features..
         /// </summary>
         public static string EarlyAccess_ThanksMessage {
@@ -966,6 +975,15 @@ namespace NodeMarkup {
         public static string LineRule_SelfEdgePoint {
             get {
                 return ResourceManager.GetString("LineRule_SelfEdgePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalk lines.
+        /// </summary>
+        public static string LineStyle_CrosswalkGroup {
+            get {
+                return ResourceManager.GetString("LineStyle_CrosswalkGroup", resourceCulture);
             }
         }
         

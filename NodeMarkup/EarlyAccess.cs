@@ -71,7 +71,7 @@ namespace NodeMarkup
             messageBox.OnButton1Click = () => true;
             messageBox.Button2Text = Localize.EarlyAccess_GetButton;
             messageBox.OnButton2Click = GetAccess;
-            messageBox.Button3Text = "Discord";
+            messageBox.Button3Text = Localize.EarlyAccess_Support;
             messageBox.OnButton3Click = OpenDiscord;
             messageBox.ChangeButton(1, 1, 5, 1);
             messageBox.ChangeButton(2, 2, 5, 3);
@@ -147,6 +147,7 @@ namespace NodeMarkup
             AddGetAccess(helper);
             AddLinkPatreon(helper);
             AddActivateKey(helper);
+            AddSupport(helper);
 
             //AddCheckAccessKey(helper);
             //AddResetAccessKey(helper);
@@ -212,6 +213,15 @@ namespace NodeMarkup
                     return true;
                 }
             }
+        }
+        private void AddSupport(UIHelper helper)
+        {
+            var supportButton = helper.AddButton(NodeMarkup.Localize.EarlyAccess_Support, Click) as UIButton;
+            supportButton.autoSize = false;
+            supportButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
+            supportButton.width = 400;
+
+            void Click() => EarlyAccess.OpenDiscord();
         }
         private void AddCheckAccessKey(UIHelper helper)
         {

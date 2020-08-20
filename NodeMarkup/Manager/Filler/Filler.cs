@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
         }
 
         private void OnStyleChanged() => Markup.Update(this, true);
-        public bool ContainsLine(MarkupLine line) => LineParts.Any(p => p.Line.PointPair == line.PointPair);
+        public bool ContainsLine(MarkupLine line) => LineParts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => SupportPoints.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
         public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)

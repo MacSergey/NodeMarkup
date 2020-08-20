@@ -153,15 +153,17 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopGroup))]
             Stop = Markup.Item.StopLine,
 
-            [Description(nameof(Localize.CrosswalkStyle_Group))]
+            [Description(nameof(Localize.LineStyle_CrosswalkGroup))]
             Crosswalk = Markup.Item.Crosswalk,
         }
         public override string ToString() => PointPair.ToString();
     }
-    public abstract class MarkupStraightLine<StyleType> : MarkupLine
-    where StyleType : LineStyle
+    public abstract class MarkupStraightLine<Style, StyleType> : MarkupLine
+        where Style : LineStyle
+        where StyleType : Enum
     {
-        public MarkupLineRawRule<StyleType> Rule { get; set; }
+        protected abstract bool Visible { get; }
+        public MarkupLineRawRule<Style> Rule { get; set; }
         public override IEnumerable<MarkupLineRawRule> Rules
         {
             get
@@ -170,20 +172,29 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
-        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : base(markup, first, second, update) { }
+        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second, StyleType styleType) : this(markup, new MarkupPointPair(first, second), styleType) { }
+        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, StyleType styleType) : base(markup, pointPair, false)
+        {
+            if (Visible)
+            {
+                var style = GetDefaultStyle(styleType);
+                var rule = new MarkupLineRawRule<Style>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End));
+                SetRule(rule);
+            }
+            Update(true);
+            if (Visible)
+                RecalculateDashes();
+        }
 
         protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
 
         protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, LineTrajectory);
-        protected void SetRule(MarkupLineRawRule<StyleType> rule)
+        private void SetRule(MarkupLineRawRule<Style> rule)
         {
             rule.OnRuleChanged = RuleChanged;
             Rule = rule;
-
-            //RuleChanged();
         }
-        protected abstract void AddDefaultRule();
+        protected abstract Style GetDefaultStyle(StyleType styleType);
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -192,10 +203,8 @@ namespace NodeMarkup.Manager
         }
         public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
         {
-            if (config.Element(MarkupLineRawRule<StyleType>.XmlName) is XElement ruleConfig && MarkupLineRawRule<StyleType>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<StyleType> rule))
+            if (config.Element(MarkupLineRawRule<Style>.XmlName) is XElement ruleConfig && MarkupLineRawRule<Style>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<Style> rule))
                 SetRule(rule);
-            else
-                AddDefaultRule();
         }
     }
     public class MarkupRegularLine : MarkupLine
@@ -327,7 +336,7 @@ namespace NodeMarkup.Manager
         public bool IsInvert => End.Num < Start.Num;
         public Func<StraightTrajectory> TrajectoryGetter { get; set; }
 
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false) 
+        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false)
         {
             Crosswalk = new MarkupCrosswalk(Markup, this, crosswalkType);
             Update(true);
@@ -359,21 +368,16 @@ namespace NodeMarkup.Manager
         }
         public override void Render(RenderManager.CameraInfo cameraInfo, Color color, float width) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
     }
-    public class MarkupStopLine : MarkupStraightLine<StopLineStyle>
+    public class MarkupStopLine : MarkupStraightLine<StopLineStyle, StopLineStyle.StopLineType>
     {
+        protected override bool Visible => true;
         public override LineType Type => LineType.Stop;
 
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType) : base(markup, pointPair)
-        {
-            AddDefaultRule(lineType);
-        }
-        protected override void AddDefaultRule() => AddDefaultRule();
-        private void AddDefaultRule(StopLineStyle.StopLineType lineType = StopLineStyle.StopLineType.Solid)
-        {
-            var style = TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
-            SetRule(new MarkupLineRawRule<StopLineStyle>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End)));
-        }
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType = StopLineStyle.StopLineType.Solid) : base(markup, pointPair, lineType) { }
+
+        protected override StopLineStyle GetDefaultStyle(StopLineStyle.StopLineType lineType)
+            => TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
+
         public override IEnumerable<ILinePartEdge> RulesEdges
         {
             get
@@ -383,18 +387,13 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class MarkupEnterLine : MarkupStraightLine<LineStyle>
+    public class MarkupEnterLine : MarkupStraightLine<LineStyle, RegularLineStyle.RegularLineType>
     {
+        protected override bool Visible => false;
         public override LineType Type => throw new NotImplementedException();
-
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
-
-        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second) { }
-
-        protected override void AddDefaultRule()
-        {
-            throw new NotImplementedException();
-        }
+        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second, RegularLineStyle.RegularLineType.Dashed) { }
+        protected override LineStyle GetDefaultStyle(RegularLineStyle.RegularLineType styleType) => throw new NotImplementedException();
     }
 
     public struct MarkupLinePair

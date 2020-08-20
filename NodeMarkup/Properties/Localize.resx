@@ -821,4 +821,10 @@ create or delete a crosswalk</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Solid</value>
   </data>
+  <data name="EarlyAccess_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Crosswalk lines</value>
+  </data>
 </root>
