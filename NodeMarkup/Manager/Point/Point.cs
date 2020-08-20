@@ -153,7 +153,7 @@ namespace NodeMarkup.Manager
     public class MarkupCrosswalkPoint : MarkupPoint
     {
         private static Vector3 MarkerSize { get; } = Vector3.one * 2f;
-        public static float Shift { get; } = 3;
+        public static float Shift { get; } = 1f;
         public override PointType Type => PointType.Crosswalk;
         public MarkupEnterPoint SourcePoint { get; }
         public override Vector3 Position
@@ -170,7 +170,7 @@ namespace NodeMarkup.Manager
         private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
         public override void UpdateProcess()
         {
-            Position = SourcePoint.Position + SourcePoint.Direction * Shift;
+            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Mathf.Sin(Enter.CornerAndNormalAngle));
             Direction = SourcePoint.Direction;
         }
         public override string ToString() => $"{base.ToString()}C";

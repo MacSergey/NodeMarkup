@@ -873,14 +873,8 @@ namespace NodeMarkup
         {
             if (point.Type == MarkupPoint.PointType.Crosswalk)
             {
-                var dir = point.Enter.CornerDir.Turn90(true);
-                var bezier = new Bezier3()
-                {
-                    a = point.Position - dir,
-                    b = point.Position + dir,
-                    c = point.Position - dir,
-                    d = point.Position + dir,
-                };
+                var dir = point.Enter.CornerDir.Turn90(true) * MarkupCrosswalkPoint.Shift;
+                var bezier = new Line3(point.Position - dir, point.Position + dir).GetBezier();
                 RenderBezier(cameraInfo, color, bezier, width);
             }
             else
@@ -891,13 +885,7 @@ namespace NodeMarkup
             if (enter.Position == null)
                 return;
 
-            var bezier = new Bezier3
-            {
-                a = enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift,
-                d = enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift
-            };
-            NetSegment.CalculateMiddlePoints(bezier.a, enter.CornerDir, bezier.d, -enter.CornerDir, true, true, out bezier.b, out bezier.c);
-
+            var bezier = new Line3(enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift, enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift).GetBezier();
             RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
         }
 
@@ -1020,33 +1008,20 @@ namespace NodeMarkup
         }
         private void RenderConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = (HoverPoint.Position - SelectPoint.Position).normalized;
-            var bezier = new Bezier3()
-            {
-                a = SelectPoint.Position,
-                d = HoverPoint.Position,
-            };
-
+            var bezier = new Line3(SelectPoint.Position, HoverPoint.Position).GetBezier();
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
 
-            NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
-            RenderBezier(cameraInfo, color, bezier, 2f, true);
+            RenderBezier(cameraInfo, color, bezier, MarkupCrosswalkPoint.Shift * 2, true);
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = (MouseWorldPosition - SelectPoint.Position);
+            var dir = MouseWorldPosition - SelectPoint.Position;
             var lenght = dir.magnitude;
             dir.Normalize();
+            var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            var bezier = new Bezier3()
-            {
-                a = SelectPoint.Position,
-                d = SelectPoint.Position + dir * Mathf.Max(lenght, 1f)
-            };
-
-            NetSegment.CalculateMiddlePoints(bezier.a, dir, bezier.d, -dir, true, true, out bezier.b, out bezier.c);
-            RenderBezier(cameraInfo, MarkupColors.White, bezier, 2f, true);
+            RenderBezier(cameraInfo, MarkupColors.White, bezier, MarkupCrosswalkPoint.Shift * 2, true);
         }
 
         #endregion
