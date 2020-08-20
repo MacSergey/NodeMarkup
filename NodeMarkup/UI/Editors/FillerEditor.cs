@@ -61,8 +61,11 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_ChevronStyle))
+            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
+            {
+                Style.SelectedObject = EditObject.Style.Type;
                 return;
+            }
 
             if (style == EditObject.Style.Type)
                 return;
@@ -84,7 +87,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
-            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_ChevronStyle))
+            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
                 return;
 
             var newStyle = style.CopyFillerStyle();

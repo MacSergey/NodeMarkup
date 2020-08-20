@@ -25,7 +25,8 @@ namespace NodeMarkup
 #else
         private static string Version => Mod.VersionMajor;
 #endif
-        private static string GetEarlyAccessURL { get; } = "https://discord.gg/QRYq8m2";
+        private static string GetEarlyAccessURL { get; } = "https://www.patreon.com/MacSergey";
+        private static string DiscordURL { get; } = "https://discord.gg/QRYq8m2";
         public static string Id { get; } = Crypt.GetHash($"{PlatformService.userID}{Version}");
 
         public static bool Status { get; private set; }
@@ -55,7 +56,7 @@ namespace NodeMarkup
                 return true;
             else if (alert)
                 ShowNoEarlyAccess(Localize.EarlyAccess_FunctionUnavailableCaption, string.Format(Localize.EarlyAccess_FunctionUnavailableMessage, function));
-#if !DEBUG
+#if !DEBUG || PRERELEASE
             return false;
 #else
             return true;
@@ -63,13 +64,18 @@ namespace NodeMarkup
         }
         public static void ShowNoEarlyAccess(string caption, string message)
         {
-            var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+            var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
             messageBox.CaprionText = caption;
             messageBox.MessageText = message;
             messageBox.Button1Text = Localize.MessageBox_OK;
             messageBox.OnButton1Click = () => true;
             messageBox.Button2Text = Localize.EarlyAccess_GetButton;
             messageBox.OnButton2Click = GetAccess;
+            messageBox.Button3Text = "Discord";
+            messageBox.OnButton3Click = OpenDiscord;
+            messageBox.ChangeButton(1, 1, 5, 1);
+            messageBox.ChangeButton(2, 2, 5, 3);
+            messageBox.ChangeButton(3, 5, 5, 1);
         }
         public static void ShowEarlyAccess(string caption)
         {
@@ -81,6 +87,11 @@ namespace NodeMarkup
         public static bool GetAccess()
         {
             Utilities.OpenUrl(GetEarlyAccessURL);
+            return true;
+        }
+        public static bool OpenDiscord()
+        {
+            Utilities.OpenUrl(DiscordURL);
             return true;
         }
         public static void SaveAccess(string token = null, bool check = true)
@@ -136,6 +147,7 @@ namespace NodeMarkup
             AddGetAccess(helper);
             AddLinkPatreon(helper);
             AddActivateKey(helper);
+
             //AddCheckAccessKey(helper);
             //AddResetAccessKey(helper);
             //AddRefreshKey(helper);
@@ -345,7 +357,7 @@ namespace NodeMarkup
                 var state = request.QueryString.GetValues("state")?.FirstOrDefault();
 
                 var response = context.Response;
-                var responseString = $"<HTML><BODY>{NodeMarkup.Localize.EarlyAccess_PatreonRedirect}</BODY></HTML>";
+                var responseString = $"<HTML><HEAD><meta charset=\"utf-8\"><style>body{{background-color: #FFFFFF;}}</style></HEAD><BODY><h1>{NodeMarkup.Localize.EarlyAccess_PatreonRedirect}</h1></BODY></HTML>";
                 var buffer = Encoding.UTF8.GetBytes(responseString);
                 response.ContentLength64 = buffer.Length;
                 var output = response.OutputStream;

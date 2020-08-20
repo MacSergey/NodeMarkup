@@ -144,7 +144,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            if ((EditObject.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
+            if (style.Type != Manager.Style.StyleType.CrosswalkExistent && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
                 return;
 
             EditObject.Style = style.CopyCrosswalkStyle();
@@ -172,6 +172,12 @@ namespace NodeMarkup.UI.Editors
 
         private void StyleChanged(Style.StyleType style)
         {
+            if (style != Manager.Style.StyleType.CrosswalkExistent && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
+            {
+                Style.SelectedObject = EditObject.Style.Type;
+                return;
+            }
+
             if (style == EditObject.Style.Type)
                 return;
 

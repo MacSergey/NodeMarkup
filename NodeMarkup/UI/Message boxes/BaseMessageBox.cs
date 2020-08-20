@@ -203,7 +203,6 @@ namespace NodeMarkup.UI
         }
         protected UIButton AddButton(int i, int from, Action action)
         {
-            var width = (this.width - (25 * (from + 1))) / from;
             var button = ButtonPanel.AddUIComponent<UIButton>();
             button.normalBgSprite = "ButtonMenu";
             button.hoveredTextColor = new Color32(7, 132, 255, 255);
@@ -211,10 +210,18 @@ namespace NodeMarkup.UI
             button.disabledTextColor = new Color32(7, 7, 7, 255);
             button.horizontalAlignment = UIHorizontalAlignment.Center;
             button.verticalAlignment = UIVerticalAlignment.Middle;
-            button.size = new Vector2(width, ButtonHeight);
-            button.relativePosition = new Vector2(width * (i - 1) + 25 * i, 0);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => action?.Invoke();
+
+            ChangeButton(button, i, from, 1);
+
             return button;
+        }
+        private static float Space => 25f;
+        protected void ChangeButton(UIButton button, int i, int from, int join)
+        {
+            var width = (this.width - (Space * (from + 1))) / from;
+            button.size = new Vector2(width * join + Space * (join - 1), ButtonHeight);
+            button.relativePosition = new Vector2(width * (i - 1) + Space * i, 0);
         }
         protected override void OnKeyDown(UIKeyEventParameter p)
         {

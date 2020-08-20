@@ -278,15 +278,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Chevron style.
-        /// </summary>
-        public static string EarlyAccess_Function_ChevronStyle {
-            get {
-                return ResourceManager.GetString("EarlyAccess_Function_ChevronStyle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy style.
         /// </summary>
         public static string EarlyAccess_Function_CopyStyle {

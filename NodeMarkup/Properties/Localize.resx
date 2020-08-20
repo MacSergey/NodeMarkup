@@ -561,9 +561,6 @@ To create a template, click «{0}» at the line style.</value>
 It will be available to everyone later.
 By registering early access, you will support the ability to develop this mod at the same speed.</value>
   </data>
-  <data name="EarlyAccess_Function_ChevronStyle" xml:space="preserve">
-    <value>Chevron style</value>
-  </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copy style</value>
   </data>
