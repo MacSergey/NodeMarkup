@@ -320,8 +320,13 @@ namespace NodeMarkup.Manager
         public bool TryGetLine<LineType>(ulong lineId, Dictionary<ObjectId, ObjectId> map, out LineType line)
             where LineType : MarkupLine
         {
-            MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair);
-            return TryGetLine(pair.Hash, out line);
+            if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair))
+                return TryGetLine(pair.Hash, out line);
+            else
+            {
+                line = null;
+                return false;
+            }
         }
 
         public bool TryGetEnter(ushort enterId, out Enter enter)

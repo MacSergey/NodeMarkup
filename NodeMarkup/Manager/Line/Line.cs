@@ -122,7 +122,11 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, Markup makrup, Dictionary<ObjectId, ObjectId> map, out MarkupLine line)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair);
+            if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair))
+            {
+                line = null;
+                return false;
+            }
 
             if (!makrup.TryGetLine(pointPair.Hash, out line))
             {
