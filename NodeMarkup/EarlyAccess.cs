@@ -33,6 +33,8 @@ namespace NodeMarkup
 
         public static bool CheckAccess()
         {
+            Status = false;
+
             if (EarlyAccessVersion.value == Version)
                 Status = true;
             else if (!string.IsNullOrEmpty(PatreonToken.value))
@@ -51,7 +53,6 @@ namespace NodeMarkup
 
         public static bool CheckFunctionAccess(string function, bool alert = true)
         {
-
             if (Status)
                 return true;
             else if (alert)
