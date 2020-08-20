@@ -35,11 +35,11 @@ namespace NodeMarkup
 
 #if DEBUG
         public static bool IsBeta => true;
-        public string Name { get; } = $"{StaticName} {Version} [BETA]";
+        public string Name { get; } = $"{StaticName} {Version.GetString()} [BETA]";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public static bool IsBeta => false;
-        public string Name { get; } = $"{StaticName} {Version}";
+        public string Name { get; } = $"{StaticName} {Version.GetString()}";
         public string Description => Localize.Mod_Description;
 #endif
 
