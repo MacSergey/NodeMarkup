@@ -842,4 +842,7 @@ create or delete a crosswalk</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>template</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
+    <value />
+  </data>
 </root>
