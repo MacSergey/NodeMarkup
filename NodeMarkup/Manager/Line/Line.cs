@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IToXml
+    public abstract class MarkupLine : IUpdate, IToXml
     {
         public static string XmlName { get; } = "L";
 
@@ -43,12 +43,17 @@ namespace NodeMarkup.Manager
             PointPair = pointPair;
 
             if (update)
-                UpdateTrajectory();
+                Update(true);
         }
         protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
-        protected virtual void RuleChanged() => Markup.Update(this);
+        protected virtual void RuleChanged() => Markup.Update(this, true);
 
-        public void UpdateTrajectory() => LineTrajectory = CalculateTrajectory();
+        public void Update(bool onlySelfUpdate = false)
+        {
+            LineTrajectory = CalculateTrajectory();
+            if (!onlySelfUpdate)
+                Markup.Update(this);
+        }
         protected abstract ILineTrajectory CalculateTrajectory();
 
         public void RecalculateDashes() => Dashes = GetDashes().ToArray();
@@ -176,7 +181,7 @@ namespace NodeMarkup.Manager
             rule.OnRuleChanged = RuleChanged;
             Rule = rule;
 
-            RuleChanged();
+            //RuleChanged();
         }
         protected abstract void AddDefaultRule();
         public override XElement ToXml()
@@ -325,7 +330,7 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false) 
         {
             Crosswalk = new MarkupCrosswalk(Markup, this, crosswalkType);
-            UpdateTrajectory();
+            Update(true);
             Markup.AddCrosswalk(Crosswalk);
         }
         protected override MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
@@ -334,7 +339,7 @@ namespace NodeMarkup.Manager
             var to = empty ? null : new CrosswalkBorderEdge(this, BorderPosition.Left);
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
-        protected override void RuleChanged() => Markup.Update(this, true, true);
+        protected override void RuleChanged() => Markup.Update(this, true);
 
         protected override ILineTrajectory CalculateTrajectory() => TrajectoryGetter();
         public float GetT(BorderPosition border) => (int)border;

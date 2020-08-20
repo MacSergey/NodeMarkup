@@ -26,6 +26,7 @@ namespace NodeMarkup
 
         public static List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.3"),
             new Version("1.2.1"),
             new Version("1.2"),
             new Version("1.1"),
@@ -77,6 +78,7 @@ namespace NodeMarkup
                 NodeMarkupTool.Create();
                 MarkupManager.Init();
 
+                EarlyAccess.CheckAccess();
                 ShowWhatsNew();
                 ShowBetaWarning();
             }

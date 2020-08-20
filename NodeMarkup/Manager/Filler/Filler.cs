@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IToXml
+    public class MarkupFiller : IUpdate, IToXml
     {
         public static IEnumerable<IFillerVertex> GetBeginCandidates(Markup markup)
         {
@@ -105,7 +105,7 @@ namespace NodeMarkup.Manager
                 LineParts.RemoveAt(LineParts.Count - 1);
         }
 
-        private void OnStyleChanged() => Markup.Update(this);
+        private void OnStyleChanged() => Markup.Update(this, true);
         public bool ContainsLine(MarkupLine line) => LineParts.Any(p => p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => SupportPoints.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
@@ -224,18 +224,15 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End);
         }
 
-        public void Update()
+        public void Update(bool onlySelfUpdate = false)
         {
             foreach (var part in LineParts)
             {
                 if (part.Line is MarkupEnterLine fakeLine)
-                    fakeLine.UpdateTrajectory();
+                    fakeLine.Update(true);
             }
         }
-        public void RecalculateDashes()
-        {
-            Dashes = Style.Calculate(this).ToArray();
-        }
+        public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
 
         public XElement ToXml()
         {

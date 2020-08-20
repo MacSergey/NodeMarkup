@@ -12,7 +12,16 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class Markup : IToXml
+    public interface IUpdate
+    {
+        void Update(bool onlySelfUpdate = false);
+    }
+    public interface IUpdate<Type>
+        where Type : IUpdate
+    {
+        void Update(Type item, bool recalculate = false);
+    }
+    public class Markup : IUpdate<MarkupPoint>, IUpdate<MarkupLine>, IUpdate<MarkupFiller>, IUpdate<MarkupCrosswalk>, IToXml
     {
         #region STATIC
 
@@ -138,7 +147,7 @@ namespace NodeMarkup.Manager
             foreach (var line in LinesDictionary.Values.ToArray())
             {
                 if (ContainsEnter(line.Start.Enter.Id) && ContainsEnter(line.End.Enter.Id))
-                    line.UpdateTrajectory();
+                    line.Update();
                 else
                     RemoveLine(line);
             }
@@ -146,58 +155,60 @@ namespace NodeMarkup.Manager
         private void UpdateFillers()
         {
             foreach (var filler in FillersList)
-                filler.Update();
+                filler.Update(true);
         }
         private void UpdateCrosswalks()
         {
             foreach (var crosswalk in Crosswalks)
-                crosswalk.Update();
+                crosswalk.Update(true);
         }
 
-        public void Update(MarkupPoint point)
+        public void Update(MarkupPoint point, bool recalculate = false)
         {
             point.Update();
 
             foreach (var line in GetPointLines(point))
-            {
-                line.UpdateTrajectory();
-            }
+                line.Update();
+
             foreach (var filler in GetPointFillers(point))
-            {
                 filler.Update();
+
+            foreach (var crosswalk in GetPointCrosswalks(point))
+                crosswalk.Update();
+
+            if (recalculate)
+                RecalculateDashes();
+        }
+        public void Update(MarkupLine line, bool recalculate = false)
+        {
+            line.Update(true);
+
+            foreach (var intersect in GetExistIntersects(line).ToArray())
+            {
+                LineIntersects.Remove(intersect.Pair);
+                intersect.Pair.GetOther(line).Update();
             }
 
-            RecalculateDashes();
+            foreach (var filler in GetLineFillers(line))
+                filler.Update();
+
+            foreach (var crosswalk in GetLinesIsBorder(line))
+                crosswalk.Update();
+
+            if (recalculate)
+                RecalculateDashes();
         }
-        public void Update(MarkupLine line, bool updateIntersect = false, bool updateFillers = false)
+        public void Update(MarkupFiller filler, bool recalculate = false)
         {
-            line.UpdateTrajectory();
-            if (updateIntersect)
-            {
-                foreach (var intersect in GetExistIntersects(line).ToArray())
-                {
-                    LineIntersects.Remove(intersect.Pair);
-                    Update(intersect.Pair.GetOther(line));
-                }
-            }
-            if (updateFillers)
-            {
-                foreach (var filler in GetLineFillers(line))
-                    Update(filler);
-            }
-            line.RecalculateDashes();
-            NeedRecalculateBatches = true;
+            filler.Update();
+            if (recalculate)
+                RecalculateDashes();
         }
-        public void Update(MarkupFiller filler)
+        public void Update(MarkupCrosswalk crosswalk, bool recalculate = false)
         {
-            filler.RecalculateDashes();
-            NeedRecalculateBatches = true;
-        }
-        public void Update(MarkupCrosswalk crosswalk)
-        {
-            Update(crosswalk.Line, true, true);
-            crosswalk.RecalculateDashes();
-            NeedRecalculateBatches = true;
+            crosswalk.Line.Update();
+            if (recalculate)
+                RecalculateDashes();
         }
 
         public void Clear()
@@ -363,6 +374,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
         public IEnumerable<MarkupFiller> GetPointFillers(MarkupPoint point) => FillersList.Where(f => f.ContainsPoint(point));
+        public IEnumerable<MarkupCrosswalk> GetPointCrosswalks(MarkupPoint point) => Crosswalks.Where(c => c.ContainsPoint(point));
         public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
         #endregion
@@ -455,6 +467,8 @@ namespace NodeMarkup.Manager
                 if (MarkupCrosswalk.FromXml(crosswalkConfig, this, map, out MarkupCrosswalk crosswalk))
                     CrosswalksDictionary[crosswalk.Line] = crosswalk;
             }
+
+            Update();
         }
 
         #endregion XML

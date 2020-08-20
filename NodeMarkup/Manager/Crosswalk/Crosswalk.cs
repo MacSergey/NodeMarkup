@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IToXml
+    public class MarkupCrosswalk : IUpdate, IToXml
     {
         #region PROPERTIES
 
@@ -76,6 +76,7 @@ namespace NodeMarkup.Manager
             Line = line;
             Line.TrajectoryGetter = GetTrajectory;
             _style = style;
+            _style.OnStyleChanged = CrosswalkChanged;
             _rightBorder = rightBorder;
             _leftBorder = leftBorder;
 
@@ -88,8 +89,14 @@ namespace NodeMarkup.Manager
             EnterLine = new MarkupEnterLine(Markup, startPoint.Num < endPoint.Num ? startPoint : endPoint, startPoint.Num < endPoint.Num ? endPoint : startPoint);
         }
 
-        protected void CrosswalkChanged() => Markup.Update(this);
-        public void Update() => EnterLine.UpdateTrajectory();
+        protected void CrosswalkChanged() => Markup.Update(this, true);
+
+        public void Update(bool onlySelfUpdate = false)
+        {
+            EnterLine.Update(true);
+            if(!onlySelfUpdate)
+                Markup.Update(this);
+        }
         public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
         public void Render(RenderManager.CameraInfo cameraInfo, Color color)
         {
@@ -110,7 +117,7 @@ namespace NodeMarkup.Manager
             var trajectory = GetOffsetTrajectory(TotalWidth);
 
             RightBorderTrajectory = GetBorderTrajectory(trajectory, RightBorder, 0, DefaultRightBorderTrajectory, out float startT);
-            LeftBorderTrajectory = GetBorderTrajectory(trajectory, LeftBorder, 0, DefaultLeftBorderTrajectory, out float endT);
+            LeftBorderTrajectory = GetBorderTrajectory(trajectory, LeftBorder, 1, DefaultLeftBorderTrajectory, out float endT);
 
             return new StraightTrajectory((StraightTrajectory)trajectory.Cut(startT, endT), false);
         }
@@ -168,6 +175,7 @@ namespace NodeMarkup.Manager
             if (line == LeftBorder)
                 LeftBorder = null;
         }
+        public bool ContainsPoint(MarkupPoint point) => EnterLine.ContainsPoint(point);
 
         #region XML
 

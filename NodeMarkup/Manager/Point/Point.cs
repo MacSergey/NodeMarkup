@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IToXml, IFromXml
+    public abstract class MarkupPoint : IUpdate, IToXml, IFromXml
     {
         public event Action<MarkupPoint> OnUpdate;
         static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
@@ -45,7 +45,7 @@ namespace NodeMarkup.Manager
             set
             {
                 _offset = value;
-                Markup.Update(this);
+                Markup.Update(this, true);
             }
         }
 
@@ -90,7 +90,7 @@ namespace NodeMarkup.Manager
         }
         public MarkupPoint(SegmentMarkupLine segmentLine, LocationType location) : this(segmentLine.Enter.PointNum, segmentLine, location) { }
 
-        public void Update()
+        public void Update(bool onlySelfUpdate = false)
         {
             UpdateProcess();
             OnUpdate?.Invoke(this);
