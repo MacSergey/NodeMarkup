@@ -21,7 +21,7 @@ namespace NodeMarkup
         public static SavedString EarlyAccessVersion { get; } = new SavedString(nameof(EarlyAccessVersion), UI.Settings.SettingsFile, string.Empty, true);
         public static SavedString PatreonToken { get; } = new SavedString(nameof(PatreonToken), UI.Settings.SettingsFile, string.Empty, true);
 #if DEBUG
-        public static string Version => $"{Mod.VersionMajor} [BETA]";
+        public static string Version => $"{Mod.VersionBuild} [BETA]";
 #else
         private static string Version => Mod.VersionBuild.ToString();
 #endif

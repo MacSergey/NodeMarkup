@@ -90,6 +90,7 @@ namespace NodeMarkup.Manager
             }
         }
         public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width = 0.2f) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
+        public abstract bool ContainsRule(MarkupLineRawRule rule);
 
         public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
         {
@@ -108,6 +109,7 @@ namespace NodeMarkup.Manager
                         return new MarkupRegularLine(markup, pointPair, regularStyle);
             }
         }
+
         public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection,
@@ -195,6 +197,8 @@ namespace NodeMarkup.Manager
             Rule = rule;
         }
         protected abstract Style GetDefaultStyle(StyleType styleType);
+        public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && rule == Rule;
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -273,6 +277,7 @@ namespace NodeMarkup.Manager
             if (!RawRules.Any())
                 AddRule(false);
         }
+        public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
         protected override IEnumerable<MarkupStyleDash> GetDashes()
         {

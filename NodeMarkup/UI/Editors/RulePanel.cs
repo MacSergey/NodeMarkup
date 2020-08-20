@@ -42,12 +42,7 @@ namespace NodeMarkup.UI.Editors
             SetSize();
 
             AddHeader();
-            if (Editor.CanDivide)
-            {
-                AddFromProperty();
-                AddToProperty();
-                FillEdges();
-            }
+            AddEdgeProperties();
             AddStyleTypeProperty();
             AddStyleProperties();
         }
@@ -70,6 +65,12 @@ namespace NodeMarkup.UI.Editors
             header.OnSelectTemplate += OnSelectTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
+        }
+        private void AddEdgeProperties()
+        {
+            AddFromProperty();
+            AddToProperty();
+            FillEdges();
         }
         private void AddFromProperty()
         {
@@ -99,14 +100,15 @@ namespace NodeMarkup.UI.Editors
         }
         private void FillEdge(MarkupLineSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
         {
-            if (panel != null)
-            {
-                panel.OnSelectChanged -= action;
-                panel.Clear();
-                panel.AddRange(Editor.SupportPoints);
-                panel.SelectedObject = value;
-                panel.OnSelectChanged += action;
-            }
+            if (panel == null)
+                return;
+
+            panel.OnSelectChanged -= action;
+            panel.Clear();
+            panel.AddRange(Editor.SupportPoints);
+            panel.SelectedObject = value;
+            panel.isVisible = Editor.CanDivide;
+            panel.OnSelectChanged += action;
         }
         private void AddStyleTypeProperty()
         {

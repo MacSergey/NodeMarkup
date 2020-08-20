@@ -92,6 +92,11 @@ namespace NodeMarkup.UI.Editors
             rulePanel.eventMouseLeave += RuleMouseLeave;
             return rulePanel;
         }
+        private void RemoveRulePanel(RulePanel rulePanel)
+        {
+            SettingsPanel.RemoveUIComponent(rulePanel);
+            Destroy(rulePanel);
+        }
 
         private void AddAddButton()
         {
@@ -154,9 +159,9 @@ namespace NodeMarkup.UI.Editors
             bool Delete()
             {
                 regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
-                SettingsPanel.RemoveUIComponent(rulePanel);
-                Destroy(rulePanel);
+                RemoveRulePanel(rulePanel);
                 RefreshItem();
+                RefreshRulePanels();
                 DeleteAddButton();
                 AddAddButton();
                 return true;
@@ -268,8 +273,20 @@ namespace NodeMarkup.UI.Editors
         public void RefreshItem() => SelectItem.Refresh();
         public void RefreshRulePanels()
         {
-            foreach (var rulePanel in SettingsPanel.components.OfType<RulePanel>())
-                rulePanel.Refresh();
+            var rulePanels = SettingsPanel.components.OfType<RulePanel>().ToArray();
+
+            foreach(var rulePanel in rulePanels)
+            {
+                if (EditObject.ContainsRule(rulePanel.Rule))
+                    rulePanel.Refresh();
+                else
+                    RemoveRulePanel(rulePanel);
+            }
+            foreach(var rule in EditObject.Rules)
+            {
+                if (!rulePanels.Any(r => r.Rule == rule))
+                    AddRulePanel(rule);
+            }
         }
     }
 
