@@ -811,9 +811,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
   </data>
-  <data name="EarlyAccess_Support" xml:space="preserve">
-    <value>Поддержка</value>
-  </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>Линии переходов</value>
   </data>
@@ -847,5 +844,9 @@ Shift X10, Ctrl X0.1</value>
 - Изменен переход к редактированию точки. Нажмите на точку при зажатом Ctrl.
 - Добавлена возможность выбора языка мода отличного от языка игры.
 - Добавлен Финский язык.</value>
+  </data>
+  
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Поддержка</value>
   </data>
 </root>

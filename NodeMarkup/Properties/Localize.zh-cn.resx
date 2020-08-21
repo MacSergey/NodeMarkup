@@ -786,9 +786,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
-  <data name="EarlyAccess_Support" xml:space="preserve">
-    <value>支持服务</value>
-  </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>人行横道线</value>
   </data>
@@ -808,4 +805,8 @@ Shift x10，Ctrl x0.1</value>
     <value>模版</value>
   </data>
   
+  
+  <data name="Mod_Support" xml:space="preserve">
+    <value>支持服务</value>
+  </data>
 </root>

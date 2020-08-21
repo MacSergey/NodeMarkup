@@ -747,7 +747,6 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
     <value>Continua</value>
   </data>
   
-  
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>attraversamento</value>
   </data>
@@ -763,5 +762,7 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modello</value>
   </data>
+  
+  
   
 </root>

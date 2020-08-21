@@ -759,7 +759,6 @@ Sprawdź punkty "Z" i "Do" innych reguł.</value>
     <value>Ciągła</value>
   </data>
   
-  
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>przejście dla pieszych</value>
   </data>
@@ -775,5 +774,7 @@ Sprawdź punkty "Z" i "Do" innych reguł.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>szablon</value>
   </data>
+  
+  
   
 </root>

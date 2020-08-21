@@ -684,7 +684,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>交差点（ノード）に、横断歩道の設定がありません。
-2つのポイントを繋げて作りましょう。</value>
+Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>横断歩道</value>
@@ -708,7 +708,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>テンプレートをタブで折り畳む</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
-    <value>クリックして横断歩道の追加</value>
+    <value>クリックして横断歩道を作成</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>クリックして横断歩道を削除</value>
@@ -753,10 +753,10 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>ポイントをグループ化して表示</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
-    <value>円形で表示</value>
+    <value>グループ化して表示</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
-    <value>ラインで表示</value>
+    <value>従来型で表示</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
     <value>追加したルールが重なっています。
@@ -772,7 +772,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>元に戻す</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
-    <value>終わりのポイントを選択</value>
+    <value>終点側のポイントを選択</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
     <value>ポイントを選択して
@@ -782,16 +782,13 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>2本の破線</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>梯子タイプ</value>
+    <value>梯子タイプの横断歩道</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
     <value>テンプレートがありません</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>実線</value>
-  </data>
-  <data name="EarlyAccess_Support" xml:space="preserve">
-    <value>サポート</value>
+    <value>ベタ塗り</value>
   </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>横断歩道のタブ</value>
@@ -812,4 +809,8 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>テンプレート</value>
   </data>
   
+  
+  <data name="Mod_Support" xml:space="preserve">
+    <value>サポート（Discordにジャンプ）</value>
+  </data>
 </root>
