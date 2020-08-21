@@ -723,7 +723,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2重のゼブラ模様</value>
   </data>
   <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
-    <value>横断歩道の線幅</value>
+    <value>横断歩道全体の幅</value>
   </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>縦方向のオフセット</value>
@@ -738,16 +738,16 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2本の実線</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>左枠線</value>
+    <value>左側の基準線</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>右枠線</value>
+    <value>右側の基準線</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>横断歩道の左枠線を選択</value>
+    <value>左側の基準線を選択</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>横断歩道の右枠線を選択</value>
+    <value>右側の基準線を選択</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>ポイントをグループ化して表示</value>
@@ -763,10 +763,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
 他と重なっている、始点と終点のポイントを確認してください。</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>横断歩道の左枠線</value>
+    <value>左側の基準線</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>横断歩道の右枠線</value>
+    <value>右側の基準線</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>元に戻す</value>
@@ -782,7 +782,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2本の破線</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>梯子タイプの横断歩道</value>
+    <value>ハシゴ型の横断歩道</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
     <value>テンプレートがありません</value>
@@ -816,5 +816,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Mod_Support" xml:space="preserve">
     <value>サポート</value>
   </data>
-  
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>トラブルシューティング</value>
+  </data>
 </root>

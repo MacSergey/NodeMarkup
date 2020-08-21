@@ -730,7 +730,9 @@ Pro vytvoření přechodu drž Shift.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Souběžná s pruhy</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Souběžné plné čáry</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Levý roh</value>
   </data>
@@ -772,15 +774,21 @@ Zkontrolujte počáteční a koncové body ostatních pravidel.</value>
     <value>Vyber bod pro vytvoření
 nebo odstranění přechodu</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Souběžné přerušované čáry</value>
+  </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
     <value>Žebřík</value>
   </data>
-  
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Žádné šablony</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Nepřerušovná</value>
   </data>
-  
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Čáry přechodů</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>přechod</value>
   </data>
@@ -797,7 +805,14 @@ nebo odstranění přechodu</value>
     <value>šablonu</value>
   </data>
   
-  
-  
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Při načítání se vyskytly chyby.
+Nepodařilo se načíst značení pro {0} křižovatek.</value>
+  </data>
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Podpora</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Řešení problémů</value>
+  </data>
 </root>
