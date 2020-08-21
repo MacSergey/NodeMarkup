@@ -812,5 +812,7 @@ Nie udało się załadować wypełnień dla {0} skrzyżowań.</value>
   <data name="Mod_Support" xml:space="preserve">
     <value>Wsparcie</value>
   </data>
-  
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Rozwiązywanie problemów</value>
+  </data>
 </root>

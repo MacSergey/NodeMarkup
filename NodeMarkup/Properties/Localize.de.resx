@@ -848,6 +848,6 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
     <value>Support</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Problemlösungen</value>
+    <value>Hilfe</value>
   </data>
 </root>

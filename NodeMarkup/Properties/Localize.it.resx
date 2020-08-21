@@ -360,7 +360,13 @@ Clicca per modificare il marcatore</value>
 +Shift - Continua
 +Ctrl - Tratteggiata</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Seleziona un punto per
+creare o cancellare una linea
++Ctrl per muovere il punto
+Tieni premuto Alt per impostare il riempimento
+Tieni premuto Shift per impostare le strisce pedonali</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Cosa c'è di nuovo in {0}</value>
   </data>
@@ -540,7 +546,11 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
     <value>Questa funzione non è disponibile</value>
   </data>
-  
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>La funzione «{0}» è attualmente utilizzabile tramite accesso anticipato al Patreon.
+Successivamente sarà disponibile per tutti.
+Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
+  </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
     <value>Copia stile</value>
   </data>
@@ -550,26 +560,48 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
     <value>Linee perpendicolari</value>
   </data>
-  
-  
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Ottieni l'accesso anticipato</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Il tuo codice d'accesso</value>
+  </data>
   <data name="EarlyAccess_Key" xml:space="preserve">
     <value>Chiave d'accesso</value>
   </data>
   <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
     <value>Attiva</value>
   </data>
-  
-  
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Attivazione dell'accesso anticipato</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Per attivare l'accesso anticipato devi inserire il codice</value>
+  </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
     <value>Annulla</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>Il codice che hai inserito non è valido</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Collegamento in corso...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Collega account Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Collega account Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>L'account Patreon non può esser collegato perché non hai i permessi d'accesso.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Si è verificato un errore durante il collegamento dell'account, riprova.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Il tuo account è collegato, però non hai l'accesso anticipato.</value>
+  </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
     <value>Puoi chiudere questa pagina e tornare al gioco.</value>
   </data>
@@ -588,7 +620,9 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
     <value>Grazie per il tuo supporto, ora puoi goderti tutte le funzionalità.</value>
   </data>
-  
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Accesso anticipato</value>
+  </data>
   <data name="LineEditor_CenterSolid" xml:space="preserve">
     <value>Centrale continua</value>
   </data>
@@ -669,9 +703,12 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Attraversamenti</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Non ci sono attualmente strisce pedonali a questo incrocio.
+Per crearli tieni premuto Shift.</value>
+  </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>attraversamento</value>
+    <value>strisce pedonali</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
     <value>Attraversamenti</value>
@@ -718,7 +755,9 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Parallelo alle corsie</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Doppia linea continua</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Bordo sinistro</value>
   </data>
@@ -731,24 +770,52 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleziona il bordo destro dell'attraversamento</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Gruppo di punti sovrapposto</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Disponi in cerchio</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Disponi in linea</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>La regola si sovrappone con un'altra.
+Controlla le regole su "Da" e "A".</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Bordo sinistro delle strisce pedonali</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Bordo destro delle strisce pedonali</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Ripristina</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Seleziona il punto di fine</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Seleziona un punto per creare o
+cancellare le strisce pedonali</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Doppia linea tratteggiata</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Scala</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Nessun modello</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Modello delle strisce pedonali</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>attraversamento</value>
+    <value>strisce pedonali</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
     <value>riempimento</value>
@@ -763,9 +830,14 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
     <value>modello</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Il caricamento è stato completato con errori.
+Impossibile caricare i contrassegni per {0} intersezioni.</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Supporto</value>
   </data>
-  
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Risoluzione problemi</value>
+  </data>
 </root>

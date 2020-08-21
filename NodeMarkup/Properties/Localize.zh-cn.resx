@@ -812,5 +812,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Mod_Support" xml:space="preserve">
     <value>支持服务</value>
   </data>
-  
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>故障排除</value>
+  </data>
 </root>
