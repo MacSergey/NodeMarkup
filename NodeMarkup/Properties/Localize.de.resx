@@ -365,7 +365,8 @@ Klicken um Markierung zu bearbeiten</value>
 Linie erstellen oder löschen
 +Strg um den Punkt zu verschieben
 Alt halten um eine Füllung zu erstellen
-Shift halten um eine Fußgängerüberweg-Markierung zu erstellen</value>
+Shift halten um eine
+Fußgängerüberweg-Markierung zu erstellen</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
