@@ -809,8 +809,12 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>テンプレート</value>
   </data>
   
-  
-  <data name="Mod_Support" xml:space="preserve">
-    <value>サポート（Discordにジャンプ）</value>
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>マーキングが正常に描画されず、ロードエラーがありました。
+{0} ヶ所の交差点（ノード）で、マーキングの描画に失敗しました。</value>
   </data>
+  <data name="Mod_Support" xml:space="preserve">
+    <value>サポート</value>
+  </data>
+  
 </root>

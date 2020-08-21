@@ -360,7 +360,13 @@ Kliknij aby edytować oznaczenia</value>
 +Shift - ciągła
 +Ctrl - podwójna</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Wybierz punkt aby
+utworzyć lub usunąć linię
++Ctrl - aby przesunąć punkt
+Przytrzymaj Alt - aby utworzyć wypełnienie
+Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
+  </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
   </data>
@@ -672,7 +678,10 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Przejścia dla pieszych</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>To skrzyżowanie nie ma jeszcze przejścia dla pieszych.
+Aby utworzyć przejście dla pieszych przytrzymaj klawisz Shift.</value>
+  </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>przejście dla pieszych</value>
   </data>
@@ -721,7 +730,9 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Równolegle do pasów</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Równoległe linie ciągłe</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Lewa krawędź</value>
   </data>
@@ -747,18 +758,37 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Reguła jest nadpisywana przez inną regułę.
 Sprawdź punkty "Z" i "Do" innych reguł.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Lewy margines przejścia dla pieszych</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Prawy margines przejścia dla pieszych</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Resetuj</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Wybierz punkt końcowy</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Wybierz punkt, aby
+utworzyć lub usunąć przejście dla pieszych</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Równoległe przerywane linie</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Drabinka</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Brak szablonów</value>
+  </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Ciągła</value>
   </data>
-  
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Linie przejść dla pieszych</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>przejście dla pieszych</value>
   </data>
@@ -775,6 +805,12 @@ Sprawdź punkty "Z" i "Do" innych reguł.</value>
     <value>szablon</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Wystąpiły błędy podczas ładowania danych.
+Nie udało się załadować wypełnień dla {0} skrzyżowań.</value>
+  </data>
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Wsparcie</value>
+  </data>
   
 </root>

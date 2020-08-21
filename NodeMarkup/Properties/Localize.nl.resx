@@ -804,8 +804,14 @@ een zebrapad te creëren of te verwijderen</value>
     <value>sjabloon</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Er zijn fouten opgetreden tijdens het laden.
+Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Support</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Probleemoplossing</value>
   </data>
 </root>

@@ -805,8 +805,12 @@ Shift x10，Ctrl x0.1</value>
     <value>模版</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>导入完毕，但出现了以下错误：
+ {0} 个交叉口的地标线导入失败</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>支持服务</value>
   </data>
+  
 </root>

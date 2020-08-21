@@ -805,8 +805,14 @@ poistaaksesi suojatien</value>
     <value>malline</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Tallennnuksen avaamisessa tapahtui virheitä.
+{0}n risteyksen merkintöjen lataus epäonnistui.</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Tuki</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Vianmääritys</value>
   </data>
 </root>

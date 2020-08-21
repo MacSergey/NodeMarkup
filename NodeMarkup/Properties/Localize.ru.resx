@@ -845,8 +845,14 @@ Shift X10, Ctrl X0.1</value>
 - Добавлена возможность выбора языка мода отличного от языка игры.
 - Добавлен Финский язык.</value>
   </data>
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Загрузка завершилась с ошибками.
+Не удалось загрузить разметку для {0} перекрестков.</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Поддержка</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Устранение неполадок</value>
   </data>
 </root>
