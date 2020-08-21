@@ -406,7 +406,7 @@ namespace NodeMarkup.Manager
             Offset = config.GetAttrValue("O", DefaultCrosswalkOffset);
         }
     }
-    public class ParallelSolidLinesCrosswalkStyle : LinedCrosswalkStyle
+    public class ParallelSolidLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle
     {
         public override StyleType Type => StyleType.CrosswalkParallelSolidLines;
 
@@ -435,7 +435,7 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, IDashedLine
+    public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IDashedLine
     {
         public override StyleType Type => StyleType.CrosswalkParallelDashedLines;
 
@@ -519,7 +519,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", LineStyle.DefaultSpaceLength);
         }
     }
-    public class LadderCrosswalkStyle : ParallelSolidLinesCrosswalkStyle, IDashedCrosswalk
+    public class LadderCrosswalkStyle : ParallelSolidLinesCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk
     {
         public override StyleType Type => StyleType.CrosswalkLadder;
 
@@ -604,7 +604,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", LineStyle.DefaultSpaceLength);
         }
     }
-    public class SolidCrosswalkStyle : CustomCrosswalkStyle
+    public class SolidCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle
     {
         public override StyleType Type => StyleType.CrosswalkSolid;
 
