@@ -821,9 +821,6 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Durchgezogen</value>
   </data>
-  <data name="EarlyAccess_Support" xml:space="preserve">
-    <value>Support/Hilfe</value>
-  </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>Fußgängerüberwege</value>
   </data>
@@ -843,4 +840,8 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Vorlage</value>
   </data>
   
+  
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Support/Hilfe</value>
+  </data>
 </root>

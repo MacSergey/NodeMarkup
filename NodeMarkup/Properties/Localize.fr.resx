@@ -786,9 +786,6 @@ créer ou supprimer un passage piéton</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  <data name="EarlyAccess_Support" xml:space="preserve">
-    <value>Support</value>
-  </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>Passages piétons</value>
   </data>
@@ -808,4 +805,8 @@ créer ou supprimer un passage piéton</value>
     <value>modèle</value>
   </data>
   
+  
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
 </root>

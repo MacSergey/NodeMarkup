@@ -786,9 +786,6 @@ crear o eliminar el paso de peatones</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  <data name="EarlyAccess_Support" xml:space="preserve">
-    <value>Apoyo</value>
-  </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>Líneas de paso de peatones</value>
   </data>
@@ -808,4 +805,8 @@ crear o eliminar el paso de peatones</value>
     <value>plantilla</value>
   </data>
   
+  
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Apoyo</value>
+  </data>
 </root>

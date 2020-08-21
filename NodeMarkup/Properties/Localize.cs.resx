@@ -781,7 +781,6 @@ nebo odstranění přechodu</value>
     <value>Nepřerušovná</value>
   </data>
   
-  
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>přechod</value>
   </data>
@@ -797,5 +796,7 @@ nebo odstranění přechodu</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>šablonu</value>
   </data>
+  
+  
   
 </root>
