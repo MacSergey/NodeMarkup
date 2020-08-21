@@ -113,9 +113,9 @@ namespace NodeMarkup
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
-        public static bool OpenReportBug()
+        public static bool OpenTroubleshooting()
         {
-            Utilities.OpenUrl(ReportBugUrl);
+            Utilities.OpenUrl(TroubleshootingUrl);
             return true;
         }
         private void ShowLoadError()
@@ -127,7 +127,7 @@ namespace NodeMarkup
                 messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors);
                 messageBox.Button1Text = Localize.MessageBox_OK;
                 messageBox.Button2Text = Localize.Mod_Support;
-                messageBox.OnButton2Click = OpenReportBug;
+                messageBox.OnButton2Click = OpenTroubleshooting;
             }
         }
         private void ShowBetaWarning()
