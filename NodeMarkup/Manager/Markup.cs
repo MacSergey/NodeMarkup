@@ -437,9 +437,20 @@ namespace NodeMarkup.Manager
         public static bool FromXml(Version version, XElement config, out Markup markup)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            markup = MarkupManager.Get(nodeId);
-            markup.FromXml(version, config);
-            return true;
+
+            try
+            {
+                markup = MarkupManager.Get(nodeId);
+                markup.FromXml(version, config);
+                return true;
+            }
+            catch (Exception error)
+            {
+                Logger.LogError(() => $"Could load node #{nodeId} markup", error);
+                markup = null;
+                MarkupManager.LoadErrors += 1;
+                return false;
+            }
         }
         public void FromXml(Version version, XElement config, Dictionary<ObjectId, ObjectId> map = null)
         {

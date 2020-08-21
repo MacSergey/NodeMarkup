@@ -1195,6 +1195,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Loaded completed with errors.
+        ///Failed to load marking for {0} intersections..
+        /// </summary>
+        public static string Mod_LoadFailed {
+            get {
+                return ResourceManager.GetString("Mod_LoadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Czech.
         /// </summary>
         public static string Mod_Locale_cs {

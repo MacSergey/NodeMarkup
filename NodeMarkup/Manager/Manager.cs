@@ -18,6 +18,7 @@ namespace NodeMarkup.Manager
 
         static PropManager PropManager => Singleton<PropManager>.instance;
         static Material Material { get; set; }
+        public static ushort LoadErrors { get; set; } = 0;
 
         public static void Init()
         {
@@ -123,6 +124,7 @@ namespace NodeMarkup.Manager
         public static void FromXml(XElement config)
         {
             NodesMarkup.Clear();
+            LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);
             foreach (var markupConfig in config.Elements(Markup.XmlName))

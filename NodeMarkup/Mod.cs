@@ -81,6 +81,7 @@ namespace NodeMarkup
                 EarlyAccess.CheckAccess();
                 ShowWhatsNew();
                 ShowBetaWarning();
+                ShowLoadError();
             }
         }
 
@@ -107,6 +108,15 @@ namespace NodeMarkup
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
+        private void ShowLoadError()
+        {
+            if (MarkupManager.LoadErrors != 0)
+            {
+                var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
+                messageBox.CaprionText = StaticName;
+                messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors);
+            }
+        }
         private void ShowBetaWarning()
         {
             if(!IsBeta)

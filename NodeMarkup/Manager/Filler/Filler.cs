@@ -257,7 +257,12 @@ namespace NodeMarkup.Manager
             {
                 if (FillerVertex.FromXml(supportConfig, markup, map, out IFillerVertex vertex))
                     filler.Add(vertex);
+                else
+                    return false;
             }
+            if(filler.First == null)
+                return false;
+
             filler.Add(filler.First);
 
             return true;

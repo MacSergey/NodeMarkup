@@ -858,4 +858,8 @@ By becoming a Patreon, you will be  supporting the development of the mod at the
 - Added the ability to select tool's language different from the game language.
 - Added Finnish language.</value>
   </data>
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Loaded completed with errors.
+Failed to load marking for {0} intersections.</value>
+  </data>
 </root>
