@@ -723,7 +723,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2重のゼブラ模様</value>
   </data>
   <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
-    <value>横断歩道全体の幅</value>
+    <value>外枠線の幅</value>
   </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>縦方向のオフセット</value>
