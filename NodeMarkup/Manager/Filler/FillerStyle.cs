@@ -400,8 +400,8 @@ namespace NodeMarkup.Manager
             var middle = new Bezier3()
             {
                 a = (trajectories[right].EndPosition + trajectories[left].StartPosition) / 2,
-                b = (trajectories[right].EndDirection + trajectories[left].StartDirection / 2).normalized,
-                c = (trajectories[right].StartDirection + trajectories[left].EndDirection / 2).normalized,
+                b = (trajectories[right].EndDirection.normalized + trajectories[left].StartDirection.normalized) / 2,
+                c = (trajectories[right].StartDirection.normalized + trajectories[left].EndDirection.normalized) / 2,
                 d = (trajectories[right].StartPosition + trajectories[left].EndPosition) / 2,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);

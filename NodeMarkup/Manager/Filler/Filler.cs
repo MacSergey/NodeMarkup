@@ -268,7 +268,7 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public override string ToString() => GetHashCode().ToString();
+        public override string ToString() => Math.Abs(GetHashCode()).ToString();
     }
     public class FillerLinePart : MarkupLinePart
     {
