@@ -1388,15 +1388,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added chevron filler style
-        ///- You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
-        ///- Copy/paste lines and fillers style.
-        ///- Improved stop lines.
-        ///- Added perpendicular lines.
-        ///- Linked Patreon account for early access.
-        ///- Added the ability to select the language separately from the game language.
-        ///- Added zebra crosswalk.
-        ///- Added lines and templates groups..
+        ///   Ищет локализованную строку, похожую на Version 1.3 Released..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
