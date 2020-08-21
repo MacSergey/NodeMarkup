@@ -1,6 +1,7 @@
 files:
   - source: /NodeMarkup/Properties/Localize.resx
     translation: /NodeMarkup/Properties/Localize.%two_letters_code%.resx
+    update_option: update_as_unapproved
     languages_mapping:
       two_letters_code:
         "zh-CN": "zh-cn"
