@@ -505,15 +505,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Support.
-        /// </summary>
-        public static string EarlyAccess_Support {
-            get {
-                return ResourceManager.GetString("EarlyAccess_Support", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Thank you for your support, now you can enjoy all the features..
         /// </summary>
         public static string EarlyAccess_ThanksMessage {
@@ -1327,6 +1318,15 @@ namespace NodeMarkup {
         public static string Mod_LocaleGame {
             get {
                 return ResourceManager.GetString("Mod_LocaleGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Support.
+        /// </summary>
+        public static string Mod_Support {
+            get {
+                return ResourceManager.GetString("Mod_Support", resourceCulture);
             }
         }
         

@@ -19,6 +19,8 @@ namespace NodeMarkup
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
+        public static string DiscordURL { get; } = "https://discord.gg/QRYq8m2";
+
         public static string StaticName { get; } = "Intersection Marking Tool";
 
         public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
@@ -108,18 +110,26 @@ namespace NodeMarkup
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
+        public static bool OpenDiscord()
+        {
+            Utilities.OpenUrl(DiscordURL);
+            return true;
+        }
         private void ShowLoadError()
         {
             if (MarkupManager.LoadErrors != 0)
             {
-                var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
+                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                 messageBox.CaprionText = StaticName;
                 messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors);
+                messageBox.Button1Text = Localize.MessageBox_OK;
+                messageBox.Button2Text = Localize.Mod_Support;
+                messageBox.OnButton2Click = OpenDiscord;
             }
         }
         private void ShowBetaWarning()
         {
-            if(!IsBeta)
+            if (!IsBeta)
                 UI.Settings.BetaWarning.value = true;
             else if (UI.Settings.BetaWarning.value)
             {

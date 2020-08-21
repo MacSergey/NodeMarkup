@@ -26,7 +26,6 @@ namespace NodeMarkup
         private static string Version => Mod.VersionBuild.ToString();
 #endif
         private static string GetEarlyAccessURL { get; } = "https://www.patreon.com/MacSergey";
-        private static string DiscordURL { get; } = "https://discord.gg/QRYq8m2";
         public static string Id { get; } = Crypt.GetHash($"{PlatformService.userID}{Version}");
 
         public static bool Status { get; private set; }
@@ -72,11 +71,9 @@ namespace NodeMarkup
             messageBox.OnButton1Click = () => true;
             messageBox.Button2Text = Localize.EarlyAccess_GetButton;
             messageBox.OnButton2Click = GetAccess;
-            messageBox.Button3Text = Localize.EarlyAccess_Support;
-            messageBox.OnButton3Click = OpenDiscord;
-            messageBox.ChangeButton(1, 1, 5, 1);
-            messageBox.ChangeButton(2, 2, 5, 3);
-            messageBox.ChangeButton(3, 5, 5, 1);
+            messageBox.Button3Text = Localize.Mod_Support;
+            messageBox.OnButton3Click = Mod.OpenDiscord;
+            messageBox.SetButtonsRatio(new int[] { 1, 2, 1 });
         }
         public static void ShowEarlyAccess(string caption)
         {
@@ -88,11 +85,6 @@ namespace NodeMarkup
         public static bool GetAccess()
         {
             Utilities.OpenUrl(GetEarlyAccessURL);
-            return true;
-        }
-        public static bool OpenDiscord()
-        {
-            Utilities.OpenUrl(DiscordURL);
             return true;
         }
         public static void SaveAccess(string token = null, bool check = true)
@@ -217,12 +209,12 @@ namespace NodeMarkup
         }
         private void AddSupport(UIHelper helper)
         {
-            var supportButton = helper.AddButton(NodeMarkup.Localize.EarlyAccess_Support, Click) as UIButton;
+            var supportButton = helper.AddButton(NodeMarkup.Localize.Mod_Support, Click) as UIButton;
             supportButton.autoSize = false;
             supportButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             supportButton.width = 400;
 
-            void Click() => EarlyAccess.OpenDiscord();
+            void Click() => Mod.OpenDiscord();
         }
         private void AddCheckAccessKey(UIHelper helper)
         {

@@ -157,7 +157,7 @@ namespace NodeMarkup.UI
             if (ScrollableContent == null)
                 return;
 
-            foreach(var item in ScrollableContent.components)
+            foreach (var item in ScrollableContent.components)
                 RemoveChildHandles(item);
         }
         private void AddChildHandles(UIComponent child)
@@ -201,7 +201,7 @@ namespace NodeMarkup.UI
             ButtonPanel = AddUIComponent<UIPanel>();
             ButtonPanel.size = new Vector2(Width, ButtonHeight + 10);
         }
-        protected UIButton AddButton(int i, int from, Action action)
+        protected UIButton AddButton(int num, int from, Action action)
         {
             var button = ButtonPanel.AddUIComponent<UIButton>();
             button.normalBgSprite = "ButtonMenu";
@@ -212,17 +212,37 @@ namespace NodeMarkup.UI
             button.verticalAlignment = UIVerticalAlignment.Middle;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => action?.Invoke();
 
-            ChangeButton(button, i, from, 1);
+            ChangeButton(button, num, from);
 
             return button;
         }
         private static float Space => 25f;
-        protected void ChangeButton(UIButton button, int i, int from, int join)
+        public static int DefaultButton { get; set; } = 1;
+        protected void ChangeButton(UIButton button, int i, int from, float? positionRatio = null, float? widthRatio = null)
         {
-            var width = (this.width - (Space * (from + 1))) / from;
-            button.size = new Vector2(width * join + Space * (join - 1), ButtonHeight);
-            button.relativePosition = new Vector2(width * (i - 1) + Space * i, 0);
+            var width = this.width - (Space * 2 + Space / 2 * (from - 1));
+            button.size = new Vector2(width * (widthRatio ?? 1f / from), ButtonHeight);
+            button.relativePosition = new Vector2(Space * (0.5f + i / 2f) + width * (positionRatio ?? 1f / from * (i - 1)), 0);
         }
+        public void SetButtonsRatio(int[] ratio)
+        {
+            var buttons = ButtonPanel.components.OfType<UIButton>().ToArray();
+            if (buttons.Length == 0)
+                return;
+
+            var sum = 0;
+            var resultRatio = new int[buttons.Length];
+            for (var i = 0; i < buttons.Length; i += 1)
+                sum += resultRatio[i] = (i < ratio.Length ? ratio[i] : 1);
+
+            var before = 0;
+            for (var i = 0; i < buttons.Length; i += 1)
+            {
+                ChangeButton(buttons[i], i + 1, buttons.Length, (float)before / sum, (float)resultRatio[i] / sum);
+                before += resultRatio[i];
+            }
+        }
+
         protected override void OnKeyDown(UIKeyEventParameter p)
         {
             if (!p.used)
@@ -234,6 +254,8 @@ namespace NodeMarkup.UI
                 }
                 else if (p.keycode == KeyCode.Return)
                 {
+                    if (ButtonPanel.components.OfType<UIButton>().Skip(DefaultButton - 1).FirstOrDefault() is UIButton button)
+                        button.SimulateClick();
                     p.Use();
                 }
             }

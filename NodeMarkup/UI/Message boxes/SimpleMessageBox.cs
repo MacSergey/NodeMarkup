@@ -107,21 +107,6 @@ namespace NodeMarkup.UI
             if (OnButton3Click?.Invoke() != false)
                 Cancel();
         }
-        public void ChangeButton(int button, int i, int from, int join)
-        {
-            switch(button)
-            {
-                case 1:
-                    ChangeButton(Button1, i, from, join);
-                    break;
-                case 2:
-                    ChangeButton(Button2, i, from, join);
-                    break;
-                case 3:
-                    ChangeButton(Button3, i, from, join);
-                    break;
-            }
-        }
     }
 
     public class OkMessageBox : OneButtonMessageBox
