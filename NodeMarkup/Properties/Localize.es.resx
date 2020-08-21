@@ -805,8 +805,13 @@ crear o eliminar el paso de peatones</value>
     <value>plantilla</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>La carga se completó con errores. Fallo al cargar las marcas para {0} intersecciones.</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Apoyo</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Resolución de problemas</value>
   </data>
 </root>

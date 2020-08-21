@@ -819,7 +819,7 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Keine Vorlagen</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Durchgezogen</value>
+    <value>Vollständig gefüllt</value>
   </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>Fußgängerüberwege</value>
@@ -840,8 +840,14 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Vorlage</value>
   </data>
   
-  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Laden mit Fehlern beendet.
+Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
+  </data>
   <data name="Mod_Support" xml:space="preserve">
-    <value>Support/Hilfe</value>
+    <value>Support</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Problemlösungen</value>
   </data>
 </root>

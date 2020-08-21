@@ -764,5 +764,8 @@ Per creare una modello, clicca «{0}» sullo stile linea.</value>
   </data>
   
   
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Supporto</value>
+  </data>
   
 </root>
