@@ -50,6 +50,7 @@ namespace NodeMarkup.UI
 
         public static void OnSettingsUI(UIHelperBase helper)
         {
+            AddSupport(helper);
             AddLanguage(helper);
             AddKeyMapping(helper);
             AddGeneral(helper);
@@ -57,6 +58,14 @@ namespace NodeMarkup.UI
             AddNotifications(helper);
             AddOther(helper);
         }
+        private static void AddSupport(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup(Localize.Mod_Support) as UIHelper;
+            AddWiki(group);
+            AddDiscord(group);
+        }
+        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Mod.OpenWiki());
+        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Mod.OpenDiscord());
 
         #region LANGUAGE
 
@@ -258,7 +267,7 @@ namespace NodeMarkup.UI
         }
         private static void AddDeleteAll(UIHelper group)
         {
-            var button = group.AddButton(Localize.Settings_DeleteMarkingButton, Click) as UIButton;
+            var button = AddButton(group, Localize.Settings_DeleteMarkingButton, Click, 600);
             button.textColor = Color.red;
 
             void Click()
@@ -276,7 +285,7 @@ namespace NodeMarkup.UI
         }
         private static void AddDump(UIHelper group)
         {
-            var button = group.AddButton(Localize.Settings_DumpMarkingButton, Click) as UIButton;
+            AddButton(group, Localize.Settings_DumpMarkingButton, Click, 600);
 
             void Click()
             {
@@ -307,7 +316,7 @@ namespace NodeMarkup.UI
         }
         private static void AddImport(UIHelper group)
         {
-            var button = group.AddButton(Localize.Settings_ImportMarkingButton, Click) as UIButton;
+            AddButton(group, Localize.Settings_ImportMarkingButton, Click, 600);
 
             void Click()
             {
@@ -360,6 +369,15 @@ namespace NodeMarkup.UI
                     inProcess = false;
                 }
             }
+        }
+        private static UIButton AddButton(UIHelper group, string text, OnButtonClicked click, float width = 400)
+        {
+            var button = group.AddButton(text, click) as UIButton;
+            button.autoSize = false;
+            button.textHorizontalAlignment = UIHorizontalAlignment.Center;
+            button.width = width;
+
+            return button;
         }
     }
 
