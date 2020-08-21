@@ -1186,8 +1186,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Loaded completed with errors.
-        ///Failed to load marking for {0} intersections..
+        ///   Ищет локализованную строку, похожую на Load was completed with errors.
+        ///Failed to load markings for {0} intersections..
         /// </summary>
         public static string Mod_LoadFailed {
             get {
@@ -1818,6 +1818,15 @@ namespace NodeMarkup {
         public static string Settings_ShowWhatsNew {
             get {
                 return ResourceManager.GetString("Settings_ShowWhatsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Troubleshooting.
+        /// </summary>
+        public static string Settings_Troubleshooting {
+            get {
+                return ResourceManager.GetString("Settings_Troubleshooting", resourceCulture);
             }
         }
         

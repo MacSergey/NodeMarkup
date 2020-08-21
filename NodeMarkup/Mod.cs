@@ -22,6 +22,7 @@ namespace NodeMarkup
         public static string DiscordURL { get; } = "https://discord.gg/QRYq8m2";
         public static string ReportBugUrl { get; } = "https://github.com/MacSergey/NodeMarkup/issues/new?assignees=&labels=NEW+ISSUE&template=bug_report.md";
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
+        public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
         public static string StaticName { get; } = "Intersection Marking Tool";
 
@@ -115,16 +116,6 @@ namespace NodeMarkup
         public static bool OpenReportBug()
         {
             Utilities.OpenUrl(ReportBugUrl);
-            return true;
-        }
-        public static bool OpenDiscord()
-        {
-            Utilities.OpenUrl(DiscordURL);
-            return true;
-        }
-        public static bool OpenWiki()
-        {
-            Utilities.OpenUrl(WikiUrl);
             return true;
         }
         private void ShowLoadError()

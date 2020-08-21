@@ -62,10 +62,12 @@ namespace NodeMarkup.UI
         {
             UIHelper group = helper.AddGroup(Localize.Mod_Support) as UIHelper;
             AddWiki(group);
+            AddTroubleshooting(group);
             AddDiscord(group);
         }
-        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Mod.OpenWiki());
-        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Mod.OpenDiscord());
+        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.OpenUrl(Mod.WikiUrl));
+        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.OpenUrl(Mod.DiscordURL));
+        private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.OpenUrl(Mod.TroubleshootingUrl));
 
         #region LANGUAGE
 
