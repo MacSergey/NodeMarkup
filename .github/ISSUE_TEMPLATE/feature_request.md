@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: Player Requested Features
+labels: Player Requested Feature
 assignees: ''
 
 ---
