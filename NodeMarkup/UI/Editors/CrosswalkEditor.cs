@@ -144,7 +144,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            if (style.Type != Manager.Style.StyleType.CrosswalkExistent && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
+            if (!(style.Type == Manager.Style.StyleType.CrosswalkExistent || style.Type == Manager.Style.StyleType.CrosswalkZebra) && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
                 return;
 
             EditObject.Style = style.CopyCrosswalkStyle();
@@ -172,7 +172,7 @@ namespace NodeMarkup.UI.Editors
 
         private void StyleChanged(Style.StyleType style)
         {
-            if (style != Manager.Style.StyleType.CrosswalkExistent && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
+            if (!(style == Manager.Style.StyleType.CrosswalkExistent || style == Manager.Style.StyleType.CrosswalkZebra) && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
             {
                 Style.SelectedObject = EditObject.Style.Type;
                 return;
