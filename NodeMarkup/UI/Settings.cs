@@ -54,7 +54,7 @@ namespace NodeMarkup.UI
             AddLanguage(helper);
             AddKeyMapping(helper);
             AddGeneral(helper);
-            AddAccess(helper);
+            //AddAccess(helper);
             AddNotifications(helper);
             AddOther(helper);
         }

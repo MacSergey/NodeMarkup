@@ -832,12 +832,10 @@ create or delete a crosswalk</value>
     <value>template</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>- Added early access (EA) to new features. Some features will only be available to Patreons for a certain time. They will become available to everyone later on.
-By becoming a Patreon, you will be  supporting the development of the mod at the current speed.
-- (EA) Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
-- Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", (EA)"Zebra", (EA)"Double Zebra", (EA)"Parallel solid lines", (EA)"Parallel dashed lines", (EA)"Ladder", (EA)"Solid".
-- (EA) Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
-- (EA) Added the ability to copy/paste style of lines, fillers, and crosswalks.
+    <value>- Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+- Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", "Zebra", "Double Zebra", "Parallel solid lines", "Parallel dashed lines", "Ladder", "Solid".
+- Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
+- Added the ability to copy/paste style of lines, fillers, and crosswalks.
 - Added ability to sort lines and templates by styles and types. You can modify and disable the function in the settings.
 - Updated template selection menu.
 - Added grouping of nearby points for easier selection. There are two types of grouping available: in a circle and in a line. You can pick the type or disable the function in the settings.

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -497,7 +497,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Создать  заполнитель</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Двойная сплошная</value>
   </data>
@@ -830,12 +829,10 @@ Shift X10, Ctrl X0.1</value>
     <value>шаблон</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>- Добавлен ранний доступ (РД) к новым функциям. Отдельные функции некоторое время будут доступны только для подписчиков Patreon. Oни станут доступными для всех позже.
-Оформив ранний доступ, вы поддержите возможность развивать мод с той же скоростью.
-- (РД) Добавлен новый стиль заполнителей - шеврон (&lt;&lt;&lt;&lt;&lt;).
-- Добавлены пешеходные переходы. Для создания удерживайте Shift. Доступны следующие стили: "Существующий переход", (РД)"Зебра", (РД)"Двойная зебра", (РД)"Параллельные сплошные линии", (РД)"Параллельные пунктирные линии", (РД)"Лестница", (РД)"Сплошной".
-- (РД) Добавлены перпендикулярные линии. Этим линиям не нужна вторая точка, они направлены по прямой. Для создания потяните линию в обратную сторону от перекрестка.
-- (РД) Добавлена возможность копировать/вставлять стиль линий, заполнителей, переходов.
+    <value>- Добавлен новый стиль заполнителей - шеврон (&lt;&lt;&lt;&lt;&lt;).
+- Добавлены пешеходные переходы. Для создания удерживайте Shift. Доступны следующие стили: "Существующий переход", "Зебра", "Двойная зебра", "Параллельные сплошные линии", "Параллельные пунктирные линии", "Лестница", "Сплошной".
+- Добавлены перпендикулярные линии. Этим линиям не нужна вторая точка, они направлены по прямой. Для создания потяните линию в обратную сторону от перекрестка.
+- Добавлена возможность копировать/вставлять стиль линий, заполнителей, переходов.
 - Добавлена сортировка линий и шаблонов по стилям и типам. Можно изменить и отключить в настройках.
 - Обновлено меню выбора шаблонов.
 - Добавлено группирование близко расположенных точек для удобства выбора их. Два вида группирования: в круг и в линию. Можно изменить и отключить в настройках.
