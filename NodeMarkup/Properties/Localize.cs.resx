@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Odstranit {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Opravdu chcete odstranit {0} {1}?
-Tuto akci nelze vrátit zpět</value>
+Tuto akci nelze vrátit zpět.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Použijte kolečko myši pro změnu hodnoty
@@ -196,10 +196,10 @@ Tuto akci nelze vrátit zpět</value>
     <value>Dvojitá přerušovaná</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Dvojitá nepřerušovaná</value>
+    <value>Dvojitá plná</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ne</value>
@@ -267,9 +267,6 @@ Tuto akci nelze vrátit zpět</value>
   </data>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Export úspěšný</value>
-  </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Základní nastavení</value>
   </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importovat data ze souboru</value>
@@ -340,11 +337,7 @@ Tuto akci nelze vrátit zpět</value>
     <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?
 Tuto akci nelze vrátit zpět</value>
   </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klikněte pro vykreslení čáry
-+Shift - Plná čára
-+Ctrl - Dvojitá čára</value>
-  </data>
+  
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknětě pro odstranění čáry</value>
   </data>
@@ -356,9 +349,7 @@ Klikněte pro změnu značení</value>
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod
-+Shift - plná čára
-+Ctrl - dvojitá čára</value>
+    <value>Vyberte koncový bod</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyber bod pro vytvoření
@@ -371,7 +362,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Co je nového v {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Zobrazit novinky</value>
+    <value>Zobrazovat novinky</value>
   </data>
   
   <data name="Settings_Import" xml:space="preserve">
@@ -396,7 +387,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Plná i přerušovaná</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
@@ -456,7 +447,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Výchozí</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   
   
@@ -467,14 +458,14 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Oznámení</value>
   </data>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Oznámení pouze o významných aktualizacích</value>
+    <value>Oznamovat pouze o významných aktualizacích</value>
   </data>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Dvojitá nepřerušovaná</value>
+    <value>Dvojitá plná</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná</value>
@@ -495,7 +486,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Prohodit</value>
   </data>
   <data name="Filler_Turn" xml:space="preserve">
-    <value>Odbočka</value>
+    <value>Otočit</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
     <value>Na této křižovatce nejsou žádné čáry.
@@ -505,10 +496,7 @@ Pro vytvoření čáry spojte dva body.</value>
     <value>Na této křižovatce nejsou žádné výplňě.
 Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Nejsou vytvořeny žádné šablony.
-Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivujte klávesou</value>
   </data>
@@ -659,9 +647,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Jazyk</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klikněte pro vytvoření kolmé čáry
-+Shift - plná
-+Ctrl - dvojitá</value>
+    <value>Klikněte pro vytvoření kolmé čáry</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klikněte pro odstranění kolmé čáry</value>
@@ -698,10 +684,10 @@ Pro vytvoření přechodu drž Shift.</value>
     <value>Hranice křižovatky</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Skupinové čáry</value>
+    <value>Seskupovat čáry</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Skupinové šablony</value>
+    <value>Seskupovat šablony</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Klikněte pro vytvoření přechodu</value>
@@ -784,7 +770,7 @@ nebo odstranění přechodu</value>
     <value>Žádné šablony</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
     <value>Čáry přechodů</value>
@@ -815,4 +801,71 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Řešení problémů</value>
   </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Šachovnice</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Počet čar</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Základna trojuhelníku</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Výška trojuhelníku</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Mezera</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Strana čtverce</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Zuby</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Zuby</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Plná i přerušovaná</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Odstranit značení</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopírovat značení</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Vložit značení</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Nenastaveno</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Základní nastavení</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Podpora</value>
+  </data>
+  
+  
 </root>

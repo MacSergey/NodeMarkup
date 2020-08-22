@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Apagar {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Tem a certeza que quer mesmo apagar {0} {1}?
-Esta ação não pode ser desfeita</value>
+Esta ação não pode ser desfeita.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -268,9 +268,6 @@ Esta acção não pode ser desfeita</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Exportação guardada com sucesso</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Geral</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importar dados de marcações de um ficheiro</value>
   </data>
@@ -341,9 +338,7 @@ Esta acção não pode ser desfeita</value>
 Esta acção não pode ser desfeita</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Clique para criar uma linha
-+Shift - Sólida
-+Ctrl - Dupla</value>
+    <value>Clique para criar uma linha</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Clique para remover a linha</value>
@@ -356,9 +351,7 @@ Clique para editar marcações</value>
     <value>Seleccione um nó para editar marcações</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar ponto final
-+Shift - Sólida
-+Ctrl - Dupla</value>
+    <value>Seleccionar ponto final</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione um ponto para
@@ -515,10 +508,7 @@ Para criar uma linha conecte dois pontos.</value>
     <value>Ainda não existem preenchimentos nesta intercessão.
 Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>A lista de modelos está vazia.
-Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar com chave</value>
   </data>
@@ -670,8 +660,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clique para criar uma linha perpendicular
-+ Shift - Solid
-+ Ctrl - Double</value>
++ Shift - Solida
++ Ctrl - Dupla</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
@@ -824,4 +814,87 @@ O carregamento de {0} marcações falhou.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Resolução de problemas</value>
   </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Xadrez</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Número de linhas</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Base do triângulo</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Altura do triângulo</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Espaço central</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Lado reto</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Dente de tubarão</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Dente de tubarão</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Dupla Combinada</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Limpar marcação</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Copiar marcação</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Colar marcação</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Colar marcação</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo colar a marcação?
+Vai substituir todos as marcações existente. 
+Esta acção não pode ser desfeita.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Modificadores da passadeira</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Modificadores de preenchimentos</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Modificadores de linhas</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Modificadores de linhas de paragem</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Não definido</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Sem modificador</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Apoio</value>
+  </data>
+  
+  
 </root>

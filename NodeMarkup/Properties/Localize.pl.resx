@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Usuń {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Czy na pewno chcesz usunąć {0} {1}?
-Nie będzie można cofnąć tej operacji</value>
+Nie będzie można cofnąć tej operacji.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Użyj kółka myszy aby zmienić wartość
@@ -268,9 +268,6 @@ Nie będzie można cofnąć tej operacji</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Eksportowanie oznaczeń zakończono pomyślnie</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Ogólne</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importuj oznaczenia z pliku</value>
   </data>
@@ -340,11 +337,7 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Czy na pewno chcesz usunąć wszystkie oznaczenia skrzyżowania #{0}?
 Nie będzie można cofnąć tej operacji</value>
   </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Kliknij aby utworzyć linię
-+Shift - ciągła
-+Ctrl - podwójna</value>
-  </data>
+  
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknij aby usunąć linię</value>
   </data>
@@ -356,9 +349,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Wybierz punkt końcowy
-+Shift - ciągła
-+Ctrl - podwójna</value>
+    <value>Wybierz punkt końcowy</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby
@@ -505,10 +496,7 @@ Aby utworzyć linię połącz ze sobą dwa punkty.</value>
     <value>To skrzyżowanie nie ma jeszcze żadnych wypełnień.
 Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Lista szablonów jest pusta.
-Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktywuj za pomocą klucza</value>
   </data>
@@ -659,9 +647,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Język</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Kliknij, aby utworzyć prostopadłą linię
-+Shift - ciągła
-+Ctrl - podwójna</value>
+    <value>Kliknij, aby utworzyć prostopadłą linię</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Kliknij, aby usunąć prostopadłą linię</value>
@@ -815,4 +801,47 @@ Nie udało się załadować wypełnień dla {0} skrzyżowań.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Rozwiązywanie problemów</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Nie ustawiono</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Ogólne</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Wsparcie</value>
+  </data>
+  
+  
 </root>

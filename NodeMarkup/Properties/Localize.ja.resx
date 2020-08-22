@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>{0} を削除しますか？</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>{0} - {1} を削除してもよろしいですか?
-この操作は元に戻せません</value>
+この操作は元に戻せません。</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>ホイールのスクロールで増減
@@ -269,9 +269,6 @@
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>ダンプ出力は正常に行われました</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>基本設定</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルからインポート</value>
   </data>
@@ -302,7 +299,7 @@
     <value>ショートカットの設定</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>削除前に確認します</value>
+    <value>削除前の確認方法</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>ツールチップの表示</value>
@@ -342,9 +339,7 @@
 この操作は元に戻せません</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>クリックしてラインの追加
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value>クリックしてラインの追加</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>クリックしてラインを削除</value>
@@ -357,9 +352,7 @@
     <value>マーキングを編集するノードを選択します</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>終点側のポイントを選択
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value>終点側のポイントを選択</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して
@@ -506,10 +499,7 @@ Shift押下で横断歩道の作成</value>
     <value>交差点（ノード）に塗り潰しの設定がありません。
 Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>テンプレートの一覧は空です。
-作成するにはラインのスタイルで、 {0} をクリックします。</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>アクセスIDで有効化する</value>
   </data>
@@ -663,9 +653,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線の追加
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value>クリックして垂直線の追加</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
@@ -819,4 +807,113 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>トラブルシューティング</value>
   </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>チェス盤の横断歩道</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>四角形の数</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>三角形の長さ</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>三角形の高さ</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>空白の長さ</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>四角形の大きさ</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>サメの歯型</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>サメの歯型</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>破線＆実線</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>マーキングの削除</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>マーキングのコピー</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>マーキングの貼り付け</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>マーキングの貼り付け</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>本当にマーキングを貼り付けますか？
+既存であるノード内のマーキングは、全て置き換えます。
+この操作は、元に戻すことができません。</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>横断歩道のキー設定</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>塗り潰しのキー設定</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>ラインのキー設定</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>停止線のキー設定</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>未設定</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>全ての削除方法で確認</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>他の項目に影響がある場合のみ確認</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>他と依存性のあるライン等も、一緒に削除されます。</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>横断歩道の基準線 - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>横断歩道 - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>塗り潰し - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>ライン - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>ルール - {0} ヶ所</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>表示＆確認の設定</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>基本設定</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>グループ・タブの設定</value>
+  </data>
+  <data name="Settings_HelpfulLinks" xml:space="preserve">
+    <value>サポートのリンク</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>ショートカット</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>サポート（Discordにジャンプ）</value>
+  </data>
+  
+  
 </root>

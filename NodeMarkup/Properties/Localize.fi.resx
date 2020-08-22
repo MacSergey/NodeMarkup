@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Poista {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Haluatko varmasti poistaa {0} {1}?
-Tätä toimintoa ei voi kumota</value>
+Tätä toimintoa ei voi kumota.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Vieritä hiiren rullalla vaihtaaksesi
@@ -268,9 +268,6 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Vienti onnistui</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Yleiset</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Tuo tiemerkintätiedot tiedostosta</value>
   </data>
@@ -340,11 +337,7 @@ Tätä toimintoa ei voi kumota</value>
     <value>Haluatko varmasti poistaa kaikki risteyksen #{0} tiemerkinnät?
 Tätä toimintoa ei voi kumota</value>
   </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Napauta luodaksesi viiva
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
-  </data>
+  
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Napauta poistaaksesi viivan</value>
   </data>
@@ -356,14 +349,11 @@ Napauta muokataksesi merkintöjä</value>
     <value>Valitse risteys muokataksesi merkintöjä</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Valitse päätepiste
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
+    <value>Valitse päätepiste</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan
 +Ctrl siirtääksesi pistettä
-+Shift muokataksesi pistettä
 Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen
 Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
   </data>
@@ -505,10 +495,7 @@ Yhdistä kaksi pistettä luodaksesi viivan.</value>
     <value>Risteyksessä ei ole vielä sulkualueita.
 Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Mallinelista on tyhjä.
-Napauta {0} viivan tyylissä luodaksesi mallineen.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivoi avaimella</value>
   </data>
@@ -659,9 +646,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
     <value>Kieli</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Napauta luodaksesi kohtisuora viiva
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
+    <value>Napauta luodaksesi kohtisuora viiva</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Napauta poistaaksesi kohtisuoran viivan</value>
@@ -815,4 +800,55 @@ poistaaksesi suojatien</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Vianmääritys</value>
   </data>
+  
+  
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Kolmion pohja</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Kolmion korkeus</value>
+  </data>
+  
+  
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Väistämisviiva</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Väistämisviiva</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Ei määritetty</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Yleiset</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Tuki</value>
+  </data>
+  
+  
 </root>

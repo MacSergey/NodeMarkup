@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Supprimer {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Voulez-vous vraiment supprimer {0} {1}?
-Cette action est irréversible</value>
+Cette action est irréversible.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Utilisez la molette pour changer
@@ -268,9 +268,6 @@ Cette action est irréversible</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Extraction réussie</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Général</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importer les données de marquage depuis un fichier</value>
   </data>
@@ -340,11 +337,7 @@ Cette action est irréversible</value>
     <value>Voulez-vous vraiment supprimer tous les marquages du noeud #{0} ?
 Cette action est irréversible</value>
   </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Cliquer pour créer une ligne
-+Shift - Solide
-+Ctrl - Double</value>
-  </data>
+  
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Cliquez pour supprimer la ligne</value>
   </data>
@@ -356,9 +349,7 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Sélectionnez un point de fin
-+Maj - Solide
-+Ctrl - Double</value>
+    <value>Sélectionnez un point de fin</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
@@ -495,7 +486,7 @@ Maintenez Maj pour créer un passage piéton</value>
     <value>Inverser</value>
   </data>
   <data name="Filler_Turn" xml:space="preserve">
-    <value>Virage</value>
+    <value>Tourner</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
     <value>Il n'y a pas de lignes à cet intersection.
@@ -505,10 +496,7 @@ Pour créer une ligne, connectez deux points.</value>
     <value>Il n'y a pas de remplisseurs à cet intersection.
 Pour créer un remplisseur, maintenez Alt ou appuyez sur {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>La liste des modèles est vide.
-Pour créer un modèle, cliquez sur {0} sur le style de ligne.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activer avec la clé</value>
   </data>
@@ -806,7 +794,7 @@ créer ou supprimer un passage piéton</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
-    <value>Le chargement s'est abouti avec des erreurs.
+    <value>Erreurs lors du chargement.
 Le marquage de {0} intersections n'a pas pu être chargé.</value>
   </data>
   <data name="Mod_Support" xml:space="preserve">
@@ -815,4 +803,61 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Dépannage</value>
   </data>
+  
+  
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Base du triangle</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Hauteur du triangle</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Espacement</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Côté du carré</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Dents de requin</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Dents de requin</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Solide et Tirets</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Non défini</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  
+  
 </root>

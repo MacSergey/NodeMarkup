@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Delete {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Do you really want to delete {0} {1}?
-This action cannot be undone</value>
+This action cannot be undone.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll the wheel to change
@@ -268,9 +268,6 @@ This action cannot be undone</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Dump success saved</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>General</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Import marking data from file</value>
   </data>
@@ -341,9 +338,7 @@ This action cannot be undone</value>
 This action cannot be undone</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Click to create a line
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Click to create a line</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Click to delete the line</value>
@@ -356,9 +351,7 @@ Click to edit marking</value>
     <value>Select a node to change marking</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Select endpoint
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Select endpoint</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Select a point to
@@ -498,7 +491,8 @@ Hold Shift to create a crosswalk</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Version 1.3 Released.</value>
+    <value>- Fix chevron line parts overlap.
+- New chevron middle line calculation algorithm</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -534,7 +528,9 @@ To create a filler hold Alt or press {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.
-To create a template, click «{0}» at the line style.</value>
+To create a template, click «{0}» at the line or crosswalk or filler style.</value>
+    <comment>TemplateEditor_EmptyMessage
+</comment>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activate with key</value>
@@ -686,9 +682,7 @@ By registering early access, you will support the ability to develop this mod at
     <value>Language</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Click to create a perpendicular line
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Click to create a perpendicular line</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Click to delete the perpendicular line</value>
@@ -832,12 +826,10 @@ create or delete a crosswalk</value>
     <value>template</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>- Added early access (EA) to new features. Some features will only be available to Patreons for a certain time. They will become available to everyone later on.
-By becoming a Patreon, you will be  supporting the development of the mod at the current speed.
-- (EA) Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
-- Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", (EA)"Zebra", (EA)"Double Zebra", (EA)"Parallel solid lines", (EA)"Parallel dashed lines", (EA)"Ladder", (EA)"Solid".
-- (EA) Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
-- (EA) Added the ability to copy/paste style of lines, fillers, and crosswalks.
+    <value>- Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+- Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", "Zebra", "Double Zebra", "Parallel solid lines", "Parallel dashed lines", "Ladder", "Solid".
+- Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
+- Added the ability to copy/paste style of lines, fillers, and crosswalks.
 - Added ability to sort lines and templates by styles and types. You can modify and disable the function in the settings.
 - Updated template selection menu.
 - Added grouping of nearby points for easier selection. There are two types of grouping available: in a circle and in a line. You can pick the type or disable the function in the settings.
@@ -856,5 +848,118 @@ Failed to load markings for {0} intersections.</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Troubleshooting</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Chess board</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Line count</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Triangle base</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Triangle height</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Space between</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Square side</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Shark teeth</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Shark teeth</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Solid and dashed</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Clear marking</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Copy marking</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Paste marking</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Paste marking</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Do you really want to paste marking?
+It will replace the existing marking.
+This action cannot be undone.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Crosswalks modifier</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Fillers modifier</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Regular lines modifier</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Stop lines modifier</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Without modifier</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>In any case</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Only if will affect others items</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Dependent items will also be removed:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Crosswalk Borders - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Crosswalks - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Fillers - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Lines - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Rules - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Display and usage</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Groupings</value>
+  </data>
+  <data name="Settings_HelpfulLinks" xml:space="preserve">
+    <value>Helpful links</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Shortcuts and modifiers</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Copy</value>
   </data>
 </root>
