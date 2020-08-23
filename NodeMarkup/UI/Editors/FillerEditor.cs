@@ -61,12 +61,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
-            {
-                Style.SelectedObject = EditObject.Style.Type;
-                return;
-            }
-
             if (style == EditObject.Style.Type)
                 return;
 
@@ -87,9 +81,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
-            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
-                return;
-
             var newStyle = style.CopyFillerStyle();
 
             newStyle.MedianOffset = EditObject.Style.MedianOffset;
@@ -112,12 +103,11 @@ namespace NodeMarkup.UI.Editors
         }
         private void CopyStyle()
         {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
                 Buffer = EditObject.Style.CopyFillerStyle();
         }
         private void PasteStyle()
         {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is FillerStyle style)
+            if (Buffer is FillerStyle style)
                 ApplyStyle(style);
         }
         private void ClearStyleProperties()

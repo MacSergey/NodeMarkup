@@ -1,15 +1,10 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.Threading;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using static ToolBase;
 
 namespace NodeMarkup.UI.Editors
 {

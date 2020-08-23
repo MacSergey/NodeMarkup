@@ -1,14 +1,10 @@
 ﻿using ColossalFramework.Math;
-using NodeMarkup.UI;
 using NodeMarkup.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
@@ -261,9 +257,6 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
-                    return null;
-
                 line = MarkupLine.FromStyle(this, pointPair, style);
                 LinesDictionary[pointPair.Hash] = line;
                 NeedRecalculateBatches = true;

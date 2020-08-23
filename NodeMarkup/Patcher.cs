@@ -1,13 +1,8 @@
 ﻿using CitiesHarmony.API;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
 using HarmonyLib;
 using NodeMarkup.Manager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace NodeMarkup
 {

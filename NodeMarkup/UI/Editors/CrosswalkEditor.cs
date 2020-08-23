@@ -1,11 +1,9 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
@@ -144,9 +142,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            if (style.Type != Manager.Style.StyleType.CrosswalkExistent && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
-                return;
-
             EditObject.Style = style.CopyCrosswalkStyle();
             Style.SelectedObject = EditObject.Style.Type;
 
@@ -161,23 +156,16 @@ namespace NodeMarkup.UI.Editors
         }
         private void CopyStyle()
         {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
                 Buffer = EditObject.Style.CopyCrosswalkStyle();
         }
         private void PasteStyle()
         {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is CrosswalkStyle style)
+            if (Buffer is CrosswalkStyle style)
                 ApplyStyle(style);
         }
 
         private void StyleChanged(Style.StyleType style)
         {
-            if (style != Manager.Style.StyleType.CrosswalkExistent && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
-            {
-                Style.SelectedObject = EditObject.Style.Type;
-                return;
-            }
-
             if (style == EditObject.Style.Type)
                 return;
 

@@ -1,11 +1,7 @@
-﻿using ColossalFramework.UI;
-using NodeMarkup.Manager;
-using System;
+﻿using NodeMarkup.Manager;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 namespace NodeMarkup.Utils
 {

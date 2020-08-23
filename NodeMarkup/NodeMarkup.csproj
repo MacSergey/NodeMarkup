@@ -97,7 +97,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EarlyAccess.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Manager\Crosswalk\Crosswalk.cs" />
     <Compile Include="Manager\Crosswalk\CrosswalkStyleBase.cs" />
@@ -140,7 +139,6 @@
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Button.cs" />
-    <Compile Include="UI\Message boxes\EarlyAccessMessageBox.cs" />
     <Compile Include="UI\Message boxes\ImportMessageBox.cs" />
     <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
     <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
@@ -211,12 +209,6 @@
     <EmbeddedResource Include="Resources\Styles.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EarlyAccess\EarlyAccessLibrary.csproj">
-      <Project>{8fa0a542-b2d4-4e00-abd6-e7470906351d}</Project>
-      <Name>EarlyAccessLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\ListItem.png" />
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +257,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -5,18 +5,12 @@ using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Diagnostics;
-using ColossalFramework.Threading;
-using System.Threading;
 using System.Reflection;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
 using System.Globalization;
 using NodeMarkup.UI.Editors;
-using UnityEngine.SocialPlatforms;
 using static ColossalFramework.UI.UIDropDown;
 using ColossalFramework.Globalization;
 
@@ -54,7 +48,6 @@ namespace NodeMarkup.UI
             AddLanguage(helper);
             AddKeyMapping(helper);
             AddGeneral(helper);
-            AddAccess(helper);
             AddNotifications(helper);
             AddOther(helper);
         }
@@ -221,16 +214,6 @@ namespace NodeMarkup.UI
 
             void OnGroupLinesChanged(bool groupLines) => GroupLines.value = groupLines;
         }
-        #endregion
-
-        #region ACCESS
-        private static void AddAccess(UIHelperBase helper)
-        {
-            UIHelper group = helper.AddGroup(Localize.Settings_EarlyAccess) as UIHelper;
-            if (group.self is UIComponent component)
-                component.AddUIComponent<EarlyAccessPanel>();
-        }
-
         #endregion
 
         #region NOTIFICATIONS

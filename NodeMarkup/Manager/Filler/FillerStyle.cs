@@ -1,12 +1,10 @@
 ﻿using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 

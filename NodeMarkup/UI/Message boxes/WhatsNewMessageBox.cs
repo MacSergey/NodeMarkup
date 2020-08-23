@@ -1,8 +1,6 @@
 ﻿using ColossalFramework.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI
@@ -15,21 +13,14 @@ namespace NodeMarkup.UI
 
         public WhatsNewMessageBox()
         {
-            OkButton = AddButton(1, EarlyAccess.Status ? 1 : 2, OkClick);
+            OkButton = AddButton(1, 1, OkClick);
             OkButton.text = NodeMarkup.Localize.MessageBox_OK;
-
-            if(!EarlyAccess.Status)
-            {
-                GetEarlyAccessButton = AddButton(2, 2, GetEarlyAccessClick);
-                GetEarlyAccessButton.text = NodeMarkup.Localize.EarlyAccess_GetButton;
-            }
         }
         protected virtual void OkClick()
         {
             if (OnButtonClick?.Invoke() != false)
                 Cancel();
         }
-        protected virtual void GetEarlyAccessClick() => EarlyAccess.GetAccess();
 
         public void Init(Dictionary<Version, string> messages)
         {

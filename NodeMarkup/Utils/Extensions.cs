@@ -1,14 +1,12 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -198,7 +196,7 @@ namespace NodeMarkup.Utils
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) :
             (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleDashed : Style.StyleType.LineDashed);
         public static Style.StyleType GetStopStyle(this Event e) => NodeMarkupTool.ShiftIsPressed ? Style.StyleType.StopLineDashed : Style.StyleType.StopLineSolid;
-        public static Style.StyleType GetCrosswalkStyle(this Event e) => EarlyAccess.Status ? Style.StyleType.CrosswalkZebra : Style.StyleType.CrosswalkExistent;
+        public static Style.StyleType GetCrosswalkStyle(this Event e) => Style.StyleType.CrosswalkZebra;
 
         public static Bezier3 GetBezier(this Line3 line)
         {

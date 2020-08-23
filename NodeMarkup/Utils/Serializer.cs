@@ -1,7 +1,5 @@
 ﻿using ICities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NodeMarkup.Manager;
 using System.Xml.Linq;
@@ -9,9 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.IO.Compression;
-using ColossalFramework.IO;
-using System.Linq.Expressions;
-using NodeMarkup.UI;
 using HarmonyLib;
 using ColossalFramework.Globalization;
 

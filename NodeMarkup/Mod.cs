@@ -4,13 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using NodeMarkup.UI;
 using System.Globalization;
 using ColossalFramework.Globalization;
 using ColossalFramework;
-using ColossalFramework.UI;
-using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 
 namespace NodeMarkup
@@ -64,7 +61,6 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
-            EarlyAccess.CheckAccess();
         }
         public void OnDisabled()
         {
@@ -83,7 +79,6 @@ namespace NodeMarkup
                 NodeMarkupTool.Create();
                 MarkupManager.Init();
 
-                EarlyAccess.CheckAccess();
                 ShowWhatsNew();
                 ShowBetaWarning();
                 ShowLoadError();

@@ -1,14 +1,7 @@
 ﻿using ColossalFramework;
-using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace NodeMarkup.UI
