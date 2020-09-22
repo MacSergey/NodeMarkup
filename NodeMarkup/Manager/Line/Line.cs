@@ -19,6 +19,7 @@ namespace NodeMarkup.Manager
 
         public Markup Markup { get; private set; }
         public ulong Id => PointPair.Hash;
+        public bool IsInvert => PointPair.IsInvert;
 
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;

@@ -356,4 +356,133 @@ namespace NodeMarkup.Manager
             Invert = config.GetAttrValue("I", 0) == 1;
         }
     }
+    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle
+    {
+        public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
+
+        float _base;
+        float _height;
+        float _space;
+        public float Base
+        {
+            get => _base;
+            set
+            {
+                _base = value;
+                StyleChanged();
+            }
+        }
+        public float Height
+        {
+            get => _height;
+            set
+            {
+                _height = value;
+                StyleChanged();
+            }
+        }
+        public float Space
+        {
+            get => _space;
+            set
+            {
+                _space = value;
+                StyleChanged();
+            }
+        }
+        public SharkTeethStopLineStyle(Color color, float baseValue, float height, float space) : base(color, 0)
+        {
+            Base = baseValue;
+            Height = height;
+            Space = space;
+        }
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        {
+            return StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes);
+
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory lineTrajectory, float startT, float endT)
+            {
+                yield return StyleHelper.CalculateDashedDash(lineTrajectory, stopLine.IsInvert ? endT : startT, stopLine.IsInvert ? startT : endT, Base, Height / (stopLine.IsInvert ? -2 : 2), Height, Color, MaterialType.Triangle);
+            }
+        }
+
+        public override StopLineStyle CopyStopLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is SharkTeethStopLineStyle sharkTeethTarget)
+            {
+                sharkTeethTarget.Base = Base;
+                sharkTeethTarget.Height = Height;
+                sharkTeethTarget.Space = Space;
+            }
+        }
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddBaseProperty(this, parent, onHover, onLeave));
+            components.Add(AddHeightProperty(this, parent, onHover, onLeave));
+            components.Add(AddSpaceProperty(this, parent, onHover, onLeave));
+
+            return components;
+        }
+        protected static FloatPropertyPanel AddBaseProperty(SharkTeethStopLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            baseProperty.Text = Localize.LineEditor_SharkToothBase;
+            baseProperty.UseWheel = true;
+            baseProperty.WheelStep = 0.1f;
+            baseProperty.CheckMin = true;
+            baseProperty.MinValue = 0.3f;
+            baseProperty.Init();
+            baseProperty.Value = sharkTeethStyle.Base;
+            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
+            AddOnHoverLeave(baseProperty, onHover, onLeave);
+            return baseProperty;
+        }
+        protected static FloatPropertyPanel AddHeightProperty(SharkTeethStopLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            heightProperty.Text = Localize.LineEditor_SharkToothHeight;
+            heightProperty.UseWheel = true;
+            heightProperty.WheelStep = 0.1f;
+            heightProperty.CheckMin = true;
+            heightProperty.MinValue = 0.3f;
+            heightProperty.Init();
+            heightProperty.Value = sharkTeethStyle.Height;
+            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
+            AddOnHoverLeave(heightProperty, onHover, onLeave);
+            return heightProperty;
+        }
+        protected static FloatPropertyPanel AddSpaceProperty(SharkTeethStopLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            spaceProperty.Text = Localize.LineEditor_SharkToothSpace;
+            spaceProperty.UseWheel = true;
+            spaceProperty.WheelStep = 0.1f;
+            spaceProperty.CheckMin = true;
+            spaceProperty.MinValue = 0.1f;
+            spaceProperty.Init();
+            spaceProperty.Value = sharkTeethStyle.Space;
+            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
+            AddOnHoverLeave(spaceProperty, onHover, onLeave);
+            return spaceProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("B", Base));
+            config.Add(new XAttribute("H", Height));
+            config.Add(new XAttribute("S", Space));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            Base = config.GetAttrValue("B", DefaultSharkBaseLength);
+            Height = config.GetAttrValue("H", DefaultSharkHeight);
+            Space = config.GetAttrValue("S", DefaultSharkSpaceLength);
+        }
+    }
 }

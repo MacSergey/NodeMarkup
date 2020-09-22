@@ -145,6 +145,7 @@ namespace NodeMarkup.Manager
             {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultStopOffset)},
             {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
             {StopLineType.ChessBoard, new ChessBoardStopLineStyle(DefaultColor, DefaultStopWidth, 2, false)},
+            {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
 
         public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyStopLineStyle() : null;
@@ -172,7 +173,10 @@ namespace NodeMarkup.Manager
             DoubleDashed = StyleType.StopLineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_StopChessBoard))]
-            ChessBoard,
+            ChessBoard = StyleType.StopLineChessBoard,
+
+            [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
+            SharkTeeth = StyleType.StopLineSharkTeeth,
         }
     }
 }
