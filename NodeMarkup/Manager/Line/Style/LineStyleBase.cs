@@ -77,21 +77,6 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
-        protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
-        {
-            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
-            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
-            buttonsPanel.Init();
-            buttonsPanel.OnButtonClick += OnButtonClick;
-
-            void OnButtonClick(int index)
-            {
-                if (index == invertIndex)
-                    asymStyle.Invert = !asymStyle.Invert;
-            }
-
-            return buttonsPanel;
-        }
     }
 
     public abstract class RegularLineStyle : LineStyle

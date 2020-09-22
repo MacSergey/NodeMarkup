@@ -179,6 +179,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Chess board.
+        /// </summary>
+        public static string CrosswalkStyle_ChessBoard {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_ChessBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Double zebra.
         /// </summary>
         public static string CrosswalkStyle_DoubleZebra {
@@ -1119,15 +1128,6 @@ namespace NodeMarkup {
         public static string LineStyle_Stop {
             get {
                 return ResourceManager.GetString("LineStyle_Stop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Chess board.
-        /// </summary>
-        public static string LineStyle_StopChessBoard {
-            get {
-                return ResourceManager.GetString("LineStyle_StopChessBoard", resourceCulture);
             }
         }
         

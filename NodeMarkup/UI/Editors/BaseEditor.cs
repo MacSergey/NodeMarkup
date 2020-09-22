@@ -42,6 +42,7 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.CrosswalkParallelDashedLines, nameof(Style.StyleType.CrosswalkParallelDashedLines) },
                 {Style.StyleType.CrosswalkLadder, nameof(Style.StyleType.CrosswalkLadder) },
                 {Style.StyleType.CrosswalkSolid, nameof(Style.StyleType.CrosswalkSolid) },
+                {Style.StyleType.CrosswalkChessBoard, nameof(Style.StyleType.CrosswalkChessBoard) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));

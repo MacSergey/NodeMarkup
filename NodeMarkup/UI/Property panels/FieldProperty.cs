@@ -91,9 +91,9 @@ namespace NodeMarkup.UI.Editors
             {
                 var mode = NodeMarkupTool.ShiftIsPressed ? WheelMode.High : NodeMarkupTool.CtrlIsPressed ? WheelMode.Low : WheelMode.Normal;
                 if (eventParam.wheelDelta < 0)
-                    Value = Increment(Value, WheelStep, mode);
-                else
                     Value = Decrement(Value, WheelStep, mode);
+                else
+                    Value = Increment(Value, WheelStep, mode);
             }
         }
 
@@ -136,12 +136,12 @@ namespace NodeMarkup.UI.Editors
         protected override float Decrement(float value, float step, WheelMode mode)
         {
             step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
-            return (value + step).RoundToNearest(step);
+            return (value - step).RoundToNearest(step);
         }
         protected override float Increment(float value, float step, WheelMode mode)
         {
             step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
-            return (value - step).RoundToNearest(step);
+            return (value + step).RoundToNearest(step);
         }
         protected override string GetString(float value) => value.ToString("0.###");
     }

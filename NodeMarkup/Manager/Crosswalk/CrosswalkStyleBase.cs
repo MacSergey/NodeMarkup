@@ -17,6 +17,9 @@ namespace NodeMarkup.Manager
         public static float DefaultCrosswalkSpaceLength { get; } = 0.6f;
         public static float DefaultCrosswalkOffset { get; } = 0.3f;
 
+        public static float DefaultCrosswalkSquareSide { get; } = 1f;
+        public static int DefaultCrosswalkLineCount { get; } = 2;
+
         static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
@@ -26,7 +29,11 @@ namespace NodeMarkup.Manager
             {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, LineStyle.DefaultDashLength, LineStyle.DefaultSpaceLength) },
             {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
             {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
+            {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
         };
+
+        protected override float WidthWheelStep => 0.1f;
+        protected override float WidthMinValue => 0.1f;
 
         public static Style GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
 
@@ -61,6 +68,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Solid))]
             Solid = StyleType.CrosswalkSolid,
+
+            [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
+            ChessBoard = StyleType.CrosswalkChessBoard,
         }
 
 
@@ -116,7 +126,7 @@ namespace NodeMarkup.Manager
                 var start = Mathf.Clamp(intersects[i - 1].FirstT + startOffset, -halfLength, halfLength);
                 var end = Mathf.Clamp(intersects[i].FirstT - endOffset, -halfLength, halfLength);
 
-                if ((end - start) < width / 2)
+                if ((end - start) < 0.1f)
                     continue;
 
                 var startPosition = position + direction * start;

@@ -856,7 +856,7 @@ Failed to load markings for {0} intersections.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Troubleshooting</value>
   </data>
-  <data name="LineStyle_StopChessBoard" xml:space="preserve">
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Chess board</value>
   </data>
   <data name="LineEditor_LineCount" xml:space="preserve">

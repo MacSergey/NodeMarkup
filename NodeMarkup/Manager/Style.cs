@@ -56,6 +56,9 @@ namespace NodeMarkup.Manager
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
         public static float DefaultWidth { get; } = 0.15f;
 
+        protected virtual float WidthWheelStep { get; } = 0.01f;
+        protected virtual float WidthMinValue { get; } = 0.05f;
+
         public static T GetDefault<T>(StyleType type) where T : Style
         {
             switch (type & StyleType.GroupMask)
@@ -151,14 +154,14 @@ namespace NodeMarkup.Manager
             colorProperty.OnValueChanged += (Color32 color) => Color = color;
             return colorProperty;
         }
-        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave, float wheelStep = 0.01f, float minValue = 0.05f)
+        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
             widthProperty.Text = Localize.LineEditor_Width;
             widthProperty.UseWheel = true;
-            widthProperty.WheelStep = wheelStep;
+            widthProperty.WheelStep = WidthWheelStep;
             widthProperty.CheckMin = true;
-            widthProperty.MinValue = minValue;
+            widthProperty.MinValue = WidthMinValue;
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width = value;
@@ -193,6 +196,21 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength = value;
             AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
             return spaceLengthProperty;
+        }
+        protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        {
+            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
+            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += OnButtonClick;
+
+            void OnButtonClick(int index)
+            {
+                if (index == invertIndex)
+                    asymStyle.Invert = !asymStyle.Invert;
+            }
+
+            return buttonsPanel;
         }
         protected static void AddOnHoverLeave<T>(FieldPropertyPanel<T> fieldPanel, Action onHover, Action onLeave)
         {
@@ -248,9 +266,6 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
             StopLineSolidAndDashed,
 
-            //[Description(nameof(Localize.LineStyle_StopChessBoard))]
-            //StopLineChessBoard,
-
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,
 
@@ -294,6 +309,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Solid))]
             CrosswalkSolid,
+
+            [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
+            CrosswalkChessBoard,
         }
     }
 
