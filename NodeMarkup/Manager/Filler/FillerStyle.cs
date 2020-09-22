@@ -162,6 +162,7 @@ namespace NodeMarkup.Manager
         float _step;
         bool _invert;
         int _output;
+        bool _newAlgorithm;
 
         public float AngleBetween
         {
@@ -200,6 +201,15 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public bool NewAlgorithm
+        {
+            get => _newAlgorithm;
+            set
+            {
+                _newAlgorithm = value;
+                StyleChanged();
+            }
+        }
 
         public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, medianOffset)
         {
@@ -227,7 +237,10 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
+            {
                 components.Add(AddInvertAndTurnProperty(this, parent));
+                components.Add(AddNewAlgorithmProperty(this, parent));
+            }
 
             return components;
         }
@@ -265,6 +278,15 @@ namespace NodeMarkup.Manager
 
             return buttonsPanel;
         }
+        protected static BoolPropertyPanel AddNewAlgorithmProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        {
+            var newAlgorithmProperty = parent.AddUIComponent<BoolPropertyPanel>();
+            newAlgorithmProperty.Text = "New algorithm";
+            newAlgorithmProperty.Init();
+            newAlgorithmProperty.Value = chevronStyle.NewAlgorithm;
+            newAlgorithmProperty.OnValueChanged += (bool value) => chevronStyle.NewAlgorithm = value;
+            return newAlgorithmProperty;
+        }
 
         protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
         {
@@ -301,12 +323,14 @@ namespace NodeMarkup.Manager
         private void GetItems(ILineTrajectory[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
         {
             var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;
-            var width = Width / Mathf.Sin(halfAngelRad);
+            var coef = Mathf.Sin(halfAngelRad);
+            var width = Width / coef;
 
             var bezier = GetMiddleBezier(trajectories);
             var line = GetMiddleLine(bezier, halfAngelRad, rect);
 
-            StyleHelper.GetParts(width, 0, out int partsCount, out partWidth);
+            StyleHelper.GetParts(Width, 0, out int partsCount, out partWidth);
+            var partStep = partWidth / coef;
 
             positions = new List<Vector3[]>();
             directions = new List<Vector3>();
@@ -317,14 +341,14 @@ namespace NodeMarkup.Manager
                 var dirRight = dir.TurnRad(halfAngelRad, true);
                 var dirLeft = dir.TurnRad(halfAngelRad, false);
 
-                var start = partWidth / 2;
+                var start = partStep / 2;
 
                 var rightPos = new Vector3[partsCount];
                 var leftPos = new Vector3[partsCount];
 
                 for (var i = 0; i < partsCount; i += 1)
                 {
-                    var partPos = itemPositions[0] + dir * (start + partWidth * i);
+                    var partPos = itemPositions[0] + dir * (start + partStep * i);
 
                     rightPos[i] = partPos;
                     leftPos[i] = partPos;
@@ -375,9 +399,7 @@ namespace NodeMarkup.Manager
             }
 
             foreach (var dashT in dashesT)
-            {
                 yield return new Vector3[] { Position(dashT[0]), Position(dashT[1]) };
-            }
 
 
             Vector3 Position(float t) => t <= 1 ? bezier.Position(t) : line.a + (line.b - line.a) * (t - 1);
@@ -395,14 +417,27 @@ namespace NodeMarkup.Manager
         }
         private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
         {
-            var left = Output % trajectories.Length;
-            var right = left == 0 ? trajectories.Length - 1 : left - 1;
+            var leftIndex = Output % trajectories.Length;
+            var rightIndex = leftIndex == 0 ? trajectories.Length - 1 : leftIndex - 1;
+            var left = trajectories[leftIndex];
+            var right = trajectories[rightIndex];
+
+            if(NewAlgorithm)
+            {
+                var leftLength = left.Length;
+                var rightLength = right.Length;
+                if (leftLength < rightLength)
+                    right = right.Cut(right.Travel(0, rightLength - leftLength), 1);
+                else
+                    left = left.Cut(0, left.Travel(0, rightLength));
+            }
+
             var middle = new Bezier3()
             {
-                a = (trajectories[right].EndPosition + trajectories[left].StartPosition) / 2,
-                b = (trajectories[right].EndDirection.normalized + trajectories[left].StartDirection.normalized) / 2,
-                c = (trajectories[right].StartDirection.normalized + trajectories[left].EndDirection.normalized) / 2,
-                d = (trajectories[right].StartPosition + trajectories[left].EndPosition) / 2,
+                a = (right.EndPosition + left.StartPosition) / 2,
+                b = (right.EndDirection.normalized + left.StartDirection.normalized) / 2,
+                c = (right.StartDirection.normalized + left.EndDirection.normalized) / 2,
+                d = (right.StartPosition + left.EndPosition) / 2,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
             var middleTrajectory = new BezierTrajectory(middle);
@@ -410,7 +445,7 @@ namespace NodeMarkup.Manager
             var cutT = 1f;
             for (var i = 0; i < trajectories.Length; i += 1)
             {
-                if (i == left || i == right)
+                if (i == leftIndex || i == rightIndex)
                     continue;
                 if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && intersect.FirstT < cutT)
                     cutT = intersect.FirstT;
