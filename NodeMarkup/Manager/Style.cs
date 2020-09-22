@@ -245,8 +245,11 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             StopLineDoubleDashed,
 
-            [Description(nameof(Localize.LineStyle_StopChessBoard))]
-            StopLineChessBoard,
+            [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
+            StopLineSolidAndDashed,
+
+            //[Description(nameof(Localize.LineStyle_StopChessBoard))]
+            //StopLineChessBoard,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,

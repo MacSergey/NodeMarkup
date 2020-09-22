@@ -880,4 +880,7 @@ Failed to load markings for {0} intersections.</value>
   <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
     <value>Shark teeth</value>
   </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Solid and dashed</value>
+  </data>
 </root>

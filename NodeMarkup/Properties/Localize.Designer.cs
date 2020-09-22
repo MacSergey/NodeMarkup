@@ -1177,6 +1177,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid and dashed.
+        /// </summary>
+        public static string LineStyle_StopSolidAndDashed {
+            get {
+                return ResourceManager.GetString("LineStyle_StopSolidAndDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No.
         /// </summary>
         public static string MessageBox_No {

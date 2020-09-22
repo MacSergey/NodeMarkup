@@ -273,25 +273,21 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
             foreach (var dash in StyleHelper.CalculateSolid(trajectory, CalculateSolidDash))
-            {
                 yield return dash;
-            }
+
             foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
-            {
                 yield return dash;
+
+            IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
+            {
+                var offset = CenterSolid ? 0 : Invert ? Offset : -Offset;
+                yield return StyleHelper.CalculateSolidDash(lineTrajectory, offset, Width, Color);
             }
-        }
-
-        protected IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory trajectory)
-        {
-            var offset = CenterSolid ? 0 : Invert ? Offset : -Offset;
-
-            yield return StyleHelper.CalculateSolidDash(trajectory, offset, Width, Color);
-        }
-        protected IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT)
-        {
-            var offset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
-            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, offset, Width, Color);
+            IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory lineTrajectory, float startT, float endT)
+            {
+                var offset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
+                yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, DashLength, offset, Width, Color);
+            }
         }
         public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert, CenterSolid);
         public override void CopyTo(Style target)

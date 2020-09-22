@@ -144,7 +144,8 @@ namespace NodeMarkup.Manager
             {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength)},
             {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultStopOffset)},
             {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
-            {StopLineType.ChessBoard, new ChessBoardStopLineStyle(DefaultColor, DefaultStopWidth, 2, false)},
+            {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            //{StopLineType.ChessBoard, new ChessBoardStopLineStyle(DefaultColor, DefaultStopWidth, 2, false)},
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
 
@@ -172,8 +173,11 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             DoubleDashed = StyleType.StopLineDoubleDashed,
 
-            [Description(nameof(Localize.LineStyle_StopChessBoard))]
-            ChessBoard = StyleType.StopLineChessBoard,
+            [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
+            SolidAndDashed = StyleType.StopLineSolidAndDashed,
+
+            //[Description(nameof(Localize.LineStyle_StopChessBoard))]
+            //ChessBoard = StyleType.StopLineChessBoard,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,
