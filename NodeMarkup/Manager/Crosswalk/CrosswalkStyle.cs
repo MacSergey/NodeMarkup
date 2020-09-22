@@ -94,7 +94,6 @@ namespace NodeMarkup.Manager
             return components;
         }
 
-
         protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
             var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
@@ -306,12 +305,8 @@ namespace NodeMarkup.Manager
         }
 
         protected List<UIComponent> GetBaseUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-        {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetBeforeProperty(this, parent, onHover, onLeave));
-            components.Add(AddOffsetAfterProperty(this, parent, onHover, onLeave));
-            return components;
-        }
+            => base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = GetBaseUIComponents(editObject, parent, onHover, onLeave, isTemplate);
