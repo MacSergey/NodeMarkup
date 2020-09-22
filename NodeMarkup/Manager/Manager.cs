@@ -17,12 +17,16 @@ namespace NodeMarkup.Manager
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
 
         static PropManager PropManager => Singleton<PropManager>.instance;
-        static Material Material { get; set; }
+        static Dictionary<MaterialType, Material> MaterialLib { get; set; }
         public static ushort LoadErrors { get; set; } = 0;
 
         public static void Init()
         {
-            Material = RenderHelper.CreateMaterial();
+            MaterialLib = new Dictionary<MaterialType, Material>()
+            {
+                { MaterialType.Rectangle, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white))},
+                { MaterialType.Triangle, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth.png", 64,64))},
+            };
         }
 
         public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
@@ -72,7 +76,7 @@ namespace NodeMarkup.Manager
                 materialBlock.SetVector(RenderHelper.ID_DecalSize, batch.Size);
 
                 var mesh = batch.Mesh;
-                var material = Material;
+                var material = MaterialLib[batch.MaterialType];
 
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
             }
@@ -133,5 +137,10 @@ namespace NodeMarkup.Manager
                     NeedUpdate.Add(markup.Id);
             }
         }
+    }
+    public enum MaterialType
+    {
+        Rectangle,
+        Triangle
     }
 }

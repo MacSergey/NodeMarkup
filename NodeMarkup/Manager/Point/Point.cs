@@ -230,6 +230,7 @@ namespace NodeMarkup.Manager
         public ulong Hash { get; }
         public MarkupPoint First { get; }
         public MarkupPoint Second { get; }
+        public bool IsInvert => First.Id < Second.Id;
         public bool IsSomeEnter => First.Enter == Second.Enter;
         public bool IsStopLine => IsSomeEnter && First.Type == MarkupPoint.PointType.Enter && Second.Type == MarkupPoint.PointType.Enter;
         public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;

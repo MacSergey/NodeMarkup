@@ -126,18 +126,18 @@ namespace NodeMarkup.Manager
             return dashesT;
         }
 
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color, MaterialType materialType = MaterialType.Rectangle)
         {
             if (offset == 0)
-                return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
+                return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color, materialType: materialType);
             else
             {
                 var startOffset = trajectory.Tangent(startT).Turn90(true).normalized * offset;
                 var endOffset = trajectory.Tangent(endT).Turn90(true).normalized * offset;
-                return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
+                return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color, materialType: materialType);
             }
         }
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null, MaterialType materialType = MaterialType.Rectangle)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -146,9 +146,9 @@ namespace NodeMarkup.Manager
             endPosition += endOffset;
 
             if (angle == null)
-                return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, width, color);
+                return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, width, color, materialType);
             else
-                return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, width, color);
+                return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, width, color, materialType);
         }
 
         public static MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, float offset, float width, Color color)

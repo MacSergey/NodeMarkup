@@ -125,12 +125,10 @@ namespace NodeMarkup.Utils
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
             string path = TextureUtil.path + textureFile;
             Stream manifestResourceStream = executingAssembly.GetManifestResourceStream(path);
-            //Assert(manifestResourceStream != null, "could not find " + path);
             byte[] array = new byte[manifestResourceStream.Length];
             manifestResourceStream.Read(array, 0, array.Length);
 
             Texture2D texture2D = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            //Assert(texture2D != null, "texture2D");
             texture2D.filterMode = FilterMode.Bilinear;
             texture2D.LoadImage(array);
             texture2D.Apply(true, true);

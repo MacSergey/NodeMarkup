@@ -879,6 +879,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Line count.
+        /// </summary>
+        public static string LineEditor_LineCount {
+            get {
+                return ResourceManager.GetString("LineEditor_LineCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Lines.
         /// </summary>
         public static string LineEditor_Lines {
@@ -907,11 +916,47 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Triangle base.
+        /// </summary>
+        public static string LineEditor_SharkToothBase {
+            get {
+                return ResourceManager.GetString("LineEditor_SharkToothBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Triangle height.
+        /// </summary>
+        public static string LineEditor_SharkToothHeight {
+            get {
+                return ResourceManager.GetString("LineEditor_SharkToothHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Space between.
+        /// </summary>
+        public static string LineEditor_SharkToothSpace {
+            get {
+                return ResourceManager.GetString("LineEditor_SharkToothSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Space length.
         /// </summary>
         public static string LineEditor_SpaceLength {
             get {
                 return ResourceManager.GetString("LineEditor_SpaceLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Square side.
+        /// </summary>
+        public static string LineEditor_SquareSide {
+            get {
+                return ResourceManager.GetString("LineEditor_SquareSide", resourceCulture);
             }
         }
         
@@ -1042,6 +1087,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Shark teeth.
+        /// </summary>
+        public static string LineStyle_SharkTeeth {
+            get {
+                return ResourceManager.GetString("LineStyle_SharkTeeth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid.
         /// </summary>
         public static string LineStyle_Solid {
@@ -1065,6 +1119,15 @@ namespace NodeMarkup {
         public static string LineStyle_Stop {
             get {
                 return ResourceManager.GetString("LineStyle_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Chess board.
+        /// </summary>
+        public static string LineStyle_StopChessBoard {
+            get {
+                return ResourceManager.GetString("LineStyle_StopChessBoard", resourceCulture);
             }
         }
         
@@ -1101,6 +1164,15 @@ namespace NodeMarkup {
         public static string LineStyle_StopGroup {
             get {
                 return ResourceManager.GetString("LineStyle_StopGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Shark teeth.
+        /// </summary>
+        public static string LineStyle_StopSharkTeeth {
+            get {
+                return ResourceManager.GetString("LineStyle_StopSharkTeeth", resourceCulture);
             }
         }
         
@@ -1388,7 +1460,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Version 1.3 Released..
+        ///   Ищет локализованную строку, похожую на - Fix chevron line parts overlap.
+        ///- New chevron middle line calculation algorithm.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

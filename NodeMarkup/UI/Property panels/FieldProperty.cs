@@ -152,4 +152,11 @@ namespace NodeMarkup.UI.Editors
         protected override string Decrement(string value, string step, WheelMode mode) => throw new NotSupportedException();
         protected override string Increment(string value, string step, WheelMode mode) => throw new NotSupportedException();
     }
+    public class IntPropertyPanel : ComparableFieldPropertyPanel<int>
+    {
+        protected override bool CanUseWheel => true;
+
+        protected override int Decrement(int value, int step, WheelMode mode) => value - step;
+        protected override int Increment(int value, int step, WheelMode mode) => value + step;
+    }
 }

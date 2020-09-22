@@ -133,11 +133,12 @@ namespace NodeMarkup.Manager
 
         public virtual List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = new List<UIComponent>
-            {
-                AddColorProperty(parent),
-                AddWidthProperty(parent, onHover, onLeave),
-            };
+            var components = new List<UIComponent>();
+
+            if (this is IColorStyle)
+                components.Add(AddColorProperty(parent));
+            if (this is IWidthStyle)
+                components.Add(AddWidthProperty(parent, onHover, onLeave));
 
             return components;
         }
@@ -225,6 +226,9 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             LineSolidAndDashed,
 
+            [Description(nameof(Localize.LineStyle_SharkTeeth))]
+            LineSharkTeeth,
+
 
             [Description(nameof(Localize.LineStyle_StopGroup))]
             StopLine = Markup.Item.StopLine,
@@ -240,6 +244,12 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             StopLineDoubleDashed,
+
+            [Description(nameof(Localize.LineStyle_StopChessBoard))]
+            StopLineChessBoard,
+
+            [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
+            StopLineSharkTeeth,
 
 
             [Description(nameof(Localize.FillerStyle_Group))]
@@ -286,23 +296,25 @@ namespace NodeMarkup.Manager
 
     public class MarkupStyleDash
     {
+        public MaterialType MaterialType { get; set; }
         public Vector3 Position { get; set; }
         public float Angle { get; set; }
         public float Length { get; set; }
         public float Width { get; set; }
         public Color Color { get; set; }
 
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color)
+        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle)
         {
             Position = position;
             Angle = angle;
             Length = length;
             Width = width;
             Color = color;
+            MaterialType = materialType;
         }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color) : this((start + end) / 2, angle, length, width, color) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color) : this(start, end, dir.AbsoluteAngle(), length, width, color) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color) : this(start, end, dir, (end - start).magnitude, width, color) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this((start + end) / 2, angle, length, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
     }
     public class StyleTemplate : IToXml
     {

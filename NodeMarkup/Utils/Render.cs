@@ -102,9 +102,8 @@ namespace NodeMarkup.Utils
         }
         public static Color32 VerticesColor(int i) => new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, (byte)(16 * i));
 
-        public static Material CreateMaterial()
+        public static Material CreateMaterial(Texture2D texture, Texture2D aci = null)
         {
-            var texture = CreateDotTexture(Color.white);
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
                 mainTexture = texture,
@@ -114,6 +113,9 @@ namespace NodeMarkup.Utils
                 enableInstancing = false,
                 globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
             };
+            if (aci != null)
+                material.SetTexture("_ACIMap", aci);
+
             material.EnableKeyword("MULTI_INSTANCE");
 
             var tiling = new Vector4(1f, 0f, 1f, 0f);
@@ -143,15 +145,14 @@ namespace NodeMarkup.Utils
             texture.Apply();
             return texture;
         }
-        public static Texture2D CreateDotTexture(Color color)
+        public static Texture2D CreateTexture(int height, int width, Color color)
         {
-            var height = 1;
-            var width = 1;
-            var texture = new Texture2D(height, width)
+            var texture = new Texture2D(height, width) { name = "Markup" };
+            for (var i = 0; i < width; i += 1)
             {
-                name = "Markup",
-            };
-            texture.SetPixel(0, 0, color);
+                for (var j = 0; j < height; j += 1)
+                    texture.SetPixel(i, j, color);
+            }
             texture.Apply();
             return texture;
         }
@@ -159,6 +160,7 @@ namespace NodeMarkup.Utils
 
     public class RenderBatch
     {
+        public MaterialType MaterialType { get; }
         public int Count { get; }
         public Vector4[] Locations { get; }
         public Vector4[] Indices { get; }
@@ -167,8 +169,9 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size)
+        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size, MaterialType materialType)
         {
+            MaterialType = materialType;
             Count = count;
             Locations = new Vector4[Count];
             Indices = new Vector4[Count];
@@ -189,29 +192,34 @@ namespace NodeMarkup.Utils
 
         public static IEnumerable<RenderBatch> FromDashes(IEnumerable<MarkupStyleDash> dashes)
         {
-            var groups = dashes.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(Round(d.Length), 1f, d.Width));
+            var materialGroups = dashes.GroupBy(d => d.MaterialType);
 
-            foreach (var group in groups)
+            foreach (var materialGroup in materialGroups)
             {
-                var groupEnumerator = group.GetEnumerator();
+                var sizeGroups = materialGroup.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(Round(d.Length), 1f, d.Width));
 
-                var buffer = new MarkupStyleDash[16];
-                var count = 0;
-
-                bool isEnd = groupEnumerator.MoveNext();
-                do
+                foreach (var sizeGroup in sizeGroups)
                 {
-                    buffer[count] = groupEnumerator.Current;
-                    count += 1;
-                    isEnd = !groupEnumerator.MoveNext();
-                    if (isEnd || count == 16)
+                    var groupEnumerator = sizeGroup.GetEnumerator();
+
+                    var buffer = new MarkupStyleDash[16];
+                    var count = 0;
+
+                    bool isEnd = groupEnumerator.MoveNext();
+                    do
                     {
-                        var batch = new RenderBatch(buffer, count, group.Key);
-                        yield return batch;
-                        count = 0;
+                        buffer[count] = groupEnumerator.Current;
+                        count += 1;
+                        isEnd = !groupEnumerator.MoveNext();
+                        if (isEnd || count == 16)
+                        {
+                            var batch = new RenderBatch(buffer, count, sizeGroup.Key, materialGroup.Key);
+                            yield return batch;
+                            count = 0;
+                        }
                     }
+                    while (!isEnd);
                 }
-                while (!isEnd);
             }
         }
         private static int RoundTo => 5;

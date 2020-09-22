@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -226,6 +227,133 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config);
             Offset = config.GetAttrValue("O", DefaultOffset);
+        }
+    }
+    public class ChessBoardStopLineStyle : StopLineStyle, IColorStyle, IAsymLine
+    {
+        public override StyleType Type => StyleType.StopLineChessBoard;
+
+        bool _invert;
+        float _squareSide;
+        int _lineCount;
+        public bool Invert
+        {
+            get => _invert;
+            set
+            {
+                _invert = value;
+                StyleChanged();
+            }
+        }
+        public float SquareSide
+        {
+            get => _squareSide;
+            set
+            {
+                _squareSide = value;
+                StyleChanged();
+            }
+        }
+        public int LineCount
+        {
+            get => _lineCount;
+            set
+            {
+                _lineCount = value;
+                StyleChanged();
+            }
+        }
+
+        public ChessBoardStopLineStyle(Color32 color, float squareSide, int lineCount, bool invert) : base(color, 0) 
+        {
+            SquareSide = squareSide;
+            LineCount = lineCount;
+            Invert = invert;
+        }
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        {
+            yield break;
+            //var angle = stopLine.Start.Enter.CornerAndNormalAngle;
+            //var additionalLength = SquareSide * LineCount * Mathf.Tan(angle);
+            //var fullLength = trajectory.Length + additionalLength;
+            //var count = (int)(fullLength / SquareSide);
+            //var startSpace = (fullLength - SquareSide * count) / 2;
+
+            //var offsetDir = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
+
+            //for (var i = 0; i < LineCount; i += 1)
+            //{
+            //    for (var j = 0; i < count; j += 2)
+            //    {
+
+            //    }
+            //}
+        }
+
+        public override StopLineStyle CopyStopLineStyle() => new ChessBoardStopLineStyle(Color, SquareSide, LineCount, Invert);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is ChessBoardStopLineStyle chessBoardTarget)
+            {
+                chessBoardTarget.SquareSide = SquareSide;
+                chessBoardTarget.LineCount = LineCount;
+                chessBoardTarget.Invert = Invert;
+            }
+        }
+
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddSquareSideProperty(this, parent, onHover, onLeave));
+            components.Add(AddLineCountProperty(this, parent, onHover, onLeave));
+            if (!isTemplate)
+                components.Add(AddInvertProperty(this, parent));
+            return components;
+        }
+        protected static FloatPropertyPanel AddSquareSideProperty(ChessBoardStopLineStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var squareSideProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            squareSideProperty.Text = Localize.LineEditor_SquareSide;
+            squareSideProperty.UseWheel = true;
+            squareSideProperty.WheelStep = 0.1f;
+            squareSideProperty.CheckMin = true;
+            squareSideProperty.MinValue = 0.1f;
+            squareSideProperty.Init();
+            squareSideProperty.Value = chessBoardStyle.SquareSide;
+            squareSideProperty.OnValueChanged += (float value) => chessBoardStyle.SquareSide = value;
+            AddOnHoverLeave(squareSideProperty, onHover, onLeave);
+            return squareSideProperty;
+        }
+        protected static IntPropertyPanel AddLineCountProperty(ChessBoardStopLineStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var lineCountProperty = parent.AddUIComponent<IntPropertyPanel>();
+            lineCountProperty.Text = Localize.LineEditor_LineCount;
+            lineCountProperty.UseWheel = true;
+            lineCountProperty.WheelStep = 1;
+            lineCountProperty.CheckMin = true;
+            lineCountProperty.MinValue = 2;
+            lineCountProperty.Init();
+            lineCountProperty.Value = chessBoardStyle.LineCount;
+            lineCountProperty.OnValueChanged += (int value) => chessBoardStyle.LineCount = value;
+            AddOnHoverLeave(lineCountProperty, onHover, onLeave);
+            return lineCountProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute("SS", SquareSide));
+            config.Add(new XAttribute("LC", LineCount));
+            config.Add(new XAttribute("I", Invert ? 1 : 0));
+            return config;
+        }
+        public override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+            SquareSide = config.GetAttrValue("SS", DefaultStopWidth);
+            LineCount = config.GetAttrValue("LC", 2);
+            Invert = config.GetAttrValue("I", 0) == 1;
         }
     }
 }

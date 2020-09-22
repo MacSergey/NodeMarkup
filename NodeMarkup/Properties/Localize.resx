@@ -498,7 +498,8 @@ Hold Shift to create a crosswalk</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Version 1.3 Released.</value>
+    <value>- Fix chevron line parts overlap.
+- New chevron middle line calculation algorithm</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -854,5 +855,29 @@ Failed to load markings for {0} intersections.</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Troubleshooting</value>
+  </data>
+  <data name="LineStyle_StopChessBoard" xml:space="preserve">
+    <value>Chess board</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Line count</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Triangle base</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Triangle height</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Space between</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Square side</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Shark teeth</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Shark teeth</value>
   </data>
 </root>
