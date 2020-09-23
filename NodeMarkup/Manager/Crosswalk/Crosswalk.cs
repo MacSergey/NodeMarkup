@@ -192,8 +192,8 @@ namespace NodeMarkup.Manager
         }
         public void FromXml(XElement config, PasteMap map)
         {
-            _rightBorder = GetBorder("RB");
-            _leftBorder = GetBorder("LB");
+            _rightBorder = GetBorder(map.IsMirror ? "LB" : "RB");
+            _leftBorder = GetBorder(map.IsMirror ? "RB" : "LB");
             if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, out CrosswalkStyle style))
             {
                 _style = style;
