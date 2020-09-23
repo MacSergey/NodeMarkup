@@ -107,14 +107,19 @@ namespace NodeMarkup.UI
         }
 
         public void UpdatePanel() => CurrentEditor?.UpdateEditor();
-        public void SetNode(ushort nodeId)
+        public void SetNode(Markup markup)
         {
-            Show();
-            Caption.text = string.Format(NodeMarkup.Localize.Panel_Caption, nodeId);
+            Markup = markup;
 
-            Markup = MarkupManager.Get(nodeId);
-            TabStrip.selectedIndex = -1;
-            SelectEditor<LinesEditor>();
+            if (Markup != null)
+            {
+                Show();
+                Caption.text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
+                TabStrip.selectedIndex = -1;
+                SelectEditor<LinesEditor>();
+            }
+            else
+                Hide();
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
         private void TabStripSelectedIndexChanged(UIComponent component, int index)
