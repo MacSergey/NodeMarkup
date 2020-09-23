@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("W", Width));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
             Width = config.GetAttrValue("W", DefaultCrosswalkWidth);
         }
@@ -177,9 +177,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("OA", OffsetAfter));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             OffsetBefore = config.GetAttrValue("OB", DefaultCrosswalkOffset);
             OffsetAfter = config.GetAttrValue("OA", DefaultCrosswalkOffset);
         }
@@ -221,9 +221,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("LW", LineWidth));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             LineWidth = config.GetAttrValue("LW", DefaultCrosswalkOffset);
         }
     }
@@ -324,9 +324,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("P", Parallel));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             DashLength = config.GetAttrValue("DL", LineStyle.DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", LineStyle.DefaultSpaceLength);
             Parallel = config.GetAttrValue("P", true);
@@ -403,9 +403,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultCrosswalkOffset);
         }
     }
@@ -515,9 +515,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             DashLength = config.GetAttrValue("DL", LineStyle.DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", LineStyle.DefaultSpaceLength);
         }
@@ -600,9 +600,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             DashLength = config.GetAttrValue("DL", LineStyle.DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", LineStyle.DefaultSpaceLength);
         }
@@ -754,12 +754,12 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("I", Invert ? 1 : 0));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             SquareSide = config.GetAttrValue("SS", DefaultCrosswalkSquareSide);
             LineCount = config.GetAttrValue("LC", DefaultCrosswalkLineCount);
-            Invert = config.GetAttrValue("I", 0) == 1;
+            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror;
         }
     }
 }

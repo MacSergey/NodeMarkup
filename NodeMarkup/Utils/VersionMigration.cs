@@ -8,10 +8,10 @@ namespace NodeMarkup.Utils
 {
     public static class VersionMigration
     {
-        public static Dictionary<ObjectId, ObjectId> Befor1_2(Markup markup, Dictionary<ObjectId, ObjectId> map)
+        public static PasteMap Befor1_2(Markup markup, PasteMap map)
         {
             if (map == null)
-                map = new Dictionary<ObjectId, ObjectId>();
+                map = new PasteMap();
 
             foreach(var enter in markup.Enters)
             {

@@ -10,16 +10,16 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IUpdate, IToXml, IFromXml
+    public abstract class MarkupPoint : IUpdate, IToXml
     {
         public event Action<MarkupPoint> OnUpdate;
-        static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
-        static ushort GetEnter(int id) => (ushort)id;
-        static byte GetNum(int id) => (byte)(id >> 16);
-        static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
+        public static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
+        public static ushort GetEnter(int id) => (ushort)id;
+        public static byte GetNum(int id) => (byte)(id >> 16);
+        public static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
         public static string XmlName { get; } = "P";
 
-        public static bool FromId(int id, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPoint point)
+        public static bool FromId(int id, Markup markup, PasteMap map, out MarkupPoint point)
         {
             point = null;
 
@@ -108,15 +108,15 @@ namespace NodeMarkup.Manager
             );
             return config;
         }
-        public static void FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map)
+        public static void FromXml(XElement config, Markup markup, PasteMap map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
             if (FromId(id, markup, map, out MarkupPoint point))
-                point.FromXml(config);
+                point.FromXml(config, map);
         }
-        public void FromXml(XElement config)
+        public void FromXml(XElement config, PasteMap map)
         {
-            _offset = config.GetAttrValue<float>("O");
+            _offset = config.GetAttrValue<float>("O") * (map.IsMirror ? -1 : 1);
         }
 
         public enum PointType
@@ -210,7 +210,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPointPair pair)
+        public static bool FromHash(ulong hash, Markup markup, PasteMap map, out MarkupPointPair pair)
         {
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);

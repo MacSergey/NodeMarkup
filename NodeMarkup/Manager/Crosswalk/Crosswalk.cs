@@ -190,11 +190,11 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
+        public void FromXml(XElement config, PasteMap map)
         {
             _rightBorder = GetBorder("RB");
             _leftBorder = GetBorder("LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out CrosswalkStyle style))
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, out CrosswalkStyle style))
             {
                 _style = style;
                 _style.OnStyleChanged = CrosswalkChanged;
@@ -207,7 +207,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupCrosswalk crosswalk)
+        public static bool FromXml(XElement config, Markup markup, PasteMap map, out MarkupCrosswalk crosswalk)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             if (markup.TryGetLine(lineId, map, out MarkupCrosswalkLine line))

@@ -95,9 +95,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             Angle = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStepGrid);
             Offset = config.GetAttrValue("O", DefaultOffset);
@@ -486,9 +486,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Output));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             AngleBetween = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStepGrid);
             Invert = config.GetAttrValue("I", 0) == 1;

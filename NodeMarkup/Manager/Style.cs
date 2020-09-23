@@ -22,14 +22,14 @@ namespace NodeMarkup.Manager
     }
     public abstract class Style : IToXml
     {
-        public static bool FromXml<T>(XElement config, out T style) where T : Style
+        public static bool FromXml<T>(XElement config, PasteMap map, out T style) where T : Style
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
             if (TemplateManager.GetDefault<T>(type) is T defaultStyle)
             {
                 style = defaultStyle;
-                style.FromXml(config);
+                style.FromXml(config, map);
                 return true;
             }
             else
@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("W", Width));
             return config;
         }
-        public virtual void FromXml(XElement config)
+        public virtual void FromXml(XElement config, PasteMap map)
         {
             var colorInt = config.GetAttrValue<int>("C");
             Color = colorInt != 0 ? colorInt.ToColor() : DefaultColor;
@@ -385,7 +385,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
             var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, out Style style))
+            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new PasteMap(), out Style style))
             {
                 template = new StyleTemplate(name, style);
                 return true;

@@ -76,9 +76,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
@@ -145,9 +145,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
@@ -199,9 +199,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
@@ -336,13 +336,13 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("CS", CenterSolid ? 1 : 0));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
-            Invert = config.GetAttrValue("I", 0) == 1;
+            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror;
             CenterSolid = config.GetAttrValue("CS", 0) == 1;
         }
     }
@@ -477,13 +477,13 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("I", Invert ? 1 : 0));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, PasteMap map)
         {
-            base.FromXml(config);
+            base.FromXml(config, map);
             Base = config.GetAttrValue("B", DefaultSharkBaseLength);
             Height = config.GetAttrValue("H", DefaultSharkHeight);
             Space = config.GetAttrValue("S", DefaultSharkSpaceLength);
-            Invert = config.GetAttrValue("I", 0) == 1;
+            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror;
         }
     }
 }

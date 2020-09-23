@@ -13,7 +13,7 @@ namespace NodeMarkup.Manager
     public static class LinePartEdge
     {
         public static string XmlName { get; } = "E";
-        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out ILinePartEdge supportPoint)
+        public static bool FromXml(XElement config, MarkupLine mainLine, PasteMap map, out ILinePartEdge supportPoint)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -35,7 +35,7 @@ namespace NodeMarkup.Manager
     }
     public class EnterPointEdge : EnterSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out EnterPointEdge enterPoint)
+        public static bool FromXml(XElement config, Markup markup, PasteMap map, out EnterPointEdge enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
@@ -61,7 +61,7 @@ namespace NodeMarkup.Manager
 
     public class LinesIntersectEdge : IntersectSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, MarkupLine mainLine, Dictionary<ObjectId, ObjectId> map, out LinesIntersectEdge linePoint)
+        public static bool FromXml(XElement config, MarkupLine mainLine, PasteMap map, out LinesIntersectEdge linePoint)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             if (mainLine.Markup.TryGetLine(lineId, map, out MarkupLine line))
@@ -95,11 +95,11 @@ namespace NodeMarkup.Manager
     }
     public class CrosswalkBorderEdge : SupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out CrosswalkBorderEdge borderPoint)
+        public static bool FromXml(XElement config, MarkupLine line, PasteMap map, out CrosswalkBorderEdge borderPoint)
         {            
             if (line is MarkupCrosswalkLine crosswalkLine)
             {
-                var border = (BorderPosition)config.GetAttrValue("B", (int)BorderPosition.Right);
+                var border = (BorderPosition)(((config.GetAttrValue("B", (int)BorderPosition.Right) == (int)BorderPosition.Right) ^ map.IsMirror) ? 1 : 0);
                 borderPoint = new CrosswalkBorderEdge(crosswalkLine, border);
                 return true;
             }

@@ -91,7 +91,7 @@ namespace NodeMarkup.Manager
 
             if (delete.Length == 1 && add.Length == 1 && oldEnters.Find(e => e.Id == delete[0]).PointCount == newEnters.Find(e => e.Id == add[0]).PointCount)
             {
-                var map = new Dictionary<ObjectId, ObjectId>()
+                var map = new PasteMap()
                 {
                     {new ObjectId() {Segment = delete[0] },  new ObjectId() {Segment = add[0] }}
                 };
@@ -317,7 +317,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool TryGetLine<LineType>(ulong lineId, Dictionary<ObjectId, ObjectId> map, out LineType line)
+        public bool TryGetLine<LineType>(ulong lineId, PasteMap map, out LineType line)
             where LineType : MarkupLine
         {
             if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair))
@@ -441,7 +441,7 @@ namespace NodeMarkup.Manager
             try
             {
                 markup = MarkupManager.Get(nodeId);
-                markup.FromXml(version, config);
+                markup.FromXml(version, config, new PasteMap());
                 return true;
             }
             catch (Exception error)
@@ -452,7 +452,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public void FromXml(Version version, XElement config, Dictionary<ObjectId, ObjectId> map = null)
+        public void FromXml(Version version, XElement config, PasteMap map)
         {
             if (version < new Version("1.2"))
                 map = VersionMigration.Befor1_2(this, map);

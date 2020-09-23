@@ -5,6 +5,7 @@ using NodeMarkup.Manager;
 using System.Xml.Linq;
 using System.Xml;
 using System.IO;
+using System.Linq;
 
 namespace NodeMarkup.Utils
 {
@@ -44,26 +45,52 @@ namespace NodeMarkup.Utils
         }
 
         public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
+            => Paste(targetInstanceID, record, sourceMap, PasteMapFiller);
+        private void PasteMapFiller(Markup markup, PasteMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
-            if (targetInstanceID.Type == InstanceType.NetNode)
-            {
-                ushort nodeID = targetInstanceID.NetNode;
-                var map = new Dictionary<ObjectId, ObjectId>();
-                foreach (var source in sourceMap)
-                {
-                    if (source.Key.Type == InstanceType.NetSegment && source.Value.Type == InstanceType.NetSegment)
-                    {
-                        map.Add(new ObjectId() { Segment = source.Key.NetSegment }, new ObjectId() { Segment = source.Value.NetSegment });
-                    }
-                }
+            foreach (var source in sourceMap.Where(p => IsCorrect(p)))
+                map[new ObjectId() { Segment = source.Key.NetSegment }] = new ObjectId() { Segment = source.Value.NetSegment };
+        }
 
-                if (record is XElement config)
+        public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
+            => Paste(targetInstanceID, record, sourceMap, MirrorMapFiller);
+        private void MirrorMapFiller(Markup markup, PasteMap map, Dictionary<InstanceID, InstanceID> sourceMap)
+        {
+            foreach (var source in sourceMap.Where(p => IsCorrect(p)))
+            {
+                if (!markup.TryGetEnter(source.Value.NetSegment, out Enter enter))
+                    continue;
+
+                var sourceSegment = source.Key.NetSegment;
+                var targetSetment = source.Value.NetSegment;
+                map[new ObjectId() { Segment = sourceSegment }] = new ObjectId() { Segment = targetSetment };
+                var count = enter.PointCount + 1;
+                for (var i = 1; i < count; i += 1)
                 {
-                    var markup = MarkupManager.Get(nodeID);
-                    markup.FromXml(Mod.Version, config, map);
+                    foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
+                    {
+                        var sourcePoint = new ObjectId() { Point = MarkupPoint.GetId(targetSetment, (byte)i, pointType) };
+                        var targetPoint = new ObjectId() { Point = MarkupPoint.GetId(targetSetment, (byte)(count - i), pointType) };
+                        map[sourcePoint] = targetPoint;
+
+                    }
                 }
             }
         }
+
+        private void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, PasteMap, Dictionary<InstanceID, InstanceID>> mapFiller)
+        {
+            if (targetInstanceID.Type != InstanceType.NetNode || !(record is XElement config))
+                return;
+
+            ushort nodeID = targetInstanceID.NetNode;
+            var map = new PasteMap(true);
+            var markup = MarkupManager.Get(nodeID);
+            mapFiller(markup, map, sourceMap);
+            markup.FromXml(Mod.Version, config, map);
+        }
+        private bool IsCorrect(KeyValuePair<InstanceID, InstanceID> pair) => pair.Key.Type == InstanceType.NetSegment && pair.Value.Type == InstanceType.NetSegment;
+
 
         public override string Encode64(object record)
         {
