@@ -52,7 +52,7 @@ namespace NodeMarkup
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
-        private MarkupBuffer Buffer { get; set; }
+        public MarkupBuffer Buffer { get; private set; } = new MarkupBuffer(new XElement("Markup"), new ushort[0]);
 
         #endregion
 
@@ -81,6 +81,7 @@ namespace NodeMarkup
                 { BaseToolMode.ModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
                 { BaseToolMode.ModeType.MakeFiller, new MakeFillerToolMode() },
                 { BaseToolMode.ModeType.DragPoint, new DragPointToolMode() },
+                { BaseToolMode.ModeType.PasteMarkup, new PasteMarkupToolMode()}
             };
 
             return Instance;
@@ -238,6 +239,8 @@ namespace NodeMarkup
 
         protected override void OnToolGUI(Event e)
         {
+            Mode.OnGUI(e);
+
             if (Mode.ProcessShortcuts(e))
                 return;
 
@@ -299,14 +302,7 @@ namespace NodeMarkup
 
             bool Paste()
             {
-                Markup.Clear();
-                var map = new PasteMap();
-                var enters = Markup.Enters.Select(e => e.Id).ToArray();
-                for (var i = 0; i < Math.Min(Buffer.Enters.Length, enters.Length); i += 1)
-                    map[new ObjectId() { Segment = Buffer.Enters[i] }] = new ObjectId() { Segment = enters[i] };
-
-                Markup.FromXml(Mod.Version, Buffer.Data, map);
-                Panel.UpdatePanel();
+                SetMode(BaseToolMode.ModeType.PasteMarkup);
                 return true;
             }
         }

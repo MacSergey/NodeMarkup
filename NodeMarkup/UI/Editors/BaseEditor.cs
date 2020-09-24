@@ -163,20 +163,7 @@ namespace NodeMarkup.UI.Editors
         protected virtual void FillItems() { }
         public virtual void Select(int index) { }
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
-        //public virtual string GetInfo() => string.Empty;
-        //public virtual void OnUpdate() { }
         public virtual bool OnShortcut(Event e) => false;
-        //public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
-        //{
-        //    isDone = true;
-        //    NodeMarkupPanel.EndEditorAction();
-        //}
-        //public virtual void OnSecondaryMouseClicked(out bool isDone)
-        //{
-        //    isDone = true;
-        //    NodeMarkupPanel.EndEditorAction();
-        //}
-        //public virtual void EndEditorAction() { }
 
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);

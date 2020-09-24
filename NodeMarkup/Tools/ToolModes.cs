@@ -18,9 +18,10 @@ namespace NodeMarkup
         public abstract ModeType Type { get; }
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        protected Markup Markup => Tool.Markup;
         protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
 
-        public virtual void Start() 
+        public virtual void Start()
         {
             Reset();
         }
@@ -45,6 +46,7 @@ namespace NodeMarkup
             MakeCrosswalk,
             MakeFiller,
             PanelAction,
+            PasteMarkup,
             DragPoint,
         }
     }
@@ -351,7 +353,7 @@ namespace NodeMarkup
             else if (NodeMarkupTool.OnlyAltIsPressed)
             {
                 Tool.SetMode(ModeType.MakeFiller);
-                if(Tool.Mode is MakeFillerToolMode fillerToolMode)
+                if (Tool.Mode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
                 return true;
             }
@@ -699,6 +701,82 @@ namespace NodeMarkup
 
             var bezier = new Line3(enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift, enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
+        }
+    }
+    public class PasteMarkupToolMode : BaseToolMode
+    {
+        public override ModeType Type => ModeType.PasteMarkup;
+        public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
+        private MarkupBuffer Buffer => Tool.Buffer;
+        private int _shift;
+        private int Shift
+        {
+            get => _shift;
+            set
+            {
+                _shift = value;
+                Paste();
+            }
+        }
+        private float Size => 50;
+        private float Padding => 5;
+        private Rect TurnLeft { get; set; } = new Rect();
+        private Rect TurnRight { get; set; } = new Rect();
+
+        public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
+        private static UITextureAtlas GetButtonsIcons()
+        {
+            var spriteNames = new string[]
+            {
+                "TurnLeft",
+                "TurnRight",
+            };
+
+            var atlas = TextureUtil.GetAtlas(nameof(PasteMarkupToolMode));
+            if (atlas == UIView.GetAView().defaultAtlas)
+            {
+                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(PasteMarkupToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
+            }
+
+            return atlas;
+        }
+        protected override void Reset()
+        {
+            Shift = int.MaxValue >> 1;
+        }
+        public override void OnPrimaryMouseClicked(Event e)
+        {
+            var uiView = UIView.GetAView();
+            var mouse = uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
+
+            if (TurnLeft.Contains(mouse))
+                Shift += 1;
+            else if (TurnRight.Contains(mouse))
+                Shift -= 1;
+        }
+
+        public override void OnGUI(Event e)
+        {
+            var uiView = UIView.GetAView();
+            var screenPos = uiView.WorldPointToGUI(Camera.main, Utilities.GetNode(Tool.Markup.Id).m_position) * uiView.inputScale;
+
+            TurnLeft = new Rect(screenPos.x - Size - Padding / 2, screenPos.y - Size / 2, Size, Size);
+            GUI.DrawTextureWithTexCoords(TurnLeft, ButtonAtlas.texture, ButtonAtlas.sprites[0].region);
+            TurnRight = new Rect(screenPos.x + Padding / 2, screenPos.y - Size / 2, Size, Size);
+            GUI.DrawTextureWithTexCoords(TurnRight, ButtonAtlas.texture, ButtonAtlas.sprites[1].region);
+        }
+
+        private void Paste()
+        {
+            Markup.Clear();
+            var map = new PasteMap();
+            var enters = Markup.Enters.Select(e => e.Id).ToArray();
+            var max = Math.Min(Tool.Buffer.Enters.Length, enters.Length);
+            for (var i = 0; i < max; i += 1)
+                map[new ObjectId() { Segment = Buffer.Enters[i] }] = new ObjectId() { Segment = enters[(i + Shift) % max] };
+
+            Markup.FromXml(Mod.Version, Buffer.Data, map);
+            Panel.UpdatePanel();
         }
     }
 }

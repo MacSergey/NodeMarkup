@@ -226,6 +226,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SharkTooth.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PasteButtons.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
     <PostBuildEvent>
