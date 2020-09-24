@@ -20,7 +20,12 @@ namespace NodeMarkup
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
 
-        public virtual void Reset() { }
+        public virtual void Start() 
+        {
+            Reset();
+        }
+        public virtual void End() { }
+        protected virtual void Reset() { }
 
         public virtual void OnUpdate() { }
         public virtual string GetToolInfo() => null;
@@ -49,7 +54,7 @@ namespace NodeMarkup
         ushort HoverNodeId { get; set; } = 0;
         bool IsHoverNode => HoverNodeId != 0;
 
-        public override void Reset()
+        protected override void Reset()
         {
             HoverNodeId = 0;
         }
@@ -103,7 +108,7 @@ namespace NodeMarkup
         protected bool IsHoverPoint => HoverPoint != null;
         protected bool IsSelectPoint => SelectPoint != null;
 
-        public override void Reset()
+        protected override void Reset()
         {
             HoverPoint = null;
             SelectPoint = null;
@@ -325,7 +330,7 @@ namespace NodeMarkup
     {
         public override ModeType Type => ModeType.MakeLine;
 
-        public override void Reset()
+        protected override void Reset()
         {
             base.Reset();
             SetTarget();
@@ -475,7 +480,7 @@ namespace NodeMarkup
     {
         public override ModeType Type => ModeType.MakeCrosswalk;
 
-        public override void Reset()
+        protected override void Reset()
         {
             base.Reset();
             SetTarget(MarkupPoint.PointType.Crosswalk);
@@ -564,7 +569,7 @@ namespace NodeMarkup
 
         public bool DisableByAlt { get; set; }
 
-        public override void Reset()
+        protected override void Reset()
         {
             TempFiller = new MarkupFiller(Tool.EditMarkup, Style.StyleType.FillerStripe);
             GetFillerPoints();
@@ -660,7 +665,7 @@ namespace NodeMarkup
         public override ModeType Type => ModeType.DragPoint;
         public MarkupPoint DragPoint { get; set; } = null;
 
-        public override void Reset()
+        protected override void Reset()
         {
             DragPoint = null;
         }

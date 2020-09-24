@@ -141,8 +141,9 @@ namespace NodeMarkup
 
         public void SetMode(BaseToolMode.ModeType mode)
         {
+            Mode?.End();
             Mode = ToolModes[mode];
-            Mode.Reset();
+            Mode.Start();
         }
         public void SetMarkup(Markup markup)
         {

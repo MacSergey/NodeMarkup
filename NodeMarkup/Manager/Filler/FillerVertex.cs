@@ -87,7 +87,10 @@ namespace NodeMarkup.Manager
         {
             var otherEnterPoint = Point.IsFirst ? Enter.Next.LastPoint : Enter.Prev.FirstPoint;
             var vertex = new EnterFillerVertex(otherEnterPoint);
-            if (vertex.Equals(filler.First) || !filler.Vertices.Any(v => vertex.Equals(v)))
+            var isCanEnd = vertex.Equals(filler.First) && filler.VertexCount >= 3;
+            var isUsed = filler.Vertices.Any(v => vertex.Equals(v));
+            var isEdgeLine = Point.Lines.Any(l => l.ContainsPoint(otherEnterPoint));
+            if ((isCanEnd || !isUsed) && !isEdgeLine)
                 yield return vertex;
         }
         private IEnumerable<IFillerVertex> GetEnterOtherPoints(MarkupFiller filler)
