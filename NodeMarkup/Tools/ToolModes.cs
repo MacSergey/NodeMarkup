@@ -144,7 +144,7 @@ namespace NodeMarkup
         public override string GetToolInfo()
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var exist = Tool.EditMarkup.ExistConnection(pointPair);
+            var exist = Tool.Markup.ExistConnection(pointPair);
 
             if (pointPair.IsStopLine)
                 return exist ? Localize.Tool_InfoDeleteStopLine : Localize.Tool_InfoCreateStopLine;
@@ -198,7 +198,7 @@ namespace NodeMarkup
         protected void SetTarget(MarkupPoint.PointType pointType = MarkupPoint.PointType.Enter, MarkupPoint ignore = null)
         {
             TargetPoints.Clear();
-            foreach (var enter in Tool.EditMarkup.Enters)
+            foreach (var enter in Tool.Markup.Enters)
             {
                 if ((pointType & MarkupPoint.PointType.Enter) == MarkupPoint.PointType.Enter)
                     SetEnterTarget(enter, ignore);
@@ -385,7 +385,7 @@ namespace NodeMarkup
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
                 var lineType = pointPair.IsStopLine ? e.GetStopStyle() : e.GetRegularStyle();
-                var newLine = Tool.EditMarkup.ToggleConnection(pointPair, lineType);
+                var newLine = Tool.Markup.ToggleConnection(pointPair, lineType);
                 Panel.EditLine(newLine);
 
                 SelectPoint = null;
@@ -429,7 +429,7 @@ namespace NodeMarkup
             };
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
+            var color = Tool.Markup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             NodeMarkupTool.RenderBezier(cameraInfo, color, bezier);
@@ -437,7 +437,7 @@ namespace NodeMarkup
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Blue;
+            var color = Tool.Markup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Blue;
 
             var lineBezier = new Bezier3()
             {
@@ -519,7 +519,7 @@ namespace NodeMarkup
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                var newCrosswalkLine = Tool.EditMarkup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalkLine;
+                var newCrosswalkLine = Tool.Markup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalkLine;
                 Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
 
                 SelectPoint = null;
@@ -546,7 +546,7 @@ namespace NodeMarkup
         {
             var bezier = new Line3(SelectPoint.Position, HoverPoint.Position).GetBezier();
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.EditMarkup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
+            var color = Tool.Markup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
 
             NodeMarkupTool.RenderBezier(cameraInfo, color, bezier, MarkupCrosswalkPoint.Shift * 2, true);
         }
@@ -571,7 +571,7 @@ namespace NodeMarkup
 
         protected override void Reset()
         {
-            TempFiller = new MarkupFiller(Tool.EditMarkup, Style.StyleType.FillerStripe);
+            TempFiller = new MarkupFiller(Tool.Markup, Style.StyleType.FillerStripe);
             GetFillerPoints();
         }
 
@@ -608,7 +608,7 @@ namespace NodeMarkup
             {
                 if (TempFiller.Add(FillerPointsSelector.HoverPoint))
                 {
-                    Tool.EditMarkup.AddFiller(TempFiller);
+                    Tool.Markup.AddFiller(TempFiller);
                     Panel.EditFiller(TempFiller);
                     Tool.SetDefaultMode();
                     return;

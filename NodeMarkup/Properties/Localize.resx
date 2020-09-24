@@ -892,4 +892,12 @@ Failed to load markings for {0} intersections.</value>
   <data name="Panel_PasteMarking" xml:space="preserve">
     <value>Paste marking</value>
   </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Paste marking</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Do you really want to paste marking?
+It will replace the existing marking.
+This action cannot be undone.</value>
+  </data>
 </root>

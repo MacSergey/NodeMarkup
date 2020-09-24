@@ -13,6 +13,7 @@ using UnityEngine;
 using NodeMarkup.Manager;
 using ICities;
 using ColossalFramework.PlatformServices;
+using System.Xml.Linq;
 
 namespace NodeMarkup
 {
@@ -43,14 +44,15 @@ namespace NodeMarkup
 
         public BaseToolMode Mode { get; private set; }
         private Dictionary<BaseToolMode.ModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<BaseToolMode.ModeType, BaseToolMode>();
-        public Markup EditMarkup { get; private set; }
+        public Markup Markup { get; private set; }
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
-        NodeMarkupButton Button => NodeMarkupButton.Instance;
-        NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
+        private NodeMarkupButton Button => NodeMarkupButton.Instance;
+        private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
-        UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
+        private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
+        private MarkupBuffer Buffer { get; set; }
 
         #endregion
 
@@ -128,7 +130,6 @@ namespace NodeMarkup
             SetMode(BaseToolMode.ModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
-            //Panel?.EndPanelAction();
         }
 
         public void ToggleTool()
@@ -148,29 +149,9 @@ namespace NodeMarkup
         }
         public void SetMarkup(Markup markup)
         {
-            EditMarkup = markup;
-            Panel.SetNode(EditMarkup);
+            Markup = markup;
+            Panel.SetNode(Markup);
         }
-
-        //public void StartPanelAction(out bool isAccept)
-        //{
-        //    if (Mode.Type == BaseToolMode.ModeType.MakeLine)
-        //    {
-        //        SetMode(BaseToolMode.ModeType.PanelAction);
-        //        isAccept = true;
-        //    }
-        //    else
-        //        isAccept = false;
-        //}
-        //public void EndPanelAction()
-        //{
-        //    if (Mode.Type == BaseToolMode.ModeType.PanelAction)
-        //    {
-        //        Panel.EndPanelAction();
-        //        SetMode(BaseToolMode.ModeType.MakeLine);
-        //    }
-        //}
-
         #endregion
 
         #region UPDATE
@@ -285,7 +266,7 @@ namespace NodeMarkup
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
-                messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, EditMarkup.Id);
+                messageBox.MessageText = string.Format(Localize.Tool_ClearMarkingsMessage, Markup.Id);
                 messageBox.OnButton1Click = Delete;
             }
             else
@@ -293,7 +274,38 @@ namespace NodeMarkup
 
             bool Delete()
             {
-                EditMarkup.Clear();
+                Markup.Clear();
+                Panel.UpdatePanel();
+                return true;
+            }
+        }
+        public void CopyMarkup()
+        {
+            var data = Markup.ToXml();
+            var enters = Markup.Enters.Select(e => e.Id).ToArray();
+            Buffer = new MarkupBuffer(data, enters);
+        }
+        public void PasteMarkup()
+        {
+            if (UI.Settings.DeleteWarnings)
+            {
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = Localize.Tool_PasteMarkingsCaption;
+                messageBox.MessageText = Localize.Tool_PasteMarkingsMessage;
+                messageBox.OnButton1Click = Paste;
+            }
+            else
+                Paste();
+
+            bool Paste()
+            {
+                Markup.Clear();
+                var map = new PasteMap();
+                var enters = Markup.Enters.Select(e => e.Id).ToArray();
+                for (var i = 0; i < Math.Min(Buffer.Enters.Length, enters.Length); i += 1)
+                    map[new ObjectId() { Segment = Buffer.Enters[i] }] = new ObjectId() { Segment = enters[i] };
+
+                Markup.FromXml(Mod.Version, Buffer.Data, map);
                 Panel.UpdatePanel();
                 return true;
             }
@@ -342,6 +354,16 @@ namespace NodeMarkup
         #endregion
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
+    }
+    public struct MarkupBuffer
+    {
+        public XElement Data { get; private set; }
+        public ushort[] Enters { get; private set; }
+        public MarkupBuffer(XElement data, ushort[] enters)
+        {
+            Data = data;
+            Enters = enters;
+        }
     }
     public class ThreadingExtension : ThreadingExtensionBase
     {

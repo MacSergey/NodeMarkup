@@ -2250,5 +2250,25 @@ namespace NodeMarkup {
                 return ResourceManager.GetString("Tool_InfoSelectLineStartPoint", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste marking.
+        /// </summary>
+        public static string Tool_PasteMarkingsCaption {
+            get {
+                return ResourceManager.GetString("Tool_PasteMarkingsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to paste marking?
+        ///It will replace the existing marking.
+        ///This action cannot be undone..
+        /// </summary>
+        public static string Tool_PasteMarkingsMessage {
+            get {
+                return ResourceManager.GetString("Tool_PasteMarkingsMessage", resourceCulture);
+            }
+        }
     }
 }

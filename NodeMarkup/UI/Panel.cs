@@ -16,6 +16,7 @@ namespace NodeMarkup.UI
     {
         public static NodeMarkupPanel Instance { get; private set; }
 
+        protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
 
         private UIPanelDragHeader Header { get; set; }
@@ -63,8 +64,11 @@ namespace NodeMarkup.UI
             Header.size = new Vector2(500, 42);
             Header.relativePosition = new Vector2(0, 0);
             Header.target = parent;
-        }
 
+            Header.Buttons.OnCopy += OnCopy;
+            Header.Buttons.OnPaste += OnPaste;
+            Header.Buttons.OnClear += OnClear;
+        }
         private void CreateTabStrip()
         {
             TabStrip = AddUIComponent<CustomUITabstrip>();
@@ -164,11 +168,25 @@ namespace NodeMarkup.UI
         }
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
+
+        private void Buttons_OnPaste()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Buttons_OnCopy()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnClear() => Tool.DeleteAllMarking();
+        private void OnCopy() => Tool.CopyMarkup();
+        private void OnPaste() => Tool.PasteMarkup();
     }
     public class UIPanelDragHeader : UIDragHandle
     {
         private UILabel Caption { get; set; }
-        private MainHeaderContent Buttons { get; set; }
+        public MainHeaderContent Buttons { get; private set; }
 
         public string Text
         {
@@ -214,17 +232,19 @@ namespace NodeMarkup.UI
     }
     public class MainHeaderContent : HeaderContent
     {
+        public event Action OnClear;
+        public event Action OnCopy;
+        public event Action OnPaste;
+
         UIButton Copy { get; set; }
         UIButton Paste { get; set; }
         UIButton Clear { get; set; }
 
         public MainHeaderContent()
         {
-            Copy = AddButton("Copy", NodeMarkup.Localize.Panel_CopyMarking, null);
-            Paste = AddButton("Paste", NodeMarkup.Localize.Panel_PasteMarking, null);
-            Clear = AddButton("Clear", NodeMarkup.Localize.Panel_ClearMarking, OnClear);
+            Copy = AddButton("Copy", NodeMarkup.Localize.Panel_CopyMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke());
+            Paste = AddButton("Paste", NodeMarkup.Localize.Panel_PasteMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke());
+            Clear = AddButton("Clear", NodeMarkup.Localize.Panel_ClearMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnClear?.Invoke());
         }
-
-        public void OnClear(UIComponent component, UIMouseEventParameter eventParam) => NodeMarkupTool.Instance.DeleteAllMarking();
     }
 }
