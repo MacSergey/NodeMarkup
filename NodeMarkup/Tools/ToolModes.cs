@@ -86,7 +86,7 @@ namespace NodeMarkup
         public override void OnPrimaryMouseClicked(Event e)
         {
             Tool.SetMarkup(MarkupManager.Get(HoverNodeId));
-            Tool.SetMode(ModeType.MakeLine);
+            Tool.SetDefaultMode();
         }
         public override void OnSecondaryMouseClicked() => Tool.Disable();
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
@@ -501,7 +501,7 @@ namespace NodeMarkup
                 return true;
             else if (!NodeMarkupTool.ShiftIsPressed)
             {
-                Tool.SetMode(ModeType.MakeLine);
+                Tool.SetDefaultMode();
                 SetTarget();
                 return true;
             }
@@ -596,7 +596,7 @@ namespace NodeMarkup
         {
             if (DisableByAlt && !NodeMarkupTool.AltIsPressed && TempFiller.IsEmpty)
             {
-                Tool.SetMode(ModeType.MakeLine);
+                Tool.SetDefaultMode();
                 return true;
             }
             else
@@ -610,7 +610,7 @@ namespace NodeMarkup
                 {
                     Tool.EditMarkup.AddFiller(TempFiller);
                     Panel.EditFiller(TempFiller);
-                    Tool.SetMode(ModeType.MakeLine);
+                    Tool.SetDefaultMode();
                     return;
                 }
                 DisableByAlt = false;
@@ -620,7 +620,7 @@ namespace NodeMarkup
         public override void OnSecondaryMouseClicked()
         {
             if (TempFiller.IsEmpty)
-                Tool.SetMode(ModeType.MakeLine);
+                Tool.SetDefaultMode();
             else
             {
                 TempFiller.Remove();
@@ -679,7 +679,7 @@ namespace NodeMarkup
         public override void OnPrimaryMouseClicked(Event e)
         {
             Panel.EditPoint(DragPoint);
-            Tool.SetMode(ModeType.MakeLine);
+            Tool.SetDefaultMode();
         }
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
@@ -700,31 +700,5 @@ namespace NodeMarkup
             var bezier = new Line3(enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift, enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
         }
-    }
-    public class PanelActionToolMode : BaseToolMode
-    {
-        public override ModeType Type => ModeType.PanelAction;
-
-        public override void OnUpdate() => Panel.OnUpdate();
-        public override string GetToolInfo() => Panel.GetInfo();
-        public override void OnPrimaryMouseClicked(Event e)
-        {
-            Panel.OnPrimaryMouseClicked(e, out bool isDone);
-            if (isDone)
-            {
-                Panel.EndPanelAction();
-                Tool.SetMode(ModeType.MakeLine);
-            }
-        }
-        public override void OnSecondaryMouseClicked()
-        {
-            Panel.OnSecondaryMouseClicked(out bool isDone);
-            if (isDone)
-            {
-                Panel.EndPanelAction();
-                Tool.SetMode(ModeType.MakeLine);
-            }
-        }
-        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => Panel.Render(cameraInfo);
     }
 }

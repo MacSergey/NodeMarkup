@@ -174,32 +174,7 @@ namespace NodeMarkup.UI
             var editor = SelectEditor<FillerEditor>();
             editor?.UpdateEditor(filler);
         }
-        public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
-        public string GetInfo() => CurrentEditor?.GetInfo();
-        public void OnUpdate() => CurrentEditor?.OnUpdate();
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
-        public void OnPrimaryMouseClicked(Event e, out bool isDone)
-        {
-            if (CurrentEditor is Editor editor)
-                editor.OnPrimaryMouseClicked(e, out isDone);
-            else
-                isDone = true;
-        }
-        public void OnSecondaryMouseClicked(out bool isDone)
-        {
-            if (CurrentEditor is Editor editor)
-                editor.OnSecondaryMouseClicked(out isDone);
-            else
-                isDone = true;
-        }
-        public void StartEditorAction(Editor editor, out bool isAccept)
-        {
-            isAccept = false;
-            if (CurrentEditor == editor)
-                NodeMarkupTool.Instance?.StartPanelAction(out isAccept);
-        }
-        public void EndEditorAction() => NodeMarkupTool.Instance?.EndPanelAction();
-
-        public void EndPanelAction() => CurrentEditor?.EndEditorAction();
+        public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
     }
 }

@@ -79,7 +79,6 @@ namespace NodeMarkup
                 { BaseToolMode.ModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
                 { BaseToolMode.ModeType.MakeFiller, new MakeFillerToolMode() },
                 { BaseToolMode.ModeType.DragPoint, new DragPointToolMode() },
-                { BaseToolMode.ModeType.PanelAction, new PanelActionToolMode() },
             };
 
             return Instance;
@@ -129,7 +128,7 @@ namespace NodeMarkup
             SetMode(BaseToolMode.ModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
-            Panel?.EndPanelAction();
+            //Panel?.EndPanelAction();
         }
 
         public void ToggleTool()
@@ -139,10 +138,12 @@ namespace NodeMarkup
         }
         public void Disable() => enabled = false;
 
-        public void SetMode(BaseToolMode.ModeType mode)
+        public void SetDefaultMode() => SetMode(BaseToolMode.ModeType.MakeLine);
+        public void SetMode(BaseToolMode.ModeType mode) => SetMode(ToolModes[mode]);
+        public void SetMode(BaseToolMode mode)
         {
             Mode?.End();
-            Mode = ToolModes[mode];
+            Mode = mode;
             Mode.Start();
         }
         public void SetMarkup(Markup markup)
@@ -151,24 +152,24 @@ namespace NodeMarkup
             Panel.SetNode(EditMarkup);
         }
 
-        public void StartPanelAction(out bool isAccept)
-        {
-            if (Mode.Type == BaseToolMode.ModeType.MakeLine)
-            {
-                SetMode(BaseToolMode.ModeType.PanelAction);
-                isAccept = true;
-            }
-            else
-                isAccept = false;
-        }
-        public void EndPanelAction()
-        {
-            if (Mode.Type == BaseToolMode.ModeType.PanelAction)
-            {
-                Panel.EndPanelAction();
-                SetMode(BaseToolMode.ModeType.MakeLine);
-            }
-        }
+        //public void StartPanelAction(out bool isAccept)
+        //{
+        //    if (Mode.Type == BaseToolMode.ModeType.MakeLine)
+        //    {
+        //        SetMode(BaseToolMode.ModeType.PanelAction);
+        //        isAccept = true;
+        //    }
+        //    else
+        //        isAccept = false;
+        //}
+        //public void EndPanelAction()
+        //{
+        //    if (Mode.Type == BaseToolMode.ModeType.PanelAction)
+        //    {
+        //        Panel.EndPanelAction();
+        //        SetMode(BaseToolMode.ModeType.MakeLine);
+        //    }
+        //}
 
         #endregion
 
