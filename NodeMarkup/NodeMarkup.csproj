@@ -130,8 +130,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Localize.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tool.cs" />
-    <Compile Include="Tools\BaseTool.cs" />
+    <Compile Include="Tools\Tool.cs" />
+    <Compile Include="Tools\ToolModes.cs" />
     <Compile Include="UI\Editors\BaseEditor.cs" />
     <Compile Include="UI\Editors\BaseGroupEditor.cs" />
     <Compile Include="UI\Editors\CrosswalkEditor.cs" />
@@ -269,7 +269,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

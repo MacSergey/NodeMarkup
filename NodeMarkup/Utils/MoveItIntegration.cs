@@ -52,7 +52,7 @@ namespace NodeMarkup.Utils
                 map[new ObjectId() { Segment = source.Key.NetSegment }] = new ObjectId() { Segment = source.Value.NetSegment };
         }
 
-        public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
+        public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation)
             => Paste(targetInstanceID, record, sourceMap, MirrorMapFiller);
         private void MirrorMapFiller(Markup markup, PasteMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
@@ -102,8 +102,6 @@ namespace NodeMarkup.Utils
         {
             if (record == null || record.Length == 0) return null;
 
-            // XElement.Parse throws MissingMethodException
-            // Method not found: System.Xml.XmlReaderSettings.set_MaxCharactersFromEntities
             XElement xml;
             using (StringReader input = new StringReader((string)EncodeUtil.BinaryDecode64(record)))
             {
