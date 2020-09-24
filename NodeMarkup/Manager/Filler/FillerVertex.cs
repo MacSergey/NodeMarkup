@@ -105,7 +105,7 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IFillerVertex> GetPointLinesPoints(MarkupFiller filler)
         {
-            foreach (var line in Point.Lines)
+            foreach (var line in Point.Lines.Where(l => l.Type != MarkupLine.LineType.Stop))
             {
                 foreach (var vertex in filler.GetLinePoints(this, line))
                 {
