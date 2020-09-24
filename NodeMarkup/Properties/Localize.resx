@@ -883,4 +883,13 @@ Failed to load markings for {0} intersections.</value>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
     <value>Solid and dashed</value>
   </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Clear marking</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Copy marking</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Paste marking</value>
+  </data>
 </root>

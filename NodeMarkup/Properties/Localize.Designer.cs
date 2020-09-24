@@ -1497,6 +1497,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Clear marking.
+        /// </summary>
+        public static string Panel_ClearMarking {
+            get {
+                return ResourceManager.GetString("Panel_ClearMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy marking.
+        /// </summary>
+        public static string Panel_CopyMarking {
+            get {
+                return ResourceManager.GetString("Panel_CopyMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste marking.
+        /// </summary>
+        public static string Panel_PasteMarking {
+            get {
+                return ResourceManager.GetString("Panel_PasteMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на point.
         /// </summary>
         public static string PointEditor_DeleteCaptionDescription {

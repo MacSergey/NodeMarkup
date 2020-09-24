@@ -166,7 +166,7 @@ namespace NodeMarkup
             }
             else if (NodeMarkupTool.DeleteAllShortcut.IsPressed(e))
             {
-                Tool.DeleteAllLines();
+                Tool.DeleteAllMarking();
                 return true;
             }
             else if (Panel?.OnShortcut(e) == true)

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
 
@@ -17,8 +18,7 @@ namespace NodeMarkup.UI
 
         public Markup Markup { get; private set; }
 
-        private UIDragHandle Handle { get; set; }
-        private UILabel Caption { get; set; }
+        private UIPanelDragHeader Header { get; set; }
         private CustomUITabstrip TabStrip { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
@@ -37,7 +37,7 @@ namespace NodeMarkup.UI
         }
         public static void RemovePanel()
         {
-            if(Instance != null)
+            if (Instance != null)
             {
                 Instance.Hide();
                 Destroy(Instance);
@@ -55,32 +55,20 @@ namespace NodeMarkup.UI
             CreateTabStrip();
             CreateEditors();
 
-            size = new Vector2(500, Handle.height + TabStrip.height + EditorSize.y);
+            size = new Vector2(500, Header.height + TabStrip.height + EditorSize.y);
         }
         private void CreateHandle()
         {
-            Handle = AddUIComponent<UIDragHandle>();
-            Handle.size = new Vector2(500, 42);
-            Handle.relativePosition = new Vector2(0, 0);
-            Handle.target = parent;
-            Handle.eventSizeChanged += ((component, size) =>
-            {
-                Caption.size = size;
-                Caption.CenterToParent();
-            });
-
-            Caption = Handle.AddUIComponent<UILabel>();
-            Caption.text = nameof(NodeMarkupPanel);
-            Caption.textAlignment = UIHorizontalAlignment.Center;
-            Caption.anchor = UIAnchorStyle.Top;
-
-            Caption.eventTextChanged += ((component, text) => Caption.CenterToParent());
+            Header = AddUIComponent<UIPanelDragHeader>();
+            Header.size = new Vector2(500, 42);
+            Header.relativePosition = new Vector2(0, 0);
+            Header.target = parent;
         }
 
         private void CreateTabStrip()
         {
             TabStrip = AddUIComponent<CustomUITabstrip>();
-            TabStrip.relativePosition = new Vector3(0, Handle.height);
+            TabStrip.relativePosition = new Vector3(0, Header.height);
             TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
             TabStrip.selectedIndex = -1;
         }
@@ -114,7 +102,7 @@ namespace NodeMarkup.UI
             if (Markup != null)
             {
                 Show();
-                Caption.text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
+                Header.Text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
                 TabStrip.selectedIndex = -1;
                 SelectEditor<LinesEditor>();
             }
@@ -176,5 +164,67 @@ namespace NodeMarkup.UI
         }
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
+    }
+    public class UIPanelDragHeader : UIDragHandle
+    {
+        private UILabel Caption { get; set; }
+        private MainHeaderContent Buttons { get; set; }
+
+        public string Text
+        {
+            get => Caption.text;
+            set => Caption.text = value;
+        }
+
+        public UIPanelDragHeader()
+        {
+            CreateCaption();
+            CreateButtonsPanel();
+        }
+
+        private void CreateCaption()
+        {
+            Caption = AddUIComponent<UILabel>();
+            Caption.autoSize = false;
+            Caption.text = nameof(NodeMarkupPanel);
+            Caption.textAlignment = UIHorizontalAlignment.Center;
+            Caption.verticalAlignment = UIVerticalAlignment.Middle;
+        }
+        private void CreateButtonsPanel()
+        {
+            Buttons = AddUIComponent<MainHeaderContent>();
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            Buttons.autoLayout = true;
+            Buttons.autoLayout = false;
+            Buttons.FitChildrenHorizontally();
+            Buttons.height = height;
+
+            foreach (var item in Buttons.components)
+                item.relativePosition = new Vector2(item.relativePosition.x, (Buttons.height - item.height) / 2);
+
+            Caption.width = width - Buttons.width;
+            Caption.relativePosition = new Vector2(0, (height - Caption.height) / 2);
+
+            Buttons.relativePosition = new Vector2(Caption.width - 5, (height - Buttons.height) / 2);
+        }
+    }
+    public class MainHeaderContent : HeaderContent
+    {
+        UIButton Copy { get; set; }
+        UIButton Paste { get; set; }
+        UIButton Clear { get; set; }
+
+        public MainHeaderContent()
+        {
+            Copy = AddButton("Copy", NodeMarkup.Localize.Panel_CopyMarking, null);
+            Paste = AddButton("Paste", NodeMarkup.Localize.Panel_PasteMarking, null);
+            Clear = AddButton("Clear", NodeMarkup.Localize.Panel_ClearMarking, OnClear);
+        }
+
+        public void OnClear(UIComponent component, UIMouseEventParameter eventParam) => NodeMarkupTool.Instance.DeleteAllMarking();
     }
 }

@@ -11,33 +11,9 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class HeaderPanel : EditorItem
     {
-        public static UITextureAtlas ButtonAtlas { get; } = GetStylesIcons();
-        private static UITextureAtlas GetStylesIcons()
-        {
-            var spriteNames = new string[]
-            {
-                "Hovered",
-                "_",
-                "AddTemplate",
-                "ApplyTemplate",
-                "Copy",
-                "Paste",
-                "SetDefault",
-                "UnsetDefault",
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-            {
-                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames, new RectOffset(2,2,2,2));
-            }
-
-            return atlas;
-        }
-
         public event Action OnDelete;
 
-        protected UIPanel Content { get; set; }
+        protected HeaderContent Content { get; set; }
         protected UIButton DeleteButton { get; set; }
 
         public HeaderPanel()
@@ -66,10 +42,8 @@ namespace NodeMarkup.UI.Editors
 
         private void AddContent()
         {
-            Content = AddUIComponent<UIPanel>();
+            Content = AddUIComponent<HeaderContent>();
             Content.relativePosition = new Vector2(0, 0);
-            Content.autoLayoutDirection = LayoutDirection.Horizontal;
-            Content.autoLayoutPadding = new RectOffset(0, 5, 0, 0);
         }
 
         private void AddDeleteButton()
@@ -84,15 +58,51 @@ namespace NodeMarkup.UI.Editors
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
 
-        protected UIButton AddButton(string sprite, string text = null, MouseEventHandler onClick = null)
+    }
+    public class HeaderContent : UIPanel
+    {
+        public static UITextureAtlas ButtonAtlas { get; } = GetStylesIcons();
+        private static UITextureAtlas GetStylesIcons()
         {
-            var button = Content.AddUIComponent<UIButton>();
+            var spriteNames = new string[]
+            {
+                "Hovered",
+                "_",
+                "AddTemplate",
+                "ApplyTemplate",
+                "Copy",
+                "Paste",
+                "SetDefault",
+                "UnsetDefault",
+                "Clear",
+            };
+
+            var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));
+            if (atlas == UIView.GetAView().defaultAtlas)
+            {
+                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames, new RectOffset(2, 2, 2, 2));
+            }
+
+            return atlas;
+        }
+        protected virtual Color32 HoveredColor => Color.black;
+        protected virtual Color32 PressedColor => new Color32(32, 32, 32, 255);
+
+        public HeaderContent()
+        {
+            autoLayoutDirection = LayoutDirection.Horizontal;
+            autoLayoutPadding = new RectOffset(0, 5, 0, 0);
+        }
+
+        public UIButton AddButton(string sprite, string text = null, MouseEventHandler onClick = null)
+        {
+            var button = AddUIComponent<UIButton>();
             button.hoveredBgSprite = "Hovered";
             button.pressedBgSprite = "Hovered";
             button.size = new Vector2(25, 25);
             button.atlas = ButtonAtlas;
-            button.hoveredColor = Color.black;
-            button.pressedColor = new Color32(32, 32, 32, 255);
+            button.hoveredColor = HoveredColor;
+            button.pressedColor = PressedColor;
             button.tooltip = text;
             if (onClick != null)
                 button.eventClick += onClick;
@@ -106,7 +116,7 @@ namespace NodeMarkup.UI.Editors
 
             return button;
         }
-        protected void SetSprite(UIButton button, string sprite) => (button.components.First() as UIPanel).backgroundSprite = sprite;
+        public void SetSprite(UIButton button, string sprite) => (button.components.First() as UIPanel).backgroundSprite = sprite;
     }
     public class StyleHeaderPanel : HeaderPanel
     {
@@ -125,10 +135,10 @@ namespace NodeMarkup.UI.Editors
 
         public StyleHeaderPanel()
         {
-            SaveTemplate = AddButton("AddTemplate", NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick);
-            ApplyTemplate = AddButton("ApplyTemplate", NodeMarkup.Localize.HeaderPanel_ApplyTemplate, ApplyTemplateClick);
-            Copy = AddButton("Copy", NodeMarkup.Localize.LineEditor_StyleCopy, CopyClick);
-            Paste = AddButton("Paste", NodeMarkup.Localize.LineEditor_StylePaste, PasteClick);
+            SaveTemplate = Content.AddButton("AddTemplate", NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick);
+            ApplyTemplate = Content.AddButton("ApplyTemplate", NodeMarkup.Localize.HeaderPanel_ApplyTemplate, ApplyTemplateClick);
+            Copy = Content.AddButton("Copy", NodeMarkup.Localize.LineEditor_StyleCopy, CopyClick);
+            Paste = Content.AddButton("Paste", NodeMarkup.Localize.LineEditor_StylePaste, PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, bool isDeletable = true)
@@ -336,13 +346,13 @@ namespace NodeMarkup.UI.Editors
 
         public TemplateHeaderPanel()
         {
-            SetAsDefaultButton = AddButton(string.Empty, onClick: SetAsDefaultClick);
+            SetAsDefaultButton = Content.AddButton(string.Empty, onClick: SetAsDefaultClick);
         }
         public void Init(bool isDefault)
         {
             base.Init(isDeletable: false);
 
-            SetSprite(SetAsDefaultButton, isDefault ? "UnsetDefault" : "SetDefault");
+            Content.SetSprite(SetAsDefaultButton, isDefault ? "UnsetDefault" : "SetDefault");
             SetAsDefaultButton.tooltip = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
 

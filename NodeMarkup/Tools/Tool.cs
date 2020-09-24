@@ -277,9 +277,9 @@ namespace NodeMarkup
             }
         }
 
-        public void DeleteAllLines()
+        public void DeleteAllMarking()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllLines)}");
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllMarking)}");
 
             if (UI.Settings.DeleteWarnings)
             {
