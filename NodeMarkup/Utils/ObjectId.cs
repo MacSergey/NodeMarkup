@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodeMarkup.Manager;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,19 @@ namespace NodeMarkup.Utils
         public IEnumerator<KeyValuePair<ObjectId, ObjectId>> GetEnumerator() => Map.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public void Add(ObjectId key, ObjectId value) => Map.Add(key, value);
+        public void AddMirrorEnter(Enter enter)
+        {
+            var count = enter.PointCount + 1;
+            for (var i = 1; i < count; i += 1)
+            {
+                foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
+                {
+                    var sourcePoint = new ObjectId() { Point = MarkupPoint.GetId(enter.Id, (byte)i, pointType) };
+                    var targetPoint = new ObjectId() { Point = MarkupPoint.GetId(enter.Id, (byte)(count - i), pointType) };
+                    this[sourcePoint] = targetPoint;
+                }
+            }
+        }
     }
     public enum ObjectType : long
     {

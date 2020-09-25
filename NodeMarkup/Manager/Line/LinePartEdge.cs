@@ -99,7 +99,7 @@ namespace NodeMarkup.Manager
         {            
             if (line is MarkupCrosswalkLine crosswalkLine)
             {
-                var border = (BorderPosition)(((config.GetAttrValue("B", (int)BorderPosition.Right) == (int)BorderPosition.Right) ^ map.IsMirror) ? 1 : 0);
+                var border = (config.GetAttrValue("B", (int)BorderPosition.Right) == (int)BorderPosition.Left) ^ map.IsMirror ? BorderPosition.Left : BorderPosition.Right;
                 borderPoint = new CrosswalkBorderEdge(crosswalkLine, border);
                 return true;
             }

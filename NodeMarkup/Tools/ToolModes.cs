@@ -709,6 +709,7 @@ namespace NodeMarkup
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
         private MarkupBuffer Buffer => Tool.Buffer;
         private int _shift;
+        private bool _isMirror;
         private int Shift
         {
             get => _shift;
@@ -718,9 +719,20 @@ namespace NodeMarkup
                 Paste();
             }
         }
+        private bool IsMirror
+        {
+            get => _isMirror;
+            set
+            {
+                _isMirror = value;
+                Paste();
+            }
+        }
+
         private float Size => 50;
         private float Padding => 5;
         private Rect TurnLeft { get; set; } = new Rect();
+        private Rect Flip { get; set; } = new Rect();
         private Rect TurnRight { get; set; } = new Rect();
 
         public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
@@ -729,6 +741,7 @@ namespace NodeMarkup
             var spriteNames = new string[]
             {
                 "TurnLeft",
+                "Flip",
                 "TurnRight",
             };
 
@@ -742,7 +755,9 @@ namespace NodeMarkup
         }
         protected override void Reset()
         {
-            Shift = int.MaxValue >> 1;
+            _shift = 0;
+            _isMirror = false;
+            Paste();
         }
         public override void OnPrimaryMouseClicked(Event e)
         {
@@ -753,6 +768,8 @@ namespace NodeMarkup
                 Shift += 1;
             else if (TurnRight.Contains(mouse))
                 Shift -= 1;
+            else if (Flip.Contains(mouse))
+                IsMirror = !IsMirror;
         }
 
         public override void OnGUI(Event e)
@@ -760,20 +777,35 @@ namespace NodeMarkup
             var uiView = UIView.GetAView();
             var screenPos = uiView.WorldPointToGUI(Camera.main, Utilities.GetNode(Tool.Markup.Id).m_position) * uiView.inputScale;
 
-            TurnLeft = new Rect(screenPos.x - Size - Padding / 2, screenPos.y - Size / 2, Size, Size);
+            TurnLeft = GetPosition(screenPos, 1, 3);
+            Flip = GetPosition(screenPos, 2, 3);
+            TurnRight = GetPosition(screenPos, 3, 3);
             GUI.DrawTextureWithTexCoords(TurnLeft, ButtonAtlas.texture, ButtonAtlas.sprites[0].region);
-            TurnRight = new Rect(screenPos.x + Padding / 2, screenPos.y - Size / 2, Size, Size);
-            GUI.DrawTextureWithTexCoords(TurnRight, ButtonAtlas.texture, ButtonAtlas.sprites[1].region);
+            GUI.DrawTextureWithTexCoords(Flip, ButtonAtlas.texture, ButtonAtlas.sprites[1].region);
+            GUI.DrawTextureWithTexCoords(TurnRight, ButtonAtlas.texture, ButtonAtlas.sprites[2].region);
+
+        }
+        private Rect GetPosition(Vector2 centre, int i, int of)
+        {
+            var sumWidth = of * Size + (of - 1) * Padding;
+            return new Rect(centre.x - sumWidth / 2 + (i - 1) * (Size + Padding), centre.y - Size / 2, Size, Size);
         }
 
         private void Paste()
         {
             Markup.Clear();
-            var map = new PasteMap();
-            var enters = Markup.Enters.Select(e => e.Id).ToArray();
+            var map = new PasteMap(IsMirror);
+            var enters = Markup.Enters.ToArray();
             var max = Math.Min(Tool.Buffer.Enters.Length, enters.Length);
             for (var i = 0; i < max; i += 1)
-                map[new ObjectId() { Segment = Buffer.Enters[i] }] = new ObjectId() { Segment = enters[(i + Shift) % max] };
+            {
+                var targetI = ((IsMirror ? max - i - 1 : i) + max + Shift % max) % max;
+                var enter = enters[targetI];
+                map[new ObjectId() { Segment = Buffer.Enters[i] }] = new ObjectId() { Segment = enter.Id };
+
+                if (IsMirror)
+                    map.AddMirrorEnter(enter);
+            }
 
             Markup.FromXml(Mod.Version, Buffer.Data, map);
             Panel.UpdatePanel();

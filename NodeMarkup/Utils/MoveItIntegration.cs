@@ -64,17 +64,7 @@ namespace NodeMarkup.Utils
                 var sourceSegment = source.Key.NetSegment;
                 var targetSetment = source.Value.NetSegment;
                 map[new ObjectId() { Segment = sourceSegment }] = new ObjectId() { Segment = targetSetment };
-                var count = enter.PointCount + 1;
-                for (var i = 1; i < count; i += 1)
-                {
-                    foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
-                    {
-                        var sourcePoint = new ObjectId() { Point = MarkupPoint.GetId(targetSetment, (byte)i, pointType) };
-                        var targetPoint = new ObjectId() { Point = MarkupPoint.GetId(targetSetment, (byte)(count - i), pointType) };
-                        map[sourcePoint] = targetPoint;
-
-                    }
-                }
+                map.AddMirrorEnter(enter);
             }
         }
 
