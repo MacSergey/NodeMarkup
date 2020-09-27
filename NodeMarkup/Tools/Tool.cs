@@ -14,6 +14,7 @@ using NodeMarkup.Manager;
 using ICities;
 using ColossalFramework.PlatformServices;
 using System.Xml.Linq;
+using NodeMarkup.UI.Editors;
 
 namespace NodeMarkup
 {
@@ -285,6 +286,43 @@ namespace NodeMarkup
                 return true;
             }
         }
+        public void DeleteItem(IDeletable item, Action onDelete)
+        {
+            if (UI.Settings.DeleteWarnings)
+            {
+                var dependences = item.GetDependences();
+                if (dependences.Exist)
+                {
+                    ShowModal(GetDeleteDependences(dependences));
+                    return;
+                }
+                else if (UI.Settings.DeleteWarningsType == 0)
+                {
+                    ShowModal(string.Empty);
+                    return;
+                }
+            }
+
+            onDelete();
+
+            void ShowModal(string additional)
+            {
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
+                messageBox.MessageText = string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item) + additional;
+                messageBox.OnButton1Click = () =>
+                    {
+                        onDelete();
+                        return true;
+                    };
+            }
+        }
+        private string GetDeleteDependences(Dependences dependences)
+        {
+            var strings = dependences.Total.Where(i => i.Value > 0).Select(i => string.Format(i.Key.Description(), i.Value)).ToArray();
+            return $"\n{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
+        }
+
         public void CopyMarkup()
         {
             var data = Markup.ToXml();

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections;
@@ -10,9 +11,12 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IUpdate, IToXml
+    public class MarkupFiller : IUpdate, IDeletable, IToXml
     {
         public static string XmlName { get; } = "F";
+
+        public string DeleteCaptionDescription => Localize.FillerEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.FillerEditor_DeleteMessageDescription;
 
         public Markup Markup { get; }
         public FillerContour Contour { get; }
@@ -54,6 +58,8 @@ namespace NodeMarkup.Manager
             }
         }
         public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
+
+        public Dependences GetDependences() => new Dependences();
 
         public XElement ToXml()
         {

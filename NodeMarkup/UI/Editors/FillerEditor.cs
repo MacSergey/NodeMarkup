@@ -143,8 +143,6 @@ namespace NodeMarkup.UI.Editors
     }
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.FillerEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.FillerEditor_DeleteMessageDescription;
         public override void Init() => Init(true, true);
 
         protected override void OnObjectSet() => SetIcon();

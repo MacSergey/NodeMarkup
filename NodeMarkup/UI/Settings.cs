@@ -30,6 +30,7 @@ namespace NodeMarkup.UI
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
+        public static SavedInt DeleteWarningsType { get; } = new SavedInt(nameof(DeleteWarningsType), SettingsFile, 0, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
@@ -165,7 +166,7 @@ namespace NodeMarkup.UI
 
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
-            AddDeleteRequest(group);
+            AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAnyActions, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddQuickRuleSetup(group);
             AddGroupLines(group);
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle });
@@ -198,12 +199,6 @@ namespace NodeMarkup.UI
             var showCheckBox = group.AddCheckbox(Localize.Settings_ShowTooltips, ShowToolTip, OnShowToolTipsChanged) as UICheckBox;
 
             void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
-        }
-        private static void AddDeleteRequest(UIHelper group)
-        {
-            var requestCheckBox = group.AddCheckbox(Localize.Settings_ShowDeleteWarnings, DeleteWarnings, OnDeleteRequestChanged) as UICheckBox;
-
-            void OnDeleteRequestChanged(bool request) => DeleteWarnings.value = request;
         }
         private static void AddQuickRuleSetup(UIHelper group)
         {

@@ -337,13 +337,15 @@ namespace NodeMarkup.Manager
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
     }
-    public class StyleTemplate : IToXml
+    public class StyleTemplate : IDeletable, IToXml
     {
         public static string XmlName { get; } = "T";
 
+        public string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+
         string _name;
         Style _style;
-
         public string Name
         {
             get => _name;
@@ -379,6 +381,7 @@ namespace NodeMarkup.Manager
             Style.OnStyleChanged = TemplateChanged;
         }
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
+        public Dependences GetDependences() => new Dependences();
 
         public override string ToString() => Name;
 

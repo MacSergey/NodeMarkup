@@ -11,7 +11,7 @@ namespace NodeMarkup.UI.Editors
     public class EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon> : UIPanel
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
-        where EditableObject : class
+        where EditableObject : class, IDeletable
     {
         bool _isExpand = true;
         public bool IsExpand

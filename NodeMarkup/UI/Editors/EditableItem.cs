@@ -88,14 +88,12 @@ namespace NodeMarkup.UI.Editors
     }
     public abstract class EditableItem<EditableObject, IconType> : EditableItemBase
         where IconType : UIComponent
-        where EditableObject : class
+        where EditableObject : class, IDeletable
     {
         public event Action<EditableItem<EditableObject, IconType>> OnDelete;
 
         EditableObject _object;
         private bool Inited { get; set; } = false;
-        public abstract string DeleteCaptionDescription { get; }
-        public abstract string DeleteMessageDescription { get; }
         public EditableObject Object
         {
             get => _object;

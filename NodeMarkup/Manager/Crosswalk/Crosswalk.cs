@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Utils;
+﻿using NodeMarkup.UI.Editors;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,15 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IUpdate, IToXml
+    public class MarkupCrosswalk : IUpdate, IDeletable, IToXml
     {
         #region PROPERTIES
 
         public static string XmlName { get; } = "C";
         public string XmlSection => XmlName;
+
+        public string DeleteCaptionDescription => Localize.CrossWalkEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.CrossWalkEditor_DeleteMessageDescription;
 
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
@@ -176,6 +180,8 @@ namespace NodeMarkup.Manager
                 LeftBorder = null;
         }
         public bool ContainsPoint(MarkupPoint point) => EnterLine.ContainsPoint(point);
+
+        public Dependences GetDependences() => Markup.GetCrosswalkDependences(this);
 
         #region XML
 

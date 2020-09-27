@@ -523,25 +523,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete {0}.
-        /// </summary>
-        public static string Editor_DeleteCaption {
-            get {
-                return ResourceManager.GetString("Editor_DeleteCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?
-        ///This action cannot be undone.
-        /// </summary>
-        public static string Editor_DeleteMessage {
-            get {
-                return ResourceManager.GetString("Editor_DeleteMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Scroll the wheel to change
         ///Shift X10, Ctrl X0.1.
         /// </summary>
@@ -1923,6 +1904,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на In any case.
+        /// </summary>
+        public static string Settings_ShowDeleteWarningsAnyActions {
+            get {
+                return ResourceManager.GetString("Settings_ShowDeleteWarningsAnyActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only if will affect others items.
+        /// </summary>
+        public static string Settings_ShowDeleteWarningsOnlyDependences {
+            get {
+                return ResourceManager.GetString("Settings_ShowDeleteWarningsOnlyDependences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Notification only about major updates.
         /// </summary>
         public static string Settings_ShowOnlyMajor {
@@ -2119,6 +2118,79 @@ namespace NodeMarkup {
         public static string Tool_ClearMarkingsMessage {
             get {
                 return ResourceManager.GetString("Tool_ClearMarkingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete {0}.
+        /// </summary>
+        public static string Tool_DeleteCaption {
+            get {
+                return ResourceManager.GetString("Tool_DeleteCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dependent items will also be removed:.
+        /// </summary>
+        public static string Tool_DeleteDependence {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalk Borders - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceCrosswalkBorders {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceCrosswalkBorders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalks - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceCrosswalks {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceCrosswalks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceFillers {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceFillers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Lines - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceLines {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Rules - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceRules {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?
+        ///This action cannot be undone..
+        /// </summary>
+        public static string Tool_DeleteMessage {
+            get {
+                return ResourceManager.GetString("Tool_DeleteMessage", resourceCulture);
             }
         }
         

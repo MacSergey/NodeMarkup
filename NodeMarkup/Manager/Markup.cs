@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using NodeMarkup.UI;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections;
@@ -252,23 +253,30 @@ namespace NodeMarkup.Manager
         #region LINES
 
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
-        {
-            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
-            {
-                RemoveConnect(line);
-                return null;
-            }
-            else
-            {
-                if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
-                    return null;
+        //public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
+        //{
+        //    if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
+        //    {
+        //        RemoveConnect(line);
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
+        //            return null;
 
-                line = MarkupLine.FromStyle(this, pointPair, style);
-                LinesDictionary[pointPair.Hash] = line;
-                NeedRecalculateBatches = true;
-                return line;
-            }
+        //        line = MarkupLine.FromStyle(this, pointPair, style);
+        //        LinesDictionary[pointPair.Hash] = line;
+        //        NeedRecalculateBatches = true;
+        //        return line;
+        //    }
+        //}
+        public MarkupLine AddConnection(MarkupPointPair pointPair, Style.StyleType style)
+        {
+            var line = MarkupLine.FromStyle(this, pointPair, style);
+            LinesDictionary[pointPair.Hash] = line;
+            NeedRecalculateBatches = true;
+            return line;
         }
         public void RemoveConnect(MarkupLine line)
         {
@@ -297,16 +305,33 @@ namespace NodeMarkup.Manager
 
             LinesDictionary.Remove(line.PointPair.Hash);
         }
+        public Dependences GetLineDependences(MarkupLine line)
+        {
+            var dependences = new Dependences
+            {
+                Rules = 0,
+                Fillers = GetLineFillers(line).Count(),
+                Crosswalks = CrosswalksDictionary.ContainsKey(line) ? 1 : 0,
+                CrosswalkBorders = GetLinesIsBorder(line).Count(),
+            };
+            foreach (var intersect in GetExistIntersects(line).ToArray())
+            {
+                if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
+                    dependences.Rules += regularLine.GetLineDependences(line);
+            }
+
+            return dependences;
+        }
 
         #endregion
 
         #region GET & CONTAINS
 
-        public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
-        public bool TryGetLine<LineType>(ulong lineId, out LineType line)
+        public bool TryGetLine(MarkupPointPair pointPair, out MarkupLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
+        public bool TryGetLine<LineType>(MarkupPointPair pointPair, out LineType line)
             where LineType : MarkupLine
         {
-            if (LinesDictionary.TryGetValue(lineId, out MarkupLine rawLine) && rawLine is LineType)
+            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine rawLine) && rawLine is LineType)
             {
                 line = rawLine as LineType;
                 return true;
@@ -321,7 +346,7 @@ namespace NodeMarkup.Manager
             where LineType : MarkupLine
         {
             if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair))
-                return TryGetLine(pair.Hash, out line);
+                return TryGetLine(pair, out line);
             else
             {
                 line = null;
@@ -409,6 +434,13 @@ namespace NodeMarkup.Manager
             NeedRecalculateBatches = true;
         }
         public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
+        public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
+        {
+            var dependences = GetLineDependences(crosswalk.Line);
+            dependences.Crosswalks = 0;
+            dependences.Lines = 1;
+            return dependences;
+        }
 
         #endregion
 

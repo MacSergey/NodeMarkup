@@ -11,6 +11,12 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
+    public interface IDeletable
+    {
+        string DeleteCaptionDescription { get; }
+        string DeleteMessageDescription { get; }
+        Dependences GetDependences();
+    }
     public abstract class Editor : UIPanel
     {
         public static Dictionary<Style.StyleType, string> SpriteNames { get; set; }
@@ -175,7 +181,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
-        where EditableObject : class
+        where EditableObject : class, IDeletable
     {
         EditableItemType _selectItem;
 
@@ -245,17 +251,9 @@ namespace NodeMarkup.UI.Editors
             if (!(deleteItem is EditableItemType item))
                 return;
 
-            if (Settings.DeleteWarnings)
-            {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = string.Format(NodeMarkup.Localize.Editor_DeleteCaption, item.DeleteCaptionDescription);
-                messageBox.MessageText = string.Format(NodeMarkup.Localize.Editor_DeleteMessage, item.DeleteMessageDescription, item.Object);
-                messageBox.OnButton1Click = Delete;
-            }
-            else
-                Delete();
+            Tool.DeleteItem(item.Object, Delete);
 
-            bool Delete()
+            void Delete()
             {
                 OnObjectDelete(item.Object);
                 var isSelect = item == SelectItem;
@@ -265,7 +263,6 @@ namespace NodeMarkup.UI.Editors
                     ClearSettings();
                     Select(0);
                 }
-                return true;
             }
         }
 

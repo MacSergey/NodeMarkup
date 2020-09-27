@@ -58,8 +58,6 @@ namespace NodeMarkup.UI.Editors
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.PointEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.PointEditor_DeleteMessageDescription;
         public override void Init() => Init(true, false);
         protected override void OnObjectSet() => Icon.InnerColor = Object.Color;
     }

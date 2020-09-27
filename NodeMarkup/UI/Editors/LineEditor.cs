@@ -126,7 +126,7 @@ namespace NodeMarkup.UI.Editors
             if (!(EditObject is MarkupRegularLine regularLine))
                 return;
 
-            if (Settings.DeleteWarnings)
+            if (Settings.DeleteWarnings && Settings.DeleteWarningsType == 0)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
@@ -293,9 +293,6 @@ namespace NodeMarkup.UI.Editors
     public class LineItem : EditableItem<MarkupLine, LineIcon>
     {
         public override void Init() => Init(true, true);
-
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.LineEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.LineEditor_DeleteMessageDescription;
 
         protected override void OnObjectSet() => SetIcon();
         public override void Refresh()

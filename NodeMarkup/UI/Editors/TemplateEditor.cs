@@ -85,8 +85,6 @@ namespace NodeMarkup.UI.Editors
 
     public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>
     {
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.TemplateEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.TemplateEditor_DeleteMessageDescription;
         private bool IsDefault { get; set; }
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;

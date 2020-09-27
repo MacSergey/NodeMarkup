@@ -9,7 +9,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class GroupedEditor<EditableItemType, EditableObject, ItemIcon, EditableGroupType, GroupType> : Editor<EditableItemType, EditableObject, ItemIcon>
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
-        where EditableObject : class
+        where EditableObject : class, IDeletable
         where EditableGroupType : EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon>
     {
         private Dictionary<GroupType, EditableGroupType> Groups { get; } = new Dictionary<GroupType, EditableGroupType>();

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IUpdate, IToXml
+    public abstract class MarkupPoint : IUpdate, IDeletable, IToXml
     {
         public event Action<MarkupPoint> OnUpdate;
         public static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
@@ -37,6 +38,9 @@ namespace NodeMarkup.Manager
 
             return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, type, out point);
         }
+
+        public string DeleteCaptionDescription => Localize.PointEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.PointEditor_DeleteMessageDescription;
 
         float _offset = 0;
         public float Offset
@@ -118,6 +122,8 @@ namespace NodeMarkup.Manager
         {
             _offset = config.GetAttrValue<float>("O") * (map.IsMirror ? -1 : 1);
         }
+
+        public Dependences GetDependences() => throw new NotSupportedException();
 
         public enum PointType
         {

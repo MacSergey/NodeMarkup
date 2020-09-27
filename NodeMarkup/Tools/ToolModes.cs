@@ -404,9 +404,14 @@ namespace NodeMarkup
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
-                var newLine = Tool.Markup.ToggleConnection(pointPair, lineType);
-                Panel.EditLine(newLine);
+                if(Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
+                    Tool.DeleteItem(line, () => Tool.Markup.RemoveConnect(line));
+                else
+                {
+                    var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
+                    var newLine = Tool.Markup.AddConnection(pointPair, lineType);
+                    Panel.EditLine(newLine);
+                }
 
                 SelectPoint = null;
                 SetTarget();
@@ -539,8 +544,13 @@ namespace NodeMarkup
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                var newCrosswalkLine = Tool.Markup.ToggleConnection(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;
-                Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
+                if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
+                    Tool.DeleteItem(line, () => Tool.Markup.RemoveConnect(line));
+                else
+                {
+                    var newCrosswalkLine = Tool.Markup.AddConnection(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;
+                    Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
+                }
 
                 SelectPoint = null;
                 SetTarget();
