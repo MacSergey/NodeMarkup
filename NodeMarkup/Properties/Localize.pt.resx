@@ -354,9 +354,7 @@ Clique para editar marcações</value>
     <value>Seleccione um nó para editar marcações</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar ponto final
-+Shift - Sólida
-+Ctrl - Dupla</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione um ponto para

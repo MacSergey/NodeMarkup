@@ -354,9 +354,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Wybierz punkt końcowy
-+Shift - ciągła
-+Ctrl - podwójna</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby

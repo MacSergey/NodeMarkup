@@ -354,9 +354,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите перекресток для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку

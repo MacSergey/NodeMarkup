@@ -2278,9 +2278,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select endpoint
-        ///+Shift - Solid
-        ///+Ctrl - Double.
+        ///   Ищет локализованную строку, похожую на Select endpoint.
         /// </summary>
         public static string Tool_InfoSelectLineEndPoint {
             get {

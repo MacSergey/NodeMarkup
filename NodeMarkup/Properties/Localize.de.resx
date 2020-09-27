@@ -354,9 +354,7 @@ Klicken um Markierung zu bearbeiten</value>
     <value>Node zum Ändern der Markierung auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Endpunkt wählen
-+Shift - Durchgezogen
-+Strg - Doppelt</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Startpunkt wählen zum

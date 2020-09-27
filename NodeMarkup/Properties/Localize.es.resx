@@ -354,9 +354,7 @@ Haga clic para editar las marcas</value>
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccione el punto final
-+Mayús - Continua
-+Ctrl - Discontinua</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione el punto para

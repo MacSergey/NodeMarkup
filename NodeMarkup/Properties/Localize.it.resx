@@ -354,9 +354,7 @@ Clicca per modificare il marcatore</value>
     <value>Seleziona un nodo per modificare il marcatore</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleziona il punto finale
-+Shift - Continua
-+Ctrl - Tratteggiata</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleziona un punto per

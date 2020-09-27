@@ -353,9 +353,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Selecteer punt om markering te wijzigen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selecteer eindpunt
-+Shift - Ononderbroken
-+Ctrl - Dubbel</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om

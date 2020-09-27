@@ -354,9 +354,7 @@ Klikněte pro změnu značení</value>
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod
-+Shift - plná čára
-+Ctrl - dvojitá čára</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyber bod pro vytvoření

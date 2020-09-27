@@ -354,9 +354,7 @@ Shift x10，Ctrl x0.1</value>
     <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>选择终止点
-+Shift 实线
-+Ctrl 双线</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点

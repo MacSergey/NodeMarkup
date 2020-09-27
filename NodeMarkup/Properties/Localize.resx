@@ -354,9 +354,7 @@ Click to edit marking</value>
     <value>Select a node to change marking</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Select endpoint
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Select endpoint</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Select a point to

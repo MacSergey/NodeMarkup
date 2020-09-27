@@ -355,9 +355,7 @@
     <value>マーキングを編集するノードを選択します</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>終点側のポイントを選択
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value></value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して
