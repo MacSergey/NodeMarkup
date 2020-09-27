@@ -35,12 +35,12 @@ namespace NodeMarkup.UI.Editors
         {
             DropDown = Control.AddUIComponent<DropDownType>();
 
-            CustomUIDropDown<Type>.SetDefault(DropDown);
-            DropDown.eventSelectedIndexChanged += DropDownIndexChanged;
+            DropDown.SetDefaultStyle();
+            DropDown.OnSelectObjectChanged += DropDownValueChanged;
             DropDown.eventDropdownOpen += DropDownOpen;
             DropDown.eventDropdownClose += DropDownClose;
         }
-
+        private void DropDownValueChanged(Type value) => OnSelectObjectChanged?.Invoke(value);
         private void DropDownClose(UIDropDown dropdown, UIListBox popup, ref bool overridden)
         {
             IsOpen = false;
@@ -52,7 +52,6 @@ namespace NodeMarkup.UI.Editors
             IsOpen = true;
             OnDropDownStateChange?.Invoke(true);
         }
-        private void DropDownIndexChanged(UIComponent component, int value) => OnSelectObjectChanged?.Invoke(DropDown.SelectedObject);
 
         public override void Init()
         {
@@ -77,6 +76,8 @@ namespace NodeMarkup.UI.Editors
     }
     public abstract class CustomUIDropDown<ValueType> : UIDropDown
     {
+        public event Action<ValueType> OnSelectObjectChanged;
+
         public Func<ValueType, ValueType, bool> IsEqualDelegate { get; set; }
         List<ValueType> Objects { get; } = new List<ValueType>();
         public ValueType SelectedObject
@@ -84,6 +85,12 @@ namespace NodeMarkup.UI.Editors
             get => selectedIndex >= 0 ? Objects[selectedIndex] : default;
             set => selectedIndex = Objects.FindIndex(o => IsEqualDelegate?.Invoke(o, value) ?? ReferenceEquals(o, value) || o.Equals(value));
         }
+
+        public CustomUIDropDown()
+        {
+            eventSelectedIndexChanged += IndexChanged;
+        }
+        protected virtual void IndexChanged(UIComponent component, int value) => OnSelectObjectChanged?.Invoke(SelectedObject);
 
         public void AddItem(ValueType item, string label = null)
         {
@@ -97,35 +104,35 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnMouseWheel(UIMouseEventParameter p) { }
 
-        public static UIButton SetDefault(UIDropDown dropDown, Vector2? size = null)
+        public UIButton SetDefaultStyle(Vector2? size = null)
         {
-            dropDown.atlas = EditorItem.EditorItemAtlas;
-            dropDown.size = size ?? new Vector2(230, 20);
-            dropDown.listBackground = "TextFieldPanelHovered";
-            dropDown.itemHeight = 20;
-            dropDown.itemHover = "TextFieldPanel";
-            dropDown.itemHighlight = "TextFieldPanelFocus";
-            dropDown.normalBgSprite = "TextFieldPanel";
-            dropDown.hoveredBgSprite = "TextFieldPanelHovered";
-            dropDown.listWidth = 230;
-            dropDown.listHeight = 700;
-            dropDown.listPosition = PopupListPosition.Below;
-            dropDown.clampListToScreen = true;
-            dropDown.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
-            dropDown.popupColor = new Color32(45, 52, 61, 255);
-            dropDown.popupTextColor = new Color32(170, 170, 170, 255);
-            dropDown.textScale = 0.7f;
-            dropDown.textFieldPadding = new RectOffset(8, 0, 6, 0);
-            dropDown.popupColor = Color.white;
-            dropDown.popupTextColor = Color.black;
-            dropDown.verticalAlignment = UIVerticalAlignment.Middle;
-            dropDown.horizontalAlignment = UIHorizontalAlignment.Left;
-            dropDown.itemPadding = new RectOffset(14, 0, 8, 0);
+            atlas = EditorItem.EditorItemAtlas;
+            this.size = size ?? new Vector2(230, 20);
+            listBackground = "TextFieldPanelHovered";
+            itemHeight = 20;
+            itemHover = "TextFieldPanel";
+            itemHighlight = "TextFieldPanelFocus";
+            normalBgSprite = "TextFieldPanel";
+            hoveredBgSprite = "TextFieldPanelHovered";
+            listWidth = 230;
+            listHeight = 700;
+            listPosition = PopupListPosition.Below;
+            clampListToScreen = true;
+            foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            popupColor = new Color32(45, 52, 61, 255);
+            popupTextColor = new Color32(170, 170, 170, 255);
+            textScale = 0.7f;
+            textFieldPadding = new RectOffset(8, 0, 6, 0);
+            popupColor = Color.white;
+            popupTextColor = Color.black;
+            verticalAlignment = UIVerticalAlignment.Middle;
+            horizontalAlignment = UIHorizontalAlignment.Left;
+            itemPadding = new RectOffset(14, 0, 8, 0);
 
-            var button = dropDown.AddUIComponent<UIButton>();
+            var button = AddUIComponent<UIButton>();
             button.atlas = TextureUtil.InGameAtlas;
             button.text = string.Empty;
-            button.size = dropDown.size;
+            button.size = this.size;
             button.relativePosition = new Vector3(0f, 0f);
             button.textVerticalAlignment = UIVerticalAlignment.Middle;
             button.textHorizontalAlignment = UIHorizontalAlignment.Left;
@@ -139,9 +146,37 @@ namespace NodeMarkup.UI.Editors
             button.verticalAlignment = UIVerticalAlignment.Middle;
             button.textScale = 0.8f;
 
-            dropDown.triggerButton = button;
+            triggerButton = button;
 
             return button;
+        }
+
+        public void SetSettingsStyle(Vector2? size = null)
+        {
+            atlas = TextureUtil.InGameAtlas;
+            this.size = size ?? new Vector2(400, 38);
+            listBackground = "OptionsDropboxListbox";
+            itemHeight = 24;
+            itemHover = "ListItemHover";
+            itemHighlight = "ListItemHighlight";
+            normalBgSprite = "OptionsDropbox";
+            hoveredBgSprite = "OptionsDropboxHovered";
+            focusedBgSprite = "OptionsDropboxFocused";
+            autoListWidth = true;
+            listHeight = 700;
+            listPosition = PopupListPosition.Below;
+            clampListToScreen = false;
+            foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            popupColor = Color.white;
+            popupTextColor = new Color32(170, 170, 170, 255);
+            textScale = 1.25f;
+            textFieldPadding = new RectOffset(14, 40, 7, 0);
+            popupColor = Color.white;
+            popupTextColor = new Color32(170, 170, 170, 255);
+            verticalAlignment = UIVerticalAlignment.Middle;
+            horizontalAlignment = UIHorizontalAlignment.Left;
+            itemPadding = new RectOffset(14, 14, 0, 0);
+            triggerButton = this;
         }
     }
 }

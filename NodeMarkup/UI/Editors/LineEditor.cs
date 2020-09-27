@@ -40,7 +40,7 @@ namespace NodeMarkup.UI.Editors
         }
 
         protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
-        protected override string GroupName(MarkupLine.LineType group) => Utilities.EnumDescription(group);
+        protected override string GroupName(MarkupLine.LineType group) => group.Description();
 
         protected override void FillItems()
         {
@@ -117,7 +117,7 @@ namespace NodeMarkup.UI.Editors
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (e) => SetStyle(rulePanel, e)));
         private bool SetStyle(RulePanel rulePanel, Event e)
         {
-            rulePanel.Style.SelectedObject = e.GetRegularStyle();
+            rulePanel.Style.SelectedObject = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
             SettingsPanel.ScrollToBottom();
             return true;
         }

@@ -58,6 +58,9 @@ namespace NodeMarkup.UI
             AddNotifications(helper);
             AddOther(helper);
         }
+
+        #region SUPPORT
+
         private static void AddSupport(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Mod_Support) as UIHelper;
@@ -68,6 +71,8 @@ namespace NodeMarkup.UI
         private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.OpenUrl(Mod.WikiUrl));
         private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.OpenUrl(Mod.DiscordURL));
         private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.OpenUrl(Mod.TroubleshootingUrl));
+
+        #endregion
 
         #region LANGUAGE
 
@@ -80,31 +85,6 @@ namespace NodeMarkup.UI
         {
             var locales = GetSupportLanguages().ToArray();
             var dropDown = (group.self as UIComponent).AddUIComponent<LanguageDropDown>();
-
-            dropDown.atlas = TextureUtil.InGameAtlas;
-            dropDown.size = new Vector2(400, 38);
-            dropDown.listBackground = "OptionsDropboxListbox";
-            dropDown.itemHeight = 24;
-            dropDown.itemHover = "ListItemHover";
-            dropDown.itemHighlight = "ListItemHighlight";
-            dropDown.normalBgSprite = "OptionsDropbox";
-            dropDown.hoveredBgSprite = "OptionsDropboxHovered";
-            dropDown.focusedBgSprite = "OptionsDropboxFocused";
-            dropDown.autoListWidth = true;
-            dropDown.listHeight = 700;
-            dropDown.listPosition = PopupListPosition.Below;
-            dropDown.clampListToScreen = false;
-            dropDown.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
-            dropDown.popupColor = Color.white;
-            dropDown.popupTextColor = new Color32(170, 170, 170, 255);
-            dropDown.textScale = 1.25f;
-            dropDown.textFieldPadding = new RectOffset(14, 40, 7, 0);
-            dropDown.popupColor = Color.white;
-            dropDown.popupTextColor = new Color32(170, 170, 170, 255);
-            dropDown.verticalAlignment = UIVerticalAlignment.Middle;
-            dropDown.horizontalAlignment = UIHorizontalAlignment.Left;
-            dropDown.itemPadding = new RectOffset(14, 14, 0, 0);
-            dropDown.triggerButton = dropDown;
 
             dropDown.AddItem(string.Empty, Localize.Mod_LocaleGame);
 
@@ -151,15 +131,31 @@ namespace NodeMarkup.UI
         #region KEYMAPPING
         private static void AddKeyMapping(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper;
-            UIPanel panel = group.self as UIPanel;
+            var keymappingsPanel = (helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper).self as UIPanel;
 
-            var keymappings = panel.gameObject.AddComponent<KeymappingsPanel>();
+            var keymappings = keymappingsPanel.gameObject.AddComponent<KeymappingsPanel>();
             keymappings.AddKeymapping(Localize.Settings_ActivateTool, NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewFiller, NodeMarkupTool.AddFillerShortcut);
+
+            var regularLinesPanel = (helper.AddGroup(Localize.Settings_RegularLinesModifier) as UIHelper).self as UIPanel;
+            var regularLinesModifier = regularLinesPanel.gameObject.AddComponent<RegularLineModifierPanel>();
+            regularLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+
+            var stopLinesPanel = (helper.AddGroup(Localize.Settings_StopLinesModifier) as UIHelper).self as UIPanel;
+            var stopLinesModifier = stopLinesPanel.gameObject.AddComponent<StopLineModifierPanel>();
+            stopLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+
+            var crosswalksPanel = (helper.AddGroup(Localize.Settings_CrosswalksModifier) as UIHelper).self as UIPanel;
+            var crosswalksModifier = crosswalksPanel.gameObject.AddComponent<CrosswalkModifierPanel>();
+            crosswalksModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+
+            var fillersPanel = (helper.AddGroup(Localize.Settings_FillersModifier) as UIHelper).self as UIPanel;
+            var fillersModifier = fillersPanel.gameObject.AddComponent<FillerModifierPanel>();
+            fillersModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
         }
+
         #endregion
 
         #region GENERAL
@@ -383,5 +379,11 @@ namespace NodeMarkup.UI
         }
     }
 
-    public class LanguageDropDown : CustomUIDropDown<string> { }
+    public class LanguageDropDown : CustomUIDropDown<string> 
+    { 
+        public LanguageDropDown()
+        {
+            SetSettingsStyle();
+        }
+    }
 }

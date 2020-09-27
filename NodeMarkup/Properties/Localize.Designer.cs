@@ -1605,6 +1605,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalks modifier.
+        /// </summary>
+        public static string Settings_CrosswalksModifier {
+            get {
+                return ResourceManager.GetString("Settings_CrosswalksModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete all node lines.
         /// </summary>
         public static string Settings_DeleteAllNodeLines {
@@ -1701,6 +1710,15 @@ namespace NodeMarkup {
         public static string Settings_EarlyAccess {
             get {
                 return ResourceManager.GetString("Settings_EarlyAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers modifier.
+        /// </summary>
+        public static string Settings_FillersModifier {
+            get {
+                return ResourceManager.GetString("Settings_FillersModifier", resourceCulture);
             }
         }
         
@@ -1869,6 +1887,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Regular lines modifier.
+        /// </summary>
+        public static string Settings_RegularLinesModifier {
+            get {
+                return ResourceManager.GetString("Settings_RegularLinesModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Render distance.
         /// </summary>
         public static string Settings_RenderDistance {
@@ -1919,6 +1946,33 @@ namespace NodeMarkup {
         public static string Settings_ShowWhatsNew {
             get {
                 return ResourceManager.GetString("Settings_ShowWhatsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stop lines modifier.
+        /// </summary>
+        public static string Settings_StopLinesModifier {
+            get {
+                return ResourceManager.GetString("Settings_StopLinesModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not set.
+        /// </summary>
+        public static string Settings_StyleModifierNotSet {
+            get {
+                return ResourceManager.GetString("Settings_StyleModifierNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Without modifier.
+        /// </summary>
+        public static string Settings_StyleModifierWithout {
+            get {
+                return ResourceManager.GetString("Settings_StyleModifierWithout", resourceCulture);
             }
         }
         
@@ -2078,9 +2132,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click to create a line
-        ///+Shift - Solid
-        ///+Ctrl - Double.
+        ///   Ищет локализованную строку, похожую на Click to create a line.
         /// </summary>
         public static string Tool_InfoCreateLine {
             get {
@@ -2089,9 +2141,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click to create a perpendicular line
-        ///+Shift - Solid
-        ///+Ctrl - Double.
+        ///   Ищет локализованную строку, похожую на Click to create a perpendicular line.
         /// </summary>
         public static string Tool_InfoCreateNormalLine {
             get {

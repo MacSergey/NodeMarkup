@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -342,9 +342,7 @@
 この操作は元に戻せません</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>クリックしてラインの追加
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value></value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>クリックしてラインを削除</value>
@@ -374,7 +372,6 @@ Shift押下で横断歩道の作成</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
   </data>
-  
   <data name="Settings_Import" xml:space="preserve">
     <value>インポート</value>
   </data>
@@ -459,8 +456,6 @@ Shift押下で横断歩道の作成</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>ベタ塗り</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
@@ -473,7 +468,6 @@ Shift押下で横断歩道の作成</value>
   <data name="Settings_AddNewFiller" xml:space="preserve">
     <value>新しい塗り潰しを追加</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>2重線</value>
   </data>
@@ -663,9 +657,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線の追加
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value></value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
@@ -808,7 +800,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>マーキングが正常に描画されず、ロードエラーがありました。
 {0} ヶ所の交差点（ノード）で、マーキングの描画に失敗しました。</value>

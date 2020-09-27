@@ -43,7 +43,7 @@ namespace NodeMarkup.UI.Editors
         protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
             => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
         protected override string GroupName(Style.StyleType group)
-            => Settings.GroupTemplatesType == 0 ? Utilities.EnumDescription(group) : $"{Utilities.EnumDescription(group & Style.StyleType.GroupMask)}\n{Utilities.EnumDescription(group)}";
+            => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
         private void AddHeader()
         {

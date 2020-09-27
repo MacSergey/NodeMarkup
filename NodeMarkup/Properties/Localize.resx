@@ -341,9 +341,7 @@ This action cannot be undone</value>
 This action cannot be undone</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Click to create a line
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Click to create a line</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Click to delete the line</value>
@@ -687,9 +685,7 @@ By registering early access, you will support the ability to develop this mod at
     <value>Language</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Click to create a perpendicular line
-+Shift - Solid
-+Ctrl - Double</value>
+    <value>Click to create a perpendicular line</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Click to delete the perpendicular line</value>
@@ -899,5 +895,23 @@ Failed to load markings for {0} intersections.</value>
     <value>Do you really want to paste marking?
 It will replace the existing marking.
 This action cannot be undone.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Crosswalks modifier</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Fillers modifier</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Regular lines modifier</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Stop lines modifier</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Without modifier</value>
   </data>
 </root>

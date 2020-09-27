@@ -25,10 +25,8 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void FillItems()
         {
-            foreach (var value in Enum.GetValues(typeof(EnumType)).OfType<EnumType>())
-            {
-                DropDown.AddItem(value, Utilities.EnumDescription(value));
-            }
+            foreach (var value in Utilities.GetEnumValues<EnumType>())
+                DropDown.AddItem(value, value.Description());
         }
     }
     public abstract class StylePropertyPanel : EnumPropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
@@ -42,9 +40,7 @@ namespace NodeMarkup.UI.Editors
         protected override void FillItems()
         {
             foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<Style.StyleType>())
-            {
-                DropDown.AddItem(value, Utilities.EnumDescription(value));
-            }
+                DropDown.AddItem(value, value.Description());
         }
     }
     public class RegularStylePropertyPanel : StylePropertyPanel<RegularLineStyle.RegularLineType> { }

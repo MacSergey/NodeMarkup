@@ -114,7 +114,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             SolidAndDashed = StyleType.LineSolidAndDashed,
 
-            [Description(nameof(Localize.LineStyle_SolidAndDashed))]
+            [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
         }
     }
@@ -149,7 +149,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Stop))]
             Solid = StyleType.StopLineSolid,
 
-            [Description(nameof(Localize.LineStyle_Stop))]
+            [Description(nameof(Localize.LineStyle_StopDashed))]
             Dashed = StyleType.StopLineDashed,
 
             [Description(nameof(Localize.LineStyle_StopDouble))]

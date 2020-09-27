@@ -341,9 +341,7 @@ Shift X10, Ctrl X0.1</value>
 Это действие нельзя отменить</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Нажмите для создания линии
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value></value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Нажмите для удаления линии</value>
@@ -683,9 +681,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Язык</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Нажмите для создания перпендикулярной линии
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value></value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Нажмите для удаления перпендикулярной линии</value>

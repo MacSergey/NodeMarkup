@@ -33,6 +33,9 @@ namespace NodeMarkup
         public static bool OnlyShiftIsPressed => ShiftIsPressed && !AltIsPressed && !CtrlIsPressed;
         public static bool OnlyCtrlIsPressed => CtrlIsPressed && !AltIsPressed && !ShiftIsPressed;
 
+        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } =
+            Utilities.GetEnumValues<Style.StyleType>().ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{(int)(object)i}", UI.Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
+
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
         public static bool MouseRayValid { get; private set; }
@@ -350,6 +353,35 @@ namespace NodeMarkup
         #endregion
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
+
+        public static Style.StyleType GetStyle<StyleType>(StyleType defaultStyle)
+           where StyleType : Enum
+        {
+            var modifier = Utilities.GetEnumValues<StyleModifier>()
+                .FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.Control == CtrlIsPressed && ik.Shift == ShiftIsPressed && ik.Alt == AltIsPressed);
+
+            foreach (var style in Utilities.GetEnumValues<StyleType>())
+            {
+                var general = (Style.StyleType)(object)style;
+                if (StylesModifier.TryGetValue(general, out SavedInt saved) && (StyleModifier)saved.value == modifier)
+                    return general;
+            }
+            return (Style.StyleType)(object)defaultStyle;
+        }
+        private static StyleModifier GetDefaultStylesModifier(Style.StyleType style)
+        {
+            switch (style)
+            {
+                case Style.StyleType.LineDashed: return StyleModifier.Without;
+                case Style.StyleType.LineSolid: return StyleModifier.Shift;
+                case Style.StyleType.LineDoubleDashed: return StyleModifier.Ctrl;
+                case Style.StyleType.LineDoubleSolid: return StyleModifier.CtrlShift;
+                case Style.StyleType.StopLineSolid: return StyleModifier.Without;
+                case Style.StyleType.CrosswalkZebra: return StyleModifier.Without;
+                case Style.StyleType.FillerStripe: return StyleModifier.Without;
+                default: return StyleModifier.NotSet;
+            }
+        }
     }
     public struct MarkupBuffer
     {

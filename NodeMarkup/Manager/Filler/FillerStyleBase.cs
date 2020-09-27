@@ -72,14 +72,14 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
-            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Trajectories.ToArray();
+            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
             var rect = GetRect(trajectories);
             return GetDashes(trajectories, rect, filler.Markup.Height);
         }
         public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
-            var lineParts = filler.Parts.ToArray();
-            var trajectories = filler.TrajectoriesRaw.ToArray();
+            var lineParts = filler.Contour.Parts.ToArray();
+            var trajectories = filler.Contour.TrajectoriesRaw.ToArray();
 
             for (var i = 0; i < lineParts.Length; i += 1)
             {

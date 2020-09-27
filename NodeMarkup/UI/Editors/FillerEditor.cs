@@ -61,7 +61,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
+            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(style.Description()))
             {
                 Style.SelectedObject = EditObject.Style.Type;
                 return;
@@ -87,7 +87,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
-            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
+            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(style.Type.Description()))
                 return;
 
             var newStyle = style.CopyFillerStyle();
@@ -134,7 +134,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverItem)
             {
-                foreach (var trajectory in HoverItem.Object.Trajectories)
+                foreach (var trajectory in HoverItem.Object.Contour.Trajectories)
                     NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, trajectory, 0.2f);
             }
         }

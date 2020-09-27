@@ -39,6 +39,24 @@ namespace NodeMarkup
         public virtual void OnSecondaryMouseClicked() { }
         public virtual void RenderOverlay(RenderManager.CameraInfo cameraInfo) { }
 
+        protected string GetCreateToolTip<StyleType>(string text)
+            where StyleType : Enum
+        {
+            var modifiers = GetStylesModifier<StyleType>().ToArray();
+            return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
+        }
+        protected IEnumerable<string> GetStylesModifier<StyleType>()
+            where StyleType : Enum
+        {
+            foreach (var style in Utilities.GetEnumValues<StyleType>())
+            {
+                var general = (Style.StyleType)(object)style;
+                var modifier = (StyleModifier)NodeMarkupTool.StylesModifier[general].value;
+                if (modifier != StyleModifier.NotSet)
+                    yield return $"{general.Description()} - {modifier.Description()}";
+            }
+        }
+
         public enum ModeType
         {
             SelectNode,
@@ -149,13 +167,13 @@ namespace NodeMarkup
             var exist = Tool.Markup.ExistConnection(pointPair);
 
             if (pointPair.IsStopLine)
-                return exist ? Localize.Tool_InfoDeleteStopLine : Localize.Tool_InfoCreateStopLine;
+                return exist ? Localize.Tool_InfoDeleteStopLine : GetCreateToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);
             else if (pointPair.IsCrosswalk)
-                return exist ? Localize.Tool_InfoDeleteCrosswalk : Localize.Tool_InfoCreateCrosswalk;
+                return exist ? Localize.Tool_InfoDeleteCrosswalk : GetCreateToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk);
             else if (pointPair.IsNormal)
-                return exist ? Localize.Tool_InfoDeleteNormalLine : Localize.Tool_InfoCreateNormalLine;
+                return exist ? Localize.Tool_InfoDeleteNormalLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine);
             else
-                return exist ? Localize.Tool_InfoDeleteLine : Localize.Tool_InfoCreateLine;
+                return exist ? Localize.Tool_InfoDeleteLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
         }
         public override bool ProcessShortcuts(Event e)
         {
@@ -386,7 +404,7 @@ namespace NodeMarkup
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                var lineType = pointPair.IsStopLine ? e.GetStopStyle() : e.GetRegularStyle();
+                var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
                 var newLine = Tool.Markup.ToggleConnection(pointPair, lineType);
                 Panel.EditLine(newLine);
 
@@ -521,7 +539,7 @@ namespace NodeMarkup
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                var newCrosswalkLine = Tool.Markup.ToggleConnection(pointPair, e.GetCrosswalkStyle()) as MarkupCrosswalkLine;
+                var newCrosswalkLine = Tool.Markup.ToggleConnection(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;
                 Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
 
                 SelectPoint = null;
@@ -566,14 +584,14 @@ namespace NodeMarkup
     {
         public override ModeType Type => ModeType.MakeFiller;
 
-        private MarkupFiller TempFiller { get; set; }
+        private FillerContour Contour { get; set; }
         private PointsSelector<IFillerVertex> FillerPointsSelector { get; set; }
 
         public bool DisableByAlt { get; set; }
 
         protected override void Reset()
         {
-            TempFiller = new MarkupFiller(Tool.Markup, Style.StyleType.FillerStripe);
+            Contour = new FillerContour(Tool.Markup);
             GetFillerPoints();
         }
 
@@ -582,21 +600,21 @@ namespace NodeMarkup
         {
             if (FillerPointsSelector.IsHoverPoint)
             {
-                if (TempFiller.IsEmpty)
+                if (Contour.IsEmpty)
                     return Localize.Tool_InfoFillerClickStart;
-                else if (FillerPointsSelector.HoverPoint == TempFiller.First)
-                    return Localize.Tool_InfoFillerClickEnd;
+                else if (FillerPointsSelector.HoverPoint == Contour.First)
+                    return GetCreateToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
                 else
                     return Localize.Tool_InfoFillerClickNext;
             }
-            else if (TempFiller.IsEmpty)
+            else if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerSelectStart;
             else
                 return Localize.Tool_InfoFillerSelectNext;
         }
         public override bool ProcessShortcuts(Event e)
         {
-            if (DisableByAlt && !NodeMarkupTool.AltIsPressed && TempFiller.IsEmpty)
+            if (DisableByAlt && !NodeMarkupTool.AltIsPressed && Contour.IsEmpty)
             {
                 Tool.SetDefaultMode();
                 return true;
@@ -608,10 +626,11 @@ namespace NodeMarkup
         {
             if (FillerPointsSelector.IsHoverPoint)
             {
-                if (TempFiller.Add(FillerPointsSelector.HoverPoint))
+                if (Contour.Add(FillerPointsSelector.HoverPoint))
                 {
-                    Tool.Markup.AddFiller(TempFiller);
-                    Panel.EditFiller(TempFiller);
+                    var filler = new MarkupFiller(Contour, NodeMarkupTool.GetStyle(FillerStyle.FillerType.Stripe));
+                    Tool.Markup.AddFiller(filler);
+                    Panel.EditFiller(filler);
                     Tool.SetDefaultMode();
                     return;
                 }
@@ -621,11 +640,11 @@ namespace NodeMarkup
         }
         public override void OnSecondaryMouseClicked()
         {
-            if (TempFiller.IsEmpty)
+            if (Contour.IsEmpty)
                 Tool.SetDefaultMode();
             else
             {
-                TempFiller.Remove();
+                Contour.Remove();
                 GetFillerPoints();
             }
         }
@@ -638,29 +657,29 @@ namespace NodeMarkup
 
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(TempFiller.First) ? MarkupColors.Green : MarkupColors.White;
-            foreach (var trajectory in TempFiller.Trajectories)
+            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(Contour.First) ? MarkupColors.Green : MarkupColors.White;
+            foreach (var trajectory in Contour.Trajectories)
                 NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
-            if (TempFiller.IsEmpty)
+            if (Contour.IsEmpty)
                 return;
 
             if (FillerPointsSelector.IsHoverPoint)
             {
-                var linePart = TempFiller.GetFillerLine(TempFiller.Last, FillerPointsSelector.HoverPoint);
+                var linePart = Contour.GetFillerLine(Contour.Last, FillerPointsSelector.HoverPoint);
                 if (linePart.GetTrajectory(out ILineTrajectory trajectory))
                     NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.Green, trajectory);
             }
             else
             {
-                var bezier = new Line3(TempFiller.Last.Position, NodeMarkupTool.MouseWorldPosition).GetBezier();
+                var bezier = new Line3(Contour.Last.Position, NodeMarkupTool.MouseWorldPosition).GetBezier();
                 NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier);
             }
         }
 
-        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(TempFiller.GetNextСandidates(), MarkupColors.Red);
+        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(Contour.GetNextСandidates(), MarkupColors.Red);
     }
     public class DragPointToolMode : BaseToolMode
     {

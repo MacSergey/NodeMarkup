@@ -102,6 +102,7 @@
     <Compile Include="Manager\Crosswalk\Crosswalk.cs" />
     <Compile Include="Manager\Crosswalk\CrosswalkStyleBase.cs" />
     <Compile Include="Manager\Filler\Filler.cs" />
+    <Compile Include="Manager\Filler\FillerContour.cs" />
     <Compile Include="Manager\Filler\FillerStyle.cs" />
     <Compile Include="Manager\Filler\FillerStyleBase.cs" />
     <Compile Include="Manager\Filler\FillerVertex.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="UI\Property panels\ListProperty.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="UI\Settings.cs" />
+    <Compile Include="UI\StyleModifier.cs" />
     <Compile Include="UI\TabPanel.cs" />
     <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\BezierBounds.cs" />
@@ -272,7 +274,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
