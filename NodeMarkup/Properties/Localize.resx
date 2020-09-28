@@ -231,13 +231,13 @@ This action cannot be undone</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Not set</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Activate tool</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Add new line rule</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Delete all node lines</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -332,7 +332,7 @@ This action cannot be undone</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Do you really want to clear all node #{0} markings?
-This action cannot be undone</value>
+This action cannot be undone.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Click to create a line</value>
@@ -484,12 +484,27 @@ Hold Shift to create a crosswalk</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Notification only about major updates</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
     <value>- Fix chevron line parts overlap.
-- New chevron middle line calculation algorithm</value>
+- New chevron middle line calculation algorithm
+- added shark teeth line
+- added solid&amp;dashed stop line
+- added shark teeth stop line
+- added chess board crosswalk
+- Added support moveit mirroring
+- Fix filler vertex duplicates
+- Added copy/paste marking
+- Added style modifier settings
+- added "Only if will affect others items" option to confirm before deleting
+- added settings tabs
+- duplicate templates
+- added the ability to resize panel
+- added line with overlaps rules indication
+- map editor support
+- save marking data in intersections</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -616,8 +631,8 @@ By registering early access, you will support the ability to develop this mod at
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Early access</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Center solid</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Alignment</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>I agree</value>
@@ -953,5 +968,55 @@ This action cannot be undone.</value>
   </data>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Copy</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Edge</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Starting from</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Vertex</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Reset all points offset</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Reset all points offset</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Do you really want to reset all node #{0} points offset?
+This action cannot be undone.</value>
+  </data>
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>Drag and drop circle for set paste order</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>Drop circle inside target to set paste order
+Drop circle outside target to unset paste order</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Copy marking</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Paste marking</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>Change order</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Turn clockwise</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Turn counter-clockwise</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Right</value>
   </data>
 </root>

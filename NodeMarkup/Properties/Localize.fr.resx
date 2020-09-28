@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Cette action est irréversible</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Non défini</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Activer l'outil</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Ajouter une règle de ligne</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Supprimer toutes les lignes du noeud</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -284,9 +284,6 @@ Cette action est irréversible</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>Données de marquage importées avec succès</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Autre</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuration rapide des règles</value>
@@ -335,9 +332,11 @@ Cette action est irréversible</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Voulez-vous vraiment supprimer tous les marquages du noeud #{0} ?
-Cette action est irréversible</value>
+Cette action est irréversible.</value>
   </data>
-  
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Cliquez pour créer une ligne</value>
+  </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Cliquez pour supprimer la ligne</value>
   </data>
@@ -364,6 +363,7 @@ Maintenez Maj pour créer un passage piéton</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Afficher les nouveautés</value>
   </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importer</value>
   </data>
@@ -448,6 +448,8 @@ Maintenez Maj pour créer un passage piéton</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
@@ -457,9 +459,10 @@ Maintenez Maj pour créer un passage piéton</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Uniquement notifier les mise à jour majeures</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Ajouter un nouveau remplisseur</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solide</value>
   </data>
@@ -492,7 +495,10 @@ Pour créer une ligne, connectez deux points.</value>
     <value>Il n'y a pas de remplisseurs à cet intersection.
 Pour créer un remplisseur, maintenez Alt ou appuyez sur {0}.</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>La liste des modèles est vide.
+Pour créer un modèle, cliquez {0} sur une ligne, passage piéton ou remplisseur.</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activer avec la clé</value>
   </data>
@@ -582,9 +588,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Accès anticipé</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Centre solide</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>J'accepte</value>
   </data>
@@ -643,7 +647,9 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
     <value>Langue</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value></value>
+    <value>Cliquez pour créer une ligne perpendiculaire
++Maj - Solide
++Ctrl - Double</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Cliquez pour supprimer la ligne perpendiculaire</value>
@@ -786,6 +792,7 @@ créer ou supprimer un passage piéton</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modèle</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Erreurs lors du chargement.
 Le marquage de {0} intersections n'a pas pu être chargé.</value>
@@ -796,7 +803,9 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Dépannage</value>
   </data>
-  
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Damiers</value>
+  </data>
   
   <data name="LineEditor_SharkToothBase" xml:space="preserve">
     <value>Base du triangle</value>
@@ -819,11 +828,23 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
     <value>Solide et Tirets</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Supprimer le marquage</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Copier le marquage</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Coller le marquage</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Coller le marquage</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment coller le marquage ?
+Cela va remplacer le marquage existant.
+Cette action est irréversible.</value>
+  </data>
   
   
   
@@ -832,8 +853,12 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
     <value>Non défini</value>
   </data>
   
-  
-  
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>Dans chaque cas</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Seulement s'il affecte d'autres objets</value>
+  </data>
   
   
   
@@ -845,12 +870,46 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="Settings_GeneralTab" xml:space="preserve">
     <value>Général</value>
   </data>
-  
-  
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
   
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Support</value>
   </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Dupliquer</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  
+  
+  
+  
+  
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud #{0} ?
+Cette action est irréversible.</value>
+  </data>
+  
+  
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Copier le marquage</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Coller le marquage</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>Changer l'ordre</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Tourner dans le sens des aiguilles d'une montre</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Tourner dans le sens inverse des aiguilles d'une montre</value>
+  </data>
+  
   
   
 </root>

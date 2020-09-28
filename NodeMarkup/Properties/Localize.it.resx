@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Questa azione non può essere annullata</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Non impostato</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Attivazione strumento</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Aggiungi una nuova regola alla linea</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Elimina tutte le linee del nodo</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -284,9 +284,6 @@ Questa azione non può essere annullata</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>Dati marcatori importati con successo</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Altro</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configurazione rapida delle regole</value>
@@ -335,7 +332,7 @@ Questa azione non può essere annullata</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Vuoi veramente rimuovere tutti i marcatori dei nodi #{0}?
-Questa azione non può essere annullata</value>
+Questa azione non può essere annullata.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Clicca per creare una linea</value>
@@ -487,9 +484,10 @@ Tieni premuto Shift per impostare le strisce pedonali</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Notifica solo gli update maggiore</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia continua</value>
   </data>
@@ -525,8 +523,6 @@ Per creare uno riempimento, tieni premuto Alt o premi {0}.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista dei modelli è vuota.
 Per creare un modello, clicca «{0}» sulla linea, sull'attraversamento pedonale o sullo stile del riempimento.</value>
-    <comment>TemplateEditor_EmptyMessage
-</comment>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Attiva con codice</value>
@@ -617,9 +613,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Accesso anticipato</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Centrale continua</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Accetto</value>
   </data>
@@ -821,6 +815,7 @@ cancellare le strisce pedonali</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modello</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Il caricamento è stato completato con errori.
 Impossibile caricare i contrassegni per {0} intersezioni.</value>
@@ -929,9 +924,6 @@ L'azione non può esser annullata.</value>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Raggruppamento</value>
   </data>
-  <data name="Settings_HelpfulLinks" xml:space="preserve">
-    <value>Link utili</value>
-  </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Scorciatoie e modificari</value>
   </data>
@@ -944,4 +936,20 @@ L'azione non può esser annullata.</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Copia</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

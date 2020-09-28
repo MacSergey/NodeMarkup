@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Не задано</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Активация инструмента</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Добавление нового правила</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Удалить все линии перекрестка</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -284,9 +284,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>Разметку успешно импортирована</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Другие</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Быстрая настройка правил</value>
@@ -335,7 +332,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить всю разметку перекрестка #{0}?
-Это действие нельзя отменить</value>
+Это действие нельзя отменить.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Нажмите для создания линии</value>
@@ -487,9 +484,10 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Уведомления только о важных обновлениях</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Создать  заполнитель</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Двойная сплошная</value>
   </data>
@@ -525,8 +523,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Список шаблонов пуст.
 Для создания шаблона нажмите «{0}» у стиля линии или перехода или заполнителя.</value>
-    <comment>TemplateEditor_EmptyMessage
-</comment>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Активировать ключом</value>
@@ -617,8 +613,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Ранний доступ</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Центрировать сплошную</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Выравнивание</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Я согласен</value>
@@ -822,10 +818,12 @@ Shift X10, Ctrl X0.1</value>
     <value>шаблон</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>- Добавлен новый стиль заполнителей - шеврон (&lt;&lt;&lt;&lt;&lt;).
-- Добавлены пешеходные переходы. Для создания удерживайте Shift. Доступны следующие стили: "Существующий переход", "Зебра", "Двойная зебра", "Параллельные сплошные линии", "Параллельные пунктирные линии", "Лестница", "Сплошной".
-- Добавлены перпендикулярные линии. Этим линиям не нужна вторая точка, они направлены по прямой. Для создания потяните линию в обратную сторону от перекрестка.
-- Добавлена возможность копировать/вставлять стиль линий, заполнителей, переходов.
+    <value>- Добавлен ранний доступ (РД) к новым функциям. Отдельные функции некоторое время будут доступны только для подписчиков Patreon. Oни станут доступными для всех позже.
+Оформив ранний доступ, вы поддержите возможность развивать мод с той же скоростью.
+- (РД) Добавлен новый стиль заполнителей - шеврон (&lt;&lt;&lt;&lt;&lt;).
+- Добавлены пешеходные переходы. Для создания удерживайте Shift. Доступны следующие стили: "Существующий переход", (РД)"Зебра", (РД)"Двойная зебра", (РД)"Параллельные сплошные линии", (РД)"Параллельные пунктирные линии", (РД)"Лестница", (РД)"Сплошной".
+- (РД) Добавлены перпендикулярные линии. Этим линиям не нужна вторая точка, они направлены по прямой. Для создания потяните линию в обратную сторону от перекрестка.
+- (РД) Добавлена возможность копировать/вставлять стиль линий, заполнителей, переходов.
 - Добавлена сортировка линий и шаблонов по стилям и типам. Можно изменить и отключить в настройках.
 - Обновлено меню выбора шаблонов.
 - Добавлено группирование близко расположенных точек для удобства выбора их. Два вида группирования: в круг и в линию. Можно изменить и отключить в настройках.
@@ -943,9 +941,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Группировка</value>
   </data>
-  <data name="Settings_HelpfulLinks" xml:space="preserve">
-    <value>Полезные ссылки</value>
-  </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Горячие клавиши</value>
   </data>
@@ -957,5 +952,55 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Копия</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Грань</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Начало из</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Вершина</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Сброс смещения всех точек</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Сброс смещения всех точек</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Вы действительно хотите сбросить значения смещения всех точек перекрестка #{0}?
+Это действие нельзя отменить.</value>
+  </data>
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>Перетащите круг для задания порядка вставки</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>Наведите круг на цель для задания порядка сортировки
+Уберите круг с цели для отмены порядка сортировки</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Скопировать разметку</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Вставить разметку</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>Инвертировать порядок</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Повернуть по часовой стрелке</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Повернуть против часовой стрелки</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Центр</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Лево</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Право</value>
   </data>
 </root>

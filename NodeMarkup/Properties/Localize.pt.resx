@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Esta ação não pode ser desfeita</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Não definido</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Activar a ferramenta</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Adicionar nova regra à linha</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Remover todas as linhas deste nó</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -284,9 +284,6 @@ Esta acção não pode ser desfeita</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>Dados de marcações importados com sucesso</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Outros</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuração rápida das regras</value>
@@ -335,7 +332,7 @@ Esta acção não pode ser desfeita</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Tem a certeza que quer mesmo remover todas as marcações do nó #{0}?
-Esta acção não pode ser desfeita</value>
+Esta ação não pode ser desfeita.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Clique para criar uma linha</value>
@@ -461,6 +458,8 @@ Prima Shift para criar uma passadeira</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versão {0}</value>
   </data>
@@ -470,9 +469,10 @@ Prima Shift para criar uma passadeira</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Notificar apenas sobre actualizações principais</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Sólida dupla</value>
   </data>
@@ -505,7 +505,10 @@ Para criar uma linha conecte dois pontos.</value>
     <value>Ainda não existem preenchimentos nesta intercessão.
 Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>A lista de modelos está vazia.
+Para criar um modelo, clique «{0}» no estilo da linha, da passadeira ou do preenchimento.</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar com chave</value>
   </data>
@@ -595,9 +598,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Acesso antecipado</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Linha central sólida</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Concordo</value>
   </data>
@@ -656,7 +657,9 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
     <value>Linguagem</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Clique para criar uma linha perpendicular</value>
+    <value>Clique para criar uma linha perpendicular
++ Shift - Solida
++ Ctrl - Dupla</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
@@ -798,6 +801,7 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modelo</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>O carregamento foi completado com erros.
 O carregamento de {0} marcações falhou.</value>
@@ -870,25 +874,81 @@ Esta acção não pode ser desfeita.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Sem modificador</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>Em qualquer caso</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Apenas de afetar outros itens</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Itens dependentes também serão removidos:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Bordas da passadeira - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Passadeiras - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Preenchimentos - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Linhas - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Regras- {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Cópia de segurança</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Apresentação e utilização</value>
+  </data>
   <data name="Settings_GeneralTab" xml:space="preserve">
     <value>Geral</value>
   </data>
-  
-  
-  
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Grupos</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Atalhos e modificadores</value>
+  </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Apoio</value>
   </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplicar</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Borda</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>A partir de</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Vértice</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Repor o deslocamento de todos os pontos</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Repor o deslocamento de todos os pontos</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo repor todos os descolamentos de pontos do nó #{0}?
+Esta ação não pode ser desfeita.</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 </root>

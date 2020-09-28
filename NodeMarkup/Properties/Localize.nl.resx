@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Niet ingesteld</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Activeer programma</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Voeg nieuwe lijnregel toe</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -285,9 +285,6 @@ Deze actie kan niet ongedaan worden gedaan</value>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>Markeringsdata succesvol geïmporteerd</value>
   </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Andere</value>
-  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Snelle regel setup</value>
   </data>
@@ -334,8 +331,8 @@ Deze actie kan niet ongedaan worden gedaan</value>
     <value>Verwijder puntmarkeringen</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Wil je echt alle punt #{0} markeringen wissen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>Wil je echt alle markeringen op punt #{0} wissen?
+Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Klik om een lijn te maken</value>
@@ -365,6 +362,7 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Toon wat nieuw is</value>
   </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importeer</value>
   </data>
@@ -449,6 +447,8 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Versie {0}</value>
   </data>
@@ -458,9 +458,10 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Alleen meldingen over grote updates</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Nieuwe opvulling toevoegen</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dubbel niet onderbroken</value>
   </data>
@@ -493,7 +494,10 @@ Verbind twee punten om een lijn te maken.</value>
     <value>Er zijn nog geen opvullingen bij dit kruispunt.
 Houdt Alt ingedrukt of klik {0} om een opvulling te maken.</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>De lijst met sjablonen is leeg.
+Klik «{0}» bij de lijn-, zebrapad- of opvuliingstijl om een sjabloon te maken.</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activeren met sleutel</value>
   </data>
@@ -583,9 +587,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Vroegtijdige toegang</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Centreer niet onderbroken</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Ik ga akkoord</value>
   </data>
@@ -787,6 +789,7 @@ een zebrapad te creëren of te verwijderen</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>sjabloon</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Er zijn fouten opgetreden tijdens het laden.
 Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
@@ -894,8 +897,9 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Groeperingen</value>
   </data>
-  
-  
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Snelkoppelingen en Sneltoetsen</value>
+  </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Support</value>
   </data>
@@ -905,4 +909,31 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Kopiëren</value>
   </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Kant</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Beginnend vanaf</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Hoekpunt</value>
+  </data>
+  
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Reset alle punt correctieafstanden</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Wil je echt alle correctieafstanden op punt #{0} wissen?
+Deze actie kan niet ongedaan worden gemaakt.</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>
