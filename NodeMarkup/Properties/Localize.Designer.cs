@@ -1586,6 +1586,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Backup.
+        /// </summary>
+        public static string Settings_BackupTab {
+            get {
+                return ResourceManager.GetString("Settings_BackupTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Crosswalks modifier.
         /// </summary>
         public static string Settings_CrosswalksModifier {
@@ -1628,6 +1637,15 @@ namespace NodeMarkup {
         public static string Settings_DeleteMarkingMessage {
             get {
                 return ResourceManager.GetString("Settings_DeleteMarkingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Display and usage.
+        /// </summary>
+        public static string Settings_DisplayAndUsage {
+            get {
+                return ResourceManager.GetString("Settings_DisplayAndUsage", resourceCulture);
             }
         }
         
@@ -1706,9 +1724,18 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на General.
         /// </summary>
-        public static string Settings_General {
+        public static string Settings_GeneralTab {
             get {
-                return ResourceManager.GetString("Settings_General", resourceCulture);
+                return ResourceManager.GetString("Settings_GeneralTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Groupings.
+        /// </summary>
+        public static string Settings_Groupings {
+            get {
+                return ResourceManager.GetString("Settings_Groupings", resourceCulture);
             }
         }
         
@@ -1772,6 +1799,15 @@ namespace NodeMarkup {
         public static string Settings_GroupTemplatesByType {
             get {
                 return ResourceManager.GetString("Settings_GroupTemplatesByType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Helpful links.
+        /// </summary>
+        public static string Settings_HelpfulLinks {
+            get {
+                return ResourceManager.GetString("Settings_HelpfulLinks", resourceCulture);
             }
         }
         
@@ -1895,6 +1931,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Shortcuts and modifiers.
+        /// </summary>
+        public static string Settings_ShortcutsAndModifiersTab {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutsAndModifiersTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Confirm before deleting.
         /// </summary>
         public static string Settings_ShowDeleteWarnings {
@@ -1972,6 +2017,15 @@ namespace NodeMarkup {
         public static string Settings_StyleModifierWithout {
             get {
                 return ResourceManager.GetString("Settings_StyleModifierWithout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Support.
+        /// </summary>
+        public static string Settings_SupportTab {
+            get {
+                return ResourceManager.GetString("Settings_SupportTab", resourceCulture);
             }
         }
         

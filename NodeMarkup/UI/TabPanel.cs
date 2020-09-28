@@ -16,12 +16,12 @@ namespace NodeMarkup.UI
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "";
         }
-        public void AddTab<PanelType>(string name) where PanelType : Editor
+        public void AddTab(string name, float textScale = 0.85f)
         {
-            var tabButton = AddTab(name);
+            var tabButton = base.AddTab(name);
             tabButton.autoSize = true;
             tabButton.textPadding = new RectOffset(5, 5, 2, 2);
-            tabButton.textScale = 0.85f;
+            tabButton.textScale = textScale;
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             tabButton.verticalAlignment = UIVerticalAlignment.Middle;
 

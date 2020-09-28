@@ -268,9 +268,6 @@ This action cannot be undone</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Dump success saved</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>General</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Import marking data from file</value>
   </data>
@@ -935,5 +932,26 @@ This action cannot be undone.</value>
   </data>
   <data name="Tool_DeleteDependenceRules" xml:space="preserve">
     <value>Rules - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Display and usage</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Groupings</value>
+  </data>
+  <data name="Settings_HelpfulLinks" xml:space="preserve">
+    <value>Helpful links</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Shortcuts and modifiers</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Support</value>
   </data>
 </root>

@@ -19,6 +19,7 @@ using NodeMarkup.UI.Editors;
 using UnityEngine.SocialPlatforms;
 using static ColossalFramework.UI.UIDropDown;
 using ColossalFramework.Globalization;
+using ColossalFramework.PlatformServices;
 
 namespace NodeMarkup.UI
 {
@@ -43,6 +44,9 @@ namespace NodeMarkup.UI
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedInt GroupPointsType { get; } = new SavedInt(nameof(GroupPointsType), SettingsFile, 0, true);
 
+        private static CustomUITabstrip TabStrip { get; set; }
+        private static List<UIPanel> TabPanels { get; set; }
+
         static Settings()
         {
             if (GameSettings.FindSettingsFileByName(SettingsFile) == null)
@@ -51,20 +55,82 @@ namespace NodeMarkup.UI
 
         public static void OnSettingsUI(UIHelperBase helper)
         {
-            AddSupport(helper);
-            AddLanguage(helper);
-            AddKeyMapping(helper);
-            AddGeneral(helper);
-            //AddAccess(helper);
-            AddNotifications(helper);
-            AddOther(helper);
+            var mainPanel = (helper as UIHelper).self as UIScrollablePanel;
+            CreateTabStrip(mainPanel);
+
+            var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
+            AddLanguage(generalTab);
+            AddGeneral(generalTab);
+            AddGrouping(generalTab);
+            AddNotifications(generalTab);
+
+            var shortcutTab = CreateTab(mainPanel, Localize.Settings_ShortcutsAndModifiersTab);
+            AddKeyMapping(shortcutTab);
+
+            if (SceneManager.GetActiveScene().name is string scene && (scene != "MainMenu" && scene != "IntroScreen"))
+            {
+                var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
+                AddBackup(backupTab);
+            }
+
+            var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
+            AddSupport(supportTab);
+            //AddAccess(supportTab);
         }
+        private static void CreateTabStrip(UIScrollablePanel mainPanel)
+        {
+            TabPanels = new List<UIPanel>();
+
+            TabStrip = mainPanel.AddUIComponent<CustomUITabstrip>();
+            TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
+            TabStrip.selectedIndex = -1;
+        }
+        private static UIHelper CreateTab(UIScrollablePanel mainPanel, string name)
+        {
+            TabStrip.AddTab(name, 1.25f);
+
+            var tabPanel = mainPanel.AddUIComponent<UIPanel>();
+            tabPanel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
+            tabPanel.isVisible = false;
+            TabPanels.Add(tabPanel);
+
+            var panel = tabPanel.AddUIComponent<UIScrollablePanel>();
+            UIUtils.AddScrollbar(tabPanel, panel);
+            panel.verticalScrollbar.eventVisibilityChanged += ScrollbarVisibilityChanged;
+
+            panel.size = tabPanel.size;
+            panel.relativePosition = Vector2.zero;
+            panel.autoLayout = true;
+            panel.autoLayoutDirection = LayoutDirection.Vertical;
+            panel.autoLayoutPadding = new RectOffset(0, 0, 0, 5);
+            panel.clipChildren = true;
+            panel.scrollWheelDirection = UIOrientation.Vertical;
+
+            return new UIHelper(panel);
+
+            void ScrollbarVisibilityChanged(UIComponent component, bool value)
+            {
+                panel.width = tabPanel.width - (panel.verticalScrollbar.isVisible ? panel.verticalScrollbar.width : 0);
+            }
+        }
+
+        private static void TabStripSelectedIndexChanged(UIComponent component, int index)
+        {
+            if (index >= 0 && TabPanels.Count > index)
+            {
+                foreach (var tab in TabPanels)
+                    tab.isVisible = false;
+
+                TabPanels[index].isVisible = true;
+            }
+        }
+
 
         #region SUPPORT
 
         private static void AddSupport(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Mod_Support) as UIHelper;
+            UIHelper group = helper.AddGroup(Localize.Settings_HelpfulLinks) as UIHelper;
             AddWiki(group);
             AddTroubleshooting(group);
             AddDiscord(group);
@@ -162,12 +228,17 @@ namespace NodeMarkup.UI
         #region GENERAL
         private static void AddGeneral(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_General) as UIHelper;
+            UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAnyActions, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddQuickRuleSetup(group);
+            }
+        private static void AddGrouping(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
+
             AddGroupLines(group);
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle });
             AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
@@ -247,11 +318,8 @@ namespace NodeMarkup.UI
         #endregion
 
         #region OTHER
-        private static void AddOther(UIHelperBase helper)
+        private static void AddBackup(UIHelperBase helper)
         {
-            if (SceneManager.GetActiveScene().name is string scene && (scene == "MainMenu" || scene == "IntroScreen"))
-                return;
-
             UIHelper group = helper.AddGroup(Localize.Settings_Other) as UIHelper;
 
             AddDeleteAll(group);
