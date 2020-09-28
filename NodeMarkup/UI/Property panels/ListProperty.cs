@@ -127,7 +127,7 @@ namespace NodeMarkup.UI.Editors
             popupTextColor = Color.black;
             verticalAlignment = UIVerticalAlignment.Middle;
             horizontalAlignment = UIHorizontalAlignment.Left;
-            itemPadding = new RectOffset(14, 0, 8, 0);
+            itemPadding = new RectOffset(14, 0, 5, 0);
 
             var button = AddUIComponent<UIButton>();
             button.atlas = TextureUtil.InGameAtlas;

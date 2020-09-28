@@ -1812,15 +1812,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Helpful links.
-        /// </summary>
-        public static string Settings_HelpfulLinks {
-            get {
-                return ResourceManager.GetString("Settings_HelpfulLinks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Import.
         /// </summary>
         public static string Settings_Import {
@@ -1891,15 +1882,6 @@ namespace NodeMarkup {
         public static string Settings_Notifications {
             get {
                 return ResourceManager.GetString("Settings_Notifications", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Other.
-        /// </summary>
-        public static string Settings_Other {
-            get {
-                return ResourceManager.GetString("Settings_Other", resourceCulture);
             }
         }
         

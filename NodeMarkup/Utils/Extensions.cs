@@ -3,6 +3,7 @@ using ColossalFramework.Globalization;
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using ICities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using System;
@@ -262,6 +263,15 @@ namespace NodeMarkup.Utils
                 return version.ToString(3);
             else
                 return version.ToString(2);
+        }
+
+        public static UIHelperBase AddGroup(this UIHelperBase helper)
+        {
+            var newGroup = helper.AddGroup("aaa") as UIHelper;
+            var panel = newGroup.self as UIPanel;
+            if (panel.parent.Find<UILabel>("Label") is UILabel label)
+                label.isVisible = false;
+            return newGroup;
         }
     }
 

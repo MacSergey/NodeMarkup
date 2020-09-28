@@ -56,6 +56,7 @@ namespace NodeMarkup.UI
         public static void OnSettingsUI(UIHelperBase helper)
         {
             var mainPanel = (helper as UIHelper).self as UIScrollablePanel;
+            mainPanel.autoLayoutPadding = new RectOffset(0, 0, 0, 25);
             CreateTabStrip(mainPanel);
 
             var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
@@ -102,7 +103,6 @@ namespace NodeMarkup.UI
             panel.relativePosition = Vector2.zero;
             panel.autoLayout = true;
             panel.autoLayoutDirection = LayoutDirection.Vertical;
-            panel.autoLayoutPadding = new RectOffset(0, 0, 0, 5);
             panel.clipChildren = true;
             panel.scrollWheelDirection = UIOrientation.Vertical;
 
@@ -130,7 +130,7 @@ namespace NodeMarkup.UI
 
         private static void AddSupport(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_HelpfulLinks) as UIHelper;
+            UIHelper group = helper.AddGroup() as UIHelper;
             AddWiki(group);
             AddTroubleshooting(group);
             AddDiscord(group);
@@ -320,7 +320,7 @@ namespace NodeMarkup.UI
         #region OTHER
         private static void AddBackup(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_Other) as UIHelper;
+            UIHelper group = helper.AddGroup() as UIHelper;
 
             AddDeleteAll(group);
             AddDump(group);
