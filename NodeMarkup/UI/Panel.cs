@@ -25,6 +25,7 @@ namespace NodeMarkup.UI
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
 
+        private Vector2 EditorSize => size - new Vector2(0, Header.height + TabStrip.height);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
         public static NodeMarkupPanel CreatePanel()
@@ -131,9 +132,10 @@ namespace NodeMarkup.UI
         {
             base.OnSizeChanged();
 
-            foreach (var editor in Editors)
-                editor.size = size - new Vector2(0, Header.height + TabStrip.height);
-
+            //foreach (var editor in Editors)
+            //    editor.size = EditorSize;
+            if (CurrentEditor != null)
+                CurrentEditor.size = EditorSize;
             if (Header != null)
                 Header.size = new Vector2(size.x, Header.height);
             if (SizeChanger != null)
@@ -166,12 +168,12 @@ namespace NodeMarkup.UI
             if (index >= 0 && Editors.Count > index)
             {
                 foreach (var editor in Editors)
-                {
                     editor.isVisible = false;
-                }
 
-                Editors[index].isVisible = true;
-                return Editors[index];
+                var selectEditor = Editors[index];
+                selectEditor.isVisible = true;
+                selectEditor.size = EditorSize;
+                return selectEditor;
             }
             else
                 return null;

@@ -205,12 +205,12 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
-            ItemsPanel.height = size.y;
+            var itemsPanelWidth = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
+            ItemsPanel.size = new Vector2(itemsPanelWidth, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
-            SettingsPanel.width = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
-            SettingsPanel.height = size.y;
+            var settingsPanelWidth = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
+            SettingsPanel.size = new Vector2(settingsPanelWidth, size.y);
             SettingsPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
 
             EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);

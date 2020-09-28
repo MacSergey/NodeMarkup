@@ -25,9 +25,7 @@ namespace NodeMarkup.UI
 
             var atlas = TextureUtil.GetAtlas(nameof(EditorItemAtlas));
             if (atlas == UIView.GetAView().defaultAtlas)
-            {
                 atlas = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, spriteNames, new RectOffset(4, 4, 4, 4), 2);
-            }
 
             return atlas;
         }
@@ -94,9 +92,7 @@ namespace NodeMarkup.UI
             Control.autoLayout = false;
 
             foreach (var item in Control.components)
-            {
-                item.relativePosition = new Vector3(item.relativePosition.x, (Control.size.y - item.size.y) / 2);
-            }
+                item.relativePosition = new Vector2(item.relativePosition.x, (Control.size.y - item.size.y) / 2);
         }
     }
 }
