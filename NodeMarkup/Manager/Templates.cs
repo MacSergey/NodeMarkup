@@ -42,16 +42,12 @@ namespace NodeMarkup.Manager
             template.OnStyleChanged = OnTemplateStyleChanged;
             template.OnNameChanged = OnTemplateNameChanged;
         }
-        public static bool AddTemplate(Style style, out StyleTemplate template, string name = null)
+        public static bool AddTemplate(Style style, out StyleTemplate template) => AddTemplate(GetNewName(), style, out template);
+        public static bool DuplicateTemplate(StyleTemplate template, out StyleTemplate duplicate) 
+            => AddTemplate(GetNewName($"{template.Name} {Localize.Template_DuplicateTemplateSuffix}"), template.Style, out duplicate);
+        private static bool AddTemplate(string name, Style style, out StyleTemplate template)
         {
-            var templateName = name ?? GetNewName();
-            if (TemplatesDictionary.ContainsKey(templateName))
-            {
-                template = default;
-                return false;
-            }
-
-            template = new StyleTemplate(templateName, style);
+            template = new StyleTemplate(name, style);
             InitTempalte(template);
             TemplatesDictionary[template.Name] = template;
 
@@ -76,15 +72,20 @@ namespace NodeMarkup.Manager
 
             Save();
         }
-        private static string GetNewName()
+        private static string GetNewName(string newName = null)
         {
-            var i = 1;
-            foreach (var template in Templates.Where(t => t.Name.StartsWith(DefaultName)))
+            if (string.IsNullOrEmpty(newName))
+                newName = DefaultName;
+
+            var i = 0;
+            foreach (var template in Templates.Where(t => t.Name.StartsWith(newName)))
             {
-                if (int.TryParse(template.Name.Substring(DefaultName.Length), out int num) && num >= i)
+                if (template.Name.Length == newName.Length && i == 0)
+                    i = 1;
+                else if (int.TryParse(template.Name.Substring(newName.Length), out int num) && num >= i)
                     i = num + 1;
             }
-            return $"{DefaultName} {i}";
+            return i == 0 ? newName : $"{newName} {i}";
         }
         public static T GetDefault<T>(Style.StyleType type) where T : Style
         {

@@ -50,6 +50,7 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
             HeaderPanel.Init(EditObject.IsDefault());
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
+            HeaderPanel.OnDuplicate += Duplicate;
         }
         private void AddTemplateName()
         {
@@ -74,6 +75,11 @@ namespace NodeMarkup.UI.Editors
         {
             TemplateManager.ToggleAsDefaultTemplate(EditObject);
             AsDefaultRefresh();
+        }
+        private void Duplicate()
+        {
+            if (TemplateManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
+                NodeMarkupPanel.EditTemplate(duplicate);
         }
         private void AsDefaultRefresh()
         {

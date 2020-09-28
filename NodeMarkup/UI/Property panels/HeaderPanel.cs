@@ -72,6 +72,7 @@ namespace NodeMarkup.UI.Editors
                 "ApplyTemplate",
                 "Copy",
                 "Paste",
+                "Duplicate",
                 "SetDefault",
                 "UnsetDefault",
                 "Clear",
@@ -338,12 +339,15 @@ namespace NodeMarkup.UI.Editors
     public class TemplateHeaderPanel : HeaderPanel
     {
         public event Action OnSetAsDefault;
+        public event Action OnDuplicate;
 
         UIButton SetAsDefaultButton { get; set; }
+        UIButton DuplicateButton { get; set; }
 
         public TemplateHeaderPanel()
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, onClick: SetAsDefaultClick);
+            DuplicateButton = Content.AddButton("Duplicate", NodeMarkup.Localize.HeaderPanel_Duplicate, DuplicateClick);
         }
         public void Init(bool isDefault)
         {
@@ -360,6 +364,7 @@ namespace NodeMarkup.UI.Editors
             SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
         }
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
+        private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
     }
 
 }

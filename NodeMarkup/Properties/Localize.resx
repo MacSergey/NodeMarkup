@@ -954,4 +954,10 @@ This action cannot be undone.</value>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Support</value>
   </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Copy</value>
+  </data>
 </root>

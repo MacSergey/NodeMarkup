@@ -687,6 +687,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Duplicate.
+        /// </summary>
+        public static string HeaderPanel_Duplicate {
+            get {
+                return ResourceManager.GetString("HeaderPanel_Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No templates.
         /// </summary>
         public static string HeaderPanel_NoTemplates {
@@ -2035,6 +2044,15 @@ namespace NodeMarkup {
         public static string Settings_Troubleshooting {
             get {
                 return ResourceManager.GetString("Settings_Troubleshooting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string Template_DuplicateTemplateSuffix {
+            get {
+                return ResourceManager.GetString("Template_DuplicateTemplateSuffix", resourceCulture);
             }
         }
         
