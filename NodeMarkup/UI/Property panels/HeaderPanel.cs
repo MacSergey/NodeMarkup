@@ -87,7 +87,7 @@ namespace NodeMarkup.UI.Editors
             return atlas;
         }
         protected virtual Color32 HoveredColor => Color.black;
-        protected virtual Color32 PressedColor => new Color32(32, 32, 32, 255);
+        protected virtual Color32 PressedColor => new Color32(160 , 160, 160, 255);
 
         public HeaderContent()
         {

@@ -308,7 +308,7 @@ namespace NodeMarkup
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
-                messageBox.MessageText = string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item) + additional;
+                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
                     {
                         onDelete();
@@ -319,7 +319,7 @@ namespace NodeMarkup
         private string GetDeleteDependences(Dependences dependences)
         {
             var strings = dependences.Total.Where(i => i.Value > 0).Select(i => string.Format(i.Key.Description(), i.Value)).ToArray();
-            return $"\n{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
+            return $"{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
         }
 
         public void CopyMarkup()
