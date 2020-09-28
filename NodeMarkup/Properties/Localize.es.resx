@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Eliminar {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>¿De verdad quieres eliminar {0} {1}?
-No se puede deshacer esta acción</value>
+No se puede deshacer esta acción.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Desplazar la rueda para cambiar
@@ -268,9 +268,6 @@ No se puede deshacer esta acción</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Exportación guardada con éxito</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>General</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importar las marcas desde el archivo</value>
   </data>
@@ -340,9 +337,7 @@ No se puede deshacer esta acción</value>
     <value>¿De verdad quieres eliminar todas las marcas del nodo #{0}?
 No se puede deshacer esta acción</value>
   </data>
-  <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value></value>
-  </data>
+  
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Haga clic para borrar la línea</value>
   </data>
@@ -354,7 +349,7 @@ Haga clic para editar las marcas</value>
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value></value>
+    <value>Seleccione el punto final</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione el punto para
@@ -497,10 +492,7 @@ Para crear una línea, conecta dos puntos.</value>
     <value>Todavía no hay rellenos en este cruce.
 Para crear un relleno, mantenga Alt o presione {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>La lista de plantillas está vacía.
-Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar con clave</value>
   </data>
@@ -803,4 +795,49 @@ crear o eliminar el paso de peatones</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Resolución de problemas</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Doble Combinada</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>No establecido</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>General</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Apoyo</value>
+  </data>
+  
+  
 </root>

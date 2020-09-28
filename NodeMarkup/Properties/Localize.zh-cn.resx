@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>删除{0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>确定要删除 {0} {1} 吗?
 此操作不可撤销。</value>
   </data>
@@ -268,9 +268,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>导出成功</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>常规设置</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>从文件中导入地标线信息</value>
   </data>
@@ -341,7 +338,7 @@ Shift x10，Ctrl x0.1</value>
 此操作不可撤销。</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value></value>
+    <value>点击以创建线段</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>点击可擦除线段</value>
@@ -354,7 +351,7 @@ Shift x10，Ctrl x0.1</value>
     <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value></value>
+    <value>选择终止点</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点
@@ -497,10 +494,7 @@ Shift x10，Ctrl x0.1</value>
     <value>此交叉路口没有填充图案。
 按住Alt或点按 {0} 以创建填充图案.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>没有模板可选。
-在线段页点击 «{0}» 来创建新模板。</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>使用密钥激活</value>
   </data>
@@ -651,7 +645,7 @@ Shift x10，Ctrl x0.1</value>
     <value>语言</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value></value>
+    <value>点击以创建垂直线</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>点击以擦除垂直线</value>
@@ -804,4 +798,103 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>故障排除</value>
   </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>棋盘格</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>线条数</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>三角形底边长</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>三角形高度</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>三角形间隙</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>方形边长</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>三角式</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>三角式</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>虚实线</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>清除标记</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>复制标记</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>粘贴标记</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>粘贴标记</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>确定要粘贴标记吗?
+粘贴后会清除既存的地标线。
+此操作无法撤销！</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>人行横道快捷键</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>填充图案快捷键</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>普通标线快捷键</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>停止线快捷键</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>未设置</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>无快捷键</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>总是弹窗</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>只有其他标线受到影响时弹窗</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>以下受影响的部分也会被擦除</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>人行横道边界 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>人行横道 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>填充 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>线段 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>规则 - {0}</value>
+  </data>
+  
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>常规设置</value>
+  </data>
+  
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>支持服务</value>
+  </data>
+  
+  
 </root>

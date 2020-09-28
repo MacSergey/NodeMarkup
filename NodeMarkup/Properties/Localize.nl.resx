@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Verwijder {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Wil je {0} {1} echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll het wiel om te veranderen
@@ -268,9 +268,6 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Export gelukt</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Algemeen</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Importeer markeringsgegevens uit bestand</value>
   </data>
@@ -341,7 +338,7 @@ Deze actie kan niet ongedaan worden gedaan</value>
 Deze actie kan niet ongedaan worden gemaakt</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value></value>
+    <value>Klik om een lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Klik om de lijn te verwijderen</value>
@@ -353,7 +350,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Selecteer punt om markering te wijzigen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value></value>
+    <value>Selecteer eindpunt</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
@@ -496,10 +493,7 @@ Verbind twee punten om een lijn te maken.</value>
     <value>Er zijn nog geen opvullingen bij dit kruispunt.
 Houdt Alt ingedrukt of klik {0} om een opvulling te maken.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>De lijst met sjablonen is leeg.
-Klik «{0}» bij de lijnstijl om een sjabloon te maken.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activeren met sleutel</value>
   </data>
@@ -650,7 +644,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Taal</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value></value>
+    <value>Klik om een loodrechte lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klik om de loodrechte lijn te verwijderen</value>
@@ -802,5 +796,113 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Probleemoplossing</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Schaakbord</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Aantal lijnen</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Haaientand breedte</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Haaientand lengte</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Tussenafstand</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Vierkant lengte</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Haaientanden</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Haaientanden</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Ononderbroken en onderbroken</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Verwijder markering</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopieer markering</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Plak markering</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Plak markering</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Weet je zeker dat je de markering wilt plakken?
+Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt worden.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Zebrapad sneltoetsen</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Opvulling sneltoetsen</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Normale lijn sneltoetsen</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Stoplijn sneltoetsen</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Niet ingesteld</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Zonder sneltoets</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>Altijd</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Alleen wanneer het impact heeft op afhankelijke markeringen</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Afhankelijke markeringen worden ook verwijderd:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Zebrapad randen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Zebrapad - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Opvullingen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Lijnen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Regels - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Weergave en gebruik</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Algemeen</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Groeperingen</value>
+  </data>
+  
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Dupliceren</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopiëren</value>
   </data>
 </root>

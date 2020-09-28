@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Удалить {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить {0} {1}?
-Это действие нельзя отменить</value>
+Это действие нельзя отменить.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Крутите колесико для изменения
@@ -268,9 +268,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Разметки успешно сохранены</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Основные</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Импортировать разметку из файла</value>
   </data>
@@ -341,7 +338,7 @@ Shift X10, Ctrl X0.1</value>
 Это действие нельзя отменить</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value></value>
+    <value>Нажмите для создания линии</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Нажмите для удаления линии</value>
@@ -354,7 +351,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите перекресток для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value></value>
+    <value>Выберите конечную точку</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
@@ -527,7 +524,9 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Список шаблонов пуст.
-Для создания шаблона нажмите «{0}» у стиля линии.</value>
+Для создания шаблона нажмите «{0}» у стиля линии или перехода или заполнителя.</value>
+    <comment>TemplateEditor_EmptyMessage
+</comment>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Активировать ключом</value>
@@ -679,7 +678,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Язык</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value></value>
+    <value>Нажмите для создания перпендикулярной линии</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Нажмите для удаления перпендикулярной линии</value>
@@ -845,5 +844,118 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Устранение неполадок</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Шахматная доска</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Количество линий</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Основание треугольника</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Высота треугольника</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Расстояние между</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Сторона квадрата</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Акульи зубы</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Акульи зубы</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Сплошная и пунктирная</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Удалить всю разметку</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Скопировать разметку</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Вставить разметку</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Вставить разметку</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Вы действительно хотите вставить разметку?
+Она заменит существующую разметку. 
+Это действие нельзя отменить.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля перехода</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля заполнителя</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля линий</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля стоп линий</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Не задано</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Без модификатора</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>В любом случае</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Только если будут удалены другие элементы</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Зависящие элементы так же будут удалены:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Границы переходов - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Переходы - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Заполнители - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Линии - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Правила - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Бэкап</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Отображение и использование</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Основные</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Группировка</value>
+  </data>
+  <data name="Settings_HelpfulLinks" xml:space="preserve">
+    <value>Полезные ссылки</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Горячие клавиши</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Поддержка</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Дублировать</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Копия</value>
   </data>
 </root>

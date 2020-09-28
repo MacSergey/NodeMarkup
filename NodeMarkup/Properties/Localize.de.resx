@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Lösche {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
+  <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Willst du {0} {1} wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Mausrad scrollen zum ändern
@@ -268,9 +268,6 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
     <value>Erfolgreich gespeichert</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Allgemein</value>
-  </data>
   <data name="Settings_ImportMarkingButton" xml:space="preserve">
     <value>Markierungsdaten aus Datei importieren</value>
   </data>
@@ -341,7 +338,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
 Diese Aktion kann nicht rückgängig gemacht werden</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value></value>
+    <value>Klicken um eine Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Zum Löschen der Linie klicken</value>
@@ -354,15 +351,14 @@ Klicken um Markierung zu bearbeiten</value>
     <value>Node zum Ändern der Markierung auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value></value>
+    <value>Endpunkt wählen</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Startpunkt wählen zum
 Linie erstellen oder löschen
 +Strg um den Punkt zu verschieben
 Alt halten um eine Füllung zu erstellen
-Shift halten um eine
-Fußgängerüberweg-Markierung zu erstellen</value>
+Shift halten erstellt eine Fußgängerüberweg-Markierung</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
@@ -537,10 +533,7 @@ Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
     <value>Es befinden sich noch keine Füllungen auf dieser Kreuzung.
 Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
   </data>
-  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Vorlagen ist leer.
-Um eine Vorlage zu erstellen klicke «{0}» beim Linien-Stil.</value>
-  </data>
+  
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivierungscode eingeben</value>
   </data>
@@ -691,7 +684,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
     <value>Sprache</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value></value>
+    <value>Klicken, um eine orthogonale Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klicken, um die orthogonale Linie zu löschen</value>
@@ -722,7 +715,7 @@ Zum Erstellen einer Fußgängerüberweg-Markierung Shift gedrückt halten.</valu
     <value>Füllungen</value>
   </data>
   <data name="LineStyle_RegularGroup" xml:space="preserve">
-    <value>Normale Linien</value>
+    <value>Reguläre Linien</value>
   </data>
   <data name="LineStyle_StopGroup" xml:space="preserve">
     <value>Haltelinie</value>
@@ -843,5 +836,118 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Hilfe</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Schachbrett</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Linienanzahl</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Basis der Dreiecke</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Höhe der Dreiecke</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Abstand dazwischen</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Quadrat-Breite</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Haifischzähne</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Haifischzähne</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Durchgezogen und Gestrichelt</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Markierung entfernen</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Markierung kopieren</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Markierung einfügen</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Markierung einfügen</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Möchtest Du wirklich die Markierung einfügen?
+Dies wird alle vorhandenen Markierungen ersetzen.
+Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Tastenkombinationen für Fußgängerüberwege</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Tastenkombinationen für Füllungen</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Tastenkombinationen für reguläre Linien</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Tastenkombinationen für Haltelinien</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Nicht festgelegt</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Ohne Tastenkombination</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>In jedem Fall</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Nur wenn es Anderes beeinflussen wird</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Dazugehöriges wird ebenfalls entfernt:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Ränder von Fußgängerüberwegen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Fußgängerüberwege - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Füllungen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Linien - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Regeln - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Sicherung</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Anzeige und Verwendung</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Gruppen</value>
+  </data>
+  <data name="Settings_HelpfulLinks" xml:space="preserve">
+    <value>Hilfreiche Links</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Tastenkürzel und Tastenkombinationen</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Support/Hilfe</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplizieren</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopieren</value>
   </data>
 </root>
