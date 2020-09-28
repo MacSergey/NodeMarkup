@@ -105,8 +105,11 @@ namespace NodeMarkup
 
         public override void OnPrimaryMouseClicked(Event e)
         {
-            Tool.SetMarkup(MarkupManager.Get(HoverNodeId));
-            Tool.SetDefaultMode();
+            if (IsHoverNode)
+            {
+                Tool.SetMarkup(MarkupManager.Get(HoverNodeId));
+                Tool.SetDefaultMode();
+            }
         }
         public override void OnSecondaryMouseClicked() => Tool.Disable();
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)

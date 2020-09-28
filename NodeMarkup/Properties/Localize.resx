@@ -528,7 +528,7 @@ To create a filler hold Alt or press {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.
-To create a template, click «{0}» at the line style.</value>
+To create a template, click «{0}» at the line or crosswalk or filler style.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activate with key</value>

@@ -91,16 +91,17 @@ namespace NodeMarkup.UI
         {
             var atlas = TextureUtil.GetAtlas(nameof(ResizeAtlas));
             if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("resize.png", nameof(ResizeAtlas), 11, 11, new string[] { "resize"}, space: 2);
+                atlas = TextureUtil.CreateTextureAtlas("resize.png", nameof(ResizeAtlas), 9, 9, new string[] { "resize"}, space: 2);
 
             return atlas;
         }
         private void CreateSizeChanger()
         {
             SizeChanger = AddUIComponent<UIPanel>();
-            SizeChanger.size = new Vector2(11, 11);
+            SizeChanger.size = new Vector2(9, 9);
             SizeChanger.atlas = ResizeAtlas;
             SizeChanger.backgroundSprite = "resize";
+            SizeChanger.color = new Color32(255, 255, 255, 160);
             SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
 
             var handle = SizeChanger.AddUIComponent<UIDragHandle>();

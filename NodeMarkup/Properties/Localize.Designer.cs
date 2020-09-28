@@ -2103,7 +2103,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на The list of templates is empty.
-        ///To create a template, click «{0}» at the line style..
+        ///To create a template, click «{0}» at the line or crosswalk or filler style..
         /// </summary>
         public static string TemplateEditor_EmptyMessage {
             get {
