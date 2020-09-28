@@ -125,6 +125,8 @@ namespace NodeMarkup
 
             if (m_toolController?.NextTool == null && PrevTool != null)
                 PrevTool.enabled = true;
+            else
+                ToolsModifierControl.SetTool<DefaultTool>();
 
             PrevTool = null;
         }
