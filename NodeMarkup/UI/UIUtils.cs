@@ -118,6 +118,12 @@ namespace NodeMarkup.UI
                 scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
             };
 
+            scrollablePanel.eventSizeChanged += (component, eventParam) =>
+            {
+                scrollbar.relativePosition = scrollablePanel.relativePosition + new Vector3(scrollablePanel.width, 0);
+                scrollbar.height = scrollablePanel.height;
+            };
+
             scrollablePanel.verticalScrollbar = scrollbar;
         }
         public static void ScrollIntoViewRecursive(this UIScrollablePanel panel, UIComponent component)

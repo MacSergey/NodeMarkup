@@ -27,8 +27,6 @@ namespace NodeMarkup.UI
         private Vector2 EditorSize => new Vector2(500, 400);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
-        private static float TabStripHeight => 20;
-
         public static NodeMarkupPanel CreatePanel()
         {
             var uiView = UIView.GetAView();
@@ -89,7 +87,7 @@ namespace NodeMarkup.UI
         {
             var editor = AddUIComponent<EditorType>();
             editor.Init(this);
-            TabStrip.AddTab<PointsEditor>(editor.Name);
+            TabStrip.AddTab(editor.Name);
 
             editor.isVisible = false;
             editor.size = EditorSize;

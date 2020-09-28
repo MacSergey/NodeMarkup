@@ -226,7 +226,6 @@ namespace NodeMarkup.UI.Editors
         {
             public event Action<StyleTemplate> OnSelect;
 
-            private static float MaxContentHeight { get; } = 200;
             protected UIScrollablePanel ScrollableContent { get; private set; }
             private float Padding => 2f;
 
@@ -327,9 +326,7 @@ namespace NodeMarkup.UI.Editors
             {
                 if (ScrollableContent != null)
                 {
-                    size = ScrollableContent.size + new Vector2(Padding * 2, Padding * 2);
-                    ScrollableContent.verticalScrollbar.relativePosition = ScrollableContent.relativePosition + new Vector3(ScrollableContent.width, 0);
-                    ScrollableContent.verticalScrollbar.height = ScrollableContent.height;
+                    size = new Vector2(Width + Padding * 2, ScrollableContent.height + Padding * 2);
 
                     foreach (var item in ScrollableContent.components)
                         item.width = ScrollableContent.width;

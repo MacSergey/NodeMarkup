@@ -114,7 +114,6 @@ namespace NodeMarkup.UI
             Handle = AddUIComponent<UIDragHandle>();
             Handle.size = new Vector2(Width, 42);
             Handle.relativePosition = new Vector2(0, 0);
-            //Handle.target = parent;
             Handle.eventSizeChanged += (component, size) =>
             {
                 Caption.size = size;
@@ -179,7 +178,7 @@ namespace NodeMarkup.UI
         private void FitContentChildren()
         {
             ScrollableContent.FitChildrenVertically();
-            ScrollableContent.width = ScrollableContent.verticalScrollbar?.isVisible == true ? Width - ScrollableContent.verticalScrollbar.width : Width;
+            ScrollableContent.width = ScrollableContent.verticalScrollbar?.isVisible == true ? Width - ScrollableContent.verticalScrollbar.width - 3 : Width;
         }
         private void ContentSizeChanged(UIComponent component, Vector2 value) => Init();
         private void Init()
@@ -187,13 +186,9 @@ namespace NodeMarkup.UI
             height = Handle.height + ScrollableContent.height + ButtonPanel.height + Padding;
             ScrollableContent.relativePosition = new Vector2(0, Handle.height);
             ButtonPanel.relativePosition = new Vector2(0, Handle.height + ScrollableContent.height + Padding);
-            ScrollableContent.verticalScrollbar.relativePosition = ScrollableContent.relativePosition + new Vector3(ScrollableContent.width, 0);
-            ScrollableContent.verticalScrollbar.height = ScrollableContent.height;
 
             foreach (var item in ScrollableContent.components)
-            {
                 item.width = ScrollableContent.width - 2 * Padding;
-            }
         }
         protected virtual void FillContent() { }
         private void AddButtonPanel()
