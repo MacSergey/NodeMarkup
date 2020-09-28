@@ -67,6 +67,16 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
             base.Awake();
 
+            ToolModes = new Dictionary<BaseToolMode.ModeType, BaseToolMode>()
+            {
+                { BaseToolMode.ModeType.SelectNode, new SelectNodeToolMode() },
+                { BaseToolMode.ModeType.MakeLine, new MakeLineToolMode() },
+                { BaseToolMode.ModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
+                { BaseToolMode.ModeType.MakeFiller, new MakeFillerToolMode() },
+                { BaseToolMode.ModeType.DragPoint, new DragPointToolMode() },
+                { BaseToolMode.ModeType.PasteMarkup, new PasteMarkupToolMode()}
+            };
+
             NodeMarkupButton.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
@@ -77,17 +87,6 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
             GameObject nodeMarkupControl = ToolsModifierControl.toolController.gameObject;
             Instance = nodeMarkupControl.AddComponent<NodeMarkupTool>();
-
-            Instance.ToolModes = new Dictionary<BaseToolMode.ModeType, BaseToolMode>()
-            {
-                { BaseToolMode.ModeType.SelectNode, new SelectNodeToolMode() },
-                { BaseToolMode.ModeType.MakeLine, new MakeLineToolMode() },
-                { BaseToolMode.ModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
-                { BaseToolMode.ModeType.MakeFiller, new MakeFillerToolMode() },
-                { BaseToolMode.ModeType.DragPoint, new DragPointToolMode() },
-                { BaseToolMode.ModeType.PasteMarkup, new PasteMarkupToolMode()}
-            };
-
             return Instance;
         }
         public static void Remove()

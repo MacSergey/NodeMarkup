@@ -21,10 +21,10 @@ namespace NodeMarkup.UI
 
         private UIPanelDragHeader Header { get; set; }
         private CustomUITabstrip TabStrip { get; set; }
+        private UIPanel SizeChanger { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
 
-        private Vector2 EditorSize => new Vector2(500, 400);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
         public static NodeMarkupPanel CreatePanel()
@@ -50,13 +50,15 @@ namespace NodeMarkup.UI
             absolutePosition = new Vector3(100, 100);
             name = "NodeMarkupPanel";
 
-            CreateHandle();
+            CreateHeader();
             CreateTabStrip();
             CreateEditors();
+            CreateSizeChanger();
 
-            size = new Vector2(500, Header.height + TabStrip.height + EditorSize.y);
+            size = new Vector2(500, Header.height + TabStrip.height + 400); ;
+            minimumSize = new Vector2(500, Header.height + TabStrip.height + 200);
         }
-        private void CreateHandle()
+        private void CreateHeader()
         {
             Header = AddUIComponent<UIPanelDragHeader>();
             Header.size = new Vector2(500, 42);
@@ -83,6 +85,36 @@ namespace NodeMarkup.UI
             CreateEditor<FillerEditor>();
             CreateEditor<TemplateEditor>();
         }
+
+        public static UITextureAtlas ResizeAtlas { get; } = GetStylesIcons();
+        private static UITextureAtlas GetStylesIcons()
+        {
+            var atlas = TextureUtil.GetAtlas(nameof(ResizeAtlas));
+            if (atlas == UIView.GetAView().defaultAtlas)
+                atlas = TextureUtil.CreateTextureAtlas("resize.png", nameof(ResizeAtlas), 11, 11, new string[] { "resize"}, space: 2);
+
+            return atlas;
+        }
+        private void CreateSizeChanger()
+        {
+            SizeChanger = AddUIComponent<UIPanel>();
+            SizeChanger.size = new Vector2(11, 11);
+            SizeChanger.atlas = ResizeAtlas;
+            SizeChanger.backgroundSprite = "resize";
+            SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
+
+            var handle = SizeChanger.AddUIComponent<UIDragHandle>();
+            handle.size = SizeChanger.size;
+            handle.relativePosition = Vector2.zero;
+            handle.target = SizeChanger;
+        }
+
+        private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
+        {
+            size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
+            SizeChanger.relativePosition = size - SizeChanger.size;
+        }
+
         private void CreateEditor<EditorType>() where EditorType : Editor
         {
             var editor = AddUIComponent<EditorType>();
@@ -90,10 +122,21 @@ namespace NodeMarkup.UI
             TabStrip.AddTab(editor.Name);
 
             editor.isVisible = false;
-            editor.size = EditorSize;
             editor.relativePosition = EditorPosition;
 
             Editors.Add(editor);
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            foreach (var editor in Editors)
+                editor.size = size - new Vector2(0, Header.height + TabStrip.height);
+
+            if (Header != null)
+                Header.size = new Vector2(size.x, Header.height);
+            if (SizeChanger != null)
+                SizeChanger.relativePosition = size - SizeChanger.size;
         }
 
         public void UpdatePanel() => CurrentEditor?.UpdateEditor();
@@ -166,16 +209,6 @@ namespace NodeMarkup.UI
         }
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
-
-        private void Buttons_OnPaste()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Buttons_OnCopy()
-        {
-            throw new NotImplementedException();
-        }
 
         private void OnClear() => Tool.DeleteAllMarking();
         private void OnCopy() => Tool.CopyMarkup();
