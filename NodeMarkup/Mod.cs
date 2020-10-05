@@ -78,15 +78,23 @@ namespace NodeMarkup
         public override void OnLevelLoaded(LoadMode mode)
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelLoaded)}");
-            if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame || mode == LoadMode.NewGameFromScenario || mode == LoadMode.NewAsset)
+            switch (mode)
             {
-                NodeMarkupTool.Create();
-                MarkupManager.Init();
+                case LoadMode.NewGame:
+                case LoadMode.LoadGame:
+                case LoadMode.NewGameFromScenario:
+                case LoadMode.NewAsset:
+                case LoadMode.LoadAsset:
+                case LoadMode.NewMap:
+                case LoadMode.LoadMap:
+                    NodeMarkupTool.Create();
+                    MarkupManager.Init();
 
-                EarlyAccess.CheckAccess();
-                ShowWhatsNew();
-                ShowBetaWarning();
-                ShowLoadError();
+                    EarlyAccess.CheckAccess();
+                    ShowWhatsNew();
+                    ShowBetaWarning();
+                    ShowLoadError();
+                    break;
             }
         }
 
