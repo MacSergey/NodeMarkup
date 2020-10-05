@@ -127,7 +127,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup makrup, PasteMap map, out MarkupLine line)
+        public static bool FromXml(XElement config, Markup makrup, ObjectsMap map, out MarkupLine line)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
             if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair))
@@ -157,7 +157,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public abstract void FromXml(XElement config, PasteMap map);
+        public abstract void FromXml(XElement config, ObjectsMap map);
 
         public enum LineType
         {
@@ -217,7 +217,7 @@ namespace NodeMarkup.Manager
             config.Add(Rule.ToXml());
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             if (config.Element(MarkupLineRawRule<Style>.XmlName) is XElement ruleConfig && MarkupLineRawRule<Style>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<Style> rule))
                 SetRule(rule);
@@ -331,7 +331,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {

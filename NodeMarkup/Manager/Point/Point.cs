@@ -20,7 +20,7 @@ namespace NodeMarkup.Manager
         public static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
         public static string XmlName { get; } = "P";
 
-        public static bool FromId(int id, Markup markup, PasteMap map, out MarkupPoint point)
+        public static bool FromId(int id, Markup markup, ObjectsMap map, out MarkupPoint point)
         {
             point = null;
 
@@ -28,13 +28,10 @@ namespace NodeMarkup.Manager
             var num = GetNum(id);
             var type = GetType(id);
 
-            if (map != null)
-            {
-                if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
-                    enterId = targetSegment.Segment;
-                if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
-                    num = GetNum(targetPoint.Point);
-            }
+            if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
+                enterId = targetSegment.Segment;
+            if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
+                num = GetNum(targetPoint.Point);
 
             return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, type, out point);
         }
@@ -112,13 +109,13 @@ namespace NodeMarkup.Manager
             );
             return config;
         }
-        public static void FromXml(XElement config, Markup markup, PasteMap map)
+        public static void FromXml(XElement config, Markup markup, ObjectsMap map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
             if (FromId(id, markup, map, out MarkupPoint point))
                 point.FromXml(config, map);
         }
-        public void FromXml(XElement config, PasteMap map)
+        public void FromXml(XElement config, ObjectsMap map)
         {
             _offset = config.GetAttrValue<float>("O") * (map.IsMirror ? -1 : 1);
         }
@@ -216,7 +213,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, PasteMap map, out MarkupPointPair pair)
+        public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair)
         {
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);

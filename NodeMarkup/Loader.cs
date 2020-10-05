@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Globalization;
 using HarmonyLib;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -119,7 +120,7 @@ namespace NodeMarkup
                     var xml = reader.ReadToEnd();
                     var config = Parse(xml);
 
-                    MarkupManager.FromXml(config);
+                    MarkupManager.FromXml(config, new ObjectsMap());
 
                     Logger.LogDebug($"Data was imported");
 

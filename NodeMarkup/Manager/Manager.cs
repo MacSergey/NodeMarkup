@@ -109,6 +109,14 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
         }
+        public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
+        {
+            if (!AssetDataExtension.TryGetValue(buildingInfo, out AssetMarking assetMarking))
+                return;
+
+            FromXml(assetMarking.Config, assetMarking.GetMap(segments.m_buffer, nodes.m_buffer), false);
+        }
+
         public static void DeleteAll()
         {
             Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(DeleteAll)}");
@@ -125,15 +133,16 @@ namespace NodeMarkup.Manager
             }
             return confix;
         }
-        public static void FromXml(XElement config)
+        public static void FromXml(XElement config, ObjectsMap map, bool clear = true)
         {
-            NodesMarkup.Clear();
+            if (clear)
+                NodesMarkup.Clear();
             LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);
             foreach (var markupConfig in config.Elements(Markup.XmlName))
             {
-                if (Markup.FromXml(version, markupConfig, out Markup markup))
+                if (Markup.FromXml(version, markupConfig, map, out Markup markup))
                     NeedUpdate.Add(markup.Id);
             }
         }

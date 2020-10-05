@@ -95,7 +95,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Angle = config.GetAttrValue("A", DefaultAngle);
@@ -486,7 +486,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Output));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             AngleBetween = config.GetAttrValue("A", DefaultAngle);

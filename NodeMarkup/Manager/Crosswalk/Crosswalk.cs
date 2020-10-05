@@ -196,7 +196,7 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public void FromXml(XElement config, PasteMap map)
+        public void FromXml(XElement config, ObjectsMap map)
         {
             _rightBorder = GetBorder(map.IsMirror ? "LB" : "RB");
             _leftBorder = GetBorder(map.IsMirror ? "RB" : "LB");
@@ -213,7 +213,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public static bool FromXml(XElement config, Markup markup, PasteMap map, out MarkupCrosswalk crosswalk)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupCrosswalk crosswalk)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             if (markup.TryGetLine(lineId, map, out MarkupCrosswalkLine line))

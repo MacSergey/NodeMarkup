@@ -70,7 +70,7 @@ namespace NodeMarkup.Manager
             }
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, PasteMap map, out MarkupFiller filler)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
         {
             if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, map, out FillerStyle style))
             {

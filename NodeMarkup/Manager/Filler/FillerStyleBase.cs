@@ -263,7 +263,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("MO", MedianOffset));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             MedianOffset = config.GetAttrValue("MO", DefaultOffset);

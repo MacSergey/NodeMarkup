@@ -826,7 +826,7 @@ namespace NodeMarkup
         private void Paste()
         {
             Markup.Clear();
-            var map = new PasteMap(IsMirror);
+            var map = new ObjectsMap(IsMirror);
             var enters = Markup.Enters.ToArray();
             var max = Math.Min(Tool.Buffer.Enters.Length, enters.Length);
             for (var i = 0; i < max; i += 1)

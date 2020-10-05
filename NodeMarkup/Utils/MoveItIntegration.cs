@@ -46,7 +46,7 @@ namespace NodeMarkup.Utils
 
         public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
             => Paste(targetInstanceID, record, sourceMap, PasteMapFiller);
-        private void PasteMapFiller(Markup markup, PasteMap map, Dictionary<InstanceID, InstanceID> sourceMap)
+        private void PasteMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             foreach (var source in sourceMap.Where(p => IsCorrect(p)))
                 map[new ObjectId() { Segment = source.Key.NetSegment }] = new ObjectId() { Segment = source.Value.NetSegment };
@@ -54,7 +54,7 @@ namespace NodeMarkup.Utils
 
         public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation)
             => Paste(targetInstanceID, record, sourceMap, MirrorMapFiller);
-        private void MirrorMapFiller(Markup markup, PasteMap map, Dictionary<InstanceID, InstanceID> sourceMap)
+        private void MirrorMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             foreach (var source in sourceMap.Where(p => IsCorrect(p)))
             {
@@ -68,13 +68,13 @@ namespace NodeMarkup.Utils
             }
         }
 
-        private void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, PasteMap, Dictionary<InstanceID, InstanceID>> mapFiller)
+        private void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, ObjectsMap, Dictionary<InstanceID, InstanceID>> mapFiller)
         {
             if (targetInstanceID.Type != InstanceType.NetNode || !(record is XElement config))
                 return;
 
             ushort nodeID = targetInstanceID.NetNode;
-            var map = new PasteMap(true);
+            var map = new ObjectsMap(true);
             var markup = MarkupManager.Get(nodeID);
             mapFiller(markup, map, sourceMap);
             markup.FromXml(Mod.Version, config, map);

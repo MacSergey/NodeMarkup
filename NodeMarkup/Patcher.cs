@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace NodeMarkup
@@ -42,6 +43,8 @@ namespace NodeMarkup
             PatchNetManagerUpdateNode(harmony);
             PatchNetSegmentUpdateLanes(harmony);
             PatchNetManagerSimulationStepImpl(harmony);
+            PatchBuildingDecorationLoadPaths(harmony);
+            PatchLoadAssetPanelOnLoad(harmony);
         }
 
         private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
@@ -58,6 +61,14 @@ namespace NodeMarkup
 
             Logger.LogDebug($"Patch {methodName}");
             harmony.Patch(original, postfix: new HarmonyMethod(postfix));
+            Logger.LogDebug($"Patched {methodName}");
+        }
+        private static void AddTranspiler(Harmony harmony, MethodInfo original, MethodInfo transpiler)
+        {
+            var methodName = $"{original.DeclaringType.Name}.{original.Name}";
+
+            Logger.LogDebug($"Patch {methodName}");
+            harmony.Patch(original, transpiler: new HarmonyMethod(transpiler));
             Logger.LogDebug($"Patched {methodName}");
         }
 
@@ -97,6 +108,57 @@ namespace NodeMarkup
         {
             var original = AccessTools.Method(typeof(NetManager), "SimulationStepImpl");
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix));
+
+            AddPostfix(harmony, original, postfix);
+        }
+        private static void PatchBuildingDecorationLoadPaths(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler));
+
+            AddTranspiler(harmony, original, transpiler);
+        }
+        private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            var segmentBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempSegmentBuffer));
+            var nodeBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempNodeBuffer));
+            var clearMethod = AccessTools.DeclaredMethod(nodeBufferField.FieldType, nameof(FastList<ushort>.Clear));
+
+            var matchCount = 0;
+            var inserted = false;
+            var enumerator = instructions.GetEnumerator();
+            var prevInstruction = (CodeInstruction)null;
+            while (enumerator.MoveNext())
+            {
+                var instruction = enumerator.Current;
+
+                if (prevInstruction != null && prevInstruction.opcode == OpCodes.Ldfld && prevInstruction.operand == nodeBufferField && instruction.opcode == OpCodes.Callvirt && instruction.operand == clearMethod)
+                    matchCount += 1;
+
+                if(!inserted && matchCount == 2)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Ldloc_0);
+                    yield return new CodeInstruction(OpCodes.Ldfld, segmentBufferField);
+                    yield return new CodeInstruction(OpCodes.Ldloc_0);
+                    yield return new CodeInstruction(OpCodes.Ldfld, nodeBufferField);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(MarkupManager), nameof(MarkupManager.PlaceIntersection)));
+                    inserted = true;
+                }
+
+                if(prevInstruction != null)
+                    yield return prevInstruction;
+
+                prevInstruction = instruction;
+            }
+
+            if (prevInstruction != null)
+                yield return prevInstruction;
+        }
+        private static void PatchLoadAssetPanelOnLoad(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
+            var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
 
             AddPostfix(harmony, original, postfix);
         }

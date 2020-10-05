@@ -8,10 +8,10 @@ namespace NodeMarkup.Utils
 {
     public static class VersionMigration
     {
-        public static PasteMap Befor1_2(Markup markup, PasteMap map)
+        public static ObjectsMap Befor1_2(Markup markup, ObjectsMap map)
         {
             if (map == null)
-                map = new PasteMap();
+                map = new ObjectsMap();
 
             foreach(var enter in markup.Enters)
             {

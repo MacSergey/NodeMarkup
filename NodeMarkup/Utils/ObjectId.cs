@@ -11,6 +11,11 @@ namespace NodeMarkup.Utils
     {
         private long Id;
 
+        public ushort Node
+        {
+            get => (Id & (long)ObjectType.Node) == 0 ? (ushort)0 : (ushort)(Id & (long)ObjectType.Data);
+            set => Id = (long)ObjectType.Node | value;
+        }
         public ushort Segment
         {
             get => (Id & (long)ObjectType.Segment) == 0 ? (ushort)0 : (ushort)(Id & (long)ObjectType.Data);
@@ -28,9 +33,22 @@ namespace NodeMarkup.Utils
 
         public override bool Equals(object obj) => obj is ObjectId objectId && objectId == this;
         public override int GetHashCode() => Id.GetHashCode();
-        public override string ToString() => $"{Type}: {Id}";
+        public override string ToString()
+        {
+            switch (Type)
+            {
+                case ObjectType.Node:
+                    return $"{Type}: {Node}";
+                case ObjectType.Segment:
+                    return $"{Type}: {Segment}";
+                case ObjectType.Point:
+                    return $"{Type}: {Point}";
+                default:
+                    return $"{Type}: {Id}";
+            }
+        }
     }
-    public class PasteMap : IEnumerable<KeyValuePair<ObjectId, ObjectId>>
+    public class ObjectsMap : IEnumerable<KeyValuePair<ObjectId, ObjectId>>
     {
         public bool IsMirror { get; set; }
         private Dictionary<ObjectId, ObjectId> Map { get; } = new Dictionary<ObjectId, ObjectId>();
@@ -41,7 +59,7 @@ namespace NodeMarkup.Utils
             set => Map[key] = value;
         }
 
-        public PasteMap(bool isMirror = false)
+        public ObjectsMap(bool isMirror = false)
         {
             IsMirror = isMirror;
         }
@@ -68,8 +86,8 @@ namespace NodeMarkup.Utils
     {
         Data = 0xFFFFFFFFL,
         Type = Data << 32,
-        Segment = 1L << 32,
-        Point = 2L << 32,
-
+        Node = 1L << 32,
+        Segment = 2L << 32,
+        Point = 4L << 32,
     }
 }

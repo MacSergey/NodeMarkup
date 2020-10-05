@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
@@ -145,7 +145,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
@@ -199,7 +199,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
@@ -336,7 +336,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("CS", CenterSolid ? 1 : 0));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
@@ -477,7 +477,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("I", Invert ? 1 : 0));
             return config;
         }
-        public override void FromXml(XElement config, PasteMap map)
+        public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Base = config.GetAttrValue("B", DefaultSharkBaseLength);

@@ -1460,7 +1460,20 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на - Fix chevron line parts overlap.
-        ///- New chevron middle line calculation algorithm.
+        ///- New chevron middle line calculation algorithm
+        ///- added shark teeth line
+        ///- added solid&amp;dashed stop line
+        ///- added shark teeth stop line
+        ///- added chess board crosswalk
+        ///- Added support moveit mirroring
+        ///- Fix filler vertex duplicates
+        ///- Added copy/paste marking
+        ///- Added style modifier settings
+        ///- added &quot;Only if will affect others items&quot; option to confirm before deleting
+        ///- added settings tabs
+        ///- duplicate templates
+        ///- added the ability to resize panel
+        ///- added line with ov [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

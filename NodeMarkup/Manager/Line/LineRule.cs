@@ -147,7 +147,7 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public static bool FromXml(XElement config, MarkupLine line, PasteMap map, out MarkupLineRawRule<StyleType> rule)
+        public static bool FromXml(XElement config, MarkupLine line, ObjectsMap map, out MarkupLineRawRule<StyleType> rule)
         {
             if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, out StyleType style))
             {

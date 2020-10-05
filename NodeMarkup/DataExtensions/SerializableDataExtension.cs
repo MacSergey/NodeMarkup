@@ -34,7 +34,7 @@ namespace NodeMarkup.Utils
                     Logger.LogDebug(decompress);
 #endif
                     var config = Loader.Parse(decompress);
-                    MarkupManager.FromXml(config);
+                    MarkupManager.FromXml(config, new ObjectsMap());
 
                     sw.Stop();
                     Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
