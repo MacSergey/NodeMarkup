@@ -97,7 +97,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataExtensions\AssetData.cs" />
+    <Compile Include="DataExtensions\LoadingExtension.cs" />
     <Compile Include="EarlyAccess.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Manager\Crosswalk\Crosswalk.cs" />
     <Compile Include="Manager\Crosswalk\CrosswalkStyleBase.cs" />
@@ -174,7 +177,7 @@
     <Compile Include="Utils\ObjectId.cs" />
     <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
-    <Compile Include="Utils\Serializer.cs" />
+    <Compile Include="DataExtensions\SerializableData.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
     <Compile Include="Utils\VersionMigration.cs" />
   </ItemGroup>
@@ -278,7 +281,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

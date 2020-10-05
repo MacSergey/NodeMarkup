@@ -71,7 +71,7 @@ namespace NodeMarkup.UI
 
         private void AddData()
         {
-            foreach (var file in Serializer.GetImportList())
+            foreach (var file in Loader.GetImportList())
             {
                 var match = Regex.Match(file);
                 if (!match.Success)
@@ -83,7 +83,7 @@ namespace NodeMarkup.UI
 
         protected virtual void ImportClick()
         {
-            var result = Serializer.OnImportData(DropDown.SelectedObject);
+            var result = Loader.ImportData(DropDown.SelectedObject);
 
             var resultMessageBox = ShowModal<OkMessageBox>();
             resultMessageBox.CaprionText = NodeMarkup.Localize.Settings_ImportMarkingCaption;

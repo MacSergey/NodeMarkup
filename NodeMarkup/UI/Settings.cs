@@ -350,7 +350,7 @@ namespace NodeMarkup.UI
 
             void Click()
             {
-                var result = Serializer.OnDumpData(out string path);
+                var result = Loader.DumpData(out string path);
 
                 if (result)
                 {

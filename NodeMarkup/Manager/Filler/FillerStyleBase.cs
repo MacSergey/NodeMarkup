@@ -56,9 +56,7 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
             if (target is IFillerStyle fillerTarget)
-            {
                 fillerTarget.MedianOffset = MedianOffset;
-            }
         }
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -73,8 +71,8 @@ namespace NodeMarkup.Manager
         public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
             var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
-            var rect = GetRect(trajectories);
-            return GetDashes(trajectories, rect, filler.Markup.Height);
+            var rect = GetRect(trajectories, out float height);
+            return GetDashes(trajectories, rect, height);
         }
         public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
@@ -214,8 +212,9 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        protected Rect GetRect(ILineTrajectory[] trajectories)
+        protected Rect GetRect(ILineTrajectory[] trajectories, out float height)
         {
+            height = 0;
             if (!trajectories.Any())
                 return Rect.zero;
 
@@ -237,8 +236,10 @@ namespace NodeMarkup.Manager
                         Set(straightTrajectory.Trajectory.b);
                         break;
                 }
+                height += (trajectory.StartPosition.y + trajectory.EndPosition.y) / 2;
             }
 
+            height /= trajectories.Length;
             return rect;
 
             void Set(Vector3 pos)

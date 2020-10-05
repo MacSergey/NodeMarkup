@@ -25,7 +25,7 @@ namespace NodeMarkup.Manager
                 var xml = UI.Settings.Templates.value;
                 if (!string.IsNullOrEmpty(xml))
                 {
-                    var config = Serializer.Parse(xml);
+                    var config = Loader.Parse(xml);
                     FromXml(config);
                 }
 
