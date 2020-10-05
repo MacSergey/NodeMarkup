@@ -140,8 +140,7 @@ namespace NodeMarkup.UI.Editors
             {
                 regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
                 RemoveRulePanel(rulePanel);
-                RefreshItem();
-                RefreshRulePanels();
+                Refresh();
                 DeleteAddButton();
                 AddAddButton();
                 return true;
@@ -207,8 +206,13 @@ namespace NodeMarkup.UI.Editors
             RefreshRulePanels();
         }
         protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveConnect(line);
+        public void Refresh()
+        {
+            RefreshItem();
+            RefreshRulePanels();
+        }
         public void RefreshItem() => SelectItem.Refresh();
-        public void RefreshRulePanels()
+        private void RefreshRulePanels()
         {
             var rulePanels = SettingsPanel.components.OfType<RulePanel>().ToArray();
 
@@ -261,7 +265,7 @@ namespace NodeMarkup.UI.Editors
         {
             Editor = editor;
         }
-
+        public override void End() => Editor.Refresh();
         public override void OnUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()
         {
@@ -292,6 +296,12 @@ namespace NodeMarkup.UI.Editors
 
     public class LineItem : EditableItem<MarkupLine, LineIcon>
     {
+        private bool HasOverlapped { get; set; }
+        public override Color32 NormalColor => HasOverlapped ? new Color32(246, 85, 85, 255) : base.NormalColor;
+        public override Color32 HoveredColor => HasOverlapped ? new Color32(247, 100, 100, 255) : base.HoveredColor;
+        public override Color32 PressedColor => HasOverlapped ? new Color32(248, 114, 114, 255) : base.PressedColor;
+        public override Color32 FocusColor => HasOverlapped ? new Color32(249, 127, 127, 255) : base.FocusColor;
+
         public override void Init() => Init(true, true);
 
         protected override void OnObjectSet() => SetIcon();
@@ -299,6 +309,9 @@ namespace NodeMarkup.UI.Editors
         {
             base.Refresh();
             SetIcon();
+
+            HasOverlapped = Object.HasOverlapped;
+            OnSelectChanged();
         }
         private void SetIcon()
         {

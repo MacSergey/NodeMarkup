@@ -33,6 +33,8 @@ namespace NodeMarkup.Manager
         public bool IsStopLine => PointPair.IsStopLine;
         public bool IsCrosswalk => PointPair.IsCrosswalk;
 
+        public bool HasOverlapped => Rules.Any(r => r.IsOverlapped);
+
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
 

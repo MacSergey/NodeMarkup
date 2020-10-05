@@ -40,22 +40,10 @@ namespace NodeMarkup.Manager
                 if (!GetFromT(out float thisFromT) || !GetToT(out float thisToT))
                     return false;
 
+                var thisMin = Mathf.Min(thisFromT, thisToT);
+                var thisMax = Mathf.Max(thisFromT, thisToT);
 
-                foreach (var rule in Line.Rules)
-                {
-                    if (rule == this)
-                        continue;
-
-                    if (rule.GetFromT(out float fromT) && rule.GetToT(out float toT))
-                    {
-                        var min = Mathf.Min(fromT, toT);
-                        var max = Mathf.Max(fromT, toT);
-                        if ((min < thisFromT && thisFromT < max) || (min < thisToT && thisToT < max))
-                            return true;
-                    }
-                }
-
-                return false;
+                return Line.Rules.Any(r => r != this && r.GetFromT(out float fromT) && r.GetToT(out float toT) && Mathf.Min(fromT, toT) <= thisMin && thisMax <= Mathf.Max(fromT, toT));
             }
         }
 
@@ -173,7 +161,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-    }  
+    }
     public struct MarkupLineRule
     {
         public float Start;
