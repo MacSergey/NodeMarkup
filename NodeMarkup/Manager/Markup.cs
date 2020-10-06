@@ -220,6 +220,11 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
+        public void ResetOffsets()
+        {
+            foreach (var enter in EntersList)
+                enter.ResetOffsets();
+        }
 
         #endregion
 

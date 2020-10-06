@@ -171,6 +171,12 @@ namespace NodeMarkup.Manager
                 Position = null;
         }
 
+        public void ResetOffsets()
+        {
+            foreach (var point in Points)
+                point.Offset = 0;
+        }
+
         public override string ToString() => Id.ToString();
     }
     public class DriveLane

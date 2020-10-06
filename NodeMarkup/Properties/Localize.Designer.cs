@@ -1953,6 +1953,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset all points offset.
+        /// </summary>
+        public static string Settings_ResetPointsOffset {
+            get {
+                return ResourceManager.GetString("Settings_ResetPointsOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Shortcuts.
         /// </summary>
         public static string Settings_Shortcuts {
@@ -2207,7 +2216,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to clear all node #{0} markings?
-        ///This action cannot be undone.
+        ///This action cannot be undone..
         /// </summary>
         public static string Tool_ClearMarkingsMessage {
             get {
@@ -2482,6 +2491,25 @@ namespace NodeMarkup {
         public static string Tool_PasteMarkingsMessage {
             get {
                 return ResourceManager.GetString("Tool_PasteMarkingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset all points offset.
+        /// </summary>
+        public static string Tool_ResetOffsetsCaption {
+            get {
+                return ResourceManager.GetString("Tool_ResetOffsetsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to reset all node #{0} points offset?
+        ///This action cannot be undone..
+        /// </summary>
+        public static string Tool_ResetOffsetsMessage {
+            get {
+                return ResourceManager.GetString("Tool_ResetOffsetsMessage", resourceCulture);
             }
         }
     }

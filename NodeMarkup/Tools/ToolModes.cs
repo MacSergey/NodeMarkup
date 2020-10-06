@@ -187,15 +187,19 @@ namespace NodeMarkup
                     fillerToolMode.DisableByAlt = false;
                 return true;
             }
-            else if (NodeMarkupTool.DeleteAllShortcut.IsPressed(e))
+            
+            if (NodeMarkupTool.DeleteAllShortcut.IsPressed(e))
             {
                 Tool.DeleteAllMarking();
                 return true;
             }
-            else if (Panel?.OnShortcut(e) == true)
+            if(NodeMarkupTool.ResetOffsetsShortcut.IsPressed(e))
+            {
+                Tool.ResetAllOffsets();
                 return true;
-            else
-                return false;
+            }
+
+            return Panel?.OnShortcut(e) == true;
         }
         public override void OnPrimaryMouseClicked(Event e)
         {

@@ -203,6 +203,7 @@ namespace NodeMarkup.UI
             var keymappings = keymappingsPanel.gameObject.AddComponent<KeymappingsPanel>();
             keymappings.AddKeymapping(Localize.Settings_ActivateTool, NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ResetPointsOffset, NodeMarkupTool.ResetOffsetsShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
             keymappings.AddKeymapping(Localize.Settings_AddNewFiller, NodeMarkupTool.AddFillerShortcut);
 

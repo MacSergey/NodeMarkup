@@ -25,6 +25,7 @@ namespace NodeMarkup
         #region STATIC
         public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
         public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
+        public static SavedInputKey ResetOffsetsShortcut { get; } = new SavedInputKey(nameof(ResetOffsetsShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.R, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
         public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
@@ -283,6 +284,27 @@ namespace NodeMarkup
             bool Delete()
             {
                 Markup.Clear();
+                Panel.UpdatePanel();
+                return true;
+            }
+        }
+        public void ResetAllOffsets()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ResetAllOffsets)}");
+
+            if (UI.Settings.DeleteWarnings)
+            {
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = Localize.Tool_ResetOffsetsCaption;
+                messageBox.MessageText = string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id);
+                messageBox.OnButton1Click = Reset;
+            }
+            else
+                Reset();
+
+            bool Reset()
+            {
+                Markup.ResetOffsets();
                 Panel.UpdatePanel();
                 return true;
             }

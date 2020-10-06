@@ -332,7 +332,7 @@ This action cannot be undone</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Do you really want to clear all node #{0} markings?
-This action cannot be undone</value>
+This action cannot be undone.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Click to create a line</value>
@@ -977,5 +977,15 @@ This action cannot be undone.</value>
   </data>
   <data name="Filler_Vertex" xml:space="preserve">
     <value>Vertex</value>
+  </data>
+  <data name="Settings_ResetPointsOffset" xml:space="preserve">
+    <value>Reset all points offset</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Reset all points offset</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Do you really want to reset all node #{0} points offset?
+This action cannot be undone.</value>
   </data>
 </root>
