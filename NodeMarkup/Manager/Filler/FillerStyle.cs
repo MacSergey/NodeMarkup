@@ -523,7 +523,7 @@ namespace NodeMarkup.Manager
             Step = config.GetAttrValue("S", DefaultStepGrid);
             Invert = config.GetAttrValue("I", 0) == 1;
             Output = config.GetAttrValue("O", 0);
-            StartingFrom = (From)config.GetAttrValue("SF", (int)From.Edge);
+            StartingFrom = (From)config.GetAttrValue("SF", (int)From.Vertex);
         }
 
         public class ChevronFromPropertyPanel : EnumPropertyPanel<From, ChevronFromPropertyPanel.ChevronFromDropDown>
