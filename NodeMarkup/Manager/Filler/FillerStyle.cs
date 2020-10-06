@@ -326,7 +326,12 @@ namespace NodeMarkup.Manager
             var width = Width / coef;
 
             var bezier = GetMiddleBezier(trajectories);
-            var line = GetMiddleLine(bezier, halfAngelRad, rect);
+            var lines = new List<ILineTrajectory>();
+            if (GetMiddleLineBefore(bezier, halfAngelRad, rect, out Line3 lineBefore))
+                lines.Add(new StraightTrajectory(lineBefore).Invert());
+            lines.Add(new BezierTrajectory(bezier));
+            if (GetMiddleLineAfter(bezier, halfAngelRad, rect, out Line3 lineAfter))
+                lines.Add(new StraightTrajectory(lineAfter));
 
             StyleHelper.GetParts(Width, 0, out int partsCount, out partWidth);
             var partStep = partWidth / coef;
@@ -334,7 +339,7 @@ namespace NodeMarkup.Manager
             positions = new List<Vector3[]>();
             directions = new List<Vector3>();
 
-            foreach (var itemPositions in GetItemsPositions(bezier, line, width, width * (Step - 1)))
+            foreach (var itemPositions in GetItemsPositions(lines, width, width * (Step - 1)))
             {
                 var dir = (itemPositions[1] - itemPositions[0]).normalized;
                 var dirRight = dir.TurnRad(halfAngelRad, true);
@@ -359,7 +364,7 @@ namespace NodeMarkup.Manager
                 directions.Add(dirLeft);
             }
         }
-        private IEnumerable<Vector3[]> GetItemsPositions(Bezier3 bezier, Line3 line, float dash, float space)
+        private IEnumerable<Vector3[]> GetItemsPositions(List<ILineTrajectory> lines, float dash, float space)
         {
             var dashesT = new List<float[]>();
 
@@ -373,7 +378,7 @@ namespace NodeMarkup.Manager
                 var currentT = 0f;
                 var nextT = Travel(currentT, startSpace);
 
-                while (nextT < 2)
+                while (nextT < lines.Count)
                 {
                     if (isDash)
                         dashesT.Add(new float[] { currentT, nextT });
@@ -386,8 +391,8 @@ namespace NodeMarkup.Manager
                 }
 
                 float endSpace;
-                if (isDash || ((Position(2) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
-                    endSpace = (Position(2) - Position(prevT)).magnitude;
+                if (isDash || ((Position(lines.Count) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
+                    endSpace = (Position(lines.Count) - Position(prevT)).magnitude;
                 else
                     endSpace = tempLength;
 
@@ -401,19 +406,35 @@ namespace NodeMarkup.Manager
                 yield return new Vector3[] { Position(dashT[0]), Position(dashT[1]) };
 
 
-            Vector3 Position(float t) => t <= 1 ? bezier.Position(t) : line.a + (line.b - line.a) * (t - 1);
+            Vector3 Position(float t)
+            {
+                var i = (int)t == t ? (int)t - 1 : (int)t;
+                return lines[i].Position(t - i);
+            }
             float Travel(float current, float distance)
             {
-                if (current >= 1)
-                    return distance / (line.b - line.a).magnitude + current;
+                var i = (int)current;
+                var next = 1f;
+                while (i < lines.Count)
+                {                   
+                    var line = lines[i];
+                    var start = current - i;
+                    next = line.Travel(start, distance);
 
-                var next = bezier.Travel(current, distance);
-                if (next < 1)
-                    return next;
-                else
-                    return (distance - (Position(1) - Position(current)).magnitude) / (line.b - line.a).magnitude + 1;
+                    if (next < 1)
+                        break;
+                    else
+                    {
+                        i += 1;
+                        current = i;
+                        distance -= (line.Position(1f) - line.Position(start)).magnitude;
+                    }
+                }
+
+                return i + next;
             }
         }
+
         private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
         {
             var leftIndex = Output % trajectories.Length;
@@ -449,25 +470,40 @@ namespace NodeMarkup.Manager
 
             return cutT == 1f ? middle : middle.Cut(0, cutT);
         }
-        private Line3 GetMiddleLine(Bezier3 middleBezier, float halfAngelRad, Rect rect)
+
+        private bool GetMiddleLineBefore(Bezier3 middleBezier, float halfAngelRad, Rect rect, out Line3 line)
+            => GetMiddleLine(middleBezier.a, (middleBezier.a - middleBezier.b).normalized, halfAngelRad, rect, out line);
+        private bool GetMiddleLineAfter(Bezier3 middleBezier, float halfAngelRad, Rect rect, out Line3 line)
+            => GetMiddleLine(middleBezier.d, (middleBezier.d - middleBezier.c).normalized, halfAngelRad, rect, out line);
+
+        private bool GetMiddleLine(Vector3 pos, Vector3 dir, float halfAngelRad, Rect rect, out Line3 line)
         {
-            var middleDir = (middleBezier.d - middleBezier.c).normalized;
-            var dirRight = middleDir.TurnRad(halfAngelRad, true);
-            var dirLeft = middleDir.TurnRad(halfAngelRad, false);
+            var dirRight = dir.TurnRad(halfAngelRad, true);
+            var dirLeft = dir.TurnRad(halfAngelRad, false);
 
             GetRail(dirRight.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
             GetRail(dirLeft.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
 
             var t = new float[] { 0, GetT(rightRail.a, dirRight), GetT(rightRail.b, dirRight), GetT(leftRail.a, dirLeft), GetT(leftRail.b, dirLeft) }.Max();
 
-            return new Line3(middleBezier.d, middleBezier.d + middleDir * t);
+            if (t > 0.1)
+            {
+                line = new Line3(pos, pos + dir * t);
+                return true;
+            }
+            else
+            {
+                line = default;
+                return false;
+            }
 
             float GetT(Vector3 railPos, Vector3 railDir)
             {
-                Line2.Intersect(middleBezier.d.XZ(), (middleBezier.d + middleDir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
+                Line2.Intersect(pos.XZ(), (pos + dir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
                 return p;
             }
         }
+
 
         public override XElement ToXml()
         {
