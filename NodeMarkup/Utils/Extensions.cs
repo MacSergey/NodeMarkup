@@ -273,6 +273,9 @@ namespace NodeMarkup.Utils
                 label.isVisible = false;
             return newGroup;
         }
+
+        public static int NextIndex(this int i, int count, int shift = 1) => (i + shift) % count;
+        public static int PrevIndex(this int i, int count, int shift = 1) => shift > i ? i + count - (shift % count) : i - shift;
     }
 
     public struct BezierPoint

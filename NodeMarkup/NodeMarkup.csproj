@@ -97,8 +97,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataExtensions\AssetDataExtension.cs" />
-    <Compile Include="DataExtensions\LoadingExtension.cs" />
+    <Compile Include="DataExtensions\AssetData.cs" />
+    <Compile Include="DataExtensions\Loading.cs" />
     <Compile Include="EarlyAccess.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Logger.cs" />
@@ -177,7 +177,7 @@
     <Compile Include="Utils\ObjectId.cs" />
     <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
-    <Compile Include="DataExtensions\SerializableDataExtension.cs" />
+    <Compile Include="DataExtensions\SerializableData.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
     <Compile Include="Utils\VersionMigration.cs" />
   </ItemGroup>

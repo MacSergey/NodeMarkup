@@ -22,7 +22,6 @@ namespace NodeMarkup.Manager
         float Angle { get; set; }
     }
 
-
     public abstract class SimpleFillerStyle : FillerStyle, IPeriodicFiller, IRotateFiller
     {
         float _angle;
@@ -162,7 +161,7 @@ namespace NodeMarkup.Manager
         float _step;
         bool _invert;
         int _output;
-        bool _newAlgorithm;
+        bool _fromEdge;
 
         public float AngleBetween
         {
@@ -201,12 +200,12 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public bool NewAlgorithm
+        public bool FromEdge
         {
-            get => _newAlgorithm;
+            get => _fromEdge;
             set
             {
-                _newAlgorithm = value;
+                _fromEdge = value;
                 StyleChanged();
             }
         }
@@ -239,7 +238,7 @@ namespace NodeMarkup.Manager
             if (!isTemplate)
             {
                 components.Add(AddInvertAndTurnProperty(this, parent));
-                components.Add(AddNewAlgorithmProperty(this, parent));
+                //components.Add(AddFromEdgeProperty(this, parent));
             }
 
             return components;
@@ -251,7 +250,7 @@ namespace NodeMarkup.Manager
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.CheckMin = true;
-            angleProperty.MinValue = 45;
+            angleProperty.MinValue = 30;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 150;
             angleProperty.Init();
@@ -278,14 +277,14 @@ namespace NodeMarkup.Manager
 
             return buttonsPanel;
         }
-        protected static BoolPropertyPanel AddNewAlgorithmProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        protected static BoolPropertyPanel AddFromEdgeProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
-            var newAlgorithmProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            newAlgorithmProperty.Text = "New algorithm";
-            newAlgorithmProperty.Init();
-            newAlgorithmProperty.Value = chevronStyle.NewAlgorithm;
-            newAlgorithmProperty.OnValueChanged += (bool value) => chevronStyle.NewAlgorithm = value;
-            return newAlgorithmProperty;
+            var fromEdgeProperty = parent.AddUIComponent<BoolPropertyPanel>();
+            fromEdgeProperty.Text = "From edge";
+            fromEdgeProperty.Init();
+            fromEdgeProperty.Value = chevronStyle.FromEdge;
+            fromEdgeProperty.OnValueChanged += (bool value) => chevronStyle.FromEdge = value;
+            return fromEdgeProperty;
         }
 
         protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
@@ -418,19 +417,16 @@ namespace NodeMarkup.Manager
         private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
         {
             var leftIndex = Output % trajectories.Length;
-            var rightIndex = leftIndex == 0 ? trajectories.Length - 1 : leftIndex - 1;
+            var rightIndex = leftIndex.PrevIndex(trajectories.Length, FromEdge ? 2 : 1);
             var left = trajectories[leftIndex];
             var right = trajectories[rightIndex];
 
-            if(NewAlgorithm)
-            {
-                var leftLength = left.Length;
-                var rightLength = right.Length;
-                if (leftLength < rightLength)
-                    right = right.Cut(right.Travel(0, rightLength - leftLength), 1);
-                else
-                    left = left.Cut(0, left.Travel(0, rightLength));
-            }
+            var leftLength = left.Length;
+            var rightLength = right.Length;
+            if (leftLength < rightLength)
+                right = right.Cut(right.Travel(0, rightLength - leftLength), 1);
+            else
+                left = left.Cut(0, left.Travel(0, rightLength));
 
             var middle = new Bezier3()
             {
@@ -447,7 +443,7 @@ namespace NodeMarkup.Manager
             {
                 if (i == leftIndex || i == rightIndex)
                     continue;
-                if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && intersect.FirstT < cutT)
+                if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && 0.1 <= intersect.FirstT && intersect.FirstT < cutT)
                     cutT = intersect.FirstT;
             }
 
@@ -462,11 +458,7 @@ namespace NodeMarkup.Manager
             GetRail(dirRight.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
             GetRail(dirLeft.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
 
-            var t = 0f;
-            t = Mathf.Max(t, GetT(rightRail.a, dirRight));
-            t = Mathf.Max(t, GetT(rightRail.b, dirRight));
-            t = Mathf.Max(t, GetT(leftRail.a, dirLeft));
-            t = Mathf.Max(t, GetT(leftRail.b, dirLeft));
+            var t = new float[] { 0, GetT(rightRail.a, dirRight), GetT(rightRail.b, dirRight), GetT(leftRail.a, dirLeft), GetT(leftRail.b, dirLeft) }.Max();
 
             return new Line3(middleBezier.d, middleBezier.d + middleDir * t);
 

@@ -397,9 +397,9 @@ namespace NodeMarkup.Manager
         }
 
         public Enter GetNextEnter(Enter current) => GetNextEnter(EntersList.IndexOf(current));
-        public Enter GetNextEnter(int index) => EntersList[index == EntersList.Count - 1 ? 0 : index + 1];
+        public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
-        public Enter GetPrevEnter(int index) => EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
+        public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
