@@ -195,8 +195,8 @@ namespace NodeMarkup.Manager
             var tSet = new HashSet<float>();
 
             var line = new StraightTrajectory(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction, false);
-            foreach (var bezier in Markup.Contour)
-                tSet.AddRange(MarkupIntersect.Calculate(line, (BezierTrajectory)bezier).Where(i => i.IsIntersect).Select(i => i.FirstT));
+            foreach (var contour in Markup.Contour)
+                tSet.AddRange(MarkupIntersect.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.FirstT));
 
             var tSetSort = tSet.OrderBy(i => i).ToArray();
 

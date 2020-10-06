@@ -29,6 +29,12 @@ namespace NodeMarkup.Manager
     {
         bool Invert { get; set; }
     }
+    public interface ISharkLIne
+    {
+        float Base { get; set; }
+        float Height { get; set; }
+        float Space { get; set; }
+    }
     public interface IParallel
     {
         bool Parallel { get; set; }
@@ -76,6 +82,48 @@ namespace NodeMarkup.Manager
             offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset = value;
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
+        }
+        protected static FloatPropertyPanel AddBaseProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            baseProperty.Text = Localize.LineEditor_SharkToothBase;
+            baseProperty.UseWheel = true;
+            baseProperty.WheelStep = 0.1f;
+            baseProperty.CheckMin = true;
+            baseProperty.MinValue = 0.3f;
+            baseProperty.Init();
+            baseProperty.Value = sharkTeethStyle.Base;
+            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
+            AddOnHoverLeave(baseProperty, onHover, onLeave);
+            return baseProperty;
+        }
+        protected static FloatPropertyPanel AddHeightProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            heightProperty.Text = Localize.LineEditor_SharkToothHeight;
+            heightProperty.UseWheel = true;
+            heightProperty.WheelStep = 0.1f;
+            heightProperty.CheckMin = true;
+            heightProperty.MinValue = 0.3f;
+            heightProperty.Init();
+            heightProperty.Value = sharkTeethStyle.Height;
+            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
+            AddOnHoverLeave(heightProperty, onHover, onLeave);
+            return heightProperty;
+        }
+        protected static FloatPropertyPanel AddSpaceProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            spaceProperty.Text = Localize.LineEditor_SharkToothSpace;
+            spaceProperty.UseWheel = true;
+            spaceProperty.WheelStep = 0.1f;
+            spaceProperty.CheckMin = true;
+            spaceProperty.MinValue = 0.1f;
+            spaceProperty.Init();
+            spaceProperty.Value = sharkTeethStyle.Space;
+            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
+            AddOnHoverLeave(spaceProperty, onHover, onLeave);
+            return spaceProperty;
         }
     }
 

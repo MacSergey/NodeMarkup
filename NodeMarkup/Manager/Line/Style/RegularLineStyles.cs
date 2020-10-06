@@ -346,7 +346,7 @@ namespace NodeMarkup.Manager
             CenterSolid = config.GetAttrValue("CS", 0) == 1;
         }
     }
-    public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine
+    public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLIne
     {
         public override StyleType Type { get; } = StyleType.LineSharkTeeth;
 
@@ -397,7 +397,18 @@ namespace NodeMarkup.Manager
             Space = space;
             Invert = invert;
         }
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        {
+            foreach (var dash in StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes))
+            {
+                var dir = dash.Angle.Direction().Turn90(true);
+                var toStart = new StraightTrajectory(line.Markup.Position, dash.Position + dir * (dash.Width / 2));
+                var toEnd = new StraightTrajectory(line.Markup.Position, dash.Position - dir * (dash.Width / 2));
+              
+                if (!line.Markup.Contour.Any(c => MarkupIntersect.CalculateSingle(c, toStart).IsIntersect || MarkupIntersect.CalculateSingle(c, toEnd).IsIntersect))
+                    yield return dash;
+            }
+        }
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
             yield return StyleHelper.CalculateDashedDash(trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? -2 : 2), Height, Color, MaterialType.Triangle);
@@ -424,48 +435,6 @@ namespace NodeMarkup.Manager
                 components.Add(AddInvertProperty(this, parent));
 
             return components;
-        }
-        protected static FloatPropertyPanel AddBaseProperty(SharkTeethLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            baseProperty.Text = Localize.LineEditor_SharkToothBase;
-            baseProperty.UseWheel = true;
-            baseProperty.WheelStep = 0.1f;
-            baseProperty.CheckMin = true;
-            baseProperty.MinValue = 0.3f;
-            baseProperty.Init();
-            baseProperty.Value = sharkTeethStyle.Base;
-            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
-            AddOnHoverLeave(baseProperty, onHover, onLeave);
-            return baseProperty;
-        }
-        protected static FloatPropertyPanel AddHeightProperty(SharkTeethLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            heightProperty.Text = Localize.LineEditor_SharkToothHeight;
-            heightProperty.UseWheel = true;
-            heightProperty.WheelStep = 0.1f;
-            heightProperty.CheckMin = true;
-            heightProperty.MinValue = 0.3f;
-            heightProperty.Init();
-            heightProperty.Value = sharkTeethStyle.Height;
-            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
-            AddOnHoverLeave(heightProperty, onHover, onLeave);
-            return heightProperty;
-        }
-        protected static FloatPropertyPanel AddSpaceProperty(SharkTeethLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceProperty.Text = Localize.LineEditor_SharkToothSpace;
-            spaceProperty.UseWheel = true;
-            spaceProperty.WheelStep = 0.1f;
-            spaceProperty.CheckMin = true;
-            spaceProperty.MinValue = 0.1f;
-            spaceProperty.Init();
-            spaceProperty.Value = sharkTeethStyle.Space;
-            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
-            AddOnHoverLeave(spaceProperty, onHover, onLeave);
-            return spaceProperty;
         }
 
         public override XElement ToXml()

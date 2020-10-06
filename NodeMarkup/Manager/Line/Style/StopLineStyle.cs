@@ -333,7 +333,7 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
     }
-    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle
+    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLIne
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
 
@@ -402,48 +402,6 @@ namespace NodeMarkup.Manager
             components.Add(AddSpaceProperty(this, parent, onHover, onLeave));
 
             return components;
-        }
-        protected static FloatPropertyPanel AddBaseProperty(SharkTeethStopLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            baseProperty.Text = Localize.LineEditor_SharkToothBase;
-            baseProperty.UseWheel = true;
-            baseProperty.WheelStep = 0.1f;
-            baseProperty.CheckMin = true;
-            baseProperty.MinValue = 0.3f;
-            baseProperty.Init();
-            baseProperty.Value = sharkTeethStyle.Base;
-            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
-            AddOnHoverLeave(baseProperty, onHover, onLeave);
-            return baseProperty;
-        }
-        protected static FloatPropertyPanel AddHeightProperty(SharkTeethStopLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            heightProperty.Text = Localize.LineEditor_SharkToothHeight;
-            heightProperty.UseWheel = true;
-            heightProperty.WheelStep = 0.1f;
-            heightProperty.CheckMin = true;
-            heightProperty.MinValue = 0.3f;
-            heightProperty.Init();
-            heightProperty.Value = sharkTeethStyle.Height;
-            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
-            AddOnHoverLeave(heightProperty, onHover, onLeave);
-            return heightProperty;
-        }
-        protected static FloatPropertyPanel AddSpaceProperty(SharkTeethStopLineStyle sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceProperty.Text = Localize.LineEditor_SharkToothSpace;
-            spaceProperty.UseWheel = true;
-            spaceProperty.WheelStep = 0.1f;
-            spaceProperty.CheckMin = true;
-            spaceProperty.MinValue = 0.1f;
-            spaceProperty.Init();
-            spaceProperty.Value = sharkTeethStyle.Space;
-            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
-            AddOnHoverLeave(spaceProperty, onHover, onLeave);
-            return spaceProperty;
         }
 
         public override XElement ToXml()

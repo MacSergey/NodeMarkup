@@ -147,7 +147,7 @@ namespace NodeMarkup.Manager
             AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
 
             CornerDir = DriveLanes.Length <= 1 ?
-                Vector3.right.TurnRad(AbsoluteAngle, false).normalized :
+                AbsoluteAngle.Direction():
                 (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
             NormalDir = DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero;
             NormalDir = IsStartSide ? -NormalDir : NormalDir;

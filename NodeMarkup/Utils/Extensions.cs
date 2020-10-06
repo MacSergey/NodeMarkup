@@ -211,6 +211,7 @@ namespace NodeMarkup.Utils
         }
         public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
         public static float AbsoluteAngle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
+        public static Vector3 Direction(this float absoluteAngle) => Vector3.right.TurnRad(absoluteAngle, false).normalized;
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 

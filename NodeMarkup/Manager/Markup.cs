@@ -34,21 +34,22 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
         public ushort Id { get; }
-        public float Height { get; private set; }
+        public Vector3 Position { get; private set; }
+        public float Height => Position.y;
 
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
-        List<Bezier3> ContourParts { get; set; } = new List<Bezier3>();
+        List<ILineTrajectory> ContourParts { get; set; } = new List<ILineTrajectory>();
 
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
-        public IEnumerable<Bezier3> Contour => ContourParts;
+        public IEnumerable<ILineTrajectory> Contour => ContourParts;
 
         public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
@@ -76,7 +77,7 @@ namespace NodeMarkup.Manager
         private void UpdateEnters()
         {
             var node = Utilities.GetNode(Id);
-            Height = node.m_position.y;
+            Position = node.m_position;
 
             var oldEnters = EntersList;
             var exists = oldEnters.Select(e => e.Id).ToList();
@@ -115,20 +116,12 @@ namespace NodeMarkup.Manager
         }
         private void UpdateNodeСontour()
         {
-            var contourParts = new List<Bezier3>();
+            var contourParts = new List<ILineTrajectory>();
 
             for (var i = 0; i < EntersList.Count; i += 1)
             {
                 var prev = EntersList[i];
-                var currentBezier = new Bezier3()
-                {
-                    a = prev.LeftSide,
-                    d = prev.RightSide
-                };
-                var currentDir = (currentBezier.d - currentBezier.a).normalized;
-                NetSegment.CalculateMiddlePoints(currentBezier.a, currentDir, currentBezier.d, -currentDir, true, true, out currentBezier.b, out currentBezier.c);
-                contourParts.Add(currentBezier);
-
+                contourParts.Add(new StraightTrajectory(prev.LeftSide, prev.RightSide));
 
                 var next = GetNextEnter(i);
                 var betweenBezier = new Bezier3()
@@ -137,7 +130,7 @@ namespace NodeMarkup.Manager
                     d = next.LeftSide
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
-                contourParts.Add(betweenBezier);
+                contourParts.Add(new BezierTrajectory(betweenBezier));
             }
 
             ContourParts = contourParts;
