@@ -969,4 +969,13 @@ This action cannot be undone.</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Edge</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Starting from</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Vertex</value>
+  </data>
 </root>

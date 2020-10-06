@@ -5,6 +5,7 @@ using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -161,7 +162,7 @@ namespace NodeMarkup.Manager
         float _step;
         bool _invert;
         int _output;
-        bool _fromEdge;
+        From _startingFrom;
 
         public float AngleBetween
         {
@@ -200,12 +201,12 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public bool FromEdge
+        public From StartingFrom
         {
-            get => _fromEdge;
+            get => _startingFrom;
             set
             {
-                _fromEdge = value;
+                _startingFrom = value;
                 StyleChanged();
             }
         }
@@ -237,8 +238,8 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
             {
+                components.Add(AddStartingFromProperty(this, parent));
                 components.Add(AddInvertAndTurnProperty(this, parent));
-                //components.Add(AddFromEdgeProperty(this, parent));
             }
 
             return components;
@@ -277,14 +278,14 @@ namespace NodeMarkup.Manager
 
             return buttonsPanel;
         }
-        protected static BoolPropertyPanel AddFromEdgeProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
-            var fromEdgeProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            fromEdgeProperty.Text = "From edge";
-            fromEdgeProperty.Init();
-            fromEdgeProperty.Value = chevronStyle.FromEdge;
-            fromEdgeProperty.OnValueChanged += (bool value) => chevronStyle.FromEdge = value;
-            return fromEdgeProperty;
+            var fromProperty = parent.AddUIComponent<ChevronFromPropertyPanel>();
+            fromProperty.Text = Localize.Filler_StartingFrom;
+            fromProperty.Init();
+            fromProperty.SelectedObject = chevronStyle.StartingFrom;
+            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom = value;
+            return fromProperty;
         }
 
         protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
@@ -438,7 +439,7 @@ namespace NodeMarkup.Manager
         private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
         {
             var leftIndex = Output % trajectories.Length;
-            var rightIndex = leftIndex.PrevIndex(trajectories.Length, FromEdge ? 2 : 1);
+            var rightIndex = leftIndex.PrevIndex(trajectories.Length, StartingFrom == From.Vertex ? 1 : 2);
             var left = trajectories[leftIndex];
             var right = trajectories[rightIndex];
 
@@ -512,6 +513,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("S", Step));
             config.Add(new XAttribute("I", Invert ? 1 : 0));
             config.Add(new XAttribute("O", Output));
+            config.Add(new XAttribute("SF", (int)StartingFrom));
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map)
@@ -521,6 +523,22 @@ namespace NodeMarkup.Manager
             Step = config.GetAttrValue("S", DefaultStepGrid);
             Invert = config.GetAttrValue("I", 0) == 1;
             Output = config.GetAttrValue("O", 0);
+            StartingFrom = (From)config.GetAttrValue("SF", (int)From.Edge);
+        }
+
+        public class ChevronFromPropertyPanel : EnumPropertyPanel<From, ChevronFromPropertyPanel.ChevronFromDropDown>
+        {
+            protected override float DropDownWidth => 100f;
+            protected override bool IsEqual(From first, From second) => first == second;
+            public class ChevronFromDropDown : CustomUIDropDown<From> { }
+        }
+        public enum From
+        {
+            [Description(nameof(Localize.Filler_Vertex))]
+            Vertex = 0,
+
+            [Description(nameof(Localize.Filler_Edge))]
+            Edge = 1
         }
     }
 }

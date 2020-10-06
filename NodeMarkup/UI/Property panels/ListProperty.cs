@@ -16,6 +16,7 @@ namespace NodeMarkup.UI.Editors
 
         protected DropDownType DropDown { get; set; }
 
+        protected virtual float DropDownWidth => 230;
         public bool AllowNull { get; set; } = true;
         public string NullText { get; set; } = string.Empty;
         public bool IsOpen { get; private set; } = false;
@@ -35,7 +36,7 @@ namespace NodeMarkup.UI.Editors
         {
             DropDown = Control.AddUIComponent<DropDownType>();
 
-            DropDown.SetDefaultStyle();
+            DropDown.SetDefaultStyle(new Vector2(DropDownWidth, 20));
             DropDown.OnSelectObjectChanged += DropDownValueChanged;
             DropDown.eventDropdownOpen += DropDownOpen;
             DropDown.eventDropdownClose += DropDownClose;
@@ -68,9 +69,7 @@ namespace NodeMarkup.UI.Editors
         public void AddRange(IEnumerable<Type> items)
         {
             foreach (var item in items)
-            {
                 DropDown.AddItem(item);
-            }
         }
         protected abstract bool IsEqual(Type first, Type second);
     }
@@ -114,7 +113,7 @@ namespace NodeMarkup.UI.Editors
             itemHighlight = "TextFieldPanelFocus";
             normalBgSprite = "TextFieldPanel";
             hoveredBgSprite = "TextFieldPanelHovered";
-            listWidth = 230;
+            listWidth = (int)width;
             listHeight = 700;
             listPosition = PopupListPosition.Below;
             clampListToScreen = true;

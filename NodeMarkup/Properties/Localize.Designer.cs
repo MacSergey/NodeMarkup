@@ -551,6 +551,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Edge.
+        /// </summary>
+        public static string Filler_Edge {
+            get {
+                return ResourceManager.GetString("Filler_Edge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invert.
         /// </summary>
         public static string Filler_Invert {
@@ -578,6 +587,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Starting from.
+        /// </summary>
+        public static string Filler_StartingFrom {
+            get {
+                return ResourceManager.GetString("Filler_StartingFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Step.
         /// </summary>
         public static string Filler_Step {
@@ -592,6 +610,15 @@ namespace NodeMarkup {
         public static string Filler_Turn {
             get {
                 return ResourceManager.GetString("Filler_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Vertex.
+        /// </summary>
+        public static string Filler_Vertex {
+            get {
+                return ResourceManager.GetString("Filler_Vertex", resourceCulture);
             }
         }
         
