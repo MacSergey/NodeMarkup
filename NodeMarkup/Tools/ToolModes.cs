@@ -1,5 +1,4 @@
-﻿using ColossalFramework;
-using ColossalFramework.Math;
+﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
@@ -7,7 +6,7 @@ using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 using static ToolBase;
 
@@ -187,13 +186,13 @@ namespace NodeMarkup
                     fillerToolMode.DisableByAlt = false;
                 return true;
             }
-            
+
             if (NodeMarkupTool.DeleteAllShortcut.IsPressed(e))
             {
                 Tool.DeleteAllMarking();
                 return true;
             }
-            if(NodeMarkupTool.ResetOffsetsShortcut.IsPressed(e))
+            if (NodeMarkupTool.ResetOffsetsShortcut.IsPressed(e))
             {
                 Tool.ResetAllOffsets();
                 return true;
@@ -411,7 +410,7 @@ namespace NodeMarkup
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                if(Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
+                if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
                     Tool.DeleteItem(line, () => Tool.Markup.RemoveConnect(line));
                 else
                 {
@@ -744,32 +743,31 @@ namespace NodeMarkup
         public override ModeType Type => ModeType.PasteMarkup;
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
         private MarkupBuffer Buffer => Tool.Buffer;
-        private int _shift;
-        private bool _isMirror;
-        private int Shift
-        {
-            get => _shift;
-            set
-            {
-                _shift = value;
-                Paste();
-            }
-        }
-        private bool IsMirror
-        {
-            get => _isMirror;
-            set
-            {
-                _isMirror = value;
-                Paste();
-            }
-        }
+        private bool IsMirror { get; set; }
 
-        private float Size => 50;
-        private float Padding => 5;
-        private Rect TurnLeft { get; set; } = new Rect();
-        private Rect Flip { get; set; } = new Rect();
-        private Rect TurnRight { get; set; } = new Rect();
+        private XElement Backup { get; set; }
+
+        private GUIButton TurnLeft { get; }
+        private GUIButton Flip { get; }
+        private GUIButton TurnRight { get; }
+
+        private Vector3 Centre { get; set; }
+        private float Radius { get; set; }
+
+        private Source[] Sources { get; set; }
+        private Target[] Targets { get; set; }
+        private Basket BasketItem { get; }
+
+        private Source HoverSource { get; set; }
+        private bool IsHoverSource => HoverSource != null;
+
+        private Source SelectedSource { get; set; }
+        private bool IsSelectedSource => SelectedSource != null;
+
+        private Target HoverTarget { get; set; }
+        private bool IsHoverTarget => HoverTarget != null;
+
+        private Target[] VisibleTargets { get; set; }
 
         public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
         private static UITextureAtlas GetButtonsIcons()
@@ -789,62 +787,424 @@ namespace NodeMarkup
 
             return atlas;
         }
+        public PasteMarkupToolMode()
+        {
+            TurnLeft = new GUIButton(1, 3, ButtonAtlas.texture, ButtonAtlas.sprites[0].region);
+            TurnLeft.OnClick += () =>
+            {
+                Transform((t) => t == null ? null : Targets[t.Num.NextIndex(Markup.Enters.Count())]);
+                Paste();
+            };
+
+            Flip = new GUIButton(2, 3, ButtonAtlas.texture, ButtonAtlas.sprites[1].region);
+            Flip.OnClick += () =>
+            {
+                Transform((t) => t == null ? null : Targets[Markup.Enters.Count() - t.Num - 1]);
+                IsMirror = !IsMirror;
+                Paste();
+            };
+
+            TurnRight = new GUIButton(3, 3, ButtonAtlas.texture, ButtonAtlas.sprites[2].region);
+            TurnRight.OnClick += () =>
+            {
+                Transform((t) => t == null ? null : Targets[t.Num.PrevIndex(Markup.Enters.Count())]);
+                Paste();
+            };
+
+            BasketItem = new Basket(this);
+        }
         protected override void Reset()
         {
-            _shift = 0;
-            _isMirror = false;
+            UpdateCentreAndRadius();
+
+            Targets = Markup.Enters.Select((e, i) => new Target(this, e, i)).ToArray();
+            Sources = Tool.Buffer.Enters.Select((e, i) => new Source(this, e, i)).ToArray();
+
+            var min = Math.Min(Targets.Length, Sources.Length);
+            for (var i = 0; i < min; i += 1)
+                Sources[i].Target = Targets[i];
+
+            IsMirror = false;
+
+            HoverSource = null;
+            SelectedSource = null;
+            HoverTarget = null;
+            VisibleTargets = Targets.ToArray();
+
+            Backup = Markup.ToXml();
             Paste();
+        }
+        public override void OnMouseDown(Event e)
+        {
+            if (IsHoverSource)
+            {
+                SelectedSource = HoverSource;
+                VisibleTargets = GetVisibleTargets(SelectedSource).ToArray();
+            }
         }
         public override void OnPrimaryMouseClicked(Event e)
         {
             var uiView = UIView.GetAView();
             var mouse = uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
 
-            if (TurnLeft.Contains(mouse))
-                Shift += 1;
-            else if (TurnRight.Contains(mouse))
-                Shift -= 1;
-            else if (Flip.Contains(mouse))
-                IsMirror = !IsMirror;
+
+            if (IsSelectedSource)
+            {
+                if (IsHoverTarget)
+                {
+                    foreach (var source in Sources)
+                    {
+                        if (source.Target == HoverTarget)
+                            source.Target = null;
+                    }
+
+                    SelectedSource.Target = HoverTarget;
+                }
+                else
+                    SelectedSource.Target = null;
+
+                SelectedSource = null;
+                VisibleTargets = Targets.ToArray();
+
+                Paste();
+            }
+            else
+            {
+                TurnLeft.CheckClick(mouse);
+                Flip.CheckClick(mouse);
+                TurnRight.CheckClick(mouse);
+            }
+        }
+        private void Transform(Func<Target, Target> func)
+        {
+            for (var i = 0; i < Sources.Length; i += 1)
+                Sources[i].Target = func(Sources[i].Target);
+        }
+        public override void OnUpdate()
+        {
+            BasketItem.Update();
+            foreach (var source in Sources)
+                source.Update();
+            GetHoverSource();
+            GetHoverTarget();
+        }
+        public void GetHoverSource()
+        {
+            if (NodeMarkupTool.MouseRayValid)
+            {
+                foreach (var source in Sources)
+                {
+                    if (source.IsHover(NodeMarkupTool.MouseRay))
+                    {
+                        HoverSource = source;
+                        return;
+                    }
+                }
+            }
+
+            HoverSource = null;
+        }
+        public void GetHoverTarget()
+        {
+            if (NodeMarkupTool.MouseRayValid)
+            {
+                foreach (var target in VisibleTargets)
+                {
+                    if (target.IsHover(NodeMarkupTool.MouseRay))
+                    {
+                        HoverTarget = target;
+                        return;
+                    }
+                }
+            }
+
+            HoverTarget = null;
         }
 
         public override void OnGUI(Event e)
         {
             var uiView = UIView.GetAView();
-            var screenPos = uiView.WorldPointToGUI(Camera.main, Utilities.GetNode(Tool.Markup.Id).m_position) * uiView.inputScale;
+            var screenPos = uiView.WorldPointToGUI(Camera.main, Centre) * uiView.inputScale;
 
-            TurnLeft = GetPosition(screenPos, 1, 3);
-            Flip = GetPosition(screenPos, 2, 3);
-            TurnRight = GetPosition(screenPos, 3, 3);
-            GUI.DrawTextureWithTexCoords(TurnLeft, ButtonAtlas.texture, ButtonAtlas.sprites[0].region);
-            GUI.DrawTextureWithTexCoords(Flip, ButtonAtlas.texture, ButtonAtlas.sprites[1].region);
-            GUI.DrawTextureWithTexCoords(TurnRight, ButtonAtlas.texture, ButtonAtlas.sprites[2].region);
+            TurnLeft.Update(screenPos);
+            Flip.Update(screenPos);
+            TurnRight.Update(screenPos);
+
+            TurnLeft.OnGUI(e);
+            Flip.OnGUI(e);
+            TurnRight.OnGUI(e);
 
         }
-        private Rect GetPosition(Vector2 centre, int i, int of)
+        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            var sumWidth = of * Size + (of - 1) * Padding;
-            return new Rect(centre.x - sumWidth / 2 + (i - 1) * (Size + Padding), centre.y - Size / 2, Size, Size);
+            NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Centre, Radius * 2);
+            BasketItem.Render(cameraInfo);
+
+            foreach (var target in VisibleTargets)
+                target.Render(cameraInfo);
+
+            if (IsHoverSource && !IsSelectedSource)
+                HoverSource.RenderHover(cameraInfo);
+
+            foreach (var source in Sources)
+            {
+                if (!IsSelectedSource || SelectedSource == source || (VisibleTargets.Contains(source.Target) && HoverTarget != source.Target))
+                    source.Render(cameraInfo);
+            }
         }
 
         private void Paste()
         {
             Markup.Clear();
             var map = new ObjectsMap(IsMirror);
-            var enters = Markup.Enters.ToArray();
-            var max = Math.Min(Tool.Buffer.Enters.Length, enters.Length);
-            for (var i = 0; i < max; i += 1)
-            {
-                var targetI = ((IsMirror ? max - i - 1 : i) + max + Shift % max) % max;
-                var enter = enters[targetI];
-                map[new ObjectId() { Segment = Buffer.Enters[i] }] = new ObjectId() { Segment = enter.Id };
 
-                if (IsMirror)
-                    map.AddMirrorEnter(enter);
+            foreach(var enter in Tool.Buffer.Enters)
+                map[new ObjectId() { Segment = enter }] = new ObjectId() { Segment = 0 };
+
+            foreach (var source in Sources)
+            {
+                if (source.Target != null)
+                {
+                    map[new ObjectId() { Segment = source.Enter }] = new ObjectId() { Segment = source.Target.Enter.Id };
+
+                    if (IsMirror)
+                        map.AddMirrorEnter(source.Target.Enter);
+                }
             }
 
             Markup.FromXml(Mod.Version, Buffer.Data, map);
             Panel.UpdatePanel();
         }
+
+        private void UpdateCentreAndRadius()
+        {
+            var points = Markup.Enters.Where(e => e.Position != null).SelectMany(e => new Vector3[] { e.LeftSide, e.RightSide }).ToArray();
+
+            if (points.Length == 0)
+            {
+                Centre = Markup.Position;
+                Radius = Markup.Radius;
+                return;
+            }
+
+            var centre = Markup.Position;
+            var radius = 1000f;
+
+            for (var i = 0; i < points.Length; i += 1)
+            {
+                for (var j = i + 1; j < points.Length; j += 1)
+                {
+                    GetCircle2Points(points, i, j, ref centre, ref radius);
+
+                    for (var k = j + 1; k < points.Length; k += 1)
+                        GetCircle3Points(points, i, j, k, ref centre, ref radius);
+                }
+            }
+
+            Centre = centre;
+            Radius = radius + Target.Size / 2;
+        }
+        private void GetCircle2Points(Vector3[] points, int i, int j, ref Vector3 centre, ref float radius)
+        {
+            var newCentre = (points[i] + points[j]) / 2;
+            var newRadius = (points[i] - points[j]).magnitude / 2;
+
+            if (newRadius >= radius)
+                return;
+
+            if (AllPointsInCircle(points, newCentre, newRadius, i, j))
+            {
+                centre = newCentre;
+                radius = newRadius;
+            }
+        }
+        private void GetCircle3Points(Vector3[] points, int i, int j, int k, ref Vector3 centre, ref float radius)
+        {
+            var pos1 = (points[i] + points[j]) / 2;
+            var pos2 = (points[j] + points[k]) / 2;
+
+            var dir1 = (points[i] - points[j]).Turn90(true).normalized;
+            var dir2 = (points[j] - points[k]).Turn90(true).normalized;
+
+            Line2.Intersect(pos1.XZ(), (pos1 + dir1).XZ(), pos2.XZ(), (pos2 + dir2).XZ(), out float p, out _);
+            var newCentre = pos1 + dir1 * p;
+            var newRadius = (newCentre - points[i]).magnitude;
+
+            if (newRadius >= radius)
+                return;
+
+            if (AllPointsInCircle(points, newCentre, newRadius, i, j, k))
+            {
+                centre = newCentre;
+                radius = newRadius;
+            }
+        }
+        private bool AllPointsInCircle(Vector3[] points, Vector3 centre, float radius, params int[] ignore)
+        {
+            for (var i = 0; i < points.Length; i += 1)
+            {
+                if (ignore.Any(j => j == i))
+                    continue;
+
+                if ((centre - points[i]).magnitude > radius)
+                    return false;
+            }
+
+            return true;
+        }
+        private Bounds GetTargetPosition(Enter enter)
+        {
+            var dir = (enter.Position.Value - Markup.Position).normalized;
+            var normal = dir.Turn90(true);
+
+            Line2.Intersect(Centre.XZ(), (Centre + normal).XZ(), Markup.Position.XZ(), (Markup.Position + dir).XZ(), out float p, out _);
+            var point = Centre + normal * p;
+            var distance = Mathf.Sqrt(Mathf.Pow(Radius, 2) - Mathf.Pow(Math.Abs(p), 2));
+
+            return new Bounds(point + dir * distance, Vector3.one * Target.Size);
+        }
+        private IEnumerable<Target> GetVisibleTargets(Source source)
+        {
+            var a = Get(s => s.PrevIndex(Sources.Length)) ?? Targets.First();
+            var b = Get(s => s.NextIndex(Sources.Length)) ?? Targets.Last();
+
+            yield return a;
+            for (var target = Targets[a.Num.NextIndex(Targets.Length)]; target != b; target = Targets[target.Num.NextIndex(Targets.Length)])
+                yield return target;
+            if (b != a)
+                yield return b;
+
+            Target Get(Func<int, int> func)
+            {
+                var i = func(source.Num);
+                for (; i != source.Num && Sources[i].Target == null; i = func(i)) { }
+                return Sources[i].Target;
+            }
+        }
+
+
+        private class Target
+        {
+            public static float Size => 3f;
+
+            private PasteMarkupToolMode ToolMode { get; }
+            private Bounds Bounds { get; set; }
+            public Vector3 Position
+            {
+                get => Bounds.center;
+                private set => Bounds = new Bounds(value, Vector3.one * Size);
+            }
+            public Enter Enter { get; }
+            public int Num { get; }
+
+            public Target(PasteMarkupToolMode toolMode, Enter enter, int num)
+            {
+                ToolMode = toolMode;
+                Enter = enter;
+                Num = num;
+
+                var dir = (Enter.Position.Value - ToolMode.Markup.Position).normalized;
+                var normal = dir.Turn90(true);
+
+                Line2.Intersect(ToolMode.Centre.XZ(), (ToolMode.Centre + normal).XZ(), ToolMode.Markup.Position.XZ(), (ToolMode.Markup.Position + dir).XZ(), out float p, out _);
+                var point = ToolMode.Centre + normal * p;
+                var distance = Mathf.Sqrt(Mathf.Pow(ToolMode.Radius, 2) - Mathf.Pow(Math.Abs(p), 2));
+                Position = point + dir * distance;
+            }
+
+            public bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
+
+            public void Render(RenderManager.CameraInfo cameraInfo)
+            {
+                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size, false);
+                if(ToolMode.IsSelectedSource && ToolMode.HoverTarget == this)
+                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Green, Position, Size + 0.43f);
+            }
+        }
+
+        private class Source
+        {
+            public static float Size => 1.5f;
+
+            private PasteMarkupToolMode ToolMode { get; }
+            private Bounds Bounds { get; set; }
+            public Vector3 Position
+            {
+                get => Bounds.center;
+                set => Bounds = new Bounds(value, Vector3.one * Size);
+            }
+            public ushort Enter { get; }
+            public int Num { get; }
+            public Target Target { get; set; }
+
+            public Source(PasteMarkupToolMode toolMode, ushort enter, int num)
+            {
+                ToolMode = toolMode;
+                Enter = enter;
+                Num = num;
+            }
+            public bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
+
+            public void Update()
+            {
+                if (Target == null)
+                {
+                    var i = ToolMode.Sources.Take(Num).Count(s => s.Target == null);
+                    Position = ToolMode.BasketItem.Position + ToolMode.BasketItem.Direction * ((Target.Size * (i + 1) + Size * i - ToolMode.BasketItem.Width) / 2);
+                }
+                else
+                    Position = Target.Position;
+            }
+
+            public void Render(RenderManager.CameraInfo cameraInfo)
+            {
+                var position = ToolMode.SelectedSource == this ? (ToolMode.IsHoverTarget ? ToolMode.HoverTarget.Position : NodeMarkupTool.MouseWorldPosition) : Position;
+                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.GetOverlayColor(Num, 255), position, Size);
+            }
+            public void RenderHover(RenderManager.CameraInfo cameraInfo) => NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size - 0.5f);
+        }
+        private class Basket
+        {
+            private PasteMarkupToolMode ToolMode { get; }
+
+            public Vector3 Position { get; private set; }
+            public Vector3 Direction { get; private set; }
+            public float Width { get; private set; }
+
+            public int Count { get; set; }
+            public bool IsEmpty => Count == 0;
+
+            public Basket(PasteMarkupToolMode toolMode)
+            {
+                ToolMode = toolMode;
+            }
+
+            public void Update()
+            {
+                Count = ToolMode.Sources.Count(s => s.Target == null);
+
+                if (!IsEmpty)
+                {
+                    var cameraDir = -NodeMarkupTool.CameraDirection;
+                    cameraDir.y = 0;
+                    cameraDir.Normalize();
+                    Direction = cameraDir.Turn90(false);
+                    Position = ToolMode.Centre + cameraDir * (ToolMode.Radius + 2 * Target.Size);
+                    Width = (Target.Size * (Count + 1) + Source.Size * (Count - 1)) / 2;
+                }
+            }
+
+            public void Render(RenderManager.CameraInfo cameraInfo)
+            {
+                if (!IsEmpty && !ToolMode.IsSelectedSource)
+                {
+                    var halfWidth = (Width - Target.Size) / 2;
+                    var basket = new StraightTrajectory(Position - Direction * halfWidth, Position + Direction * halfWidth);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, basket, Target.Size, alphaBlend: false);
+                }
+            }
+        }
     }
+
+
 }

@@ -8,7 +8,7 @@ namespace NodeMarkup.Utils
 {
     public class MarkupColors
     {
-        private static byte Alpha => 224;
+        private const byte Alpha = 224;
         public static Color32 White { get; } = new Color32(255, 255, 255, 255);
         public static Color32 Green { get; } = new Color32(0, 200, 81, 255);
         public static Color32 Red { get; } = new Color32(255, 68, 68, 255);
@@ -31,6 +31,11 @@ namespace NodeMarkup.Utils
 
         };
 
-        public static Color32 GetOverlayColor(int index) => OverlayColors[index % OverlayColors.Length];
+        public static Color32 GetOverlayColor(int index, byte alpha = Alpha)
+        {
+            var color = OverlayColors[index % OverlayColors.Length];
+            color.a = alpha;
+            return color;
+        }
     }
 }

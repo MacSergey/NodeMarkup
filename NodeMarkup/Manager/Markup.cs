@@ -35,6 +35,7 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
         public ushort Id { get; }
         public Vector3 Position { get; private set; }
+        public float Radius { get; private set; }
         public float Height => Position.y;
 
         List<Enter> EntersList { get; set; } = new List<Enter>();
@@ -110,6 +111,7 @@ namespace NodeMarkup.Manager
                 enter.Update();
 
             UpdateNodeСontour();
+            UpdateRadius();
 
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
@@ -135,6 +137,7 @@ namespace NodeMarkup.Manager
 
             ContourParts = contourParts;
         }
+        private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
         private void UpdateLines()
         {
