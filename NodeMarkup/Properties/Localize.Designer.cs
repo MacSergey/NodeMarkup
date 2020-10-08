@@ -1608,33 +1608,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Activate tool.
-        /// </summary>
-        public static string Settings_ActivateTool {
-            get {
-                return ResourceManager.GetString("Settings_ActivateTool", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Add new filler.
-        /// </summary>
-        public static string Settings_AddNewFiller {
-            get {
-                return ResourceManager.GetString("Settings_AddNewFiller", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Add new line rule.
-        /// </summary>
-        public static string Settings_AddNewLineRule {
-            get {
-                return ResourceManager.GetString("Settings_AddNewLineRule", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup.
         /// </summary>
         public static string Settings_BackupTab {
@@ -1649,15 +1622,6 @@ namespace NodeMarkup {
         public static string Settings_CrosswalksModifier {
             get {
                 return ResourceManager.GetString("Settings_CrosswalksModifier", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete all node lines.
-        /// </summary>
-        public static string Settings_DeleteAllNodeLines {
-            get {
-                return ResourceManager.GetString("Settings_DeleteAllNodeLines", resourceCulture);
             }
         }
         
@@ -1953,11 +1917,65 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Activate tool.
+        /// </summary>
+        public static string Settings_ShortcutActivateTool {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutActivateTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new filler.
+        /// </summary>
+        public static string Settings_ShortcutAddNewFiller {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutAddNewFiller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new line rule.
+        /// </summary>
+        public static string Settings_ShortcutAddNewLineRule {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutAddNewLineRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy marking.
+        /// </summary>
+        public static string Settings_ShortcutCopyMarking {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutCopyMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all node lines.
+        /// </summary>
+        public static string Settings_ShortcutDeleteAllNodeLines {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutDeleteAllNodeLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste marking.
+        /// </summary>
+        public static string Settings_ShortcutPasteMarking {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutPasteMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Reset all points offset.
         /// </summary>
-        public static string Settings_ResetPointsOffset {
+        public static string Settings_ShortcutResetPointsOffset {
             get {
-                return ResourceManager.GetString("Settings_ResetPointsOffset", resourceCulture);
+                return ResourceManager.GetString("Settings_ShortcutResetPointsOffset", resourceCulture);
             }
         }
         
@@ -2298,6 +2316,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Change order.
+        /// </summary>
+        public static string Tool_InfoChangeOrder {
+            get {
+                return ResourceManager.GetString("Tool_InfoChangeOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to create a crosswalk.
         /// </summary>
         public static string Tool_InfoCreateCrosswalk {
@@ -2434,6 +2461,25 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag and drop circle for set paste order.
+        /// </summary>
+        public static string Tool_InfoPasteDrag {
+            get {
+                return ResourceManager.GetString("Tool_InfoPasteDrag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drop circle inside target to set paste order
+        ///Drop circle outside target to unset paste order.
+        /// </summary>
+        public static string Tool_InfoPasteDrop {
+            get {
+                return ResourceManager.GetString("Tool_InfoPasteDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Select endpoint.
         /// </summary>
         public static string Tool_InfoSelectCrosswalkEndPoint {
@@ -2471,6 +2517,24 @@ namespace NodeMarkup {
         public static string Tool_InfoSelectLineStartPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectLineStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn clockwise.
+        /// </summary>
+        public static string Tool_InfoTurnClockwise {
+            get {
+                return ResourceManager.GetString("Tool_InfoTurnClockwise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn counter-clockwise.
+        /// </summary>
+        public static string Tool_InfoTurnСounterClockwise {
+            get {
+                return ResourceManager.GetString("Tool_InfoTurnСounterClockwise", resourceCulture);
             }
         }
         

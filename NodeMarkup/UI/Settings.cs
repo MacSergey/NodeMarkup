@@ -201,11 +201,13 @@ namespace NodeMarkup.UI
             var keymappingsPanel = (helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper).self as UIPanel;
 
             var keymappings = keymappingsPanel.gameObject.AddComponent<KeymappingsPanel>();
-            keymappings.AddKeymapping(Localize.Settings_ActivateTool, NodeMarkupTool.ActivationShortcut);
-            keymappings.AddKeymapping(Localize.Settings_DeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
-            keymappings.AddKeymapping(Localize.Settings_ResetPointsOffset, NodeMarkupTool.ResetOffsetsShortcut);
-            keymappings.AddKeymapping(Localize.Settings_AddNewLineRule, NodeMarkupTool.AddRuleShortcut);
-            keymappings.AddKeymapping(Localize.Settings_AddNewFiller, NodeMarkupTool.AddFillerShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutActivateTool, NodeMarkupTool.ActivationShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutDeleteAllNodeLines, NodeMarkupTool.DeleteAllShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutResetPointsOffset, NodeMarkupTool.ResetOffsetsShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutAddNewLineRule, NodeMarkupTool.AddRuleShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutAddNewFiller, NodeMarkupTool.AddFillerShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutCopyMarking, NodeMarkupTool.CopyMarkingShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutPasteMarking, NodeMarkupTool.PasteMarkingShortcut);
 
             var regularLinesPanel = (helper.AddGroup(Localize.Settings_RegularLinesModifier) as UIHelper).self as UIPanel;
             var regularLinesModifier = regularLinesPanel.gameObject.AddComponent<RegularLineModifierPanel>();

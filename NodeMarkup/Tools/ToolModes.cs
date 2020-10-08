@@ -197,6 +197,16 @@ namespace NodeMarkup
                 Tool.ResetAllOffsets();
                 return true;
             }
+            if (NodeMarkupTool.CopyMarkingShortcut.IsPressed(e))
+            {
+                Tool.CopyMarkup();
+                return true;
+            }
+            if (NodeMarkupTool.PasteMarkingShortcut.IsPressed(e))
+            {
+                Tool.PasteMarkup();
+                return true;
+            }
 
             return Panel?.OnShortcut(e) == true;
         }
@@ -742,7 +752,7 @@ namespace NodeMarkup
     {
         public override ModeType Type => ModeType.PasteMarkup;
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
-        private MarkupBuffer Buffer => Tool.Buffer;
+        private MarkupBuffer Buffer => Tool.MarkupBuffer;
         private bool IsMirror { get; set; }
 
         private XElement Backup { get; set; }
@@ -781,9 +791,7 @@ namespace NodeMarkup
 
             var atlas = TextureUtil.GetAtlas(nameof(PasteMarkupToolMode));
             if (atlas == UIView.GetAView().defaultAtlas)
-            {
                 atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(PasteMarkupToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
-            }
 
             return atlas;
         }
@@ -818,7 +826,7 @@ namespace NodeMarkup
             UpdateCentreAndRadius();
 
             Targets = Markup.Enters.Select((e, i) => new Target(this, e, i)).ToArray();
-            Sources = Tool.Buffer.Enters.Select((e, i) => new Source(this, e, i)).ToArray();
+            Sources = Tool.MarkupBuffer.Enters.Select((e, i) => new Source(this, e, i)).ToArray();
 
             var min = Math.Min(Targets.Length, Sources.Length);
             for (var i = 0; i < min; i += 1)
@@ -844,10 +852,6 @@ namespace NodeMarkup
         }
         public override void OnPrimaryMouseClicked(Event e)
         {
-            var uiView = UIView.GetAView();
-            var mouse = uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
-
-
             if (IsSelectedSource)
             {
                 if (IsHoverTarget)
@@ -870,6 +874,8 @@ namespace NodeMarkup
             }
             else
             {
+                var mouse = GetMouse();
+
                 TurnLeft.CheckClick(mouse);
                 Flip.CheckClick(mouse);
                 TurnRight.CheckClick(mouse);
@@ -920,7 +926,24 @@ namespace NodeMarkup
 
             HoverTarget = null;
         }
+        public override string GetToolInfo()
+        {
+            if (IsSelectedSource)
+                return Localize.Tool_InfoPasteDrop;
+            else
+            {
+                var mouse = GetMouse();
 
+                if (TurnLeft.CheckHover(mouse))
+                    return Localize.Tool_InfoTurnСounterClockwise;
+                else if (Flip.CheckHover(mouse))
+                    return Localize.Tool_InfoChangeOrder;
+                else if (TurnRight.CheckHover(mouse))
+                    return Localize.Tool_InfoTurnClockwise;
+                else
+                    return Localize.Tool_InfoPasteDrag;
+            }
+        }
         public override void OnGUI(Event e)
         {
             var uiView = UIView.GetAView();
@@ -940,7 +963,7 @@ namespace NodeMarkup
             NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Centre, Radius * 2);
             BasketItem.Render(cameraInfo);
 
-            foreach (var target in VisibleTargets)
+            foreach (var target in Targets)
                 target.Render(cameraInfo);
 
             if (IsHoverSource && !IsSelectedSource)
@@ -948,7 +971,7 @@ namespace NodeMarkup
 
             foreach (var source in Sources)
             {
-                if (!IsSelectedSource || SelectedSource == source || (VisibleTargets.Contains(source.Target) && HoverTarget != source.Target))
+                if (!IsSelectedSource || SelectedSource == source || (source.Target != null && source.Target != HoverTarget))
                     source.Render(cameraInfo);
             }
         }
@@ -958,7 +981,7 @@ namespace NodeMarkup
             Markup.Clear();
             var map = new ObjectsMap(IsMirror);
 
-            foreach(var enter in Tool.Buffer.Enters)
+            foreach (var enter in Tool.MarkupBuffer.Enters)
                 map[new ObjectId() { Segment = enter }] = new ObjectId() { Segment = 0 };
 
             foreach (var source in Sources)
@@ -1081,7 +1104,11 @@ namespace NodeMarkup
                 return Sources[i].Target;
             }
         }
-
+        private Vector2 GetMouse()
+        {
+            var uiView = UIView.GetAView();
+            return uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
+        }
 
         private class Target
         {
@@ -1116,9 +1143,19 @@ namespace NodeMarkup
 
             public void Render(RenderManager.CameraInfo cameraInfo)
             {
-                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size, false);
-                if(ToolMode.IsSelectedSource && ToolMode.HoverTarget == this)
-                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Green, Position, Size + 0.43f);
+                if (ToolMode.VisibleTargets.Contains(this))
+                {
+                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size, false);
+                    if (ToolMode.IsSelectedSource)
+                    {
+                        if (ToolMode.HoverTarget == this && ToolMode.SelectedSource.Target != this)
+                            NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Green, Position, Size + 0.43f);
+                        else if (ToolMode.HoverTarget != this && ToolMode.SelectedSource.Target == this)
+                            NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Red, Position, Size + 0.43f);
+                    }
+                }
+                else
+                    NodeMarkupTool.RenderCircle(cameraInfo, new Color32(192, 192, 192, 255), Position, Size, false);
             }
         }
 
@@ -1159,9 +1196,11 @@ namespace NodeMarkup
             public void Render(RenderManager.CameraInfo cameraInfo)
             {
                 var position = ToolMode.SelectedSource == this ? (ToolMode.IsHoverTarget ? ToolMode.HoverTarget.Position : NodeMarkupTool.MouseWorldPosition) : Position;
+                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.GetOverlayColor(Num, 255), position, Size - 0.4f);
                 NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.GetOverlayColor(Num, 255), position, Size);
+
             }
-            public void RenderHover(RenderManager.CameraInfo cameraInfo) => NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size - 0.5f);
+            public void RenderHover(RenderManager.CameraInfo cameraInfo) => NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size - 0.9f);
         }
         private class Basket
         {

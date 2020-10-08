@@ -28,6 +28,9 @@ namespace NodeMarkup
         public static SavedInputKey ResetOffsetsShortcut { get; } = new SavedInputKey(nameof(ResetOffsetsShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.R, true, true, false), true);
         public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
         public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
+        public static SavedInputKey CopyMarkingShortcut { get; } = new SavedInputKey(nameof(CopyMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.C, true, true, false), true);
+        public static SavedInputKey PasteMarkingShortcut { get; } = new SavedInputKey(nameof(PasteMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.V, true, true, false), true);
+
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         public static bool CtrlIsPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
@@ -57,7 +60,7 @@ namespace NodeMarkup
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
-        public MarkupBuffer Buffer { get; private set; } = new MarkupBuffer(new XElement("Markup"), new ushort[0]);
+        public MarkupBuffer MarkupBuffer { get; private set; } = new MarkupBuffer(new XElement("Markup"), new ushort[0]);
 
         #endregion
 
@@ -350,7 +353,7 @@ namespace NodeMarkup
         {
             var data = Markup.ToXml();
             var enters = Markup.Enters.Select(e => e.Id).ToArray();
-            Buffer = new MarkupBuffer(data, enters);
+            MarkupBuffer = new MarkupBuffer(data, enters);
         }
         public void PasteMarkup()
         {

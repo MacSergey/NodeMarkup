@@ -34,9 +34,11 @@ namespace NodeMarkup.UI
         }
         public void CheckClick(Vector2 mouse)
         {
-            if (Position.Contains(mouse))
+            if (CheckHover(mouse))
                 OnClick?.Invoke();
         }
+        public bool CheckHover(Vector2 mouse) => Position.Contains(mouse);
+
         public void OnGUI(Event e) => GUI.DrawTextureWithTexCoords(Position, Texture, Coords);
 
         private Rect GetPosition(Vector2 centre, int i, int of)
