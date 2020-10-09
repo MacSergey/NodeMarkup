@@ -162,10 +162,6 @@ namespace NodeMarkup.Utils
     public class RenderBatch
     {
         public static float MeshHeight => 3f;
-        static float x = 0f;
-        static float y = 0f;
-        static float z = 0f;
-        static float w = 1f;
         public MaterialType MaterialType { get; }
         public int Count { get; }
         public Vector4[] Locations { get; }
@@ -189,7 +185,7 @@ namespace NodeMarkup.Utils
                 var dash = dashes[i];
                 Locations[i] = dash.Position;
                 Locations[i].w = dash.Angle;
-                Indices[i] = new Vector4(x, y, z, w);
+                Indices[i] = new Vector4(0f, 0f, 0f, 1f);
                 Colors[i] = dash.Color.ToX3Vector();
             }
 
