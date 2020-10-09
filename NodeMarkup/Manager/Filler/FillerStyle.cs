@@ -315,7 +315,7 @@ namespace NodeMarkup.Manager
                         var start = pos + dir * intersects[j - 1].FirstT;
                         var end = pos + dir * intersects[j].FirstT;
 
-                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color);
+                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color, MaterialType.RectangleFillers);
                     }
                 }
             }

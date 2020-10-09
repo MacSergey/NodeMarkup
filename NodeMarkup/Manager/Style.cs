@@ -324,7 +324,7 @@ namespace NodeMarkup.Manager
         public float Width { get; set; }
         public Color Color { get; set; }
 
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle)
+        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
         {
             Position = position;
             Angle = angle;
@@ -333,9 +333,9 @@ namespace NodeMarkup.Manager
             Color = color;
             MaterialType = materialType;
         }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this((start + end) / 2, angle, length, width, color, materialType) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.Rectangle) : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this((start + end) / 2, angle, length, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
     }
     public class StyleTemplate : IDeletable, IToXml
     {

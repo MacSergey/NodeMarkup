@@ -126,7 +126,7 @@ namespace NodeMarkup.Manager
             return dashesT;
         }
 
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color, MaterialType materialType = MaterialType.Rectangle)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
         {
             if (offset == 0)
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color, materialType: materialType);
@@ -137,7 +137,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color, materialType: materialType);
             }
         }
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null, MaterialType materialType = MaterialType.Rectangle)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null, MaterialType materialType = MaterialType.RectangleLines)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);

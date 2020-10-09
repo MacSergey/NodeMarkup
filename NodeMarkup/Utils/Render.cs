@@ -102,7 +102,7 @@ namespace NodeMarkup.Utils
         }
         public static Color32 VerticesColor(int i) => new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, (byte)(16 * i));
 
-        public static Material CreateMaterial(Texture2D texture, Texture2D aci = null)
+        public static Material CreateMaterial(Texture2D texture, Texture2D aci = null, int renderQueue = 2460)
         {
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
@@ -112,6 +112,7 @@ namespace NodeMarkup.Utils
                 doubleSidedGI = false,
                 enableInstancing = false,
                 globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
+                renderQueue = renderQueue,
             };
             if (aci != null)
                 material.SetTexture("_ACIMap", aci);
@@ -160,6 +161,11 @@ namespace NodeMarkup.Utils
 
     public class RenderBatch
     {
+        public static float MeshHeight => 3f;
+        static float x = 0f;
+        static float y = 0f;
+        static float z = 0f;
+        static float w = 1f;
         public MaterialType MaterialType { get; }
         public int Count { get; }
         public Vector4[] Locations { get; }
@@ -183,7 +189,7 @@ namespace NodeMarkup.Utils
                 var dash = dashes[i];
                 Locations[i] = dash.Position;
                 Locations[i].w = dash.Angle;
-                Indices[i] = new Vector4(0f, 0f, 0f, 1f);
+                Indices[i] = new Vector4(x, y, z, w);
                 Colors[i] = dash.Color.ToX3Vector();
             }
 
@@ -196,7 +202,7 @@ namespace NodeMarkup.Utils
 
             foreach (var materialGroup in materialGroups)
             {
-                var sizeGroups = materialGroup.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(Round(d.Length), 1f, d.Width));
+                var sizeGroups = materialGroup.Where(d => d.Length >= 0.1f).GroupBy(d => new Vector3(Round(d.Length), MeshHeight, d.Width));
 
                 foreach (var sizeGroup in sizeGroups)
                 {

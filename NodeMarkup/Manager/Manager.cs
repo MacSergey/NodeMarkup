@@ -24,7 +24,8 @@ namespace NodeMarkup.Manager
         {
             MaterialLib = new Dictionary<MaterialType, Material>()
             {
-                { MaterialType.Rectangle, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white))},
+                { MaterialType.RectangleLines, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white))},
+                { MaterialType.RectangleFillers, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
                 { MaterialType.Triangle, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth.png", 64,64))},
             };
         }
@@ -149,7 +150,8 @@ namespace NodeMarkup.Manager
     }
     public enum MaterialType
     {
-        Rectangle,
+        RectangleLines,
+        RectangleFillers,
         Triangle
     }
 }

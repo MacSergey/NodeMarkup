@@ -142,7 +142,7 @@ namespace NodeMarkup.Manager
                         end += normal * (isStartToEnd ? -endOffset : endOffset);
                     }
 
-                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color);
+                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color, MaterialType.RectangleFillers);
                 }
             }
         }

@@ -26,6 +26,10 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateSolid(trajectory, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
+            //var dash = StyleHelper.CalculateSolidDash(trajectory, 0f, Width, Color);
+            //dash.Position += new Vector3(0f, 0.5f, 0f);
+            //yield return dash;
+
             yield return StyleHelper.CalculateSolidDash(trajectory, 0f, Width, Color);
         }
     }
@@ -404,7 +408,7 @@ namespace NodeMarkup.Manager
                 var dir = dash.Angle.Direction().Turn90(true);
                 var toStart = new StraightTrajectory(line.Markup.Position, dash.Position + dir * (dash.Width / 2));
                 var toEnd = new StraightTrajectory(line.Markup.Position, dash.Position - dir * (dash.Width / 2));
-              
+
                 if (!line.Markup.Contour.Any(c => MarkupIntersect.CalculateSingle(c, toStart).IsIntersect || MarkupIntersect.CalculateSingle(c, toEnd).IsIntersect))
                     yield return dash;
             }
