@@ -96,6 +96,7 @@ namespace NodeMarkup.UI.Editors
                     Value = Increment(Value, WheelStep, mode);
             }
         }
+        public void Edit() => Field.Focus();
 
         protected enum WheelMode
         {

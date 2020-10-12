@@ -2206,6 +2206,25 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Name is already used.
+        /// </summary>
+        public static string TemplateEditor_NameExistCaption {
+            get {
+                return ResourceManager.GetString("TemplateEditor_NameExistCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The name &quot;{0}&quot; is already used by another template.
+        ///Are you sure you want to have multiple templates with the same name?.
+        /// </summary>
+        public static string TemplateEditor_NameExistMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_NameExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Offset.
         /// </summary>
         public static string TemplateEditor_Offset {
@@ -2238,6 +2257,15 @@ namespace NodeMarkup {
         public static string TemplateEditor_Templates {
             get {
                 return ResourceManager.GetString("TemplateEditor_Templates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Unnamed template.
+        /// </summary>
+        public static string TemplateEditor_UnnamedTemplate {
+            get {
+                return ResourceManager.GetString("TemplateEditor_UnnamedTemplate", resourceCulture);
             }
         }
         

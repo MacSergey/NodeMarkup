@@ -12,7 +12,7 @@ namespace NodeMarkup.Manager
     {
         static string DefaultName => Localize.Template_NewTemplate;
 
-        static Dictionary<string, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<string, StyleTemplate>();
+        static Dictionary<Guid, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<Guid, StyleTemplate>();
         static Dictionary<Style.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<Style.StyleType, StyleTemplate>();
 
         public static IEnumerable<StyleTemplate> Templates => TemplatesDictionary.Values;
@@ -40,7 +40,6 @@ namespace NodeMarkup.Manager
         {
             template.OnTemplateChanged = OnTemplateChanged;
             template.OnStyleChanged = OnTemplateStyleChanged;
-            template.OnNameChanged = OnTemplateNameChanged;
         }
         public static bool AddTemplate(Style style, out StyleTemplate template) => AddTemplate(GetNewName(), style, out template);
         public static bool DuplicateTemplate(StyleTemplate template, out StyleTemplate duplicate) 
@@ -49,7 +48,7 @@ namespace NodeMarkup.Manager
         {
             template = new StyleTemplate(name, style);
             InitTempalte(template);
-            TemplatesDictionary[template.Name] = template;
+            TemplatesDictionary[template.Id] = template;
 
             Save();
 
@@ -57,7 +56,7 @@ namespace NodeMarkup.Manager
         }
         public static void DeleteTemplate(StyleTemplate template)
         {
-            TemplatesDictionary.Remove(template.Name);
+            TemplatesDictionary.Remove(template.Id);
             if (template.IsDefault())
                 DefaultTemplates.Remove(template.Style.Type);
 
@@ -122,39 +121,28 @@ namespace NodeMarkup.Manager
                     DefaultTemplates[newStyle.Type] = template;
             }
         }
-        static bool OnTemplateNameChanged(StyleTemplate template, string newName)
-        {
-            if (!string.IsNullOrEmpty(newName) && newName != template.Name && !TemplatesDictionary.ContainsKey(newName))
-            {
-                TemplatesDictionary.Remove(template.Name);
-                TemplatesDictionary[newName] = template;
 
-                return true;
-            }
-            else
-                return false;
-        }
+        public static bool ContainsName(string name, StyleTemplate ignore) => TemplatesDictionary.Values.Any(t => t != ignore && t.Name == name);
+
 
         static void FromXml(XElement config)
         {
             foreach (var templateConfig in config.Elements(StyleTemplate.XmlName))
             {
-                if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Name))
+                if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Id))
                 {
                     InitTempalte(template);
-                    TemplatesDictionary[template.Name] = template;
+                    TemplatesDictionary[template.Id] = template;
                 }
             }
 
             foreach (var defaultConfig in config.Elements("D"))
             {
                 var styleType = (Style.StyleType)defaultConfig.GetAttrValue<int>("T");
-                var templateName = defaultConfig.GetAttrValue<string>("N");
+                var templateId = defaultConfig.GetAttrValue<Guid>("Id");
 
-                if (TemplatesDictionary.TryGetValue(templateName, out StyleTemplate template))
-                {
+                if (TemplatesDictionary.TryGetValue(templateId, out StyleTemplate template))
                     DefaultTemplates[styleType] = template;
-                }
             }
         }
         static XElement ToXml()
@@ -162,15 +150,14 @@ namespace NodeMarkup.Manager
             var config = new XElement("C");
 
             foreach (var template in Templates)
-            {
                 config.Add(template.ToXml());
-            }
+
             foreach (var def in DefaultTemplates)
             {
-                var defaultConfig = new XElement("D",
-                    new XAttribute("T", (int)def.Key),
-                    new XAttribute("N", def.Value.Name)
-                    );
+                var defaultConfig = new XElement("D");
+                defaultConfig.Add(new XAttribute("T", (int)def.Key));
+                defaultConfig.Add(new XAttribute("Id", def.Value.Id));
+                    
                 config.Add(defaultConfig);
             }
 

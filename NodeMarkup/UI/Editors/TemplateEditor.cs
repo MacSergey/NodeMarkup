@@ -64,11 +64,33 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: true);
 
-        private void NameSubmitted(string value)
+        private void NameSubmitted(string name)
         {
-            EditObject.Name = value;
-            NameProperty.Value = EditObject.Name;
-            SelectItem.Refresh();
+            if (name == EditObject.Name)
+                return;
+
+            if (!string.IsNullOrEmpty(name) && TemplateManager.ContainsName(name, EditObject))
+            {
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
+                messageBox.MessageText = string.Format(NodeMarkup.Localize.TemplateEditor_NameExistMessage, name);
+                messageBox.OnButton1Click = Set;
+                messageBox.OnButton2Click = NotSet;
+            }
+            else
+                Set();
+
+            bool Set()
+            {
+                EditObject.Name = name;
+                SelectItem.Refresh();
+                return true;
+            }
+            bool NotSet()
+            {
+                NameProperty.Edit();
+                return true;
+            }
         }
 
         private void ToggleAsDefault()

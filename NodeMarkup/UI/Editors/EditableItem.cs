@@ -69,7 +69,7 @@ namespace NodeMarkup.UI.Editors
             Label.textAlignment = UIHorizontalAlignment.Left;
             Label.verticalAlignment = UIVerticalAlignment.Middle;
             Label.autoSize = false;
-            Label.autoHeight = false;
+            //Label.autoHeight = false;
             Label.textScale = 0.55f;
             Label.padding = new RectOffset(0, 0, 3, 0);
             Label.autoHeight = true;
@@ -109,6 +109,11 @@ namespace NodeMarkup.UI.Editors
 
         public bool ShowIcon { get; set; }
         public bool ShowDelete { get; set; }
+
+        public EditableItem()
+        {
+            Label.eventSizeChanged += LabelSizeChanged;
+        }
 
         public abstract void Init();
         public void Init(bool showIcon, bool showDelete)
@@ -177,8 +182,9 @@ namespace NodeMarkup.UI.Editors
             }
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
-            Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
+            //Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
         }
+        private void LabelSizeChanged(UIComponent component, Vector2 value) => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
 
         public virtual void Refresh() => Text = Object.ToString();
     }

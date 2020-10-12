@@ -320,7 +320,7 @@ namespace NodeMarkup.UI
         }
         #endregion
 
-        #region OTHER
+        #region BACKUP
         private static void AddBackup(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup() as UIHelper;

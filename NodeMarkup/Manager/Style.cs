@@ -346,16 +346,14 @@ namespace NodeMarkup.Manager
 
         string _name;
         Style _style;
+        public Guid Id { get; private set; }
         public string Name
         {
             get => _name;
             set
             {
-                if (OnNameChanged?.Invoke(this, value) == true)
-                {
                     _name = value;
                     TemplateChanged();
-                }
             }
         }
         public Style Style
@@ -370,27 +368,29 @@ namespace NodeMarkup.Manager
         }
         public Action OnTemplateChanged { private get; set; }
         public Action<StyleTemplate, Style> OnStyleChanged { private get; set; }
-        public Func<StyleTemplate, string, bool> OnNameChanged { private get; set; }
 
         public string XmlSection => XmlName;
 
-        public StyleTemplate(string name, Style style)
+        public StyleTemplate(string name, Style style) : this(Guid.NewGuid(), name, style) { }
+        private StyleTemplate(Guid id, string name, Style style)
         {
-            _name = name;
-            _style = style.Copy();
+            Id = id;
+            Name = name;
+            Style = style.Copy();
             Style.OnStyleChanged = TemplateChanged;
         }
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
         public Dependences GetDependences() => new Dependences();
 
-        public override string ToString() => Name;
+        public override string ToString() => !string.IsNullOrEmpty(Name) ? Name : Localize.TemplateEditor_UnnamedTemplate;
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
-            var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), out Style style))
+            if (config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), out Style style))
             {
-                template = new StyleTemplate(name, style);
+                var id = config.GetAttrValue(nameof(Id), Guid.Empty);
+                var name = config.GetAttrValue<string>("N");
+                template = id == Guid.Empty ? new StyleTemplate(name, style) : new StyleTemplate(id, name, style);
                 return true;
             }
             else
@@ -402,10 +402,10 @@ namespace NodeMarkup.Manager
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlName,
-                new XAttribute("N", Name),
-                Style.ToXml()
-                );
+            var config = new XElement(XmlName);
+            config.Add(new XAttribute(nameof(Id), Id));
+            config.Add(new XAttribute("N", Name));
+            config.Add(Style.ToXml());
             return config;
         }
     }

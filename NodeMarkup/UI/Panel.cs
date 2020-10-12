@@ -56,13 +56,13 @@ namespace NodeMarkup.UI
             CreateEditors();
             CreateSizeChanger();
 
-            size = new Vector2(500, Header.height + TabStrip.height + 400); ;
+            size = new Vector2(550, Header.height + TabStrip.height + 400); ;
             minimumSize = new Vector2(500, Header.height + TabStrip.height + 200);
         }
         private void CreateHeader()
         {
             Header = AddUIComponent<UIPanelDragHeader>();
-            Header.size = new Vector2(500, 42);
+            Header.size = new Vector2(550, 42);
             Header.relativePosition = new Vector2(0, 0);
             Header.target = parent;
 

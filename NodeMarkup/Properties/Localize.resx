@@ -1019,4 +1019,14 @@ Drop circle outside target to unset paste order</value>
   <data name="LineEditor_AlignmentRight" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Unnamed template</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Name is already used</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>The name "{0}" is already used by another template.
+Are you sure you want to have multiple templates with the same name?</value>
+  </data>
 </root>
