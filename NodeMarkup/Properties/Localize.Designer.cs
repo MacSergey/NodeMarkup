@@ -768,11 +768,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Center solid.
+        ///   Ищет локализованную строку, похожую на Alignment.
         /// </summary>
-        public static string LineEditor_CenterSolid {
+        public static string LineEditor_Alignment {
             get {
-                return ResourceManager.GetString("LineEditor_CenterSolid", resourceCulture);
+                return ResourceManager.GetString("LineEditor_Alignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Center.
+        /// </summary>
+        public static string LineEditor_AlignmentCenter {
+            get {
+                return ResourceManager.GetString("LineEditor_AlignmentCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left.
+        /// </summary>
+        public static string LineEditor_AlignmentLeft {
+            get {
+                return ResourceManager.GetString("LineEditor_AlignmentLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right.
+        /// </summary>
+        public static string LineEditor_AlignmentRight {
+            get {
+                return ResourceManager.GetString("LineEditor_AlignmentRight", resourceCulture);
             }
         }
         

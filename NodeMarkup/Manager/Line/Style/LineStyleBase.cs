@@ -132,7 +132,7 @@ namespace NodeMarkup.Manager
         protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var alignmentProperty = parent.AddUIComponent<LineAlignmentPropertyPanel>();
-            alignmentProperty.Text = "Alignment";
+            alignmentProperty.Text = Localize.LineEditor_Alignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;
             alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment = value;
@@ -140,8 +140,13 @@ namespace NodeMarkup.Manager
         }
         public enum StyleAlignment
         {
+            [Description(nameof(Localize.LineEditor_AlignmentLeft))]
             Left,
+
+            [Description(nameof(Localize.LineEditor_AlignmentCenter))]
             Centre,
+
+            [Description(nameof(Localize.LineEditor_AlignmentRight))]
             Right
         }
     }

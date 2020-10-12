@@ -631,8 +631,8 @@ By registering early access, you will support the ability to develop this mod at
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Early access</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Center solid</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Alignment</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>I agree</value>
@@ -1009,5 +1009,14 @@ Drop circle outside target to unset paste order</value>
   </data>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Turn counter-clockwise</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Right</value>
   </data>
 </root>
