@@ -1772,7 +1772,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dump success saved to {0}.
+        ///   Ищет локализованную строку, похожую на Dump success saved.
         /// </summary>
         public static string Settings_DumpMessageSuccess {
             get {

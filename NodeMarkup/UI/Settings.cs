@@ -368,7 +368,7 @@ namespace NodeMarkup.UI
                 {
                     var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                     messageBox.CaprionText = caption;
-                    messageBox.MessageText = string.Format(Localize.Settings_DumpMessageSuccess, path);
+                    messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
                     messageBox.Button2Text = Localize.MessageBox_OK;
                     messageBox.OnButton1Click = CopyToClipboard;
