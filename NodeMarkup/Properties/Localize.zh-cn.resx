@@ -248,42 +248,39 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>确定要删除全图所有的地标线吗?
-此操作不可撤销！</value>
+此操作不可撤销。</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>将地标线信息导出到文件</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>复制路径到剪贴板</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>确认</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>导出地标线信息</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>导出失败</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>导出成功</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>从文件中导入地标线信息</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>从文件中恢复地标线信息</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>导入地标线信息</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>恢复标记数据</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>确定要导入数据吗?
-导入后的数据会覆盖全图既存的地标线。
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>确定要恢复数据吗?
+恢复后的数据会覆盖全图既存的地标线。
 此操作无法撤销！</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>地标线信息导入失败</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>地标线信息恢复失败</value>
   </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>地标线信息导入成功</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>地标线信息恢复成功</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>快速初始化新规则</value>
@@ -364,10 +361,10 @@ Shift x10，Ctrl x0.1</value>
     <value>显示更新提示框</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>导入</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>恢复</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -588,7 +585,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>抢先体验版本</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>对齐</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>我同意</value>
   </data>
@@ -952,7 +951,62 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>逆时针旋转</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>中心</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>向左</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>向右</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>未命名模板</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>名称已被占用</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>模板名称 "{0}" 已被其它模板占用。
+确定要多个模板使用这个命名吗？</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>备份标记</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>备份模板</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>删除所有模板</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>删除所有模板</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>确定要删除所有模板吗?
+此操作不可撤销。</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>导出模板到文件</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>导出模板</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>从文件中恢复模板。</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>恢复模板</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>确定要恢复模板吗?
+恢复后的模板会覆盖既存的模板。
+此操作无法撤销。</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>模板恢复失败</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>模板恢复成功</value>
+  </data>
 </root>

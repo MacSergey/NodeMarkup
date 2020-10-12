@@ -246,45 +246,27 @@ Nie będzie można cofnąć tej operacji</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Usuwanie oznaczeń</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia?
-Nie będzie można cofnąć tej operacji</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Eksportuj oznaczenia do pliku</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Skopiuj ścieżkę do schowka</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Eksportuj dane oznaczeń</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Eksportowanie oznaczeń nie powiodło się</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Eksportowanie oznaczeń zakończono pomyślnie</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importuj oznaczenia z pliku</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Import oznaczeń</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz zaimportować oznaczenia?
-Wszystkie istniejące oznaczenia zostaną zastąpione.
-Nie będzie można cofnąć tej operacji</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Importowanie oznaczeń nie powiodło się</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Importowanie oznaczeń zakończone sukcesem</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Szybkie tworzenie reguł</value>
   </data>
@@ -364,10 +346,8 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
     <value>Pokaż "Co nowego?"</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importuj</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -588,7 +568,9 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Wczesny dostęp</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Wyrównanie</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Zgadzam się</value>
   </data>
@@ -952,6 +934,34 @@ Upuść okrąg na zewnątrz celu, aby anulować kolejność wklejania</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Obróć przeciwnie do ruchu wskazówek zegara</value>
   </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Środek</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Lewo</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Prawo</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Szablon bez nazwy</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Nazwa już istnieje</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Nazwa "{0}" jest obecnie używana przez inny szablon.
+Jesteś pewien, że chcesz użyć jednej nazwy dla kilku szablonów?</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

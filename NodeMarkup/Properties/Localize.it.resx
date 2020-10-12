@@ -246,45 +246,27 @@ Questa azione non può essere annullata</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Elimina tutte le marcature</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Vuoi veramente rimuovere tutti i marcatori?
-Questa azione non può essere annullata</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Scarica i dati dei marcatori su file</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copia il percorso negli appunti</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Scarica dati marcatori</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Scarico fallito</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Scarico salvato con successo</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importa dati marcatori da file</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importa dati marcatori</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Vuoi veramente importare i dati?
-I dati importati sostituiranno quelli esistenti.
-Questa azione non può essere annullata</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Importazione dati marcatori fallita</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Dati marcatori importati con successo</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configurazione rapida delle regole</value>
   </data>
@@ -374,10 +356,8 @@ Tieni premuto Shift per impostare le strisce pedonali</value>
 - Il segmento di linea con la regola verrà evidenziato quando si passa sopra il riquadro di modifica di quella regola.
 - Aggiunta traduzione in cinese semplificato.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importa</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -936,6 +916,21 @@ L'azione non può esser annullata.</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Copia</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

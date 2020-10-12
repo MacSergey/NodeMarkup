@@ -246,45 +246,27 @@ No se puede deshacer esta acción</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Eliminar todas las marcas</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar todas las marcas?
-No se puede deshacer esta acción</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportar las marcas al archivo</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copiar la ruta al portapapeles</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Aceptar</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportar las marcas</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Exportación fallida</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Exportación guardada con éxito</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importar las marcas desde el archivo</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importar las marcas</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>¿De verdad quieres importar los datos?
-Los datos importados reemplazarán todas las marcas.
-No se puede deshacer esta acción</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Importación fallida</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Las marcas se han importado con éxito</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuración rápida de la regla</value>
   </data>
@@ -362,10 +344,8 @@ Mantenga Mayús para crear un paso de peatones</value>
     <value>Mostrar las novedades</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importar</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Anular</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -839,6 +819,21 @@ crear o eliminar el paso de peatones</value>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Apoyo</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

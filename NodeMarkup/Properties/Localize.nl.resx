@@ -246,45 +246,27 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Verwijder alle markeringen</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wil je echt alle markeringen verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exporteer markeringsdata als bestand</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Kopieer bestandslocatie naar klembord</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Oké</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exporteer markeringsdata</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Export mislukt</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Export gelukt</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importeer markeringsgegevens uit bestand</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importeer markeringsdata</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Wil je echt deze data importeren?
-De geïmporteerde data vervangt alle huidige markeringen.
-Deze actie kan niet ongedaan worden gedaan</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Markeringsdata niet geïmporteerd</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Markeringsdata succesvol geïmporteerd</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Snelle regel setup</value>
   </data>
@@ -363,10 +345,8 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
     <value>Toon wat nieuw is</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importeer</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Annuleer</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -926,6 +906,21 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
     <value>Wil je echt alle correctieafstanden op punt #{0} wissen?
 Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
