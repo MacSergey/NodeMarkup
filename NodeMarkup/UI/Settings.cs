@@ -325,7 +325,7 @@ namespace NodeMarkup.UI
             UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, Localize.Settings_DeleteMarkingMessage, () => MarkupManager.DeleteAll());
-            AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingButton, Loader.DumpMarkingData);
+            AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
             AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, Localize.Settings_RestoreMarkingMessage);
         }
         private static void AddBackupTemplates(UIHelperBase helper)
