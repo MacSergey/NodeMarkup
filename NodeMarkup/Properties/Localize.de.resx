@@ -246,45 +246,27 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Alle Markierungen löschen</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wirklich alle Markierungen entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Markierungsdaten in Datei speichern</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Pfad in die Zwischenablage kopieren</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Ok</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Markierungsdaten speichern</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Speichern fehlgeschlagen</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Erfolgreich gespeichert</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten aus Datei importieren</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten importieren</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Möchtest Du wirklich die Daten importieren?
-Die importierten Daten werden alle vorhandenen Markierungen ersetzen.
-Diese Aktion kann nicht rückgängig gemacht werden</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import der Markierungsdaten fehlgeschlagen</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Markierungsdaten erfolgreich importiert</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Schnelle Regel-Erstellung</value>
   </data>
@@ -374,10 +356,8 @@ Shift halten erstellt eine Fußgängerüberweg-Markierung</value>
 - Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
 - Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importieren</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -623,7 +603,9 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Vorabzugriff</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Ausrichtung</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Ich stimme zu</value>
   </data>
@@ -987,6 +969,34 @@ Kreis außerhalb eines Ziels loslassen um die Einfüge-Reihenfolge aufzuheben</v
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Gegen den Uhrzeigersinn drehen</value>
   </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Mittig</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Unbenannte Vorlage</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Name wird bereits verwendet</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Der Name "{0}" wird bereits für eine anderen Vorlage verwendet.
+Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

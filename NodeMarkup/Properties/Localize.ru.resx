@@ -248,42 +248,39 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить всю разметку?
-Это действие нельзя отменить</value>
+Это действие нельзя отменить.</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Сохранить разметку в файл</value>
+    <value>Сохранить данные разметки в файл</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Копировать путь в буфер</value>
   </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>ОК</value>
-  </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Сохранить разметку</value>
+    <value>Сохранить данные разметки</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Не удалось сохранить разметки</value>
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
+    <value>Не удалось сохранить</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Разметки успешно сохранены</value>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>Успешно сохранено в {0}</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Импортировать разметку из файла</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Восстановить данные разметки из файла</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Импорт разметки</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Восстановить данные разметки</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Вы действительно хотите импортировать разметку?
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Вы действительно хотите восстановить разметку?
 Она заменит всю существующую разметку.
-Это действие нельзя отменить</value>
+Это действие нельзя отменить.</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Не удалось импортировать  разметку</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Не удалось восстановить данные разметки</value>
   </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Разметку успешно импортирована</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Данные разметки успешно восстановлены</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Быстрая настройка правил</value>
@@ -374,10 +371,10 @@ Shift X10, Ctrl X0.1</value>
 - Подсветка правила линии при наведении на панель редактирования.
 - Китайский язык.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Импорт</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Восстановление</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -1002,5 +999,54 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineEditor_AlignmentRight" xml:space="preserve">
     <value>Право</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Безымянный шаблон</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Имя уже используется</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Имя "{0}" уже используется другим шаблоном.
+Вы уверены, что хотите иметь несколько шаблонов с одинаковым именем?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Резервирование разметки</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Резервирование шаблонов</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Удалить все шаблоны</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Удалить все шаблоны</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить все шаблоны?
+Это действие нельзя отменить.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Сохранить шаблоны в файл</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Сохранение шаблонов</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Восстановление шаблонов из файла</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Восстановление шаблонов</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Вы действительно хотите восстановить шаблоны?
+Они заменит все существующие шаблоны.
+Это действие нельзя отменить.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Не удалось восстановить шаблоны</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Шаблоны успешно восстановлены</value>
   </data>
 </root>

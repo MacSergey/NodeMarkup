@@ -246,45 +246,27 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Poista kaikki tiemerkinnät</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
-Tätä toimintoa ei voi kumota</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Vie tiemerkintätiedot tiedostoon</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Kopioi tiedostopolku leikepöydälle</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Vie tiemerkintätiedot</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Vienti epäonnistui</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Vienti onnistui</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Tuo tiemerkintätiedot tiedostosta</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Tuo tiemerkintätiedot</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Haluatko varmasti tuoda tiedot?
-Tuodut tiedot korvaavat kaikki olemassa olevat tiemerkinnät.
-Tätä toimintoa ei voi kumota</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Tiemerkintätietojen tuonti epäonnistui</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Tiemerkintätietojen tuonti onnistui</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Nopea säännön luominen</value>
   </data>
@@ -363,10 +345,8 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
     <value>Näytä, mikä on uutta</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Tuo</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -903,6 +883,21 @@ Tätä toimintoa ei voi kumota.</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Käännä vastapäivään</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

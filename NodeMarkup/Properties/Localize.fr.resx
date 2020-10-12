@@ -246,45 +246,27 @@ Cette action est irréversible</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Supprimer tous les marquages</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les marquages ?
-Cette action est irréversible</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Extraire les données de marquage vers un fichier</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copier le chemin au presse-papier</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Ok</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Extraire les données de marquage</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>L'extraction a échoué</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Extraction réussie</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importer les données de marquage depuis un fichier</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importer les données de marquage</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment importer les données ?
-Les données importées remplaceront toutes les marquages existants.
-Cette action est irréversible</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>L'importation des données de marquage a échoué</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Données de marquage importées avec succès</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuration rapide des règles</value>
   </data>
@@ -364,10 +346,8 @@ Maintenez Maj pour créer un passage piéton</value>
     <value>Afficher les nouveautés</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importer</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -909,6 +889,21 @@ Cette action est irréversible.</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Tourner dans le sens inverse des aiguilles d'une montre</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

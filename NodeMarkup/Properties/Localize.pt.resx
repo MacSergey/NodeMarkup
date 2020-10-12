@@ -246,45 +246,27 @@ Esta ação não pode ser desfeita</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Remover todas as marcações</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo remover todas as marcações?
-Esta acção não pode ser desfeita</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportar dados de marcações para um ficheiro</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copiar caminho para área de transferência</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportar dados das marcações</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Exportação falhou</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Exportação guardada com sucesso</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importar dados de marcações de um ficheiro</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importar dados de marcações</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo importar dados?
-Os dados importados vão substituir todos os dados existente. 
-Esta acção não pode ser desfeita</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Importação falhou</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Dados de marcações importados com sucesso</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuração rápida das regras</value>
   </data>
@@ -374,10 +356,8 @@ Prima Shift para criar uma passadeira</value>
 - O segmento de uma linha agora é realçado quando paira com o rato no painel de edição daquela regra.
 - Adicionada tradução para Chinês Simplificado.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importar</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -941,6 +921,21 @@ Esta acção não pode ser desfeita.</value>
     <value>Tem a certeza que quer mesmo repor todos os descolamentos de pontos do nó #{0}?
 Esta ação não pode ser desfeita.</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

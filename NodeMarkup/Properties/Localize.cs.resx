@@ -246,45 +246,27 @@ Tuto akci nelze vrátit zpět</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Odstranit všechna značení</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit všechna značení?
-Tuto akci nelze vrátit zpět</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportovat data do souboru</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Kopírovat cestu k souboru</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportovat data</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Export se nezdařil</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Export úspěšný</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importovat data ze souboru</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importovat data</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Opravdu si přejete importovat nová data?
-Importovaná data připíší všechna existující značení.
-Tuto akci nelze vrátit zpět</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import dat se nezdařil</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Import dat úspěšný</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Rychlé vytvoření pravidel</value>
   </data>
@@ -364,10 +346,8 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Zobrazovat novinky</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importovat</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -935,6 +915,21 @@ Tuto akci nelze vrátit zpět.</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Otočit proti směru hodinových ručiček</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

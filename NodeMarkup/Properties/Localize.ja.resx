@@ -247,45 +247,27 @@
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>マップ上にある全てのマーキングを削除</value>
   </data>
-  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>マップ上にある、全てマーキングを削除してもよろしいですか?
-この操作は元に戻せません</value>
-  </data>
+  
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルに保存</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>クリップボードにコピー</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>マーキングデータのダンプ出力</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>ダンプ出力に失敗しました</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>ダンプ出力は正常に行われました</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>マーキングデータをファイルからインポート</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>マーキングデータのインポート</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>本当にデータをインポートしますか？
-インポートされたデータは、既存のマーキングを全て置き換えます。
-この操作は、元に戻すことができません。</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>マーキングデータのインポートに失敗しました</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>マーキングデータのインポートに成功しました</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>ルールのクイックセットアップ</value>
   </data>
@@ -365,10 +347,8 @@ Shift押下で横断歩道の作成</value>
     <value>新着情報を表示する</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>インポート</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -956,6 +936,21 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>反時計回りに回転</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
