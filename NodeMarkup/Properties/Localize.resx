@@ -263,7 +263,7 @@ This action cannot be undone.</value>
     <value>Dump failed</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Dump success saved to {0}</value>
+    <value>Dump success saved</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
     <value>Restore marking data from file</value>

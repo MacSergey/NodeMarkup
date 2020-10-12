@@ -263,7 +263,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Не удалось сохранить</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Успешно сохранено в {0}</value>
+    <value>Успешно сохранено</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
     <value>Восстановить данные разметки из файла</value>
