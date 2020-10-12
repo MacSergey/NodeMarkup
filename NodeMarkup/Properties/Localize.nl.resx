@@ -246,7 +246,10 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Verwijder alle markeringen</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Wil je echt alle markeringen verwijderen?
+Deze actie kan niet ongedaan worden gemaakt.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exporteer markeringsdata als bestand</value>
   </data>
@@ -262,11 +265,23 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Export gelukt</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Herstel markeringsgegevens uit bestand</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Herstel markeringsgegevens</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Weet je zeker dat je de gegevens wil herstellen?
+De herstelde zal alle bestaande markeringen vervangen.
+Deze actie kan niet ongedaan worden gemaakt.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Markeringsgegevens herstellen mislukt</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Markeringsgegevens zijn succesvol hersteld</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Snelle regel setup</value>
   </data>
@@ -345,7 +360,9 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
     <value>Toon wat nieuw is</value>
   </data>
   
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Herstel</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Annuleer</value>
   </data>
@@ -567,7 +584,9 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Vroegtijdige toegang</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Uitlijning</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Ik ga akkoord</value>
   </data>
@@ -841,9 +860,7 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Zonder sneltoets</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>Altijd</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Alleen wanneer het impact heeft op afhankelijke markeringen</value>
   </data>
@@ -898,7 +915,9 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
   <data name="Filler_Vertex" xml:space="preserve">
     <value>Hoekpunt</value>
   </data>
-  
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Reset alle punt correctieafstanden</value>
+  </data>
   <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
     <value>Reset alle punt correctieafstanden</value>
   </data>
@@ -906,29 +925,84 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
     <value>Wil je echt alle correctieafstanden op punt #{0} wissen?
 Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>Sleep de cirkel om de plak volgorde in te stellen</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>Sleep de cirkel binnen het doel om de volgorde in te stellen
+Sleep de cirkel buiten het dool om de volgorde ongedaan te maken</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopieer markering</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Plak markering</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>Verander volgorde</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Draai met de klok mee</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Draai tegen de klok in</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Midden</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Naamloos sjabloon</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Naam is al in gebruik</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>De naam "{0}" is al in gebruik door een ander sjabloon.
+Weet je zeker dat je meerdere sjablonen met dezelfde naam will hebben?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Maak Markering Backup</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Maak Sjablonen backup</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Verwijder alle sjablonen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Verwijder alle sjablonen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Weet je zeker dat je alle sjablonen wil verwijderen?
+Deze actie kan niet ongedaan worden gemaakt.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Exporteer sjablonen als bestand</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Exporteer sjablonen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Herstel sjablonen uit bestand</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Herstel sjablonen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Weet je zeker dat je sjablonen wil herstellen?
+De herstelde sjablonen zullen alle bestaande sjablonen vervangen.
+Deze actie kan niet ongedaan worden gemaakt.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Herstel sjablonen mislukt</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Sjablonen zijn succesvol hersteld</value>
+  </data>
 </root>

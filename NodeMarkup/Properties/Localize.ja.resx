@@ -247,7 +247,10 @@
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>マップ上にある全てのマーキングを削除</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>マップ上にある、全てのマーキングを削除してもよろしいですか?
+この操作は元に戻せません。</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルに保存</value>
   </data>
@@ -263,11 +266,23 @@
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>ダンプ出力は正常に行われました</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>マーキングデータをファイルから復元</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>マーキングデータの復元</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>本当にデータを復元しますか？
+復元すると、既存のマーキングデータを全て置き換えます。
+この操作は、元に戻すことができません。</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>マーキングデータの復元に失敗しました</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>マーキングデータの復元に成功しました</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>ルールのクイックセットアップ</value>
   </data>
@@ -347,7 +362,9 @@ Shift押下で横断歩道の作成</value>
     <value>新着情報を表示する</value>
   </data>
   
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>復元</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
@@ -570,7 +587,9 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>早期アクセス</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>位置揃え</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>同意します</value>
   </data>
@@ -847,9 +866,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>デフォルト</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>全ての削除方法で確認</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>他の項目に影響がある場合のみ確認</value>
   </data>
@@ -936,22 +953,62 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>反時計回りに回転</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>左寄せ</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>右寄せ</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>名無しのテンプレート</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>名前が重複しています</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>{0} という名前は、他のテンプレートで使用されています。
+重複したテンプレートを保存しても良いですか？</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>マーキングのバックアップ</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>テンプレートのバックアップ</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>テンプレートを全て削除</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>テンプレートを全て削除</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>本当に全てのテンプレートを削除しますか？
+この操作は元に戻すことはできません。</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>テンプレートをファイルに保存</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>テンプレートのダンプ出力</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>ファイルからテンプレートを復元</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>テンプレートの復元</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>本当にテンプレートを復元しますか？
+復元すると、既存のテンプレートを全て置き換えます。
+この操作は、元に戻すことができません。</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>テンプレートの復元に失敗しました</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>テンプレートの復元に成功しました</value>
+  </data>
 </root>

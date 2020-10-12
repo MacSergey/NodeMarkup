@@ -121,7 +121,7 @@
     <value>Supprimer {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} {1}?
+    <value>Voulez-vous vraiment supprimer {0} {1} ?
 Cette action est irréversible.</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
@@ -246,7 +246,10 @@ Cette action est irréversible</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Supprimer tous les marquages</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer tous les marquages ?
+Cette action est irréversible.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Extraire les données de marquage vers un fichier</value>
   </data>
@@ -262,11 +265,23 @@ Cette action est irréversible</value>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Extraction réussie</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Restaurer les marquages depuis le fichier</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Restaurer les marquages</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment restaurer les données ?
+Les données restaurées ont remplacer tout les marquages existants.
+Cette action est irréversible.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>La restauration des marquages a échoué</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Marquages restaurés avec succès</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuration rapide des règles</value>
   </data>
@@ -313,7 +328,7 @@ Cette action est irréversible</value>
     <value>Effacer les marquages de nœuds</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les marquages du noeud #{0} ?
+    <value>Voulez-vous vraiment supprimer tous les marquages du nœud #{0} ?
 Cette action est irréversible.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
@@ -346,7 +361,9 @@ Maintenez Maj pour créer un passage piéton</value>
     <value>Afficher les nouveautés</value>
   </data>
   
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Restaurer</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
@@ -568,7 +585,9 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Accès anticipé</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Alignement</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>J'accepte</value>
   </data>
@@ -786,7 +805,9 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Damiers</value>
   </data>
-  
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Nombre de lignes</value>
+  </data>
   <data name="LineEditor_SharkToothBase" xml:space="preserve">
     <value>Base du triangle</value>
   </data>
@@ -825,35 +846,61 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
 Cela va remplacer le marquage existant.
 Cette action est irréversible.</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Raccourcis pour les passages piétons</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Raccourcis pour les remplisseurs</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Raccourcis pour les lignes de marquage</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Raccourcis pour les lignes de stop</value>
+  </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>Non défini</value>
   </data>
-  
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>Dans chaque cas</value>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Sans raccourci</value>
   </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Seulement s'il affecte d'autres objets</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Ces éléments dépendants vont aussi être supprimés :</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Bordures de passage piéton : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Passages piétons : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Remplisseurs : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Lignes : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Règles : {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Sauvegarde</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Affichage et utilisation</value>
+  </data>
   <data name="Settings_GeneralTab" xml:space="preserve">
     <value>Général</value>
   </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Catégories</value>
   </data>
-  
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Raccourcis</value>
+  </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Support</value>
   </data>
@@ -863,17 +910,32 @@ Cette action est irréversible.</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Copier</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Coin</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>À partir de</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Vertex</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
     <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud #{0} ?
 Cette action est irréversible.</value>
   </data>
-  
-  
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>Glisser-déposer le cercle pour définir l'ordre de collage</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>Déposez le cercle à l'intérieur de la cible pour définir l'ordre de collage
+Déposez le cercle à l'extérieur de la cible pour enlever cet ordre de collage</value>
+  </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Copier le marquage</value>
   </data>
@@ -889,22 +951,62 @@ Cette action est irréversible.</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Tourner dans le sens inverse des aiguilles d'une montre</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Centré</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Gauche</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Droite</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Modèle sans nom</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Nom déjà utilisé</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Le nom «{0}» est déjà utilisé pour un autre modèle.
+Êtes-vous sûr de vouloir avoir plusieurs modèles avec le même nom ?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Sauvegarder le marquage</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Sauvegarder les modèles</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Supprimer tous les modèles</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Supprimer tous les modèles</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer tous les modèles ?
+Cette action est irréversible.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Sauvegarder les modèles dans le fichier</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Sauvegarder les modèles</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Restaurer les modèles depuis le fichier</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Restaurer les modèles</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment restaurer les modèles ?
+Les modèles restaurés vont remplacer tout les modèles actuels.
+Cette action est irréversible.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>La restauration des modèles a échoué</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Modèles restaurés avec succès</value>
+  </data>
 </root>

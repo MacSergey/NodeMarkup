@@ -246,7 +246,10 @@ Nie będzie można cofnąć tej operacji</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Usuwanie oznaczeń</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia? 
+Tej akcji nie można cofnąć.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Eksportuj oznaczenia do pliku</value>
   </data>
@@ -262,11 +265,23 @@ Nie będzie można cofnąć tej operacji</value>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Eksportowanie oznaczeń zakończono pomyślnie</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Przywróć dane oznaczeń z pliku</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Przywróć dane oznaczeń</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz przywrócić dane?
+Wszystkie istniejące oznaczenia zostaną zastąpione.
+Tej akcji nie można cofnąć.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Nie udało się przywrócić danych oznaczeń</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Dane oznaczeń zostały pomyślnie przywrócone</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Szybkie tworzenie reguł</value>
   </data>
@@ -346,7 +361,9 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
     <value>Pokaż "Co nowego?"</value>
   </data>
   
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Przywróć</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
@@ -845,9 +862,7 @@ Nie będzie można cofnąć tej operacji.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Bez modyfikatora</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>W każdym przypadku</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Tylko jeśli ma wpływ na inne elementy</value>
   </data>
@@ -951,18 +966,45 @@ Upuść okrąg na zewnątrz celu, aby anulować kolejność wklejania</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
     <value>Nazwa "{0}" jest obecnie używana przez inny szablon.
-Jesteś pewien, że chcesz użyć jednej nazwy dla kilku szablonów?</value>
+Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku szablonów?</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Wykonaj kopię zapasową oznaczeń</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Wykonaj kopię zapasową szablonów</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Usuń wszystkie szablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Usuń wszystkie szablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wszystkie szablony?
+Nie będzie można cofnąć tej operacji.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Wykonaj kopię zapasową szablonów do pliku</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Wykonaj kopię zapasową szablonów</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Przywróć szablony z pliku</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Przywróć szablony</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz przywrócić szablony?
+Wszystkie istniejące szablony zostaną zastąpione.
+Nie będzie można cofnąć tej operacji.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Nie udało się przywrócić szablonów</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Szablony zostały pomyślnie przywrócone</value>
+  </data>
 </root>

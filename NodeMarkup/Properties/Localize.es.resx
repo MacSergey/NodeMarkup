@@ -246,7 +246,10 @@ No se puede deshacer esta acción</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Eliminar todas las marcas</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>¿De verdad quieres borrar todas las marcas?
+No se puede deshacer esta acción.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportar las marcas al archivo</value>
   </data>
