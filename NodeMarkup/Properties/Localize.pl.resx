@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Nie będzie można cofnąć tej operacji</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Nie ustawiono</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Aktywuj narzędzie</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Dodaj nową regułę dla linii</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Usuń wszystkie oznaczenia wybranego skrzyżowania</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -284,9 +284,6 @@ Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>Importowanie oznaczeń zakończone sukcesem</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Inne</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Szybkie tworzenie reguł</value>
@@ -335,9 +332,11 @@ Nie będzie można cofnąć tej operacji</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Czy na pewno chcesz usunąć wszystkie oznaczenia skrzyżowania #{0}?
-Nie będzie można cofnąć tej operacji</value>
+Nie będzie można cofnąć tej operacji.</value>
   </data>
-  
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Kliknij, aby utworzyć linię</value>
+  </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknij aby usunąć linię</value>
   </data>
@@ -364,6 +363,7 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Pokaż "Co nowego?"</value>
   </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>Importuj</value>
   </data>
@@ -398,13 +398,13 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
     <value>Wypełnienia</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>wypełniacz</value>
+    <value>wypełnienie</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Linie</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Kratka</value>
+    <value>Siatka</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Przerywana</value>
@@ -448,6 +448,8 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Wypełnienie</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Wersja {0}</value>
   </data>
@@ -457,9 +459,10 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Powiadamiaj tylko o ważnych aktualizacjach</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Podwójna ciągła</value>
   </data>
@@ -492,7 +495,10 @@ Aby utworzyć linię połącz ze sobą dwa punkty.</value>
     <value>To skrzyżowanie nie ma jeszcze żadnych wypełnień.
 Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Lista szablonów jest pusta.
+Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii, przejścia dla pieszych lub wypełnienia.</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktywuj za pomocą klucza</value>
   </data>
@@ -500,7 +506,7 @@ Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
     <value>Aktywacja nie powiodła się</value>
   </data>
   <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktywacja pomyślna</value>
+    <value>Aktywacja powiodła się</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
     <value>Ta funkcja jest niedostępna</value>
@@ -511,7 +517,7 @@ Będzie ona dostępna dla wszystkich w późniejszym czasie.
 Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju tego moda.</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
-    <value>Skopiuj styl</value>
+    <value>Kopiuj styl</value>
   </data>
   <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
     <value>Wklej styl</value>
@@ -559,10 +565,10 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Wystąpił błąd podczas łączenia konta, spróbuj ponownie.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Konto zostało połączone, ale nie jesteś uprawniony do wczesnego dostępu.</value>
+    <value>Twoje konto zostało połączone, ale nie jesteś uprawniony do wczesnego dostępu.</value>
   </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Możesz zamknąć stronę i powrócić do gry.</value>
+    <value>Możesz zamknąć tę stronę i powrócić do gry.</value>
   </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Anuluj</value>
@@ -582,9 +588,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Wczesny dostęp</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Wyśrodkuj linię ciągłą</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Zgadzam się</value>
   </data>
@@ -716,16 +720,16 @@ Aby utworzyć przejście dla pieszych przytrzymaj klawisz Shift.</value>
     <value>Równoległe linie ciągłe</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>Lewa krawędź</value>
+    <value>Lewy obrys</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>Prawa krawędź</value>
+    <value>Prawy obrys</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>Wybierz lewą krawędź przejścia dla pieszych</value>
+    <value>Wybierz lewy obrys przejścia dla pieszych</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>Wybierz prawą krawędź przejścia dla pieszych</value>
+    <value>Wybierz prawy obrys przejścia dla pieszych</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Grupuj punkty nakładki</value>
@@ -775,7 +779,7 @@ utworzyć lub usunąć przejście dla pieszych</value>
     <value>przejście dla pieszych</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>wypełniacz</value>
+    <value>wypełnienie</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
     <value>linia</value>
@@ -786,9 +790,10 @@ utworzyć lub usunąć przejście dla pieszych</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>szablon</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Wystąpiły błędy podczas ładowania danych.
-Nie udało się załadować wypełnień dla {0} skrzyżowań.</value>
+Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Wsparcie</value>
@@ -796,47 +801,158 @@ Nie udało się załadować wypełnień dla {0} skrzyżowań.</value>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Rozwiązywanie problemów</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Szachownica</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Liczba linii</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Podstawa trójkąta</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Wysokość trójkąta</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Odstęp</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Bok kwadratu</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Ustąp pierwszeństwa</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Ustąp pierwszeństwa</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Ciągła z przerywaną</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Wyczyść oznaczenie</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopiuj oznaczenie</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Wklej oznaczenie</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Wklej oznaczenie</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz wkleić oznaczenie?
+Istniejące oznaczenie zostanie zastąpione.
+Nie będzie można cofnąć tej operacji.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Modyfikator przejść dla pieszych</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Modyfikator wypełnień</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Modyfikator zwykłych linii</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Modyfikator linii zatrzymania</value>
+  </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>Nie ustawiono</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Bez modyfikatora</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
+    <value>W każdym przypadku</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Tylko jeśli ma wpływ na inne elementy</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Powiązane elementy również zostaną usunięte:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Obrysy przejścia dla pieszych - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Przejścia dla pieszych - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Wypełnienia - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Linie - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Reguły - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Kopia zapasowa</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Wyświetl i używaj</value>
+  </data>
   <data name="Settings_GeneralTab" xml:space="preserve">
     <value>Ogólne</value>
   </data>
-  
-  
-  
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Grupowanie</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Skróty klawiszowe i modyfikatory</value>
+  </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Wsparcie</value>
   </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Kopia</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Krawędź</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Począwszy od</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Wierzchołek</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Resetuj przesunięcie wszystkich punktów</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Resetuj przesunięcie wszystkich punktów</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wszystkie przesunięcia punktów skrzyżowania #{0}?
+Nie będzie można cofnąć tej operacji.</value>
+  </data>
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>Przeciągnij i upuść okrąg, aby ustawić kolejność wklejania</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>Upuść okrąg wewnątrz celu, aby ustawić kolejność wklejania
+Upuść okrąg na zewnątrz celu, aby anulować kolejność wklejania</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopiuj oznaczenie</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Wklej oznaczenie</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>Zmień kolejność</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Obróć zgodnie z ruchem wskazówek zegara</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Obróć przeciwnie do ruchu wskazówek zegara</value>
+  </data>
+  
   
   
 </root>

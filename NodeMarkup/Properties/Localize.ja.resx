@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -232,13 +232,13 @@
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未設定</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>マーキングツールの有効化</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>新規ルールを追加</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>ノードのマーキングを全て削除</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -285,9 +285,6 @@
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>マーキングデータのインポートに成功しました</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>その他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>ルールのクイックセットアップ</value>
@@ -336,7 +333,7 @@
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>ノード #{0} のマーキングを全て削除してもよろしいですか?
-この操作は元に戻せません</value>
+この操作は元に戻せません。</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>クリックしてラインの追加</value>
@@ -367,6 +364,7 @@ Shift押下で横断歩道の作成</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
   </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>インポート</value>
   </data>
@@ -451,6 +449,8 @@ Shift押下で横断歩道の作成</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>ベタ塗り</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
@@ -460,9 +460,10 @@ Shift押下で横断歩道の作成</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>主要なアップデートのみ通知</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>新しい塗り潰しを追加</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>2重線</value>
   </data>
@@ -495,7 +496,10 @@ Shift押下で横断歩道の作成</value>
     <value>交差点（ノード）に塗り潰しの設定がありません。
 Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>テンプレートの一覧は空です。
+作成するにはライン・横断歩道・塗り潰しのスタイルから、 {0} をクリックします。</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>アクセスIDで有効化する</value>
   </data>
@@ -586,9 +590,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>早期アクセス</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>実線を中央にオフセット</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>同意します</value>
   </data>
@@ -792,6 +794,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>マーキングが正常に描画されず、ロードエラーがありました。
 {0} ヶ所の交差点（ノード）で、マーキングの描画に失敗しました。</value>
@@ -900,15 +903,60 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>グループ・タブの設定</value>
   </data>
-  <data name="Settings_HelpfulLinks" xml:space="preserve">
-    <value>サポートのリンク</value>
-  </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>ショートカット</value>
   </data>
   <data name="Settings_SupportTab" xml:space="preserve">
-    <value>サポート（Discordにジャンプ）</value>
+    <value>サポート</value>
   </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>テンプレートの複製</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>辺を基準</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>描画の基準</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>頂点を基準</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>ポイントのオフセットを全てリセット</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>ポイントのオフセットを全てリセット</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>ノード #{0} にある、ポイントのオフセットを全てリセットしますか？
+この操作は元に戻せません。</value>
+  </data>
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>マーキングの貼り付け順序は、円周部にあるポイントをD&amp;Dで入れ替え出来ます。</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>円周上にある、ポイントと重ねて順序を変更
+円周の外側に、ポイントをD&amp;Dして順序を入れ替え</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>マーキングのコピー</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>マーキングの貼り付け</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>貼り付けを反転</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>時計回りに回転</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>反時計回りに回転</value>
+  </data>
+  
   
   
 </root>

@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -231,13 +231,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未设置</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>启用工具</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>添加新规则</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>删除选中节点的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -284,9 +284,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
     <value>地标线信息导入成功</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>其他</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>快速初始化新规则</value>
@@ -366,6 +363,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>显示更新提示框</value>
   </data>
+  
   <data name="Settings_Import" xml:space="preserve">
     <value>导入</value>
   </data>
@@ -450,6 +448,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewVersion" xml:space="preserve">
     <value>版本{0}</value>
   </data>
@@ -459,9 +459,10 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>只推送重要更新提示消息</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>创建新填充图案</value>
   </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>双实线</value>
   </data>
@@ -494,7 +495,10 @@ Shift x10，Ctrl x0.1</value>
     <value>此交叉路口没有填充图案。
 按住Alt或点按 {0} 以创建填充图案.</value>
   </data>
-  
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>没有模板可选。
+在线段或填充格式上点击 «{0}» 来创建新模板。</value>
+  </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>使用密钥激活</value>
   </data>
@@ -584,9 +588,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>抢先体验版本</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>实线对齐</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>我同意</value>
   </data>
@@ -788,6 +790,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>模版</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>导入完毕，但出现了以下错误：
  {0} 个交叉口的地标线导入失败</value>
@@ -843,22 +846,22 @@ Shift x10，Ctrl x0.1</value>
 此操作无法撤销！</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>人行横道快捷键</value>
+    <value>人行横道修饰键</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>填充图案快捷键</value>
+    <value>填充图案修饰键</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>普通标线快捷键</value>
+    <value>普通标线修饰键</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>停止线快捷键</value>
+    <value>停止线修饰键</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>未设置</value>
   </data>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
-    <value>无快捷键</value>
+    <value>无修饰键</value>
   </data>
   <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
     <value>总是弹窗</value>
@@ -884,17 +887,72 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_DeleteDependenceRules" xml:space="preserve">
     <value>规则 - {0}</value>
   </data>
-  
-  
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>备份</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>界面及使用</value>
+  </data>
   <data name="Settings_GeneralTab" xml:space="preserve">
     <value>常规设置</value>
   </data>
-  
-  
-  
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>分组</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>快捷键与修饰键</value>
+  </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>支持服务</value>
   </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>重复</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>边界</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>起始点</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>顶点</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>重置全部端点偏移</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>重置全部端点偏移</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>确定要重置 #{0} 全部的端点偏移吗?
+此操作不可撤销。</value>
+  </data>
+  <data name="Tool_InfoPasteDrag" xml:space="preserve">
+    <value>长按并拖移圆圈来粘贴</value>
+  </data>
+  <data name="Tool_InfoPasteDrop" xml:space="preserve">
+    <value>将圆圈放在目标内以粘贴
+将圆圈放在在目标外以取消</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>复制标记</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>粘贴标记</value>
+  </data>
+  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+    <value>更改顺序</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>顺时针旋转</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>逆时针旋转</value>
+  </data>
+  
   
   
 </root>
