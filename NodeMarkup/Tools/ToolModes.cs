@@ -116,7 +116,7 @@ namespace NodeMarkup
             if (IsHoverNode)
             {
                 var node = Utilities.GetNode(HoverNodeId);
-                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Orange, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
+                NodeMarkupTool.RenderCircle(cameraInfo, Colors.Orange, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
         }
     }
@@ -436,7 +436,7 @@ namespace NodeMarkup
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, MarkupColors.White, 0.5f);
+                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, Colors.White, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
 
@@ -470,7 +470,7 @@ namespace NodeMarkup
             };
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
+            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             NodeMarkupTool.RenderBezier(cameraInfo, color, bezier);
@@ -478,7 +478,7 @@ namespace NodeMarkup
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Blue;
+            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Blue;
 
             var lineBezier = new Bezier3()
             {
@@ -514,7 +514,7 @@ namespace NodeMarkup
             bezier.c = v >= 0 ? bezier.c : -bezier.c;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier);
         }
     }
     public class MakeCrosswalkToolMode : MakeItemToolMode
@@ -575,7 +575,7 @@ namespace NodeMarkup
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, MarkupColors.White, 0.5f);
+                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, Colors.White, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
 
@@ -592,7 +592,7 @@ namespace NodeMarkup
         {
             var bezier = new Line3(SelectPoint.Position, HoverPoint.Position).GetBezier();
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? MarkupColors.Red : MarkupColors.Green;
+            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
 
             NodeMarkupTool.RenderBezier(cameraInfo, color, bezier, MarkupCrosswalkPoint.Shift * 2, true);
         }
@@ -603,7 +603,7 @@ namespace NodeMarkup
             dir.Normalize();
             var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, MarkupCrosswalkPoint.Shift * 2, true);
+            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier, MarkupCrosswalkPoint.Shift * 2, true);
         }
     }
     public class MakeFillerToolMode : BaseToolMode
@@ -683,7 +683,7 @@ namespace NodeMarkup
 
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(Contour.First) ? MarkupColors.Green : MarkupColors.White;
+            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(Contour.First) ? Colors.Green : Colors.White;
             foreach (var trajectory in Contour.Trajectories)
                 NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory);
         }
@@ -696,16 +696,16 @@ namespace NodeMarkup
             {
                 var linePart = Contour.GetFillerLine(Contour.Last, FillerPointsSelector.HoverPoint);
                 if (linePart.GetTrajectory(out ILineTrajectory trajectory))
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.Green, trajectory);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.Green, trajectory);
             }
             else
             {
                 var bezier = new Line3(Contour.Last.Position, NodeMarkupTool.MouseWorldPosition).GetBezier();
-                NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier);
+                NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier);
             }
         }
 
-        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(Contour.GetNextСandidates(), MarkupColors.Red);
+        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(Contour.GetNextСandidates(), Colors.Red);
     }
     public class DragPointToolMode : BaseToolMode
     {
@@ -745,7 +745,7 @@ namespace NodeMarkup
                 return;
 
             var bezier = new Line3(enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift, enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, MarkupColors.White, bezier, width);
+            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier, width);
         }
     }
     public class PasteMarkupToolMode : BaseToolMode
@@ -784,9 +784,9 @@ namespace NodeMarkup
         {
             var spriteNames = new string[]
             {
-                "TurnLeft",
-                "Flip",
-                "TurnRight",
+                nameof(TurnLeft),
+                nameof(Flip),
+                nameof(TurnRight),
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(PasteMarkupToolMode));
@@ -797,14 +797,14 @@ namespace NodeMarkup
         }
         public PasteMarkupToolMode()
         {
-            TurnLeft = new GUIButton(1, 3, ButtonAtlas.texture, ButtonAtlas.sprites[0].region);
+            TurnLeft = new GUIButton(1, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnLeft)].region);
             TurnLeft.OnClick += () =>
             {
                 Transform((t) => t == null ? null : Targets[t.Num.NextIndex(Markup.Enters.Count())]);
                 Paste();
             };
 
-            Flip = new GUIButton(2, 3, ButtonAtlas.texture, ButtonAtlas.sprites[1].region);
+            Flip = new GUIButton(2, 3, ButtonAtlas.texture, ButtonAtlas[nameof(Flip)].region);
             Flip.OnClick += () =>
             {
                 Transform((t) => t == null ? null : Targets[Markup.Enters.Count() - t.Num - 1]);
@@ -812,7 +812,7 @@ namespace NodeMarkup
                 Paste();
             };
 
-            TurnRight = new GUIButton(3, 3, ButtonAtlas.texture, ButtonAtlas.sprites[2].region);
+            TurnRight = new GUIButton(3, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnRight)].region);
             TurnRight.OnClick += () =>
             {
                 Transform((t) => t == null ? null : Targets[t.Num.PrevIndex(Markup.Enters.Count())]);
@@ -960,7 +960,7 @@ namespace NodeMarkup
         }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Centre, Radius * 2);
+            NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Centre, Radius * 2);
             BasketItem.Render(cameraInfo);
 
             foreach (var target in Targets)
@@ -1145,13 +1145,13 @@ namespace NodeMarkup
             {
                 if (ToolMode.VisibleTargets.Contains(this))
                 {
-                    NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size, false);
+                    NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Position, Size, false);
                     if (ToolMode.IsSelectedSource)
                     {
                         if (ToolMode.HoverTarget == this && ToolMode.SelectedSource.Target != this)
-                            NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Green, Position, Size + 0.43f);
+                            NodeMarkupTool.RenderCircle(cameraInfo, Colors.Green, Position, Size + 0.43f);
                         else if (ToolMode.HoverTarget != this && ToolMode.SelectedSource.Target == this)
-                            NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.Red, Position, Size + 0.43f);
+                            NodeMarkupTool.RenderCircle(cameraInfo, Colors.Red, Position, Size + 0.43f);
                     }
                 }
                 else
@@ -1196,11 +1196,11 @@ namespace NodeMarkup
             public void Render(RenderManager.CameraInfo cameraInfo)
             {
                 var position = ToolMode.SelectedSource == this ? (ToolMode.IsHoverTarget ? ToolMode.HoverTarget.Position : NodeMarkupTool.MouseWorldPosition) : Position;
-                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.GetOverlayColor(Num, 255), position, Size - 0.4f);
-                NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.GetOverlayColor(Num, 255), position, Size);
+                NodeMarkupTool.RenderCircle(cameraInfo, Colors.GetOverlayColor(Num, 255), position, Size - 0.4f);
+                NodeMarkupTool.RenderCircle(cameraInfo, Colors.GetOverlayColor(Num, 255), position, Size);
 
             }
-            public void RenderHover(RenderManager.CameraInfo cameraInfo) => NodeMarkupTool.RenderCircle(cameraInfo, MarkupColors.White, Position, Size - 0.9f);
+            public void RenderHover(RenderManager.CameraInfo cameraInfo) => NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Position, Size - 0.9f);
         }
         private class Basket
         {
@@ -1239,7 +1239,7 @@ namespace NodeMarkup
                 {
                     var halfWidth = (Width - Target.Size) / 2;
                     var basket = new StraightTrajectory(Position - Direction * halfWidth, Position + Direction * halfWidth);
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, basket, Target.Size, alphaBlend: false);
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, basket, Target.Size, alphaBlend: false);
                 }
             }
         }

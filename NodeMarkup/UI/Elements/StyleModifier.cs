@@ -73,7 +73,7 @@ namespace NodeMarkup.UI
     public class CrosswalkModifierPanel : StyleModifierPanel<CrosswalkStyle.CrosswalkType> { }
     public class FillerModifierPanel : StyleModifierPanel<FillerStyle.FillerType> { }
 
-    public class ModifierDropDown : CustomUIDropDown<StyleModifier>
+    public class ModifierDropDown : UIDropDown<StyleModifier>
     {
         public new event Action<ModifierDropDown, StyleModifier> OnSelectObjectChanged;
 

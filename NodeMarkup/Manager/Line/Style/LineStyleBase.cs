@@ -25,6 +25,10 @@ namespace NodeMarkup.Manager
     {
         float Offset { get; set; }
     }
+    public interface IDoubleAlignmentLine : IDoubleLine
+    {
+        LineStyle.StyleAlignment Alignment { get; set; }
+    }
     public interface IAsymLine
     {
         bool Invert { get; set; }
@@ -125,6 +129,21 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(spaceProperty, onHover, onLeave);
             return spaceProperty;
         }
+        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var alignmentProperty = parent.AddUIComponent<LineAlignmentPropertyPanel>();
+            alignmentProperty.Text = "Alignment";
+            alignmentProperty.Init();
+            alignmentProperty.SelectedObject = alignmentStyle.Alignment;
+            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment = value;
+            return alignmentProperty;
+        }
+        public enum StyleAlignment
+        {
+            Left,
+            Centre,
+            Right
+        }
     }
 
     public abstract class RegularLineStyle : LineStyle
@@ -135,7 +154,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
             {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffset)},
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
-            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset, false, false)},
+            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset, false)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, false) },
         };
         public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyRegularLineStyle() : null;
@@ -178,7 +197,6 @@ namespace NodeMarkup.Manager
             {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultStopOffset)},
             {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
             {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
-            //{StopLineType.ChessBoard, new ChessBoardStopLineStyle(DefaultColor, DefaultStopWidth, 2, false)},
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
 
@@ -208,9 +226,6 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
             SolidAndDashed = StyleType.StopLineSolidAndDashed,
-
-            //[Description(nameof(Localize.LineStyle_StopChessBoard))]
-            //ChessBoard = StyleType.StopLineChessBoard,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,

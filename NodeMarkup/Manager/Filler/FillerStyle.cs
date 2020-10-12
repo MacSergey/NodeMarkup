@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -260,6 +261,15 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(angleProperty, onHover, onLeave);
             return angleProperty;
         }
+        protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        {
+            var fromProperty = parent.AddUIComponent<ChevronFromPropertyPanel>();
+            fromProperty.Text = Localize.Filler_StartingFrom;
+            fromProperty.Init();
+            fromProperty.SelectedObject = chevronStyle.StartingFrom;
+            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom = value;
+            return fromProperty;
+        }
         protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
             var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
@@ -277,15 +287,6 @@ namespace NodeMarkup.Manager
             }
 
             return buttonsPanel;
-        }
-        protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
-        {
-            var fromProperty = parent.AddUIComponent<ChevronFromPropertyPanel>();
-            fromProperty.Text = Localize.Filler_StartingFrom;
-            fromProperty.Init();
-            fromProperty.SelectedObject = chevronStyle.StartingFrom;
-            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom = value;
-            return fromProperty;
         }
 
         protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
@@ -526,12 +527,6 @@ namespace NodeMarkup.Manager
             StartingFrom = (From)config.GetAttrValue("SF", (int)From.Vertex);
         }
 
-        public class ChevronFromPropertyPanel : EnumPropertyPanel<From, ChevronFromPropertyPanel.ChevronFromDropDown>
-        {
-            protected override float DropDownWidth => 100f;
-            protected override bool IsEqual(From first, From second) => first == second;
-            public class ChevronFromDropDown : CustomUIDropDown<From> { }
-        }
         public enum From
         {
             [Description(nameof(Localize.Filler_Vertex))]

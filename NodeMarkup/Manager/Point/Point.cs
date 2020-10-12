@@ -53,7 +53,7 @@ namespace NodeMarkup.Manager
         public byte Num { get; }
         public int Id { get; }
         public abstract PointType Type { get; }
-        public Color32 Color => MarkupColors.GetOverlayColor(Num - 1);
+        public Color32 Color => Colors.GetOverlayColor(Num - 1);
 
         private static Vector3 MarkerSize { get; } = Vector3.one * 1f;
         public virtual Vector3 Position

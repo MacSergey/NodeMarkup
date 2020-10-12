@@ -203,10 +203,10 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
-                HoverItem.Object.Render(cameraInfo, MarkupColors.White);
+                HoverItem.Object.Render(cameraInfo, Colors.White);
 
             if (IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, borderLine.Trajectory);
+                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, borderLine.Trajectory);
         }
 
         #endregion
@@ -276,10 +276,10 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var borderLine in BorderLines)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.Red, borderLine.Trajectory);
+                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.Red, borderLine.Trajectory);
 
             if (IsHoverLine)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, HoverLine.Trajectory, 1f);
+                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, HoverLine.Trajectory, 1f);
         }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
     }

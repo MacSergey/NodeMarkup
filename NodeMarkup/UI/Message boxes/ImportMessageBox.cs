@@ -96,6 +96,6 @@ namespace NodeMarkup.UI
             Cancel();
         }
 
-        class FileDropDown : CustomUIDropDown<string> { }
+        class FileDropDown : UIDropDown<string> { }
     }
 }

@@ -193,11 +193,11 @@ namespace NodeMarkup.UI.Editors
         {
             {
                 if (IsHoverItem)
-                    HoverItem.Object.Render(cameraInfo, MarkupColors.White, 2f);
+                    HoverItem.Object.Render(cameraInfo, Colors.White, 2f);
                 if (IsHoverRulePanel)
                     HoverRulePanel.Rule.Render(cameraInfo, WhiteAlpha, 2f);
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is SupportPoint supportPoint)
-                    supportPoint.Render(cameraInfo, MarkupColors.White);
+                    supportPoint.Render(cameraInfo, Colors.White);
             }
         }
         protected override void OnObjectUpdate()
@@ -252,7 +252,7 @@ namespace NodeMarkup.UI.Editors
 
                 if (_selectPartEdgePanel != null)
                 {
-                    PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, _selectPartEdgePanel.Position == EdgePosition.Start ? MarkupColors.Green : MarkupColors.Red);
+                    PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, _selectPartEdgePanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
                     _selectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
                     _selectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
                 }

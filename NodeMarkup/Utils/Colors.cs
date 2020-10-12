@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Utils
 {
-    public class MarkupColors
+    public static class Colors
     {
         private const byte Alpha = 224;
         public static Color32 White { get; } = new Color32(255, 255, 255, 255);

@@ -26,18 +26,15 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateSolid(trajectory, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
-            //var dash = StyleHelper.CalculateSolidDash(trajectory, 0f, Width, Color);
-            //dash.Position += new Vector3(0f, 0.5f, 0f);
-            //yield return dash;
-
             yield return StyleHelper.CalculateSolidDash(trajectory, 0f, Width, Color);
         }
     }
-    public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine
+    public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine
     {
         public override StyleType Type { get; } = StyleType.LineDoubleSolid;
 
         float _offset;
+        StyleAlignment _alignment;
         public float Offset
         {
             get => _offset;
@@ -47,10 +44,20 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public StyleAlignment Alignment
+        {
+            get => _alignment;
+            set
+            {
+                _alignment = value;
+                StyleChanged();
+            }
+        }
 
         public DoubleSolidLineStyle(Color color, float width, float offset) : base(color, width)
         {
             Offset = offset;
+            Alignment = StyleAlignment.Centre;
         }
 
         public override RegularLineStyle CopyRegularLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
@@ -58,32 +65,49 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
-            {
                 doubleTarget.Offset = Offset;
-            }
+            if (target is IDoubleAlignmentLine doubleAlignmentTarget)
+                doubleAlignmentTarget.Alignment = Alignment;
         }
 
         protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
-            yield return StyleHelper.CalculateSolidDash(trajectory, Offset, Width, Color);
-            yield return StyleHelper.CalculateSolidDash(trajectory, -Offset, Width, Color);
+            var firstOffset = Alignment switch
+            {
+                StyleAlignment.Left => 2 * Offset,
+                StyleAlignment.Centre => Offset,
+                StyleAlignment.Right => 0,
+            };
+            var secondOffset = Alignment switch
+            {
+                StyleAlignment.Left => 0,
+                StyleAlignment.Centre => -Offset,
+                StyleAlignment.Right => -2 * Offset,
+            };
+
+            yield return StyleHelper.CalculateSolidDash(trajectory, firstOffset, Width, Color);
+            yield return StyleHelper.CalculateSolidDash(trajectory, secondOffset, Width, Color);
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            if (!isTemplate)
+                components.Add(AddAlignmentProperty(this, parent, onHover, onLeave));
             return components;
         }
         public override XElement ToXml()
         {
             var config = base.ToXml();
             config.Add(new XAttribute("O", Offset));
+            config.Add(new XAttribute("A", (int)Alignment));
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
+            Alignment = (StyleAlignment)config.GetAttrValue("A", (int)StyleAlignment.Centre);
         }
     }
     public class DashedLineStyle : RegularLineStyle, IRegularLine, IDashedLine
@@ -156,11 +180,12 @@ namespace NodeMarkup.Manager
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
     }
-    public class DoubleDashedLineStyle : DashedLineStyle, IRegularLine, IDoubleLine
+    public class DoubleDashedLineStyle : DashedLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine
     {
         public override StyleType Type { get; } = StyleType.LineDoubleDashed;
 
         float _offset;
+        StyleAlignment _alignment;
         public float Offset
         {
             get => _offset;
@@ -170,10 +195,20 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public StyleAlignment Alignment
+        {
+            get => _alignment;
+            set
+            {
+                _alignment = value;
+                StyleChanged();
+            }
+        }
 
         public DoubleDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
             Offset = offset;
+            Alignment = StyleAlignment.Centre;
         }
 
         public override RegularLineStyle CopyRegularLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
@@ -181,35 +216,52 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
-            {
                 doubleTarget.Offset = Offset;
-            }
+            if (target is IDoubleAlignmentLine doubleAlignmentTarget)
+                doubleAlignmentTarget.Alignment = Alignment;
         }
 
         protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
-            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, Offset, Width, Color);
-            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, -Offset, Width, Color);
+            var firstOffset = Alignment switch
+            {
+                StyleAlignment.Left => 2 * Offset,
+                StyleAlignment.Centre => Offset,
+                StyleAlignment.Right => 0,
+            };
+            var secondOffset = Alignment switch
+            {
+                StyleAlignment.Left => 0,
+                StyleAlignment.Centre => -Offset,
+                StyleAlignment.Right => -2 * Offset,
+            };
+
+            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, firstOffset, Width, Color);
+            yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, secondOffset, Width, Color);
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            if (!isTemplate)
+                components.Add(AddAlignmentProperty(this, parent, onHover, onLeave));
             return components;
         }
         public override XElement ToXml()
         {
             var config = base.ToXml();
             config.Add(new XAttribute("O", Offset));
+            config.Add(new XAttribute("A", (int)Alignment));
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
             Offset = config.GetAttrValue("O", DefaultOffset);
+            Alignment = (StyleAlignment)config.GetAttrValue("A", (int)StyleAlignment.Centre);
         }
     }
-    public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDashedLine, IAsymLine
+    public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine, IDashedLine, IAsymLine
     {
         public override StyleType Type => StyleType.LineSolidAndDashed;
 
@@ -217,7 +269,7 @@ namespace NodeMarkup.Manager
         float _dashLength;
         float _spaceLength;
         bool _invert;
-        bool _centerSolid;
+        StyleAlignment _alignment;
         public float Offset
         {
             get => _offset;
@@ -254,23 +306,23 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public bool CenterSolid
+        public StyleAlignment Alignment
         {
-            get => _centerSolid;
+            get => _alignment;
             set
             {
-                _centerSolid = value;
+                _alignment = value;
                 StyleChanged();
             }
         }
 
-        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert, bool centerSolid) : base(color, width)
+        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
         {
             Offset = offset;
             DashLength = dashLength;
             SpaceLength = spaceLength;
             Invert = invert;
-            CenterSolid = centerSolid;
+            Alignment = StyleAlignment.Centre;
         }
 
 
@@ -284,16 +336,28 @@ namespace NodeMarkup.Manager
 
             IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
             {
-                var offset = CenterSolid ? 0 : Invert ? Offset : -Offset;
+                var offset = Alignment switch
+                {
+                    StyleAlignment.Left => Invert ? 2 * Offset : 0,
+                    StyleAlignment.Centre => Invert ? Offset : -Offset,
+                    StyleAlignment.Right => Invert ? 0 : -2 * Offset,
+                };
+
                 yield return StyleHelper.CalculateSolidDash(lineTrajectory, offset, Width, Color);
             }
             IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory lineTrajectory, float startT, float endT)
             {
-                var offset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
+                var offset = Alignment switch
+                {
+                    StyleAlignment.Left => Invert ? 0 : 2 * Offset,
+                    StyleAlignment.Centre => Invert ? -Offset : Offset,
+                    StyleAlignment.Right => Invert ? -2 * Offset : 0,
+                };
+
                 yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, DashLength, offset, Width, Color);
             }
         }
-        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert, CenterSolid);
+        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -303,9 +367,9 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength = SpaceLength;
             }
             if (target is IDoubleLine doubleTarget)
-            {
                 doubleTarget.Offset = Offset;
-            }
+            if (target is IDoubleAlignmentLine doubleAlignmentTarget)
+                doubleAlignmentTarget.Alignment = Alignment;
         }
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -315,19 +379,10 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
             {
-                components.Add(AddCenterSolidProperty(this, parent));
+                components.Add(AddAlignmentProperty(this, parent, onHover, onLeave));
                 components.Add(AddInvertProperty(this, parent));
             }
             return components;
-        }
-        protected static BoolPropertyPanel AddCenterSolidProperty(SolidAndDashedLineStyle solidAndDashedStyle, UIComponent parent)
-        {
-            var centerSolidProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            centerSolidProperty.Text = Localize.LineEditor_CenterSolid;
-            centerSolidProperty.Init();
-            centerSolidProperty.Value = solidAndDashedStyle.CenterSolid;
-            centerSolidProperty.OnValueChanged += (bool value) => solidAndDashedStyle.CenterSolid = value;
-            return centerSolidProperty;
         }
 
         public override XElement ToXml()
@@ -337,7 +392,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("DL", DashLength));
             config.Add(new XAttribute("SL", SpaceLength));
             config.Add(new XAttribute("I", Invert ? 1 : 0));
-            config.Add(new XAttribute("CS", CenterSolid ? 1 : 0));
+            config.Add(new XAttribute("A", (int)Alignment));
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map)
@@ -347,7 +402,8 @@ namespace NodeMarkup.Manager
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
             Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror;
-            CenterSolid = config.GetAttrValue("CS", 0) == 1;
+            var centerSolid = config.GetAttrValue("CS", 0) == 1;
+            Alignment = (StyleAlignment)config.GetAttrValue("A", (int)(centerSolid ? (Invert ? StyleAlignment.Right : StyleAlignment.Left) : StyleAlignment.Centre));
         }
     }
     public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLIne

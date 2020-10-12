@@ -45,17 +45,7 @@ namespace NodeMarkup.UI
         protected UIButton AddButton(UIComponent parent)
         {
             var button = parent.AddUIComponent<UIButton>();
-            button.atlas = TextureUtil.InGameAtlas;
-            button.normalBgSprite = "ButtonWhite";
-            button.disabledBgSprite = "ButtonWhite";
-            button.hoveredBgSprite = "ButtonWhite";
-            button.pressedBgSprite = "ButtonWhite";
-            button.color = Color.white;
-            button.hoveredColor = new Color32(224, 224, 224, 255);
-            button.pressedColor = new Color32(192, 192, 192, 255);
-            button.textColor = button.hoveredTextColor = button.focusedTextColor = Color.black;
-            button.pressedTextColor = Color.white;
-
+            button.SetDefaultStyle();
             return button;
         }
     }
@@ -76,10 +66,12 @@ namespace NodeMarkup.UI
             Label.textScale = 0.8f;
 
             Control = AddUIComponent<UIPanel>();
-            Control.autoLayout = true;
+            //Control.autoLayout = true;
             Control.autoLayoutDirection = LayoutDirection.Horizontal;
             Control.autoLayoutStart = LayoutStart.TopRight;
             Control.autoLayoutPadding = new RectOffset(5, 0, 0, 0);
+
+            Control.eventSizeChanged += ControlSizeChanged;
         }
 
         protected override void OnSizeChanged()
@@ -87,7 +79,12 @@ namespace NodeMarkup.UI
             base.OnSizeChanged();
 
             Label.relativePosition = new Vector2(0, (height - Label.height) / 2);
-            Control.size = size;
+            Control.size = size;           
+        }
+
+        private void ControlSizeChanged(UIComponent component, Vector2 value) => RefreshContent();
+        protected void RefreshContent()
+        {
             Control.autoLayout = true;
             Control.autoLayout = false;
 
