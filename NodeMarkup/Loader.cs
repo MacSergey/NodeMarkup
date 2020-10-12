@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -102,13 +103,59 @@ namespace NodeMarkup
 
             return lastSave;
         }
-        public static string[] GetImportList()
+        public static string MarkingRecovery => nameof(MarkingRecovery);
+        public static string TemplatesRecovery => nameof(TemplatesRecovery);
+
+        public static string MarkingName => $"{MarkingRecovery}.{GetSaveName()}";
+        private static Regex MarkingRegex { get; } = new Regex(@$"{MarkingRecovery}\.(?<name>.+)\.(?<date>\d+)");
+        private static Regex TemplatesRegex { get; } = new Regex(@$"{TemplatesRecovery}\.(?<date>\d+)");
+        private static string RecoveryDirectory => Path.Combine(Directory.GetCurrentDirectory(), "IntersectionMarkingTool");
+
+        public static Dictionary<string, string> GetMarkingRestoreList()
         {
-            var files = Directory.GetFiles(Directory.GetCurrentDirectory(), "MarkingRecovery*.xml");
+            var files = GetRestoreList($"{MarkingRecovery}*.xml");
+            var result = new Dictionary<string, string>();
+            foreach (var file in files)
+            {
+                var match = MarkingRegex.Match(file);
+                if (!match.Success)
+                    continue;
+                var date = new DateTime(long.Parse(match.Groups["date"].Value));
+                result[file] = $"{match.Groups["name"].Value} {date}";
+            }
+            return result;
+        }
+        public static Dictionary<string, string> GetTemplatesRestoreList()
+        {
+            var files = GetRestoreList($"{TemplatesRecovery}*.xml");
+            var result = new Dictionary<string, string>();
+            foreach (var file in files)
+            {
+                var match = TemplatesRegex.Match(file);
+                if (!match.Success)
+                    continue;
+                var date = new DateTime(long.Parse(match.Groups["date"].Value));
+                result[file] = date.ToString();
+            }
+            return result;
+        }
+        private static string[] GetRestoreList(string pattern)
+        {
+            var files = Directory.GetFiles(RecoveryDirectory, pattern);
             return files;
         }
 
-        public static bool ImportData(string file)
+        public static bool ImportMarkingData(string file)
+        {
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportMarkingData)}");
+            return ImportData(file, (config) => MarkupManager.Import(config));
+        }
+        public static bool ImportTemplatesData(string file)
+        {
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportTemplatesData)}");
+            return ImportData(file, (config) => TemplateManager.Import(config));
+        }
+        private static bool ImportData(string file, Action<XElement> processData)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportData)}");
 
@@ -120,7 +167,7 @@ namespace NodeMarkup
                     var xml = reader.ReadToEnd();
                     var config = Parse(xml);
 
-                    MarkupManager.FromXml(config, new ObjectsMap());
+                    processData(config);
 
                     Logger.LogDebug($"Data was imported");
 
@@ -133,16 +180,26 @@ namespace NodeMarkup
                 return false;
             }
         }
-        public static bool DumpData(out string path)
+        public static bool DumpMarkingData(out string path)
+        {
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpMarkingData)}");
+            return DumpData(() => MarkupManager.ToXml(), MarkingName, out path);
+        }
+        public static bool DumpTemplatesData(out string path)
+        {
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpTemplatesData)}");
+            return DumpData(() => TemplateManager.ToXml(), TemplatesRecovery, out path);
+        }
+        private static bool DumpData(Func<XElement> prepareData, string name, out string path)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpData)}");
 
             try
             {
-                var config = MarkupManager.ToXml();
+                var config = prepareData();
                 var xml = config.ToString(SaveOptions.DisableFormatting);
 
-                return SaveToFile(xml, out path);
+                return SaveToFile(name, xml, out path);
             }
             catch (Exception error)
             {
@@ -152,27 +209,29 @@ namespace NodeMarkup
                 return false;
             }
         }
-        public static bool SaveToFile(string xml, out string path)
+
+        public static bool SaveToFile(string name, string xml, out string file)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(SaveToFile)}");
             try
             {
-                var file = $"MarkingRecovery.{GetSaveName()}.{DateTime.Now.Ticks}.xml";
+                if (!Directory.Exists(RecoveryDirectory))
+                    Directory.CreateDirectory(RecoveryDirectory);
+
+                file = Path.Combine(RecoveryDirectory, $"{name}.{DateTime.Now.Ticks}.xml");
                 using (var fileStream = File.Create(file))
                 using (var writer = new StreamWriter(fileStream))
                 {
                     writer.Write(xml);
                 }
-
-                path = Path.Combine(Directory.GetCurrentDirectory(), file);
-                Logger.LogDebug($"Dump saved {path}");
+                Logger.LogDebug($"Dump saved {file}");
                 return true;
             }
             catch (Exception error)
             {
                 Logger.LogError(() => "Save dump failed", error);
 
-                path = string.Empty;
+                file = string.Empty;
                 return false;
             }
         }

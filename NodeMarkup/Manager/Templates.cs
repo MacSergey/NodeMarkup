@@ -20,21 +20,7 @@ namespace NodeMarkup.Manager
 
         static TemplateManager()
         {
-            try
-            {
-                var xml = UI.Settings.Templates.value;
-                if (!string.IsNullOrEmpty(xml))
-                {
-                    var config = Loader.Parse(xml);
-                    FromXml(config);
-                }
-
-                Logger.LogDebug($"Templates was loaded: {TemplatesDictionary.Count} items");
-            }
-            catch (Exception error)
-            {
-                Logger.LogError(() => "Could load templates", error);
-            }
+            Load();
         }
         private static void InitTempalte(StyleTemplate template)
         {
@@ -95,6 +81,25 @@ namespace NodeMarkup.Manager
         }
         public static bool IsDefault(this StyleTemplate template) =>
             DefaultTemplates.TryGetValue(template.Style.Type, out StyleTemplate defaultTemplate) && template == defaultTemplate;
+
+        static void Load()
+        {
+            try
+            {
+                var xml = UI.Settings.Templates.value;
+                if (!string.IsNullOrEmpty(xml))
+                {
+                    var config = Loader.Parse(xml);
+                    FromXml(config);
+                }
+
+                Logger.LogDebug($"Templates was loaded: {TemplatesDictionary.Count} items");
+            }
+            catch (Exception error)
+            {
+                Logger.LogError(() => "Could load templates", error);
+            }
+        }
         static void Save()
         {
             try
@@ -123,10 +128,25 @@ namespace NodeMarkup.Manager
         }
 
         public static bool ContainsName(string name, StyleTemplate ignore) => TemplatesDictionary.Values.Any(t => t != ignore && t.Name == name);
-
-
-        static void FromXml(XElement config)
+        private static void Clear()
         {
+            TemplatesDictionary.Clear();
+            DefaultTemplates.Clear();
+        }
+        public static void DeleteAll()
+        {
+            Clear();
+            Save();
+        }
+        public static void Import(XElement config)
+        {
+            FromXml(config);
+            Save();
+        }
+        public static void FromXml(XElement config)
+        {
+            Clear();
+
             foreach (var templateConfig in config.Elements(StyleTemplate.XmlName))
             {
                 if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Id))
@@ -145,7 +165,7 @@ namespace NodeMarkup.Manager
                     DefaultTemplates[styleType] = template;
             }
         }
-        static XElement ToXml()
+        public static XElement ToXml()
         {
             var config = new XElement("C");
 

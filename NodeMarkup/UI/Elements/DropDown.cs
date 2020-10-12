@@ -97,7 +97,7 @@ namespace NodeMarkup.UI
         public void SetSettingsStyle(Vector2? size = null)
         {
             atlas = TextureUtil.InGameAtlas;
-            this.size = size ?? new Vector2(400, 38);
+            this.size = size ?? new Vector2(400, 31);
             listBackground = "OptionsDropboxListbox";
             itemHeight = 24;
             itemHover = "ListItemHover";
@@ -112,13 +112,13 @@ namespace NodeMarkup.UI
             foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
             popupColor = Color.white;
             popupTextColor = new Color32(170, 170, 170, 255);
-            textScale = 1.25f;
+            textScale = 1f;
             textFieldPadding = new RectOffset(14, 40, 7, 0);
             popupColor = Color.white;
             popupTextColor = new Color32(170, 170, 170, 255);
             verticalAlignment = UIVerticalAlignment.Middle;
             horizontalAlignment = UIHorizontalAlignment.Left;
-            itemPadding = new RectOffset(14, 14, 0, 0);
+            itemPadding = new RectOffset(14, 14, 4, 0);
             triggerButton = this;
         }
     }

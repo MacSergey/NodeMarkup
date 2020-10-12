@@ -68,11 +68,10 @@ namespace NodeMarkup.UI
             var shortcutTab = CreateTab(mainPanel, Localize.Settings_ShortcutsAndModifiersTab);
             AddKeyMapping(shortcutTab);
 
+            var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
             if (SceneManager.GetActiveScene().name is string scene && (scene != "MainMenu" && scene != "IntroScreen"))
-            {
-                var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
-                AddBackup(backupTab);
-            }
+                AddBackupMarking(backupTab);
+            AddBackupTemplates(backupTab);
 
             var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
             AddSupport(supportTab);
@@ -321,47 +320,57 @@ namespace NodeMarkup.UI
         #endregion
 
         #region BACKUP
-        private static void AddBackup(UIHelperBase helper)
+        private static void AddBackupMarking(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup() as UIHelper;
+            UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
-            AddDeleteAll(group);
-            AddDump(group);
-            AddImport(group);
+            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, Localize.Settings_DeleteMarkingMessage, () => MarkupManager.DeleteAll());
+            AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingButton, Loader.DumpMarkingData);
+            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, Localize.Settings_RestoreMarkingMessage);
         }
-        private static void AddDeleteAll(UIHelper group)
+        private static void AddBackupTemplates(UIHelperBase helper)
         {
-            var button = AddButton(group, Localize.Settings_DeleteMarkingButton, Click, 600);
+            UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
+
+            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, Localize.Settings_DeleteTemplatesMessage, () => TemplateManager.DeleteAll());
+            AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpTemplatesData);
+            AddRestore<ImportTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, Localize.Settings_RestoreTemplatesMessage);
+        }
+
+        private static void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
+        {
+            var button = AddButton(group, buttonText, Click, 600);
             button.textColor = Color.red;
 
             void Click()
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = Localize.Settings_DeleteMarkingCaption;
-                messageBox.MessageText = Localize.Settings_DeleteMarkingMessage;
+                messageBox.CaprionText = caption;
+                messageBox.MessageText = message;
                 messageBox.OnButton1Click = Сonfirmed;
             }
             bool Сonfirmed()
             {
-                MarkupManager.DeleteAll();
+                process();
                 return true;
             }
         }
-        private static void AddDump(UIHelper group)
+        private delegate bool Dump(out string path);
+        private static void AddDump(UIHelper group, string buttonText, string caption, Dump dump)
         {
-            AddButton(group, Localize.Settings_DumpMarkingButton, Click, 600);
+            AddButton(group, buttonText, Click, 600);
 
             void Click()
             {
-                var result = Loader.DumpData(out string path);
+                var result = dump(out string path);
 
                 if (result)
                 {
                     var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                    messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
-                    messageBox.MessageText = Localize.Settings_DumpMarkingMessageSuccess;
-                    messageBox.Button1Text = Localize.Settings_DumpMarkingButton1;
-                    messageBox.Button2Text = Localize.Settings_DumpMarkingButton2;
+                    messageBox.CaprionText = caption;
+                    messageBox.MessageText = string.Format(Localize.Settings_DumpMessageSuccess, path);
+                    messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
+                    messageBox.Button2Text = Localize.MessageBox_OK;
                     messageBox.OnButton1Click = CopyToClipboard;
 
                     bool CopyToClipboard()
@@ -373,23 +382,26 @@ namespace NodeMarkup.UI
                 else
                 {
                     var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
-                    messageBox.CaprionText = Localize.Settings_DumpMarkingCaption;
-                    messageBox.MessageText = Localize.Settings_DumpMarkingMessageFailed;
+                    messageBox.CaprionText = caption;
+                    messageBox.MessageText = Localize.Settings_DumpMessageFailed;
                 }
             }
         }
-        private static void AddImport(UIHelper group)
+        private static void AddRestore<Modal>(UIHelper group, string buttonText, string caption, string message)
+            where Modal : ImportMessageBox
         {
-            AddButton(group, Localize.Settings_ImportMarkingButton, Click, 600);
+            AddButton(group, buttonText, Click, 600);
 
             void Click()
             {
-                var messageBox = MessageBoxBase.ShowModal<ImportMessageBox>();
-                messageBox.CaprionText = Localize.Settings_ImportMarkingCaption;
-                messageBox.MessageText = Localize.Settings_ImportMarkingMessage;
+                var messageBox = MessageBoxBase.ShowModal<Modal>();
+                messageBox.CaprionText = caption;
+                messageBox.MessageText = message;
 
             }
         }
+
+
         #endregion
 
         private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels)
@@ -449,7 +461,7 @@ namespace NodeMarkup.UI
     { 
         public LanguageDropDown()
         {
-            SetSettingsStyle();
+            SetSettingsStyle(new Vector2(300, 31));
         }
     }
 }

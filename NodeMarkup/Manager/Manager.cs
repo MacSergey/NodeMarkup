@@ -123,7 +123,7 @@ namespace NodeMarkup.Manager
             Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(DeleteAll)}");
             NodesMarkup.Clear();
         }
-
+        public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {
             var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", Mod.Version));

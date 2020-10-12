@@ -80,8 +80,6 @@ namespace NodeMarkup.UI
         public ModifierDropDown()
         {
             SetSettingsStyle(new Vector2(278, 31));
-            textScale = 1f;
-            itemPadding = new RectOffset(14, 14, 4, 0);
 
             foreach (var modifier in Utilities.GetEnumValues<StyleModifier>())
                 AddItem(modifier, modifier.Description());

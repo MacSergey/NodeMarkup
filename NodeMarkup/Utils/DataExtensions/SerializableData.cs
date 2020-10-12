@@ -70,7 +70,7 @@ namespace NodeMarkup.Utils
             catch(Exception error)
             {
                 Logger.LogError(() => "Save data failed", error);
-                Loader.SaveToFile(xml, out _);
+                Loader.SaveToFile(Loader.MarkingName, xml, out _);
                 throw;
             }
         }

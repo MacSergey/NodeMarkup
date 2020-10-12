@@ -1626,11 +1626,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cancel.
+        ///   Ищет локализованную строку, похожую на Backup marking.
         /// </summary>
-        public static string Setting_Cancel {
+        public static string Settings_BackupMarking {
             get {
-                return ResourceManager.GetString("Setting_Cancel", resourceCulture);
+                return ResourceManager.GetString("Settings_BackupMarking", resourceCulture);
             }
         }
         
@@ -1640,6 +1640,33 @@ namespace NodeMarkup {
         public static string Settings_BackupTab {
             get {
                 return ResourceManager.GetString("Settings_BackupTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Backup templates.
+        /// </summary>
+        public static string Settings_BackupTemplates {
+            get {
+                return ResourceManager.GetString("Settings_BackupTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string Settings_Cancel {
+            get {
+                return ResourceManager.GetString("Settings_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy path to clipboard.
+        /// </summary>
+        public static string Settings_CopyPathToClipboard {
+            get {
+                return ResourceManager.GetString("Settings_CopyPathToClipboard", resourceCulture);
             }
         }
         
@@ -1672,11 +1699,39 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to remove all markings?
-        ///This action cannot be undone.
+        ///This action cannot be undone..
         /// </summary>
         public static string Settings_DeleteMarkingMessage {
             get {
                 return ResourceManager.GetString("Settings_DeleteMarkingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all templates.
+        /// </summary>
+        public static string Settings_DeleteTemplatesButton {
+            get {
+                return ResourceManager.GetString("Settings_DeleteTemplatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all templates.
+        /// </summary>
+        public static string Settings_DeleteTemplatesCaption {
+            get {
+                return ResourceManager.GetString("Settings_DeleteTemplatesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to remove all templates?
+        ///This action cannot be undone..
+        /// </summary>
+        public static string Settings_DeleteTemplatesMessage {
+            get {
+                return ResourceManager.GetString("Settings_DeleteTemplatesMessage", resourceCulture);
             }
         }
         
@@ -1699,24 +1754,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy path to clipboard.
-        /// </summary>
-        public static string Settings_DumpMarkingButton1 {
-            get {
-                return ResourceManager.GetString("Settings_DumpMarkingButton1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на OK.
-        /// </summary>
-        public static string Settings_DumpMarkingButton2 {
-            get {
-                return ResourceManager.GetString("Settings_DumpMarkingButton2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Dump marking data.
         /// </summary>
         public static string Settings_DumpMarkingCaption {
@@ -1728,18 +1765,36 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Dump failed.
         /// </summary>
-        public static string Settings_DumpMarkingMessageFailed {
+        public static string Settings_DumpMessageFailed {
             get {
-                return ResourceManager.GetString("Settings_DumpMarkingMessageFailed", resourceCulture);
+                return ResourceManager.GetString("Settings_DumpMessageFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dump success saved.
+        ///   Ищет локализованную строку, похожую на Dump success saved to {0}.
         /// </summary>
-        public static string Settings_DumpMarkingMessageSuccess {
+        public static string Settings_DumpMessageSuccess {
             get {
-                return ResourceManager.GetString("Settings_DumpMarkingMessageSuccess", resourceCulture);
+                return ResourceManager.GetString("Settings_DumpMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dump templates to file.
+        /// </summary>
+        public static string Settings_DumpTemplatesButton {
+            get {
+                return ResourceManager.GetString("Settings_DumpTemplatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dump templates.
+        /// </summary>
+        public static string Settings_DumpTemplatesCaption {
+            get {
+                return ResourceManager.GetString("Settings_DumpTemplatesCaption", resourceCulture);
             }
         }
         
@@ -1843,62 +1898,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Import.
-        /// </summary>
-        public static string Settings_Import {
-            get {
-                return ResourceManager.GetString("Settings_Import", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Import marking data from file.
-        /// </summary>
-        public static string Settings_ImportMarkingButton {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Import marking data.
-        /// </summary>
-        public static string Settings_ImportMarkingCaption {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to import data?
-        ///The imported data will replace all existing markup.
-        ///This action cannot be undone.
-        /// </summary>
-        public static string Settings_ImportMarkingMessage {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data import failed.
-        /// </summary>
-        public static string Settings_ImportMarkingMessageFailed {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingMessageFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data successfully imported.
-        /// </summary>
-        public static string Settings_ImportMarkingMessageSuccess {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingMessageSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Language.
         /// </summary>
         public static string Settings_Language {
@@ -1940,6 +1939,109 @@ namespace NodeMarkup {
         public static string Settings_RenderDistance {
             get {
                 return ResourceManager.GetString("Settings_RenderDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore.
+        /// </summary>
+        public static string Settings_Restore {
+            get {
+                return ResourceManager.GetString("Settings_Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore marking data from file.
+        /// </summary>
+        public static string Settings_RestoreMarkingButton {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore marking data.
+        /// </summary>
+        public static string Settings_RestoreMarkingCaption {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to restore data?
+        ///The restored data will replace all existing marking.
+        ///This action cannot be undone..
+        /// </summary>
+        public static string Settings_RestoreMarkingMessage {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Marking data restore failed.
+        /// </summary>
+        public static string Settings_RestoreMarkingMessageFailed {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingMessageFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Marking data successfully restored.
+        /// </summary>
+        public static string Settings_RestoreMarkingMessageSuccess {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore templates from file.
+        /// </summary>
+        public static string Settings_RestoreTemplatesButton {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore templates.
+        /// </summary>
+        public static string Settings_RestoreTemplatesCaption {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to restore templates?
+        ///The restored templates will replace all existing templates.
+        ///This action cannot be undone..
+        /// </summary>
+        public static string Settings_RestoreTemplatesMessage {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Templates restore failed.
+        /// </summary>
+        public static string Settings_RestoreTemplatesMessageFailed {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesMessageFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Templates successfully restored.
+        /// </summary>
+        public static string Settings_RestoreTemplatesMessageSuccess {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesMessageSuccess", resourceCulture);
             }
         }
         

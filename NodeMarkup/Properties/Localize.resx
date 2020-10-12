@@ -248,42 +248,39 @@ This action cannot be undone</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>Do you really want to remove all markings?
-This action cannot be undone</value>
+This action cannot be undone.</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Dump marking data to file</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copy path to clipboard</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Dump marking data</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Dump failed</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Dump success saved</value>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>Dump success saved to {0}</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Import marking data from file</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Restore marking data from file</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Import marking data</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Restore marking data</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Do you really want to import data?
-The imported data will replace all existing markup.
-This action cannot be undone</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Do you really want to restore data?
+The restored data will replace all existing marking.
+This action cannot be undone.</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Marking data import failed</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Marking data restore failed</value>
   </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Marking data successfully imported</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Marking data successfully restored</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Quick rule setup</value>
@@ -374,10 +371,10 @@ Hold Shift to create a crosswalk</value>
 - Line segment with the rule will be highlighted when hovering over the edit panel of that rule.
 - Added Simplified Chinese translation.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Import</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Restore</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -1028,5 +1025,44 @@ Drop circle outside target to unset paste order</value>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
     <value>The name "{0}" is already used by another template.
 Are you sure you want to have multiple templates with the same name?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Backup marking</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Backup templates</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Delete all templates</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Delete all templates</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Do you really want to remove all templates?
+This action cannot be undone.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Dump templates to file</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Dump templates</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Restore templates from file</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Restore templates</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Do you really want to restore templates?
+The restored templates will replace all existing templates.
+This action cannot be undone.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Templates restore failed</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Templates successfully restored</value>
   </data>
 </root>
