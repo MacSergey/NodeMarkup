@@ -9,6 +9,10 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
+    public interface ITarget
+    {
+        public Vector3 GetSourcePosition(Source target);
+    }
     public abstract class PasteItem
     {
         protected abstract float BoundsSize { get; }
@@ -26,31 +30,28 @@ namespace NodeMarkup.Tools
             Num = num;
         }
 
-        public virtual void Update<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
-            where SourceType : Source<TargetType>
-            where TargetType : Target
+        public virtual void Update<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode)
+            where SourceType : Source
         {
             Position = GetPosition(toolMode);
         }
-        protected virtual Vector3 GetPosition<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
-            where SourceType : Source<TargetType>
-            where TargetType : Target
+        protected virtual Vector3 GetPosition<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode)
+            where SourceType : Source
         {
             return Position;
         }
 
         public bool IsHover(Ray ray) => _bounds.IntersectRay(ray);
     }
-    public abstract class Source<TargetType> : PasteItem
-        where TargetType : Target
+    public abstract class Source : PasteItem
     {
-        public virtual TargetType Target { get; set; }
+        public virtual ITarget Target { get; set; }
         public bool HasTarget => Target != null;
 
         public Source(int num, Vector3? position = null) : base(num, position) { }
 
-        public void Render<SourceType>(RenderManager.CameraInfo cameraInfo, BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
-            where SourceType : Source<TargetType>
+        public void Render<SourceType>(RenderManager.CameraInfo cameraInfo, BasePasteMarkupToolMode<SourceType> toolMode)
+            where SourceType : Source
         {
             var hue = (byte)(toolMode.SelectedSource == this || toolMode.HoverSource == this ? 255 : 192);
             var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : NodeMarkupTool.MouseWorldPosition) : Position;
@@ -62,17 +63,16 @@ namespace NodeMarkup.Tools
             }
         }
     }
-    public abstract class Target : PasteItem
+    public abstract class Target : PasteItem, ITarget
     {
         protected Vector3 ZeroPosition { get; }
-        public Target(int num, Vector3 zeroPosition) : base(num) 
+        public Target(int num, Vector3 zeroPosition) : base(num)
         {
             ZeroPosition = zeroPosition;
         }
 
-        public void Render<SourceType, TargetType>(RenderManager.CameraInfo cameraInfo, BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
-            where SourceType : Source<TargetType>
-            where TargetType : Target
+        public void Render<SourceType>(RenderManager.CameraInfo cameraInfo, BasePasteMarkupToolMode<SourceType> toolMode)
+            where SourceType : Source
         {
             if (toolMode.AvailableTargets.Contains(this))
             {
@@ -88,9 +88,10 @@ namespace NodeMarkup.Tools
             else
                 NodeMarkupTool.RenderCircle(cameraInfo, new Color32(192, 192, 192, 255), Position, BoundsSize, false);
         }
+        public abstract Vector3 GetSourcePosition(Source target);
     }
 
-    public class SourceEnter : Source<TargetEnter>
+    public class SourceEnter : Source
     {
         public static float Size => 2f;
         protected override float BoundsSize => Size;
@@ -98,9 +99,9 @@ namespace NodeMarkup.Tools
         public bool IsMirror { get; set; }
         public EnterData Enter { get; }
 
-        private TargetEnter _target;
+        private ITarget _target;
 
-        public override TargetEnter Target
+        public override ITarget Target
         {
             get => _target;
             set
@@ -108,7 +109,7 @@ namespace NodeMarkup.Tools
                 _target = value;
 
                 for (var i = 0; i < Points.Length; i += 1)
-                    Points[i].Target = _target != null && i < _target.Enter.Points ? _target.Points[!IsMirror ? i : _target.Points.Length - i - 1] : null;
+                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.Points ? targetEnter.Points[!IsMirror ? i : targetEnter.Points.Length - i - 1] : null;
             }
         }
         public SourcePoint[] Points { get; }
@@ -118,7 +119,7 @@ namespace NodeMarkup.Tools
             Enter = enter;
             Points = Enumerable.Range(0, Enter.Points).Select(i => new SourcePoint(i)).ToArray();
         }
-        protected override Vector3 GetPosition<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
+        protected override Vector3 GetPosition<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode)
         {
             if (Target == null)
             {
@@ -127,7 +128,7 @@ namespace NodeMarkup.Tools
                 //return toolMode.Basket.Position + toolMode.Basket.Direction * ((TargetEnter.Size * (i + 1) + Size * i - toolMode.Basket.Width) / 2);
             }
             else
-                return Target.Position;
+                return Target.GetSourcePosition(this);
         }
     }
     public class TargetEnter : Target
@@ -144,14 +145,14 @@ namespace NodeMarkup.Tools
             Enter = enter.Data;
             Points = enter.Points.Select((p, i) => new TargetPoint(p, i)).ToArray();
         }
-        public override void Update<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
+        public override void Update<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode)
         {
             base.Update(toolMode);
 
             foreach (var point in Points)
                 point.Update(toolMode);
         }
-        protected override Vector3 GetPosition<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
+        protected override Vector3 GetPosition<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode)
         {
             var dir = (ZeroPosition - toolMode.Markup.Position).normalized;
             var normal = dir.Turn90(true);
@@ -161,31 +162,34 @@ namespace NodeMarkup.Tools
             var distance = Mathf.Sqrt(Mathf.Pow(toolMode.Radius, 2) - Mathf.Pow(Math.Abs(p), 2));
             return point + dir * distance;
         }
+
+        public override Vector3 GetSourcePosition(Source target) => Position;
     }
 
-    public class SourcePoint : Source<TargetPoint>
+    public class SourcePoint : Source
     {
         protected override float BoundsSize => 0.5f;
 
         public SourcePoint(int num) : base(num) { }
-        protected override Vector3 GetPosition<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode)
+        protected override Vector3 GetPosition<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode)
         {
             if (Target == null)
                 return Vector3.zero;
             else
-                return Target.Position;
+                return Target.GetSourcePosition(this);
         }
     }
     public class TargetPoint : Target
     {
         protected override float BoundsSize => 1f;
         public TargetPoint(MarkupEnterPoint point, int num) : base(num, point.ZeroPosition) { }
-        protected override Vector3 GetPosition<SourceType, TargetType>(BasePasteMarkupToolMode<SourceType, TargetType> toolMode) => ZeroPosition;
+        protected override Vector3 GetPosition<SourceType>(BasePasteMarkupToolMode<SourceType> toolMode) => ZeroPosition;
+
+        public override Vector3 GetSourcePosition(Source target) => Position;
     }
 
-    public abstract class Basket<SourceType, TargetType>
-        where SourceType : Source<TargetType>
-        where TargetType : Target
+    public abstract class Basket<SourceType> : ITarget
+        where SourceType : Source
     {
         public Vector3 Position { get; private set; }
         public Vector3 Direction { get; private set; }
@@ -196,48 +200,52 @@ namespace NodeMarkup.Tools
         public Basket(IEnumerable<SourceType> items)
         {
             Items = items.ToArray();
+            foreach (var item in Items)
+                item.Target = this;
         }
+
+        public abstract Vector3 GetSourcePosition(Source target);
     }
 
-    public class Basket
-    {
-        private PasteMarkupEntersOrderToolMode ToolMode { get; }
+    //public class Basket
+    //{
+    //    private PasteMarkupEntersOrderToolMode ToolMode { get; }
 
-        public Vector3 Position { get; private set; }
-        public Vector3 Direction { get; private set; }
-        public float Width { get; private set; }
+    //    public Vector3 Position { get; private set; }
+    //    public Vector3 Direction { get; private set; }
+    //    public float Width { get; private set; }
 
-        public int Count { get; set; }
-        public bool IsEmpty => Count == 0;
+    //    public int Count { get; set; }
+    //    public bool IsEmpty => Count == 0;
 
-        public Basket(PasteMarkupEntersOrderToolMode toolMode)
-        {
-            ToolMode = toolMode;
-        }
+    //    public Basket(PasteMarkupEntersOrderToolMode toolMode)
+    //    {
+    //        ToolMode = toolMode;
+    //    }
 
-        public void Update()
-        {
-            Count = ToolMode.Sources.Count(s => s.Target == null);
+    //    public void Update()
+    //    {
+    //        Count = ToolMode.Sources.Count(s => s.Target == null);
 
-            if (!IsEmpty)
-            {
-                var cameraDir = -NodeMarkupTool.CameraDirection;
-                cameraDir.y = 0;
-                cameraDir.Normalize();
-                Direction = cameraDir.Turn90(false);
-                Position = ToolMode.Centre + cameraDir * (ToolMode.Radius + 2 * TargetEnter.Size);
-                Width = (TargetEnter.Size * (Count + 1) + SourceEnter.Size * (Count - 1)) / 2;
-            }
-        }
+    //        if (!IsEmpty)
+    //        {
+    //            var cameraDir = -NodeMarkupTool.CameraDirection;
+    //            cameraDir.y = 0;
+    //            cameraDir.Normalize();
+    //            Direction = cameraDir.Turn90(false);
+    //            Position = ToolMode.Centre + cameraDir * (ToolMode.Radius + 2 * TargetEnter.Size);
+    //            Width = (TargetEnter.Size * (Count + 1) + SourceEnter.Size * (Count - 1)) / 2;
+    //        }
+    //    }
 
-        public void Render(RenderManager.CameraInfo cameraInfo)
-        {
-            if (!IsEmpty && !ToolMode.IsSelectedSource)
-            {
-                var halfWidth = (Width - TargetEnter.Size) / 2;
-                var basket = new StraightTrajectory(Position - Direction * halfWidth, Position + Direction * halfWidth);
-                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, basket, TargetEnter.Size, alphaBlend: false);
-            }
-        }
-    }
+    //    public void Render(RenderManager.CameraInfo cameraInfo)
+    //    {
+    //        if (!IsEmpty && !ToolMode.IsSelectedSource)
+    //        {
+    //            var halfWidth = (Width - TargetEnter.Size) / 2;
+    //            var basket = new StraightTrajectory(Position - Direction * halfWidth, Position + Direction * halfWidth);
+    //            NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, basket, TargetEnter.Size, alphaBlend: false);
+    //        }
+    //    }
+    //}
 }

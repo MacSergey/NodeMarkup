@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class PasteMarkupEntersOrderToolMode : BasePasteMarkupToolMode<SourceEnter, TargetEnter>
+    public class PasteMarkupEntersOrderToolMode : BasePasteMarkupToolMode<SourceEnter>
     {
         public override ToolModeType Type => ToolModeType.PasteMarkupEnterOrder;
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
@@ -21,7 +21,7 @@ namespace NodeMarkup.Tools
         private GUIButton Flip { get; }
         private GUIButton TurnRight { get; }
 
-        public Basket Basket { get; }
+        //public Basket Basket { get; }
 
         public PasteMarkupEntersOrderToolMode()
         {
@@ -34,7 +34,7 @@ namespace NodeMarkup.Tools
             TurnRight = new GUIButton(3, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnRight)].region);
             TurnRight.OnClick += OnTurnRight;
 
-            Basket = new Basket(this);
+            //Basket = new Basket(this);
         }
         private void OnTurnLeft()
         {
@@ -61,8 +61,8 @@ namespace NodeMarkup.Tools
         {
             for (var i = 0; i < Sources.Length; i += 1)
             {
-                if (Sources[i].Target != null)
-                    Sources[i].Target = Targets[func(Sources[i].Target.Num)];
+                if (Sources[i].Target is Target target)
+                    Sources[i].Target = Targets[func(target.Num)];
             }
         }
 
@@ -72,7 +72,7 @@ namespace NodeMarkup.Tools
 
             base.Reset(prevMode);
         }
-        protected override TargetEnter[] GetTargets(BaseToolMode prevMode) => TargetEnters;
+        protected override Target[] GetTargets(BaseToolMode prevMode) => TargetEnters;
         protected override SourceEnter[] GetSources(BaseToolMode prevMode) => SourceEnters;
 
         public override void OnPrimaryMouseClicked(Event e)
@@ -93,7 +93,7 @@ namespace NodeMarkup.Tools
         public override void OnUpdate()
         {
             base.OnUpdate();
-            Basket.Update();
+            //Basket.Update();
         }
         public override string GetToolInfo()
         {
@@ -130,7 +130,7 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Centre, Radius * 2);
-            Basket.Render(cameraInfo);
+            //Basket.Render(cameraInfo);
 
             base.RenderOverlay(cameraInfo);
         }

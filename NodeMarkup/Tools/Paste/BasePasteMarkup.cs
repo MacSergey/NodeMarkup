@@ -71,12 +71,13 @@ namespace NodeMarkup.Tools
 
             foreach (var source in SourceEnters)
             {
-                map.AddEnter(source.Enter.Id, source.Target?.Enter.Id ?? 0);
+                var enterTarget = source.Target as TargetEnter;
+                map.AddEnter(source.Enter.Id, enterTarget?.Enter.Id ?? 0);
 
-                if (source.Target != null)
+                if (enterTarget != null)
                 {
                     for (var i = 0; i < source.Points.Length; i += 1)
-                        map.AddPoint(source.Target.Enter.Id, i + 1, source.Points[i].Target?.Num + 1 ?? 0);
+                        map.AddPoint(enterTarget.Enter.Id, i + 1, (source.Points[i].Target as Target)?.Num + 1 ?? 0);
                 }
             }
 
@@ -84,12 +85,11 @@ namespace NodeMarkup.Tools
             Panel.UpdatePanel();
         }
     }
-    public abstract class BasePasteMarkupToolMode<SourceType, TargetType> : BasePasteMarkupToolMode
-        where SourceType : Source<TargetType>
-        where TargetType : Target
+    public abstract class BasePasteMarkupToolMode<SourceType> : BasePasteMarkupToolMode
+        where SourceType : Source
     {
         public SourceType[] Sources { get; set; } = new SourceType[0];
-        public TargetType[] Targets { get; set; } = new TargetType[0];
+        public Target[] Targets { get; set; } = new Target[0];
 
         public SourceType HoverSource { get; protected set; }
         public bool IsHoverSource => HoverSource != null;
@@ -97,10 +97,10 @@ namespace NodeMarkup.Tools
         public SourceType SelectedSource { get; protected set; }
         public bool IsSelectedSource => SelectedSource != null;
 
-        public TargetType HoverTarget { get; protected set; }
+        public Target HoverTarget { get; protected set; }
         public bool IsHoverTarget => HoverTarget != null;
 
-        public TargetType[] AvailableTargets { get; protected set; }
+        public Target[] AvailableTargets { get; protected set; }
 
         protected override void Reset(BaseToolMode prevMode)
         {
@@ -120,7 +120,7 @@ namespace NodeMarkup.Tools
         }
 
         protected abstract SourceType[] GetSources(BaseToolMode prevMode);
-        protected abstract TargetType[] GetTargets(BaseToolMode prevMode);
+        protected abstract Target[] GetTargets(BaseToolMode prevMode);
 
         public void GetHoverSource() => HoverSource = NodeMarkupTool.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(NodeMarkupTool.MouseRay)) : null;
         public void GetHoverTarget() => HoverTarget = NodeMarkupTool.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(NodeMarkupTool.MouseRay)) : null;
@@ -182,7 +182,7 @@ namespace NodeMarkup.Tools
             }
         }
 
-        private IEnumerable<TargetType> GetAvailableTargets(SourceType source)
+        private IEnumerable<Target> GetAvailableTargets(SourceType source)
         {
             var a = GetAvailableBorder(source, s => !IsMirror ? s.PrevIndex(Sources.Length) : s.NextIndex(Sources.Length), AvailableTargetsGetter) ?? Targets.First();
             var b = GetAvailableBorder(source, s => !IsMirror ? s.NextIndex(Sources.Length) : s.PrevIndex(Sources.Length), AvailableTargetsGetter) ?? Targets.Last();
@@ -193,11 +193,12 @@ namespace NodeMarkup.Tools
             if (b != a)
                 yield return b;
         }
-        private TargetType GetAvailableBorder(SourceType source, Func<int, int> func, Func<int, SourceType, bool> condition)
+        private Target GetAvailableBorder(SourceType source, Func<int, int> func, Func<int, SourceType, bool> condition)
         {
             var i = func(source.Num);
-            for (; condition(i, source) && Sources[i].Target == null; i = func(i)) { }
-            return Sources[i].Target;
+            while (condition(i, source) && !(Sources[i].Target is Target))
+                i = func(i);
+            return Sources[i].Target as Target;
         }
         protected abstract Func<int, SourceType, bool> AvailableTargetsGetter { get; }
     }
