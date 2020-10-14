@@ -2,6 +2,7 @@
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -232,7 +233,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class PartEdgeToolMode : BaseToolMode
     {
-        public override ModeType Type => ModeType.PanelAction;
+        public override ToolModeType Type => ToolModeType.PanelAction;
 
         private LinesEditor Editor { get; }
 

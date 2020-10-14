@@ -152,6 +152,14 @@ namespace NodeMarkup.Manager
             Position = position;
             Direction = direction;
         }
+        public Vector3 ZeroPosition
+        {
+            get
+            {
+                SegmentLine.GetPositionAndDirection(Location, 0, out Vector3 position, out _);
+                return position;
+            }
+        }
     }
     public class MarkupCrosswalkPoint : MarkupPoint
     {

@@ -31,11 +31,11 @@ namespace NodeMarkup.Utils
 
         };
 
-        public static Color32 GetOverlayColor(int index, byte alpha = Alpha)
+        public static Color32 GetOverlayColor(int index, byte alpha = Alpha, byte hue = 255)
         {
             var color = OverlayColors[index % OverlayColors.Length];
-            color.a = alpha;
-            return color;
+            return new Color32(SetHue(color.r, hue), SetHue(color.g, hue), SetHue(color.b, hue), alpha);
         }
+        private static byte SetHue(byte value, byte hue) => (byte)(byte.MaxValue - ((byte.MaxValue - value) / 255f * hue));
     }
 }

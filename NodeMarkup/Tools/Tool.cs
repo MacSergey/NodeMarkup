@@ -16,7 +16,7 @@ using ColossalFramework.PlatformServices;
 using System.Xml.Linq;
 using NodeMarkup.UI.Editors;
 
-namespace NodeMarkup
+namespace NodeMarkup.Tools
 {
     public class NodeMarkupTool : ToolBase
     {
@@ -51,7 +51,7 @@ namespace NodeMarkup
         #endregion
 
         public BaseToolMode Mode { get; private set; }
-        private Dictionary<BaseToolMode.ModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<BaseToolMode.ModeType, BaseToolMode>();
+        private Dictionary<ToolModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, BaseToolMode>();
         public Markup Markup { get; private set; }
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
@@ -60,7 +60,7 @@ namespace NodeMarkup
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
-        public MarkupBuffer MarkupBuffer { get; private set; } = new MarkupBuffer(new XElement("Markup"), new ushort[0]);
+        public MarkupBuffer MarkupBuffer { get; private set; } = new MarkupBuffer();
 
         #endregion
 
@@ -71,14 +71,15 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
             base.Awake();
 
-            ToolModes = new Dictionary<BaseToolMode.ModeType, BaseToolMode>()
+            ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
-                { BaseToolMode.ModeType.SelectNode, new SelectNodeToolMode() },
-                { BaseToolMode.ModeType.MakeLine, new MakeLineToolMode() },
-                { BaseToolMode.ModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
-                { BaseToolMode.ModeType.MakeFiller, new MakeFillerToolMode() },
-                { BaseToolMode.ModeType.DragPoint, new DragPointToolMode() },
-                { BaseToolMode.ModeType.PasteMarkup, new PasteMarkupToolMode()}
+                { ToolModeType.SelectNode, new SelectNodeToolMode() },
+                { ToolModeType.MakeLine, new MakeLineToolMode() },
+                { ToolModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
+                { ToolModeType.MakeFiller, new MakeFillerToolMode() },
+                { ToolModeType.DragPoint, new DragPointToolMode() },
+                { ToolModeType.PasteMarkupEnterOrder, new PasteMarkupEntersOrderToolMode()},
+                { ToolModeType.PasteMarkupPointOrder, new PasteMarkupPointsOrderToolMode()},
             };
 
             NodeMarkupButton.CreateButton();
@@ -137,7 +138,7 @@ namespace NodeMarkup
         private void Reset()
         {
             SetMarkup(null);
-            SetMode(BaseToolMode.ModeType.SelectNode);
+            SetMode(ToolModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
         }
@@ -149,13 +150,14 @@ namespace NodeMarkup
         }
         public void Disable() => enabled = false;
 
-        public void SetDefaultMode() => SetMode(BaseToolMode.ModeType.MakeLine);
-        public void SetMode(BaseToolMode.ModeType mode) => SetMode(ToolModes[mode]);
+        public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
+        public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
         public void SetMode(BaseToolMode mode)
         {
             Mode?.End();
+            var prevMode = Mode;
             Mode = mode;
-            Mode.Start();
+            Mode?.Start(prevMode);
         }
         public void SetMarkup(Markup markup)
         {
@@ -203,7 +205,7 @@ namespace NodeMarkup
         {
             var position = GetInfoPosition();
 
-            var isToolTipEnable = UI.Settings.ShowToolTip || Mode.Type == BaseToolMode.ModeType.SelectNode;
+            var isToolTipEnable = UI.Settings.ShowToolTip || Mode.Type == ToolModeType.SelectNode;
             var isPanelHover = Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position);
             var isHasText = Mode.GetToolInfo() is string info && !string.IsNullOrEmpty(info);
 
@@ -230,7 +232,7 @@ namespace NodeMarkup
 
             cursorInfoLabel.relativePosition = relativePosition;
 
-            float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
+            static float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
         }
         private Vector3 GetInfoPosition()
         {
@@ -246,6 +248,8 @@ namespace NodeMarkup
 
         #region GUI
 
+        private bool IsMouseDown { get; set; }
+        private bool IsMouseMove { get; set; }
         protected override void OnToolGUI(Event e)
         {
             Mode.OnGUI(e);
@@ -256,13 +260,20 @@ namespace NodeMarkup
             switch (e.type)
             {
                 case EventType.MouseDown when MouseRayValid && e.button == 0:
+                    IsMouseDown = true;
+                    IsMouseMove = false;
                     Mode.OnMouseDown(e);
                     break;
                 case EventType.MouseDrag when MouseRayValid:
+                    IsMouseMove = true;
                     Mode.OnMouseDrag(e);
                     break;
                 case EventType.MouseUp when MouseRayValid && e.button == 0:
-                    Mode.OnPrimaryMouseClicked(e);
+                    if (IsMouseMove)
+                        Mode.OnMouseUp(e);
+                    else
+                        Mode.OnPrimaryMouseClicked(e);
+                    IsMouseDown = false;
                     break;
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     Mode.OnSecondaryMouseClicked();
@@ -352,7 +363,7 @@ namespace NodeMarkup
         public void CopyMarkup()
         {
             var data = Markup.ToXml();
-            var enters = Markup.Enters.Select(e => e.Id).ToArray();
+            var enters = Markup.Enters.Select(e => e.Data).ToArray();
             MarkupBuffer = new MarkupBuffer(data, enters);
         }
         public void PasteMarkup()
@@ -369,7 +380,7 @@ namespace NodeMarkup
 
             bool Paste()
             {
-                SetMode(BaseToolMode.ModeType.PasteMarkup);
+                SetMode(ToolModeType.PasteMarkupEnterOrder);
                 return true;
             }
         }
@@ -447,15 +458,16 @@ namespace NodeMarkup
             }
         }
     }
-    public struct MarkupBuffer
+    public class MarkupBuffer
     {
-        public XElement Data { get; private set; }
-        public ushort[] Enters { get; private set; }
-        public MarkupBuffer(XElement data, ushort[] enters)
+        public XElement Data { get; }
+        public EnterData[] Enters { get; }
+        public MarkupBuffer(XElement data, EnterData[] enters)
         {
             Data = data;
             Enters = enters;
         }
+        public MarkupBuffer() : this(new XElement("Markup"), new EnterData[0]) { }
     }
     public class ThreadingExtension : ThreadingExtensionBase
     {

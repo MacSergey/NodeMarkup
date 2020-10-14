@@ -20,6 +20,7 @@ using UnityEngine.SocialPlatforms;
 using static ColossalFramework.UI.UIDropDown;
 using ColossalFramework.Globalization;
 using ColossalFramework.PlatformServices;
+using NodeMarkup.Tools;
 
 namespace NodeMarkup.UI
 {
@@ -234,7 +235,7 @@ namespace NodeMarkup.UI
 
             AddDistanceSetting(group);
             AddShowToolTipsSetting(group);
-            AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAnyActions, Localize.Settings_ShowDeleteWarningsOnlyDependences });
+            AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddQuickRuleSetup(group);
             }
         private static void AddGrouping(UIHelperBase helper)

@@ -72,15 +72,18 @@ namespace NodeMarkup.Utils
         {
             var count = enter.PointCount + 1;
             for (var i = 1; i < count; i += 1)
+                AddPoint(enter.Id, i, count - i);
+        }
+        public void AddPoint(ushort enter, int source, int target)
+        {
+            foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
             {
-                foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
-                {
-                    var sourcePoint = new ObjectId() { Point = MarkupPoint.GetId(enter.Id, (byte)i, pointType) };
-                    var targetPoint = new ObjectId() { Point = MarkupPoint.GetId(enter.Id, (byte)(count - i), pointType) };
-                    this[sourcePoint] = targetPoint;
-                }
+                var sourcePoint = new ObjectId() { Point = MarkupPoint.GetId(enter, (byte)source, pointType) };
+                var targetPoint = new ObjectId() { Point = MarkupPoint.GetId(enter, (byte)target, pointType) };
+                this[sourcePoint] = targetPoint;
             }
         }
+        public void AddEnter(ushort source, ushort target) => this[new ObjectId() { Segment = source }] = new ObjectId() { Segment = target };
     }
     public enum ObjectType : long
     {

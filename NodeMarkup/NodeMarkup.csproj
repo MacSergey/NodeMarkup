@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-	<LangVersion>8.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-	<LangVersion>8.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug noWorkshop|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +41,7 @@
     <DefineConstants>TRACE;DEBUG;PRERELEASE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<LangVersion>8.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -51,7 +51,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<LangVersion>8.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -99,6 +99,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tools\BaseMode.cs" />
+    <Compile Include="Tools\DragPoint.cs" />
+    <Compile Include="Tools\MakeItem\MakeCrosswalk.cs" />
+    <Compile Include="Tools\MakeItem\MakeFiller.cs" />
+    <Compile Include="Tools\MakeItem\BaseMakeItem.cs" />
+    <Compile Include="Tools\MakeItem\MakeLIne.cs" />
+    <Compile Include="Tools\Paste\PasteClasses.cs" />
+    <Compile Include="Tools\Paste\EntersOrder.cs" />
+    <Compile Include="Tools\Paste\PointsOrder.cs" />
+    <Compile Include="Tools\SelectNode.cs" />
     <Compile Include="Utils\DataExtensions\AssetData.cs" />
     <Compile Include="Utils\DataExtensions\Loading.cs" />
     <Compile Include="EarlyAccess.cs" />
@@ -137,7 +147,7 @@
       <DependentUpon>Localize.resx</DependentUpon>
     </Compile>
     <Compile Include="Tools\Tool.cs" />
-    <Compile Include="Tools\ToolModes.cs" />
+    <Compile Include="Tools\Paste\BasePasteMarkup.cs" />
     <Compile Include="UI\Elements\DropDown.cs" />
     <Compile Include="UI\Editors\BaseEditor.cs" />
     <Compile Include="UI\Editors\BaseGroupEditor.cs" />

@@ -2136,11 +2136,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на In any case.
+        ///   Ищет локализованную строку, похожую на Always.
         /// </summary>
-        public static string Settings_ShowDeleteWarningsAnyActions {
+        public static string Settings_ShowDeleteWarningsAlways {
             get {
-                return ResourceManager.GetString("Settings_ShowDeleteWarningsAnyActions", resourceCulture);
+                return ResourceManager.GetString("Settings_ShowDeleteWarningsAlways", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace NodeMarkup.UI.Editors
             Field.cursorWidth = 1;
             Field.cursorBlinkTime = 0.45f;
             Field.selectOnFocus = true;
-            Field.tooltip = CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
+            Field.tooltip = Settings.ShowToolTip && CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
             Field.eventMouseWheel += FieldMouseWheel;
             Field.eventTextSubmitted += FieldTextSubmitted;
             Field.eventMouseHover += FieldHover;

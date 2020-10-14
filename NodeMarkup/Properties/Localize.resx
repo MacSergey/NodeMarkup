@@ -918,8 +918,8 @@ This action cannot be undone.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Without modifier</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>In any case</value>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Always</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Only if will affect others items</value>

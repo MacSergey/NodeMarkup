@@ -52,6 +52,8 @@ namespace NodeMarkup.Manager
         public float T => IsStartSide ? 0f : 1f;
         public string XmlSection => XmlName;
 
+        public EnterData Data => new EnterData(Id, PointCount);
+
 
         public Enter(Markup markup, ushort segmentId)
         {
@@ -241,15 +243,15 @@ namespace NodeMarkup.Manager
         public void GetPositionAndDirection(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
             if ((location & MarkupPoint.LocationType.Between) != MarkupPoint.LocationType.None)
-                GetMiddlePosition(offset, out position, out direction);
+                GetMiddlePositionAndDirection(offset, out position, out direction);
 
             else if ((location & MarkupPoint.LocationType.Edge) != MarkupPoint.LocationType.None)
-                GetEdgePosition(location, offset, out position, out direction);
+                GetEdgePositionAndDirection(location, offset, out position, out direction);
 
             else
                 throw new Exception();
         }
-        void GetMiddlePosition(float offset, out Vector3 position, out Vector3 direction)
+        void GetMiddlePositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
         {
             RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 rightPos, out Vector3 rightDir);
             LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 leftPos, out Vector3 leftDir);
@@ -259,7 +261,7 @@ namespace NodeMarkup.Manager
             var part = (RightLane.HalfWidth + HalfSideDelta) / CenterDelte;
             position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Mathf.Sin(Enter.CornerAndNormalAngle));
         }
-        void GetEdgePosition(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
+        void GetEdgePositionAndDirection(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
             float lineShift;
             switch (location)
@@ -280,6 +282,17 @@ namespace NodeMarkup.Manager
             var shift = (lineShift + offset) / Mathf.Sin(Enter.CornerAndNormalAngle);
 
             position += Enter.CornerDir * shift;
+        }
+    }
+    public class EnterData
+    {
+        public ushort Id { get; }
+        public int Points { get; }
+
+        public EnterData(ushort id, int points)
+        {
+            Id = id;
+            Points = points;
         }
     }
 }

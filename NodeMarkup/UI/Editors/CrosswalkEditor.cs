@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -213,7 +214,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class CrosswalkBorderToolMode : BaseToolMode
     {
-        public override ModeType Type => ModeType.PanelAction;
+        public override ToolModeType Type => ToolModeType.PanelAction;
 
         private CrosswalksEditor Editor { get; }
         private MarkupCrosswalkSelectPropertyPanel _selectBorderPanel;
