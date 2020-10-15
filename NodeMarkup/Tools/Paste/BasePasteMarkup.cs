@@ -86,7 +86,7 @@ namespace NodeMarkup.Tools
         }
     }
     public abstract class BaseOrderToolMode<SourceType> : BaseOrderToolMode
-        where SourceType : Source
+        where SourceType : Source<SourceType>
     {
         public SourceType[] Sources { get; set; } = new SourceType[0];
         public Target<SourceType>[] Targets { get; set; } = new Target<SourceType>[0];
@@ -101,7 +101,6 @@ namespace NodeMarkup.Tools
         public bool IsHoverTarget => HoverTarget != null;
 
         public Target<SourceType>[] AvailableTargets { get; protected set; }
-        public abstract Func<int, SourceType, bool> AvailableTargetsGetter { get; }
 
         protected Basket<SourceType>[] Baskets { get; set; } = new Basket<SourceType>[0];
 
@@ -136,6 +135,13 @@ namespace NodeMarkup.Tools
 
             GetHoverSource();
             GetHoverTarget();
+        }
+        public override string GetToolInfo()
+        {
+            if (IsSelectedSource)
+                return Localize.Tool_InfoPasteDrop;
+            else
+                return Localize.Tool_InfoPasteDrag;
         }
         public override void OnMouseDown(Event e)
         {
@@ -178,8 +184,8 @@ namespace NodeMarkup.Tools
         {
             foreach (var basket in Baskets)
             {
-                if (!IsSelectedSource || SelectedSource.Target == basket)
-                    basket.Render(cameraInfo, this);
+                //if (!IsSelectedSource || SelectedSource.Target == basket)
+                basket.Render(cameraInfo, this);
             }
 
             RenderOverlayAfterBaskets(cameraInfo);
@@ -198,13 +204,9 @@ namespace NodeMarkup.Tools
         protected virtual void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo) { }
         protected virtual void RenderOverlayAfterTargets(RenderManager.CameraInfo cameraInfo) { }
 
-        protected void SetAvailableTargets() => AvailableTargets = IsSelectedSource ? GetAvailableTargets(SelectedSource).ToArray() : Targets.ToArray();
-        private IEnumerable<Target<SourceType>> GetAvailableTargets(SourceType source)
-        {
-            var borders = new AvalibleBorders<SourceType>(this, source);
-            return borders.GetTargets(Targets);
-        }
-        private void SetBaskets() => Baskets = GetBaskets();
+        protected void SetAvailableTargets() => AvailableTargets = IsSelectedSource ? GetAvailableTargets(SelectedSource) : Targets.ToArray();
+        protected abstract Target<SourceType>[] GetAvailableTargets(SourceType source);
+        protected void SetBaskets() => Baskets = GetBaskets();
         protected abstract Basket<SourceType>[] GetBaskets();
     }
 }

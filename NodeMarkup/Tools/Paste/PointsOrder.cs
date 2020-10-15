@@ -10,22 +10,35 @@ namespace NodeMarkup.Tools
     {
         public override ToolModeType Type => ToolModeType.PasteMarkupPointOrder;
 
-        public override Func<int, SourcePoint, bool> AvailableTargetsGetter => (i, s) => i >= 0 && i < Sources.Length;
-
-        protected override Target<SourcePoint>[] GetTargets(BaseToolMode prevMode) 
-            => CheckPrev(prevMode, out EntersOrderToolMode toolMode) && toolMode.HoverSource.Target is TargetEnter target ? target.Points : new TargetPoint[0];
-        protected override SourcePoint[] GetSources(BaseToolMode prevMode)
-            => CheckPrev(prevMode, out EntersOrderToolMode toolMode) ? toolMode.HoverSource.Points : new SourcePoint[0];
-        private bool CheckPrev(BaseToolMode prevMode, out EntersOrderToolMode toolMode)
+        public SourceEnter SourceEnter { get; private set; }
+        public TargetEnter TargetEnter { get; private set; }
+        protected override void Reset(BaseToolMode prevMode)
         {
-            toolMode = prevMode as EntersOrderToolMode;
-            return toolMode != null && toolMode.IsHoverSource && toolMode.HoverSource.HasTarget;
+            var toolMode = prevMode as EntersOrderToolMode;
+            SourceEnter = toolMode != null && toolMode.IsHoverSource && toolMode.HoverSource.HasTarget ? toolMode.HoverSource : null;
+            TargetEnter = SourceEnter?.Target as TargetEnter;
+
+            base.Reset(prevMode);
         }
+
+        protected override Target<SourcePoint>[] GetTargets(BaseToolMode prevMode) => TargetEnter?.Points ?? new TargetPoint[0];
+        protected override SourcePoint[] GetSources(BaseToolMode prevMode) => SourceEnter?.Points ?? new SourcePoint[0];
 
         public override void OnSecondaryMouseClicked()
         {
             Tool.SetMode(ToolModeType.PasteMarkupEnterOrder);
         }
-        protected override Basket<SourcePoint>[] GetBaskets() => new Basket<SourcePoint>[0];
+        protected override Target<SourcePoint>[] GetAvailableTargets(SourcePoint source)
+        {
+            var borders = new PointsBorders(this, source);
+            var avalibleTargets = borders.GetTargets(this, Targets).ToArray();
+            return avalibleTargets;
+        }
+        protected override Basket<SourcePoint>[] GetBaskets()
+        {
+            var sourcesBorders = Sources.Where(s => !(s.Target is TargetPoint)).ToDictionary(s => s, s => new PointsBorders(this, s));
+            var baskets = sourcesBorders.GroupBy(b => b.Value, b => b.Key, PointsBorders.Comparer).Select(g => new PointsBasket(this, g.Key, g)).ToArray();
+            return baskets;
+        }
     }
 }

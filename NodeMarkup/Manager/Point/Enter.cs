@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         public float T => IsStartSide ? 0f : 1f;
         public string XmlSection => XmlName;
 
-        public EnterData Data => new EnterData(Id, PointCount);
+        public EnterData Data => new EnterData(this);
 
 
         public Enter(Markup markup, ushort segmentId)
@@ -288,11 +288,15 @@ namespace NodeMarkup.Manager
     {
         public ushort Id { get; }
         public int Points { get; }
+        public Vector3 Corner { get; }
+        public Vector3 Normal { get; }
 
-        public EnterData(ushort id, int points)
+        public EnterData(Enter enter)
         {
-            Id = id;
-            Points = points;
+            Id = enter.Id;
+            Points = enter.PointCount;
+            Corner = enter.CornerDir;
+            Normal = enter.NormalDir;
         }
     }
 }

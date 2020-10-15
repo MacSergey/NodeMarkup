@@ -15,13 +15,9 @@ namespace NodeMarkup.Tools
         public override ToolModeType Type => ToolModeType.PasteMarkupEnterOrder;
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
 
-        public override Func<int, SourceEnter, bool> AvailableTargetsGetter { get; } = (i, s) => i != s.Num;
-
         private GUIButton TurnLeft { get; }
         private GUIButton Flip { get; }
         private GUIButton TurnRight { get; }
-
-        //public Basket Basket { get; }
 
         public EntersOrderToolMode()
         {
@@ -37,6 +33,8 @@ namespace NodeMarkup.Tools
         private void OnTurnLeft()
         {
             Transform((t) => t.NextIndex(Targets.Length));
+            SetAvailableTargets();
+            SetBaskets();
             Paste();
         }
         private void OnFlip()
@@ -47,12 +45,15 @@ namespace NodeMarkup.Tools
                 source.IsMirror = IsMirror;
 
             Transform((t) => Targets.Length - t - 1);
-
+            SetAvailableTargets();
+            SetBaskets();
             Paste();
         }
         private void OnTurnRight()
         {
             Transform((t) => t.PrevIndex(Targets.Length));
+            SetAvailableTargets();
+            SetBaskets();
             Paste();
         }
         private void Transform(Func<int, int> func)
@@ -77,7 +78,7 @@ namespace NodeMarkup.Tools
         {
             base.OnPrimaryMouseClicked(e);
 
-            if (IsHoverSource)
+            if (IsHoverSource && HoverSource.Target is TargetEnter)
                 Tool.SetMode(ToolModeType.PasteMarkupPointOrder);
             else
             {
@@ -90,9 +91,7 @@ namespace NodeMarkup.Tools
         }
         public override string GetToolInfo()
         {
-            if (IsSelectedSource)
-                return Localize.Tool_InfoPasteDrop;
-            else
+            if (!IsSelectedSource)
             {
                 var mouse = GetMouse();
 
@@ -102,9 +101,9 @@ namespace NodeMarkup.Tools
                     return Localize.Tool_InfoChangeOrder;
                 else if (TurnRight.CheckHover(mouse))
                     return Localize.Tool_InfoTurnClockwise;
-                else
-                    return Localize.Tool_InfoPasteDrag;
             }
+
+            return base.GetToolInfo();
         }
         public override void OnGUI(Event e)
         {
@@ -207,7 +206,12 @@ namespace NodeMarkup.Tools
             var uiView = UIView.GetAView();
             return uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
         }
-
+        protected override Target<SourceEnter>[] GetAvailableTargets(SourceEnter source)
+        {
+            var borders = new EntersBorders(this, source);
+            var avalibleTargets = borders.GetTargets(this, Targets).ToArray();
+            return avalibleTargets;
+        }
         protected override Basket<SourceEnter>[] GetBaskets()
         {
             var sourcesBorders = Sources.Where(s => !(s.Target is TargetEnter)).ToDictionary(s => s, s => new EntersBorders(this, s));
