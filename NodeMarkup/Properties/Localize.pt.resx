@@ -246,7 +246,10 @@ Esta ação não pode ser desfeita</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Remover todas as marcações</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo remover todas as marcações?
+Esta acção não pode ser desfeita.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportar dados de marcações para um ficheiro</value>
   </data>
@@ -854,9 +857,7 @@ Esta acção não pode ser desfeita.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Sem modificador</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>Em qualquer caso</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Apenas de afetar outros itens</value>
   </data>

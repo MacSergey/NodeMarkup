@@ -246,7 +246,10 @@ Questa azione non può essere annullata</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Elimina tutte le marcature</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Vuoi veramente rimuovere tutti i marcatori?
+Questa azione non può essere annullata.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Scarica i dati dei marcatori su file</value>
   </data>
@@ -868,9 +871,7 @@ L'azione non può esser annullata.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Senza modificatore</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>In ogni caso</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Solo se affligge ulteriori oggetti</value>
   </data>

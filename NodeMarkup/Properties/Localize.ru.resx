@@ -286,7 +286,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Быстрая настройка правил</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Дистанция отрисовки</value>
+    <value>Дистанция отображения</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
     <value>Горячие клавиши</value>
@@ -902,8 +902,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Без модификатора</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>В любом случае</value>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Всегда</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Только если будут удалены другие элементы</value>
@@ -927,7 +927,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Правила - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Бэкап</value>
+    <value>Pезервирование</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Отображение и использование</value>

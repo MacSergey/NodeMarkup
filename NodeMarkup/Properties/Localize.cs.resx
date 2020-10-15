@@ -246,7 +246,10 @@ Tuto akci nelze vrátit zpět</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Odstranit všechna značení</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Opravdu si přejete odstranit všechna značení?
+Tuto akci nelze vrátit zpět.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportovat data do souboru</value>
   </data>
@@ -833,9 +836,7 @@ Tuto akci nelze vrátit zpět.</value>
     <value>Nenastaveno</value>
   </data>
   
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>V každém případě</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Pouze, pokud budou ovlivněny ostatní položky</value>
   </data>

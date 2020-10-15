@@ -246,7 +246,10 @@ Tätä toimintoa ei voi kumota</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Poista kaikki tiemerkinnät</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
+Tätä toimintoa ei voi kumota.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Vie tiemerkintätiedot tiedostoon</value>
   </data>
@@ -824,9 +827,7 @@ Tätä toimintoa ei voi kumota.</value>
     <value>Ei määritetty</value>
   </data>
   
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>Joka tapauksessa</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Vain, jos se vaikuttaa muihin asioihin</value>
   </data>

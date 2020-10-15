@@ -246,7 +246,10 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Alle Markierungen löschen</value>
   </data>
-  
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Wirklich alle Markierungen entfernen?
+Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Markierungsdaten in Datei speichern</value>
   </data>
@@ -262,11 +265,23 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Erfolgreich gespeichert</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Markierungsdaten aus Datei importieren</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Markierungsdaten wiederherstellen</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Möchtest du die Daten wirklich wiederherstellen?
+Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.
+Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Wiederherstellen der Markierungsdaten fehlgeschlagen</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Markierungsdaten erfolgreich wiederhergestellt</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Schnelle Regel-Erstellung</value>
   </data>
@@ -356,7 +371,9 @@ Shift halten erstellt eine Fußgängerüberweg-Markierung</value>
 - Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
 - Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
   </data>
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Wiederherstellen</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
@@ -880,9 +897,7 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Ohne Tastenkombination</value>
   </data>
-  <data name="Settings_ShowDeleteWarningsAnyActions" xml:space="preserve">
-    <value>In jedem Fall</value>
-  </data>
+  
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Nur wenn es Anderes beeinflussen wird</value>
   </data>
@@ -988,16 +1003,43 @@ Kreis außerhalb eines Ziels loslassen um die Einfüge-Reihenfolge aufzuheben</v
     <value>Der Name "{0}" wird bereits für eine anderen Vorlage verwendet.
 Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Markierungsdaten sichern</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Sicherungsvorlagen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Alle Vorlagen löschen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Alle Vorlagen löschen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Willst du alle Vorlagen wirklich entfernen?
+Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Vorlagen in einer Datei speichern</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Vorlagen speichern</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Vorlagen aus Datei wiederherstellen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Vorlagen wiederherstellen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Möchtest du die Vorlagen wirklich wiederherstellen?
+Die wiederhergestellten Vorlagen werden alle vorhandenen Vorlagen ersetzen.
+Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Wiederherstellen der Vorlagen fehlgeschlagen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Vorlagen erfolgreich wiederhergestellt</value>
+  </data>
 </root>
