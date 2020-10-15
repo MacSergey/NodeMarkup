@@ -12,7 +12,7 @@ using static ToolBase;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BasePasteMarkupToolMode : BaseToolMode
+    public abstract class BaseOrderToolMode : BaseToolMode
     {
         public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
         private static UITextureAtlas GetButtonsIcons()
@@ -24,9 +24,9 @@ namespace NodeMarkup.Tools
                 "TurnRight",
             };
 
-            var atlas = TextureUtil.GetAtlas(nameof(PasteMarkupEntersOrderToolMode));
+            var atlas = TextureUtil.GetAtlas(nameof(EntersOrderToolMode));
             if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(PasteMarkupEntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
+                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(EntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
 
             return atlas;
         }
@@ -37,13 +37,13 @@ namespace NodeMarkup.Tools
         protected XElement Backup { get; set; }
         protected MarkupBuffer Buffer => Tool.MarkupBuffer;
 
-        protected bool IsMirror { get; set; }
+        public bool IsMirror { get; protected set; }
         public SourceEnter[] SourceEnters { get; set; } = new SourceEnter[0];
         public TargetEnter[] TargetEnters { get; set; } = new TargetEnter[0];
 
         protected override void Reset(BaseToolMode prevMode)
         {
-            if (prevMode is BasePasteMarkupToolMode pasteMarkupTool)
+            if (prevMode is BaseOrderToolMode pasteMarkupTool)
             {
                 Backup = pasteMarkupTool.Backup;
                 IsMirror = pasteMarkupTool.IsMirror;
@@ -85,11 +85,11 @@ namespace NodeMarkup.Tools
             Panel.UpdatePanel();
         }
     }
-    public abstract class BasePasteMarkupToolMode<SourceType> : BasePasteMarkupToolMode
+    public abstract class BaseOrderToolMode<SourceType> : BaseOrderToolMode
         where SourceType : Source
     {
         public SourceType[] Sources { get; set; } = new SourceType[0];
-        public Target[] Targets { get; set; } = new Target[0];
+        public Target<SourceType>[] Targets { get; set; } = new Target<SourceType>[0];
 
         public SourceType HoverSource { get; protected set; }
         public bool IsHoverSource => HoverSource != null;
@@ -97,10 +97,13 @@ namespace NodeMarkup.Tools
         public SourceType SelectedSource { get; protected set; }
         public bool IsSelectedSource => SelectedSource != null;
 
-        public Target HoverTarget { get; protected set; }
+        public Target<SourceType> HoverTarget { get; protected set; }
         public bool IsHoverTarget => HoverTarget != null;
 
-        public Target[] AvailableTargets { get; protected set; }
+        public Target<SourceType>[] AvailableTargets { get; protected set; }
+        public abstract Func<int, SourceType, bool> AvailableTargetsGetter { get; }
+
+        protected Basket<SourceType>[] Baskets { get; set; } = new Basket<SourceType>[0];
 
         protected override void Reset(BaseToolMode prevMode)
         {
@@ -117,10 +120,11 @@ namespace NodeMarkup.Tools
                 target.Update(this);
 
             SetAvailableTargets();
+            SetBaskets();
         }
 
         protected abstract SourceType[] GetSources(BaseToolMode prevMode);
-        protected abstract Target[] GetTargets(BaseToolMode prevMode);
+        protected abstract Target<SourceType>[] GetTargets(BaseToolMode prevMode);
 
         public void GetHoverSource() => HoverSource = NodeMarkupTool.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(NodeMarkupTool.MouseRay)) : null;
         public void GetHoverTarget() => HoverTarget = NodeMarkupTool.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(NodeMarkupTool.MouseRay)) : null;
@@ -141,7 +145,7 @@ namespace NodeMarkup.Tools
                 SetAvailableTargets();
             }
         }
-        protected void SetAvailableTargets() => AvailableTargets = IsSelectedSource ? GetAvailableTargets(SelectedSource).ToArray() : Targets.ToArray();
+        public override void OnPrimaryMouseClicked(Event e) => EndDrag();
         public override void OnMouseUp(Event e)
         {
             if (IsSelectedSource)
@@ -163,17 +167,27 @@ namespace NodeMarkup.Tools
                 Paste();
             }
         }
-        public override void OnPrimaryMouseClicked(Event e) => EndDrag();
         private void EndDrag()
         {
             SelectedSource = null;
             SetAvailableTargets();
+            SetBaskets();
         }
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
+            foreach (var basket in Baskets)
+            {
+                if (!IsSelectedSource || SelectedSource.Target == basket)
+                    basket.Render(cameraInfo, this);
+            }
+
+            RenderOverlayAfterBaskets(cameraInfo);
+
             foreach (var target in Targets)
                 target.Render(cameraInfo, this);
+
+            RenderOverlayAfterTargets(cameraInfo);
 
             foreach (var source in Sources)
             {
@@ -181,25 +195,16 @@ namespace NodeMarkup.Tools
                     source.Render(cameraInfo, this);
             }
         }
+        protected virtual void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo) { }
+        protected virtual void RenderOverlayAfterTargets(RenderManager.CameraInfo cameraInfo) { }
 
-        private IEnumerable<Target> GetAvailableTargets(SourceType source)
+        protected void SetAvailableTargets() => AvailableTargets = IsSelectedSource ? GetAvailableTargets(SelectedSource).ToArray() : Targets.ToArray();
+        private IEnumerable<Target<SourceType>> GetAvailableTargets(SourceType source)
         {
-            var a = GetAvailableBorder(source, s => !IsMirror ? s.PrevIndex(Sources.Length) : s.NextIndex(Sources.Length), AvailableTargetsGetter) ?? Targets.First();
-            var b = GetAvailableBorder(source, s => !IsMirror ? s.NextIndex(Sources.Length) : s.PrevIndex(Sources.Length), AvailableTargetsGetter) ?? Targets.Last();
-
-            yield return a;
-            for (var target = Targets[a.Num.NextIndex(Targets.Length)]; target != b; target = Targets[target.Num.NextIndex(Targets.Length)])
-                yield return target;
-            if (b != a)
-                yield return b;
+            var borders = new AvalibleBorders<SourceType>(this, source);
+            return borders.GetTargets(Targets);
         }
-        private Target GetAvailableBorder(SourceType source, Func<int, int> func, Func<int, SourceType, bool> condition)
-        {
-            var i = func(source.Num);
-            while (condition(i, source) && !(Sources[i].Target is Target))
-                i = func(i);
-            return Sources[i].Target as Target;
-        }
-        protected abstract Func<int, SourceType, bool> AvailableTargetsGetter { get; }
+        private void SetBaskets() => Baskets = GetBaskets();
+        protected abstract Basket<SourceType>[] GetBaskets();
     }
 }

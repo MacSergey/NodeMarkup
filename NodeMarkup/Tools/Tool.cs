@@ -78,8 +78,8 @@ namespace NodeMarkup.Tools
                 { ToolModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
                 { ToolModeType.MakeFiller, new MakeFillerToolMode() },
                 { ToolModeType.DragPoint, new DragPointToolMode() },
-                { ToolModeType.PasteMarkupEnterOrder, new PasteMarkupEntersOrderToolMode()},
-                { ToolModeType.PasteMarkupPointOrder, new PasteMarkupPointsOrderToolMode()},
+                { ToolModeType.PasteMarkupEnterOrder, new EntersOrderToolMode()},
+                { ToolModeType.PasteMarkupPointOrder, new PointsOrderToolMode()},
             };
 
             NodeMarkupButton.CreateButton();

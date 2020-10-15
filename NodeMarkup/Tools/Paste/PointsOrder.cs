@@ -6,19 +6,19 @@ using System.Text;
 
 namespace NodeMarkup.Tools
 {
-    public class PasteMarkupPointsOrderToolMode : BasePasteMarkupToolMode<SourcePoint>
+    public class PointsOrderToolMode : BaseOrderToolMode<SourcePoint>
     {
         public override ToolModeType Type => ToolModeType.PasteMarkupPointOrder;
 
-        protected override Func<int, SourcePoint, bool> AvailableTargetsGetter => (i, s) => i >= 0 && i < Sources.Length;
+        public override Func<int, SourcePoint, bool> AvailableTargetsGetter => (i, s) => i >= 0 && i < Sources.Length;
 
-        protected override Target[] GetTargets(BaseToolMode prevMode) 
-            => CheckPrev(prevMode, out PasteMarkupEntersOrderToolMode toolMode) && toolMode.HoverSource.Target is TargetEnter target ? target.Points : new TargetPoint[0];
+        protected override Target<SourcePoint>[] GetTargets(BaseToolMode prevMode) 
+            => CheckPrev(prevMode, out EntersOrderToolMode toolMode) && toolMode.HoverSource.Target is TargetEnter target ? target.Points : new TargetPoint[0];
         protected override SourcePoint[] GetSources(BaseToolMode prevMode)
-            => CheckPrev(prevMode, out PasteMarkupEntersOrderToolMode toolMode) ? toolMode.HoverSource.Points : new SourcePoint[0];
-        private bool CheckPrev(BaseToolMode prevMode, out PasteMarkupEntersOrderToolMode toolMode)
+            => CheckPrev(prevMode, out EntersOrderToolMode toolMode) ? toolMode.HoverSource.Points : new SourcePoint[0];
+        private bool CheckPrev(BaseToolMode prevMode, out EntersOrderToolMode toolMode)
         {
-            toolMode = prevMode as PasteMarkupEntersOrderToolMode;
+            toolMode = prevMode as EntersOrderToolMode;
             return toolMode != null && toolMode.IsHoverSource && toolMode.HoverSource.HasTarget;
         }
 
@@ -26,5 +26,6 @@ namespace NodeMarkup.Tools
         {
             Tool.SetMode(ToolModeType.PasteMarkupEnterOrder);
         }
+        protected override Basket<SourcePoint>[] GetBaskets() => new Basket<SourcePoint>[0];
     }
 }

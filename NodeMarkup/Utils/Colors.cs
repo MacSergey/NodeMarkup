@@ -14,6 +14,7 @@ namespace NodeMarkup.Utils
         public static Color32 Red { get; } = new Color32(255, 68, 68, 255);
         public static Color32 Blue { get; } = new Color32(2, 117, 216, 255);
         public static Color32 Orange { get; } = new Color32(255, 136, 0, 255);
+        public static Color32 Gray { get; } = new Color32(192, 192, 192, 255);
 
         public static Color32[] OverlayColors { get; } = new Color32[]
         {

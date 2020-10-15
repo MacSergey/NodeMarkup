@@ -10,12 +10,12 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class PasteMarkupEntersOrderToolMode : BasePasteMarkupToolMode<SourceEnter>
+    public class EntersOrderToolMode : BaseOrderToolMode<SourceEnter>
     {
         public override ToolModeType Type => ToolModeType.PasteMarkupEnterOrder;
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
 
-        protected override Func<int, SourceEnter, bool> AvailableTargetsGetter { get; } = (i, s) => i != s.Num;
+        public override Func<int, SourceEnter, bool> AvailableTargetsGetter { get; } = (i, s) => i != s.Num;
 
         private GUIButton TurnLeft { get; }
         private GUIButton Flip { get; }
@@ -23,7 +23,7 @@ namespace NodeMarkup.Tools
 
         //public Basket Basket { get; }
 
-        public PasteMarkupEntersOrderToolMode()
+        public EntersOrderToolMode()
         {
             TurnLeft = new GUIButton(1, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnLeft)].region);
             TurnLeft.OnClick += OnTurnLeft;
@@ -33,8 +33,6 @@ namespace NodeMarkup.Tools
 
             TurnRight = new GUIButton(3, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnRight)].region);
             TurnRight.OnClick += OnTurnRight;
-
-            //Basket = new Basket(this);
         }
         private void OnTurnLeft()
         {
@@ -61,7 +59,7 @@ namespace NodeMarkup.Tools
         {
             for (var i = 0; i < Sources.Length; i += 1)
             {
-                if (Sources[i].Target is Target target)
+                if (Sources[i].Target is Target<SourceEnter> target)
                     Sources[i].Target = Targets[func(target.Num)];
             }
         }
@@ -72,7 +70,7 @@ namespace NodeMarkup.Tools
 
             base.Reset(prevMode);
         }
-        protected override Target[] GetTargets(BaseToolMode prevMode) => TargetEnters;
+        protected override Target<SourceEnter>[] GetTargets(BaseToolMode prevMode) => TargetEnters;
         protected override SourceEnter[] GetSources(BaseToolMode prevMode) => SourceEnters;
 
         public override void OnPrimaryMouseClicked(Event e)
@@ -89,11 +87,6 @@ namespace NodeMarkup.Tools
                 Flip.CheckClick(mouse);
                 TurnRight.CheckClick(mouse);
             }
-        }
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-            //Basket.Update();
         }
         public override string GetToolInfo()
         {
@@ -127,12 +120,9 @@ namespace NodeMarkup.Tools
             TurnRight.OnGUI(e);
 
         }
-        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
+        protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo)
         {
             NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Centre, Radius * 2);
-            //Basket.Render(cameraInfo);
-
-            base.RenderOverlay(cameraInfo);
         }
 
         private void UpdateCentreAndRadius()
@@ -216,6 +206,13 @@ namespace NodeMarkup.Tools
         {
             var uiView = UIView.GetAView();
             return uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
+        }
+
+        protected override Basket<SourceEnter>[] GetBaskets()
+        {
+            var sourcesBorders = Sources.Where(s => !(s.Target is TargetEnter)).ToDictionary(s => s, s => new EntersBorders(this, s));
+            var baskets = sourcesBorders.GroupBy(b => b.Value, b => b.Key, EntersBorders.Comparer).Select(g => new EntersBasket(this, g.Key, g)).ToArray();
+            return baskets;
         }
     }
 }
