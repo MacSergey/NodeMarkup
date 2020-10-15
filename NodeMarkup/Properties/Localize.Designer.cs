@@ -2381,6 +2381,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply.
+        /// </summary>
+        public static string Tool_Apply {
+            get {
+                return ResourceManager.GetString("Tool_Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Clear node markings.
         /// </summary>
         public static string Tool_ClearMarkingsCaption {
@@ -2396,6 +2405,15 @@ namespace NodeMarkup {
         public static string Tool_ClearMarkingsMessage {
             get {
                 return ResourceManager.GetString("Tool_ClearMarkingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Continue.
+        /// </summary>
+        public static string Tool_Continue {
+            get {
+                return ResourceManager.GetString("Tool_Continue", resourceCulture);
             }
         }
         
@@ -2469,6 +2487,24 @@ namespace NodeMarkup {
         public static string Tool_DeleteMessage {
             get {
                 return ResourceManager.GetString("Tool_DeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit paste mode.
+        /// </summary>
+        public static string Tool_EndPasteCaption {
+            get {
+                return ResourceManager.GetString("Tool_EndPasteCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to apply a paste?.
+        /// </summary>
+        public static string Tool_EndPasteMessage {
+            get {
+                return ResourceManager.GetString("Tool_EndPasteMessage", resourceCulture);
             }
         }
         
@@ -2618,6 +2654,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply.
+        /// </summary>
+        public static string Tool_InfoPasteApply {
+            get {
+                return ResourceManager.GetString("Tool_InfoPasteApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Drag and drop circle for set paste order.
         /// </summary>
         public static string Tool_InfoPasteDrag {
@@ -2633,6 +2678,24 @@ namespace NodeMarkup {
         public static string Tool_InfoPasteDrop {
             get {
                 return ResourceManager.GetString("Tool_InfoPasteDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not apply.
+        /// </summary>
+        public static string Tool_infoPasteNotApply {
+            get {
+                return ResourceManager.GetString("Tool_infoPasteNotApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset.
+        /// </summary>
+        public static string Tool_InfoPasteReset {
+            get {
+                return ResourceManager.GetString("Tool_InfoPasteReset", resourceCulture);
             }
         }
         
@@ -2692,6 +2755,15 @@ namespace NodeMarkup {
         public static string Tool_InfoTurnСounterClockwise {
             get {
                 return ResourceManager.GetString("Tool_InfoTurnСounterClockwise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not apply.
+        /// </summary>
+        public static string Tool_NotApply {
+            get {
+                return ResourceManager.GetString("Tool_NotApply", resourceCulture);
             }
         }
         

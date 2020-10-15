@@ -1065,4 +1065,28 @@ This action cannot be undone.</value>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>Templates successfully restored</value>
   </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Tool_EndPasteCaption" xml:space="preserve">
+    <value>Exit paste mode</value>
+  </data>
+  <data name="Tool_EndPasteMessage" xml:space="preserve">
+    <value>Do you want to apply a paste?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Not apply</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Not apply</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
 </root>

@@ -14,23 +14,6 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseOrderToolMode : BaseToolMode
     {
-        public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
-        private static UITextureAtlas GetButtonsIcons()
-        {
-            var spriteNames = new string[]
-            {
-                "TurnLeft",
-                "Flip",
-                "TurnRight",
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(EntersOrderToolMode));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(EntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
-
-            return atlas;
-        }
-
         public Vector3 Centre { get; protected set; }
         public float Radius { get; protected set; }
 

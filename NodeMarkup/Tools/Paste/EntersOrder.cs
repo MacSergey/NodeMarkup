@@ -12,32 +12,63 @@ namespace NodeMarkup.Tools
 {
     public class EntersOrderToolMode : BaseOrderToolMode<SourceEnter>
     {
-        public override ToolModeType Type => ToolModeType.PasteMarkupEnterOrder;
-        public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
+        public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
+        private static UITextureAtlas GetButtonsIcons()
+        {
+            var spriteNames = new string[]
+            {
+                nameof(TurnLeftButton),
+                nameof(FlipButton),
+                nameof(TurnRightButton),
+                nameof(ApplyButton),
+                nameof(NotApplyButton),
+                nameof(ResetButton)
+            };
 
-        private GUIButton TurnLeft { get; }
-        private GUIButton Flip { get; }
-        private GUIButton TurnRight { get; }
+            var atlas = TextureUtil.GetAtlas(nameof(EntersOrderToolMode));
+            if (atlas == UIView.GetAView().defaultAtlas)
+                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(EntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
+
+            return atlas;
+        }
+
+        public override ToolModeType Type => ToolModeType.PasteMarkupEnterOrder;
+
+        private GUIButton TurnLeftButton { get; }
+        private GUIButton FlipButton { get; }
+        private GUIButton TurnRightButton { get; }
+        private GUIButton ApplyButton { get; }
+        private GUIButton NotApplyButton { get; }
+        private GUIButton ResetButton { get; }
 
         public EntersOrderToolMode()
         {
-            TurnLeft = new GUIButton(1, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnLeft)].region);
-            TurnLeft.OnClick += OnTurnLeft;
+            TurnLeftButton = new GUIButton(1, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(TurnLeftButton)].region);
+            TurnLeftButton.OnClick += TurnLeftClick;
 
-            Flip = new GUIButton(2, 3, ButtonAtlas.texture, ButtonAtlas[nameof(Flip)].region);
-            Flip.OnClick += OnFlip;
+            FlipButton = new GUIButton(2, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(FlipButton)].region);
+            FlipButton.OnClick += FlipClick;
 
-            TurnRight = new GUIButton(3, 3, ButtonAtlas.texture, ButtonAtlas[nameof(TurnRight)].region);
-            TurnRight.OnClick += OnTurnRight;
+            TurnRightButton = new GUIButton(3, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(TurnRightButton)].region);
+            TurnRightButton.OnClick += TurnRightClick;
+
+            ApplyButton = new GUIButton(1, 3, 2, 2, ButtonAtlas.texture, ButtonAtlas[nameof(ApplyButton)].region);
+            ApplyButton.OnClick += ApplyClick;
+
+            NotApplyButton = new GUIButton(2, 3, 2, 2, ButtonAtlas.texture, ButtonAtlas[nameof(NotApplyButton)].region);
+            NotApplyButton.OnClick += NotApplyClick;
+
+            ResetButton = new GUIButton(3, 3, 2, 2, ButtonAtlas.texture, ButtonAtlas[nameof(ResetButton)].region);
+            ResetButton.OnClick += ResetClick;
         }
-        private void OnTurnLeft()
+        private void TurnLeftClick()
         {
             Transform((t) => t.NextIndex(Targets.Length));
             SetAvailableTargets();
             SetBaskets();
             Paste();
         }
-        private void OnFlip()
+        private void FlipClick()
         {
             IsMirror = !IsMirror;
 
@@ -49,13 +80,21 @@ namespace NodeMarkup.Tools
             SetBaskets();
             Paste();
         }
-        private void OnTurnRight()
+        private void TurnRightClick()
         {
             Transform((t) => t.PrevIndex(Targets.Length));
             SetAvailableTargets();
             SetBaskets();
             Paste();
         }
+        private void ApplyClick() => Tool.SetDefaultMode();
+        private void NotApplyClick()
+        {
+            SetBackup();
+            ApplyClick();
+        }
+        private void ResetClick() => Reset(null);
+
         private void Transform(Func<int, int> func)
         {
             for (var i = 0; i < Sources.Length; i += 1)
@@ -74,6 +113,29 @@ namespace NodeMarkup.Tools
         protected override Target<SourceEnter>[] GetTargets(BaseToolMode prevMode) => TargetEnters;
         protected override SourceEnter[] GetSources(BaseToolMode prevMode) => SourceEnters;
 
+        public override string GetToolInfo()
+        {
+            if (!IsSelectedSource)
+            {
+                var mouse = GetMouse();
+
+                if (TurnLeftButton.CheckHover(mouse))
+                    return Localize.Tool_InfoTurnСounterClockwise;
+                else if (FlipButton.CheckHover(mouse))
+                    return Localize.Tool_InfoChangeOrder;
+                else if (TurnRightButton.CheckHover(mouse))
+                    return Localize.Tool_InfoTurnClockwise;
+
+                else if (ApplyButton.CheckHover(mouse))
+                    return Localize.Tool_InfoPasteApply;
+                else if (NotApplyButton.CheckHover(mouse))
+                    return Localize.Tool_infoPasteNotApply;
+                else if (ResetButton.CheckHover(mouse))
+                    return Localize.Tool_InfoPasteReset;
+            }
+
+            return base.GetToolInfo();
+        }
         public override void OnPrimaryMouseClicked(Event e)
         {
             base.OnPrimaryMouseClicked(e);
@@ -84,39 +146,61 @@ namespace NodeMarkup.Tools
             {
                 var mouse = GetMouse();
 
-                TurnLeft.CheckClick(mouse);
-                Flip.CheckClick(mouse);
-                TurnRight.CheckClick(mouse);
+                TurnLeftButton.CheckClick(mouse);
+                FlipButton.CheckClick(mouse);
+                TurnRightButton.CheckClick(mouse);
+                ApplyButton.CheckClick(mouse);
+                NotApplyButton.CheckClick(mouse);
+                ResetButton.CheckClick(mouse);
             }
         }
-        public override string GetToolInfo()
+        public override void OnSecondaryMouseClicked()
         {
-            if (!IsSelectedSource)
+            var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
+            messageBox.CaprionText = Localize.Tool_EndPasteCaption;
+            messageBox.MessageText = Localize.Tool_EndPasteMessage;
+            messageBox.Button1Text = Localize.Tool_Apply;
+            messageBox.OnButton1Click = OnApply;
+            messageBox.Button2Text = Localize.Tool_NotApply;
+            messageBox.OnButton2Click = OnNotApply;
+            messageBox.Button3Text = Localize.Tool_Continue;
+
+            bool OnApply()
             {
-                var mouse = GetMouse();
-
-                if (TurnLeft.CheckHover(mouse))
-                    return Localize.Tool_InfoTurnСounterClockwise;
-                else if (Flip.CheckHover(mouse))
-                    return Localize.Tool_InfoChangeOrder;
-                else if (TurnRight.CheckHover(mouse))
-                    return Localize.Tool_InfoTurnClockwise;
+                ApplyClick();
+                return true;
             }
-
-            return base.GetToolInfo();
+            bool OnNotApply()
+            {
+                NotApplyClick();
+                return true;
+            }
         }
+        private void SetBackup()
+        {
+            Markup.Clear();
+            Markup.FromXml(Mod.Version, Backup, new ObjectsMap());
+            Panel.UpdatePanel();
+        }
+
         public override void OnGUI(Event e)
         {
             var uiView = UIView.GetAView();
             var screenPos = uiView.WorldPointToGUI(Camera.main, Centre) * uiView.inputScale;
 
-            TurnLeft.Update(screenPos);
-            Flip.Update(screenPos);
-            TurnRight.Update(screenPos);
+            TurnLeftButton.Update(screenPos);
+            FlipButton.Update(screenPos);
+            TurnRightButton.Update(screenPos);
+            ApplyButton.Update(screenPos);
+            NotApplyButton.Update(screenPos);
+            ResetButton.Update(screenPos);
 
-            TurnLeft.OnGUI(e);
-            Flip.OnGUI(e);
-            TurnRight.OnGUI(e);
+            TurnLeftButton.OnGUI(e);
+            FlipButton.OnGUI(e);
+            TurnRightButton.OnGUI(e);
+            ApplyButton.OnGUI(e);
+            NotApplyButton.OnGUI(e);
+            ResetButton.OnGUI(e);
 
         }
         protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo)
