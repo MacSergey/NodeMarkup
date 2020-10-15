@@ -947,4 +947,27 @@ Esta ação não pode ser desfeita.</value>
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Sim</value>
+  </data>
 </root>

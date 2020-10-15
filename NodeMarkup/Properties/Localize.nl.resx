@@ -860,7 +860,9 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Zonder sneltoets</value>
   </data>
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Altijd</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Alleen wanneer het impact heeft op afhankelijke markeringen</value>
   </data>
@@ -925,12 +927,12 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
     <value>Wil je echt alle correctieafstanden op punt #{0} wissen?
 Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>Sleep de cirkel om de plak volgorde in te stellen</value>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Sleep de cirkels om de wegvolgorde in te stellen
+Klik op een cirkel om de wegvolgorde te veranderen</value>
   </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>Sleep de cirkel binnen het doel om de volgorde in te stellen
-Sleep de cirkel buiten het dool om de volgorde ongedaan te maken</value>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Sleep de cirkel in of uit het doel om de wegvolgorde te bevestigen of ongedaan te maken</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Kopieer markering</value>
@@ -938,8 +940,8 @@ Sleep de cirkel buiten het dool om de volgorde ongedaan te maken</value>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Plak markering</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>Verander volgorde</value>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Volgorde omdraaien</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Draai met de klok mee</value>
@@ -1004,5 +1006,63 @@ Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>Sjablonen zijn succesvol hersteld</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Toepassen</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Doorgaan</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Uit plakmodus gaan</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Wil je uit plakmodus gaan en de kopie toepassen?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Niet toepassen</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Toepassen</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Niet toepassen</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Wijzig markeringsvolgorde</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Wijzig markeringsvolgorde</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Wegen zijn veranderd</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>De wegen op deze kruising zijn veranderd, daarom kan de huidige markering niet automatisch worden toegepast.
+Wil je de markering handmatig toepassen?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Volgordemodus verlaten</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Wil je de wijzigingsmodus verlaten en de nieuwe volgorde toepassen?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Sleep de cirkel om de puntvolgorde in te stellen</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Sleep de cirkel in of uit het doel om de puntvolgorde te bevestigen of ongedaan te maken</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Ononderbroken centreren</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Nee</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

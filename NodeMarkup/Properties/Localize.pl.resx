@@ -927,22 +927,15 @@ Nie będzie można cofnąć tej operacji.</value>
     <value>Czy na pewno chcesz usunąć wszystkie przesunięcia punktów skrzyżowania #{0}?
 Nie będzie można cofnąć tej operacji.</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>Przeciągnij i upuść okrąg, aby ustawić kolejność wklejania</value>
-  </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>Upuść okrąg wewnątrz celu, aby ustawić kolejność wklejania
-Upuść okrąg na zewnątrz celu, aby anulować kolejność wklejania</value>
-  </data>
+  
+  
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Kopiuj oznaczenie</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Wklej oznaczenie</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>Zmień kolejność</value>
-  </data>
+  
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Obróć zgodnie z ruchem wskazówek zegara</value>
   </data>
@@ -1006,5 +999,32 @@ Nie będzie można cofnąć tej operacji.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>Szablony zostały pomyślnie przywrócone</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Zastosuj</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Zmień kolejność oznaczeń</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Tak</value>
   </data>
 </root>

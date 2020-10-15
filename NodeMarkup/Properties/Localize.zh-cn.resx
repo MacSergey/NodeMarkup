@@ -862,7 +862,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>无修饰键</value>
   </data>
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>总是显示</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>只有其他标线受到影响时弹窗</value>
   </data>
@@ -927,12 +929,12 @@ Shift x10，Ctrl x0.1</value>
     <value>确定要重置 #{0} 全部的端点偏移吗?
 此操作不可撤销。</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>长按并拖移圆圈来粘贴</value>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>长按并拖移圆圈以设置道路排序
+点击圆圈来编辑道路节点排序</value>
   </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>将圆圈放在目标内以粘贴
-将圆圈放在在目标外以取消</value>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>将圆圈放进或移出目标，来设置或取消道路排序</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>复制标记</value>
@@ -940,8 +942,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>粘贴标记</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>更改顺序</value>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>逆向排序</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>顺时针旋转</value>
@@ -1006,5 +1008,63 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>模板恢复成功</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>退出粘贴模式</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>确定要退出粘贴模式并应用粘贴吗？</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>不应用</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>不应用</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>更改标线排序</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>更改标线排序</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>道路被更改</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>交叉路口的道路被更改，所以无法自动适配既存标线
+要手动适配标线吗？</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>退出排序编辑模式</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>确定要退出编辑模式并应用排序吗？</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>长按并拖移圆圈来设置节点排序</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>将圆圈放进或移出目标，来设置或取消节点排序</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>中心实线</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>确定</value>
   </data>
 </root>

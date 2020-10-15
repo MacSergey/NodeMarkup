@@ -969,12 +969,12 @@ Shift X10, Ctrl X0.1</value>
     <value>Вы действительно хотите сбросить значения смещения всех точек перекрестка #{0}?
 Это действие нельзя отменить.</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>Перетащите круг для задания порядка вставки</value>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Перетащите круг для задания порядка дорог
+Нажмите на круг для редактирования порядка точек</value>
   </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>Наведите круг на цель для задания порядка сортировки
-Уберите круг с цели для отмены порядка сортировки</value>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Поместите или уберите круг с цели для задания порядка дорог</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Скопировать разметку</value>
@@ -982,7 +982,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Вставить разметку</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
     <value>Инвертировать порядок</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
@@ -1048,5 +1048,63 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>Шаблоны успешно восстановлены</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Выход из режима вставки</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Вы хотите выйти из режима вставки и применить изменения?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Не применять</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Не применять</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Изменение порядка маркировки</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Изменение порядка маркировки</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Дороги были изменены</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Дороги были изменены и не удалось автоматически применить к ним существующую разметку.
+Хотите применить ее вручную?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Выход из режима редактирования порядка</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Вы хотите выйти из режима редактирования и применить новый порядок?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Перетащите круг для задания порядка точек</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Поместите или уберите круг с цели для задания порядка точек</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Сплошная по центру</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Да</value>
   </data>
 </root>
