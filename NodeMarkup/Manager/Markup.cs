@@ -110,7 +110,19 @@ namespace NodeMarkup.Manager
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
             newEnters.Sort((e1, e2) => e1.AbsoluteAngle.CompareTo(e2.AbsoluteAngle));
 
+            UpdateBackup(delete, add, oldEnters, newEnters);
 
+            foreach (var enter in EntersList)
+                enter.Update();
+
+            UpdateNodeСontour();
+            UpdateRadius();
+
+            foreach (var enter in EntersList)
+                enter.UpdatePoints();
+        }
+        private void UpdateBackup(ushort[] delete, ushort[] add, List<Enter> oldEnters, List<Enter> newEnters)
+        {
             if (delete.Length == 1 && add.Length == 1)
             {
                 var before = oldEnters.Find(e => e.Id == delete[0]).PointCount;
@@ -120,7 +132,15 @@ namespace NodeMarkup.Manager
                     NeedSetOrder = true;
 
                 if (NeedSetOrder)
-                    Backup.Map.AddSegment(delete[0], add[0]);
+                {
+                    if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectType.Segment && p.Value.Segment == delete[0]) is KeyValuePair<ObjectId, ObjectId> pair)
+                    {
+                        Backup.Map.Remove(pair.Key);
+                        Backup.Map.AddSegment(pair.Key.Segment, add[0]);
+                    }
+                    else
+                        Backup.Map.AddSegment(delete[0], add[0]);
+                }
 
                 if (before == after)
                 {
@@ -136,16 +156,8 @@ namespace NodeMarkup.Manager
             }
             else
                 EntersList = newEnters;
-
-            foreach (var enter in EntersList)
-                enter.Update();
-
-            UpdateNodeСontour();
-            UpdateRadius();
-
-            foreach (var enter in EntersList)
-                enter.UpdatePoints();
         }
+
         private void UpdateNodeСontour()
         {
             var contourParts = new List<ILineTrajectory>();

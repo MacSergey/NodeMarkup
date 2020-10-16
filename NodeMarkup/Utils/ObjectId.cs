@@ -57,9 +57,6 @@ namespace NodeMarkup.Utils
                 if (key == value)
                     return;
 
-                if (Map.TryGetValue(value, out ObjectId existKey) && existKey == key)
-                    Map.Remove(value);
-
                 Map[key] = value;
             }
         }
@@ -86,6 +83,8 @@ namespace NodeMarkup.Utils
         public void AddPoint(int source, int target) => this[new ObjectId() { Point = source }] = new ObjectId() { Point = target };
         public void AddSegment(ushort source, ushort target) => this[new ObjectId() { Segment = source }] = new ObjectId() { Segment = target };
         public void AddNode(ushort source, ushort target) => this[new ObjectId() { Node = source }] = new ObjectId() { Node = target };
+
+        public void Remove(ObjectId key) => Map.Remove(key);
     }
     public enum ObjectType : long
     {

@@ -1599,7 +1599,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Change marking order.
+        ///   Ищет локализованную строку, похожую на Edit marking order.
         /// </summary>
         public static string Panel_EditMarking {
             get {

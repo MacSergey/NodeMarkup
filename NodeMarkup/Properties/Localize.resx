@@ -1090,7 +1090,7 @@ This action cannot be undone.</value>
     <value>Reset</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>Change marking order</value>
+    <value>Edit marking order</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
     <value>Change marking order</value>
