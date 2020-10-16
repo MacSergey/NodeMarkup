@@ -305,7 +305,7 @@ namespace NodeMarkup.Tools
         float HalfWidthAngle { get; }
         float MiddleAngle => (LeftAngle + RigthAngle) / 2;
         float DeltaAngle => RigthAngle - LeftAngle;
-        public EntersBasket(EntersOrderToolMode toolMode, EntersBorders borders, IEnumerable<SourceEnter> items) : base(items)
+        public EntersBasket(BaseEntersOrderToolMode toolMode, EntersBorders borders, IEnumerable<SourceEnter> items) : base(items)
         {
             Centre = toolMode.Centre;
             Radius = toolMode.Radius + 2 * TargetEnter.Size;

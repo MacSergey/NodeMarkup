@@ -117,8 +117,8 @@ namespace NodeMarkup.Tools
             }
             else
             {
-                Tool.SetMode(ToolModeType.SelectNode);
                 Tool.SetMarkup(null);
+                Tool.SetMode(ToolModeType.SelectNode);
             }
         }
 

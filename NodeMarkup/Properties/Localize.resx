@@ -985,12 +985,12 @@ This action cannot be undone.</value>
     <value>Do you really want to reset all node #{0} points offset?
 This action cannot be undone.</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>Drag and drop circle for set paste order</value>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Drag and drop circles for set roads order
+Click circle to edit road points order</value>
   </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>Drop circle inside target to set paste order
-Drop circle outside target to unset paste order</value>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Drop circle inside/outside target to set/unset roads order</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Copy marking</value>
@@ -1071,11 +1071,11 @@ This action cannot be undone.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Tool_EndPasteCaption" xml:space="preserve">
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
     <value>Exit paste mode</value>
   </data>
-  <data name="Tool_EndPasteMessage" xml:space="preserve">
-    <value>Do you want to apply a paste?</value>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Do you want to exit paste mode and apply a paste?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Not apply</value>
@@ -1101,5 +1101,17 @@ This action cannot be undone.</value>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
     <value>Roads was changed and failed to apply automatically to them existing marking.
 Do you want to apply manually?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Exit edit order mode</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Do you want to exit edit mode and apply a new order?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Drag and drop circle for set point order</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Drop circle inside/outside target to set/unset points order</value>
   </data>
 </root>

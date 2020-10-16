@@ -134,8 +134,6 @@ namespace NodeMarkup.UI
         {
             base.OnSizeChanged();
 
-            //foreach (var editor in Editors)
-            //    editor.size = EditorSize;
             if (CurrentEditor != null)
                 CurrentEditor.size = EditorSize;
             if (Header != null)
@@ -148,16 +146,19 @@ namespace NodeMarkup.UI
         public void SetNode(Markup markup)
         {
             Markup = markup;
-
             if (Markup != null)
             {
-                Show();
                 Header.Text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
                 TabStrip.selectedIndex = -1;
                 SelectEditor<LinesEditor>();
             }
-            else
-                Hide();
+        }
+        protected override void OnVisibilityChanged()
+        {
+            base.OnVisibilityChanged();
+
+            if (isVisible)
+                UpdatePanel();
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
         private void TabStripSelectedIndexChanged(UIComponent component, int index)

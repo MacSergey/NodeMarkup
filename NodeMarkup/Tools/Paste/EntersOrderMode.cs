@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class EntersOrderToolMode : BaseOrderToolMode<SourceEnter>
+    public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>
     {
         public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
         private static UITextureAtlas GetButtonsIcons()
@@ -25,14 +25,12 @@ namespace NodeMarkup.Tools
                 nameof(ResetButton)
             };
 
-            var atlas = TextureUtil.GetAtlas(nameof(EntersOrderToolMode));
+            var atlas = TextureUtil.GetAtlas(nameof(BaseEntersOrderToolMode));
             if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(EntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
+                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(BaseEntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
 
             return atlas;
         }
-
-        public override ToolModeType Type => ToolModeType.PasteMarkupEnterOrder;
 
         private GUIButton TurnLeftButton { get; }
         private GUIButton FlipButton { get; }
@@ -41,7 +39,10 @@ namespace NodeMarkup.Tools
         private GUIButton NotApplyButton { get; }
         private GUIButton ResetButton { get; }
 
-        public EntersOrderToolMode()
+        protected override string InfoDrag => Localize.Tool_InfoRoadsDrag;
+        protected override string InfoDrop => Localize.Tool_InfoRoadsDrop;
+
+        public BaseEntersOrderToolMode()
         {
             TurnLeftButton = new GUIButton(1, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(TurnLeftButton)].region);
             TurnLeftButton.OnClick += TurnLeftClick;
@@ -141,7 +142,7 @@ namespace NodeMarkup.Tools
             base.OnPrimaryMouseClicked(e);
 
             if (IsHoverSource && HoverSource.Target is TargetEnter)
-                Tool.SetMode(ToolModeType.PasteMarkupPointOrder);
+                Tool.SetMode(ToolModeType.PointsOrder);
             else
             {
                 var mouse = GetMouse();
@@ -154,11 +155,13 @@ namespace NodeMarkup.Tools
                 ResetButton.CheckClick(mouse);
             }
         }
+        protected abstract string EndCaption { get; }
+        protected abstract string EndMessage { get; }
         public override void OnSecondaryMouseClicked()
         {
             var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
-            messageBox.CaprionText = Localize.Tool_EndPasteCaption;
-            messageBox.MessageText = Localize.Tool_EndPasteMessage;
+            messageBox.CaprionText = EndCaption;
+            messageBox.MessageText = EndMessage;
             messageBox.Button1Text = Localize.Tool_Apply;
             messageBox.OnButton1Click = OnApply;
             messageBox.Button2Text = Localize.Tool_NotApply;
@@ -180,7 +183,6 @@ namespace NodeMarkup.Tools
         {
             Markup.Clear();
             Markup.FromXml(Mod.Version, Backup, new ObjectsMap());
-            Panel.UpdatePanel();
         }
 
         public override void OnGUI(Event e)
@@ -302,5 +304,18 @@ namespace NodeMarkup.Tools
             var baskets = sourcesBorders.GroupBy(b => b.Value, b => b.Key, EntersBorders.Comparer).Select(g => new EntersBasket(this, g.Key, g)).ToArray();
             return baskets;
         }
+    }
+
+    public class PasteEntersOrderToolMode : BaseEntersOrderToolMode
+    {
+        public override ToolModeType Type => ToolModeType.PasteEntersOrder;
+        protected override string EndCaption => Localize.Tool_EndPasteOrderCaption;
+        protected override string EndMessage => Localize.Tool_EndPasteOrderMessage;
+    }
+    public class EditEntersOrderToolMode : BaseEntersOrderToolMode
+    {
+        public override ToolModeType Type => ToolModeType.EditEntersOrder;
+        protected override string EndCaption => Localize.Tool_EndEditOrderCaption;
+        protected override string EndMessage => Localize.Tool_EndEditOrderMessage;
     }
 }

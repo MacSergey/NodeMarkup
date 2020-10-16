@@ -12,6 +12,7 @@ namespace NodeMarkup.Tools
     public abstract class BaseToolMode
     {
         public abstract ToolModeType Type { get; }
+        public virtual bool ShowPanel => true;
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup => Tool.Markup;
@@ -59,8 +60,9 @@ namespace NodeMarkup.Tools
         MakeCrosswalk,
         MakeFiller,
         PanelAction,
-        PasteMarkupEnterOrder,
-        PasteMarkupPointOrder,
+        PasteEntersOrder,
+        EditEntersOrder,
+        PointsOrder,
         DragPoint,
     }
 }

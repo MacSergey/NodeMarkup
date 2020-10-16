@@ -8,14 +8,19 @@ namespace NodeMarkup.Tools
 {
     public class PointsOrderToolMode : BaseOrderToolMode<SourcePoint>
     {
-        public override ToolModeType Type => ToolModeType.PasteMarkupPointOrder;
+        public override ToolModeType Type => ToolModeType.PointsOrder;
 
+        private BaseEntersOrderToolMode PrevMode { get; set; }
         public SourceEnter SourceEnter { get; private set; }
         public TargetEnter TargetEnter { get; private set; }
+
+        protected override string InfoDrag => Localize.Tool_InfoPointsDrag;
+        protected override string InfoDrop => Localize.Tool_InfoPointsDrop;
+
         protected override void Reset(BaseToolMode prevMode)
         {
-            var toolMode = prevMode as EntersOrderToolMode;
-            SourceEnter = toolMode != null && toolMode.IsHoverSource && toolMode.HoverSource.HasTarget ? toolMode.HoverSource : null;
+            PrevMode = prevMode as BaseEntersOrderToolMode;
+            SourceEnter = PrevMode != null && PrevMode.IsHoverSource && PrevMode.HoverSource.HasTarget ? PrevMode.HoverSource : null;
             TargetEnter = SourceEnter?.Target as TargetEnter;
 
             base.Reset(prevMode);
@@ -26,7 +31,7 @@ namespace NodeMarkup.Tools
 
         public override void OnSecondaryMouseClicked()
         {
-            Tool.SetMode(ToolModeType.PasteMarkupEnterOrder);
+            Tool.SetMode(PrevMode);
         }
         protected override Target<SourcePoint>[] GetAvailableTargets(SourcePoint source)
         {

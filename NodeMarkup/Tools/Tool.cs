@@ -79,8 +79,9 @@ namespace NodeMarkup.Tools
                 { ToolModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
                 { ToolModeType.MakeFiller, new MakeFillerToolMode() },
                 { ToolModeType.DragPoint, new DragPointToolMode() },
-                { ToolModeType.PasteMarkupEnterOrder, new EntersOrderToolMode()},
-                { ToolModeType.PasteMarkupPointOrder, new PointsOrderToolMode()},
+                { ToolModeType.PasteEntersOrder, new PasteEntersOrderToolMode()},
+                { ToolModeType.EditEntersOrder, new EditEntersOrderToolMode()},
+                { ToolModeType.PointsOrder, new PointsOrderToolMode()},
             };
 
             NodeMarkupButton.CreateButton();
@@ -138,7 +139,8 @@ namespace NodeMarkup.Tools
         }
         private void Reset()
         {
-            SetMarkup(null);
+            Panel.Hide();
+            //SetMarkup(null);
             SetMode(ToolModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
@@ -159,6 +161,11 @@ namespace NodeMarkup.Tools
             var prevMode = Mode;
             Mode = mode;
             Mode?.Start(prevMode);
+
+            if (Mode?.ShowPanel == true)
+                Panel.Show();
+            else
+                Panel.Hide();
         }
         public void SetMarkup(Markup markup)
         {
@@ -377,14 +384,14 @@ namespace NodeMarkup.Tools
 
             bool Paste()
             {
-                SetMode(ToolModeType.PasteMarkupEnterOrder);
+                SetMode(ToolModeType.PasteEntersOrder);
                 return true;
             }
         }
         public void EditMarkup()
         {
             CopyMarkup();
-            SetMode(ToolModeType.PasteMarkupEnterOrder);
+            SetMode(ToolModeType.EditEntersOrder);
         }
 
         #endregion

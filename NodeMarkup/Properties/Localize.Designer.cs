@@ -2509,20 +2509,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Exit paste mode.
+        ///   Ищет локализованную строку, похожую на Exit edit order mode.
         /// </summary>
-        public static string Tool_EndPasteCaption {
+        public static string Tool_EndEditOrderCaption {
             get {
-                return ResourceManager.GetString("Tool_EndPasteCaption", resourceCulture);
+                return ResourceManager.GetString("Tool_EndEditOrderCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you want to apply a paste?.
+        ///   Ищет локализованную строку, похожую на Do you want to exit edit mode and apply a new order?.
         /// </summary>
-        public static string Tool_EndPasteMessage {
+        public static string Tool_EndEditOrderMessage {
             get {
-                return ResourceManager.GetString("Tool_EndPasteMessage", resourceCulture);
+                return ResourceManager.GetString("Tool_EndEditOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit paste mode.
+        /// </summary>
+        public static string Tool_EndPasteOrderCaption {
+            get {
+                return ResourceManager.GetString("Tool_EndPasteOrderCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to exit paste mode and apply a paste?.
+        /// </summary>
+        public static string Tool_EndPasteOrderMessage {
+            get {
+                return ResourceManager.GetString("Tool_EndPasteOrderMessage", resourceCulture);
             }
         }
         
@@ -2681,25 +2699,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Drag and drop circle for set paste order.
-        /// </summary>
-        public static string Tool_InfoPasteDrag {
-            get {
-                return ResourceManager.GetString("Tool_InfoPasteDrag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Drop circle inside target to set paste order
-        ///Drop circle outside target to unset paste order.
-        /// </summary>
-        public static string Tool_InfoPasteDrop {
-            get {
-                return ResourceManager.GetString("Tool_InfoPasteDrop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Not apply.
         /// </summary>
         public static string Tool_infoPasteNotApply {
@@ -2714,6 +2713,43 @@ namespace NodeMarkup {
         public static string Tool_InfoPasteReset {
             get {
                 return ResourceManager.GetString("Tool_InfoPasteReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag and drop circle for set point order.
+        /// </summary>
+        public static string Tool_InfoPointsDrag {
+            get {
+                return ResourceManager.GetString("Tool_InfoPointsDrag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drop circle inside/outside target to set/unset points order.
+        /// </summary>
+        public static string Tool_InfoPointsDrop {
+            get {
+                return ResourceManager.GetString("Tool_InfoPointsDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag and drop circles for set roads order
+        ///Click circle to edit road points order.
+        /// </summary>
+        public static string Tool_InfoRoadsDrag {
+            get {
+                return ResourceManager.GetString("Tool_InfoRoadsDrag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drop circle inside/outside target to set/unset roads order.
+        /// </summary>
+        public static string Tool_InfoRoadsDrop {
+            get {
+                return ResourceManager.GetString("Tool_InfoRoadsDrop", resourceCulture);
             }
         }
         

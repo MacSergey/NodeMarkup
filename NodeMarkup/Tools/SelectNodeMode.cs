@@ -13,6 +13,7 @@ namespace NodeMarkup.Tools
     public class SelectNodeToolMode : BaseToolMode
     {
         public override ToolModeType Type => ToolModeType.SelectNode;
+        public override bool ShowPanel => false;
         ushort HoverNodeId { get; set; } = 0;
         bool IsHoverNode => HoverNodeId != 0;
 
@@ -66,7 +67,7 @@ namespace NodeMarkup.Tools
                 bool OnYes()
                 {
                     Tool.CopyMarkupBackup();
-                    Tool.SetMode(ToolModeType.PasteMarkupEnterOrder);
+                    Tool.SetMode(ToolModeType.EditEntersOrder);
                     markup.NeedSetOrder = false;
                     return true;
                 }

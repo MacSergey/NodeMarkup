@@ -14,6 +14,7 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseOrderToolMode : BaseToolMode
     {
+        public override bool ShowPanel => false;
         public Vector3 Centre { get; protected set; }
         public float Radius { get; protected set; }
 
@@ -119,12 +120,14 @@ namespace NodeMarkup.Tools
             GetHoverSource();
             GetHoverTarget();
         }
+        protected abstract string InfoDrop { get; }
+        protected abstract string InfoDrag { get; }
         public override string GetToolInfo()
         {
             if (IsSelectedSource)
-                return Localize.Tool_InfoPasteDrop;
+                return InfoDrop;
             else
-                return Localize.Tool_InfoPasteDrag;
+                return InfoDrag;
         }
         public override void OnMouseDown(Event e)
         {
