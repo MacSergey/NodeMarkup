@@ -13,15 +13,10 @@ namespace NodeMarkup.UI.Editors
         where EnumType : Enum
         where UISelector : UIComponent, IUISelector<EnumType>
     {
-        private new bool AllowNull
-        {
-            set => base.AllowNull = value;
-        }
+        protected override bool AllowNull => false;
         public override void Init()
         {
-            AllowNull = false;
             base.Init();
-
             FillItems();
         }
         protected virtual void FillItems()
@@ -65,5 +60,18 @@ namespace NodeMarkup.UI.Editors
     {
         protected override bool IsEqual(LineStyle.StyleAlignment first, LineStyle.StyleAlignment second) => first == second;
         public class AlignmentSegmented : UISegmented<LineStyle.StyleAlignment> { }
+    }
+    public class BoolListPropertyPanel : ListPropertyPanel<bool, BoolListPropertyPanel.BoolSegmented>
+    {
+        protected override bool AllowNull => false;
+        protected override bool IsEqual(bool first, bool second) => first == second;
+        public void Init(string falseLabel, string trueLabel)
+        {
+            base.Init();
+            Selector.AddItem(true, trueLabel);
+            Selector.AddItem(false, falseLabel);
+        }
+
+        public class BoolSegmented : UISegmented<bool> { }
     }
 }

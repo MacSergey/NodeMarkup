@@ -273,7 +273,7 @@ namespace NodeMarkup.Manager
         float _dashLength;
         float _spaceLength;
         bool _invert;
-        StyleAlignment _alignment;
+        bool _centerSolid;
         public float Offset
         {
             get => _offset;
@@ -310,28 +310,40 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public StyleAlignment Alignment
+        public bool CenterSolid
         {
-            get => _alignment;
+            get => _centerSolid;
             set
             {
-                _alignment = value;
+                _centerSolid = value;
+                StyleChanged();
+            }
+        }
+        public StyleAlignment Alignment
+        {
+            get => CenterSolid ? (Invert ? StyleAlignment.Right : StyleAlignment.Left) : StyleAlignment.Centre;
+            set
+            {
+                _centerSolid = value != StyleAlignment.Centre;
+                _invert = value == StyleAlignment.Right;
                 StyleChanged();
             }
         }
 
-        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset, bool invert) : base(color, width)
+        public SolidAndDashedLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
             Offset = offset;
             DashLength = dashLength;
             SpaceLength = spaceLength;
-            Invert = invert;
             Alignment = StyleAlignment.Centre;
         }
 
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
+            var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
+            var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
+
             foreach (var dash in StyleHelper.CalculateSolid(trajectory, CalculateSolidDash))
                 yield return dash;
 
@@ -340,28 +352,14 @@ namespace NodeMarkup.Manager
 
             IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
             {
-                var offset = Alignment switch
-                {
-                    StyleAlignment.Left => Invert ? 2 * Offset : 0,
-                    StyleAlignment.Centre => Invert ? Offset : -Offset,
-                    StyleAlignment.Right => Invert ? 0 : -2 * Offset,
-                };
-
-                yield return StyleHelper.CalculateSolidDash(lineTrajectory, offset, Width, Color);
+                yield return StyleHelper.CalculateSolidDash(lineTrajectory, solidOffset, Width, Color);
             }
             IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory lineTrajectory, float startT, float endT)
             {
-                var offset = Alignment switch
-                {
-                    StyleAlignment.Left => Invert ? 0 : 2 * Offset,
-                    StyleAlignment.Centre => Invert ? -Offset : Offset,
-                    StyleAlignment.Right => Invert ? -2 * Offset : 0,
-                };
-
-                yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, DashLength, offset, Width, Color);
+                yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, DashLength, dashedOffset, Width, Color);
             }
         }
-        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, Invert);
+        public override RegularLineStyle CopyRegularLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -383,10 +381,19 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
             {
-                components.Add(AddAlignmentProperty(this, parent, onHover, onLeave));
+                components.Add(AddCenterSolidProperty(this, parent));
                 components.Add(AddInvertProperty(this, parent));
             }
             return components;
+        }
+        protected static BoolListPropertyPanel AddCenterSolidProperty(SolidAndDashedLineStyle solidAndDashedStyle, UIComponent parent)
+        {
+            var centerSolidProperty = parent.AddUIComponent<BoolListPropertyPanel>();
+            centerSolidProperty.Text = Localize.LineEditor_SolidInCenter;
+            centerSolidProperty.Init(Localize.LineEditor_SolidInCenterDisable, Localize.LineEditor_SolidInCenterEnable);
+            centerSolidProperty.SelectedObject = solidAndDashedStyle.CenterSolid;
+            centerSolidProperty.OnSelectObjectChanged += (value) => solidAndDashedStyle.CenterSolid = value;
+            return centerSolidProperty;
         }
 
         public override XElement ToXml()
@@ -396,7 +403,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("DL", DashLength));
             config.Add(new XAttribute("SL", SpaceLength));
             config.Add(new XAttribute("I", Invert ? 1 : 0));
-            config.Add(new XAttribute("A", (int)Alignment));
+            config.Add(new XAttribute("CS", CenterSolid ? 1 : 0));
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -406,10 +413,7 @@ namespace NodeMarkup.Manager
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
             Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror ^ invert;
-            var centerSolid = config.GetAttrValue("CS", 0) == 1;
-            Alignment = (StyleAlignment)config.GetAttrValue("A", (int)(centerSolid ? (Invert ? StyleAlignment.Right : StyleAlignment.Left) : StyleAlignment.Centre));
-            if (invert)
-                Alignment = Alignment.Invert();
+            CenterSolid = config.GetAttrValue("CS", 0) == 1;
         }
     }
     public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLIne
@@ -456,12 +460,12 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
-        public SharkTeethLineStyle(Color color, float baseValue, float height, float space, bool invert) : base(color, 0)
+        public SharkTeethLineStyle(Color color, float baseValue, float height, float space) : base(color, 0)
         {
             Base = baseValue;
             Height = height;
             Space = space;
-            Invert = invert;
+            Invert = true;
         }
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
@@ -481,7 +485,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override RegularLineStyle CopyRegularLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space, Invert);
+        public override RegularLineStyle CopyRegularLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);

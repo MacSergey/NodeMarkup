@@ -996,6 +996,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid in center.
+        /// </summary>
+        public static string LineEditor_SolidInCenter {
+            get {
+                return ResourceManager.GetString("LineEditor_SolidInCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No.
+        /// </summary>
+        public static string LineEditor_SolidInCenterDisable {
+            get {
+                return ResourceManager.GetString("LineEditor_SolidInCenterDisable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Yes.
+        /// </summary>
+        public static string LineEditor_SolidInCenterEnable {
+            get {
+                return ResourceManager.GetString("LineEditor_SolidInCenterEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Space length.
         /// </summary>
         public static string LineEditor_SpaceLength {

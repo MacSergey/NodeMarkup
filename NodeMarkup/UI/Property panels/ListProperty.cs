@@ -17,7 +17,7 @@ namespace NodeMarkup.UI.Editors
         protected UISelector Selector { get; set; }
 
         protected virtual float DropDownWidth => 230;
-        public bool AllowNull { get; set; } = true;
+        protected virtual bool AllowNull => true;
         public string NullText { get; set; } = string.Empty;
         public bool IsOpen { get; private set; } = false;
 

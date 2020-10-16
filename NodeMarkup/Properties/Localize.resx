@@ -1114,4 +1114,13 @@ Do you want to apply manually?</value>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
     <value>Drop circle inside/outside target to set/unset points order</value>
   </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Solid in center</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>
