@@ -263,9 +263,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("MO", MedianOffset));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             MedianOffset = config.GetAttrValue("MO", DefaultOffset);
         }
 

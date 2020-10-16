@@ -221,7 +221,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair)
+        public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
         {
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);
@@ -229,11 +229,13 @@ namespace NodeMarkup.Manager
             if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
             {
                 pair = new MarkupPointPair(first, second);
+                invert = first.Id <= second.Id;
                 return true;
             }
             else
             {
                 pair = default;
+                invert = false;
                 return false;
             }
         }

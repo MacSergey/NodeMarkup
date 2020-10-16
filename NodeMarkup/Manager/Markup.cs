@@ -376,7 +376,7 @@ namespace NodeMarkup.Manager
         public bool TryGetLine<LineType>(ulong lineId, ObjectsMap map, out LineType line)
             where LineType : MarkupLine
         {
-            if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair))
+            if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair, out _))
                 return TryGetLine(pair, out line);
             else
             {
@@ -525,18 +525,21 @@ namespace NodeMarkup.Manager
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
                 MarkupPoint.FromXml(pointConfig, this, map);
 
-            var toInit = new Dictionary<MarkupLine, XElement>();
+            var toInitLines = new Dictionary<MarkupLine, XElement>();
+            var invertLines = new HashSet<MarkupLine>();
             foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
             {
-                if (MarkupLine.FromXml(lineConfig, this, map, out MarkupLine line))
+                if (MarkupLine.FromXml(lineConfig, this, map, out MarkupLine line, out bool invertLine))
                 {
                     LinesDictionary[line.Id] = line;
-                    toInit[line] = lineConfig;
+                    toInitLines[line] = lineConfig;
+                    if (invertLine)
+                        invertLines.Add(line);
                 }
             }
 
-            foreach (var pair in toInit)
-                pair.Key.FromXml(pair.Value, map);
+            foreach (var pair in toInitLines)
+                pair.Key.FromXml(pair.Value, map, invertLines.Contains(pair.Key));
 
             foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
             {

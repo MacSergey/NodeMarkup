@@ -103,11 +103,13 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("A", (int)Alignment));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Offset = config.GetAttrValue("O", DefaultOffset);
             Alignment = (StyleAlignment)config.GetAttrValue("A", (int)StyleAlignment.Centre);
+            if (invert)
+                Alignment = Alignment.Invert();
         }
     }
     public class DashedLineStyle : RegularLineStyle, IRegularLine, IDashedLine
@@ -173,9 +175,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
@@ -254,11 +256,13 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("A", (int)Alignment));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Offset = config.GetAttrValue("O", DefaultOffset);
             Alignment = (StyleAlignment)config.GetAttrValue("A", (int)StyleAlignment.Centre);
+            if (invert)
+                Alignment = Alignment.Invert();
         }
     }
     public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine, IDashedLine, IAsymLine
@@ -395,15 +399,17 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("A", (int)Alignment));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Offset = config.GetAttrValue("O", DefaultOffset);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
-            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror;
+            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror ^ invert;
             var centerSolid = config.GetAttrValue("CS", 0) == 1;
             Alignment = (StyleAlignment)config.GetAttrValue("A", (int)(centerSolid ? (Invert ? StyleAlignment.Right : StyleAlignment.Left) : StyleAlignment.Centre));
+            if (invert)
+                Alignment = Alignment.Invert();
         }
     }
     public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLIne
@@ -507,13 +513,13 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("I", Invert ? 1 : 0));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Base = config.GetAttrValue("B", DefaultSharkBaseLength);
             Height = config.GetAttrValue("H", DefaultSharkHeight);
             Space = config.GetAttrValue("S", DefaultSharkSpaceLength);
-            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror;
+            Invert = config.GetAttrValue("I", 0) == 1 ^ map.IsMirror ^ invert;
         }
     }
 }

@@ -86,9 +86,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
@@ -160,9 +160,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
         }
@@ -222,9 +222,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Offset = config.GetAttrValue("O", DefaultOffset);
         }
     }
@@ -325,9 +325,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("SL", SpaceLength));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Offset = config.GetAttrValue("O", DefaultOffset);
             DashLength = config.GetAttrValue("DL", DefaultDashLength);
             SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
@@ -409,9 +409,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("S", Space));
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config, map);
+            base.FromXml(config, map, invert);
             Base = config.GetAttrValue("B", DefaultSharkBaseLength);
             Height = config.GetAttrValue("H", DefaultSharkHeight);
             Space = config.GetAttrValue("S", DefaultSharkSpaceLength);

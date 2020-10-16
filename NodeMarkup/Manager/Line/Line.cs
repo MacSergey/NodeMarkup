@@ -127,10 +127,10 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup makrup, ObjectsMap map, out MarkupLine line)
+        public static bool FromXml(XElement config, Markup makrup, ObjectsMap map, out MarkupLine line, out bool invert)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair))
+            if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair, out invert))
             {
                 line = null;
                 return false;
@@ -157,7 +157,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public abstract void FromXml(XElement config, ObjectsMap map);
+        public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
 
         public enum LineType
         {
@@ -217,9 +217,9 @@ namespace NodeMarkup.Manager
             config.Add(Rule.ToXml());
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            if (config.Element(MarkupLineRawRule<Style>.XmlName) is XElement ruleConfig && MarkupLineRawRule<Style>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<Style> rule))
+            if (config.Element(MarkupLineRawRule<Style>.XmlName) is XElement ruleConfig && MarkupLineRawRule<Style>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<Style> rule))
                 SetRule(rule);
         }
     }
@@ -331,11 +331,11 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {
-                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<RegularLineStyle> rule))
+                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<RegularLineStyle> rule))
                     AddRule(rule, false);
             }
         }

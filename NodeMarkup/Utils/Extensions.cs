@@ -277,6 +277,8 @@ namespace NodeMarkup.Utils
 
         public static int NextIndex(this int i, int count, int shift = 1) => (i + shift) % count;
         public static int PrevIndex(this int i, int count, int shift = 1) => shift > i ? i + count - (shift % count) : i - shift;
+
+        public static LineStyle.StyleAlignment Invert(this LineStyle.StyleAlignment alignment) => (LineStyle.StyleAlignment)(1 - ((int)alignment - 1));
     }
 
     public struct BezierPoint
