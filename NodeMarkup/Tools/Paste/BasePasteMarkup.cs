@@ -55,12 +55,12 @@ namespace NodeMarkup.Tools
             foreach (var source in SourceEnters)
             {
                 var enterTarget = source.Target as TargetEnter;
-                map.AddEnter(source.Enter.Id, enterTarget?.Enter.Id ?? 0);
+                map.AddSegment(source.Enter.Id, enterTarget?.Enter.Id ?? 0);
 
                 if (enterTarget != null)
                 {
                     for (var i = 0; i < source.Points.Length; i += 1)
-                        map.AddPoint(enterTarget.Enter.Id, i + 1, (source.Points[i].Target as Target)?.Num + 1 ?? 0);
+                        map.AddPoint(enterTarget.Enter.Id, (byte)(i + 1), (byte)((source.Points[i].Target as Target)?.Num + 1 ?? 0));
                 }
             }
 

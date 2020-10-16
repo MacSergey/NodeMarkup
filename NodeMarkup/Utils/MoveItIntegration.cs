@@ -49,7 +49,7 @@ namespace NodeMarkup.Utils
         private void PasteMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             foreach (var source in sourceMap.Where(p => IsCorrect(p)))
-                map[new ObjectId() { Segment = source.Key.NetSegment }] = new ObjectId() { Segment = source.Value.NetSegment };
+                map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
         }
 
         public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation)
@@ -63,7 +63,7 @@ namespace NodeMarkup.Utils
 
                 var sourceSegment = source.Key.NetSegment;
                 var targetSetment = source.Value.NetSegment;
-                map[new ObjectId() { Segment = sourceSegment }] = new ObjectId() { Segment = targetSetment };
+                map.AddSegment(sourceSegment, targetSetment);
                 map.AddMirrorEnter(enter);
             }
         }

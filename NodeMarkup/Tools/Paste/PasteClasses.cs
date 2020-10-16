@@ -44,6 +44,8 @@ namespace NodeMarkup.Tools
         }
 
         public bool IsHover(Ray ray) => _bounds.IntersectRay(ray);
+
+        public override string ToString() => Num.ToString();
     }
 
     #region SOURCE
@@ -253,7 +255,7 @@ namespace NodeMarkup.Tools
             while (true)
             {
                 if ((i == 0 && j == sources.Length - 1) || (i == sources.Length - 1 && j == 0))
-                    return sources[i].Target as Target<SourcePoint>;
+                    return null;
                 else if (sources[j].Target is Target<SourcePoint> target)
                     return target;
 

@@ -124,11 +124,11 @@ namespace NodeMarkup
 
             var segmentsCount = Math.Min(Segments.Length, targetSegments.Length);
             for (var i = 0; i < segmentsCount; i += 1)
-                map[new ObjectId() { Segment = Segments[i] }] = new ObjectId() { Segment = targetSegments[i] };
+                map.AddSegment(Segments[i], targetSegments[i]);
 
             var nodesCount = Math.Min(Nodes.Length, tagretNodes.Length);
             for (var i = 0; i < nodesCount; i += 1)
-                map[new ObjectId() { Node = Nodes[i] }] = new ObjectId() { Node = tagretNodes[i] };
+                map.AddNode(Nodes[i], tagretNodes[i]);
 
             return map;
         }

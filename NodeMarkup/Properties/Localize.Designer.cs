@@ -1572,6 +1572,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Change marking order.
+        /// </summary>
+        public static string Panel_EditMarking {
+            get {
+                return ResourceManager.GetString("Panel_EditMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Paste marking.
         /// </summary>
         public static string Panel_PasteMarking {
@@ -2087,6 +2096,15 @@ namespace NodeMarkup {
         public static string Settings_ShortcutDeleteAllNodeLines {
             get {
                 return ResourceManager.GetString("Settings_ShortcutDeleteAllNodeLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Change marking order.
+        /// </summary>
+        public static string Settings_ShortcutEditMarking {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutEditMarking", resourceCulture);
             }
         }
         
@@ -2803,6 +2821,25 @@ namespace NodeMarkup {
         public static string Tool_ResetOffsetsMessage {
             get {
                 return ResourceManager.GetString("Tool_ResetOffsetsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Roads was changed.
+        /// </summary>
+        public static string Tool_RoadsWasChangedCaption {
+            get {
+                return ResourceManager.GetString("Tool_RoadsWasChangedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Roads was changed and failed to apply automatically to them existing marking.
+        ///Do you want to apply manually?.
+        /// </summary>
+        public static string Tool_RoadsWasChangedMessage {
+            get {
+                return ResourceManager.GetString("Tool_RoadsWasChangedMessage", resourceCulture);
             }
         }
     }

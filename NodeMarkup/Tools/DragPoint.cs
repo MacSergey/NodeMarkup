@@ -26,6 +26,11 @@ namespace NodeMarkup.Tools
             DragPoint.Offset = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
             Panel.EditPoint(DragPoint);
         }
+        public override void OnMouseUp(Event e)
+        {
+            Panel.EditPoint(DragPoint);
+            Tool.SetDefaultMode();
+        }
         public override void OnPrimaryMouseClicked(Event e)
         {
             Panel.EditPoint(DragPoint);

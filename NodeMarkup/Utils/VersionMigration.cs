@@ -20,10 +20,10 @@ namespace NodeMarkup.Utils
                     switch(point.Location)
                     {
                         case MarkupPoint.LocationType.LeftEdge:
-                            map[new ObjectId() { Point = point.Id }] = new ObjectId() { Point = point.Id - (1 << 16) };
+                            map.AddPoint(point.Id, point.Id - (1 << 16));
                             break;
                         case MarkupPoint.LocationType.RightEdge:
-                            map[new ObjectId() { Point = point.Id }] = new ObjectId() { Point = point.Id + (1 << 16) };
+                            map.AddPoint(point.Id, point.Id + (1 << 16));
                             break;
                     }
                 }

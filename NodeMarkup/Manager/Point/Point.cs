@@ -28,7 +28,7 @@ namespace NodeMarkup.Manager
             var num = GetNum(id);
             var type = GetType(id);
 
-            if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
+            while (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
                 enterId = targetSegment.Segment;
             if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
                 num = GetNum(targetPoint.Point);

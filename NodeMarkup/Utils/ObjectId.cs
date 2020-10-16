@@ -35,17 +35,13 @@ namespace NodeMarkup.Utils
         public override int GetHashCode() => Id.GetHashCode();
         public override string ToString()
         {
-            switch (Type)
+            return Type switch
             {
-                case ObjectType.Node:
-                    return $"{Type}: {Node}";
-                case ObjectType.Segment:
-                    return $"{Type}: {Segment}";
-                case ObjectType.Point:
-                    return $"{Type}: {Point}";
-                default:
-                    return $"{Type}: {Id}";
-            }
+                ObjectType.Node => $"{Type}: {Node}",
+                ObjectType.Segment => $"{Type}: {Segment}",
+                ObjectType.Point => $"{Type}: {MarkupPoint.GetEnter(Point)}-{MarkupPoint.GetNum(Point)}{MarkupPoint.GetType(Point).ToString().FirstOrDefault()}",
+                _ => $"{Type}: {Id}",
+            };
         }
     }
     public class ObjectsMap : IEnumerable<KeyValuePair<ObjectId, ObjectId>>
@@ -56,7 +52,16 @@ namespace NodeMarkup.Utils
         public ObjectId this[ObjectId key]
         {
             get => Map[key];
-            set => Map[key] = value;
+            private set
+            {
+                if (key == value)
+                    return;
+
+                if (Map.TryGetValue(value, out ObjectId existKey) && existKey == key)
+                    Map.Remove(value);
+
+                Map[key] = value;
+            }
         }
 
         public ObjectsMap(bool isMirror = false)
@@ -67,23 +72,20 @@ namespace NodeMarkup.Utils
 
         public IEnumerator<KeyValuePair<ObjectId, ObjectId>> GetEnumerator() => Map.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public void Add(ObjectId key, ObjectId value) => Map.Add(key, value);
         public void AddMirrorEnter(Enter enter)
         {
             var count = enter.PointCount + 1;
-            for (var i = 1; i < count; i += 1)
-                AddPoint(enter.Id, i, count - i);
+            for (byte i = 1; i < count; i += 1)
+                AddPoint(enter.Id, i, (byte)(count - i));
         }
-        public void AddPoint(ushort enter, int source, int target)
+        public void AddPoint(ushort enter, byte source, byte target)
         {
             foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
-            {
-                var sourcePoint = new ObjectId() { Point = MarkupPoint.GetId(enter, (byte)source, pointType) };
-                var targetPoint = new ObjectId() { Point = MarkupPoint.GetId(enter, (byte)target, pointType) };
-                this[sourcePoint] = targetPoint;
-            }
+                AddPoint(MarkupPoint.GetId(enter, source, pointType), MarkupPoint.GetId(enter, target, pointType));
         }
-        public void AddEnter(ushort source, ushort target) => this[new ObjectId() { Segment = source }] = new ObjectId() { Segment = target };
+        public void AddPoint(int source, int target) => this[new ObjectId() { Point = source }] = new ObjectId() { Point = target };
+        public void AddSegment(ushort source, ushort target) => this[new ObjectId() { Segment = source }] = new ObjectId() { Segment = target };
+        public void AddNode(ushort source, ushort target) => this[new ObjectId() { Node = source }] = new ObjectId() { Node = target };
     }
     public enum ObjectType : long
     {

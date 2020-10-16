@@ -76,6 +76,7 @@ namespace NodeMarkup.UI.Editors
                 "SetDefault",
                 "UnsetDefault",
                 "Clear",
+                "Edit"
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));

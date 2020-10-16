@@ -1089,4 +1089,17 @@ This action cannot be undone.</value>
   <data name="Tool_InfoPasteReset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Change marking order</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Change marking order</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Roads was changed</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Roads was changed and failed to apply automatically to them existing marking.
+Do you want to apply manually?</value>
+  </data>
 </root>

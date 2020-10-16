@@ -208,6 +208,7 @@ namespace NodeMarkup.UI
             keymappings.AddKeymapping(Localize.Settings_ShortcutAddNewFiller, NodeMarkupTool.AddFillerShortcut);
             keymappings.AddKeymapping(Localize.Settings_ShortcutCopyMarking, NodeMarkupTool.CopyMarkingShortcut);
             keymappings.AddKeymapping(Localize.Settings_ShortcutPasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            keymappings.AddKeymapping(Localize.Settings_ShortcutEditMarking, NodeMarkupTool.EditMarkingShortcut);
 
             var regularLinesPanel = (helper.AddGroup(Localize.Settings_RegularLinesModifier) as UIHelper).self as UIPanel;
             var regularLinesModifier = regularLinesPanel.gameObject.AddComponent<RegularLineModifierPanel>();

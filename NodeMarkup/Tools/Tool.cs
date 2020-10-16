@@ -30,6 +30,7 @@ namespace NodeMarkup.Tools
         public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
         public static SavedInputKey CopyMarkingShortcut { get; } = new SavedInputKey(nameof(CopyMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.C, true, true, false), true);
         public static SavedInputKey PasteMarkingShortcut { get; } = new SavedInputKey(nameof(PasteMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.V, true, true, false), true);
+        public static SavedInputKey EditMarkingShortcut { get; } = new SavedInputKey(nameof(EditMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.E, true, true, false), true);
 
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -360,12 +361,8 @@ namespace NodeMarkup.Tools
             return $"{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
         }
 
-        public void CopyMarkup()
-        {
-            var data = Markup.ToXml();
-            var enters = Markup.Enters.Select(e => e.Data).ToArray();
-            MarkupBuffer = new MarkupBuffer(data, enters);
-        }
+        public void CopyMarkup() => MarkupBuffer = new MarkupBuffer(Markup);
+        public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
         public void PasteMarkup()
         {
             if (UI.Settings.DeleteWarnings)
@@ -383,6 +380,11 @@ namespace NodeMarkup.Tools
                 SetMode(ToolModeType.PasteMarkupEnterOrder);
                 return true;
             }
+        }
+        public void EditMarkup()
+        {
+            CopyMarkup();
+            SetMode(ToolModeType.PasteMarkupEnterOrder);
         }
 
         #endregion
@@ -462,12 +464,15 @@ namespace NodeMarkup.Tools
     {
         public XElement Data { get; }
         public EnterData[] Enters { get; }
-        public MarkupBuffer(XElement data, EnterData[] enters)
+        public ObjectsMap Map { get; }
+        public MarkupBuffer(Markup markup) : this(markup.ToXml(), markup.Enters.Select(e => e.Data).ToArray()) { }
+        public MarkupBuffer() : this(new XElement("Markup"), new EnterData[0]) { }
+        private MarkupBuffer(XElement data, EnterData[] enters)
         {
             Data = data;
             Enters = enters;
+            Map = new ObjectsMap();
         }
-        public MarkupBuffer() : this(new XElement("Markup"), new EnterData[0]) { }
     }
     public class ThreadingExtension : ThreadingExtensionBase
     {

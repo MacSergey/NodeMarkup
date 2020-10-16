@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -55,6 +56,23 @@ namespace NodeMarkup.Manager
         public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
 
+        private bool _needSetOrder;
+        public bool NeedSetOrder
+        {
+            get => _needSetOrder;
+            set
+            {
+
+                if (_needSetOrder && !value)
+                    Backup = null;
+                else if (!_needSetOrder && value)
+                    Backup = new MarkupBuffer(this);
+
+                _needSetOrder = value;
+            }
+        }
+        public MarkupBuffer Backup { get; private set; }
+
         #endregion
 
         public Markup(ushort nodeId)
@@ -92,17 +110,29 @@ namespace NodeMarkup.Manager
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
             newEnters.Sort((e1, e2) => e1.AbsoluteAngle.CompareTo(e2.AbsoluteAngle));
 
-            if (delete.Length == 1 && add.Length == 1 && oldEnters.Find(e => e.Id == delete[0]).PointCount == newEnters.Find(e => e.Id == add[0]).PointCount)
-            {
-                var map = new ObjectsMap()
-                {
-                    {new ObjectId() {Segment = delete[0] },  new ObjectId() {Segment = add[0] }}
-                };
 
-                var currentData = ToXml();
-                EntersList = newEnters;
-                Clear();
-                FromXml(Mod.Version, currentData, map);
+            if (delete.Length == 1 && add.Length == 1)
+            {
+                var before = oldEnters.Find(e => e.Id == delete[0]).PointCount;
+                var after = newEnters.Find(e => e.Id == add[0]).PointCount;
+
+                if (before != after && !NeedSetOrder)
+                    NeedSetOrder = true;
+
+                if (NeedSetOrder)
+                    Backup.Map.AddSegment(delete[0], add[0]);
+
+                if (before == after)
+                {
+                    var map = new ObjectsMap();
+                    map.AddSegment(delete[0], add[0]);
+                    var currentData = ToXml();
+                    EntersList = newEnters;
+                    Clear();
+                    FromXml(Mod.Version, currentData, map);
+                }
+                else
+                    EntersList = newEnters;
             }
             else
                 EntersList = newEnters;
@@ -470,7 +500,7 @@ namespace NodeMarkup.Manager
         public static bool FromXml(Version version, XElement config, ObjectsMap map, out Markup markup)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            if (map.TryGetValue(new ObjectId() { Node = nodeId }, out ObjectId targetNode))
+            while (map.TryGetValue(new ObjectId() { Node = nodeId }, out ObjectId targetNode))
                 nodeId = targetNode.Node;
 
             try

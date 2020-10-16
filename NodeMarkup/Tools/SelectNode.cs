@@ -1,4 +1,5 @@
 ﻿using NodeMarkup.Manager;
+using NodeMarkup.UI;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -48,8 +49,33 @@ namespace NodeMarkup.Tools
         {
             if (IsHoverNode)
             {
-                Tool.SetMarkup(MarkupManager.Get(HoverNodeId));
-                Tool.SetDefaultMode();
+                var markup = MarkupManager.Get(HoverNodeId);
+                Tool.SetMarkup(markup);
+
+                if (markup.NeedSetOrder)
+                {
+                    var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                    messageBox.CaprionText = Localize.Tool_RoadsWasChangedCaption;
+                    messageBox.MessageText = Localize.Tool_RoadsWasChangedMessage;
+                    messageBox.OnButton1Click = OnYes;
+                    messageBox.OnButton2Click = OnNo;
+                }
+                else
+                    OnNo();
+
+                bool OnYes()
+                {
+                    Tool.CopyMarkupBackup();
+                    Tool.SetMode(ToolModeType.PasteMarkupEnterOrder);
+                    markup.NeedSetOrder = false;
+                    return true;
+                }
+                bool OnNo()
+                {
+                    Tool.SetDefaultMode();
+                    markup.NeedSetOrder = false;
+                    return true;
+                }
             }
         }
         public override void OnSecondaryMouseClicked() => Tool.Disable();

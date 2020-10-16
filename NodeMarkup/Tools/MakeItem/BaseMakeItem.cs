@@ -95,6 +95,11 @@ namespace NodeMarkup.Tools
                 Tool.PasteMarkup();
                 return true;
             }
+            if (NodeMarkupTool.EditMarkingShortcut.IsPressed(e))
+            {
+                Tool.EditMarkup();
+                return true;
+            }
 
             return Panel?.OnShortcut(e) == true;
         }

@@ -70,6 +70,7 @@ namespace NodeMarkup.UI
             Header.Buttons.OnCopy += OnCopy;
             Header.Buttons.OnPaste += OnPaste;
             Header.Buttons.OnClear += OnClear;
+            Header.Buttons.OnEdit += OnEdit;
         }
         private void CreateTabStrip()
         {
@@ -93,7 +94,7 @@ namespace NodeMarkup.UI
         {
             var atlas = TextureUtil.GetAtlas(nameof(ResizeAtlas));
             if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("resize.png", nameof(ResizeAtlas), 9, 9, new string[] { "resize"}, space: 2);
+                atlas = TextureUtil.CreateTextureAtlas("resize.png", nameof(ResizeAtlas), 9, 9, new string[] { "resize" }, space: 2);
 
             return atlas;
         }
@@ -217,6 +218,7 @@ namespace NodeMarkup.UI
         private void OnClear() => Tool.DeleteAllMarking();
         private void OnCopy() => Tool.CopyMarkup();
         private void OnPaste() => Tool.PasteMarkup();
+        private void OnEdit() => Tool.EditMarkup();
     }
     public class UIPanelDragHeader : UIDragHandle
     {
@@ -270,15 +272,18 @@ namespace NodeMarkup.UI
         public event Action OnClear;
         public event Action OnCopy;
         public event Action OnPaste;
+        public event Action OnEdit;
 
-        UIButton Copy { get; set; }
-        UIButton Paste { get; set; }
-        UIButton Clear { get; set; }
+        UIButton Copy { get; }
+        UIButton Paste { get; }
+        UIButton Clear { get; }
+        UIButton Edit { get; }
 
         public MainHeaderContent()
         {
             Copy = AddButton("Copy", NodeMarkup.Localize.Panel_CopyMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke());
             Paste = AddButton("Paste", NodeMarkup.Localize.Panel_PasteMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke());
+            Edit = AddButton("Edit", NodeMarkup.Localize.Panel_EditMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke());
             Clear = AddButton("Clear", NodeMarkup.Localize.Panel_ClearMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnClear?.Invoke());
         }
     }
