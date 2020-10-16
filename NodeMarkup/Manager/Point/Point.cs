@@ -241,7 +241,6 @@ namespace NodeMarkup.Manager
         public ulong Hash { get; }
         public MarkupPoint First { get; }
         public MarkupPoint Second { get; }
-        public bool IsInvert => First.Id < Second.Id;
         public bool IsSomeEnter => First.Enter == Second.Enter;
         public bool IsStopLine => IsSomeEnter && First.Type == MarkupPoint.PointType.Enter && Second.Type == MarkupPoint.PointType.Enter;
         public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;
@@ -249,9 +248,10 @@ namespace NodeMarkup.Manager
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {
-            First = first;
-            Second = second;
-            Hash = ((ulong)Math.Max(First.Id, Second.Id)) + (((ulong)Math.Min(First.Id, Second.Id)) << 32);
+            First = first.Id > second.Id ? first : second;
+            Second = first.Id > second.Id ? second : first;
+
+            Hash = (ulong)First.Id + (((ulong)Second.Id) << 32);
         }
 
         public string XmlSection => XmlName;

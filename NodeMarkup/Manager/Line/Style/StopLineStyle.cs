@@ -373,14 +373,11 @@ namespace NodeMarkup.Manager
             Height = height;
             Space = space;
         }
-        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory) 
+            =>StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes);
+        IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory lineTrajectory, float startT, float endT)
         {
-            return StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes);
-
-            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory lineTrajectory, float startT, float endT)
-            {
-                yield return StyleHelper.CalculateDashedDash(lineTrajectory, stopLine.IsInvert ? endT : startT, stopLine.IsInvert ? startT : endT, Base, Height / (stopLine.IsInvert ? -2 : 2), Height, Color, MaterialType.Triangle);
-            }
+            yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, Base, Height / 2, Height, Color, MaterialType.Triangle);
         }
 
         public override StopLineStyle CopyStopLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);

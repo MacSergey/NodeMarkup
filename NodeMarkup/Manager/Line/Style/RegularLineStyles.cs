@@ -468,10 +468,11 @@ namespace NodeMarkup.Manager
                 if (!line.Markup.Contour.Any(c => MarkupIntersect.CalculateSingle(c, toStart).IsIntersect || MarkupIntersect.CalculateSingle(c, toEnd).IsIntersect))
                     yield return dash;
             }
-        }
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
-        {
-            yield return StyleHelper.CalculateDashedDash(trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? -2 : 2), Height, Color, MaterialType.Triangle);
+
+            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
+            {
+                yield return StyleHelper.CalculateDashedDash(trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? -2 : 2), Height, Color, MaterialType.Triangle);
+            }
         }
 
         public override RegularLineStyle CopyRegularLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space, Invert);
