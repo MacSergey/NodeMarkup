@@ -123,7 +123,7 @@ namespace NodeMarkup.Tools
                 if (TurnLeftButton.CheckHover(mouse))
                     return Localize.Tool_InfoTurnСounterClockwise;
                 else if (FlipButton.CheckHover(mouse))
-                    return Localize.Tool_InfoChangeOrder;
+                    return Localize.Tool_InfoInverseOrder;
                 else if (TurnRightButton.CheckHover(mouse))
                     return Localize.Tool_InfoTurnClockwise;
 

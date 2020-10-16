@@ -2545,15 +2545,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Change order.
-        /// </summary>
-        public static string Tool_InfoChangeOrder {
-            get {
-                return ResourceManager.GetString("Tool_InfoChangeOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to create a crosswalk.
         /// </summary>
         public static string Tool_InfoCreateCrosswalk {
@@ -2677,6 +2668,15 @@ namespace NodeMarkup {
         public static string Tool_InfoHoverNode {
             get {
                 return ResourceManager.GetString("Tool_InfoHoverNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Inverse order.
+        /// </summary>
+        public static string Tool_InfoInverseOrder {
+            get {
+                return ResourceManager.GetString("Tool_InfoInverseOrder", resourceCulture);
             }
         }
         

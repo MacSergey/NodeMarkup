@@ -998,8 +998,8 @@ Click circle to edit road points order</value>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Paste marking</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>Change order</value>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Inverse order</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Turn clockwise</value>
