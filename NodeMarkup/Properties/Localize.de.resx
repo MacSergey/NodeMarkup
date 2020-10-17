@@ -897,7 +897,9 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Ohne Tastenkombination</value>
   </data>
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Immer</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Nur wenn es Anderes beeinflussen wird</value>
   </data>
@@ -962,12 +964,12 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
     <value>Willst Du wirklich alle Versätze der Punkte von Node #{0} zurücksetzen?
 Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>Kreis halten, ziehen und loslassen um die Einfüge-Reihenfolge zu ändern</value>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Kreis halten, ziehen und loslassen um die Straßen-Reihenfolge zu ändern
+Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
   </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>Kreis in einem Ziel loslassen um die Einfüge-Reihenfolge festzulegen
-Kreis außerhalb eines Ziels loslassen um die Einfüge-Reihenfolge aufzuheben</value>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Kreis innerhalb/außerhalb des Ziels loslassen um die Straßen-Reihenfolge zu ändern/zurückzusetzen</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Markierung kopieren</value>
@@ -975,8 +977,8 @@ Kreis außerhalb eines Ziels loslassen um die Einfüge-Reihenfolge aufzuheben</v
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Markierung einfügen</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>Reihenfolge ändern</value>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Umgekehrte Reihenfolge</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Im Uhrzeigersinn drehen</value>
@@ -1041,5 +1043,63 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>Vorlagen erfolgreich wiederhergestellt</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Fortsetzen</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Einfügemodus verlassen</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Möchtest Du den Einfügemodus verlassen und das Eingefügte übernehmen?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Nicht anwenden</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Nicht anwenden</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Reihenfolge der Markierungen ändern</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Reihenfolge der Markierungen ändern</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Straßen wurden geändert</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Die Straßen an dieser Kreuzung wurden verändert, daher können die bestehenden Markierungen nicht automatisch zugeordnet werden.
+Möchtest du die Markierungen manuell zuordnen?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Reihenfolge ändern-Modus verlassen</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Möchtest Du den Bearbeitungsmodus verlassen und die neue Reihenfolge übernehmen?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Kreis halten, ziehen und loslassen um die Punkte-Reihenfolge zu ändern</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Kreis innerhalb/außerhalb des Ziels loslassen um die Punkte-Reihenfolge zu ändern/zurückzusetzen</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Durchgezogene Linie zentriert</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

@@ -875,8 +875,12 @@ Tätä toimintoa ei voi kumota.</value>
   
   
   
-  
-  
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopioi tiemerkinnät</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Liitä tiemerkinnät</value>
+  </data>
   
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Käännä myötäpäivään</value>
@@ -902,4 +906,27 @@ Tätä toimintoa ei voi kumota.</value>
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Ei</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Kyllä</value>
+  </data>
 </root>

@@ -265,11 +265,23 @@ Tuto akci nelze vrátit zpět.</value>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Export úspěšný</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Obnovit značení ze souboru</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Obnovit data o značení</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Opravdu si přejete obnovit data?
+Původní data připíší všechna existující značení.
+Tuto akci nelze vrátit zpět.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Obnovení dat se nezdařilo</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Data úspěšně obnovena</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Rychlé vytvoření pravidel</value>
   </data>
@@ -349,7 +361,9 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Zobrazovat novinky</value>
   </data>
   
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Obnovit</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
@@ -571,7 +585,9 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Early access</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Zarovnání</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Souhlasím</value>
   </data>
@@ -836,7 +852,9 @@ Tuto akci nelze vrátit zpět.</value>
     <value>Nenastaveno</value>
   </data>
   
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Vždy</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Pouze, pokud budou ovlivněny ostatní položky</value>
   </data>
@@ -907,8 +925,8 @@ Tuto akci nelze vrátit zpět.</value>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Vložit značení</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>Změnit pořadí</value>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Prohodit pořadí</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Otočit ve směru hodinových ručiček</value>
@@ -916,6 +934,80 @@ Tuto akci nelze vrátit zpět.</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Otočit proti směru hodinových ručiček</value>
   </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Na střed</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Vlevo</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Vpravo</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Nepojmenovaná šablona</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Jméno již použito</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Jméno "{0}" je již využíváno jinou šablonou.
+Opravdu chcete mít více šablon se stejným jménem?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Zálohovat značení</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Zálohovat šablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Odstranit všechny šablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Odstranit všechny šablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Opravdu si přejete odstranit všechny šablony?
+Tuto akci nelze vrátit zpět.</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Exportovat šablony do souboru</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Exportovat šablony</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Obnovit šablony ze souboru</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Obnovit šablony</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Opravdu si přejete obnovit šablony?
+Původní data připíší všechny existující šablony.
+Tuto akci nelze vrátit zpět.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Obnovení šablon se nezdařilo</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Šablony úspěšně obnoveny</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Použít</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Pokračovat</value>
+  </data>
+  
+  
+  
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Použít</value>
+  </data>
+  
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Resetovat</value>
+  </data>
   
   
   
@@ -925,13 +1017,10 @@ Tuto akci nelze vrátit zpět.</value>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Ne</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Ano</value>
+  </data>
 </root>

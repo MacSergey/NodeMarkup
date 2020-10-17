@@ -864,7 +864,9 @@ Cette action est irréversible.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Sans raccourci</value>
   </data>
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Toujours</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Seulement s'il affecte d'autres objets</value>
   </data>
@@ -929,12 +931,12 @@ Cette action est irréversible.</value>
     <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud #{0} ?
 Cette action est irréversible.</value>
   </data>
-  <data name="Tool_InfoPasteDrag" xml:space="preserve">
-    <value>Glisser-déposer le cercle pour définir l'ordre de collage</value>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Maintenez puis relâchez les cercles pour configurer l'ordre
+Cliquez le cercle pour modifier l'ordre des points</value>
   </data>
-  <data name="Tool_InfoPasteDrop" xml:space="preserve">
-    <value>Déposez le cercle à l'intérieur de la cible pour définir l'ordre de collage
-Déposez le cercle à l'extérieur de la cible pour enlever cet ordre de collage</value>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Copier le marquage</value>
@@ -942,8 +944,8 @@ Déposez le cercle à l'extérieur de la cible pour enlever cet ordre de collage
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Coller le marquage</value>
   </data>
-  <data name="Tool_InfoChangeOrder" xml:space="preserve">
-    <value>Changer l'ordre</value>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Inverser l'ordre</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Tourner dans le sens des aiguilles d'une montre</value>
@@ -1008,5 +1010,58 @@ Cette action est irréversible.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>Modèles restaurés avec succès</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Sortir du mode collage</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Voulez vous vraiment quitter le mode collage et appliquer le collage ?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Non appliqué</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Non appliqué</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Modifier l'ordre du marquage</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Modifier l'ordre du marquage</value>
+  </data>
+  
+  
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Quitter le mode de modification de l'ordre</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Voulez vous vraiment quitter le mode de modification et appliquer un nouvel ordre ?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Glisser-déposer le cercle pour définir l'ordre des points</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre des points</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Solide au centre</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Oui</value>
   </data>
 </root>
