@@ -41,7 +41,7 @@ namespace NodeMarkup.Tools
             else
                 return false;
         }
-        public override void OnMouseDown(Event e) => OnPrimaryMouseClicked(e);
+        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
         {
             if (!IsHoverPoint)

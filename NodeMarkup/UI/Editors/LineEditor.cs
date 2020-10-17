@@ -280,6 +280,7 @@ namespace NodeMarkup.UI.Editors
                     return null;
             }
         }
+        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
         {
             if (PointsSelector.IsHoverPoint)
