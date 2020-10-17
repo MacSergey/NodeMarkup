@@ -1129,4 +1129,28 @@ Do you want to apply the marking manually?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Drag with Ctrl to move the point</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
+    <value>WARNING: Default templates setting will be reset.
+
+- Added the ability to copy/paste marking from one exist intersection to another exist intersection.
+- Now the marking is not removed if you replace the road with a different number of points.
+- Added map editor support.
+- Added the ability to save marking data in intersection assets.
+- Added "Shark teeth" line and stop line style.
+- Added "Solid&amp;Dashed" stop line style.
+- Added "Chess board" crosswalk style.
+- Added the ability to set create modifiers for any styles.
+- Added the ability to duplicate templates.
+- Added the ability to have several templates with some name.
+- Added Alignment option to all double line styles.
+- Added the ability to start filler "Chevron" style from edges.
+- Added the ability to get delete warning only if will affect others items.
+- Added the ability to resize panel.
+- Added the ability to backup templates.
+- Added the ability to reset all points offset.
+- Added MoveIt mirroring support (wait MoveIt update).
+- Update filler "Chevron" style calculation algorithm.
+- Fix filler vertex duplicates in create interface.
+- Fix asym lines wrong invert value after load.</value>
+  </data>
 </root>

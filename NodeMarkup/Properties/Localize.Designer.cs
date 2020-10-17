@@ -1540,6 +1540,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на WARNING: Default templates setting will be reset.
+        ///
+        ///- Added the ability to copy/paste marking from one exist intersection to another exist intersection.
+        ///- Now the marking is not removed if you replace the road with a different number of points.
+        ///- Added map editor support.
+        ///- Added the ability to save marking data in intersection assets.
+        ///- Added &quot;Shark teeth&quot; line and stop line style.
+        ///- Added &quot;Solid&amp;Dashed&quot; stop line style.
+        ///- Added &quot;Chess board&quot; crosswalk style.
+        ///- Added the ability to set create modif [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_4 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на - Fix chevron line parts overlap.
         ///- New chevron middle line calculation algorithm
         ///- added shark teeth line
