@@ -2726,7 +2726,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Not apply.
+        ///   Ищет локализованную строку, похожую на Don&apos;t apply.
         /// </summary>
         public static string Tool_infoPasteNotApply {
             get {
@@ -2800,7 +2800,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select endpoint.
+        ///   Ищет локализованную строку, похожую на Select endpoint for regular or stop line
+        ///Drag behind point for perpendicular line.
         /// </summary>
         public static string Tool_InfoSelectLineEndPoint {
             get {
@@ -2809,15 +2810,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a point to
-        ///create or delete a line
-        ///+Ctrl to move the point
-        ///Hold Alt to create a filler
-        ///Hold Shift to create a crosswalk.
+        ///   Ищет локализованную строку, похожую на Select a point to create or delete a line.
         /// </summary>
         public static string Tool_InfoSelectLineStartPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectLineStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hold Shift to create a crosswalk.
+        /// </summary>
+        public static string Tool_InfoStartCreateCrosswalk {
+            get {
+                return ResourceManager.GetString("Tool_InfoStartCreateCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hold Alt to create a filler.
+        /// </summary>
+        public static string Tool_InfoStartCreateFiller {
+            get {
+                return ResourceManager.GetString("Tool_InfoStartCreateFiller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag with Ctrl to move the point.
+        /// </summary>
+        public static string Tool_InfoStartDragPointMode {
+            get {
+                return ResourceManager.GetString("Tool_InfoStartDragPointMode", resourceCulture);
             }
         }
         
@@ -2840,7 +2864,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Not apply.
+        ///   Ищет локализованную строку, похожую на Don&apos;t apply.
         /// </summary>
         public static string Tool_NotApply {
             get {
@@ -2888,7 +2912,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Roads was changed.
+        ///   Ищет локализованную строку, похожую на Roads have changed.
         /// </summary>
         public static string Tool_RoadsWasChangedCaption {
             get {
@@ -2897,8 +2921,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Roads was changed and failed to apply automatically to them existing marking.
-        ///Do you want to apply manually?.
+        ///   Ищет локализованную строку, похожую на The roads at this intersection have changed, therefore the existing marking cannot be applied automatically.
+        ///Do you want to apply the marking manually?.
         /// </summary>
         public static string Tool_RoadsWasChangedMessage {
             get {

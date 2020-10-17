@@ -23,7 +23,7 @@ namespace NodeMarkup.Tools
             if (IsSelectPoint)
                 return IsHoverPoint ? base.GetToolInfo() : Localize.Tool_InfoSelectLineEndPoint;
             else
-                return Localize.Tool_InfoSelectLineStartPoint;
+                return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
         }
         public override bool ProcessShortcuts(Event e)
         {
