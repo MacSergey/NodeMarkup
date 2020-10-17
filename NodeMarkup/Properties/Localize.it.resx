@@ -332,15 +332,9 @@ Clicca per modificare il marcatore</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleziona un nodo per modificare il marcatore</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleziona il punto finale</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleziona un punto per
-creare o cancellare una linea
-+Ctrl per muovere il punto
-Tieni premuto Alt per impostare il riempimento
-Tieni premuto Shift per impostare le strisce pedonali</value>
+    <value>Seleziona un punto per creare o cancellare una linea</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Cosa c'è di nuovo in {0}</value>
@@ -971,4 +965,12 @@ L'azione non può esser annullata.</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Si</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Tieni premuto Shift per impostare le strisce pedonali</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Tieni premuto Alt per impostare il riempimento</value>
+  </data>
+  
+  
 </root>

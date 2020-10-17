@@ -344,15 +344,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Wybierz punkt końcowy</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Wybierz punkt aby
-utworzyć lub usunąć linię
-+Ctrl - aby przesunąć punkt
-Przytrzymaj Alt - aby utworzyć wypełnienie
-Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
+    <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
@@ -1027,4 +1021,12 @@ Nie będzie można cofnąć tej operacji.</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Tak</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Przytrzymaj Alt - aby utworzyć wypełnienie</value>
+  </data>
+  
+  
 </root>

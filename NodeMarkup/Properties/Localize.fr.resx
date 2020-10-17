@@ -344,15 +344,10 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Sélectionnez un point de fin</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
-créer ou supprimer une ligne
-+Ctrl pour bouger le point
-Maintenir Alt pour créer un remplisseur
-Maintenez Maj pour créer un passage piéton</value>
+créer ou supprimer une ligne</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
@@ -1064,4 +1059,12 @@ Cette action est irréversible.</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Oui</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Maintenez Maj pour créer un passage piéton</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Maintenir Alt pour créer un remplisseur</value>
+  </data>
+  
+  
 </root>
