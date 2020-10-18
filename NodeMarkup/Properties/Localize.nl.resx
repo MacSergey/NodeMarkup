@@ -152,7 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Regel verwijderen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Will je de regel echt verwijderen?</value>
+    <value>Wil je de regel echt verwijderen?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Van</value>
@@ -270,7 +270,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Weet je zeker dat je de gegevens wil herstellen?
-De herstelde zal alle bestaande markeringen vervangen.</value>
+De herstelde data zal alle bestaande markeringen vervangen.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Markeringsgegevens herstellen mislukt</value>
@@ -293,26 +293,11 @@ De herstelde zal alle bestaande markeringen vervangen.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Tooltips weergeven</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Kleur</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Streeplengte</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>sjabloon</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Naam</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Correctieafstand</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Afstand</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Stijl</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Sjablonen</value>
@@ -338,7 +323,10 @@ De herstelde zal alle bestaande markeringen vervangen.</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Selecteer een eindpunt voor een normale lijn of stoplijn
+Sleep achter het punt voor een loodrechte lijn</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
 een lijn te creëren of te verwijderen</value>
@@ -361,12 +349,6 @@ een lijn te creëren of te verwijderen</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Breedte</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Breedte</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Omkeren</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ononderbroken en Streeplijn</value>
@@ -830,7 +812,7 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Weet je zeker dat je de markering wilt plakken?
-Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt worden.</value>
+Het zal de huidige markering vervangen.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Zebrapad sneltoetsen</value>
@@ -1004,7 +986,7 @@ De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
     <value>Uit plakmodus gaan</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Wil je uit plakmodus gaan en de kopie toepassen?</value>
+    <value>Wil je de plakmodus verlaten en de kopie toepassen?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Niet toepassen</value>
@@ -1058,7 +1040,9 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Houd Alt ingedrukt om een opvulling te creëren</value>
   </data>
-  
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Houd control ingedrukt om het punt te verslepen</value>
+  </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Deze actie kan niet ongedaan worden gemaakt.</value>

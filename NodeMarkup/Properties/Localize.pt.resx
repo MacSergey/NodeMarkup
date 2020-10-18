@@ -282,26 +282,11 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Mostrar dicas</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Cor</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Comprimento do traço</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modelo</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Nome</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Deslocamento</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Comprimento do espaço</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Estilo</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Modelos</value>
@@ -359,12 +344,6 @@ criar ou remover a uma linha</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Largura</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Largura</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Inverter</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Dupla Combinada</value>

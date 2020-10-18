@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -293,26 +293,11 @@ The restored data will replace all existing marking.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Show tooltips</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Color</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Dash length</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>template</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Offset</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Space length</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Style</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Templates</value>
@@ -374,12 +359,6 @@ Drag behind point for perpendicular line</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Width</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Width</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Invert</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Solid and Dashed</value>
@@ -849,7 +828,7 @@ Failed to load markings for {0} intersections.</value>
     <value>Troubleshooting</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
-    <value>Chess board</value>
+    <value>Chessboard</value>
   </data>
   <data name="LineEditor_LineCount" xml:space="preserve">
     <value>Line count</value>
@@ -976,7 +955,7 @@ It will replace the existing marking.</value>
     <value>Do you really want to reset all node #{0} points offset?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>Drag and drop circles for set roads order
+    <value>Drag and drop circles to set roads order
 Click circle to edit road points order</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
@@ -1063,7 +1042,7 @@ The restored templates will replace all existing templates.</value>
     <value>Exit paste mode</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Do you want to exit paste mode and apply a paste?</value>
+    <value>Do you want to exit paste mode and apply a changes?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Don't apply</value>
@@ -1094,10 +1073,10 @@ Do you want to apply the marking manually?</value>
     <value>Exit edit order mode</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>Do you want to exit edit mode and apply a new order?</value>
+    <value>Do you want to exit edit mode and apply a changes?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
-    <value>Drag and drop circle for set point order</value>
+    <value>Drag and drop circle to set points order</value>
   </data>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
     <value>Drop circle inside/outside target to set/unset points order</value>

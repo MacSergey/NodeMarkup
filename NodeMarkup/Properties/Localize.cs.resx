@@ -293,26 +293,11 @@ Původní data připíší všechna existující značení.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Zobrazovat popisky</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Barva</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Délka čáry</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>šablonu</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Název</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Odsazení</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Vzdálenost mezi čárami</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Styl</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Šablony</value>
@@ -361,12 +346,6 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Šířka</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Šířka</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Obrátit</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Plná i přerušovaná</value>

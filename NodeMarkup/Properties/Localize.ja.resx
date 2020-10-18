@@ -294,26 +294,11 @@
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>ツールチップの表示</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>カラー</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>破線の長さ</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>名前</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>オフセット</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>空白の長さ</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>ラインの種類</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>テンプレートの一覧</value>
@@ -366,12 +351,6 @@
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>太さ・幅</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>太さ・幅</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>ラインを反転</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>破線＆実線</value>

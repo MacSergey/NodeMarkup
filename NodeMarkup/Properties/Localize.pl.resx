@@ -294,26 +294,11 @@ Wszystkie istniejące oznaczenia zostaną zastąpione.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Pokaż podpowiedzi</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Kolor</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Długość linii</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>szablon</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Nazwa</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Przesunięcie</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Długość odstępu</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Styl</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Szablony</value>
@@ -340,7 +325,10 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Wybierz punkt końcowy dla linii zwykłej lub zatrzymania
+Przeciągnij za punkt aby uzyskać linię prostopadłą</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
@@ -362,12 +350,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Szerokość</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Szerokość</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Odwróć</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Ciągła z przerywaną</value>
@@ -851,7 +833,9 @@ Istniejące oznaczenie zostanie zastąpione.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Bez modyfikatora</value>
   </data>
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Zawsze</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Tylko jeśli ma wpływ na inne elementy</value>
   </data>
@@ -915,15 +899,22 @@ Istniejące oznaczenie zostanie zastąpione.</value>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
     <value>Czy na pewno chcesz usunąć wszystkie przesunięcia punktów skrzyżowania #{0}?</value>
   </data>
-  
-  
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Przeciągnij i upuść koła aby ustawić kolejność dróg
+Kliknij koło aby edytować kolejność punktów drogi</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Upuść koło w środku/na zewnątrz celu aby ustawić/usunąć kolejność dróg</value>
+  </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Kopiuj oznaczenie</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Wklej oznaczenie</value>
   </data>
-  
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Odwróć kolejność</value>
+  </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
     <value>Obróć zgodnie z ruchem wskazówek zegara</value>
   </data>
@@ -989,24 +980,55 @@ Wszystkie istniejące szablony zostaną zastąpione.</value>
   <data name="Tool_Apply" xml:space="preserve">
     <value>Zastosuj</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Kontynuuj</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Wyjdź z trybu wklejania</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Czy chcesz zastosować zmiany przed wyjściem z trybu wklejania?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Nie wprowadzaj zmian</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Zastosuj zmiany</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Nie wprowadzaj zmian</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Resetuj</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Edytuj kolejność oznaczeń</value>
+  </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
     <value>Zmień kolejność oznaczeń</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Drogi uległy zmianie</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Drogi na tym skrzyżowaniu uległy zmianie, w związku z tym istniejące oznaczenia nie mogą zostać zastosowane automatycznie.
+Czy chcesz zastosować oznaczenia manualnie?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Wyjdź z trybu edycji kolejności</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Czy chcesz zastosować zmiany przed wyjściem z trybu edycji kolejności?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Przeciągnij i upuść koło aby ustawić kolejność punktu</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Upuść koło w środku/na zewnątrz celu aby ustawić/usunąć kolejność punktów</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Ciągła na środku</value>
+  </data>
   <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
     <value>Nie</value>
   </data>
@@ -1019,7 +1041,9 @@ Wszystkie istniejące szablony zostaną zastąpione.</value>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Przytrzymaj Alt - aby utworzyć wypełnienie</value>
   </data>
-  
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Przeciągnij trzymając Ctrl aby przesunąć punkt</value>
+  </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Nie będzie można cofnąć tej operacji.</value>

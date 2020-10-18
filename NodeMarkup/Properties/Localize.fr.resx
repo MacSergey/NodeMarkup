@@ -293,26 +293,11 @@ Les données restaurées ont remplacer tout les marquages existants.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Afficher les infobulles</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Couleur</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Longueur du tiret</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modèle</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Nom</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Décalage</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Longueur de l'espace</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Style</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Modèles</value>
@@ -362,12 +347,6 @@ créer ou supprimer une ligne</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Largeur</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Largeur</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Inverser</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Solide et Tirets</value>
@@ -1027,8 +1006,13 @@ Les modèles restaurés vont remplacer tout les modèles actuels.</value>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
     <value>Modifier l'ordre du marquage</value>
   </data>
-  
-  
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Les routes ont été changées</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Les routes à cette intersection ont été changées, donc le marquage existant ne peut être appliqué automatiquement.
+Voulez-vous changer le marquage manuellement ?</value>
+  </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
     <value>Quitter le mode de modification de l'ordre</value>
   </data>
@@ -1056,7 +1040,9 @@ Les modèles restaurés vont remplacer tout les modèles actuels.</value>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Maintenir Alt pour créer un remplisseur</value>
   </data>
-  
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Glissez avec Ctrl pour bouger le point</value>
+  </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Cette action est irréversible.</value>

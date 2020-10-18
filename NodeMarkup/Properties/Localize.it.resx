@@ -293,26 +293,11 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Mostra i suggerimenti</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Colore</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Lunghezza del tratteggio</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modello</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Nome</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Spostamento</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Lunghezza dello spazio</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Stile</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Modelli</value>
@@ -374,12 +359,6 @@ Trascina dietro il punto per una linea perpendicolare</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Larghezza</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Larghezza</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Inverti</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Continua e Tratteggiata</value>
@@ -935,9 +914,15 @@ Questa rimpiazzerà quella già esistente.</value>
   <data name="Filler_Vertex" xml:space="preserve">
     <value>Vertice</value>
   </data>
-  
-  
-  
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Resetta tutti gli spostamenti</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Resetta tutti gli spostamenti</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Sei sicuro di voler resettare di tutti i #{0} punti lo spostamento?</value>
+  </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Trascina e rilascia il cerchio per impostare l'ordine delle strade
 Premi sul cerchio per modificare l'ordine delle strade</value>
