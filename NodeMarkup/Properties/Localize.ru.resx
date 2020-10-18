@@ -154,7 +154,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить правило?
-Это действие нельзя отменить</value>
+Это действие нельзя отменить.</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>От</value>
@@ -345,14 +345,12 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите перекресток для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку</value>
+    <value>Выберите конечную точку для обычной или стоп линии
+Потяните из перекрестка для перпендикулярной линии</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
-для создания или удаления линии
-+Ctrl для перемещения точки
-Зажмите Alt для создания заполнителя
-Зажмите Shift для создания перехода</value>
+для создания или удаления линии</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Что нового в {0}</value>
@@ -885,13 +883,13 @@ Shift X10, Ctrl X0.1</value>
 Это действие нельзя отменить.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>Модификаторы для выбора стиля перехода</value>
+    <value>Модификаторы для выбора стиля переходов</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>Модификаторы для выбора стиля заполнителя</value>
+    <value>Модификаторы для выбора стиля заполнителей</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>Модификаторы для выбора стиля линий</value>
+    <value>Модификаторы для выбора стиля обычных линий</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
     <value>Модификаторы для выбора стиля стоп линий</value>
@@ -1107,4 +1105,14 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Да</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Зажмите Shift для создания перехода</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Зажмите Alt для создания заполнителя</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Потащите с Ctrl для перемещения точки</value>
+  </data>
+  
 </root>

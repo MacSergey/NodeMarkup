@@ -345,14 +345,11 @@ Klicken um Markierung zu bearbeiten</value>
     <value>Node zum Ändern der Markierung auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Endpunkt wählen</value>
+    <value>Endpunkt für eine reguläre oder Haltelinie auswählen
+Hinter den Punkt zurückziehen um eine orthogonale Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Startpunkt wählen zum
-Linie erstellen oder löschen
-+Strg um den Punkt zu verschieben
-Alt halten um eine Füllung zu erstellen
-Shift halten erstellt eine Fußgängerüberweg-Markierung</value>
+    <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Was ist neu in {0}</value>
@@ -1102,4 +1099,14 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Shift halten erstellt eine Fußgängerüberweg-Markierung</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Alt halten um eine Füllung zu erstellen</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Strg halten und Ziehen um den Punkt zu verschieben</value>
+  </data>
+  
 </root>

@@ -332,14 +332,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Valitse risteys muokataksesi merkintöjä</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Valitse päätepiste</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Valitse piste luodaksesi tai poistaaksesi viivan
-+Ctrl siirtääksesi pistettä
-Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen
-Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+    <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Uutta modissa {0}</value>
@@ -929,4 +924,12 @@ Tätä toimintoa ei voi kumota.</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Kyllä</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
+  </data>
+  
+  
 </root>

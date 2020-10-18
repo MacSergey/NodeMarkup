@@ -345,14 +345,11 @@ Shift x10，Ctrl x0.1</value>
     <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>选择终止点</value>
+    <value>点选终点来创建普通停止线
+拖选到端点后来创建垂直线</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>点选起始点
-来创建/擦除线段
-+Ctrl 偏移端点
-按住Alt创建填充图案
-按住Shift创建人行横道</value>
+    <value>点选起始点来创建/擦除线段</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
@@ -1067,4 +1064,14 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>按住Shift创建人行横道</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>按住Alt创建填充图案</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>按住Ctrl拖动来移动端点</value>
+  </data>
+  
 </root>

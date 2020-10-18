@@ -344,15 +344,9 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Vyber bod pro vytvoření
-nebo odstranění čáry
-+Ctrl pro posunutí bodu
-Drž Alt pro vytvoření výplně
-Drž Shift pro vytvoření přechodu</value>
+    <value>Vyber bod pro vytvoření nebo odstranění čáry</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
@@ -1023,4 +1017,12 @@ Tuto akci nelze vrátit zpět.</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Ano</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Drž Shift pro vytvoření přechodu</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Drž Alt pro vytvoření výplně</value>
+  </data>
+  
+  
 </root>

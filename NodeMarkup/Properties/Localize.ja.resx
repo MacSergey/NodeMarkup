@@ -346,14 +346,12 @@
     <value>マーキングを編集するノードを選択します</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>終点側のポイントを選択</value>
+    <value>ライン・停止線の終点を選択
+垂直線は道路の後方へ移動</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して
-ラインを作成・削除する
-+Ctrlでポイントを移動
-Alt押下で塗り潰しを開始
-Shift押下で横断歩道の作成</value>
+ラインを作成・削除する</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -1017,7 +1015,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>適用する</value>
   </data>
   <data name="Tool_Continue" xml:space="preserve">
-    <value>継続する</value>
+    <value>作業を継続</value>
   </data>
   <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
     <value>マーキングの貼り付けモードを終了します</value>
@@ -1043,8 +1041,13 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
     <value>マーキングの順序を変更</value>
   </data>
-  
-  
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>道路が変更・アップグレードされました</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>交差点と接続する道路が変わって、マーキングが自動的に適用できません。
+マーキングの順序を手動で調整・適用しますか？</value>
+  </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
     <value>マーキングの編集モードを終了します</value>
   </data>
@@ -1066,4 +1069,14 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Shift押下で横断歩道の作成</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Alt押下で塗り潰しを開始</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Ctrl+ドラッグで、ポイントを移動</value>
+  </data>
+  
 </root>

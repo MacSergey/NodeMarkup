@@ -332,15 +332,10 @@ Clique para editar marcações</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione um nó para editar marcações</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar ponto final</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione um ponto para
-criar ou remover a uma linha
-+Ctrl para mover o ponto
-Prima Alt para criar um preenchimento
-Prima Shift para criar uma passadeira</value>
+criar ou remover a uma linha</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
@@ -970,4 +965,12 @@ Esta ação não pode ser desfeita.</value>
   <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
     <value>Sim</value>
   </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Prima Shift para criar uma passadeira</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Prima Alt para criar um preenchimento</value>
+  </data>
+  
+  
 </root>
