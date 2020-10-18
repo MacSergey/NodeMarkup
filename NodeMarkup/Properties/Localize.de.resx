@@ -121,8 +121,7 @@
     <value>Lösche {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Willst du {0} {1} wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+    <value>Willst du {0} {1} wirklich löschen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Mausrad scrollen zum ändern
@@ -153,8 +152,7 @@ Shift x10, Strg x0.1</value>
     <value>Regel löschen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Regel wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden</value>
+    <value>Regel wirklich löschen?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Von</value>
@@ -247,8 +245,7 @@ Diese Aktion kann nicht rückgängig gemacht werden</value>
     <value>Alle Markierungen löschen</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wirklich alle Markierungen entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+    <value>Wirklich alle Markierungen entfernen?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Markierungsdaten in Datei speichern</value>
@@ -273,8 +270,7 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Möchtest du die Daten wirklich wiederherstellen?
-Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Wiederherstellen der Markierungsdaten fehlgeschlagen</value>
@@ -328,8 +324,7 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
     <value>Node-Markierungen löschen</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Markierungen von Node #{0} entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+    <value>Willst Du wirklich alle Markierungen von Node #{0} entfernen?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Klicken um eine Linie zu erstellen</value>
@@ -873,8 +868,7 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Möchtest Du wirklich die Markierung einfügen?
-Dies wird alle vorhandenen Markierungen ersetzen.
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+Dies wird alle vorhandenen Markierungen ersetzen.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Tastenkombinationen für Fußgängerüberwege</value>
@@ -958,8 +952,7 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
     <value>Versätze aller Punkte zurücksetzen</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Versätze der Punkte von Node #{0} zurücksetzen?
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+    <value>Willst Du wirklich alle Versätze der Punkte von Node #{0} zurücksetzen?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Kreis halten, ziehen und loslassen um die Straßen-Reihenfolge zu ändern
@@ -1015,8 +1008,7 @@ Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst
     <value>Alle Vorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Willst du alle Vorlagen wirklich entfernen?
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+    <value>Willst du alle Vorlagen wirklich entfernen?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Vorlagen in einer Datei speichern</value>
@@ -1032,8 +1024,7 @@ Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Möchtest du die Vorlagen wirklich wiederherstellen?
-Die wiederhergestellten Vorlagen werden alle vorhandenen Vorlagen ersetzen.
-Diese Aktion kann nicht rückgängig gemacht werden.</value>
+Die wiederhergestellten Vorlagen werden alle vorhandenen Vorlagen ersetzen.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>Wiederherstellen der Vorlagen fehlgeschlagen</value>
@@ -1109,4 +1100,7 @@ Möchtest du die Markierungen manuell zuordnen?</value>
     <value>Strg halten und Ziehen um den Punkt zu verschieben</value>
   </data>
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
 </root>

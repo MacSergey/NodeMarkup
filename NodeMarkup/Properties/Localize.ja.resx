@@ -121,8 +121,7 @@
     <value>{0} を削除しますか？</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>{0} - {1} を削除してもよろしいですか?
-この操作は元に戻せません。</value>
+    <value>{0} - {1} を削除してもよろしいですか?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>ホイールのスクロールで増減
@@ -154,8 +153,7 @@
     <value>ルールを削除</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>ラインの設定を削除してもよろしいですか?
-この操作は元に戻せません</value>
+    <value>追加したルールを削除してもよろしいですか?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>始点</value>
@@ -248,8 +246,7 @@
     <value>マップ上にある全てのマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>マップ上にある、全てのマーキングを削除してもよろしいですか?
-この操作は元に戻せません。</value>
+    <value>マップ上にある、全てのマーキングを削除してもよろしいですか?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルに保存</value>
@@ -274,8 +271,7 @@
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>本当にデータを復元しますか？
-復元すると、既存のマーキングデータを全て置き換えます。
-この操作は、元に戻すことができません。</value>
+復元すると、既存のマーキングデータを全て置き換えます。</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>マーキングデータの復元に失敗しました</value>
@@ -329,8 +325,7 @@
     <value>ノード内のマーキングを全て消去</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>ノード #{0} のマーキングを全て削除してもよろしいですか?
-この操作は元に戻せません。</value>
+    <value>ノード #{0} のマーキングを全て削除してもよろしいですか?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>クリックしてラインの追加</value>
@@ -843,8 +838,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>本当にマーキングを貼り付けますか？
-既存であるノード内のマーキングは、全て置き換えます。
-この操作は、元に戻すことができません。</value>
+既存であるノード内のマーキングは、全て置き換えます。</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>横断歩道のキー設定</value>
@@ -928,8 +922,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>ポイントのオフセットを全てリセット</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>ノード #{0} にある、ポイントのオフセットを全てリセットしますか？
-この操作は元に戻せません。</value>
+    <value>ノード #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>円周上のポイントをD&amp;Dで、道路側のマーキングの順序を入れ替え
@@ -985,8 +978,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>テンプレートを全て削除</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>本当に全てのテンプレートを削除しますか？
-この操作は元に戻すことはできません。</value>
+    <value>本当に全てのテンプレートを削除しますか？</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>テンプレートをファイルに保存</value>
@@ -1002,8 +994,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>本当にテンプレートを復元しますか？
-復元すると、既存のテンプレートを全て置き換えます。
-この操作は、元に戻すことができません。</value>
+復元すると、既存のテンプレートを全て置き換えます。</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>テンプレートの復元に失敗しました</value>
@@ -1079,4 +1070,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>Ctrl+ドラッグで、ポイントを移動</value>
   </data>
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>この操作は元に戻せません。</value>
+  </data>
 </root>

@@ -121,8 +121,7 @@
     <value>Supprimer {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} {1} ?
-Cette action est irréversible.</value>
+    <value>Voulez-vous vraiment supprimer {0} {1} ?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Utilisez la molette pour changer
@@ -153,8 +152,7 @@ Maj X10, Ctrl X0.1</value>
     <value>Supprimer cette règle</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer la règle ?
-Cette action est irréversible</value>
+    <value>Voulez-vous vraiment supprimer la règle ?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>De</value>
@@ -247,8 +245,7 @@ Cette action est irréversible</value>
     <value>Supprimer tous les marquages</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les marquages ?
-Cette action est irréversible.</value>
+    <value>Voulez-vous vraiment supprimer tous les marquages ?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Extraire les données de marquage vers un fichier</value>
@@ -273,8 +270,7 @@ Cette action est irréversible.</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Voulez-vous vraiment restaurer les données ?
-Les données restaurées ont remplacer tout les marquages existants.
-Cette action est irréversible.</value>
+Les données restaurées ont remplacer tout les marquages existants.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>La restauration des marquages a échoué</value>
@@ -328,8 +324,7 @@ Cette action est irréversible.</value>
     <value>Effacer les marquages de nœuds</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les marquages du nœud #{0} ?
-Cette action est irréversible.</value>
+    <value>Voulez-vous vraiment supprimer tous les marquages du nœud #{0} ?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Cliquez pour créer une ligne</value>
@@ -838,8 +833,7 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Voulez-vous vraiment coller le marquage ?
-Cela va remplacer le marquage existant.
-Cette action est irréversible.</value>
+Cela va remplacer le marquage existant.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Raccourcis pour les passages piétons</value>
@@ -923,8 +917,7 @@ Cette action est irréversible.</value>
     <value>Réinitialiser tout les décalages de points</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud #{0} ?
-Cette action est irréversible.</value>
+    <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud #{0} ?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Maintenez puis relâchez les cercles pour configurer l'ordre
@@ -980,8 +973,7 @@ Cliquez le cercle pour modifier l'ordre des points</value>
     <value>Supprimer tous les modèles</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les modèles ?
-Cette action est irréversible.</value>
+    <value>Voulez-vous vraiment supprimer tous les modèles ?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Sauvegarder les modèles dans le fichier</value>
@@ -997,8 +989,7 @@ Cette action est irréversible.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Voulez-vous vraiment restaurer les modèles ?
-Les modèles restaurés vont remplacer tout les modèles actuels.
-Cette action est irréversible.</value>
+Les modèles restaurés vont remplacer tout les modèles actuels.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>La restauration des modèles a échoué</value>
@@ -1067,4 +1058,7 @@ Cette action est irréversible.</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Cette action est irréversible.</value>
+  </data>
 </root>

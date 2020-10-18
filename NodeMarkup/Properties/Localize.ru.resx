@@ -121,8 +121,7 @@
     <value>Удалить {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить {0} {1}?
-Это действие нельзя отменить.</value>
+    <value>Вы действительно хотите удалить {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Крутите колесико для изменения
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить правило</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить правило?
-Это действие нельзя отменить.</value>
+    <value>Вы действительно хотите удалить правило?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>От</value>
@@ -247,8 +245,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить всю разметку</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить всю разметку?
-Это действие нельзя отменить.</value>
+    <value>Вы действительно хотите удалить всю разметку?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Сохранить данные разметки в файл</value>
@@ -273,8 +270,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Вы действительно хотите восстановить разметку?
-Она заменит всю существующую разметку.
-Это действие нельзя отменить.</value>
+Она заменит всю существующую разметку.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Не удалось восстановить данные разметки</value>
@@ -328,8 +324,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить всю разметку</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить всю разметку перекрестка #{0}?
-Это действие нельзя отменить.</value>
+    <value>Вы действительно хотите удалить всю разметку перекрестка #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Нажмите для создания линии</value>
@@ -879,8 +874,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Вы действительно хотите вставить разметку?
-Она заменит существующую разметку. 
-Это действие нельзя отменить.</value>
+Она заменит существующую разметку.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Модификаторы для выбора стиля переходов</value>
@@ -964,8 +958,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Сброс смещения всех точек</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Вы действительно хотите сбросить значения смещения всех точек перекрестка #{0}?
-Это действие нельзя отменить.</value>
+    <value>Вы действительно хотите сбросить значения смещения всех точек перекрестка #{0}?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Перетащите круг для задания порядка дорог
@@ -1021,8 +1014,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить все шаблоны</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить все шаблоны?
-Это действие нельзя отменить.</value>
+    <value>Вы действительно хотите удалить все шаблоны?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Сохранить шаблоны в файл</value>
@@ -1038,8 +1030,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Вы действительно хотите восстановить шаблоны?
-Они заменит все существующие шаблоны.
-Это действие нельзя отменить.</value>
+Они заменит все существующие шаблоны.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>Не удалось восстановить шаблоны</value>
@@ -1115,4 +1106,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Потащите с Ctrl для перемещения точки</value>
   </data>
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Это действие нельзя отменить.</value>
+  </data>
 </root>

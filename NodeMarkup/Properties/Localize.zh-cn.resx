@@ -121,8 +121,7 @@
     <value>删除{0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>确定要删除 {0} {1} 吗?
-此操作不可撤销。</value>
+    <value>确定要删除 {0} {1} 吗?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>使用滚轮改变参数
@@ -153,8 +152,7 @@ Shift x10，Ctrl x0.1</value>
     <value>删除规则</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>确定要删除这个规则吗?
-此操作不可撤销。</value>
+    <value>确定要删除这个规则吗?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>起始点</value>
@@ -247,8 +245,7 @@ Shift x10，Ctrl x0.1</value>
     <value>删除所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>确定要删除全图所有的地标线吗?
-此操作不可撤销。</value>
+    <value>确定要删除全图所有的地标线吗?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>将地标线信息导出到文件</value>
@@ -273,8 +270,7 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>确定要恢复数据吗?
-恢复后的数据会覆盖全图既存的地标线。
-此操作无法撤销！</value>
+恢复后的数据会覆盖全图既存的地标线。</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>地标线信息恢复失败</value>
@@ -328,8 +324,7 @@ Shift x10，Ctrl x0.1</value>
     <value>清除节点的地标线</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>确定要删除节点 #{0} 的所有地标线吗?
-此操作不可撤销。</value>
+    <value>确定要删除节点 #{0} 的所有地标线吗?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>点击以创建线段</value>
@@ -838,8 +833,7 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>确定要粘贴标记吗?
-粘贴后会清除既存的地标线。
-此操作无法撤销！</value>
+粘贴后会清除既存的地标线。</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>人行横道修饰键</value>
@@ -923,8 +917,7 @@ Shift x10，Ctrl x0.1</value>
     <value>重置全部端点偏移</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>确定要重置 #{0} 全部的端点偏移吗?
-此操作不可撤销。</value>
+    <value>确定要重置 #{0} 全部的端点偏移吗?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>长按并拖移圆圈以设置道路排序
@@ -980,8 +973,7 @@ Shift x10，Ctrl x0.1</value>
     <value>删除所有模板</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>确定要删除所有模板吗?
-此操作不可撤销。</value>
+    <value>确定要删除所有模板吗?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>导出模板到文件</value>
@@ -997,8 +989,7 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>确定要恢复模板吗?
-恢复后的模板会覆盖既存的模板。
-此操作无法撤销。</value>
+恢复后的模板会覆盖既存的模板。</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>模板恢复失败</value>
@@ -1074,4 +1065,7 @@ Shift x10，Ctrl x0.1</value>
     <value>按住Ctrl拖动来移动端点</value>
   </data>
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>此操作不可撤销。</value>
+  </data>
 </root>

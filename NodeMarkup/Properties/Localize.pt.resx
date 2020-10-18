@@ -121,8 +121,7 @@
     <value>Apagar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar {0} {1}?
-Esta ação não pode ser desfeita.</value>
+    <value>Tem a certeza que quer mesmo apagar {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Remover Regra</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar esta regra?
-Esta ação não pode ser desfeita</value>
+    <value>Tem a certeza que quer mesmo apagar esta regra?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>De</value>
@@ -247,8 +245,7 @@ Esta ação não pode ser desfeita</value>
     <value>Remover todas as marcações</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo remover todas as marcações?
-Esta acção não pode ser desfeita.</value>
+    <value>Tem a certeza que quer mesmo remover todas as marcações?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportar dados de marcações para um ficheiro</value>
@@ -316,8 +313,7 @@ Esta acção não pode ser desfeita.</value>
     <value>Remover marcações do nó</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo remover todas as marcações do nó #{0}?
-Esta ação não pode ser desfeita.</value>
+    <value>Tem a certeza que quer mesmo remover todas as marcações do nó #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Clique para criar uma linha</value>
@@ -831,8 +827,7 @@ O carregamento de {0} marcações falhou.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Tem a certeza que quer mesmo colar a marcação?
-Vai substituir todos as marcações existente. 
-Esta acção não pode ser desfeita.</value>
+Vai substituir todos as marcações existente.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Modificadores da passadeira</value>
@@ -914,8 +909,7 @@ Esta acção não pode ser desfeita.</value>
     <value>Repor o deslocamento de todos os pontos</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo repor todos os descolamentos de pontos do nó #{0}?
-Esta ação não pode ser desfeita.</value>
+    <value>Tem a certeza que quer mesmo repor todos os descolamentos de pontos do nó #{0}?</value>
   </data>
   
   
@@ -973,4 +967,7 @@ Esta ação não pode ser desfeita.</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Esta ação não pode ser desfeita.</value>
+  </data>
 </root>

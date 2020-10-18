@@ -121,8 +121,7 @@
     <value>Verwijder {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Wil je {0} {1} echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt.</value>
+    <value>Wil je {0} {1} echt verwijderen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll het wiel om te veranderen
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Regel verwijderen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Will je de regel echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>Will je de regel echt verwijderen?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Van</value>
@@ -247,8 +245,7 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Verwijder alle markeringen</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wil je echt alle markeringen verwijderen?
-Deze actie kan niet ongedaan worden gemaakt.</value>
+    <value>Wil je echt alle markeringen verwijderen?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exporteer markeringsdata als bestand</value>
@@ -273,8 +270,7 @@ Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Weet je zeker dat je de gegevens wil herstellen?
-De herstelde zal alle bestaande markeringen vervangen.
-Deze actie kan niet ongedaan worden gemaakt.</value>
+De herstelde zal alle bestaande markeringen vervangen.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Markeringsgegevens herstellen mislukt</value>
@@ -328,8 +324,7 @@ Deze actie kan niet ongedaan worden gemaakt.</value>
     <value>Verwijder puntmarkeringen</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Wil je echt alle markeringen op punt #{0} wissen?
-Deze actie kan niet ongedaan worden gemaakt.</value>
+    <value>Wil je echt alle markeringen op punt #{0} wissen?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Klik om een lijn te maken</value>
@@ -919,8 +914,7 @@ Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt w
     <value>Reset alle punt correctieafstanden</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Wil je echt alle correctieafstanden op punt #{0} wissen?
-Deze actie kan niet ongedaan worden gemaakt.</value>
+    <value>Wil je echt alle correctieafstanden op punt #{0} wissen?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Sleep de cirkels om de wegvolgorde in te stellen
@@ -976,8 +970,7 @@ Weet je zeker dat je meerdere sjablonen met dezelfde naam will hebben?</value>
     <value>Verwijder alle sjablonen</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Weet je zeker dat je alle sjablonen wil verwijderen?
-Deze actie kan niet ongedaan worden gemaakt.</value>
+    <value>Weet je zeker dat je alle sjablonen wil verwijderen?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Exporteer sjablonen als bestand</value>
@@ -993,8 +986,7 @@ Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Weet je zeker dat je sjablonen wil herstellen?
-De herstelde sjablonen zullen alle bestaande sjablonen vervangen.
-Deze actie kan niet ongedaan worden gemaakt.</value>
+De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>Herstel sjablonen mislukt</value>
@@ -1068,4 +1060,7 @@ Wil je de markering handmatig toepassen?</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Deze actie kan niet ongedaan worden gemaakt.</value>
+  </data>
 </root>

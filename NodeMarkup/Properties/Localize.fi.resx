@@ -121,8 +121,7 @@
     <value>Poista {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa {0} {1}?
-Tätä toimintoa ei voi kumota.</value>
+    <value>Haluatko varmasti poistaa {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Vieritä hiiren rullalla vaihtaaksesi
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0,1</value>
     <value>Poista sääntö</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa säännön?
-Tätä toimintoa ei voi kumota</value>
+    <value>Haluatko varmasti poistaa säännön?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Alkupiste</value>
@@ -247,8 +245,7 @@ Tätä toimintoa ei voi kumota</value>
     <value>Poista kaikki tiemerkinnät</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
-Tätä toimintoa ei voi kumota.</value>
+    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Vie tiemerkintätiedot tiedostoon</value>
@@ -811,8 +808,7 @@ poistaaksesi suojatien</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Haluatko varmasti liittää tiemerkinnät?
-Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.
-Tätä toimintoa ei voi kumota.</value>
+Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
   </data>
   
   
@@ -932,4 +928,7 @@ Tätä toimintoa ei voi kumota.</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Tätä toimintoa ei voi kumota.</value>
+  </data>
 </root>

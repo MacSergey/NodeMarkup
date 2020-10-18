@@ -121,8 +121,7 @@
     <value>Eliminar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar {0} {1}?
-No se puede deshacer esta acción.</value>
+    <value>¿De verdad quieres eliminar {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Desplazar la rueda para cambiar
@@ -153,8 +152,7 @@ Mayús x10, Ctrl x0.1</value>
     <value>Eliminar la regla</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>De verdad quieres eliminar la regla?
-No se puede deshacer esta acción</value>
+    <value>De verdad quieres eliminar la regla?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Desde</value>
@@ -247,8 +245,7 @@ No se puede deshacer esta acción</value>
     <value>Eliminar todas las marcas</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar todas las marcas?
-No se puede deshacer esta acción.</value>
+    <value>¿De verdad quieres borrar todas las marcas?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportar las marcas al archivo</value>
@@ -316,8 +313,7 @@ No se puede deshacer esta acción.</value>
     <value>Eliminar las marcas del nodo</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar todas las marcas del nodo #{0}?
-No se puede deshacer esta acción.</value>
+    <value>¿De verdad quieres eliminar todas las marcas del nodo #{0}?</value>
   </data>
   
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
@@ -880,4 +876,7 @@ crear o eliminar el paso de peatones</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>No se puede deshacer esta acción.</value>
+  </data>
 </root>

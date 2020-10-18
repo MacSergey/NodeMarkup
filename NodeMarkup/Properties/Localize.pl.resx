@@ -121,8 +121,7 @@
     <value>Usuń {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć {0} {1}?
-Nie będzie można cofnąć tej operacji.</value>
+    <value>Czy na pewno chcesz usunąć {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Użyj kółka myszy aby zmienić wartość
@@ -153,8 +152,7 @@ Shift x10, Ctrl x0.1</value>
     <value>Usuń regułę</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć tę regułę?
-Nie będzie można cofnąć tej operacji</value>
+    <value>Czy na pewno chcesz usunąć tę regułę?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Z</value>
@@ -273,8 +271,7 @@ Tej akcji nie można cofnąć.</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Czy na pewno chcesz przywrócić dane?
-Wszystkie istniejące oznaczenia zostaną zastąpione.
-Tej akcji nie można cofnąć.</value>
+Wszystkie istniejące oznaczenia zostaną zastąpione.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Nie udało się przywrócić danych oznaczeń</value>
@@ -328,8 +325,7 @@ Tej akcji nie można cofnąć.</value>
     <value>Wyczyść oznaczenia skrzyżowania</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia skrzyżowania #{0}?
-Nie będzie można cofnąć tej operacji.</value>
+    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia skrzyżowania #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Kliknij, aby utworzyć linię</value>
@@ -835,8 +831,7 @@ Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Czy na pewno chcesz wkleić oznaczenie?
-Istniejące oznaczenie zostanie zastąpione.
-Nie będzie można cofnąć tej operacji.</value>
+Istniejące oznaczenie zostanie zastąpione.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Modyfikator przejść dla pieszych</value>
@@ -918,8 +913,7 @@ Nie będzie można cofnąć tej operacji.</value>
     <value>Resetuj przesunięcie wszystkich punktów</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie przesunięcia punktów skrzyżowania #{0}?
-Nie będzie można cofnąć tej operacji.</value>
+    <value>Czy na pewno chcesz usunąć wszystkie przesunięcia punktów skrzyżowania #{0}?</value>
   </data>
   
   
@@ -968,8 +962,7 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku szablonów?</value>
     <value>Usuń wszystkie szablony</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie szablony?
-Nie będzie można cofnąć tej operacji.</value>
+    <value>Czy na pewno chcesz usunąć wszystkie szablony?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Wykonaj kopię zapasową szablonów do pliku</value>
@@ -985,8 +978,7 @@ Nie będzie można cofnąć tej operacji.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Czy na pewno chcesz przywrócić szablony?
-Wszystkie istniejące szablony zostaną zastąpione.
-Nie będzie można cofnąć tej operacji.</value>
+Wszystkie istniejące szablony zostaną zastąpione.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>Nie udało się przywrócić szablonów</value>
@@ -1029,4 +1021,7 @@ Nie będzie można cofnąć tej operacji.</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Nie będzie można cofnąć tej operacji.</value>
+  </data>
 </root>

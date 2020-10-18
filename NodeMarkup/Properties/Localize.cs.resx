@@ -121,8 +121,7 @@
     <value>Odstranit {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit {0} {1}?
-Tuto akci nelze vrátit zpět.</value>
+    <value>Opravdu chcete odstranit {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Použijte kolečko myši pro změnu hodnoty
@@ -153,8 +152,7 @@ Shift ×10, Ctrl ×0.1</value>
     <value>Odstranit pravidlo</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit toto pravidlo?
-Tuto akci nelze vrátit zpět</value>
+    <value>Opravdu chcete odstranit toto pravidlo?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Z</value>
@@ -247,8 +245,7 @@ Tuto akci nelze vrátit zpět</value>
     <value>Odstranit všechna značení</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Opravdu si přejete odstranit všechna značení?
-Tuto akci nelze vrátit zpět.</value>
+    <value>Opravdu si přejete odstranit všechna značení?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportovat data do souboru</value>
@@ -273,8 +270,7 @@ Tuto akci nelze vrátit zpět.</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Opravdu si přejete obnovit data?
-Původní data připíší všechna existující značení.
-Tuto akci nelze vrátit zpět.</value>
+Původní data připíší všechna existující značení.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Obnovení dat se nezdařilo</value>
@@ -328,8 +324,7 @@ Tuto akci nelze vrátit zpět.</value>
     <value>Odstranit všechna značení z této křižovatky</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?
-Tuto akci nelze vrátit zpět.</value>
+    <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Klikněte pro vytvoření čáry</value>
@@ -835,8 +830,7 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Opravdu si přejete vložit značení?
-Původní značení bude odstraněno.
-Tuto akci nelze vrátit zpět.</value>
+Původní značení bude odstraněno.</value>
   </data>
   
   
@@ -908,8 +902,7 @@ Tuto akci nelze vrátit zpět.</value>
     <value>Resetovat odsazení všech bodů</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Opravdu chcete resetovat odsazení všech bodů na křižovatce #{0}?
-Tuto akci nelze vrátit zpět.</value>
+    <value>Opravdu chcete resetovat odsazení všech bodů na křižovatce #{0}?</value>
   </data>
   
   
@@ -960,8 +953,7 @@ Opravdu chcete mít více šablon se stejným jménem?</value>
     <value>Odstranit všechny šablony</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Opravdu si přejete odstranit všechny šablony?
-Tuto akci nelze vrátit zpět.</value>
+    <value>Opravdu si přejete odstranit všechny šablony?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Exportovat šablony do souboru</value>
@@ -977,8 +969,7 @@ Tuto akci nelze vrátit zpět.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Opravdu si přejete obnovit šablony?
-Původní data připíší všechny existující šablony.
-Tuto akci nelze vrátit zpět.</value>
+Původní data připíší všechny existující šablony.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>Obnovení šablon se nezdařilo</value>
@@ -1025,4 +1016,7 @@ Tuto akci nelze vrátit zpět.</value>
   </data>
   
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Tuto akci nelze vrátit zpět.</value>
+  </data>
 </root>
