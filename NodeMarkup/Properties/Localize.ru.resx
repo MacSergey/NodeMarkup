@@ -293,26 +293,11 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Показывать подсказки</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Цвет</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Длина штриха</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>шаблон</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Название</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Сдвиг</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Длина промежутка</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Стиль</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Шаблоны</value>
@@ -375,12 +360,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Ширина</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Ширина</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Инвертировать</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Сплошная и пунктирная</value>
@@ -1105,7 +1084,28 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Потащите с Ctrl для перемещения точки</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
+    <value>ПРЕДУПРЕЖДЕНИЕ: Настройки шаблонов по умолчанию будут сброшены.
+
+- Добавлена возможность копировать разметку с одного перекрестка на другой.
+- Теперь при замене дороги с другим количеством точек, разметка не будет удаляться.
+- Добавлена поддержка редактора карт.
+- Добавлена возможность сохранять разметку в активах развязок.
+- Добавлен стиль "Акульи зубы" для линий и стоп линий.
+- Добавлен стиль "Сплошная и пунктирная" для стоп линии.
+- Добавлен стиль "Шахматная доска" для переходов.
+- Добавлена возможность задавать модификаторы для выбора стилей при создании линий/заполнителей/переходов.
+- Добавлена возможность дублировать шаблоны.
+- Добавлена возможность иметь несколько шаблонов с одинаковым именем.
+- Добавлена возможность начинать Шеврон из граней.
+- Добавлена возможность получать предупреждение при удалении только если будут удалены зависимые элементы.
+- Добавлена возможность изменять размер панели.
+- Добавлена возможность делать резервирование шаблонов.
+- Добавлена возможность сбрасывать значение сдвига всех точек сразу.
+- Добавлена поддержка отзеркаливания с помощью MoveIt (необходимо ожидать обновление MoveIt).
+- Обновлен алгоритм расчёта Шевронов.
+- Исправлено дублирование вершин в интерфейсе создания заполнителей.</value>
+  </data>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Это действие нельзя отменить.</value>
   </data>
