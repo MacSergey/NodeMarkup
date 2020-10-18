@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections;
@@ -33,24 +35,43 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
         public ushort Id { get; }
-        public float Height { get; private set; }
+        public Vector3 Position { get; private set; }
+        public float Radius { get; private set; }
+        public float Height => Position.y;
 
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
-        List<Bezier3> ContourParts { get; set; } = new List<Bezier3>();
+        List<ILineTrajectory> ContourParts { get; set; } = new List<ILineTrajectory>();
 
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
-        public IEnumerable<Bezier3> Contour => ContourParts;
+        public IEnumerable<ILineTrajectory> Contour => ContourParts;
 
         public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
+
+        private bool _needSetOrder;
+        public bool NeedSetOrder
+        {
+            get => _needSetOrder;
+            set
+            {
+
+                if (_needSetOrder && !value)
+                    Backup = null;
+                else if (!_needSetOrder && value)
+                    Backup = new MarkupBuffer(this);
+
+                _needSetOrder = value;
+            }
+        }
+        public MarkupBuffer Backup { get; private set; }
 
         #endregion
 
@@ -75,7 +96,7 @@ namespace NodeMarkup.Manager
         private void UpdateEnters()
         {
             var node = Utilities.GetNode(Id);
-            Height = node.m_position.y;
+            Position = node.m_position;
 
             var oldEnters = EntersList;
             var exists = oldEnters.Select(e => e.Id).ToList();
@@ -89,45 +110,62 @@ namespace NodeMarkup.Manager
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
             newEnters.Sort((e1, e2) => e1.AbsoluteAngle.CompareTo(e2.AbsoluteAngle));
 
-            if (delete.Length == 1 && add.Length == 1 && oldEnters.Find(e => e.Id == delete[0]).PointCount == newEnters.Find(e => e.Id == add[0]).PointCount)
-            {
-                var map = new Dictionary<ObjectId, ObjectId>()
-                {
-                    {new ObjectId() {Segment = delete[0] },  new ObjectId() {Segment = add[0] }}
-                };
-
-                var currentData = ToXml();
-                EntersList = newEnters;
-                Clear();
-                FromXml(Mod.Version, currentData, map);
-            }
-            else
-                EntersList = newEnters;
+            UpdateBackup(delete, add, oldEnters, newEnters);
 
             foreach (var enter in EntersList)
                 enter.Update();
 
             UpdateNodeСontour();
+            UpdateRadius();
 
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
         }
+        private void UpdateBackup(ushort[] delete, ushort[] add, List<Enter> oldEnters, List<Enter> newEnters)
+        {
+            if (delete.Length == 1 && add.Length == 1)
+            {
+                var before = oldEnters.Find(e => e.Id == delete[0]).PointCount;
+                var after = newEnters.Find(e => e.Id == add[0]).PointCount;
+
+                if (before != after && !NeedSetOrder)
+                    NeedSetOrder = true;
+
+                if (NeedSetOrder)
+                {
+                    if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectType.Segment && p.Value.Segment == delete[0]) is KeyValuePair<ObjectId, ObjectId> pair)
+                    {
+                        Backup.Map.Remove(pair.Key);
+                        Backup.Map.AddSegment(pair.Key.Segment, add[0]);
+                    }
+                    else
+                        Backup.Map.AddSegment(delete[0], add[0]);
+                }
+
+                if (before == after)
+                {
+                    var map = new ObjectsMap();
+                    map.AddSegment(delete[0], add[0]);
+                    var currentData = ToXml();
+                    EntersList = newEnters;
+                    Clear();
+                    FromXml(Mod.Version, currentData, map);
+                }
+                else
+                    EntersList = newEnters;
+            }
+            else
+                EntersList = newEnters;
+        }
+
         private void UpdateNodeСontour()
         {
-            var contourParts = new List<Bezier3>();
+            var contourParts = new List<ILineTrajectory>();
 
             for (var i = 0; i < EntersList.Count; i += 1)
             {
                 var prev = EntersList[i];
-                var currentBezier = new Bezier3()
-                {
-                    a = prev.LeftSide,
-                    d = prev.RightSide
-                };
-                var currentDir = (currentBezier.d - currentBezier.a).normalized;
-                NetSegment.CalculateMiddlePoints(currentBezier.a, currentDir, currentBezier.d, -currentDir, true, true, out currentBezier.b, out currentBezier.c);
-                contourParts.Add(currentBezier);
-
+                contourParts.Add(new StraightTrajectory(prev.LeftSide, prev.RightSide));
 
                 var next = GetNextEnter(i);
                 var betweenBezier = new Bezier3()
@@ -136,11 +174,12 @@ namespace NodeMarkup.Manager
                     d = next.LeftSide
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
-                contourParts.Add(betweenBezier);
+                contourParts.Add(new BezierTrajectory(betweenBezier));
             }
 
             ContourParts = contourParts;
         }
+        private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
         private void UpdateLines()
         {
@@ -219,6 +258,11 @@ namespace NodeMarkup.Manager
 
             RecalculateDashes();
         }
+        public void ResetOffsets()
+        {
+            foreach (var enter in EntersList)
+                enter.ResetOffsets();
+        }
 
         #endregion
 
@@ -252,23 +296,30 @@ namespace NodeMarkup.Manager
         #region LINES
 
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
-        {
-            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
-            {
-                RemoveConnect(line);
-                return null;
-            }
-            else
-            {
-                if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
-                    return null;
+        //public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
+        //{
+        //    if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
+        //    {
+        //        RemoveConnect(line);
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
+        //            return null;
 
-                line = MarkupLine.FromStyle(this, pointPair, style);
-                LinesDictionary[pointPair.Hash] = line;
-                NeedRecalculateBatches = true;
-                return line;
-            }
+        //        line = MarkupLine.FromStyle(this, pointPair, style);
+        //        LinesDictionary[pointPair.Hash] = line;
+        //        NeedRecalculateBatches = true;
+        //        return line;
+        //    }
+        //}
+        public MarkupLine AddConnection(MarkupPointPair pointPair, Style.StyleType style)
+        {
+            var line = MarkupLine.FromStyle(this, pointPair, style);
+            LinesDictionary[pointPair.Hash] = line;
+            NeedRecalculateBatches = true;
+            return line;
         }
         public void RemoveConnect(MarkupLine line)
         {
@@ -297,16 +348,33 @@ namespace NodeMarkup.Manager
 
             LinesDictionary.Remove(line.PointPair.Hash);
         }
+        public Dependences GetLineDependences(MarkupLine line)
+        {
+            var dependences = new Dependences
+            {
+                Rules = 0,
+                Fillers = GetLineFillers(line).Count(),
+                Crosswalks = CrosswalksDictionary.ContainsKey(line) ? 1 : 0,
+                CrosswalkBorders = GetLinesIsBorder(line).Count(),
+            };
+            foreach (var intersect in GetExistIntersects(line).ToArray())
+            {
+                if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
+                    dependences.Rules += regularLine.GetLineDependences(line);
+            }
+
+            return dependences;
+        }
 
         #endregion
 
         #region GET & CONTAINS
 
-        public bool TryGetLine(ulong lineId, out MarkupLine line) => LinesDictionary.TryGetValue(lineId, out line);
-        public bool TryGetLine<LineType>(ulong lineId, out LineType line)
+        public bool TryGetLine(MarkupPointPair pointPair, out MarkupLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
+        public bool TryGetLine<LineType>(MarkupPointPair pointPair, out LineType line)
             where LineType : MarkupLine
         {
-            if (LinesDictionary.TryGetValue(lineId, out MarkupLine rawLine) && rawLine is LineType)
+            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine rawLine) && rawLine is LineType)
             {
                 line = rawLine as LineType;
                 return true;
@@ -317,11 +385,11 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool TryGetLine<LineType>(ulong lineId, Dictionary<ObjectId, ObjectId> map, out LineType line)
+        public bool TryGetLine<LineType>(ulong lineId, ObjectsMap map, out LineType line)
             where LineType : MarkupLine
         {
-            if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair))
-                return TryGetLine(pair.Hash, out line);
+            if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair, out _))
+                return TryGetLine(pair, out line);
             else
             {
                 line = null;
@@ -372,9 +440,9 @@ namespace NodeMarkup.Manager
         }
 
         public Enter GetNextEnter(Enter current) => GetNextEnter(EntersList.IndexOf(current));
-        public Enter GetNextEnter(int index) => EntersList[index == EntersList.Count - 1 ? 0 : index + 1];
+        public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
-        public Enter GetPrevEnter(int index) => EntersList[index == 0 ? EntersList.Count - 1 : index - 1];
+        public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
@@ -409,6 +477,13 @@ namespace NodeMarkup.Manager
             NeedRecalculateBatches = true;
         }
         public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
+        public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
+        {
+            var dependences = GetLineDependences(crosswalk.Line);
+            dependences.Crosswalks = 0;
+            dependences.Lines = 1;
+            return dependences;
+        }
 
         #endregion
 
@@ -434,14 +509,16 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(Version version, XElement config, out Markup markup)
+        public static bool FromXml(Version version, XElement config, ObjectsMap map, out Markup markup)
         {
             var nodeId = config.GetAttrValue<ushort>(nameof(Id));
+            while (map.TryGetValue(new ObjectId() { Node = nodeId }, out ObjectId targetNode))
+                nodeId = targetNode.Node;
 
             try
             {
                 markup = MarkupManager.Get(nodeId);
-                markup.FromXml(version, config);
+                markup.FromXml(version, config, map);
                 return true;
             }
             catch (Exception error)
@@ -452,7 +529,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public void FromXml(Version version, XElement config, Dictionary<ObjectId, ObjectId> map = null)
+        public void FromXml(Version version, XElement config, ObjectsMap map)
         {
             if (version < new Version("1.2"))
                 map = VersionMigration.Befor1_2(this, map);
@@ -460,18 +537,21 @@ namespace NodeMarkup.Manager
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
                 MarkupPoint.FromXml(pointConfig, this, map);
 
-            var toInit = new Dictionary<MarkupLine, XElement>();
+            var toInitLines = new Dictionary<MarkupLine, XElement>();
+            var invertLines = new HashSet<MarkupLine>();
             foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
             {
-                if (MarkupLine.FromXml(lineConfig, this, map, out MarkupLine line))
+                if (MarkupLine.FromXml(lineConfig, this, map, out MarkupLine line, out bool invertLine))
                 {
                     LinesDictionary[line.Id] = line;
-                    toInit[line] = lineConfig;
+                    toInitLines[line] = lineConfig;
+                    if (invertLine)
+                        invertLines.Add(line);
                 }
             }
 
-            foreach (var pair in toInit)
-                pair.Key.FromXml(pair.Value, map);
+            foreach (var pair in toInitLines)
+                pair.Key.FromXml(pair.Value, map, invertLines.Contains(pair.Key));
 
             foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
             {

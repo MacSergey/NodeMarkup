@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Удалить {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить {0} {1}?
-Это действие нельзя отменить</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Крутите колесико для изменения
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить правило</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить правило?
-Это действие нельзя отменить</value>
+    <value>Вы действительно хотите удалить правило?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>От</value>
@@ -231,13 +229,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Не задано</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Активация инструмента</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Добавление нового правила</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Удалить все линии перекрестка</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,55 +245,44 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить всю разметку</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить всю разметку?
-Это действие нельзя отменить</value>
+    <value>Вы действительно хотите удалить всю разметку?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Сохранить разметку в файл</value>
+    <value>Сохранить данные разметки в файл</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Копировать путь в буфер</value>
   </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>ОК</value>
-  </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Сохранить разметку</value>
+    <value>Сохранить данные разметки</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
-    <value>Не удалось сохранить разметки</value>
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
+    <value>Не удалось сохранить</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
-    <value>Разметки успешно сохранены</value>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>Успешно сохранено</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Основные</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Восстановить данные разметки из файла</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Импортировать разметку из файла</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Восстановить данные разметки</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Импорт разметки</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Вы действительно хотите восстановить разметку?
+Она заменит всю существующую разметку.</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Вы действительно хотите импортировать разметку?
-Она заменит всю существующую разметку.
-Это действие нельзя отменить</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Не удалось восстановить данные разметки</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Не удалось импортировать  разметку</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Разметку успешно импортирована</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Другие</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Данные разметки успешно восстановлены</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Быстрая настройка правил</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Дистанция отрисовки</value>
+    <value>Дистанция отображения</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
     <value>Горячие клавиши</value>
@@ -337,13 +324,10 @@ Shift X10, Ctrl X0.1</value>
     <value>Удалить всю разметку</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить всю разметку перекрестка #{0}?
-Это действие нельзя отменить</value>
+    <value>Вы действительно хотите удалить всю разметку перекрестка #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Нажмите для создания линии
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value>Нажмите для создания линии</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Нажмите для удаления линии</value>
@@ -356,16 +340,12 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите перекресток для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value>Выберите конечную точку для обычной или стоп линии
+Потяните из перекрестка для перпендикулярной линии</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
-для создания или удаления линии
-+Ctrl для перемещения точки
-Зажмите Alt для создания заполнителя
-Зажмите Shift для создания перехода</value>
+для создания или удаления линии</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Что нового в {0}</value>
@@ -384,10 +364,10 @@ Shift X10, Ctrl X0.1</value>
 - Подсветка правила линии при наведении на панель редактирования.
 - Китайский язык.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Импорт</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Восстановление</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -494,7 +474,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Уведомления только о важных обновлениях</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Создать  заполнитель</value>
   </data>
   
@@ -532,7 +512,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Список шаблонов пуст.
-Для создания шаблона нажмите «{0}» у стиля линии.</value>
+Для создания шаблона нажмите «{0}» у стиля линии или перехода или заполнителя.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Активировать ключом</value>
@@ -623,8 +603,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Ранний доступ</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Центрировать сплошную</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Выравнивание</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Я согласен</value>
@@ -684,9 +664,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Язык</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Нажмите для создания перпендикулярной линии
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value>Нажмите для создания перпендикулярной линии</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Нажмите для удаления перпендикулярной линии</value>
@@ -854,5 +832,281 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Устранение неполадок</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Шахматная доска</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Количество линий</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Основание треугольника</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Высота треугольника</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Расстояние между</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Сторона квадрата</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Акульи зубы</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Акульи зубы</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Сплошная и пунктирная</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Удалить всю разметку</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Скопировать разметку</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Вставить разметку</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Вставить разметку</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Вы действительно хотите вставить разметку?
+Она заменит существующую разметку.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля переходов</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля заполнителей</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля обычных линий</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Модификаторы для выбора стиля стоп линий</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Не задано</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Без модификатора</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Всегда</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Только если будут удалены другие элементы</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Зависящие элементы так же будут удалены:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Границы переходов - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Переходы - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Заполнители - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Линии - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Правила - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Pезервирование</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Отображение и использование</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Основные</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Группировка</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Горячие клавиши</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Поддержка</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Дублировать</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Копия</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Грань</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Начало из</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Вершина</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Сброс смещения всех точек</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Сброс смещения всех точек</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Вы действительно хотите сбросить значения смещения всех точек перекрестка #{0}?</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Перетащите круг для задания порядка дорог
+Нажмите на круг для редактирования порядка точек</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Поместите или уберите круг с цели для задания порядка дорог</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Скопировать разметку</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Вставить разметку</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Инвертировать порядок</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Повернуть по часовой стрелке</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Повернуть против часовой стрелки</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Центр</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Лево</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Право</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Безымянный шаблон</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Имя уже используется</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Имя "{0}" уже используется другим шаблоном.
+Вы уверены, что хотите иметь несколько шаблонов с одинаковым именем?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Резервирование разметки</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Резервирование шаблонов</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Удалить все шаблоны</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Удалить все шаблоны</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить все шаблоны?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Сохранить шаблоны в файл</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Сохранение шаблонов</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Восстановление шаблонов из файла</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Восстановление шаблонов</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Вы действительно хотите восстановить шаблоны?
+Они заменит все существующие шаблоны.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Не удалось восстановить шаблоны</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Шаблоны успешно восстановлены</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Выход из режима вставки</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Вы хотите выйти из режима вставки и применить изменения?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Не применять</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Не применять</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Изменение порядка маркировки</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Изменение порядка маркировки</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Дороги были изменены</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Дороги были изменены и не удалось автоматически применить к ним существующую разметку.
+Хотите применить ее вручную?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Выход из режима редактирования порядка</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Вы хотите выйти из режима редактирования и применить новый порядок?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Перетащите круг для задания порядка точек</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Поместите или уберите круг с цели для задания порядка точек</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Сплошная по центру</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Зажмите Shift для создания перехода</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Зажмите Alt для создания заполнителя</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Потащите с Ctrl для перемещения точки</value>
+  </data>
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Это действие нельзя отменить.</value>
   </data>
 </root>

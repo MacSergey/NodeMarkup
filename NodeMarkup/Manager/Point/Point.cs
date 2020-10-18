@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,16 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IUpdate, IToXml, IFromXml
+    public abstract class MarkupPoint : IUpdate, IDeletable, IToXml
     {
         public event Action<MarkupPoint> OnUpdate;
-        static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
-        static ushort GetEnter(int id) => (ushort)id;
-        static byte GetNum(int id) => (byte)(id >> 16);
-        static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
+        public static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
+        public static ushort GetEnter(int id) => (ushort)id;
+        public static byte GetNum(int id) => (byte)(id >> 16);
+        public static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
         public static string XmlName { get; } = "P";
 
-        public static bool FromId(int id, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPoint point)
+        public static bool FromId(int id, Markup markup, ObjectsMap map, out MarkupPoint point)
         {
             point = null;
 
@@ -27,16 +28,16 @@ namespace NodeMarkup.Manager
             var num = GetNum(id);
             var type = GetType(id);
 
-            if (map != null)
-            {
-                if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
-                    enterId = targetSegment.Segment;
-                if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
-                    num = GetNum(targetPoint.Point);
-            }
+            if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
+                enterId = targetSegment.Segment;
+            if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
+                num = GetNum(targetPoint.Point);
 
             return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(num, type, out point);
         }
+
+        public string DeleteCaptionDescription => Localize.PointEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.PointEditor_DeleteMessageDescription;
 
         float _offset = 0;
         public float Offset
@@ -52,7 +53,7 @@ namespace NodeMarkup.Manager
         public byte Num { get; }
         public int Id { get; }
         public abstract PointType Type { get; }
-        public Color32 Color => MarkupColors.GetOverlayColor(Num - 1);
+        public Color32 Color => Colors.GetOverlayColor(Num - 1);
 
         private static Vector3 MarkerSize { get; } = Vector3.one * 1f;
         public virtual Vector3 Position
@@ -108,16 +109,18 @@ namespace NodeMarkup.Manager
             );
             return config;
         }
-        public static void FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map)
+        public static void FromXml(XElement config, Markup markup, ObjectsMap map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
             if (FromId(id, markup, map, out MarkupPoint point))
-                point.FromXml(config);
+                point.FromXml(config, map);
         }
-        public void FromXml(XElement config)
+        public void FromXml(XElement config, ObjectsMap map)
         {
-            _offset = config.GetAttrValue<float>("O");
+            _offset = config.GetAttrValue<float>("O") * (map.IsMirror ? -1 : 1);
         }
+
+        public Dependences GetDependences() => throw new NotSupportedException();
 
         public enum PointType
         {
@@ -148,6 +151,14 @@ namespace NodeMarkup.Manager
             SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
             Position = position;
             Direction = direction;
+        }
+        public Vector3 ZeroPosition
+        {
+            get
+            {
+                SegmentLine.GetPositionAndDirection(Location, 0, out Vector3 position, out _);
+                return position;
+            }
         }
     }
     public class MarkupCrosswalkPoint : MarkupPoint
@@ -192,8 +203,8 @@ namespace NodeMarkup.Manager
             var tSet = new HashSet<float>();
 
             var line = new StraightTrajectory(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction, false);
-            foreach (var bezier in Markup.Contour)
-                tSet.AddRange(MarkupIntersect.Calculate(line, (BezierTrajectory)bezier).Where(i => i.IsIntersect).Select(i => i.FirstT));
+            foreach (var contour in Markup.Contour)
+                tSet.AddRange(MarkupIntersect.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.FirstT));
 
             var tSetSort = tSet.OrderBy(i => i).ToArray();
 
@@ -210,7 +221,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupPointPair pair)
+        public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
         {
             var firstId = (int)hash;
             var secondId = (int)(hash >> 32);
@@ -218,11 +229,13 @@ namespace NodeMarkup.Manager
             if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
             {
                 pair = new MarkupPointPair(first, second);
+                invert = first.Id <= second.Id;
                 return true;
             }
             else
             {
                 pair = default;
+                invert = false;
                 return false;
             }
         }
@@ -237,9 +250,10 @@ namespace NodeMarkup.Manager
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {
-            First = first;
-            Second = second;
-            Hash = ((ulong)Math.Max(First.Id, Second.Id)) + (((ulong)Math.Min(First.Id, Second.Id)) << 32);
+            First = first.Id > second.Id ? first : second;
+            Second = first.Id > second.Id ? second : first;
+
+            Hash = (ulong)First.Id + (((ulong)Second.Id) << 32);
         }
 
         public string XmlSection => XmlName;

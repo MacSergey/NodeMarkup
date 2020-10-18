@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,6 @@ namespace NodeMarkup.UI.Editors
             {
                 foreach (var point in enter.Points)
                     AddItem(point);
-
-                //foreach (var point in enter.Crosswalks)
-                //    AddItem(point);
             }
         }
         protected override void OnObjectSelect()
@@ -53,13 +51,11 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverItem.Object, MarkupColors.White, 2f);
+                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverItem.Object, Colors.White, 2f);
         }
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.PointEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.PointEditor_DeleteMessageDescription;
         public override void Init() => Init(true, false);
         protected override void OnObjectSet() => Icon.InnerColor = Object.Color;
     }

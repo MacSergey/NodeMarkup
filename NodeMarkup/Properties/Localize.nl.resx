@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Verwijder {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Wil je {0} {1} echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Wil je {0} {1} echt verwijderen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll het wiel om te veranderen
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Regel verwijderen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Will je de regel echt verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>Will je de regel echt verwijderen?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Van</value>
@@ -231,13 +229,13 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Niet ingesteld</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Activeer programma</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Voeg nieuwe lijnregel toe</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,49 +245,38 @@ Deze actie kan niet ongedaan worden gemaakt</value>
     <value>Verwijder alle markeringen</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Wil je echt alle markeringen verwijderen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>Wil je echt alle markeringen verwijderen?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exporteer markeringsdata als bestand</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Kopieer bestandslocatie naar klembord</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>Oké</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exporteer markeringsdata</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Export mislukt</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Export gelukt</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Algemeen</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Herstel markeringsgegevens uit bestand</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importeer markeringsgegevens uit bestand</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Herstel markeringsgegevens</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importeer markeringsdata</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Weet je zeker dat je de gegevens wil herstellen?
+De herstelde zal alle bestaande markeringen vervangen.</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Wil je echt deze data importeren?
-De geïmporteerde data vervangt alle huidige markeringen.
-Deze actie kan niet ongedaan worden gedaan</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Markeringsgegevens herstellen mislukt</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Markeringsdata niet geïmporteerd</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Markeringsdata succesvol geïmporteerd</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Andere</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Markeringsgegevens zijn succesvol hersteld</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Snelle regel setup</value>
@@ -337,13 +324,10 @@ Deze actie kan niet ongedaan worden gedaan</value>
     <value>Verwijder puntmarkeringen</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Wil je echt alle punt #{0} markeringen wissen?
-Deze actie kan niet ongedaan worden gemaakt</value>
+    <value>Wil je echt alle markeringen op punt #{0} wissen?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klik om een lijn te maken
-+Shift - Ononderbroken
-+Ctrl - Dubbel</value>
+    <value>Klik om een lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Klik om de lijn te verwijderen</value>
@@ -354,17 +338,10 @@ Deze actie kan niet ongedaan worden gemaakt</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selecteer eindpunt
-+Shift - Ononderbroken
-+Ctrl - Dubbel</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
-een lijn te creëren of te verwijderen
-+Ctrl om een punt te verplaatsen
-Houd Alt ingedrukt om een opvulling te creëren
-Houd Shift ingedrukt om een zebrapad te creëren</value>
+een lijn te creëren of te verwijderen</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Wat is er nieuw in {0}</value>
@@ -373,10 +350,10 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
     <value>Toon wat nieuw is</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importeer</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Herstel</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Annuleer</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -468,7 +445,7 @@ Houd Shift ingedrukt om een zebrapad te creëren</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Alleen meldingen over grote updates</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Nieuwe opvulling toevoegen</value>
   </data>
   
@@ -506,7 +483,7 @@ Houdt Alt ingedrukt of klik {0} om een opvulling te maken.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>De lijst met sjablonen is leeg.
-Klik «{0}» bij de lijnstijl om een sjabloon te maken.</value>
+Klik «{0}» bij de lijn-, zebrapad- of opvuliingstijl om een sjabloon te maken.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activeren met sleutel</value>
@@ -597,8 +574,8 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Vroegtijdige toegang</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Centreer niet onderbroken</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Uitlijning</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Ik ga akkoord</value>
@@ -658,9 +635,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Taal</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klik om een loodrechte lijn te maken
-+Shift - Niet onderbroken
-+Ctrl - Dubbel</value>
+    <value>Klik om een loodrechte lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klik om de loodrechte lijn te verwijderen</value>
@@ -813,5 +788,279 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Probleemoplossing</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Schaakbord</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Aantal lijnen</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Haaientand breedte</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Haaientand lengte</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Tussenafstand</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Vierkant lengte</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Haaientanden</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Haaientanden</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Ononderbroken en onderbroken</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Verwijder markering</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopieer markering</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Plak markering</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Plak markering</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Weet je zeker dat je de markering wilt plakken?
+Het zal de huidige markering vervangen en deze actie kan niet ongedaan gemaakt worden.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Zebrapad sneltoetsen</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Opvulling sneltoetsen</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Normale lijn sneltoetsen</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Stoplijn sneltoetsen</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Niet ingesteld</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Zonder sneltoets</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Altijd</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Alleen wanneer het impact heeft op afhankelijke markeringen</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Afhankelijke markeringen worden ook verwijderd:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Zebrapad randen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Zebrapad - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Opvullingen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Lijnen - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Regels - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Weergave en gebruik</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Algemeen</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Groeperingen</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Snelkoppelingen en Sneltoetsen</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Dupliceren</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopiëren</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Kant</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Beginnend vanaf</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Hoekpunt</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Reset alle punt correctieafstanden</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Reset alle punt correctieafstanden</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Wil je echt alle correctieafstanden op punt #{0} wissen?</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Sleep de cirkels om de wegvolgorde in te stellen
+Klik op een cirkel om de wegvolgorde te veranderen</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Sleep de cirkel in of uit het doel om de wegvolgorde te bevestigen of ongedaan te maken</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopieer markering</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Plak markering</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Volgorde omdraaien</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Draai met de klok mee</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Draai tegen de klok in</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Midden</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Naamloos sjabloon</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Naam is al in gebruik</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>De naam "{0}" is al in gebruik door een ander sjabloon.
+Weet je zeker dat je meerdere sjablonen met dezelfde naam will hebben?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Maak Markering Backup</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Maak Sjablonen backup</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Verwijder alle sjablonen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Verwijder alle sjablonen</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Weet je zeker dat je alle sjablonen wil verwijderen?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Exporteer sjablonen als bestand</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Exporteer sjablonen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Herstel sjablonen uit bestand</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Herstel sjablonen</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Weet je zeker dat je sjablonen wil herstellen?
+De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Herstel sjablonen mislukt</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Sjablonen zijn succesvol hersteld</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Toepassen</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Doorgaan</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Uit plakmodus gaan</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Wil je uit plakmodus gaan en de kopie toepassen?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Niet toepassen</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Toepassen</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Niet toepassen</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Wijzig markeringsvolgorde</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Wijzig markeringsvolgorde</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Wegen zijn veranderd</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>De wegen op deze kruising zijn veranderd, daarom kan de huidige markering niet automatisch worden toegepast.
+Wil je de markering handmatig toepassen?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Volgordemodus verlaten</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Wil je de wijzigingsmodus verlaten en de nieuwe volgorde toepassen?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Sleep de cirkel om de puntvolgorde in te stellen</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Sleep de cirkel in of uit het doel om de puntvolgorde te bevestigen of ongedaan te maken</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Ononderbroken centreren</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Nee</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Houd Shift ingedrukt om een zebrapad te creëren</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Houd Alt ingedrukt om een opvulling te creëren</value>
+  </data>
+  
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
 </root>

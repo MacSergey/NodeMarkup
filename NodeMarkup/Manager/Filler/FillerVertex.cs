@@ -11,12 +11,12 @@ namespace NodeMarkup.Manager
     public interface IFillerVertex : ISupportPoint
     {
         MarkupLine GetCommonLine(IFillerVertex other);
-        IEnumerable<IFillerVertex> GetNextCandidates(MarkupFiller filler, IFillerVertex prev);
+        IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
     }
     public static class FillerVertex
     {
         public static string XmlName { get; } = "V";
-        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out IFillerVertex fillerVertex)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out IFillerVertex fillerVertex)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -35,7 +35,7 @@ namespace NodeMarkup.Manager
     }
     public class EnterFillerVertex : EnterSupportPoint, IFillerVertex
     {
-        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out EnterFillerVertex enterPoint)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterFillerVertex enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
@@ -68,43 +68,46 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public IEnumerable<IFillerVertex> GetNextCandidates(MarkupFiller filler, IFillerVertex prev)
+        public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
             if(!(prev is EnterFillerVertex prevE && Enter == prevE.Point.Enter))
-                foreach (var vertex in GetEnterOtherPoints(filler))
+                foreach (var vertex in GetEnterOtherPoints(contour))
                     yield return vertex;
 
             if (Point.IsEdge)
             {
-                foreach (var vertex in GetOtherEnterPoint(filler))
+                foreach (var vertex in GetOtherEnterPoint(contour))
                     yield return vertex;
             }
 
-            foreach (var vertex in GetPointLinesPoints(filler))
+            foreach (var vertex in GetPointLinesPoints(contour))
                 yield return vertex;
         }
-        private IEnumerable<IFillerVertex> GetOtherEnterPoint(MarkupFiller filler)
+        private IEnumerable<IFillerVertex> GetOtherEnterPoint(FillerContour contour)
         {
             var otherEnterPoint = Point.IsFirst ? Enter.Next.LastPoint : Enter.Prev.FirstPoint;
             var vertex = new EnterFillerVertex(otherEnterPoint);
-            if (vertex.Equals(filler.First) || !filler.Vertices.Any(v => vertex.Equals(v)))
+            var isCanEnd = vertex.Equals(contour.First) && contour.VertexCount >= 3;
+            var isUsed = contour.Vertices.Any(v => vertex.Equals(v));
+            var isEdgeLine = Point.Lines.Any(l => l.ContainsPoint(otherEnterPoint));
+            if ((isCanEnd || !isUsed) && !isEdgeLine)
                 yield return vertex;
         }
-        private IEnumerable<IFillerVertex> GetEnterOtherPoints(MarkupFiller filler)
+        private IEnumerable<IFillerVertex> GetEnterOtherPoints(FillerContour contour)
         {
-            filler.GetMinMaxNum(this, out byte num, out byte minNum, out byte maxNum);
+            contour.GetMinMaxNum(this, out byte num, out byte minNum, out byte maxNum);
 
             foreach (var point in Enter.Points.Where(p => p.Num != num && minNum < p.Num && p.Num < maxNum && (p.IsEdge || p.Lines.Any())))
                 yield return new EnterFillerVertex(point);
 
-            if (filler.First is EnterFillerVertex first && first.Enter == Enter && (minNum == first.Point.Num || first.Point.Num == maxNum))
+            if (contour.First is EnterFillerVertex first && first.Enter == Enter && (minNum == first.Point.Num || first.Point.Num == maxNum))
                 yield return first;
         }
-        private IEnumerable<IFillerVertex> GetPointLinesPoints(MarkupFiller filler)
+        private IEnumerable<IFillerVertex> GetPointLinesPoints(FillerContour contour)
         {
-            foreach (var line in Point.Lines)
+            foreach (var line in Point.Lines.Where(l => l.Type != MarkupLine.LineType.Stop))
             {
-                foreach (var vertex in filler.GetLinePoints(this, line))
+                foreach (var vertex in contour.GetLinePoints(this, line))
                 {
                     yield return vertex;
                 }
@@ -113,7 +116,7 @@ namespace NodeMarkup.Manager
     }
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex
     {
-        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out IntersectFillerVertex linePoint)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out IntersectFillerVertex linePoint)
         {
             var lineId1 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName1);
             var lineId2 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName2);
@@ -147,24 +150,24 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public IEnumerable<IFillerVertex> GetNextCandidates(MarkupFiller filler, IFillerVertex prev)
+        public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
             switch (prev)
             {
                 case EnterFillerVertex prevE:
-                    return filler.GetLinePoints(this, First.ContainsPoint(prevE.Point) ? Second : First);
+                    return contour.GetLinePoints(this, First.ContainsPoint(prevE.Point) ? Second : First);
                 case IntersectFillerVertex prevI:
-                    return filler.GetLinePoints(this, prevI.LinePair.ContainLine(First) ? Second : First);
+                    return contour.GetLinePoints(this, prevI.LinePair.ContainLine(First) ? Second : First);
                 default:
-                    return GetNextEmptyCandidates(filler);
+                    return GetNextEmptyCandidates(contour);
             }
         }
-        private IEnumerable<IFillerVertex> GetNextEmptyCandidates(MarkupFiller filler)
+        private IEnumerable<IFillerVertex> GetNextEmptyCandidates(FillerContour contour)
         {
-            foreach (var vertex in filler.GetLinePoints(this, First))
+            foreach (var vertex in contour.GetLinePoints(this, First))
                 yield return vertex;
 
-            foreach (var vertex in filler.GetLinePoints(this, Second))
+            foreach (var vertex in contour.GetLinePoints(this, Second))
                 yield return vertex;
         }
 

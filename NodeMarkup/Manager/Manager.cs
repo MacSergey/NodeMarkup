@@ -17,12 +17,17 @@ namespace NodeMarkup.Manager
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
 
         static PropManager PropManager => Singleton<PropManager>.instance;
-        static Material Material { get; set; }
+        static Dictionary<MaterialType, Material> MaterialLib { get; set; }
         public static ushort LoadErrors { get; set; } = 0;
 
         public static void Init()
         {
-            Material = RenderHelper.CreateMaterial();
+            MaterialLib = new Dictionary<MaterialType, Material>()
+            {
+                { MaterialType.RectangleLines, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white))},
+                { MaterialType.RectangleFillers, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
+                { MaterialType.Triangle, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth.png", 64,64))},
+            };
         }
 
         public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
@@ -72,7 +77,7 @@ namespace NodeMarkup.Manager
                 materialBlock.SetVector(RenderHelper.ID_DecalSize, batch.Size);
 
                 var mesh = batch.Mesh;
-                var material = Material;
+                var material = MaterialLib[batch.MaterialType];
 
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
             }
@@ -105,12 +110,20 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
         }
+        public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
+        {
+            if (!AssetDataExtension.TryGetValue(buildingInfo, out AssetMarking assetMarking))
+                return;
+
+            FromXml(assetMarking.Config, assetMarking.GetMap(segments.m_buffer, nodes.m_buffer), false);
+        }
+
         public static void DeleteAll()
         {
             Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(DeleteAll)}");
             NodesMarkup.Clear();
         }
-
+        public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {
             var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", Mod.Version));
@@ -121,17 +134,24 @@ namespace NodeMarkup.Manager
             }
             return confix;
         }
-        public static void FromXml(XElement config)
+        public static void FromXml(XElement config, ObjectsMap map, bool clear = true)
         {
-            NodesMarkup.Clear();
+            if (clear)
+                NodesMarkup.Clear();
             LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);
             foreach (var markupConfig in config.Elements(Markup.XmlName))
             {
-                if (Markup.FromXml(version, markupConfig, out Markup markup))
+                if (Markup.FromXml(version, markupConfig, map, out Markup markup))
                     NeedUpdate.Add(markup.Id);
             }
         }
+    }
+    public enum MaterialType
+    {
+        RectangleLines,
+        RectangleFillers,
+        Triangle
     }
 }

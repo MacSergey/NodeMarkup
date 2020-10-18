@@ -6,14 +6,15 @@ using UnityEngine;
 
 namespace NodeMarkup.Utils
 {
-    public class MarkupColors
+    public static class Colors
     {
-        private static byte Alpha => 224;
+        private const byte Alpha = 224;
         public static Color32 White { get; } = new Color32(255, 255, 255, 255);
         public static Color32 Green { get; } = new Color32(0, 200, 81, 255);
         public static Color32 Red { get; } = new Color32(255, 68, 68, 255);
         public static Color32 Blue { get; } = new Color32(2, 117, 216, 255);
         public static Color32 Orange { get; } = new Color32(255, 136, 0, 255);
+        public static Color32 Gray { get; } = new Color32(192, 192, 192, 255);
 
         public static Color32[] OverlayColors { get; } = new Color32[]
         {
@@ -31,6 +32,11 @@ namespace NodeMarkup.Utils
 
         };
 
-        public static Color32 GetOverlayColor(int index) => OverlayColors[index % OverlayColors.Length];
+        public static Color32 GetOverlayColor(int index, byte alpha = Alpha, byte hue = 255)
+        {
+            var color = OverlayColors[index % OverlayColors.Length];
+            return new Color32(SetHue(color.r, hue), SetHue(color.g, hue), SetHue(color.b, hue), alpha);
+        }
+        private static byte SetHue(byte value, byte hue) => (byte)(byte.MaxValue - ((byte.MaxValue - value) / 255f * hue));
     }
 }

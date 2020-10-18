@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style)))
+            if (style == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(style.Description()))
             {
                 Style.SelectedObject = EditObject.Style.Type;
                 return;
@@ -87,7 +88,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
-            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(Utilities.EnumDescription(style.Type)))
+            if (style.Type == Manager.Style.StyleType.FillerChevron && !EarlyAccess.CheckFunctionAccess(style.Type.Description()))
                 return;
 
             var newStyle = style.CopyFillerStyle();
@@ -134,8 +135,8 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverItem)
             {
-                foreach (var trajectory in HoverItem.Object.Trajectories)
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, MarkupColors.White, trajectory, 0.2f);
+                foreach (var trajectory in HoverItem.Object.Contour.Trajectories)
+                    NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, trajectory, 0.2f);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();
@@ -143,8 +144,6 @@ namespace NodeMarkup.UI.Editors
     }
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.FillerEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.FillerEditor_DeleteMessageDescription;
         public override void Init() => Init(true, true);
 
         protected override void OnObjectSet() => SetIcon();

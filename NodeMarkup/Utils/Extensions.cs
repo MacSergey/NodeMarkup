@@ -1,8 +1,11 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Globalization;
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using ICities;
 using NodeMarkup.Manager;
+using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,11 +56,34 @@ namespace NodeMarkup.Utils
             else
                 Process.Start(url);
         }
-        public static string EnumDescription<T>(T value)
+        public static AttrType GetAttr<AttrType, T>(this T value) where T : Enum where AttrType : Attribute
+            => typeof(T).GetField(value.ToString()).GetCustomAttributes(typeof(AttrType), false).OfType<AttrType>().FirstOrDefault();
+        public static IEnumerable<Type> GetEnumValues<Type>() where Type : Enum => Enum.GetValues(typeof(Type)).OfType<Type>();
+        public static string Description<T>(this T value)
             where T : Enum
         {
-            var description = typeof(T).GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false).OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? value.ToString();
+            var description = value.GetAttr<DescriptionAttribute, T>()?.Description ?? value.ToString();
             return Localize.ResourceManager.GetString(description, Localize.Culture);
+        }
+        public static string Description(this StyleModifier modifier)
+        {
+            var localeID = "KEYNAME";
+
+            if (modifier.GetAttr<DescriptionAttribute, StyleModifier>() is DescriptionAttribute description)
+                return Localize.ResourceManager.GetString(description.Description, Localize.Culture);
+            else if (modifier.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute inputKey)
+            {
+                var modifierStrings = new List<string>();
+                if (inputKey.Control)
+                    modifierStrings.Add(Locale.Get(localeID, KeyCode.LeftControl.ToString()));
+                if (inputKey.Shift)
+                    modifierStrings.Add(Locale.Get(localeID, KeyCode.LeftShift.ToString()));
+                if (inputKey.Alt)
+                    modifierStrings.Add(Locale.Get(localeID, KeyCode.LeftAlt.ToString()));
+                return string.Join("+", modifierStrings.ToArray());
+            }
+            else
+                return modifier.ToString();
         }
 
         private static NetManager NetManager => Singleton<NetManager>.instance;
@@ -185,6 +211,7 @@ namespace NodeMarkup.Utils
         }
         public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
         public static float AbsoluteAngle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
+        public static Vector3 Direction(this float absoluteAngle) => Vector3.right.TurnRad(absoluteAngle, false).normalized;
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 
@@ -193,12 +220,10 @@ namespace NodeMarkup.Utils
         public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
         public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
 
-        public static Style.StyleType GetRegularStyle(this Event e) =>
-            NodeMarkupTool.ShiftIsPressed ?
-            (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleSolid : Style.StyleType.LineSolid) :
-            (NodeMarkupTool.CtrlIsPressed ? Style.StyleType.LineDoubleDashed : Style.StyleType.LineDashed);
-        public static Style.StyleType GetStopStyle(this Event e) => NodeMarkupTool.ShiftIsPressed ? Style.StyleType.StopLineDashed : Style.StyleType.StopLineSolid;
-        public static Style.StyleType GetCrosswalkStyle(this Event e) => EarlyAccess.Status ? Style.StyleType.CrosswalkZebra : Style.StyleType.CrosswalkExistent;
+        public static Style.StyleType ToGeneral(this RegularLineStyle.RegularLineType style) => (Style.StyleType)(object)style;
+        public static Style.StyleType ToGeneral(this StopLineStyle.StopLineType style) => (Style.StyleType)(object)style;
+        public static Style.StyleType ToGeneral(this CrosswalkStyle.CrosswalkType style) => (Style.StyleType)(object)style;
+        public static Style.StyleType ToGeneral(this FillerStyle.FillerType style) => (Style.StyleType)(object)style;
 
         public static Bezier3 GetBezier(this Line3 line)
         {
@@ -240,6 +265,20 @@ namespace NodeMarkup.Utils
             else
                 return version.ToString(2);
         }
+
+        public static UIHelperBase AddGroup(this UIHelperBase helper)
+        {
+            var newGroup = helper.AddGroup("aaa") as UIHelper;
+            var panel = newGroup.self as UIPanel;
+            if (panel.parent.Find<UILabel>("Label") is UILabel label)
+                label.isVisible = false;
+            return newGroup;
+        }
+
+        public static int NextIndex(this int i, int count, int shift = 1) => (i + shift) % count;
+        public static int PrevIndex(this int i, int count, int shift = 1) => shift > i ? i + count - (shift % count) : i - shift;
+
+        public static LineStyle.StyleAlignment Invert(this LineStyle.StyleAlignment alignment) => (LineStyle.StyleAlignment)(1 - ((int)alignment - 1));
     }
 
     public struct BezierPoint

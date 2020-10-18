@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
+using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,12 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IUpdate, IToXml
+    public abstract class MarkupLine : IUpdate, IDeletable, IToXml
     {
         public static string XmlName { get; } = "L";
+
+        public string DeleteCaptionDescription => Localize.LineEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.LineEditor_DeleteMessageDescription;
 
         public abstract LineType Type { get; }
 
@@ -27,6 +32,8 @@ namespace NodeMarkup.Manager
         public bool IsNormal => PointPair.IsNormal;
         public bool IsStopLine => PointPair.IsStopLine;
         public bool IsCrosswalk => PointPair.IsCrosswalk;
+
+        public bool HasOverlapped => Rules.Any(r => r.IsOverlapped);
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
@@ -109,6 +116,7 @@ namespace NodeMarkup.Manager
                         return new MarkupRegularLine(markup, pointPair, regularStyle);
             }
         }
+        public Dependences GetDependences() => Markup.GetLineDependences(this);
 
         public virtual XElement ToXml()
         {
@@ -119,16 +127,16 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup makrup, Dictionary<ObjectId, ObjectId> map, out MarkupLine line)
+        public static bool FromXml(XElement config, Markup makrup, ObjectsMap map, out MarkupLine line, out bool invert)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair))
+            if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair, out invert))
             {
                 line = null;
                 return false;
             }
 
-            if (!makrup.TryGetLine(pointPair.Hash, out line))
+            if (!makrup.TryGetLine(pointPair, out line))
             {
                 var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
                 switch (type)
@@ -149,7 +157,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public abstract void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map);
+        public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
 
         public enum LineType
         {
@@ -209,9 +217,9 @@ namespace NodeMarkup.Manager
             config.Add(Rule.ToXml());
             return config;
         }
-        public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            if (config.Element(MarkupLineRawRule<Style>.XmlName) is XElement ruleConfig && MarkupLineRawRule<Style>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<Style> rule))
+            if (config.Element(MarkupLineRawRule<Style>.XmlName) is XElement ruleConfig && MarkupLineRawRule<Style>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<Style> rule))
                 SetRule(rule);
         }
     }
@@ -275,12 +283,13 @@ namespace NodeMarkup.Manager
             if (!RawRules.Any())
                 return;
 
-            RawRules.RemoveAll(r => Match(r.From) || Match(r.To));
-            bool Match(ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
+            RawRules.RemoveAll(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
 
             if (!RawRules.Any())
                 AddRule(false);
         }
+        private bool Match(MarkupLine intersectLine, ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
+        public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
         protected override IEnumerable<MarkupStyleDash> GetDashes()
@@ -322,11 +331,11 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {
-                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, out MarkupLineRawRule<RegularLineStyle> rule))
+                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<RegularLineStyle> rule))
                     AddRule(rule, false);
             }
         }

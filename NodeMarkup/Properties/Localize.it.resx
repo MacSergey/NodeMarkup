@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Cancella {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Vuoi veramente cancellare {0} {1}?
-Questa azione non può essere annullata</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Vuoi veramente cancellare {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scorri con la rotella per cambiare
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Elimina regola</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Vuoi veramente cancellare la regola?
-Questa azione non può essere annullata</value>
+    <value>Sei sicuro di voler cancellare la regola?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Da</value>
@@ -231,13 +229,13 @@ Questa azione non può essere annullata</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Non impostato</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Attivazione strumento</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Aggiungi una nuova regola alla linea</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Elimina tutte le linee del nodo</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,49 +245,38 @@ Questa azione non può essere annullata</value>
     <value>Elimina tutte le marcature</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Vuoi veramente rimuovere tutti i marcatori?
-Questa azione non può essere annullata</value>
+    <value>Vuoi veramente rimuovere tutti i marcatori?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Scarica i dati dei marcatori su file</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copia il percorso negli appunti</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Scarica dati marcatori</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Scarico fallito</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Scarico salvato con successo</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Generali</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Ripristina dati marcatura da file</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importa dati marcatori da file</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Ripristina dati marcatura</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importa dati marcatori</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Sei sicuro di voler ripristinare i dati?
+I dati ripristinati sostituiranno quelli esistenti.</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Vuoi veramente importare i dati?
-I dati importati sostituiranno quelli esistenti.
-Questa azione non può essere annullata</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Ripristino dati marcatura fallito</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Importazione dati marcatori fallita</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Dati marcatori importati con successo</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Altro</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Dati marcatura ripristinati con successo</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configurazione rapida delle regole</value>
@@ -337,13 +324,10 @@ Questa azione non può essere annullata</value>
     <value>Ripulisci marcatori nodi</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Vuoi veramente rimuovere tutti i marcatori dei nodi #{0}?
-Questa azione non può essere annullata</value>
+    <value>Vuoi veramente rimuovere tutti i marcatori dei nodi #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Clicca per creare una linea
-+Shift - Continua
-+Ctrl - Tratteggiata</value>
+    <value>Clicca per creare una linea</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Clicca per cancellare la linea</value>
@@ -356,16 +340,11 @@ Clicca per modificare il marcatore</value>
     <value>Seleziona un nodo per modificare il marcatore</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleziona il punto finale
-+Shift - Continua
-+Ctrl - Tratteggiata</value>
+    <value>Seleziona il punto di fine per uno stop oppure una linea di stop
+Trascina dietro il punto per una linea perpendicolare</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleziona un punto per
-creare o cancellare una linea
-+Ctrl per muovere il punto
-Tieni premuto Alt per impostare il riempimento
-Tieni premuto Shift per impostare le strisce pedonali</value>
+    <value>Seleziona un punto per creare o cancellare una linea</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Cosa c'è di nuovo in {0}</value>
@@ -384,10 +363,10 @@ Tieni premuto Shift per impostare le strisce pedonali</value>
 - Il segmento di linea con la regola verrà evidenziato quando si passa sopra il riquadro di modifica di quella regola.
 - Aggiunta traduzione in cinese semplificato.</value>
   </data>
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importa</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Ripristina</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -494,7 +473,7 @@ Tieni premuto Shift per impostare le strisce pedonali</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Notifica solo gli update maggiore</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
   
@@ -532,7 +511,7 @@ Per creare uno riempimento, tieni premuto Alt o premi {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista dei modelli è vuota.
-Per creare una modello, clicca «{0}» sullo stile linea.</value>
+Per creare un modello, clicca «{0}» sulla linea, sull'attraversamento pedonale o sullo stile del riempimento.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Attiva con codice</value>
@@ -623,8 +602,8 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Accesso anticipato</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Centrale continua</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Allineamento</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Accetto</value>
@@ -684,9 +663,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
     <value>Lingua</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Clicca per creare una linea perpendicolare
-+Shift - Continua
-+Ctrl - Doppia</value>
+    <value>Clicca per creare una linea perpendicolare</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clicca per cancellare le linea perpendicolare</value>
@@ -839,5 +816,275 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Risoluzione problemi</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Scacchiera</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Conteggio linee</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Base del triangolo</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Altezza del triangolo</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Spazio tra</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Grandezza quadrato</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Segnale di dare precedenza</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Segnale di dare precedenza</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Continua e tratteggiata</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Deseleziona la marcatura</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Copia la marcatura</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Incolla la marcatura</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Incolla la marcatura</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Sei sicuro di voler incollare la marcatura?
+Questa rimpiazzerà quella già esistente.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Modificatore attraversamento pedonale</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Modificatore riempimento</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Modificatore linee regolari</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Modificare linee di stop</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Non impostato</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Senza modificatore</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Sempre</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Solo se affligge ulteriori oggetti</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Anche gli oggetti dipendenti verranno rimossi:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Bordi passaggio pedonale - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Passaggio pedonale - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Riempimenti - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Linee - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Regole - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Visualizzazione ed utilizzo</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Generali</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Raggruppamento</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Scorciatoie e modificari</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Supporto</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplicato</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Bordo</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Inizia da</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Vertice</value>
+  </data>
+  
+  
+  
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Trascina e rilascia il cerchio per impostare l'ordine delle strade
+Premi sul cerchio per modificare l'ordine delle strade</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Rilascia il cerchio dentro/fuori dal bersaglio per impostare/cancellare l'ordine delle strade</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Copia marcatura</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Incolla marcatura</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Inverti l'ordine</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Gira in senso orario</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Gira in senso anti-orario</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Centro</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Sinistra</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Destra</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Modello senza nome</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Nome già in uso</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Il nome "{0}" è attualmente utilizzare da un altro modello.
+Sei sicuro di voler avere più modelli con lo stesso nome?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Backup marcatura</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Backup modelli</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Cancella tutti i modelli</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Cancella tutti i modelli</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Sei sicuro di voler rimuovere tutti i modelli?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Scarica i modelli su file</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Scarica i modelli</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Ripristina template da file</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Ripristina template</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Sei sicuro di voler ripristinare i template?
+I template ripristinati sostituiranno quelli esistenti.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Recupero modelli fallito</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Recupero modelli riuscito</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Applica</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Continua</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Esci dalla modalità di incollo</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Sei sicuro di voler uscire dalla modalità di incollo ed applicare?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Non applicare</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Applica</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Non applicare</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Ripristina</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Modifica ordine marcature</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Cambia ordine marcature</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Le strade sono cambiate</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>La strada a questo incrocio è cambiata, l'incrocio esistente non può esser applicato automaticamente.
+Vuoi applicare l'incrocio manualmente?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Esci dalla modalità modifica ordine</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Sei sicuro di voler uscire dalla modalità di modifica ed applicare il nuovo ordine?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Trascina e rilascia il cerchio per impostare l'ordine dei punti</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Rilascia il cerchio dentro/fuori dal bersaglio per impostare/cancellare l'ordine dei punti</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Solido in centro</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Tieni premuto Shift per impostare le strisce pedonali</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Tieni premuto Alt per impostare il riempimento</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Trascina con Ctrl per muovere il punto</value>
+  </data>
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Questa azione non può esser annullata.</value>
   </data>
 </root>

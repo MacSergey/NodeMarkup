@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,16 @@ namespace NodeMarkup.UI
 {
     public static class UIUtils
     {
-        private static UIView uiRoot { get; set; } = null;
+        private static UIView UIRoot { get; set; } = null;
         private static void FindUIRoot()
         {
-            uiRoot = null;
+            UIRoot = null;
             foreach (UIView uiview in UnityEngine.Object.FindObjectsOfType<UIView>())
             {
                 bool flag = uiview.transform.parent == null && uiview.name == "UIView";
                 if (flag)
                 {
-                    uiRoot = uiview;
+                    UIRoot = uiview;
                     break;
                 }
             }
@@ -30,17 +31,17 @@ namespace NodeMarkup.UI
             Transform parent = transform.parent;
             while (parent != null)
             {
-                text = parent.name + "/" + text;
+                text = $"{parent.name}/{text}";
                 parent = parent.parent;
             }
             return text;
         }
         public static T FindComponent<T>(string name, UIComponent parent = null, FindOptions options = FindOptions.None) where T : UIComponent
         {
-            if (uiRoot == null)
+            if (UIRoot == null)
             {
                 FindUIRoot();
-                if (uiRoot == null)
+                if (UIRoot == null)
                     return default;
             }
             foreach (T t in UnityEngine.Object.FindObjectsOfType<T>())
@@ -48,7 +49,7 @@ namespace NodeMarkup.UI
                 bool flag4 = (options & FindOptions.NameContains) > FindOptions.None ? t.name.Contains(name) : t.name == name;
                 if (flag4)
                 {
-                    Transform transform = parent != null ? parent.transform : uiRoot.transform;
+                    Transform transform = parent != null ? parent.transform : UIRoot.transform;
                     Transform parent2 = t.transform.parent;
                     while (parent2 != null && parent2 != transform)
                         parent2 = parent2.parent;
@@ -118,6 +119,12 @@ namespace NodeMarkup.UI
                 scrollbar.value -= (int)eventParam.wheelDelta * scrollbar.incrementAmount;
             };
 
+            scrollablePanel.eventSizeChanged += (component, eventParam) =>
+            {
+                scrollbar.relativePosition = scrollablePanel.relativePosition + new Vector3(scrollablePanel.width, 0);
+                scrollbar.height = scrollablePanel.height;
+            };
+
             scrollablePanel.verticalScrollbar = scrollbar;
         }
         public static void ScrollIntoViewRecursive(this UIScrollablePanel panel, UIComponent component)
@@ -147,6 +154,25 @@ namespace NodeMarkup.UI
 
                 panel.scrollPosition = scrollPosition;
             }
+        }
+
+
+        public static Color32 ButtonNormal = Color.white;
+        public static Color32 ButtonHovered = new Color32(224, 224, 224, 255);
+        public static Color32 ButtonPressed = new Color32(192, 192, 192, 255);
+        public static Color32 ButtonFocused = new Color32(160, 160, 160, 255);
+        public static void SetDefaultStyle(this UIButton button)
+        {
+            button.atlas = TextureUtil.InGameAtlas;
+            button.normalBgSprite = "ButtonWhite";
+            button.disabledBgSprite = "ButtonWhite";
+            button.hoveredBgSprite = "ButtonWhite";
+            button.pressedBgSprite = "ButtonWhite";
+            button.color = ButtonNormal;
+            button.hoveredColor = ButtonHovered;
+            button.pressedColor = ButtonPressed;
+            button.textColor = button.hoveredTextColor = button.focusedTextColor = Color.black;
+            button.pressedTextColor = Color.white;
         }
     }
 }

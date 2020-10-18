@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Odstranit {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit {0} {1}?
-Tuto akci nelze vrátit zpět</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Opravdu chcete odstranit {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Použijte kolečko myši pro změnu hodnoty
@@ -153,8 +152,7 @@ Shift ×10, Ctrl ×0.1</value>
     <value>Odstranit pravidlo</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit toto pravidlo?
-Tuto akci nelze vrátit zpět</value>
+    <value>Opravdu chcete odstranit toto pravidlo?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Z</value>
@@ -196,10 +194,10 @@ Tuto akci nelze vrátit zpět</value>
     <value>Dvojitá přerušovaná</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Dvojitá nepřerušovaná</value>
+    <value>Dvojitá plná</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ne</value>
@@ -231,13 +229,13 @@ Tuto akci nelze vrátit zpět</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Nenastaveno</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Aktivovat nástroj</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Přidat nové pravidlo</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Odstranit všechna značení z křižovatky</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,49 +245,38 @@ Tuto akci nelze vrátit zpět</value>
     <value>Odstranit všechna značení</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit všechna značení?
-Tuto akci nelze vrátit zpět</value>
+    <value>Opravdu si přejete odstranit všechna značení?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Exportovat data do souboru</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Kopírovat cestu k souboru</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportovat data</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Export se nezdařil</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Export úspěšný</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Základní nastavení</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Obnovit značení ze souboru</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importovat data ze souboru</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Obnovit data o značení</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Importovat data</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Opravdu si přejete obnovit data?
+Původní data připíší všechna existující značení.</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Opravdu si přejete importovat nová data?
-Importovaná data připíší všechna existující značení.
-Tuto akci nelze vrátit zpět</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Obnovení dat se nezdařilo</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Import dat se nezdařil</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Import dat úspěšný</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Ostatní</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Data úspěšně obnovena</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Rychlé vytvoření pravidel</value>
@@ -337,13 +324,10 @@ Tuto akci nelze vrátit zpět</value>
     <value>Odstranit všechna značení z této křižovatky</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?
-Tuto akci nelze vrátit zpět</value>
+    <value>Opravdu chcete odstranit všechna značení křižovatky #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klikněte pro vykreslení čáry
-+Shift - Plná čára
-+Ctrl - Dvojitá čára</value>
+    <value>Klikněte pro vytvoření čáry</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknětě pro odstranění čáry</value>
@@ -355,29 +339,21 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod
-+Shift - plná čára
-+Ctrl - dvojitá čára</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Vyber bod pro vytvoření
-nebo odstranění čáry
-+Ctrl pro posunutí bodu
-Drž Alt pro vytvoření výplně
-Drž Shift pro vytvoření přechodu</value>
+    <value>Vyber bod pro vytvoření nebo odstranění čáry</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Zobrazit novinky</value>
+    <value>Zobrazovat novinky</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importovat</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Obnovit</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -396,7 +372,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Plná i přerušovaná</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
@@ -456,7 +432,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Výchozí</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   
   
@@ -467,14 +443,14 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Oznámení</value>
   </data>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Oznámení pouze o významných aktualizacích</value>
+    <value>Oznamovat pouze o významných aktualizacích</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Dvojitá nepřerušovaná</value>
+    <value>Dvojitá plná</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná</value>
@@ -495,7 +471,7 @@ Drž Shift pro vytvoření přechodu</value>
     <value>Prohodit</value>
   </data>
   <data name="Filler_Turn" xml:space="preserve">
-    <value>Odbočka</value>
+    <value>Otočit</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
     <value>Na této křižovatce nejsou žádné čáry.
@@ -507,7 +483,7 @@ Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Nejsou vytvořeny žádné šablony.
-Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry.</value>
+Pro vytvoření šablony, vyberte «{0}» při úpravě stylu přechodu nebo výplně.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivujte klávesou</value>
@@ -598,8 +574,8 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Early access</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Prostřední plná</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Zarovnání</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Souhlasím</value>
@@ -659,9 +635,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Jazyk</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klikněte pro vytvoření kolmé čáry
-+Shift - plná
-+Ctrl - dvojitá</value>
+    <value>Klikněte pro vytvoření kolmé čáry</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klikněte pro odstranění kolmé čáry</value>
@@ -698,10 +672,10 @@ Pro vytvoření přechodu drž Shift.</value>
     <value>Hranice křižovatky</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Skupinové čáry</value>
+    <value>Seskupovat čáry</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Skupinové šablony</value>
+    <value>Seskupovat šablony</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Klikněte pro vytvoření přechodu</value>
@@ -730,7 +704,9 @@ Pro vytvoření přechodu drž Shift.</value>
   <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
     <value>Souběžná s pruhy</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Souběžné plné čáry</value>
+  </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Levý roh</value>
   </data>
@@ -772,15 +748,21 @@ Zkontrolujte počáteční a koncové body ostatních pravidel.</value>
     <value>Vyber bod pro vytvoření
 nebo odstranění přechodu</value>
   </data>
-  
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Souběžné přerušované čáry</value>
+  </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
     <value>Žebřík</value>
   </data>
-  
-  <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Žádné šablony</value>
   </data>
-  
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Plná</value>
+  </data>
+  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+    <value>Čáry přechodů</value>
+  </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>přechod</value>
   </data>
@@ -797,7 +779,244 @@ nebo odstranění přechodu</value>
     <value>šablonu</value>
   </data>
   
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Při načítání se vyskytly chyby.
+Nepodařilo se načíst značení pro {0} křižovatek.</value>
+  </data>
+  <data name="Mod_Support" xml:space="preserve">
+    <value>Podpora</value>
+  </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>Řešení problémů</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Šachovnice</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Počet čar</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Základna trojuhelníku</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Výška trojuhelníku</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Mezera</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Strana čtverce</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Zuby</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Zuby</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Plná i přerušovaná</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Odstranit značení</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopírovat značení</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Vložit značení</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Vložit značení</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Opravdu si přejete vložit značení?
+Původní značení bude odstraněno.</value>
+  </data>
   
   
   
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Nenastaveno</value>
+  </data>
+  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Vždy</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Pouze, pokud budou ovlivněny ostatní položky</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Zavislosti budou také odstraněny:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Hranice přechodu - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Přechody - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Výplně - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Čáry - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Pravidla - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Záloha</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Zobrazení a použití</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Základní nastavení</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Seskupování</value>
+  </data>
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Podpora</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplikovat</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopírovat</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Strana</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Začínat od</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Vrchol</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Resetovat odsazení všech bodů</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Resetovat odsazení všech bodů</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Opravdu chcete resetovat odsazení všech bodů na křižovatce #{0}?</value>
+  </data>
+  
+  
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopírovat značení</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Vložit značení</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Prohodit pořadí</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Otočit ve směru hodinových ručiček</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Otočit proti směru hodinových ručiček</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Na střed</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Vlevo</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Vpravo</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Nepojmenovaná šablona</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Jméno již použito</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Jméno "{0}" je již využíváno jinou šablonou.
+Opravdu chcete mít více šablon se stejným jménem?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Zálohovat značení</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Zálohovat šablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Odstranit všechny šablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Odstranit všechny šablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Opravdu si přejete odstranit všechny šablony?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Exportovat šablony do souboru</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Exportovat šablony</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Obnovit šablony ze souboru</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Obnovit šablony</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Opravdu si přejete obnovit šablony?
+Původní data připíší všechny existující šablony.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Obnovení šablon se nezdařilo</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Šablony úspěšně obnoveny</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Použít</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Pokračovat</value>
+  </data>
+  
+  
+  
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Použít</value>
+  </data>
+  
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Resetovat</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Ne</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Drž Shift pro vytvoření přechodu</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Drž Alt pro vytvoření výplně</value>
+  </data>
+  
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Tuto akci nelze vrátit zpět.</value>
+  </data>
 </root>

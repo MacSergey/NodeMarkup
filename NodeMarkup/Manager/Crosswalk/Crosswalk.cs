@@ -1,4 +1,6 @@
-﻿using NodeMarkup.Utils;
+﻿using NodeMarkup.Tools;
+using NodeMarkup.UI.Editors;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +10,15 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IUpdate, IToXml
+    public class MarkupCrosswalk : IUpdate, IDeletable, IToXml
     {
         #region PROPERTIES
 
         public static string XmlName { get; } = "C";
         public string XmlSection => XmlName;
+
+        public string DeleteCaptionDescription => Localize.CrossWalkEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.CrossWalkEditor_DeleteMessageDescription;
 
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
@@ -177,6 +182,8 @@ namespace NodeMarkup.Manager
         }
         public bool ContainsPoint(MarkupPoint point) => EnterLine.ContainsPoint(point);
 
+        public Dependences GetDependences() => Markup.GetCrosswalkDependences(this);
+
         #region XML
 
         public XElement ToXml()
@@ -190,11 +197,11 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public void FromXml(XElement config, Dictionary<ObjectId, ObjectId> map)
+        public void FromXml(XElement config, ObjectsMap map)
         {
-            _rightBorder = GetBorder("RB");
-            _leftBorder = GetBorder("LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out CrosswalkStyle style))
+            _rightBorder = GetBorder(map.IsMirror ? "LB" : "RB");
+            _leftBorder = GetBorder(map.IsMirror ? "RB" : "LB");
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, out CrosswalkStyle style))
             {
                 _style = style;
                 _style.OnStyleChanged = CrosswalkChanged;
@@ -207,7 +214,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public static bool FromXml(XElement config, Markup markup, Dictionary<ObjectId, ObjectId> map, out MarkupCrosswalk crosswalk)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupCrosswalk crosswalk)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             if (markup.TryGetLine(lineId, map, out MarkupCrosswalkLine line))

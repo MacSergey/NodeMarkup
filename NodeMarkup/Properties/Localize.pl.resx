@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Usuń {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć {0} {1}?
-Nie będzie można cofnąć tej operacji</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Użyj kółka myszy aby zmienić wartość
@@ -153,8 +152,7 @@ Shift x10, Ctrl x0.1</value>
     <value>Usuń regułę</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć tę regułę?
-Nie będzie można cofnąć tej operacji</value>
+    <value>Czy na pewno chcesz usunąć tę regułę?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Z</value>
@@ -231,13 +229,13 @@ Nie będzie można cofnąć tej operacji</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Nie ustawiono</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Aktywuj narzędzie</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Dodaj nową regułę dla linii</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Usuń wszystkie oznaczenia wybranego skrzyżowania</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,49 +245,39 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Usuwanie oznaczeń</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia?
-Nie będzie można cofnąć tej operacji</value>
+    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia? 
+Tej akcji nie można cofnąć.</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Eksportuj oznaczenia do pliku</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Skopiuj ścieżkę do schowka</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Eksportuj dane oznaczeń</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Eksportowanie oznaczeń nie powiodło się</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Eksportowanie oznaczeń zakończono pomyślnie</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Ogólne</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Przywróć dane oznaczeń z pliku</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Importuj oznaczenia z pliku</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Przywróć dane oznaczeń</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Import oznaczeń</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz przywrócić dane?
+Wszystkie istniejące oznaczenia zostaną zastąpione.</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz zaimportować oznaczenia?
-Wszystkie istniejące oznaczenia zostaną zastąpione.
-Nie będzie można cofnąć tej operacji</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Nie udało się przywrócić danych oznaczeń</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Importowanie oznaczeń nie powiodło się</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Importowanie oznaczeń zakończone sukcesem</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Inne</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Dane oznaczeń zostały pomyślnie przywrócone</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Szybkie tworzenie reguł</value>
@@ -337,13 +325,10 @@ Nie będzie można cofnąć tej operacji</value>
     <value>Wyczyść oznaczenia skrzyżowania</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia skrzyżowania #{0}?
-Nie będzie można cofnąć tej operacji</value>
+    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia skrzyżowania #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Kliknij aby utworzyć linię
-+Shift - ciągła
-+Ctrl - podwójna</value>
+    <value>Kliknij, aby utworzyć linię</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Kliknij aby usunąć linię</value>
@@ -355,17 +340,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Wybierz skrzyżowanie aby zmodyfikować oznaczenia</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Wybierz punkt końcowy
-+Shift - ciągła
-+Ctrl - podwójna</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Wybierz punkt aby
-utworzyć lub usunąć linię
-+Ctrl - aby przesunąć punkt
-Przytrzymaj Alt - aby utworzyć wypełnienie
-Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
+    <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
@@ -374,10 +351,10 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
     <value>Pokaż "Co nowego?"</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Importuj</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Przywróć</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -408,13 +385,13 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
     <value>Wypełnienia</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>wypełniacz</value>
+    <value>wypełnienie</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
     <value>Linie</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Kratka</value>
+    <value>Siatka</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Przerywana</value>
@@ -469,7 +446,7 @@ Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Powiadamiaj tylko o ważnych aktualizacjach</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
   </data>
   
@@ -507,7 +484,7 @@ Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Lista szablonów jest pusta.
-Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii.</value>
+Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii, przejścia dla pieszych lub wypełnienia.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktywuj za pomocą klucza</value>
@@ -516,7 +493,7 @@ Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii.</value>
     <value>Aktywacja nie powiodła się</value>
   </data>
   <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktywacja pomyślna</value>
+    <value>Aktywacja powiodła się</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
     <value>Ta funkcja jest niedostępna</value>
@@ -527,7 +504,7 @@ Będzie ona dostępna dla wszystkich w późniejszym czasie.
 Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju tego moda.</value>
   </data>
   <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
-    <value>Skopiuj styl</value>
+    <value>Kopiuj styl</value>
   </data>
   <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
     <value>Wklej styl</value>
@@ -575,10 +552,10 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Wystąpił błąd podczas łączenia konta, spróbuj ponownie.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Konto zostało połączone, ale nie jesteś uprawniony do wczesnego dostępu.</value>
+    <value>Twoje konto zostało połączone, ale nie jesteś uprawniony do wczesnego dostępu.</value>
   </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Możesz zamknąć stronę i powrócić do gry.</value>
+    <value>Możesz zamknąć tę stronę i powrócić do gry.</value>
   </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
     <value>Anuluj</value>
@@ -598,8 +575,8 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Wczesny dostęp</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Wyśrodkuj linię ciągłą</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Wyrównanie</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Zgadzam się</value>
@@ -659,9 +636,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Język</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Kliknij, aby utworzyć prostopadłą linię
-+Shift - ciągła
-+Ctrl - podwójna</value>
+    <value>Kliknij, aby utworzyć prostopadłą linię</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Kliknij, aby usunąć prostopadłą linię</value>
@@ -734,16 +709,16 @@ Aby utworzyć przejście dla pieszych przytrzymaj klawisz Shift.</value>
     <value>Równoległe linie ciągłe</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>Lewa krawędź</value>
+    <value>Lewy obrys</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>Prawa krawędź</value>
+    <value>Prawy obrys</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>Wybierz lewą krawędź przejścia dla pieszych</value>
+    <value>Wybierz lewy obrys przejścia dla pieszych</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>Wybierz prawą krawędź przejścia dla pieszych</value>
+    <value>Wybierz prawy obrys przejścia dla pieszych</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Grupuj punkty nakładki</value>
@@ -793,7 +768,7 @@ utworzyć lub usunąć przejście dla pieszych</value>
     <value>przejście dla pieszych</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>wypełniacz</value>
+    <value>wypełnienie</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
     <value>linia</value>
@@ -807,12 +782,246 @@ utworzyć lub usunąć przejście dla pieszych</value>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Wystąpiły błędy podczas ładowania danych.
-Nie udało się załadować wypełnień dla {0} skrzyżowań.</value>
+Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Wsparcie</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Rozwiązywanie problemów</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Szachownica</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>Liczba linii</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Podstawa trójkąta</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Wysokość trójkąta</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>Odstęp</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>Bok kwadratu</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Ustąp pierwszeństwa</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Ustąp pierwszeństwa</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Ciągła z przerywaną</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Wyczyść oznaczenie</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopiuj oznaczenie</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Wklej oznaczenie</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Wklej oznaczenie</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz wkleić oznaczenie?
+Istniejące oznaczenie zostanie zastąpione.</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Modyfikator przejść dla pieszych</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Modyfikator wypełnień</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Modyfikator zwykłych linii</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Modyfikator linii zatrzymania</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Nie ustawiono</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Bez modyfikatora</value>
+  </data>
+  
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Tylko jeśli ma wpływ na inne elementy</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Powiązane elementy również zostaną usunięte:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Obrysy przejścia dla pieszych - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Przejścia dla pieszych - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Wypełnienia - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Linie - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Reguły - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Kopia zapasowa</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Wyświetl i używaj</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Ogólne</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Grupowanie</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Skróty klawiszowe i modyfikatory</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Wsparcie</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Kopia</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>Krawędź</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>Począwszy od</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>Wierzchołek</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Resetuj przesunięcie wszystkich punktów</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Resetuj przesunięcie wszystkich punktów</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wszystkie przesunięcia punktów skrzyżowania #{0}?</value>
+  </data>
+  
+  
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopiuj oznaczenie</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Wklej oznaczenie</value>
+  </data>
+  
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Obróć zgodnie z ruchem wskazówek zegara</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Obróć przeciwnie do ruchu wskazówek zegara</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Środek</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Lewo</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Prawo</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Szablon bez nazwy</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Nazwa już istnieje</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Nazwa "{0}" jest obecnie używana przez inny szablon.
+Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku szablonów?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Wykonaj kopię zapasową oznaczeń</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Wykonaj kopię zapasową szablonów</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Usuń wszystkie szablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Usuń wszystkie szablony</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wszystkie szablony?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Wykonaj kopię zapasową szablonów do pliku</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Wykonaj kopię zapasową szablonów</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Przywróć szablony z pliku</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Przywróć szablony</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz przywrócić szablony?
+Wszystkie istniejące szablony zostaną zastąpione.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Nie udało się przywrócić szablonów</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Szablony zostały pomyślnie przywrócone</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Zastosuj</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Zmień kolejność oznaczeń</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Przytrzymaj Alt - aby utworzyć wypełnienie</value>
+  </data>
+  
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Nie będzie można cofnąć tej operacji.</value>
   </data>
 </root>

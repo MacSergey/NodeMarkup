@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>{0} を削除しますか？</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>{0} - {1} を削除してもよろしいですか?
-この操作は元に戻せません</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>{0} - {1} を削除してもよろしいですか?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>ホイールのスクロールで増減
@@ -154,8 +153,7 @@
     <value>ルールを削除</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>ラインの設定を削除してもよろしいですか?
-この操作は元に戻せません</value>
+    <value>追加したルールを削除してもよろしいですか?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>始点</value>
@@ -232,13 +230,13 @@
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未設定</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>マーキングツールの有効化</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>新規ルールを追加</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>ノードのマーキングを全て削除</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -248,49 +246,38 @@
     <value>マップ上にある全てのマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>マップ上にある、全てマーキングを削除してもよろしいですか?
-この操作は元に戻せません</value>
+    <value>マップ上にある、全てのマーキングを削除してもよろしいですか?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルに保存</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>クリップボードにコピー</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>マーキングデータのダンプ出力</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>ダンプ出力に失敗しました</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>ダンプ出力は正常に行われました</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>基本設定</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>マーキングデータをファイルから復元</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>マーキングデータをファイルからインポート</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>マーキングデータの復元</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>マーキングデータのインポート</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>本当にデータを復元しますか？
+復元すると、既存のマーキングデータを全て置き換えます。</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>本当にデータをインポートしますか？
-インポートされたデータは、既存のマーキングを全て置き換えます。
-この操作は、元に戻すことができません。</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>マーキングデータの復元に失敗しました</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>マーキングデータのインポートに失敗しました</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>マーキングデータのインポートに成功しました</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>その他</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>マーキングデータの復元に成功しました</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>ルールのクイックセットアップ</value>
@@ -302,7 +289,7 @@
     <value>ショートカットの設定</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>削除前に確認します</value>
+    <value>削除前の確認方法</value>
   </data>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>ツールチップの表示</value>
@@ -338,13 +325,10 @@
     <value>ノード内のマーキングを全て消去</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>ノード #{0} のマーキングを全て削除してもよろしいですか?
-この操作は元に戻せません</value>
+    <value>ノード #{0} のマーキングを全て削除してもよろしいですか?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>クリックしてラインの追加
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value>クリックしてラインの追加</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>クリックしてラインを削除</value>
@@ -357,16 +341,12 @@
     <value>マーキングを編集するノードを選択します</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>終点側のポイントを選択
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value>ライン・停止線の終点を選択
+垂直線は道路の後方へ移動</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して
-ラインを作成・削除する
-+Ctrlでポイントを移動
-Alt押下で塗り潰しを開始
-Shift押下で横断歩道の作成</value>
+ラインを作成・削除する</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -375,10 +355,10 @@ Shift押下で横断歩道の作成</value>
     <value>新着情報を表示する</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>インポート</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>復元</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -470,7 +450,7 @@ Shift押下で横断歩道の作成</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>主要なアップデートのみ通知</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>新しい塗り潰しを追加</value>
   </data>
   
@@ -508,7 +488,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>テンプレートの一覧は空です。
-作成するにはラインのスタイルで、 {0} をクリックします。</value>
+作成するにはライン・横断歩道・塗り潰しのスタイルから、 {0} をクリックします。</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>アクセスIDで有効化する</value>
@@ -600,8 +580,8 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>早期アクセス</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>実線を中央にオフセット</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>位置揃え</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>同意します</value>
@@ -663,9 +643,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線の追加
-+Shift - 実線
-+Ctrl - 2重線</value>
+    <value>クリックして垂直線の追加</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
@@ -723,7 +701,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2重のゼブラ模様</value>
   </data>
   <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
-    <value>横断歩道の線幅</value>
+    <value>外枠線の幅</value>
   </data>
   <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
     <value>縦方向のオフセット</value>
@@ -738,16 +716,16 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2本の実線</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>左枠線</value>
+    <value>左側の基準線</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>右枠線</value>
+    <value>右側の基準線</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>横断歩道の左枠線を選択</value>
+    <value>左側の基準線を選択</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>横断歩道の右枠線を選択</value>
+    <value>右側の基準線を選択</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>ポイントをグループ化して表示</value>
@@ -763,10 +741,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
 他と重なっている、始点と終点のポイントを確認してください。</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>横断歩道の左枠線</value>
+    <value>左側の基準線</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>横断歩道の右枠線</value>
+    <value>右側の基準線</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>元に戻す</value>
@@ -782,7 +760,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2本の破線</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>梯子タイプの横断歩道</value>
+    <value>ハシゴ型の横断歩道</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
     <value>テンプレートがありません</value>
@@ -816,5 +794,283 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Mod_Support" xml:space="preserve">
     <value>サポート</value>
   </data>
+  <data name="Settings_Troubleshooting" xml:space="preserve">
+    <value>トラブルシューティング</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>チェス盤の横断歩道</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>四角形の数</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>三角形の長さ</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>三角形の高さ</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>空白の長さ</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>四角形の大きさ</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>サメの歯型</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>サメの歯型</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>破線＆実線</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>マーキングの削除</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>マーキングのコピー</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>マーキングの貼り付け</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>マーキングの貼り付け</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>本当にマーキングを貼り付けますか？
+既存であるノード内のマーキングは、全て置き換えます。</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>横断歩道のキー設定</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>塗り潰しのキー設定</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>ラインのキー設定</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>停止線のキー設定</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>未設定</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>常に確認する</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>他の項目に影響がある場合のみ確認</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>他と依存性のあるライン等も、一緒に削除されます。</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>横断歩道の基準線 - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>横断歩道 - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>塗り潰し - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>ライン - {0} ヶ所</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>ルール - {0} ヶ所</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>表示＆確認の設定</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>基本設定</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>グループ・タブの設定</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>ショートカット</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>サポート</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>テンプレートの複製</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>辺を基準</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>描画の基準</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>頂点を基準</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>ポイントのオフセットを全てリセット</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>ポイントのオフセットを全てリセット</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>ノード #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>円周上のポイントをD&amp;Dで、道路側のマーキングの順序を入れ替え
+ポイントをクリックすると、道路上のラインの順序を入れ替え</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>円周上にあるポイントを内外にD&amp;Dして、マーキングの順序を入れ替え</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>マーキングのコピー</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>マーキングの貼り付け</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>マーキングの反転</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>時計回りに回転</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>反時計回りに回転</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>左寄せ</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>右寄せ</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>名無しのテンプレート</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>名前が重複しています</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>{0} という名前は、他のテンプレートで使用されています。
+重複したテンプレートを保存しても良いですか？</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>マーキングのバックアップ</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>テンプレートのバックアップ</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>テンプレートを全て削除</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>テンプレートを全て削除</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>本当に全てのテンプレートを削除しますか？</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>テンプレートをファイルに保存</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>テンプレートのダンプ出力</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>テンプレートをファイルから復元</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>テンプレートの復元</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>本当にテンプレートを復元しますか？
+復元すると、既存のテンプレートを全て置き換えます。</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>テンプレートの復元に失敗しました</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>テンプレートの復元に成功しました</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>適用する</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>作業を継続</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>マーキングの貼り付けモードを終了します</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>貼り付けモードを終了して、変更したマーキングを適用しますか？</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>適用しない</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>適用する</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>適用しない</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>マーキングの順序を編集</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>マーキングの順序を変更</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>道路が変更・アップグレードされました</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>交差点と接続する道路が変わって、マーキングが自動的に適用できません。
+マーキングの順序を手動で調整・適用しますか？</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>マーキングの編集モードを終了します</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>編集モードを終了して、変更したマーキングを適用しますか？</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>ポイントを円からD&amp;Dして、順序を入れ替え</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>道路上にあるポイントを内外にD&amp;Dして、ラインの順序を入れ替え</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>実線を中心</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Shift押下で横断歩道の作成</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Alt押下で塗り潰しを開始</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Ctrl+ドラッグで、ポイントを移動</value>
+  </data>
   
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>この操作は元に戻せません。</value>
+  </data>
 </root>

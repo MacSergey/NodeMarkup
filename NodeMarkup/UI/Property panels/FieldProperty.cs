@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace NodeMarkup.UI.Editors
             Field.cursorWidth = 1;
             Field.cursorBlinkTime = 0.45f;
             Field.selectOnFocus = true;
-            Field.tooltip = CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
+            Field.tooltip = Settings.ShowToolTip && CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
             Field.eventMouseWheel += FieldMouseWheel;
             Field.eventTextSubmitted += FieldTextSubmitted;
             Field.eventMouseHover += FieldHover;
@@ -91,11 +92,12 @@ namespace NodeMarkup.UI.Editors
             {
                 var mode = NodeMarkupTool.ShiftIsPressed ? WheelMode.High : NodeMarkupTool.CtrlIsPressed ? WheelMode.Low : WheelMode.Normal;
                 if (eventParam.wheelDelta < 0)
-                    Value = Increment(Value, WheelStep, mode);
-                else
                     Value = Decrement(Value, WheelStep, mode);
+                else
+                    Value = Increment(Value, WheelStep, mode);
             }
         }
+        public void Edit() => Field.Focus();
 
         protected enum WheelMode
         {
@@ -136,12 +138,12 @@ namespace NodeMarkup.UI.Editors
         protected override float Decrement(float value, float step, WheelMode mode)
         {
             step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
-            return (value + step).RoundToNearest(step);
+            return (value - step).RoundToNearest(step);
         }
         protected override float Increment(float value, float step, WheelMode mode)
         {
             step = mode == WheelMode.Low ? step / 10 : mode == WheelMode.High ? step * 10 : step;
-            return (value - step).RoundToNearest(step);
+            return (value + step).RoundToNearest(step);
         }
         protected override string GetString(float value) => value.ToString("0.###");
     }
@@ -151,5 +153,12 @@ namespace NodeMarkup.UI.Editors
 
         protected override string Decrement(string value, string step, WheelMode mode) => throw new NotSupportedException();
         protected override string Increment(string value, string step, WheelMode mode) => throw new NotSupportedException();
+    }
+    public class IntPropertyPanel : ComparableFieldPropertyPanel<int>
+    {
+        protected override bool CanUseWheel => true;
+
+        protected override int Decrement(int value, int step, WheelMode mode) => value - step;
+        protected override int Increment(int value, int step, WheelMode mode) => value + step;
     }
 }

@@ -40,22 +40,10 @@ namespace NodeMarkup.Manager
                 if (!GetFromT(out float thisFromT) || !GetToT(out float thisToT))
                     return false;
 
+                var thisMin = Mathf.Min(thisFromT, thisToT);
+                var thisMax = Mathf.Max(thisFromT, thisToT);
 
-                foreach (var rule in Line.Rules)
-                {
-                    if (rule == this)
-                        continue;
-
-                    if (rule.GetFromT(out float fromT) && rule.GetToT(out float toT))
-                    {
-                        var min = Mathf.Min(fromT, toT);
-                        var max = Mathf.Max(fromT, toT);
-                        if ((min < thisFromT && thisFromT < max) || (min < thisToT && thisToT < max))
-                            return true;
-                    }
-                }
-
-                return false;
+                return Line.Rules.Any(r => r != this && r.GetFromT(out float fromT) && r.GetToT(out float toT) && Mathf.Min(fromT, toT) <= thisMin && thisMax <= Mathf.Max(fromT, toT));
             }
         }
 
@@ -159,9 +147,9 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public static bool FromXml(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map, out MarkupLineRawRule<StyleType> rule)
+        public static bool FromXml(XElement config, MarkupLine line, ObjectsMap map, bool invert, out MarkupLineRawRule<StyleType> rule)
         {
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, out StyleType style))
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, invert, out StyleType style))
             {
                 var edges = GetEdges(config, line, map).ToArray();
                 rule = new MarkupLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
@@ -173,7 +161,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-    }  
+    }
     public struct MarkupLineRule
     {
         public float Start;

@@ -1,10 +1,12 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -21,7 +23,6 @@ namespace NodeMarkup.Manager
     {
         float Angle { get; set; }
     }
-
 
     public abstract class SimpleFillerStyle : FillerStyle, IPeriodicFiller, IRotateFiller
     {
@@ -95,9 +96,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("O", Offset));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config);
+            base.FromXml(config, map, invert);
             Angle = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStepGrid);
             Offset = config.GetAttrValue("O", DefaultOffset);
@@ -162,6 +163,7 @@ namespace NodeMarkup.Manager
         float _step;
         bool _invert;
         int _output;
+        From _startingFrom;
 
         public float AngleBetween
         {
@@ -200,6 +202,15 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public From StartingFrom
+        {
+            get => _startingFrom;
+            set
+            {
+                _startingFrom = value;
+                StyleChanged();
+            }
+        }
 
         public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, medianOffset)
         {
@@ -227,7 +238,10 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
+            {
+                components.Add(AddStartingFromProperty(this, parent));
                 components.Add(AddInvertAndTurnProperty(this, parent));
+            }
 
             return components;
         }
@@ -238,7 +252,7 @@ namespace NodeMarkup.Manager
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.CheckMin = true;
-            angleProperty.MinValue = 45;
+            angleProperty.MinValue = 30;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 150;
             angleProperty.Init();
@@ -246,6 +260,15 @@ namespace NodeMarkup.Manager
             angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween = value;
             AddOnHoverLeave(angleProperty, onHover, onLeave);
             return angleProperty;
+        }
+        protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        {
+            var fromProperty = parent.AddUIComponent<ChevronFromPropertyPanel>();
+            fromProperty.Text = Localize.Filler_StartingFrom;
+            fromProperty.Init();
+            fromProperty.SelectedObject = chevronStyle.StartingFrom;
+            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom = value;
+            return fromProperty;
         }
         protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
@@ -293,7 +316,7 @@ namespace NodeMarkup.Manager
                         var start = pos + dir * intersects[j - 1].FirstT;
                         var end = pos + dir * intersects[j].FirstT;
 
-                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color);
+                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color, MaterialType.RectangleFillers);
                     }
                 }
             }
@@ -301,30 +324,37 @@ namespace NodeMarkup.Manager
         private void GetItems(ILineTrajectory[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
         {
             var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;
-            var width = Width / Mathf.Sin(halfAngelRad);
+            var coef = Mathf.Sin(halfAngelRad);
+            var width = Width / coef;
 
             var bezier = GetMiddleBezier(trajectories);
-            var line = GetMiddleLine(bezier, halfAngelRad, rect);
+            var lines = new List<ILineTrajectory>();
+            if (GetMiddleLineBefore(bezier, halfAngelRad, rect, out Line3 lineBefore))
+                lines.Add(new StraightTrajectory(lineBefore).Invert());
+            lines.Add(new BezierTrajectory(bezier));
+            if (GetMiddleLineAfter(bezier, halfAngelRad, rect, out Line3 lineAfter))
+                lines.Add(new StraightTrajectory(lineAfter));
 
-            StyleHelper.GetParts(width, 0, out int partsCount, out partWidth);
+            StyleHelper.GetParts(Width, 0, out int partsCount, out partWidth);
+            var partStep = partWidth / coef;
 
             positions = new List<Vector3[]>();
             directions = new List<Vector3>();
 
-            foreach (var itemPositions in GetItemsPositions(bezier, line, width, width * (Step - 1)))
+            foreach (var itemPositions in GetItemsPositions(lines, width, width * (Step - 1)))
             {
                 var dir = (itemPositions[1] - itemPositions[0]).normalized;
                 var dirRight = dir.TurnRad(halfAngelRad, true);
                 var dirLeft = dir.TurnRad(halfAngelRad, false);
 
-                var start = partWidth / 2;
+                var start = partStep / 2;
 
                 var rightPos = new Vector3[partsCount];
                 var leftPos = new Vector3[partsCount];
 
                 for (var i = 0; i < partsCount; i += 1)
                 {
-                    var partPos = itemPositions[0] + dir * (start + partWidth * i);
+                    var partPos = itemPositions[0] + dir * (start + partStep * i);
 
                     rightPos[i] = partPos;
                     leftPos[i] = partPos;
@@ -336,7 +366,7 @@ namespace NodeMarkup.Manager
                 directions.Add(dirLeft);
             }
         }
-        private IEnumerable<Vector3[]> GetItemsPositions(Bezier3 bezier, Line3 line, float dash, float space)
+        private IEnumerable<Vector3[]> GetItemsPositions(List<ILineTrajectory> lines, float dash, float space)
         {
             var dashesT = new List<float[]>();
 
@@ -350,7 +380,7 @@ namespace NodeMarkup.Manager
                 var currentT = 0f;
                 var nextT = Travel(currentT, startSpace);
 
-                while (nextT < 2)
+                while (nextT < lines.Count)
                 {
                     if (isDash)
                         dashesT.Add(new float[] { currentT, nextT });
@@ -363,8 +393,8 @@ namespace NodeMarkup.Manager
                 }
 
                 float endSpace;
-                if (isDash || ((Position(2) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
-                    endSpace = (Position(2) - Position(prevT)).magnitude;
+                if (isDash || ((Position(lines.Count) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
+                    endSpace = (Position(lines.Count) - Position(prevT)).magnitude;
                 else
                     endSpace = tempLength;
 
@@ -375,34 +405,58 @@ namespace NodeMarkup.Manager
             }
 
             foreach (var dashT in dashesT)
-            {
                 yield return new Vector3[] { Position(dashT[0]), Position(dashT[1]) };
+
+
+            Vector3 Position(float t)
+            {
+                var i = (int)t == t ? (int)t - 1 : (int)t;
+                return lines[i].Position(t - i);
             }
-
-
-            Vector3 Position(float t) => t <= 1 ? bezier.Position(t) : line.a + (line.b - line.a) * (t - 1);
             float Travel(float current, float distance)
             {
-                if (current >= 1)
-                    return distance / (line.b - line.a).magnitude + current;
+                var i = (int)current;
+                var next = 1f;
+                while (i < lines.Count)
+                {                   
+                    var line = lines[i];
+                    var start = current - i;
+                    next = line.Travel(start, distance);
 
-                var next = bezier.Travel(current, distance);
-                if (next < 1)
-                    return next;
-                else
-                    return (distance - (Position(1) - Position(current)).magnitude) / (line.b - line.a).magnitude + 1;
+                    if (next < 1)
+                        break;
+                    else
+                    {
+                        i += 1;
+                        current = i;
+                        distance -= (line.Position(1f) - line.Position(start)).magnitude;
+                    }
+                }
+
+                return i + next;
             }
         }
+
         private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
         {
-            var left = Output % trajectories.Length;
-            var right = left == 0 ? trajectories.Length - 1 : left - 1;
+            var leftIndex = Output % trajectories.Length;
+            var rightIndex = leftIndex.PrevIndex(trajectories.Length, StartingFrom == From.Vertex ? 1 : 2);
+            var left = trajectories[leftIndex];
+            var right = trajectories[rightIndex];
+
+            var leftLength = left.Length;
+            var rightLength = right.Length;
+            if (leftLength < rightLength)
+                right = right.Cut(right.Travel(0, rightLength - leftLength), 1);
+            else
+                left = left.Cut(0, left.Travel(0, rightLength));
+
             var middle = new Bezier3()
             {
-                a = (trajectories[right].EndPosition + trajectories[left].StartPosition) / 2,
-                b = (trajectories[right].EndDirection.normalized + trajectories[left].StartDirection.normalized) / 2,
-                c = (trajectories[right].StartDirection.normalized + trajectories[left].EndDirection.normalized) / 2,
-                d = (trajectories[right].StartPosition + trajectories[left].EndPosition) / 2,
+                a = (right.EndPosition + left.StartPosition) / 2,
+                b = (right.EndDirection.normalized + left.StartDirection.normalized) / 2,
+                c = (right.StartDirection.normalized + left.EndDirection.normalized) / 2,
+                d = (right.StartPosition + left.EndPosition) / 2,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
             var middleTrajectory = new BezierTrajectory(middle);
@@ -410,37 +464,48 @@ namespace NodeMarkup.Manager
             var cutT = 1f;
             for (var i = 0; i < trajectories.Length; i += 1)
             {
-                if (i == left || i == right)
+                if (i == leftIndex || i == rightIndex)
                     continue;
-                if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && intersect.FirstT < cutT)
+                if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && 0.1 <= intersect.FirstT && intersect.FirstT < cutT)
                     cutT = intersect.FirstT;
             }
 
             return cutT == 1f ? middle : middle.Cut(0, cutT);
         }
-        private Line3 GetMiddleLine(Bezier3 middleBezier, float halfAngelRad, Rect rect)
+
+        private bool GetMiddleLineBefore(Bezier3 middleBezier, float halfAngelRad, Rect rect, out Line3 line)
+            => GetMiddleLine(middleBezier.a, (middleBezier.a - middleBezier.b).normalized, halfAngelRad, rect, out line);
+        private bool GetMiddleLineAfter(Bezier3 middleBezier, float halfAngelRad, Rect rect, out Line3 line)
+            => GetMiddleLine(middleBezier.d, (middleBezier.d - middleBezier.c).normalized, halfAngelRad, rect, out line);
+
+        private bool GetMiddleLine(Vector3 pos, Vector3 dir, float halfAngelRad, Rect rect, out Line3 line)
         {
-            var middleDir = (middleBezier.d - middleBezier.c).normalized;
-            var dirRight = middleDir.TurnRad(halfAngelRad, true);
-            var dirLeft = middleDir.TurnRad(halfAngelRad, false);
+            var dirRight = dir.TurnRad(halfAngelRad, true);
+            var dirLeft = dir.TurnRad(halfAngelRad, false);
 
             GetRail(dirRight.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
             GetRail(dirLeft.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
 
-            var t = 0f;
-            t = Mathf.Max(t, GetT(rightRail.a, dirRight));
-            t = Mathf.Max(t, GetT(rightRail.b, dirRight));
-            t = Mathf.Max(t, GetT(leftRail.a, dirLeft));
-            t = Mathf.Max(t, GetT(leftRail.b, dirLeft));
+            var t = new float[] { 0, GetT(rightRail.a, dirRight), GetT(rightRail.b, dirRight), GetT(leftRail.a, dirLeft), GetT(leftRail.b, dirLeft) }.Max();
 
-            return new Line3(middleBezier.d, middleBezier.d + middleDir * t);
+            if (t > 0.1)
+            {
+                line = new Line3(pos, pos + dir * t);
+                return true;
+            }
+            else
+            {
+                line = default;
+                return false;
+            }
 
             float GetT(Vector3 railPos, Vector3 railDir)
             {
-                Line2.Intersect(middleBezier.d.XZ(), (middleBezier.d + middleDir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
+                Line2.Intersect(pos.XZ(), (pos + dir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
                 return p;
             }
         }
+
 
         public override XElement ToXml()
         {
@@ -449,15 +514,26 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("S", Step));
             config.Add(new XAttribute("I", Invert ? 1 : 0));
             config.Add(new XAttribute("O", Output));
+            config.Add(new XAttribute("SF", (int)StartingFrom));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config);
+            base.FromXml(config, map, invert);
             AngleBetween = config.GetAttrValue("A", DefaultAngle);
             Step = config.GetAttrValue("S", DefaultStepGrid);
             Invert = config.GetAttrValue("I", 0) == 1;
             Output = config.GetAttrValue("O", 0);
+            StartingFrom = (From)config.GetAttrValue("SF", (int)From.Vertex);
+        }
+
+        public enum From
+        {
+            [Description(nameof(Localize.Filler_Vertex))]
+            Vertex = 0,
+
+            [Description(nameof(Localize.Filler_Edge))]
+            Edge = 1
         }
     }
 }

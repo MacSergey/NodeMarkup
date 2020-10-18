@@ -43,13 +43,14 @@ namespace NodeMarkup.UI.Editors
         protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
             => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
         protected override string GroupName(Style.StyleType group)
-            => Settings.GroupTemplatesType == 0 ? Utilities.EnumDescription(group) : $"{Utilities.EnumDescription(group & Style.StyleType.GroupMask)}\n{Utilities.EnumDescription(group)}";
+            => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
         private void AddHeader()
         {
             HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
             HeaderPanel.Init(EditObject.IsDefault());
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
+            HeaderPanel.OnDuplicate += Duplicate;
         }
         private void AddTemplateName()
         {
@@ -63,17 +64,44 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: true);
 
-        private void NameSubmitted(string value)
+        private void NameSubmitted(string name)
         {
-            EditObject.Name = value;
-            NameProperty.Value = EditObject.Name;
-            SelectItem.Refresh();
+            if (name == EditObject.Name)
+                return;
+
+            if (!string.IsNullOrEmpty(name) && TemplateManager.ContainsName(name, EditObject))
+            {
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
+                messageBox.MessageText = string.Format(NodeMarkup.Localize.TemplateEditor_NameExistMessage, name);
+                messageBox.OnButton1Click = Set;
+                messageBox.OnButton2Click = NotSet;
+            }
+            else
+                Set();
+
+            bool Set()
+            {
+                EditObject.Name = name;
+                SelectItem.Refresh();
+                return true;
+            }
+            bool NotSet()
+            {
+                NameProperty.Edit();
+                return true;
+            }
         }
 
         private void ToggleAsDefault()
         {
             TemplateManager.ToggleAsDefaultTemplate(EditObject);
             AsDefaultRefresh();
+        }
+        private void Duplicate()
+        {
+            if (TemplateManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
+                NodeMarkupPanel.EditTemplate(duplicate);
         }
         private void AsDefaultRefresh()
         {
@@ -85,8 +113,6 @@ namespace NodeMarkup.UI.Editors
 
     public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>
     {
-        public override string DeleteCaptionDescription => NodeMarkup.Localize.TemplateEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => NodeMarkup.Localize.TemplateEditor_DeleteMessageDescription;
         private bool IsDefault { get; set; }
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;

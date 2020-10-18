@@ -11,20 +11,22 @@ namespace NodeMarkup.UI
 {
     public class KeymappingsPanel : UICustomControl
     {
-        private static readonly string kKeyBindingTemplate = "KeyBindingTemplate";
+        private static readonly string keyBindingTemplate = "KeyBindingTemplate";
         private SavedInputKey m_EditingBinding;
         private string m_EditingBindingCategory;
         private int count;
 
-        internal void AddKeymapping(string label, SavedInputKey savedInputKey)
+        public void AddKeymapping(string label, SavedInputKey savedInputKey)
         {
-            UIPanel uipanel = base.component.AttachUIComponent(UITemplateManager.GetAsGameObject(KeymappingsPanel.kKeyBindingTemplate)) as UIPanel;
+            UIPanel uipanel = component.AttachUIComponent(UITemplateManager.GetAsGameObject(keyBindingTemplate)) as UIPanel;
+
             int num = count;
             count = num + 1;
             if (num % 2 == 1)
             {
                 uipanel.backgroundSprite = null;
             }
+
             UILabel uilabel = uipanel.Find<UILabel>("Name");
             UIButton uibutton = uipanel.Find<UIButton>("Binding");
             uibutton.eventKeyDown += OnBindingKeyDown;

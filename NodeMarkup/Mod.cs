@@ -12,10 +12,11 @@ using ColossalFramework;
 using ColossalFramework.UI;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
+using NodeMarkup.Tools;
 
 namespace NodeMarkup
 {
-    public class Mod : LoadingExtensionBase, IUserMod
+    public class Mod : IUserMod
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
@@ -25,6 +26,11 @@ namespace NodeMarkup
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
         public static string StaticName { get; } = "Intersection Marking Tool";
+#if DEBUG
+        public static string StaticFullName => $"{StaticName} {Version.GetString()} [BETA]";
+#else
+        public static string StaticFullName => $"{StaticName} {Version.GetString()}";
+#endif
 
         public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
         public static Version VersionBuild => Version.Build();
@@ -38,13 +44,12 @@ namespace NodeMarkup
             new Version("1.0")
         };
 
+        public string Name => StaticFullName;
 #if DEBUG
         public static bool IsBeta => true;
-        public string Name { get; } = $"{StaticName} {Version.GetString()} [BETA]";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public static bool IsBeta => false;
-        public string Name { get; } = $"{StaticName} {Version.GetString()}";
         public string Description => Localize.Mod_Description;
 #endif
 
@@ -73,28 +78,7 @@ namespace NodeMarkup
             NodeMarkupTool.Remove();
 
             LocaleManager.eventLocaleChanged -= LocaleChanged;
-        }
-
-        public override void OnLevelLoaded(LoadMode mode)
-        {
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelLoaded)}");
-            if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame || mode == LoadMode.NewGameFromScenario || mode == LoadMode.NewAsset)
-            {
-                NodeMarkupTool.Create();
-                MarkupManager.Init();
-
-                EarlyAccess.CheckAccess();
-                ShowWhatsNew();
-                ShowBetaWarning();
-                ShowLoadError();
-            }
-        }
-
-        public override void OnLevelUnloading()
-        {
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelUnloading)}");
-            NodeMarkupTool.Remove();
-        }
+        }     
 
         public void OnSettingsUI(UIHelperBase helper)
         {
@@ -117,90 +101,6 @@ namespace NodeMarkup
         {
             Utilities.OpenUrl(TroubleshootingUrl);
             return true;
-        }
-        private void ShowLoadError()
-        {
-            if (MarkupManager.LoadErrors != 0)
-            {
-                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                messageBox.CaprionText = StaticName;
-                messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors);
-                messageBox.Button1Text = Localize.MessageBox_OK;
-                messageBox.Button2Text = Localize.Mod_Support;
-                messageBox.OnButton2Click = OpenTroubleshooting;
-            }
-        }
-        private void ShowBetaWarning()
-        {
-            if (!IsBeta)
-                UI.Settings.BetaWarning.value = true;
-            else if (UI.Settings.BetaWarning.value)
-            {
-                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                messageBox.CaprionText = Localize.Mod_BetaWarningCaption;
-                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, StaticName);
-                messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
-                messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
-                messageBox.OnButton1Click = AgreeClick;
-                messageBox.OnButton2Click = GetStable;
-
-                bool AgreeClick()
-                {
-                    UI.Settings.BetaWarning.value = false;
-                    return true;
-                }
-                bool GetStable()
-                {
-                    Utilities.OpenUrl(StableURL);
-                    return true;
-                }
-            }
-        }
-        private void ShowWhatsNew()
-        {
-            var whatNewVersion = new Version(UI.Settings.WhatsNewVersion);
-
-            if (!UI.Settings.ShowWhatsNew || Version <= whatNewVersion)
-                return;
-
-            var messages = GetWhatsNewMessages(whatNewVersion);
-            if (!messages.Any())
-                return;
-
-            var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
-            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, StaticName);
-            messageBox.OnButtonClick = Confirm;
-            messageBox.Init(messages);
-
-            bool Confirm()
-            {
-                UI.Settings.WhatsNewVersion.value = Version.ToString();
-                return true;
-            }
-        }
-        private Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
-        {
-            var messages = new Dictionary<Version, string>(Versions.Count);
-#if DEBUG
-            messages[Version] = Localize.Mod_WhatsNewMessageBeta;
-#endif
-            foreach (var version in Versions)
-            {
-                if (Version < version)
-                    continue;
-
-                if (version <= whatNewVersion)
-                    break;
-
-                if (UI.Settings.ShowOnlyMajor && !version.IsMinor())
-                    continue;
-
-                if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
-                    messages[version] = message;
-            }
-
-            return messages;
-        }
-        private string GetWhatsNew(Version version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.ToString().Replace('.', '_')}", Localize.Culture);
+        }       
     }
 }

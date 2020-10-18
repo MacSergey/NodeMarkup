@@ -5,6 +5,7 @@ using NodeMarkup.Manager;
 using System.Xml.Linq;
 using System.Xml;
 using System.IO;
+using System.Linq;
 
 namespace NodeMarkup.Utils
 {
@@ -44,26 +45,42 @@ namespace NodeMarkup.Utils
         }
 
         public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
+            => Paste(targetInstanceID, record, sourceMap, PasteMapFiller);
+        private void PasteMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
-            if (targetInstanceID.Type == InstanceType.NetNode)
-            {
-                ushort nodeID = targetInstanceID.NetNode;
-                var map = new Dictionary<ObjectId, ObjectId>();
-                foreach (var source in sourceMap)
-                {
-                    if (source.Key.Type == InstanceType.NetSegment && source.Value.Type == InstanceType.NetSegment)
-                    {
-                        map.Add(new ObjectId() { Segment = source.Key.NetSegment }, new ObjectId() { Segment = source.Value.NetSegment });
-                    }
-                }
+            foreach (var source in sourceMap.Where(p => IsCorrect(p)))
+                map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
+        }
 
-                if (record is XElement config)
-                {
-                    var markup = MarkupManager.Get(nodeID);
-                    markup.FromXml(Mod.Version, config, map);
-                }
+        public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation)
+            => Paste(targetInstanceID, record, sourceMap, MirrorMapFiller);
+        private void MirrorMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
+        {
+            foreach (var source in sourceMap.Where(p => IsCorrect(p)))
+            {
+                if (!markup.TryGetEnter(source.Value.NetSegment, out Enter enter))
+                    continue;
+
+                var sourceSegment = source.Key.NetSegment;
+                var targetSetment = source.Value.NetSegment;
+                map.AddSegment(sourceSegment, targetSetment);
+                map.AddMirrorEnter(enter);
             }
         }
+
+        private void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, ObjectsMap, Dictionary<InstanceID, InstanceID>> mapFiller)
+        {
+            if (targetInstanceID.Type != InstanceType.NetNode || !(record is XElement config))
+                return;
+
+            ushort nodeID = targetInstanceID.NetNode;
+            var map = new ObjectsMap(true);
+            var markup = MarkupManager.Get(nodeID);
+            mapFiller(markup, map, sourceMap);
+            markup.FromXml(Mod.Version, config, map);
+        }
+        private bool IsCorrect(KeyValuePair<InstanceID, InstanceID> pair) => pair.Key.Type == InstanceType.NetSegment && pair.Value.Type == InstanceType.NetSegment;
+
 
         public override string Encode64(object record)
         {
@@ -75,8 +92,6 @@ namespace NodeMarkup.Utils
         {
             if (record == null || record.Length == 0) return null;
 
-            // XElement.Parse throws MissingMethodException
-            // Method not found: System.Xml.XmlReaderSettings.set_MaxCharactersFromEntities
             XElement xml;
             using (StringReader input = new StringReader((string)EncodeUtil.BinaryDecode64(record)))
             {

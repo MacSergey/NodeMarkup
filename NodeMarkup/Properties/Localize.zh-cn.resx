@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>删除{0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>确定要删除 {0} {1} 吗?
-此操作不可撤销。</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>确定要删除 {0} {1} 吗?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>使用滚轮改变参数
@@ -153,8 +152,7 @@ Shift x10，Ctrl x0.1</value>
     <value>删除规则</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>确定要删除这个规则吗?
-此操作不可撤销。</value>
+    <value>确定要删除这个规则吗?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>起始点</value>
@@ -231,13 +229,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未设置</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>启用工具</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>添加新规则</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>删除选中节点的所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,49 +245,38 @@ Shift x10，Ctrl x0.1</value>
     <value>删除所有地标线</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>确定要删除全图所有的地标线吗?
-此操作不可撤销！</value>
+    <value>确定要删除全图所有的地标线吗?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>将地标线信息导出到文件</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>复制路径到剪贴板</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>确认</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>导出地标线信息</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>导出失败</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>导出成功</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>常规设置</value>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>从文件中恢复地标线信息</value>
   </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>从文件中导入地标线信息</value>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>恢复标记数据</value>
   </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>导入地标线信息</value>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>确定要恢复数据吗?
+恢复后的数据会覆盖全图既存的地标线。</value>
   </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>确定要导入数据吗?
-导入后的数据会覆盖全图既存的地标线。
-此操作无法撤销！</value>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>地标线信息恢复失败</value>
   </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>地标线信息导入失败</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>地标线信息导入成功</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>其他</value>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>地标线信息恢复成功</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>快速初始化新规则</value>
@@ -337,13 +324,10 @@ Shift x10，Ctrl x0.1</value>
     <value>清除节点的地标线</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>确定要删除节点 #{0} 的所有地标线吗?
-此操作不可撤销。</value>
+    <value>确定要删除节点 #{0} 的所有地标线吗?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>点击以创建地标线
-+Shift 实线
-+Ctrl 双线</value>
+    <value>点击以创建线段</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>点击可擦除线段</value>
@@ -356,16 +340,11 @@ Shift x10，Ctrl x0.1</value>
     <value>选择节点以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>选择终止点
-+Shift 实线
-+Ctrl 双线</value>
+    <value>点选终点来创建普通停止线
+拖选到端点后来创建垂直线</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>点选起始点
-来创建/擦除线段
-+Ctrl 偏移端点
-按住Alt创建填充图案
-按住Shift创建人行横道</value>
+    <value>点选起始点来创建/擦除线段</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
@@ -374,10 +353,10 @@ Shift x10，Ctrl x0.1</value>
     <value>显示更新提示框</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>导入</value>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>恢复</value>
   </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -469,7 +448,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>只推送重要更新提示消息</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>创建新填充图案</value>
   </data>
   
@@ -507,7 +486,7 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>没有模板可选。
-在线段页点击 «{0}» 来创建新模板。</value>
+在线段或填充格式上点击 «{0}» 来创建新模板。</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>使用密钥激活</value>
@@ -598,8 +577,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>抢先体验版本</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>实线对齐</value>
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>对齐</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>我同意</value>
@@ -659,9 +638,7 @@ Shift x10，Ctrl x0.1</value>
     <value>语言</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>点击以创建垂直线
-+Shift 实线
-+Ctrl 双线</value>
+    <value>点击以创建垂直线</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>点击以擦除垂直线</value>
@@ -814,5 +791,281 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>故障排除</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>棋盘格</value>
+  </data>
+  <data name="LineEditor_LineCount" xml:space="preserve">
+    <value>线条数</value>
+  </data>
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>三角形底边长</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>三角形高度</value>
+  </data>
+  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+    <value>三角形间隙</value>
+  </data>
+  <data name="LineEditor_SquareSide" xml:space="preserve">
+    <value>方形边长</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>三角式</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>三角式</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>虚实线</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>清除标记</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>复制标记</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>粘贴标记</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>粘贴标记</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>确定要粘贴标记吗?
+粘贴后会清除既存的地标线。</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>人行横道修饰键</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>填充图案修饰键</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>普通标线修饰键</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>停止线修饰键</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>未设置</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>无修饰键</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>总是显示</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>只有其他标线受到影响时弹窗</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>以下受影响的部分也会被擦除</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>人行横道边界 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>人行横道 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>填充 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>线段 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>规则 - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>备份</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>界面及使用</value>
+  </data>
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>常规设置</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>分组</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>快捷键与修饰键</value>
+  </data>
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>支持服务</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>重复</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Filler_Edge" xml:space="preserve">
+    <value>边界</value>
+  </data>
+  <data name="Filler_StartingFrom" xml:space="preserve">
+    <value>起始点</value>
+  </data>
+  <data name="Filler_Vertex" xml:space="preserve">
+    <value>顶点</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>重置全部端点偏移</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>重置全部端点偏移</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>确定要重置 #{0} 全部的端点偏移吗?</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>长按并拖移圆圈以设置道路排序
+点击圆圈来编辑道路节点排序</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>将圆圈放进或移出目标，来设置或取消道路排序</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>复制标记</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>粘贴标记</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>逆向排序</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>顺时针旋转</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>逆时针旋转</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>中心</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>向左</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>向右</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>未命名模板</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>名称已被占用</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>模板名称 "{0}" 已被其它模板占用。
+确定要多个模板使用这个命名吗？</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>备份标记</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>备份模板</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>删除所有模板</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>删除所有模板</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>确定要删除所有模板吗?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>导出模板到文件</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>导出模板</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>从文件中恢复模板。</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>恢复模板</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>确定要恢复模板吗?
+恢复后的模板会覆盖既存的模板。</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>模板恢复失败</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>模板恢复成功</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>退出粘贴模式</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>确定要退出粘贴模式并应用粘贴吗？</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>不应用</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>不应用</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>更改标线排序</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>更改标线排序</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>道路被更改</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>交叉路口的道路被更改，所以无法自动适配既存标线
+要手动适配标线吗？</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>退出排序编辑模式</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>确定要退出编辑模式并应用排序吗？</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>长按并拖移圆圈来设置节点排序</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>将圆圈放进或移出目标，来设置或取消节点排序</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>中心实线</value>
+  </data>
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>按住Shift创建人行横道</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>按住Alt创建填充图案</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>按住Ctrl拖动来移动端点</value>
+  </data>
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>此操作不可撤销。</value>
   </data>
 </root>

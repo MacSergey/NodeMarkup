@@ -179,6 +179,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Chess board.
+        /// </summary>
+        public static string CrosswalkStyle_ChessBoard {
+            get {
+                return ResourceManager.GetString("CrosswalkStyle_ChessBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Double zebra.
         /// </summary>
         public static string CrosswalkStyle_DoubleZebra {
@@ -514,25 +523,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete {0}.
-        /// </summary>
-        public static string Editor_DeleteCaption {
-            get {
-                return ResourceManager.GetString("Editor_DeleteCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?
-        ///This action cannot be undone.
-        /// </summary>
-        public static string Editor_DeleteMessage {
-            get {
-                return ResourceManager.GetString("Editor_DeleteMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Scroll the wheel to change
         ///Shift X10, Ctrl X0.1.
         /// </summary>
@@ -557,6 +547,15 @@ namespace NodeMarkup {
         public static string Filler_AngleBetween {
             get {
                 return ResourceManager.GetString("Filler_AngleBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edge.
+        /// </summary>
+        public static string Filler_Edge {
+            get {
+                return ResourceManager.GetString("Filler_Edge", resourceCulture);
             }
         }
         
@@ -588,6 +587,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Starting from.
+        /// </summary>
+        public static string Filler_StartingFrom {
+            get {
+                return ResourceManager.GetString("Filler_StartingFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Step.
         /// </summary>
         public static string Filler_Step {
@@ -602,6 +610,15 @@ namespace NodeMarkup {
         public static string Filler_Turn {
             get {
                 return ResourceManager.GetString("Filler_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Vertex.
+        /// </summary>
+        public static string Filler_Vertex {
+            get {
+                return ResourceManager.GetString("Filler_Vertex", resourceCulture);
             }
         }
         
@@ -697,6 +714,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Duplicate.
+        /// </summary>
+        public static string HeaderPanel_Duplicate {
+            get {
+                return ResourceManager.GetString("HeaderPanel_Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No templates.
         /// </summary>
         public static string HeaderPanel_NoTemplates {
@@ -742,11 +768,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Center solid.
+        ///   Ищет локализованную строку, похожую на Alignment.
         /// </summary>
-        public static string LineEditor_CenterSolid {
+        public static string LineEditor_Alignment {
             get {
-                return ResourceManager.GetString("LineEditor_CenterSolid", resourceCulture);
+                return ResourceManager.GetString("LineEditor_Alignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Center.
+        /// </summary>
+        public static string LineEditor_AlignmentCenter {
+            get {
+                return ResourceManager.GetString("LineEditor_AlignmentCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left.
+        /// </summary>
+        public static string LineEditor_AlignmentLeft {
+            get {
+                return ResourceManager.GetString("LineEditor_AlignmentLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right.
+        /// </summary>
+        public static string LineEditor_AlignmentRight {
+            get {
+                return ResourceManager.GetString("LineEditor_AlignmentRight", resourceCulture);
             }
         }
         
@@ -823,8 +876,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to delete the rule?
-        ///This action cannot be undone.
+        ///   Ищет локализованную строку, похожую на Do you really want to delete the rule?.
         /// </summary>
         public static string LineEditor_DeleteRuleMessage {
             get {
@@ -879,6 +931,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Line count.
+        /// </summary>
+        public static string LineEditor_LineCount {
+            get {
+                return ResourceManager.GetString("LineEditor_LineCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Lines.
         /// </summary>
         public static string LineEditor_Lines {
@@ -907,11 +968,74 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Triangle base.
+        /// </summary>
+        public static string LineEditor_SharkToothBase {
+            get {
+                return ResourceManager.GetString("LineEditor_SharkToothBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Triangle height.
+        /// </summary>
+        public static string LineEditor_SharkToothHeight {
+            get {
+                return ResourceManager.GetString("LineEditor_SharkToothHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Space between.
+        /// </summary>
+        public static string LineEditor_SharkToothSpace {
+            get {
+                return ResourceManager.GetString("LineEditor_SharkToothSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid in center.
+        /// </summary>
+        public static string LineEditor_SolidInCenter {
+            get {
+                return ResourceManager.GetString("LineEditor_SolidInCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No.
+        /// </summary>
+        public static string LineEditor_SolidInCenterDisable {
+            get {
+                return ResourceManager.GetString("LineEditor_SolidInCenterDisable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Yes.
+        /// </summary>
+        public static string LineEditor_SolidInCenterEnable {
+            get {
+                return ResourceManager.GetString("LineEditor_SolidInCenterEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Space length.
         /// </summary>
         public static string LineEditor_SpaceLength {
             get {
                 return ResourceManager.GetString("LineEditor_SpaceLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Square side.
+        /// </summary>
+        public static string LineEditor_SquareSide {
+            get {
+                return ResourceManager.GetString("LineEditor_SquareSide", resourceCulture);
             }
         }
         
@@ -1042,6 +1166,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Shark teeth.
+        /// </summary>
+        public static string LineStyle_SharkTeeth {
+            get {
+                return ResourceManager.GetString("LineStyle_SharkTeeth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid.
         /// </summary>
         public static string LineStyle_Solid {
@@ -1101,6 +1234,33 @@ namespace NodeMarkup {
         public static string LineStyle_StopGroup {
             get {
                 return ResourceManager.GetString("LineStyle_StopGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Shark teeth.
+        /// </summary>
+        public static string LineStyle_StopSharkTeeth {
+            get {
+                return ResourceManager.GetString("LineStyle_StopSharkTeeth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid and dashed.
+        /// </summary>
+        public static string LineStyle_StopSolidAndDashed {
+            get {
+                return ResourceManager.GetString("LineStyle_StopSolidAndDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This action cannot be undone..
+        /// </summary>
+        public static string MessageBox_CantUndone {
+            get {
+                return ResourceManager.GetString("MessageBox_CantUndone", resourceCulture);
             }
         }
         
@@ -1376,10 +1536,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added early access (EA) to new features. Some features will only be available to Patreons for a certain time. They will become available to everyone later on.
-        ///By becoming a Patreon, you will be  supporting the development of the mod at the current speed.
-        ///- (EA) Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
-        ///- Added crosswalks. Hold Shift to create them. Currently available Styles: &quot;Existing crosswalk&quot;, (EA)&quot;Zebra&quot;, (EA)&quot;Double Zebra&quot;, (EA)&quot;Parallel solid lines&quot;, (EA)&quot;Parallel dashed lines&quot;, (EA)&quot;Ladder&quot;, (E [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на - Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+        ///- Added crosswalks. Hold Shift to create them. Currently available Styles: &quot;Existing crosswalk&quot;, &quot;Zebra&quot;, &quot;Double Zebra&quot;, &quot;Parallel solid lines&quot;, &quot;Parallel dashed lines&quot;, &quot;Ladder&quot;, &quot;Solid&quot;.
+        ///- Added perpendicular lines. These lines don&apos;t have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
+        ///- Added the ability to copy/paste style of lines, fillers, and [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_3 {
             get {
@@ -1388,15 +1548,39 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added chevron filler style
-        ///- You can delete a rule for a line that doesn&apos;t intersect to make it invisible.
-        ///- Copy/paste lines and fillers style.
-        ///- Improved stop lines.
-        ///- Added perpendicular lines.
-        ///- Linked Patreon account for early access.
-        ///- Added the ability to select the language separately from the game language.
-        ///- Added zebra crosswalk.
-        ///- Added lines and templates groups..
+        ///   Ищет локализованную строку, похожую на WARNING: Default templates setting will be reset.
+        ///
+        ///- Added the ability to copy/paste marking from one exist intersection to another exist intersection.
+        ///- Now the marking is not removed if you replace the road with a different number of points.
+        ///- Added map editor support.
+        ///- Added the ability to save marking data in intersection assets.
+        ///- Added &quot;Shark teeth&quot; line and stop line style.
+        ///- Added &quot;Solid&amp;Dashed&quot; stop line style.
+        ///- Added &quot;Chess board&quot; crosswalk style.
+        ///- Added the ability to set create modif [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_4 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Fix chevron line parts overlap.
+        ///- New chevron middle line calculation algorithm
+        ///- added shark teeth line
+        ///- added solid&amp;dashed stop line
+        ///- added shark teeth stop line
+        ///- added chess board crosswalk
+        ///- Added support moveit mirroring
+        ///- Fix filler vertex duplicates
+        ///- Added copy/paste marking
+        ///- Added style modifier settings
+        ///- added &quot;Only if will affect others items&quot; option to confirm before deleting
+        ///- added settings tabs
+        ///- duplicate templates
+        ///- added the ability to resize panel
+        ///- added line with ov [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -1419,6 +1603,42 @@ namespace NodeMarkup {
         public static string Panel_Caption {
             get {
                 return ResourceManager.GetString("Panel_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Clear marking.
+        /// </summary>
+        public static string Panel_ClearMarking {
+            get {
+                return ResourceManager.GetString("Panel_ClearMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy marking.
+        /// </summary>
+        public static string Panel_CopyMarking {
+            get {
+                return ResourceManager.GetString("Panel_CopyMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit marking order.
+        /// </summary>
+        public static string Panel_EditMarking {
+            get {
+                return ResourceManager.GetString("Panel_EditMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste marking.
+        /// </summary>
+        public static string Panel_PasteMarking {
+            get {
+                return ResourceManager.GetString("Panel_PasteMarking", resourceCulture);
             }
         }
         
@@ -1468,47 +1688,56 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Backup marking.
+        /// </summary>
+        public static string Settings_BackupMarking {
+            get {
+                return ResourceManager.GetString("Settings_BackupMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Backup.
+        /// </summary>
+        public static string Settings_BackupTab {
+            get {
+                return ResourceManager.GetString("Settings_BackupTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Backup templates.
+        /// </summary>
+        public static string Settings_BackupTemplates {
+            get {
+                return ResourceManager.GetString("Settings_BackupTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Cancel.
         /// </summary>
-        public static string Setting_Cancel {
+        public static string Settings_Cancel {
             get {
-                return ResourceManager.GetString("Setting_Cancel", resourceCulture);
+                return ResourceManager.GetString("Settings_Cancel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Activate tool.
+        ///   Ищет локализованную строку, похожую на Copy path to clipboard.
         /// </summary>
-        public static string Settings_ActivateTool {
+        public static string Settings_CopyPathToClipboard {
             get {
-                return ResourceManager.GetString("Settings_ActivateTool", resourceCulture);
+                return ResourceManager.GetString("Settings_CopyPathToClipboard", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Add new filler.
+        ///   Ищет локализованную строку, похожую на Crosswalks modifier.
         /// </summary>
-        public static string Settings_AddNewFiller {
+        public static string Settings_CrosswalksModifier {
             get {
-                return ResourceManager.GetString("Settings_AddNewFiller", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Add new line rule.
-        /// </summary>
-        public static string Settings_AddNewLineRule {
-            get {
-                return ResourceManager.GetString("Settings_AddNewLineRule", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete all node lines.
-        /// </summary>
-        public static string Settings_DeleteAllNodeLines {
-            get {
-                return ResourceManager.GetString("Settings_DeleteAllNodeLines", resourceCulture);
+                return ResourceManager.GetString("Settings_CrosswalksModifier", resourceCulture);
             }
         }
         
@@ -1531,12 +1760,47 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to remove all markings?
-        ///This action cannot be undone.
+        ///   Ищет локализованную строку, похожую на Do you really want to remove all markings?.
         /// </summary>
         public static string Settings_DeleteMarkingMessage {
             get {
                 return ResourceManager.GetString("Settings_DeleteMarkingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all templates.
+        /// </summary>
+        public static string Settings_DeleteTemplatesButton {
+            get {
+                return ResourceManager.GetString("Settings_DeleteTemplatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all templates.
+        /// </summary>
+        public static string Settings_DeleteTemplatesCaption {
+            get {
+                return ResourceManager.GetString("Settings_DeleteTemplatesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to remove all templates?.
+        /// </summary>
+        public static string Settings_DeleteTemplatesMessage {
+            get {
+                return ResourceManager.GetString("Settings_DeleteTemplatesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Display and usage.
+        /// </summary>
+        public static string Settings_DisplayAndUsage {
+            get {
+                return ResourceManager.GetString("Settings_DisplayAndUsage", resourceCulture);
             }
         }
         
@@ -1546,24 +1810,6 @@ namespace NodeMarkup {
         public static string Settings_DumpMarkingButton {
             get {
                 return ResourceManager.GetString("Settings_DumpMarkingButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy path to clipboard.
-        /// </summary>
-        public static string Settings_DumpMarkingButton1 {
-            get {
-                return ResourceManager.GetString("Settings_DumpMarkingButton1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на OK.
-        /// </summary>
-        public static string Settings_DumpMarkingButton2 {
-            get {
-                return ResourceManager.GetString("Settings_DumpMarkingButton2", resourceCulture);
             }
         }
         
@@ -1579,18 +1825,36 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Dump failed.
         /// </summary>
-        public static string Settings_DumpMarkingMessageFailed {
+        public static string Settings_DumpMessageFailed {
             get {
-                return ResourceManager.GetString("Settings_DumpMarkingMessageFailed", resourceCulture);
+                return ResourceManager.GetString("Settings_DumpMessageFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Dump success saved.
         /// </summary>
-        public static string Settings_DumpMarkingMessageSuccess {
+        public static string Settings_DumpMessageSuccess {
             get {
-                return ResourceManager.GetString("Settings_DumpMarkingMessageSuccess", resourceCulture);
+                return ResourceManager.GetString("Settings_DumpMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dump templates to file.
+        /// </summary>
+        public static string Settings_DumpTemplatesButton {
+            get {
+                return ResourceManager.GetString("Settings_DumpTemplatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dump templates.
+        /// </summary>
+        public static string Settings_DumpTemplatesCaption {
+            get {
+                return ResourceManager.GetString("Settings_DumpTemplatesCaption", resourceCulture);
             }
         }
         
@@ -1604,11 +1868,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers modifier.
+        /// </summary>
+        public static string Settings_FillersModifier {
+            get {
+                return ResourceManager.GetString("Settings_FillersModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на General.
         /// </summary>
-        public static string Settings_General {
+        public static string Settings_GeneralTab {
             get {
-                return ResourceManager.GetString("Settings_General", resourceCulture);
+                return ResourceManager.GetString("Settings_GeneralTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Groupings.
+        /// </summary>
+        public static string Settings_Groupings {
+            get {
+                return ResourceManager.GetString("Settings_Groupings", resourceCulture);
             }
         }
         
@@ -1676,62 +1958,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Import.
-        /// </summary>
-        public static string Settings_Import {
-            get {
-                return ResourceManager.GetString("Settings_Import", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Import marking data from file.
-        /// </summary>
-        public static string Settings_ImportMarkingButton {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Import marking data.
-        /// </summary>
-        public static string Settings_ImportMarkingCaption {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to import data?
-        ///The imported data will replace all existing markup.
-        ///This action cannot be undone.
-        /// </summary>
-        public static string Settings_ImportMarkingMessage {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data import failed.
-        /// </summary>
-        public static string Settings_ImportMarkingMessageFailed {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingMessageFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data successfully imported.
-        /// </summary>
-        public static string Settings_ImportMarkingMessageSuccess {
-            get {
-                return ResourceManager.GetString("Settings_ImportMarkingMessageSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Language.
         /// </summary>
         public static string Settings_Language {
@@ -1750,20 +1976,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Other.
-        /// </summary>
-        public static string Settings_Other {
-            get {
-                return ResourceManager.GetString("Settings_Other", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Quick rule setup.
         /// </summary>
         public static string Settings_QuickRuleSetup {
             get {
                 return ResourceManager.GetString("Settings_QuickRuleSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Regular lines modifier.
+        /// </summary>
+        public static string Settings_RegularLinesModifier {
+            get {
+                return ResourceManager.GetString("Settings_RegularLinesModifier", resourceCulture);
             }
         }
         
@@ -1777,6 +2003,179 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore.
+        /// </summary>
+        public static string Settings_Restore {
+            get {
+                return ResourceManager.GetString("Settings_Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore marking data from file.
+        /// </summary>
+        public static string Settings_RestoreMarkingButton {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore marking data.
+        /// </summary>
+        public static string Settings_RestoreMarkingCaption {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to restore data?
+        ///The restored data will replace all existing marking..
+        /// </summary>
+        public static string Settings_RestoreMarkingMessage {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Marking data restore failed.
+        /// </summary>
+        public static string Settings_RestoreMarkingMessageFailed {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingMessageFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Marking data successfully restored.
+        /// </summary>
+        public static string Settings_RestoreMarkingMessageSuccess {
+            get {
+                return ResourceManager.GetString("Settings_RestoreMarkingMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore templates from file.
+        /// </summary>
+        public static string Settings_RestoreTemplatesButton {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore templates.
+        /// </summary>
+        public static string Settings_RestoreTemplatesCaption {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to restore templates?
+        ///The restored templates will replace all existing templates..
+        /// </summary>
+        public static string Settings_RestoreTemplatesMessage {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Templates restore failed.
+        /// </summary>
+        public static string Settings_RestoreTemplatesMessageFailed {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesMessageFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Templates successfully restored.
+        /// </summary>
+        public static string Settings_RestoreTemplatesMessageSuccess {
+            get {
+                return ResourceManager.GetString("Settings_RestoreTemplatesMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Activate tool.
+        /// </summary>
+        public static string Settings_ShortcutActivateTool {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutActivateTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new filler.
+        /// </summary>
+        public static string Settings_ShortcutAddNewFiller {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutAddNewFiller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new line rule.
+        /// </summary>
+        public static string Settings_ShortcutAddNewLineRule {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutAddNewLineRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy marking.
+        /// </summary>
+        public static string Settings_ShortcutCopyMarking {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutCopyMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all node lines.
+        /// </summary>
+        public static string Settings_ShortcutDeleteAllNodeLines {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutDeleteAllNodeLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Change marking order.
+        /// </summary>
+        public static string Settings_ShortcutEditMarking {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutEditMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste marking.
+        /// </summary>
+        public static string Settings_ShortcutPasteMarking {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutPasteMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset all points offset.
+        /// </summary>
+        public static string Settings_ShortcutResetPointsOffset {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutResetPointsOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Shortcuts.
         /// </summary>
         public static string Settings_Shortcuts {
@@ -1786,11 +2185,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Shortcuts and modifiers.
+        /// </summary>
+        public static string Settings_ShortcutsAndModifiersTab {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutsAndModifiersTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Confirm before deleting.
         /// </summary>
         public static string Settings_ShowDeleteWarnings {
             get {
                 return ResourceManager.GetString("Settings_ShowDeleteWarnings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Always.
+        /// </summary>
+        public static string Settings_ShowDeleteWarningsAlways {
+            get {
+                return ResourceManager.GetString("Settings_ShowDeleteWarningsAlways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only if will affect others items.
+        /// </summary>
+        public static string Settings_ShowDeleteWarningsOnlyDependences {
+            get {
+                return ResourceManager.GetString("Settings_ShowDeleteWarningsOnlyDependences", resourceCulture);
             }
         }
         
@@ -1822,6 +2248,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Stop lines modifier.
+        /// </summary>
+        public static string Settings_StopLinesModifier {
+            get {
+                return ResourceManager.GetString("Settings_StopLinesModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not set.
+        /// </summary>
+        public static string Settings_StyleModifierNotSet {
+            get {
+                return ResourceManager.GetString("Settings_StyleModifierNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Without modifier.
+        /// </summary>
+        public static string Settings_StyleModifierWithout {
+            get {
+                return ResourceManager.GetString("Settings_StyleModifierWithout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Support.
+        /// </summary>
+        public static string Settings_SupportTab {
+            get {
+                return ResourceManager.GetString("Settings_SupportTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Troubleshooting.
         /// </summary>
         public static string Settings_Troubleshooting {
@@ -1831,29 +2293,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string Template_DuplicateTemplateSuffix {
+            get {
+                return ResourceManager.GetString("Template_DuplicateTemplateSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на New template.
         /// </summary>
         public static string Template_NewTemplate {
             get {
                 return ResourceManager.GetString("Template_NewTemplate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Color.
-        /// </summary>
-        public static string TemplateEditor_Color {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Color", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Dash length.
-        /// </summary>
-        public static string TemplateEditor_DashedLength {
-            get {
-                return ResourceManager.GetString("TemplateEditor_DashedLength", resourceCulture);
             }
         }
         
@@ -1877,20 +2330,11 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на The list of templates is empty.
-        ///To create a template, click «{0}» at the line style..
+        ///To create a template, click «{0}» at the line or crosswalk or filler style..
         /// </summary>
         public static string TemplateEditor_EmptyMessage {
             get {
                 return ResourceManager.GetString("TemplateEditor_EmptyMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Invert.
-        /// </summary>
-        public static string TemplateEditor_Invert {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Invert", resourceCulture);
             }
         }
         
@@ -1904,29 +2348,21 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset.
+        ///   Ищет локализованную строку, похожую на Name is already used.
         /// </summary>
-        public static string TemplateEditor_Offset {
+        public static string TemplateEditor_NameExistCaption {
             get {
-                return ResourceManager.GetString("TemplateEditor_Offset", resourceCulture);
+                return ResourceManager.GetString("TemplateEditor_NameExistCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Space length.
+        ///   Ищет локализованную строку, похожую на The name &quot;{0}&quot; is already used by another template.
+        ///Are you sure you want to have multiple templates with the same name?.
         /// </summary>
-        public static string TemplateEditor_SpaceLength {
+        public static string TemplateEditor_NameExistMessage {
             get {
-                return ResourceManager.GetString("TemplateEditor_SpaceLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Style.
-        /// </summary>
-        public static string TemplateEditor_Style {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Style", resourceCulture);
+                return ResourceManager.GetString("TemplateEditor_NameExistMessage", resourceCulture);
             }
         }
         
@@ -1940,11 +2376,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Width.
+        ///   Ищет локализованную строку, похожую на Unnamed template.
         /// </summary>
-        public static string TemplateEditor_Width {
+        public static string TemplateEditor_UnnamedTemplate {
             get {
-                return ResourceManager.GetString("TemplateEditor_Width", resourceCulture);
+                return ResourceManager.GetString("TemplateEditor_UnnamedTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply.
+        /// </summary>
+        public static string Tool_Apply {
+            get {
+                return ResourceManager.GetString("Tool_Apply", resourceCulture);
             }
         }
         
@@ -1958,12 +2403,128 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to clear all node #{0} markings?
-        ///This action cannot be undone.
+        ///   Ищет локализованную строку, похожую на Do you really want to clear all node #{0} markings?.
         /// </summary>
         public static string Tool_ClearMarkingsMessage {
             get {
                 return ResourceManager.GetString("Tool_ClearMarkingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Continue.
+        /// </summary>
+        public static string Tool_Continue {
+            get {
+                return ResourceManager.GetString("Tool_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete {0}.
+        /// </summary>
+        public static string Tool_DeleteCaption {
+            get {
+                return ResourceManager.GetString("Tool_DeleteCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dependent items will also be removed:.
+        /// </summary>
+        public static string Tool_DeleteDependence {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalk Borders - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceCrosswalkBorders {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceCrosswalkBorders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalks - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceCrosswalks {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceCrosswalks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceFillers {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceFillers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Lines - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceLines {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Rules - {0}.
+        /// </summary>
+        public static string Tool_DeleteDependenceRules {
+            get {
+                return ResourceManager.GetString("Tool_DeleteDependenceRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?.
+        /// </summary>
+        public static string Tool_DeleteMessage {
+            get {
+                return ResourceManager.GetString("Tool_DeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit edit order mode.
+        /// </summary>
+        public static string Tool_EndEditOrderCaption {
+            get {
+                return ResourceManager.GetString("Tool_EndEditOrderCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to exit edit mode and apply a new order?.
+        /// </summary>
+        public static string Tool_EndEditOrderMessage {
+            get {
+                return ResourceManager.GetString("Tool_EndEditOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit paste mode.
+        /// </summary>
+        public static string Tool_EndPasteOrderCaption {
+            get {
+                return ResourceManager.GetString("Tool_EndPasteOrderCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to exit paste mode and apply a paste?.
+        /// </summary>
+        public static string Tool_EndPasteOrderMessage {
+            get {
+                return ResourceManager.GetString("Tool_EndPasteOrderMessage", resourceCulture);
             }
         }
         
@@ -1977,9 +2538,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click to create a line
-        ///+Shift - Solid
-        ///+Ctrl - Double.
+        ///   Ищет локализованную строку, похожую на Click to create a line.
         /// </summary>
         public static string Tool_InfoCreateLine {
             get {
@@ -1988,9 +2547,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click to create a perpendicular line
-        ///+Shift - Solid
-        ///+Ctrl - Double.
+        ///   Ищет локализованную строку, похожую на Click to create a perpendicular line.
         /// </summary>
         public static string Tool_InfoCreateNormalLine {
             get {
@@ -2099,11 +2656,84 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Inverse order.
+        /// </summary>
+        public static string Tool_InfoInverseOrder {
+            get {
+                return ResourceManager.GetString("Tool_InfoInverseOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Select a node to change marking.
         /// </summary>
         public static string Tool_InfoNode {
             get {
                 return ResourceManager.GetString("Tool_InfoNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply.
+        /// </summary>
+        public static string Tool_InfoPasteApply {
+            get {
+                return ResourceManager.GetString("Tool_InfoPasteApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Don&apos;t apply.
+        /// </summary>
+        public static string Tool_infoPasteNotApply {
+            get {
+                return ResourceManager.GetString("Tool_infoPasteNotApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset.
+        /// </summary>
+        public static string Tool_InfoPasteReset {
+            get {
+                return ResourceManager.GetString("Tool_InfoPasteReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag and drop circle for set point order.
+        /// </summary>
+        public static string Tool_InfoPointsDrag {
+            get {
+                return ResourceManager.GetString("Tool_InfoPointsDrag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drop circle inside/outside target to set/unset points order.
+        /// </summary>
+        public static string Tool_InfoPointsDrop {
+            get {
+                return ResourceManager.GetString("Tool_InfoPointsDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag and drop circles for set roads order
+        ///Click circle to edit road points order.
+        /// </summary>
+        public static string Tool_InfoRoadsDrag {
+            get {
+                return ResourceManager.GetString("Tool_InfoRoadsDrag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drop circle inside/outside target to set/unset roads order.
+        /// </summary>
+        public static string Tool_InfoRoadsDrop {
+            get {
+                return ResourceManager.GetString("Tool_InfoRoadsDrop", resourceCulture);
             }
         }
         
@@ -2127,9 +2757,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select endpoint
-        ///+Shift - Solid
-        ///+Ctrl - Double.
+        ///   Ищет локализованную строку, похожую на Select endpoint for regular or stop line
+        ///Drag behind point for perpendicular line.
         /// </summary>
         public static string Tool_InfoSelectLineEndPoint {
             get {
@@ -2138,15 +2767,121 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a point to
-        ///create or delete a line
-        ///+Ctrl to move the point
-        ///Hold Alt to create a filler
-        ///Hold Shift to create a crosswalk.
+        ///   Ищет локализованную строку, похожую на Select a point to create or delete a line.
         /// </summary>
         public static string Tool_InfoSelectLineStartPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectLineStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hold Shift to create a crosswalk.
+        /// </summary>
+        public static string Tool_InfoStartCreateCrosswalk {
+            get {
+                return ResourceManager.GetString("Tool_InfoStartCreateCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hold Alt to create a filler.
+        /// </summary>
+        public static string Tool_InfoStartCreateFiller {
+            get {
+                return ResourceManager.GetString("Tool_InfoStartCreateFiller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag with Ctrl to move the point.
+        /// </summary>
+        public static string Tool_InfoStartDragPointMode {
+            get {
+                return ResourceManager.GetString("Tool_InfoStartDragPointMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn clockwise.
+        /// </summary>
+        public static string Tool_InfoTurnClockwise {
+            get {
+                return ResourceManager.GetString("Tool_InfoTurnClockwise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn counter-clockwise.
+        /// </summary>
+        public static string Tool_InfoTurnСounterClockwise {
+            get {
+                return ResourceManager.GetString("Tool_InfoTurnСounterClockwise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Don&apos;t apply.
+        /// </summary>
+        public static string Tool_NotApply {
+            get {
+                return ResourceManager.GetString("Tool_NotApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste marking.
+        /// </summary>
+        public static string Tool_PasteMarkingsCaption {
+            get {
+                return ResourceManager.GetString("Tool_PasteMarkingsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to paste marking?
+        ///It will replace the existing marking..
+        /// </summary>
+        public static string Tool_PasteMarkingsMessage {
+            get {
+                return ResourceManager.GetString("Tool_PasteMarkingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset all points offset.
+        /// </summary>
+        public static string Tool_ResetOffsetsCaption {
+            get {
+                return ResourceManager.GetString("Tool_ResetOffsetsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to reset all node #{0} points offset?.
+        /// </summary>
+        public static string Tool_ResetOffsetsMessage {
+            get {
+                return ResourceManager.GetString("Tool_ResetOffsetsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Roads have changed.
+        /// </summary>
+        public static string Tool_RoadsWasChangedCaption {
+            get {
+                return ResourceManager.GetString("Tool_RoadsWasChangedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The roads at this intersection have changed, therefore the existing marking cannot be applied automatically.
+        ///Do you want to apply the marking manually?.
+        /// </summary>
+        public static string Tool_RoadsWasChangedMessage {
+            get {
+                return ResourceManager.GetString("Tool_RoadsWasChangedMessage", resourceCulture);
             }
         }
     }

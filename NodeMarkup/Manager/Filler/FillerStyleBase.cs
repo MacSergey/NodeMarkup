@@ -56,9 +56,7 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
             if (target is IFillerStyle fillerTarget)
-            {
                 fillerTarget.MedianOffset = MedianOffset;
-            }
         }
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -72,14 +70,14 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
         {
-            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Trajectories.ToArray();
-            var rect = GetRect(trajectories);
-            return GetDashes(trajectories, rect, filler.Markup.Height);
+            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
+            var rect = GetRect(trajectories, out float height);
+            return GetDashes(trajectories, rect, height);
         }
         public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
-            var lineParts = filler.Parts.ToArray();
-            var trajectories = filler.TrajectoriesRaw.ToArray();
+            var lineParts = filler.Contour.Parts.ToArray();
+            var trajectories = filler.Contour.TrajectoriesRaw.ToArray();
 
             for (var i = 0; i < lineParts.Length; i += 1)
             {
@@ -144,7 +142,7 @@ namespace NodeMarkup.Manager
                         end += normal * (isStartToEnd ? -endOffset : endOffset);
                     }
 
-                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color);
+                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color, MaterialType.RectangleFillers);
                 }
             }
         }
@@ -214,8 +212,9 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        protected Rect GetRect(ILineTrajectory[] trajectories)
+        protected Rect GetRect(ILineTrajectory[] trajectories, out float height)
         {
+            height = 0;
             if (!trajectories.Any())
                 return Rect.zero;
 
@@ -237,8 +236,10 @@ namespace NodeMarkup.Manager
                         Set(straightTrajectory.Trajectory.b);
                         break;
                 }
+                height += (trajectory.StartPosition.y + trajectory.EndPosition.y) / 2;
             }
 
+            height /= trajectories.Length;
             return rect;
 
             void Set(Vector3 pos)
@@ -262,9 +263,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("MO", MedianOffset));
             return config;
         }
-        public override void FromXml(XElement config)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            base.FromXml(config);
+            base.FromXml(config, map, invert);
             MedianOffset = config.GetAttrValue("MO", DefaultOffset);
         }
 

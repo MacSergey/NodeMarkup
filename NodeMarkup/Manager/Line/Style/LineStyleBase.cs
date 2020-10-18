@@ -16,20 +16,30 @@ namespace NodeMarkup.Manager
     public interface IRegularLine : ILineStyle { }
     public interface IStopLine : ILineStyle { }
     public interface ICrosswalkStyle : ILineStyle { }
-    public interface IDashedLine : ILineStyle
+    public interface IDashedLine
     {
         float DashLength { get; set; }
         float SpaceLength { get; set; }
     }
-    public interface IDoubleLine : ILineStyle
+    public interface IDoubleLine
     {
         float Offset { get; set; }
     }
-    public interface IAsymLine : ILineStyle
+    public interface IDoubleAlignmentLine : IDoubleLine
+    {
+        LineStyle.StyleAlignment Alignment { get; set; }
+    }
+    public interface IAsymLine
     {
         bool Invert { get; set; }
     }
-    public interface IParallel : ILineStyle
+    public interface ISharkLIne
+    {
+        float Base { get; set; }
+        float Height { get; set; }
+        float Space { get; set; }
+    }
+    public interface IParallel
     {
         bool Parallel { get; set; }
     }
@@ -53,6 +63,10 @@ namespace NodeMarkup.Manager
         public static float DefaultSpaceLength { get; } = 1.5f;
         public static float DefaultOffset { get; } = 0.15f;
 
+        public static float DefaultSharkBaseLength { get; } = 0.5f;
+        public static float DefaultSharkSpaceLength { get; } = 0.5f;
+        public static float DefaultSharkHeight { get; } = 0.6f;
+
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory);
@@ -73,20 +87,67 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
-        protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        protected static FloatPropertyPanel AddBaseProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
-            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
-            buttonsPanel.Init();
-            buttonsPanel.OnButtonClick += OnButtonClick;
+            var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            baseProperty.Text = Localize.LineEditor_SharkToothBase;
+            baseProperty.UseWheel = true;
+            baseProperty.WheelStep = 0.1f;
+            baseProperty.CheckMin = true;
+            baseProperty.MinValue = 0.3f;
+            baseProperty.Init();
+            baseProperty.Value = sharkTeethStyle.Base;
+            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
+            AddOnHoverLeave(baseProperty, onHover, onLeave);
+            return baseProperty;
+        }
+        protected static FloatPropertyPanel AddHeightProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            heightProperty.Text = Localize.LineEditor_SharkToothHeight;
+            heightProperty.UseWheel = true;
+            heightProperty.WheelStep = 0.1f;
+            heightProperty.CheckMin = true;
+            heightProperty.MinValue = 0.3f;
+            heightProperty.Init();
+            heightProperty.Value = sharkTeethStyle.Height;
+            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
+            AddOnHoverLeave(heightProperty, onHover, onLeave);
+            return heightProperty;
+        }
+        protected static FloatPropertyPanel AddSpaceProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            spaceProperty.Text = Localize.LineEditor_SharkToothSpace;
+            spaceProperty.UseWheel = true;
+            spaceProperty.WheelStep = 0.1f;
+            spaceProperty.CheckMin = true;
+            spaceProperty.MinValue = 0.1f;
+            spaceProperty.Init();
+            spaceProperty.Value = sharkTeethStyle.Space;
+            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
+            AddOnHoverLeave(spaceProperty, onHover, onLeave);
+            return spaceProperty;
+        }
+        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var alignmentProperty = parent.AddUIComponent<LineAlignmentPropertyPanel>();
+            alignmentProperty.Text = Localize.LineEditor_Alignment;
+            alignmentProperty.Init();
+            alignmentProperty.SelectedObject = alignmentStyle.Alignment;
+            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment = value;
+            return alignmentProperty;
+        }
+        public enum StyleAlignment
+        {
+            [Description(nameof(Localize.LineEditor_AlignmentLeft))]
+            Left,
 
-            void OnButtonClick(int index)
-            {
-                if (index == invertIndex)
-                    asymStyle.Invert = !asymStyle.Invert;
-            }
+            [Description(nameof(Localize.LineEditor_AlignmentCenter))]
+            Centre,
 
-            return buttonsPanel;
+            [Description(nameof(Localize.LineEditor_AlignmentRight))]
+            Right
         }
     }
 
@@ -98,7 +159,8 @@ namespace NodeMarkup.Manager
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
             {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffset)},
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
-            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset, false, false)}
+            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
+            {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
         public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyRegularLineStyle() : null;
 
@@ -123,6 +185,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             SolidAndDashed = StyleType.LineSolidAndDashed,
+
+            [Description(nameof(Localize.LineStyle_SharkTeeth))]
+            SharkTeeth = StyleType.LineSharkTeeth,
         }
     }
     public abstract class StopLineStyle : LineStyle
@@ -136,6 +201,8 @@ namespace NodeMarkup.Manager
             {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength)},
             {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultStopOffset)},
             {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
 
         public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyStopLineStyle() : null;
@@ -153,7 +220,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Stop))]
             Solid = StyleType.StopLineSolid,
 
-            [Description(nameof(Localize.LineStyle_Stop))]
+            [Description(nameof(Localize.LineStyle_StopDashed))]
             Dashed = StyleType.StopLineDashed,
 
             [Description(nameof(Localize.LineStyle_StopDouble))]
@@ -161,6 +228,12 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             DoubleDashed = StyleType.StopLineDoubleDashed,
+
+            [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
+            SolidAndDashed = StyleType.StopLineSolidAndDashed,
+
+            [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
+            SharkTeeth = StyleType.StopLineSharkTeeth,
         }
     }
 }

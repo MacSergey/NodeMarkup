@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,12 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
+    public interface IDeletable
+    {
+        string DeleteCaptionDescription { get; }
+        string DeleteMessageDescription { get; }
+        Dependences GetDependences();
+    }
     public abstract class Editor : UIPanel
     {
         public static Dictionary<Style.StyleType, string> SpriteNames { get; set; }
@@ -24,10 +31,13 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.LineDoubleSolid,   nameof(Style.StyleType.LineDoubleSolid) },
                 {Style.StyleType.LineDoubleDashed, nameof(Style.StyleType.LineDoubleDashed) },
                 {Style.StyleType.LineSolidAndDashed, nameof(Style.StyleType.LineSolidAndDashed) },
+                {Style.StyleType.LineSharkTeeth, nameof(Style.StyleType.LineSharkTeeth) },
                 {Style.StyleType.StopLineSolid, nameof(Style.StyleType.StopLineSolid) },
                 {Style.StyleType.StopLineDashed, nameof(Style.StyleType.StopLineDashed) },
                 {Style.StyleType.StopLineDoubleSolid, nameof(Style.StyleType.StopLineDoubleSolid) },
                 {Style.StyleType.StopLineDoubleDashed, nameof(Style.StyleType.StopLineDoubleDashed) },
+                {Style.StyleType.StopLineSolidAndDashed, nameof(Style.StyleType.StopLineSolidAndDashed) },
+                {Style.StyleType.StopLineSharkTeeth, nameof(Style.StyleType.StopLineSharkTeeth) },
                 {Style.StyleType.FillerStripe, nameof(Style.StyleType.FillerStripe) },
                 {Style.StyleType.FillerGrid, nameof(Style.StyleType.FillerGrid) },
                 {Style.StyleType.FillerSolid, nameof(Style.StyleType.FillerSolid) },
@@ -39,6 +49,7 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.CrosswalkParallelDashedLines, nameof(Style.StyleType.CrosswalkParallelDashedLines) },
                 {Style.StyleType.CrosswalkLadder, nameof(Style.StyleType.CrosswalkLadder) },
                 {Style.StyleType.CrosswalkSolid, nameof(Style.StyleType.CrosswalkSolid) },
+                {Style.StyleType.CrosswalkChessBoard, nameof(Style.StyleType.CrosswalkChessBoard) },
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));
@@ -49,6 +60,7 @@ namespace NodeMarkup.UI.Editors
 
             return atlas;
         }
+        protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public NodeMarkupPanel NodeMarkupPanel { get; private set; }
         protected Markup Markup => NodeMarkupPanel.Markup;
 
@@ -96,7 +108,6 @@ namespace NodeMarkup.UI.Editors
         private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
             ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
-            ItemsPanel.verticalScrollbar.relativePosition = ItemsPanel.relativePosition + new Vector3(ItemsPanel.width, 0);
         }
 
         private void AddSettingPanel()
@@ -124,7 +135,6 @@ namespace NodeMarkup.UI.Editors
         private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
             SettingsPanel.width = size.x / 10 * 7 - (value ? SettingsPanel.verticalScrollbar.width : 0);
-            SettingsPanel.verticalScrollbar.relativePosition = SettingsPanel.relativePosition + new Vector3(SettingsPanel.width, 0);
         }
         private void AddEmptyLabel()
         {
@@ -158,20 +168,7 @@ namespace NodeMarkup.UI.Editors
         protected virtual void FillItems() { }
         public virtual void Select(int index) { }
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
-        public virtual string GetInfo() => string.Empty;
-        public virtual void OnUpdate() { }
         public virtual bool OnShortcut(Event e) => false;
-        public virtual void OnPrimaryMouseClicked(Event e, out bool isDone)
-        {
-            isDone = true;
-            NodeMarkupPanel.EndEditorAction();
-        }
-        public virtual void OnSecondaryMouseClicked(out bool isDone)
-        {
-            isDone = true;
-            NodeMarkupPanel.EndEditorAction();
-        }
-        public virtual void EndEditorAction() { }
 
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
@@ -183,7 +180,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
-        where EditableObject : class
+        where EditableObject : class, IDeletable
     {
         EditableItemType _selectItem;
 
@@ -209,15 +206,13 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
-            ItemsPanel.height = size.y;
+            var itemsPanelWidth = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
+            ItemsPanel.size = new Vector2(itemsPanelWidth, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
-            ItemsPanel.verticalScrollbar.height = size.y;
 
-            SettingsPanel.width = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
-            SettingsPanel.height = size.y;
+            var settingsPanelWidth = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
+            SettingsPanel.size = new Vector2(settingsPanelWidth, size.y);
             SettingsPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
-            SettingsPanel.verticalScrollbar.height = size.y;
 
             EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);
             EmptyLabel.relativePosition = SettingsPanel.relativePosition;
@@ -253,17 +248,9 @@ namespace NodeMarkup.UI.Editors
             if (!(deleteItem is EditableItemType item))
                 return;
 
-            if (Settings.DeleteWarnings)
-            {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = string.Format(NodeMarkup.Localize.Editor_DeleteCaption, item.DeleteCaptionDescription);
-                messageBox.MessageText = string.Format(NodeMarkup.Localize.Editor_DeleteMessage, item.DeleteMessageDescription, item.Object);
-                messageBox.OnButton1Click = Delete;
-            }
-            else
-                Delete();
+            Tool.DeleteItem(item.Object, Delete);
 
-            bool Delete()
+            void Delete()
             {
                 OnObjectDelete(item.Object);
                 var isSelect = item == SelectItem;
@@ -273,7 +260,6 @@ namespace NodeMarkup.UI.Editors
                     ClearSettings();
                     Select(0);
                 }
-                return true;
             }
         }
 

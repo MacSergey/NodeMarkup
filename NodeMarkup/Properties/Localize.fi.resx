@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Editor_DeleteCaption" xml:space="preserve">
+  <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Poista {0}</value>
   </data>
-  <data name="Editor_DeleteMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa {0} {1}?
-Tätä toimintoa ei voi kumota</value>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Vieritä hiiren rullalla vaihtaaksesi
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0,1</value>
     <value>Poista sääntö</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa säännön?
-Tätä toimintoa ei voi kumota</value>
+    <value>Haluatko varmasti poistaa säännön?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>Alkupiste</value>
@@ -231,13 +229,13 @@ Tätä toimintoa ei voi kumota</value>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Ei määritetty</value>
   </data>
-  <data name="Settings_ActivateTool" xml:space="preserve">
+  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
     <value>Käynnistä työkalu</value>
   </data>
-  <data name="Settings_AddNewLineRule" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Lisää uusi sääntö</value>
   </data>
-  <data name="Settings_DeleteAllNodeLines" xml:space="preserve">
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
     <value>Poista risteyksen kaikki tiemerkinnät</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
@@ -247,50 +245,28 @@ Tätä toimintoa ei voi kumota</value>
     <value>Poista kaikki tiemerkinnät</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?
-Tätä toimintoa ei voi kumota</value>
+    <value>Haluatko varmasti poistaa kaikki tiemerkinnät?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Vie tiemerkintätiedot tiedostoon</value>
   </data>
-  <data name="Settings_DumpMarkingButton1" xml:space="preserve">
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Kopioi tiedostopolku leikepöydälle</value>
-  </data>
-  <data name="Settings_DumpMarkingButton2" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Vie tiemerkintätiedot</value>
   </data>
-  <data name="Settings_DumpMarkingMessageFailed" xml:space="preserve">
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Vienti epäonnistui</value>
   </data>
-  <data name="Settings_DumpMarkingMessageSuccess" xml:space="preserve">
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Vienti onnistui</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>Yleiset</value>
-  </data>
-  <data name="Settings_ImportMarkingButton" xml:space="preserve">
-    <value>Tuo tiemerkintätiedot tiedostosta</value>
-  </data>
-  <data name="Settings_ImportMarkingCaption" xml:space="preserve">
-    <value>Tuo tiemerkintätiedot</value>
-  </data>
-  <data name="Settings_ImportMarkingMessage" xml:space="preserve">
-    <value>Haluatko varmasti tuoda tiedot?
-Tuodut tiedot korvaavat kaikki olemassa olevat tiemerkinnät.
-Tätä toimintoa ei voi kumota</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageFailed" xml:space="preserve">
-    <value>Tiemerkintätietojen tuonti epäonnistui</value>
-  </data>
-  <data name="Settings_ImportMarkingMessageSuccess" xml:space="preserve">
-    <value>Tiemerkintätietojen tuonti onnistui</value>
-  </data>
-  <data name="Settings_Other" xml:space="preserve">
-    <value>Muut</value>
-  </data>
+  
+  
+  
+  
+  
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Nopea säännön luominen</value>
   </data>
@@ -338,12 +314,10 @@ Tätä toimintoa ei voi kumota</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Haluatko varmasti poistaa kaikki risteyksen #{0} tiemerkinnät?
-Tätä toimintoa ei voi kumota</value>
+Tätä toimintoa ei voi kumota.</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Napauta luodaksesi viiva
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
+    <value>Napauta luodaksesi viivan</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Napauta poistaaksesi viivan</value>
@@ -355,17 +329,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Valitse risteys muokataksesi merkintöjä</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Valitse päätepiste
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Valitse piste luodaksesi tai poistaaksesi viivan
-+Ctrl siirtääksesi pistettä
-+Shift muokataksesi pistettä
-Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen
-Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+    <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Uutta modissa {0}</value>
@@ -374,10 +340,8 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
     <value>Näytä, mikä on uutta</value>
   </data>
   
-  <data name="Settings_Import" xml:space="preserve">
-    <value>Tuo</value>
-  </data>
-  <data name="Setting_Cancel" xml:space="preserve">
+  
+  <data name="Settings_Cancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
   <data name="LineEditor_Invert" xml:space="preserve">
@@ -393,7 +357,7 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
     <value>Käänteinen</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Sulkuviiva ja Katkoviiva</value>
+    <value>Sulku- ja Katkoviiva</value>
   </data>
   <data name="LineStyle_Stop" xml:space="preserve">
     <value>Viiva</value>
@@ -469,7 +433,7 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
   <data name="Settings_ShowOnlyMajor" xml:space="preserve">
     <value>Ilmoita vain merkittävistä päivityksistä</value>
   </data>
-  <data name="Settings_AddNewFiller" xml:space="preserve">
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Lisää uusi sulkualue</value>
   </data>
   
@@ -507,7 +471,7 @@ Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Mallinelista on tyhjä.
-Napauta {0} viivan tyylissä luodaksesi mallineen.</value>
+Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi mallineen.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivoi avaimella</value>
@@ -598,9 +562,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Ennakkopääsy</value>
   </data>
-  <data name="LineEditor_CenterSolid" xml:space="preserve">
-    <value>Keskitä sulkuviiva</value>
-  </data>
+  
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Ymmärrän</value>
   </data>
@@ -659,9 +621,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
     <value>Kieli</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Napauta luodaksesi kohtisuora viiva
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
+    <value>Napauta luodaksesi kohtisuora viiva</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Napauta poistaaksesi kohtisuoran viivan</value>
@@ -698,10 +658,10 @@ Pidä Shif-näppäintä pohjassa luodaksesi suojatien.</value>
     <value>Pysäytysviivat</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Lajittele viivat</value>
+    <value>Ryhmittele viivat</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Lajittele mallineet</value>
+    <value>Ryhmittele mallineet</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Napauta luodaksesi suojatien</value>
@@ -814,5 +774,161 @@ poistaaksesi suojatien</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Vianmääritys</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Shakkiruudukko</value>
+  </data>
+  
+  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+    <value>Kolmion pohja</value>
+  </data>
+  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+    <value>Kolmion korkeus</value>
+  </data>
+  
+  
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Väistämisviiva</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Väistämisviiva</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Sulku- ja katkoviiva</value>
+  </data>
+  
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopioi tiemerkinnät</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Liitä tiemerkinnät</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Liitä tiemerkinnät</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Haluatko varmasti liittää tiemerkinnät?
+Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
+  </data>
+  
+  
+  
+  
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Ei määritetty</value>
+  </data>
+  
+  
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Vain, jos se vaikuttaa muihin asioihin</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Riippuvat asiat poistetaan myös:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Suojateiden reunat - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Suojatiet - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Sulkualueet - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Viivat - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Säännöt - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Varmuuskopiointi</value>
+  </data>
+  
+  <data name="Settings_GeneralTab" xml:space="preserve">
+    <value>Yleiset</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Ryhmittely</value>
+  </data>
+  
+  <data name="Settings_SupportTab" xml:space="preserve">
+    <value>Tuki</value>
+  </data>
+  
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopioi</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Kopioi tiemerkinnät</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Liitä tiemerkinnät</value>
+  </data>
+  
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Käännä myötäpäivään</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Käännä vastapäivään</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+    <value>Ei</value>
+  </data>
+  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+    <value>Kyllä</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
+  </data>
+  
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Tätä toimintoa ei voi kumota.</value>
   </data>
 </root>

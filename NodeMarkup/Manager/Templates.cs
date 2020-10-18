@@ -12,7 +12,7 @@ namespace NodeMarkup.Manager
     {
         static string DefaultName => Localize.Template_NewTemplate;
 
-        static Dictionary<string, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<string, StyleTemplate>();
+        static Dictionary<Guid, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<Guid, StyleTemplate>();
         static Dictionary<Style.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<Style.StyleType, StyleTemplate>();
 
         public static IEnumerable<StyleTemplate> Templates => TemplatesDictionary.Values;
@@ -20,40 +20,21 @@ namespace NodeMarkup.Manager
 
         static TemplateManager()
         {
-            try
-            {
-                var xml = UI.Settings.Templates.value;
-                if (!string.IsNullOrEmpty(xml))
-                {
-                    var config = Serializer.Parse(xml);
-                    FromXml(config);
-                }
-
-                Logger.LogDebug($"Templates was loaded: {TemplatesDictionary.Count} items");
-            }
-            catch (Exception error)
-            {
-                Logger.LogError(() => "Could load templates", error);
-            }
+            Load();
         }
         private static void InitTempalte(StyleTemplate template)
         {
             template.OnTemplateChanged = OnTemplateChanged;
             template.OnStyleChanged = OnTemplateStyleChanged;
-            template.OnNameChanged = OnTemplateNameChanged;
         }
-        public static bool AddTemplate(Style style, out StyleTemplate template, string name = null)
+        public static bool AddTemplate(Style style, out StyleTemplate template) => AddTemplate(GetNewName(), style, out template);
+        public static bool DuplicateTemplate(StyleTemplate template, out StyleTemplate duplicate) 
+            => AddTemplate(GetNewName($"{template.Name} {Localize.Template_DuplicateTemplateSuffix}"), template.Style, out duplicate);
+        private static bool AddTemplate(string name, Style style, out StyleTemplate template)
         {
-            var templateName = name ?? GetNewName();
-            if (TemplatesDictionary.ContainsKey(templateName))
-            {
-                template = default;
-                return false;
-            }
-
-            template = new StyleTemplate(templateName, style);
+            template = new StyleTemplate(name, style);
             InitTempalte(template);
-            TemplatesDictionary[template.Name] = template;
+            TemplatesDictionary[template.Id] = template;
 
             Save();
 
@@ -61,7 +42,7 @@ namespace NodeMarkup.Manager
         }
         public static void DeleteTemplate(StyleTemplate template)
         {
-            TemplatesDictionary.Remove(template.Name);
+            TemplatesDictionary.Remove(template.Id);
             if (template.IsDefault())
                 DefaultTemplates.Remove(template.Style.Type);
 
@@ -76,15 +57,20 @@ namespace NodeMarkup.Manager
 
             Save();
         }
-        private static string GetNewName()
+        private static string GetNewName(string newName = null)
         {
-            var i = 1;
-            foreach (var template in Templates.Where(t => t.Name.StartsWith(DefaultName)))
+            if (string.IsNullOrEmpty(newName))
+                newName = DefaultName;
+
+            var i = 0;
+            foreach (var template in Templates.Where(t => t.Name.StartsWith(newName)))
             {
-                if (int.TryParse(template.Name.Substring(DefaultName.Length), out int num) && num >= i)
+                if (template.Name.Length == newName.Length && i == 0)
+                    i = 1;
+                else if (int.TryParse(template.Name.Substring(newName.Length), out int num) && num >= i)
                     i = num + 1;
             }
-            return $"{DefaultName} {i}";
+            return i == 0 ? newName : $"{newName} {i}";
         }
         public static T GetDefault<T>(Style.StyleType type) where T : Style
         {
@@ -95,6 +81,25 @@ namespace NodeMarkup.Manager
         }
         public static bool IsDefault(this StyleTemplate template) =>
             DefaultTemplates.TryGetValue(template.Style.Type, out StyleTemplate defaultTemplate) && template == defaultTemplate;
+
+        static void Load()
+        {
+            try
+            {
+                var xml = UI.Settings.Templates.value;
+                if (!string.IsNullOrEmpty(xml))
+                {
+                    var config = Loader.Parse(xml);
+                    FromXml(config);
+                }
+
+                Logger.LogDebug($"Templates was loaded: {TemplatesDictionary.Count} items");
+            }
+            catch (Exception error)
+            {
+                Logger.LogError(() => "Could load templates", error);
+            }
+        }
         static void Save()
         {
             try
@@ -121,55 +126,58 @@ namespace NodeMarkup.Manager
                     DefaultTemplates[newStyle.Type] = template;
             }
         }
-        static bool OnTemplateNameChanged(StyleTemplate template, string newName)
-        {
-            if (!string.IsNullOrEmpty(newName) && newName != template.Name && !TemplatesDictionary.ContainsKey(newName))
-            {
-                TemplatesDictionary.Remove(template.Name);
-                TemplatesDictionary[newName] = template;
 
-                return true;
-            }
-            else
-                return false;
+        public static bool ContainsName(string name, StyleTemplate ignore) => TemplatesDictionary.Values.Any(t => t != ignore && t.Name == name);
+        private static void Clear()
+        {
+            TemplatesDictionary.Clear();
+            DefaultTemplates.Clear();
         }
-
-        static void FromXml(XElement config)
+        public static void DeleteAll()
         {
+            Clear();
+            Save();
+        }
+        public static void Import(XElement config)
+        {
+            FromXml(config);
+            Save();
+        }
+        public static void FromXml(XElement config)
+        {
+            Clear();
+
             foreach (var templateConfig in config.Elements(StyleTemplate.XmlName))
             {
-                if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Name))
+                if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Id))
                 {
                     InitTempalte(template);
-                    TemplatesDictionary[template.Name] = template;
+                    TemplatesDictionary[template.Id] = template;
                 }
             }
 
             foreach (var defaultConfig in config.Elements("D"))
             {
                 var styleType = (Style.StyleType)defaultConfig.GetAttrValue<int>("T");
-                var templateName = defaultConfig.GetAttrValue<string>("N");
+                var templateId = defaultConfig.GetAttrValue<Guid>("Id");
 
-                if (TemplatesDictionary.TryGetValue(templateName, out StyleTemplate template))
-                {
+                if (TemplatesDictionary.TryGetValue(templateId, out StyleTemplate template))
                     DefaultTemplates[styleType] = template;
-                }
             }
         }
-        static XElement ToXml()
+        public static XElement ToXml()
         {
             var config = new XElement("C");
 
             foreach (var template in Templates)
-            {
                 config.Add(template.ToXml());
-            }
+
             foreach (var def in DefaultTemplates)
             {
-                var defaultConfig = new XElement("D",
-                    new XAttribute("T", (int)def.Key),
-                    new XAttribute("N", def.Value.Name)
-                    );
+                var defaultConfig = new XElement("D");
+                defaultConfig.Add(new XAttribute("T", (int)def.Key));
+                defaultConfig.Add(new XAttribute("Id", def.Value.Id));
+                    
                 config.Add(defaultConfig);
             }
 

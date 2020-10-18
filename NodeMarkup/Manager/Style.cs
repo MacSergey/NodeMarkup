@@ -22,14 +22,14 @@ namespace NodeMarkup.Manager
     }
     public abstract class Style : IToXml
     {
-        public static bool FromXml<T>(XElement config, out T style) where T : Style
+        public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
             if (TemplateManager.GetDefault<T>(type) is T defaultStyle)
             {
                 style = defaultStyle;
-                style.FromXml(config);
+                style.FromXml(config, map, invert);
                 return true;
             }
             else
@@ -55,6 +55,9 @@ namespace NodeMarkup.Manager
 
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
         public static float DefaultWidth { get; } = 0.15f;
+
+        protected virtual float WidthWheelStep { get; } = 0.01f;
+        protected virtual float WidthMinValue { get; } = 0.05f;
 
         public static T GetDefault<T>(StyleType type) where T : Style
         {
@@ -115,7 +118,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("W", Width));
             return config;
         }
-        public virtual void FromXml(XElement config)
+        public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             var colorInt = config.GetAttrValue<int>("C");
             Color = colorInt != 0 ? colorInt.ToColor() : DefaultColor;
@@ -133,11 +136,12 @@ namespace NodeMarkup.Manager
 
         public virtual List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = new List<UIComponent>
-            {
-                AddColorProperty(parent),
-                AddWidthProperty(parent, onHover, onLeave),
-            };
+            var components = new List<UIComponent>();
+
+            if (this is IColorStyle)
+                components.Add(AddColorProperty(parent));
+            if (this is IWidthStyle)
+                components.Add(AddWidthProperty(parent, onHover, onLeave));
 
             return components;
         }
@@ -150,14 +154,14 @@ namespace NodeMarkup.Manager
             colorProperty.OnValueChanged += (Color32 color) => Color = color;
             return colorProperty;
         }
-        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave, float wheelStep = 0.01f, float minValue = 0.05f)
+        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
             widthProperty.Text = Localize.LineEditor_Width;
             widthProperty.UseWheel = true;
-            widthProperty.WheelStep = wheelStep;
+            widthProperty.WheelStep = WidthWheelStep;
             widthProperty.CheckMin = true;
-            widthProperty.MinValue = minValue;
+            widthProperty.MinValue = WidthMinValue;
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width = value;
@@ -193,6 +197,21 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
             return spaceLengthProperty;
         }
+        protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        {
+            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
+            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += OnButtonClick;
+
+            void OnButtonClick(int index)
+            {
+                if (index == invertIndex)
+                    asymStyle.Invert = !asymStyle.Invert;
+            }
+
+            return buttonsPanel;
+        }
         protected static void AddOnHoverLeave<T>(FieldPropertyPanel<T> fieldPanel, Action onHover, Action onLeave)
         {
             if (onHover != null)
@@ -225,6 +244,9 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             LineSolidAndDashed,
 
+            [Description(nameof(Localize.LineStyle_SharkTeeth))]
+            LineSharkTeeth,
+
 
             [Description(nameof(Localize.LineStyle_StopGroup))]
             StopLine = Markup.Item.StopLine,
@@ -240,6 +262,12 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             StopLineDoubleDashed,
+
+            [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
+            StopLineSolidAndDashed,
+
+            [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
+            StopLineSharkTeeth,
 
 
             [Description(nameof(Localize.FillerStyle_Group))]
@@ -281,46 +309,51 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Solid))]
             CrosswalkSolid,
+
+            [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
+            CrosswalkChessBoard,
         }
     }
 
     public class MarkupStyleDash
     {
+        public MaterialType MaterialType { get; set; }
         public Vector3 Position { get; set; }
         public float Angle { get; set; }
         public float Length { get; set; }
         public float Width { get; set; }
         public Color Color { get; set; }
 
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color)
+        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
         {
             Position = position;
             Angle = angle;
             Length = length;
             Width = width;
             Color = color;
+            MaterialType = materialType;
         }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color) : this((start + end) / 2, angle, length, width, color) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color) : this(start, end, dir.AbsoluteAngle(), length, width, color) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color) : this(start, end, dir, (end - start).magnitude, width, color) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this((start + end) / 2, angle, length, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
     }
-    public class StyleTemplate : IToXml
+    public class StyleTemplate : IDeletable, IToXml
     {
         public static string XmlName { get; } = "T";
 
+        public string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
+        public string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+
         string _name;
         Style _style;
-
+        public Guid Id { get; private set; }
         public string Name
         {
             get => _name;
             set
             {
-                if (OnNameChanged?.Invoke(this, value) == true)
-                {
                     _name = value;
                     TemplateChanged();
-                }
             }
         }
         public Style Style
@@ -335,26 +368,29 @@ namespace NodeMarkup.Manager
         }
         public Action OnTemplateChanged { private get; set; }
         public Action<StyleTemplate, Style> OnStyleChanged { private get; set; }
-        public Func<StyleTemplate, string, bool> OnNameChanged { private get; set; }
 
         public string XmlSection => XmlName;
 
-        public StyleTemplate(string name, Style style)
+        public StyleTemplate(string name, Style style) : this(Guid.NewGuid(), name, style) { }
+        private StyleTemplate(Guid id, string name, Style style)
         {
-            _name = name;
-            _style = style.Copy();
+            Id = id;
+            Name = name;
+            Style = style.Copy();
             Style.OnStyleChanged = TemplateChanged;
         }
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
+        public Dependences GetDependences() => new Dependences();
 
-        public override string ToString() => Name;
+        public override string ToString() => !string.IsNullOrEmpty(Name) ? Name : Localize.TemplateEditor_UnnamedTemplate;
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
-            var name = config.GetAttrValue<string>("N");
-            if (!string.IsNullOrEmpty(name) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, out Style style))
+            if (config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), false, out Style style))
             {
-                template = new StyleTemplate(name, style);
+                var id = config.GetAttrValue(nameof(Id), Guid.Empty);
+                var name = config.GetAttrValue<string>("N");
+                template = id == Guid.Empty ? new StyleTemplate(name, style) : new StyleTemplate(id, name, style);
                 return true;
             }
             else
@@ -366,10 +402,10 @@ namespace NodeMarkup.Manager
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlName,
-                new XAttribute("N", Name),
-                Style.ToXml()
-                );
+            var config = new XElement(XmlName);
+            config.Add(new XAttribute(nameof(Id), Id));
+            config.Add(new XAttribute("N", Name));
+            config.Add(Style.ToXml());
             return config;
         }
     }

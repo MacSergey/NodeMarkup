@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Utils;
+﻿using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +91,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkupLine line, Dictionary<ObjectId, ObjectId> map)
+        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkupLine line, ObjectsMap map)
         {
             foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
             {
