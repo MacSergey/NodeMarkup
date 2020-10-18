@@ -142,10 +142,10 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Добавить правило</value>
   </data>
-  <data name="LineEditor_Color" xml:space="preserve">
+  <data name="StyleOption_Color" xml:space="preserve">
     <value>Цвет</value>
   </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
+  <data name="StyleOption_DashedLength" xml:space="preserve">
     <value>Длина штриха</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
@@ -154,7 +154,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить правило?</value>
   </data>
-  <data name="LineEditor_From" xml:space="preserve">
+  <data name="LineRule_From" xml:space="preserve">
     <value>От</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
@@ -169,16 +169,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Линии</value>
   </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
+  <data name="StyleOption_Offset" xml:space="preserve">
     <value>Сдвиг</value>
   </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
     <value>Длина промежутка</value>
   </data>
-  <data name="LineEditor_Style" xml:space="preserve">
+  <data name="Editor_Style" xml:space="preserve">
     <value>Стиль</value>
   </data>
-  <data name="LineEditor_To" xml:space="preserve">
+  <data name="LineRule_To" xml:space="preserve">
     <value>До</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
@@ -355,16 +355,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  <data name="LineEditor_Invert" xml:space="preserve">
+  <data name="StyleOption_Invert" xml:space="preserve">
     <value>Инвертировать</value>
   </data>
-  <data name="LineEditor_Width" xml:space="preserve">
+  <data name="StyleOption_Width" xml:space="preserve">
     <value>Ширина</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Сплошная и пунктирная</value>
   </data>
-  <data name="LineStyle_Stop" xml:space="preserve">
+  <data name="LineStyle_StopSolid" xml:space="preserve">
     <value>Сплошная</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
@@ -388,13 +388,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Пунктирная</value>
   </data>
-  <data name="Filler_Step" xml:space="preserve">
+  <data name="StyleOption_Step" xml:space="preserve">
     <value>Шаг</value>
   </data>
-  <data name="Filler_Angle" xml:space="preserve">
+  <data name="StyleOption_Angle" xml:space="preserve">
     <value>Угол</value>
   </data>
-  <data name="Filler_Offset" xml:space="preserve">
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
     <value>Отступ от линий</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
@@ -412,16 +412,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Выберите следующую точку контура</value>
   </data>
-  <data name="Filler_MedianOffset" xml:space="preserve">
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
     <value>Отступ от разд. полосы</value>
   </data>
-  <data name="LineEditor_ColorCopy" xml:space="preserve">
+  <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Копировать</value>
   </data>
-  <data name="LineEditor_ColorPaste" xml:space="preserve">
+  <data name="Editor_ColorPaste" xml:space="preserve">
     <value>Вставить</value>
   </data>
-  <data name="LineEditor_ColorDefault" xml:space="preserve">
+  <data name="Editor_ColorDefault" xml:space="preserve">
     <value>Стандартный</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
@@ -463,22 +463,19 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Двойная пунктирная</value>
   </data>
-  <data name="LineEditor_StyleCopy" xml:space="preserve">
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
     <value>Копировать</value>
   </data>
-  <data name="LineEditor_StylePaste" xml:space="preserve">
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>Вставить</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
     <value>Шеврон</value>
   </data>
-  <data name="Filler_AngleBetween" xml:space="preserve">
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Угол между</value>
   </data>
-  <data name="Filler_Invert" xml:space="preserve">
-    <value>Инвертировать</value>
-  </data>
-  <data name="Filler_Turn" xml:space="preserve">
+  <data name="StyleOption_Turn" xml:space="preserve">
     <value>Повернуть</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
@@ -509,15 +506,6 @@ Shift X10, Ctrl X0.1</value>
     <value>Функция «{0}» сейчас доступна только оформившим ранней доступ на Patreon.
 Она будет доступна позже для всех.
 Оформив ранний доступ, вы поддержите возможность развивать мод с той же скоростью.</value>
-  </data>
-  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
-    <value>Копирование стиля</value>
-  </data>
-  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
-    <value>Вставку стиля</value>
-  </data>
-  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
-    <value>Перпендикулярные линии</value>
   </data>
   <data name="EarlyAccess_GetButton" xml:space="preserve">
     <value>Получить ранний доступ</value>
@@ -582,7 +570,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Ранний доступ</value>
   </data>
-  <data name="LineEditor_Alignment" xml:space="preserve">
+  <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Выравнивание</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
@@ -654,7 +642,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Существующий переход</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
     <value>Отступ между</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
@@ -673,10 +661,10 @@ Shift X10, Ctrl X0.1</value>
   <data name="FillerStyle_Group" xml:space="preserve">
     <value>Заполнители</value>
   </data>
-  <data name="LineStyle_RegularGroup" xml:space="preserve">
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
     <value>Обычные линии</value>
   </data>
-  <data name="LineStyle_StopGroup" xml:space="preserve">
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
     <value>Стоп линии</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
@@ -700,16 +688,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>Двойная зебра</value>
   </data>
-  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+  <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Ширина линии</value>
   </data>
-  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
     <value>Отступ после</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
     <value>Отступ до</value>
   </data>
-  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Параллельно линиям</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
@@ -768,7 +756,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
   </data>
-  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
     <value>Линии переходов</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
@@ -815,19 +803,19 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Шахматная доска</value>
   </data>
-  <data name="LineEditor_LineCount" xml:space="preserve">
+  <data name="StyleOption_LineCount" xml:space="preserve">
     <value>Количество линий</value>
   </data>
-  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
     <value>Основание треугольника</value>
   </data>
-  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
     <value>Высота треугольника</value>
   </data>
-  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
     <value>Расстояние между</value>
   </data>
-  <data name="LineEditor_SquareSide" xml:space="preserve">
+  <data name="StyleOption_SquareSide" xml:space="preserve">
     <value>Сторона квадрата</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
@@ -921,13 +909,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Копия</value>
   </data>
-  <data name="Filler_Edge" xml:space="preserve">
+  <data name="StyleOption_Edge" xml:space="preserve">
     <value>Грань</value>
   </data>
-  <data name="Filler_StartingFrom" xml:space="preserve">
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
     <value>Начало из</value>
   </data>
-  <data name="Filler_Vertex" xml:space="preserve">
+  <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Вершина</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
@@ -961,13 +949,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Повернуть против часовой стрелки</value>
   </data>
-  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>Центр</value>
   </data>
-  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
     <value>Лево</value>
   </data>
-  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
     <value>Право</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
@@ -1066,13 +1054,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
     <value>Поместите или уберите круг с цели для задания порядка точек</value>
   </data>
-  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Сплошная по центру</value>
   </data>
-  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+  <data name="StyleOption_No" xml:space="preserve">
     <value>Нет</value>
   </data>
-  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+  <data name="StyleOption_Yes" xml:space="preserve">
     <value>Да</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
@@ -1110,4 +1098,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Это действие нельзя отменить.</value>
   </data>
+  
+  
 </root>

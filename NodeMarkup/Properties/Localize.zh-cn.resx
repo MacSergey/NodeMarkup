@@ -142,10 +142,10 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>添加规则</value>
   </data>
-  <data name="LineEditor_Color" xml:space="preserve">
+  <data name="StyleOption_Color" xml:space="preserve">
     <value>颜色</value>
   </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
+  <data name="StyleOption_DashedLength" xml:space="preserve">
     <value>虚线长度</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
@@ -154,7 +154,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>确定要删除这个规则吗?</value>
   </data>
-  <data name="LineEditor_From" xml:space="preserve">
+  <data name="LineRule_From" xml:space="preserve">
     <value>起始点</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
@@ -169,16 +169,16 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>线段</value>
   </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
+  <data name="StyleOption_Offset" xml:space="preserve">
     <value>偏移</value>
   </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
     <value>间隔长度</value>
   </data>
-  <data name="LineEditor_Style" xml:space="preserve">
+  <data name="Editor_Style" xml:space="preserve">
     <value>样式</value>
   </data>
-  <data name="LineEditor_To" xml:space="preserve">
+  <data name="LineRule_To" xml:space="preserve">
     <value>终止点</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
@@ -270,13 +270,13 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>确定要恢复数据吗?
-恢复后的数据会覆盖全图既存的地标线。</value>
+恢复后的数据会覆盖全图既存的标记。</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>地标线信息恢复失败</value>
+    <value>标记信息恢复失败</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>地标线信息恢复成功</value>
+    <value>标记信息恢复成功</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>快速初始化新规则</value>
@@ -344,16 +344,16 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="LineEditor_Invert" xml:space="preserve">
+  <data name="StyleOption_Invert" xml:space="preserve">
     <value>翻转</value>
   </data>
-  <data name="LineEditor_Width" xml:space="preserve">
+  <data name="StyleOption_Width" xml:space="preserve">
     <value>宽度</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>虚实线</value>
   </data>
-  <data name="LineStyle_Stop" xml:space="preserve">
+  <data name="LineStyle_StopSolid" xml:space="preserve">
     <value>实线</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
@@ -377,13 +377,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>虚线</value>
   </data>
-  <data name="Filler_Step" xml:space="preserve">
+  <data name="StyleOption_Step" xml:space="preserve">
     <value>间隔</value>
   </data>
-  <data name="Filler_Angle" xml:space="preserve">
+  <data name="StyleOption_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="Filler_Offset" xml:space="preserve">
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
     <value>从边线回缩</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
@@ -401,16 +401,16 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>选择填充区域下一端点</value>
   </data>
-  <data name="Filler_MedianOffset" xml:space="preserve">
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
     <value>往中心回缩</value>
   </data>
-  <data name="LineEditor_ColorCopy" xml:space="preserve">
+  <data name="Editor_ColorCopy" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="LineEditor_ColorPaste" xml:space="preserve">
+  <data name="Editor_ColorPaste" xml:space="preserve">
     <value>粘贴</value>
   </data>
-  <data name="LineEditor_ColorDefault" xml:space="preserve">
+  <data name="Editor_ColorDefault" xml:space="preserve">
     <value>默认</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
@@ -437,22 +437,19 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>双虚线</value>
   </data>
-  <data name="LineEditor_StyleCopy" xml:space="preserve">
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="LineEditor_StylePaste" xml:space="preserve">
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>粘贴</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
     <value>锯齿形</value>
   </data>
-  <data name="Filler_AngleBetween" xml:space="preserve">
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="Filler_Invert" xml:space="preserve">
-    <value>翻转</value>
-  </data>
-  <data name="Filler_Turn" xml:space="preserve">
+  <data name="StyleOption_Turn" xml:space="preserve">
     <value>旋转</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
@@ -483,15 +480,6 @@ Shift x10，Ctrl x0.1</value>
     <value>此功能 “{0}” 目前只供Patreon抢先体验用户使用。
 一段时间后会面向大众开放。
 加入抢先体验后，你可以支持作者开发本mod。</value>
-  </data>
-  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
-    <value>复制样式</value>
-  </data>
-  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
-    <value>粘贴样式</value>
-  </data>
-  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
-    <value>垂直线</value>
   </data>
   <data name="EarlyAccess_GetButton" xml:space="preserve">
     <value>获取抢先访问</value>
@@ -556,7 +544,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>抢先体验版本</value>
   </data>
-  <data name="LineEditor_Alignment" xml:space="preserve">
+  <data name="StyleOption_Alignment" xml:space="preserve">
     <value>对齐</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
@@ -628,7 +616,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>现存人行横道</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
     <value>间隔大小</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
@@ -647,10 +635,10 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerStyle_Group" xml:space="preserve">
     <value>填充图案</value>
   </data>
-  <data name="LineStyle_RegularGroup" xml:space="preserve">
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
     <value>普通标线</value>
   </data>
-  <data name="LineStyle_StopGroup" xml:space="preserve">
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
     <value>停止线</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
@@ -674,16 +662,16 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>双斑马线</value>
   </data>
-  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+  <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>线条宽度</value>
   </data>
-  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
     <value>从后方偏移</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
     <value>从前方偏移</value>
   </data>
-  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>与车道平行</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
@@ -742,7 +730,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
-  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
     <value>人行横道线</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
@@ -774,19 +762,19 @@ Shift x10，Ctrl x0.1</value>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>棋盘格</value>
   </data>
-  <data name="LineEditor_LineCount" xml:space="preserve">
+  <data name="StyleOption_LineCount" xml:space="preserve">
     <value>线条数</value>
   </data>
-  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
     <value>三角形底边长</value>
   </data>
-  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
     <value>三角形高度</value>
   </data>
-  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
     <value>三角形间隙</value>
   </data>
-  <data name="LineEditor_SquareSide" xml:space="preserve">
+  <data name="StyleOption_SquareSide" xml:space="preserve">
     <value>方形边长</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
@@ -880,13 +868,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="Filler_Edge" xml:space="preserve">
+  <data name="StyleOption_Edge" xml:space="preserve">
     <value>边界</value>
   </data>
-  <data name="Filler_StartingFrom" xml:space="preserve">
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
     <value>起始点</value>
   </data>
-  <data name="Filler_Vertex" xml:space="preserve">
+  <data name="StyleOption_Vertex" xml:space="preserve">
     <value>顶点</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
@@ -920,13 +908,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>逆时针旋转</value>
   </data>
-  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>中心</value>
   </data>
-  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
     <value>向左</value>
   </data>
-  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
     <value>向右</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
@@ -1025,13 +1013,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
     <value>将圆圈放进或移出目标，来设置或取消节点排序</value>
   </data>
-  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>中心实线</value>
   </data>
-  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+  <data name="StyleOption_No" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+  <data name="StyleOption_Yes" xml:space="preserve">
     <value>确定</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
@@ -1046,5 +1034,11 @@ Shift x10，Ctrl x0.1</value>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>此操作不可撤销。</value>
+  </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>空</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>创建新边线</value>
   </data>
 </root>
