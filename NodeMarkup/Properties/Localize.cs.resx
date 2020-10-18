@@ -266,7 +266,7 @@ Shift ×10, Ctrl ×0.1</value>
     <value>Obnovit značení ze souboru</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>Obnovit data o značení</value>
+    <value>Obnovit data značení</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Opravdu si přejete obnovit data?
@@ -324,9 +324,12 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Vyberte křižovatku pro změnu značení</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Vyberte bod pro vytvoření čáry
+Táhněte za bod pro vytvoření kolmé čáry</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Vyber bod pro vytvoření nebo odstranění čáry</value>
+    <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
@@ -462,7 +465,7 @@ Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Nejsou vytvořeny žádné šablony.
-Pro vytvoření šablony, vyberte «{0}» při úpravě stylu přechodu nebo výplně.</value>
+Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry, přechodu nebo výplně.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivujte klávesou</value>
@@ -633,7 +636,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Na této křižovatce nejsou žádné přechody.
-Pro vytvoření přechodu drž Shift.</value>
+Pro vytvoření přechodu podržte Shift.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>přechod</value>
@@ -811,22 +814,32 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
     <value>Opravdu si přejete vložit značení?
 Původní značení bude odstraněno.</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Klávesové zkratky přechodů</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Klávesové zkratky výplní</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Klávesové zkratky čar</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Klávesové zkratky hranic křižovatky</value>
+  </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>Nenastaveno</value>
   </data>
-  
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Bez zkratky</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
     <value>Vždy</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
-    <value>Pouze, pokud budou ovlivněny ostatní položky</value>
+    <value>Pouze, pokud budou ovlivněny jiná pravidla</value>
   </data>
   <data name="Tool_DeleteDependence" xml:space="preserve">
-    <value>Zavislosti budou také odstraněny:</value>
+    <value>Závislosti budou odstraněny:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
     <value>Hranice přechodu - {0}</value>
@@ -844,7 +857,7 @@ Původní značení bude odstraněno.</value>
     <value>Pravidla - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Záloha</value>
+    <value>Zálohy</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Zobrazení a použití</value>
@@ -855,7 +868,9 @@ Původní značení bude odstraněno.</value>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Seskupování</value>
   </data>
-  
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Klávesové zkratky</value>
+  </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Podpora</value>
   </data>
@@ -883,8 +898,13 @@ Původní značení bude odstraněno.</value>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
     <value>Opravdu chcete resetovat odsazení všech bodů na křižovatce #{0}?</value>
   </data>
-  
-  
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Tažením kruhů měňte pořadí jednotlivých silnic
+Kliknutím na kruh změňte pořadí bodů na silnici</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Přesuňte kruh dovnitř/ven z kružnice pro nastavení/odnastavení pořadí silnic</value>
+  </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Kopírovat značení</value>
   </data>
@@ -962,25 +982,52 @@ Původní data připíší všechny existující šablony.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Pokračovat</value>
   </data>
-  
-  
-  
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Opustit režim vkládání</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Chcete opustim režim vkládání a použít změny?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
   <data name="Tool_InfoPasteApply" xml:space="preserve">
     <value>Použít</value>
   </data>
-  
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
   <data name="Tool_InfoPasteReset" xml:space="preserve">
     <value>Resetovat</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Změnit pořadí značení</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Změnit pořadí značení</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Silnice byly změněny</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Silnice na této křižovatce se změnily, existující značení nemůže být automaticky použito.
+Chcete nastavit předchozí značení manuálně?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Opustit režim úpravy pořadí</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Chcete opustit režim úprav a použít změny?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Přesuňte kruh pro změnu pořadí bodů</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Přesuňte kruh dovnitř/ven z kružnice pro nastavení/zrušení pořadí bodů</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Plná ve středu</value>
+  </data>
   <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
     <value>Ne</value>
   </data>
@@ -988,12 +1035,14 @@ Původní data připíší všechny existující šablony.</value>
     <value>Ano</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Drž Shift pro vytvoření přechodu</value>
+    <value>+Shift pro vytvoření přechodu</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Drž Alt pro vytvoření výplně</value>
+    <value>+Alt pro vytvoření výplně</value>
   </data>
-  
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Táhněte s Ctrl pro posun bodu</value>
+  </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tuto akci nelze vrátit zpět.</value>
