@@ -262,11 +262,22 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>Exportação guardada com sucesso</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Recuperar dados das marcações a partir dum ficheiro</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Recuperar dados das marcações</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Tem a certeza que quer recuperar os dados?
+Os dados recuperados vão substituir todas as marcações existentes.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>A recuperação de dados falhou</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Dados recuperados com sucesso</value>
+  </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Configuração rápida das regras</value>
   </data>
@@ -313,10 +324,12 @@ Clique para editar marcações</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione um nó para editar marcações</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Selecione um ponto próprio para uma linha normal ou de paragem
+Arraste para trás do ponto para uma linha perpendicular</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione um ponto para
-criar ou remover a uma linha</value>
+    <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
@@ -335,7 +348,9 @@ criar ou remover a uma linha</value>
 - O segmento de uma linha agora é realçado quando paira com o rato no painel de edição daquela regra.
 - Adicionada tradução para Chinês Simplificado.</value>
   </data>
-  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Recuperar</value>
+  </data>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
@@ -551,7 +566,9 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Acesso antecipado</value>
   </data>
-  
+  <data name="LineEditor_Alignment" xml:space="preserve">
+    <value>Alinhamento</value>
+  </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>Concordo</value>
   </data>
@@ -826,7 +843,9 @@ Vai substituir todos as marcações existente.</value>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
     <value>Sem modificador</value>
   </data>
-  
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Sempre</value>
+  </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
     <value>Apenas de afetar outros itens</value>
   </data>
@@ -890,48 +909,136 @@ Vai substituir todos as marcações existente.</value>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
     <value>Tem a certeza que quer mesmo repor todos os descolamentos de pontos do nó #{0}?</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Arraste e largue os círculos para definir a ordem das estradas
+Clique no circulo para editar a ordem dos pontos da estrada</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Larga o circulo dentro ou fora do alvo para definir ou repor a ordem das estradas</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Copiar marcação</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Colar marcação</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Inverter ordem</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Virar no sentido horário</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Virar no sentido anti-horário</value>
+  </data>
+  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+    <value>Centro</value>
+  </data>
+  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+    <value>Esquerda</value>
+  </data>
+  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+    <value>Direita</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Modelo não nomeado</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>O nome já está em uso</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>O nome "{0}" já está ser usado por outro modelo.
+Tem a certeza que quer ter vários modelos com o mesmo nome?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Cópia de segurança das marcações</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Cópia de segurança dos modelos</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Apagar todos os modelos</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Apagar todos os modelos</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Quer mesmo remover todos os modelos?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Descarregar modelos para um ficheiro</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Descarregar modelos</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Recuperar modelos de um ficheiro</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Recuperar modelos</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Tem a certeza que quer recuperar os modelos?
+Os modelos recuperados vão substituir todos os modelos existentes.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Recuperação dos modelos falhou</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Modelos recuperados com sucesso</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Sair do modo de colagem</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Quer sair do modo de colagem e aplicar as mudanças?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Não aplicar</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Não aplicar</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Repor</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Editar ordem das marcações</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Alterar ordem das marcações</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>As estradas mudaram</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>As estradas nesta interseção mudaram, por isso as marcações existentes não podem ser aplicadas automaticamente.
+Quer aplicar as marcações manualmente?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Sair do modo de edição da ordem</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Quer sair do modo de edição e aplicar as mudanças?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Arraste e largue os círculos para definir a ordem dos pontos</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Larga o circulo dentro ou fora do alvo para definir ou repor a ordem dos pontos</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Centro sólido</value>
+  </data>
   <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
     <value>Não</value>
   </data>
@@ -944,7 +1051,9 @@ Vai substituir todos as marcações existente.</value>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Prima Alt para criar um preenchimento</value>
   </data>
-  
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Arraste com Ctrl para mover o ponto</value>
+  </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
