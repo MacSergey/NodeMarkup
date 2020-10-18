@@ -179,7 +179,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Chess board.
+        ///   Ищет локализованную строку, похожую на Chessboard.
         /// </summary>
         public static string CrosswalkStyle_ChessBoard {
             get {
@@ -1566,21 +1566,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fix chevron line parts overlap.
-        ///- New chevron middle line calculation algorithm
-        ///- added shark teeth line
-        ///- added solid&amp;dashed stop line
-        ///- added shark teeth stop line
-        ///- added chess board crosswalk
-        ///- Added support moveit mirroring
-        ///- Fix filler vertex duplicates
-        ///- Added copy/paste marking
-        ///- Added style modifier settings
-        ///- added &quot;Only if will affect others items&quot; option to confirm before deleting
-        ///- added settings tabs
-        ///- duplicate templates
-        ///- added the ability to resize panel
-        ///- added line with ov [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на Version 1.4 Released.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -2502,7 +2488,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you want to exit edit mode and apply a new order?.
+        ///   Ищет локализованную строку, похожую на Do you want to exit edit mode and apply a changes?.
         /// </summary>
         public static string Tool_EndEditOrderMessage {
             get {
@@ -2520,7 +2506,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you want to exit paste mode and apply a paste?.
+        ///   Ищет локализованную строку, похожую на Do you want to exit paste mode and apply a changes?.
         /// </summary>
         public static string Tool_EndPasteOrderMessage {
             get {
@@ -2701,7 +2687,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Drag and drop circle for set point order.
+        ///   Ищет локализованную строку, похожую на Drag and drop circle to set points order.
         /// </summary>
         public static string Tool_InfoPointsDrag {
             get {
@@ -2719,7 +2705,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Drag and drop circles for set roads order
+        ///   Ищет локализованную строку, похожую на Drag and drop circles to set roads order
         ///Click circle to edit road points order.
         /// </summary>
         public static string Tool_InfoRoadsDrag {
