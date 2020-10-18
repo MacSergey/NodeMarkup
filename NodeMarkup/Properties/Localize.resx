@@ -121,8 +121,7 @@
     <value>Delete {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Do you really want to delete {0} {1}?
-This action cannot be undone.</value>
+    <value>Do you really want to delete {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll the wheel to change
@@ -153,8 +152,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Delete rule</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Do you really want to delete the rule?
-This action cannot be undone</value>
+    <value>Do you really want to delete the rule?</value>
   </data>
   <data name="LineEditor_From" xml:space="preserve">
     <value>From</value>
@@ -247,8 +245,7 @@ This action cannot be undone</value>
     <value>Delete all markings</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Do you really want to remove all markings?
-This action cannot be undone.</value>
+    <value>Do you really want to remove all markings?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Dump marking data to file</value>
@@ -273,8 +270,7 @@ This action cannot be undone.</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Do you really want to restore data?
-The restored data will replace all existing marking.
-This action cannot be undone.</value>
+The restored data will replace all existing marking.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Marking data restore failed</value>
@@ -328,8 +324,7 @@ This action cannot be undone.</value>
     <value>Clear node markings</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Do you really want to clear all node #{0} markings?
-This action cannot be undone.</value>
+    <value>Do you really want to clear all node #{0} markings?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Click to create a line</value>
@@ -894,8 +889,7 @@ Failed to load markings for {0} intersections.</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
     <value>Do you really want to paste marking?
-It will replace the existing marking.
-This action cannot be undone.</value>
+It will replace the existing marking.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Crosswalks modifier</value>
@@ -979,8 +973,7 @@ This action cannot be undone.</value>
     <value>Reset all points offset</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Do you really want to reset all node #{0} points offset?
-This action cannot be undone.</value>
+    <value>Do you really want to reset all node #{0} points offset?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Drag and drop circles for set roads order
@@ -1036,8 +1029,7 @@ Are you sure you want to have multiple templates with the same name?</value>
     <value>Delete all templates</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Do you really want to remove all templates?
-This action cannot be undone.</value>
+    <value>Do you really want to remove all templates?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
     <value>Dump templates to file</value>
@@ -1053,8 +1045,7 @@ This action cannot be undone.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Do you really want to restore templates?
-The restored templates will replace all existing templates.
-This action cannot be undone.</value>
+The restored templates will replace all existing templates.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>Templates restore failed</value>
@@ -1152,5 +1143,8 @@ Do you want to apply the marking manually?</value>
 - Update filler "Chevron" style calculation algorithm.
 - Fix filler vertex duplicates in create interface.
 - Fix asym lines wrong invert value after load.</value>
+  </data>
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>This action cannot be undone.</value>
   </data>
 </root>

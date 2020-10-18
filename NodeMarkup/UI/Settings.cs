@@ -326,17 +326,17 @@ namespace NodeMarkup.UI
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, Localize.Settings_DeleteMarkingMessage, () => MarkupManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{Localize.MessageBox_CantUndone}", () => MarkupManager.DeleteAll());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
-            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, Localize.Settings_RestoreMarkingMessage);
+            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{Localize.MessageBox_CantUndone}");
         }
         private static void AddBackupTemplates(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, Localize.Settings_DeleteTemplatesMessage, () => TemplateManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{Localize.MessageBox_CantUndone}", () => TemplateManager.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpTemplatesData);
-            AddRestore<ImportTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, Localize.Settings_RestoreTemplatesMessage);
+            AddRestore<ImportTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{Localize.MessageBox_CantUndone}");
         }
 
         private static void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)

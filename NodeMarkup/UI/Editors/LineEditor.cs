@@ -131,7 +131,7 @@ namespace NodeMarkup.UI.Editors
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = NodeMarkup.Localize.LineEditor_DeleteRuleMessage;
+                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkup.Localize.MessageBox_CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else

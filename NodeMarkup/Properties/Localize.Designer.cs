@@ -876,8 +876,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to delete the rule?
-        ///This action cannot be undone.
+        ///   Ищет локализованную строку, похожую на Do you really want to delete the rule?.
         /// </summary>
         public static string LineEditor_DeleteRuleMessage {
             get {
@@ -1253,6 +1252,15 @@ namespace NodeMarkup {
         public static string LineStyle_StopSolidAndDashed {
             get {
                 return ResourceManager.GetString("LineStyle_StopSolidAndDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This action cannot be undone..
+        /// </summary>
+        public static string MessageBox_CantUndone {
+            get {
+                return ResourceManager.GetString("MessageBox_CantUndone", resourceCulture);
             }
         }
         
@@ -1752,8 +1760,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to remove all markings?
-        ///This action cannot be undone..
+        ///   Ищет локализованную строку, похожую на Do you really want to remove all markings?.
         /// </summary>
         public static string Settings_DeleteMarkingMessage {
             get {
@@ -1780,8 +1787,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to remove all templates?
-        ///This action cannot be undone..
+        ///   Ищет локализованную строку, похожую на Do you really want to remove all templates?.
         /// </summary>
         public static string Settings_DeleteTemplatesMessage {
             get {
@@ -2025,8 +2031,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to restore data?
-        ///The restored data will replace all existing marking.
-        ///This action cannot be undone..
+        ///The restored data will replace all existing marking..
         /// </summary>
         public static string Settings_RestoreMarkingMessage {
             get {
@@ -2072,8 +2077,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to restore templates?
-        ///The restored templates will replace all existing templates.
-        ///This action cannot be undone..
+        ///The restored templates will replace all existing templates..
         /// </summary>
         public static string Settings_RestoreTemplatesMessage {
             get {
@@ -2462,8 +2466,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to clear all node #{0} markings?
-        ///This action cannot be undone..
+        ///   Ищет локализованную строку, похожую на Do you really want to clear all node #{0} markings?.
         /// </summary>
         public static string Tool_ClearMarkingsMessage {
             get {
@@ -2544,8 +2547,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?
-        ///This action cannot be undone..
+        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?.
         /// </summary>
         public static string Tool_DeleteMessage {
             get {
@@ -2901,8 +2903,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to paste marking?
-        ///It will replace the existing marking.
-        ///This action cannot be undone..
+        ///It will replace the existing marking..
         /// </summary>
         public static string Tool_PasteMarkingsMessage {
             get {
@@ -2920,8 +2921,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to reset all node #{0} points offset?
-        ///This action cannot be undone..
+        ///   Ищет локализованную строку, похожую на Do you really want to reset all node #{0} points offset?.
         /// </summary>
         public static string Tool_ResetOffsetsMessage {
             get {
