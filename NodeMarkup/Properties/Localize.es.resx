@@ -1008,12 +1008,25 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
     <value>Las carreteras han cambiado</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Las carreteras en este cruce han cambiado, por lo que las marcas existentes no se puede aplicar automáticamente.
+¿Quieres aplicar las marcas manualmente?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Salir del modo de edición del orden</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>¿Quieres salir del modo de edición y aplicar un nuevo orden?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Arrastre y suelte el círculo para establecer el orden de los puntos</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Coloque el círculo dentro/fuera del objetivo para establecer/cancelar el orden de los puntos</value>
+  </data>
+  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+    <value>Continua en el centro</value>
+  </data>
   <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
     <value>No</value>
   </data>
@@ -1026,7 +1039,9 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Mantenga Alt para crear un relleno</value>
   </data>
-  
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Arrastre con Ctrl para mover el punto</value>
+  </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>No se puede deshacer esta acción.</value>
