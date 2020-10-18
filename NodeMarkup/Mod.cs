@@ -37,6 +37,7 @@ namespace NodeMarkup
 
         public static List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.4"),
             new Version("1.3"),
             new Version("1.2.1"),
             new Version("1.2"),
