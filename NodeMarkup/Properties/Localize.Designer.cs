@@ -2311,24 +2311,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Color.
-        /// </summary>
-        public static string TemplateEditor_Color {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Color", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Dash length.
-        /// </summary>
-        public static string TemplateEditor_DashedLength {
-            get {
-                return ResourceManager.GetString("TemplateEditor_DashedLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на template.
         /// </summary>
         public static string TemplateEditor_DeleteCaptionDescription {
@@ -2353,15 +2335,6 @@ namespace NodeMarkup {
         public static string TemplateEditor_EmptyMessage {
             get {
                 return ResourceManager.GetString("TemplateEditor_EmptyMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Invert.
-        /// </summary>
-        public static string TemplateEditor_Invert {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Invert", resourceCulture);
             }
         }
         
@@ -2394,33 +2367,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset.
-        /// </summary>
-        public static string TemplateEditor_Offset {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Offset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Space length.
-        /// </summary>
-        public static string TemplateEditor_SpaceLength {
-            get {
-                return ResourceManager.GetString("TemplateEditor_SpaceLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Style.
-        /// </summary>
-        public static string TemplateEditor_Style {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Style", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Templates.
         /// </summary>
         public static string TemplateEditor_Templates {
@@ -2435,15 +2381,6 @@ namespace NodeMarkup {
         public static string TemplateEditor_UnnamedTemplate {
             get {
                 return ResourceManager.GetString("TemplateEditor_UnnamedTemplate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Width.
-        /// </summary>
-        public static string TemplateEditor_Width {
-            get {
-                return ResourceManager.GetString("TemplateEditor_Width", resourceCulture);
             }
         }
         

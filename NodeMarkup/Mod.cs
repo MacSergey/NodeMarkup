@@ -26,6 +26,11 @@ namespace NodeMarkup
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
         public static string StaticName { get; } = "Intersection Marking Tool";
+#if DEBUG
+        public static string StaticFullName => $"{StaticName} {Version.GetString()} [BETA]";
+#else
+        public static string StaticFullName => $"{StaticName} {Version.GetString()}";
+#endif
 
         public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
         public static Version VersionBuild => Version.Build();
@@ -39,13 +44,12 @@ namespace NodeMarkup
             new Version("1.0")
         };
 
+        public string Name => StaticFullName;
 #if DEBUG
         public static bool IsBeta => true;
-        public string Name { get; } = $"{StaticName} {Version.GetString()} [BETA]";
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public static bool IsBeta => false;
-        public string Name { get; } = $"{StaticName} {Version.GetString()}";
         public string Description => Localize.Mod_Description;
 #endif
 

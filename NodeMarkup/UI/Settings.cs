@@ -61,6 +61,7 @@ namespace NodeMarkup.UI
             CreateTabStrip(mainPanel);
 
             var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
+            generalTab.AddGroup(Mod.StaticFullName);
             AddLanguage(generalTab);
             AddGeneral(generalTab);
             AddGrouping(generalTab);

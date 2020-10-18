@@ -293,26 +293,11 @@ The restored data will replace all existing marking.</value>
   <data name="Settings_ShowTooltips" xml:space="preserve">
     <value>Show tooltips</value>
   </data>
-  <data name="TemplateEditor_Color" xml:space="preserve">
-    <value>Color</value>
-  </data>
-  <data name="TemplateEditor_DashedLength" xml:space="preserve">
-    <value>Dash length</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>template</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="TemplateEditor_Offset" xml:space="preserve">
-    <value>Offset</value>
-  </data>
-  <data name="TemplateEditor_SpaceLength" xml:space="preserve">
-    <value>Space length</value>
-  </data>
-  <data name="TemplateEditor_Style" xml:space="preserve">
-    <value>Style</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Templates</value>
@@ -374,12 +359,6 @@ Drag behind point for perpendicular line</value>
   </data>
   <data name="LineEditor_Width" xml:space="preserve">
     <value>Width</value>
-  </data>
-  <data name="TemplateEditor_Width" xml:space="preserve">
-    <value>Width</value>
-  </data>
-  <data name="TemplateEditor_Invert" xml:space="preserve">
-    <value>Invert</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Solid and Dashed</value>
