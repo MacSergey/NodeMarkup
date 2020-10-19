@@ -377,7 +377,7 @@ namespace NodeMarkup.Manager
             =>StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes);
         IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory lineTrajectory, float startT, float endT)
         {
-            yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, Base, Height / 2, Height, Color, MaterialType.Triangle);
+            yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, Base, Height / -2, Height, Color, MaterialType.Triangle);
         }
 
         public override StopLineStyle CopyStopLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
