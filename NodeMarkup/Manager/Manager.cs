@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using static NetInfo;
 
 namespace NodeMarkup.Manager
 {
@@ -109,6 +110,11 @@ namespace NodeMarkup.Manager
                 if (NodesMarkup.TryGetValue(nodeId, out Markup markup))
                     markup.Update();
             }
+        }
+        public static void NetInfoNodeInitNodeInfoPostfix(Node info)
+        {
+            if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
+                info.m_nodeMaterial.renderQueue = 2470;
         }
         public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
         {

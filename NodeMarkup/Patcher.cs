@@ -45,6 +45,7 @@ namespace NodeMarkup
             PatchNetManagerSimulationStepImpl(harmony);
             PatchBuildingDecorationLoadPaths(harmony);
             PatchLoadAssetPanelOnLoad(harmony);
+            PatchNetInfoNodeInitNodeInfo(harmony);
         }
 
         private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
@@ -159,6 +160,13 @@ namespace NodeMarkup
         {
             var original = AccessTools.Method(typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
             var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
+
+            AddPostfix(harmony, original, postfix);
+        }
+        private static void PatchNetInfoNodeInitNodeInfo(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetInfo), "InitNodeInfo");
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
 
             AddPostfix(harmony, original, postfix);
         }
