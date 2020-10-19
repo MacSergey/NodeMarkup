@@ -70,7 +70,7 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
-            EarlyAccess.CheckAccess();
+            //EarlyAccess.CheckAccess();
         }
         public void OnDisabled()
         {

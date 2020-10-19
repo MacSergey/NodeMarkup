@@ -167,14 +167,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle()
-        {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
-                Buffer = Rule.Style.CopyLineStyle();
-        }
+        private void CopyStyle() => Buffer = Rule.Style.CopyLineStyle();
         private void PasteStyle()
         {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is LineStyle style)
+            if (Buffer is LineStyle style)
                 ApplyStyle(style);
         }
         private void FromChanged(ILinePartEdge from) => Rule.From = from;

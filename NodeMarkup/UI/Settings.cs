@@ -291,12 +291,12 @@ namespace NodeMarkup.UI
         #endregion
 
         #region ACCESS
-        private static void AddAccess(UIHelperBase helper)
-        {
-            UIHelper group = helper.AddGroup(Localize.Settings_EarlyAccess) as UIHelper;
-            if (group.self is UIComponent component)
-                component.AddUIComponent<EarlyAccessPanel>();
-        }
+        //private static void AddAccess(UIHelperBase helper)
+        //{
+        //    UIHelper group = helper.AddGroup(Localize.Settings_EarlyAccess) as UIHelper;
+        //    if (group.self is UIComponent component)
+        //        component.AddUIComponent<EarlyAccessPanel>();
+        //}
 
         #endregion
 

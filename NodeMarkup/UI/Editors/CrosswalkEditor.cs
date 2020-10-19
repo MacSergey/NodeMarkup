@@ -127,9 +127,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            if (!(style.Type == Manager.Style.StyleType.CrosswalkExistent || style.Type == Manager.Style.StyleType.CrosswalkZebra) && !EarlyAccess.CheckFunctionAccess(style.Type.Description()))
-                return;
-
             EditObject.Style = style.CopyCrosswalkStyle();
             Style.SelectedObject = EditObject.Style.Type;
 
@@ -142,25 +139,15 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle()
-        {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_CopyStyle))
-                Buffer = EditObject.Style.CopyCrosswalkStyle();
-        }
+        private void CopyStyle() =>  Buffer = EditObject.Style.CopyCrosswalkStyle();
         private void PasteStyle()
         {
-            if (EarlyAccess.CheckFunctionAccess(NodeMarkup.Localize.EarlyAccess_Function_PasteStyle) && Buffer is CrosswalkStyle style)
+            if (Buffer is CrosswalkStyle style)
                 ApplyStyle(style);
         }
 
         private void StyleChanged(Style.StyleType style)
         {
-            if (!(style == Manager.Style.StyleType.CrosswalkExistent || style == Manager.Style.StyleType.CrosswalkZebra) && !EarlyAccess.CheckFunctionAccess(style.Description()))
-            {
-                Style.SelectedObject = EditObject.Style.Type;
-                return;
-            }
-
             if (style == EditObject.Style.Type)
                 return;
 

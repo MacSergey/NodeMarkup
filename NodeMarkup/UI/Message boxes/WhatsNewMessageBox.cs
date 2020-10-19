@@ -29,7 +29,6 @@ namespace NodeMarkup.UI
             if (OnButtonClick?.Invoke() != false)
                 Cancel();
         }
-        protected virtual void GetEarlyAccessClick() => EarlyAccess.GetAccess();
 
         public void Init(Dictionary<Version, string> messages)
         {

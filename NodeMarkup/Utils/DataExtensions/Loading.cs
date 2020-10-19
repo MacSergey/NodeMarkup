@@ -27,7 +27,7 @@ namespace NodeMarkup
                     NodeMarkupTool.Create();
                     MarkupManager.Init();
 
-                    EarlyAccess.CheckAccess();
+                    //EarlyAccess.CheckAccess();
                     ShowWhatsNew();
                     ShowBetaWarning();
                     ShowLoadError();
