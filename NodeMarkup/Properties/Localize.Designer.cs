@@ -296,33 +296,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy style.
-        /// </summary>
-        public static string EarlyAccess_Function_CopyStyle {
-            get {
-                return ResourceManager.GetString("EarlyAccess_Function_CopyStyle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste style.
-        /// </summary>
-        public static string EarlyAccess_Function_PasteStyle {
-            get {
-                return ResourceManager.GetString("EarlyAccess_Function_PasteStyle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Perpendicular lines.
-        /// </summary>
-        public static string EarlyAccess_Function_PerpendicularLines {
-            get {
-                return ResourceManager.GetString("EarlyAccess_Function_PerpendicularLines", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на This function is unavailable.
         /// </summary>
         public static string EarlyAccess_FunctionUnavailableCaption {
