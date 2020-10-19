@@ -91,7 +91,7 @@ namespace NodeMarkup.Manager
         {
             Line.Start.Enter.TryGetPoint(Line.Start.Num, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
             Line.End.Enter.TryGetPoint(Line.End.Num, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);
-            EnterLine = new MarkupEnterLine(Markup, startPoint.Num < endPoint.Num ? startPoint : endPoint, startPoint.Num < endPoint.Num ? endPoint : startPoint);
+            EnterLine = new MarkupEnterLine(Markup, startPoint, endPoint);
         }
 
         protected void CrosswalkChanged() => Markup.Update(this, true);

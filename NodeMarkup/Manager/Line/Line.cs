@@ -351,7 +351,6 @@ namespace NodeMarkup.Manager
     {
         public override LineType Type => LineType.Crosswalk;
         public MarkupCrosswalk Crosswalk { get; set; }
-        public bool IsInvert => End.Num < Start.Num;
         public Func<StraightTrajectory> TrajectoryGetter { get; set; }
 
         public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false)

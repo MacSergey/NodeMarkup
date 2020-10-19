@@ -223,13 +223,13 @@ namespace NodeMarkup.Manager
         public static string XmlName2 { get; } = "L2";
         public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
         {
-            var firstId = (int)hash;
-            var secondId = (int)(hash >> 32);
+            var secondId = (int)hash;
+            var firstId = (int)(hash >> 32);
 
             if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
             {
-                pair = new MarkupPointPair(first, second);
-                invert = first.Id <= second.Id;
+                pair = new MarkupPointPair(second, first);
+                invert = second.Id <= first.Id;
                 return true;
             }
             else
@@ -250,10 +250,10 @@ namespace NodeMarkup.Manager
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {
-            First = first.Id > second.Id ? first : second;
-            Second = first.Id > second.Id ? second : first;
+            First = first.Id > second.Id ? second : first;
+            Second = first.Id > second.Id ? first : second;
 
-            Hash = (ulong)First.Id + (((ulong)Second.Id) << 32);
+            Hash = (((ulong)First.Id) << 32) + (ulong)Second.Id;
         }
 
         public string XmlSection => XmlName;

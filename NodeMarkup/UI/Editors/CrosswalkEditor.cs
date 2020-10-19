@@ -70,7 +70,7 @@ namespace NodeMarkup.UI.Editors
         }
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {
-            var point = border == BorderPosition.Right ^ EditObject.Line.IsInvert ? EditObject.Line.Start : EditObject.Line.End;
+            var point = border == BorderPosition.Right ? EditObject.Line.Start : EditObject.Line.End;
             if (point.Enter.TryGetPoint(point.Num, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
                 return enterPoint.Markup.GetPointLines(enterPoint).OfType<MarkupRegularLine>().ToArray();
             else
