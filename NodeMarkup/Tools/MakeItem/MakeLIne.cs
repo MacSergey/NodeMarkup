@@ -80,7 +80,7 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, Colors.White, 0.5f);
+                HoverPoint.Render(cameraInfo, Colors.Hover, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
 
@@ -117,12 +117,12 @@ namespace NodeMarkup.Tools
             var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, color, bezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color);
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Blue;
+            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Purple;
 
             var lineBezier = new Bezier3()
             {
@@ -131,7 +131,7 @@ namespace NodeMarkup.Tools
                 c = SelectPoint.Position,
                 d = HoverPoint.Position,
             };
-            NodeMarkupTool.RenderBezier(cameraInfo, color, lineBezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, lineBezier, color);
 
             var normal = SelectPoint.Direction.Turn90(false);
 
@@ -142,7 +142,7 @@ namespace NodeMarkup.Tools
             };
             normalBezier.b = normalBezier.a + normal / 2;
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
-            NodeMarkupTool.RenderBezier(cameraInfo, color, normalBezier, 2f, true);
+            NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, color, 2f, cut: true);
         }
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -158,7 +158,7 @@ namespace NodeMarkup.Tools
             bezier.c = v >= 0 ? bezier.c : -bezier.c;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Hover);
         }
     }
 }

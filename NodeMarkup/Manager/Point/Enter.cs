@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class Enter
+    public class Enter : IRender
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -149,7 +150,7 @@ namespace NodeMarkup.Manager
             AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
 
             CornerDir = DriveLanes.Length <= 1 ?
-                AbsoluteAngle.Direction():
+                AbsoluteAngle.Direction() :
                 (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
             NormalDir = DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero;
             NormalDir = IsStartSide ? -NormalDir : NormalDir;
@@ -180,6 +181,15 @@ namespace NodeMarkup.Manager
         }
 
         public override string ToString() => Id.ToString();
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        {
+            if (Position == null)
+                return;
+
+            var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidth, Position.Value + CornerDir * RoadHalfWidth).GetBezier();
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend);
+        }
     }
     public class DriveLane
     {

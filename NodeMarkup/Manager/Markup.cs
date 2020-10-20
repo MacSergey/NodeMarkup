@@ -14,9 +14,9 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IItem : IUpdate, IDeletable
+    public interface IRender
     {
-        void Render(RenderManager.CameraInfo cameraInfo, Color color);
+        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null);
     }
     public interface IDeletable
     {
@@ -33,6 +33,8 @@ namespace NodeMarkup.Manager
     {
         void Update(Type item, bool recalculate = false);
     }
+    public interface IItem : IUpdate, IDeletable, IRender { }
+
     public class Markup : IUpdate<MarkupPoint>, IUpdate<MarkupLine>, IUpdate<MarkupFiller>, IUpdate<MarkupCrosswalk>, IToXml
     {
         #region STATIC

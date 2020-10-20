@@ -88,9 +88,8 @@ namespace NodeMarkup.Tools
 
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(Contour.First) ? Colors.Green : Colors.White;
-            foreach (var trajectory in Contour.Trajectories)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory);
+            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(Contour.First) ? Colors.Green : Colors.Hover;
+            Contour.Render(cameraInfo, color);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -101,12 +100,12 @@ namespace NodeMarkup.Tools
             {
                 var linePart = Contour.GetFillerLine(Contour.Last, FillerPointsSelector.HoverPoint);
                 if (linePart.GetTrajectory(out ILineTrajectory trajectory))
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.Green, trajectory);
+                    trajectory.Render(cameraInfo, Colors.Green);
             }
             else
             {
                 var bezier = new Line3(Contour.Last.Position, NodeMarkupTool.MouseWorldPosition).GetBezier();
-                NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier);
+                NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Hover);
             }
         }
 

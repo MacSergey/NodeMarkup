@@ -85,7 +85,7 @@ namespace NodeMarkup.Tools
             if (IsHoverNode)
             {
                 var node = Utilities.GetNode(HoverNodeId);
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.Orange, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
+                NodeMarkupTool.RenderCircle(cameraInfo, node.m_position, Colors.Orange, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
         }
     }

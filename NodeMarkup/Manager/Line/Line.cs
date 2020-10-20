@@ -96,8 +96,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public void Render(RenderManager.CameraInfo cameraInfo, Color color) => Render(cameraInfo, color);
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width = 0.2f) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Trajectory.Render(cameraInfo, color, width, alphaBlend);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
 
         public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
@@ -384,7 +383,6 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color, float width) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
     }
     public class MarkupStopLine : MarkupStraightLine<StopLineStyle, StopLineStyle.StopLineType>
     {

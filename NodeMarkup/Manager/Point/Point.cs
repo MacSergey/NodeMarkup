@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -122,6 +123,10 @@ namespace NodeMarkup.Manager
 
         public Dependences GetDependences() => throw new NotSupportedException();
 
+        protected static float DefaultWidth => 1f;
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color ?? Color, width ?? DefaultWidth, alphaBlend);
+
         public enum PointType
         {
             Enter = 1,
@@ -183,6 +188,12 @@ namespace NodeMarkup.Manager
         {
             Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Mathf.Sin(Enter.CornerAndNormalAngle));
             Direction = SourcePoint.Direction;
+        }
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        {
+            var dir = Enter.CornerDir.Turn90(true) * Shift;
+            var bezier = new Line3(Position - dir, Position + dir).GetBezier();
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color ?? Color, width ?? DefaultWidth, alphaBlend);
         }
         public override string ToString() => $"{base.ToString()}C";
     }

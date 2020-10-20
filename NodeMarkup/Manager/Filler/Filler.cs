@@ -103,11 +103,7 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color color)
-        {
-            foreach (var trajectory in Contour.Trajectories)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory, 0.2f);
-        }
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Contour.Render(cameraInfo, color, width, alphaBlend);
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();
     }

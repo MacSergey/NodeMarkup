@@ -63,9 +63,10 @@ namespace NodeMarkup.Tools
             var hue = (byte)(toolMode.SelectedSource == this || toolMode.HoverSource == this ? 255 : 192);
             var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : NodeMarkupTool.MouseWorldPosition) : Position;
             var size = BoundsSize;
+            var color = Colors.GetOverlayColor(Num, 255, hue);
             while (size > 0)
             {
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.GetOverlayColor(Num, 255, hue), position, size);
+                NodeMarkupTool.RenderCircle(cameraInfo, position, color, size);
                 size -= 0.43f;
             }
         }
@@ -130,17 +131,17 @@ namespace NodeMarkup.Tools
         {
             if (toolMode.AvailableTargets.Contains(this))
             {
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Position, BoundsSize, false);
+                NodeMarkupTool.RenderCircle(cameraInfo, Position, width: BoundsSize, alphaBlend: false);
                 if (toolMode.IsSelectedSource)
                 {
                     if (toolMode.HoverTarget == this && toolMode.SelectedSource.Target != this)
-                        NodeMarkupTool.RenderCircle(cameraInfo, Colors.Green, Position, BoundsSize + 0.43f);
+                        NodeMarkupTool.RenderCircle(cameraInfo, Position, Colors.Green, BoundsSize + 0.43f);
                     else if (toolMode.HoverTarget != this && toolMode.SelectedSource.Target == this)
-                        NodeMarkupTool.RenderCircle(cameraInfo, Colors.Red, Position, BoundsSize + 0.43f);
+                        NodeMarkupTool.RenderCircle(cameraInfo, Position, Colors.Red, BoundsSize + 0.43f);
                 }
             }
             else
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.Gray, Position, BoundsSize, false);
+                NodeMarkupTool.RenderCircle(cameraInfo, Position, Colors.Gray, BoundsSize, false);
         }
         public abstract Vector3 GetSourcePosition(SourceType source);
     }
@@ -324,17 +325,17 @@ namespace NodeMarkup.Tools
             var deltaAngle = (RigthAngle - LeftAngle) / n;
 
             for (var i = 0; i < n; i += 1)
-                NodeMarkupTool.RenderBezier(cameraInfo, Color, GetBezier(LeftAngle + deltaAngle * i, LeftAngle + deltaAngle * (i + 1)), cut: true);
+                NodeMarkupTool.RenderBezier(cameraInfo, GetBezier(LeftAngle + deltaAngle * i, LeftAngle + deltaAngle * (i + 1)), Color, cut: true);
 
             var leftDir = LeftAngle.Direction();
-            NodeMarkupTool.RenderTrajectory(cameraInfo, Color, new StraightTrajectory(Centre + toolMode.Radius * leftDir, Centre + Radius * leftDir));
+            new StraightTrajectory(Centre + toolMode.Radius * leftDir, Centre + Radius * leftDir).Render(cameraInfo, Color);
             var rightDir = RigthAngle.Direction();
-            NodeMarkupTool.RenderTrajectory(cameraInfo, Color, new StraightTrajectory(Centre + toolMode.Radius * rightDir, Centre + Radius * rightDir));
+            new StraightTrajectory(Centre + toolMode.Radius * rightDir, Centre + Radius * rightDir).Render(cameraInfo, Color);
 
             if (Count <= 1)
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Centre + MiddleAngle.Direction() * Radius, TargetEnter.Size, false);
+                NodeMarkupTool.RenderCircle(cameraInfo, Centre + MiddleAngle.Direction() * Radius, width: TargetEnter.Size, alphaBlend: false);
             else
-                NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, GetBezier(MiddleAngle - HalfWidthAngle, MiddleAngle + HalfWidthAngle), TargetEnter.Size, alphaBlend: false);
+                NodeMarkupTool.RenderBezier(cameraInfo, GetBezier(MiddleAngle - HalfWidthAngle, MiddleAngle + HalfWidthAngle), width: TargetEnter.Size, alphaBlend: false);
         }
         private Bezier3 GetBezier(float aAngle, float dAngle)
         {
@@ -389,12 +390,12 @@ namespace NodeMarkup.Tools
         }
         public override void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourcePoint> toolMode)
         {
-            NodeMarkupTool.RenderTrajectory(cameraInfo, Color, Connect, Width, true);
+            Connect.Render(cameraInfo, Color, Width);
 
             if (Count <= 0)
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.White, Position, TargetPoint.Size, false);
+                NodeMarkupTool.RenderCircle(cameraInfo, Position, width: TargetPoint.Size, alphaBlend: false);
             else
-                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, Line, TargetPoint.Size, alphaBlend: false);
+                Line.Render(cameraInfo, width: TargetPoint.Size, alphaBlend: false);
 
         }
         public override Vector3 GetSourcePosition(SourcePoint source)

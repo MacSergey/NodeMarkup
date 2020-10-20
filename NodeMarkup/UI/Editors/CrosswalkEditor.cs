@@ -242,15 +242,12 @@ namespace NodeMarkup.UI.Editors
         public override void OnUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
         public override string GetToolInfo()
         {
-            switch (SelectBorderPanel.Position)
+            return SelectBorderPanel.Position switch
             {
-                case BorderPosition.Right:
-                    return Localize.CrosswalkEditor_InfoSelectRightBorder;
-                case BorderPosition.Left:
-                    return Localize.CrosswalkEditor_InfoSelectLeftBorder;
-                default:
-                    return null;
-            }
+                BorderPosition.Right => Localize.CrosswalkEditor_InfoSelectRightBorder,
+                BorderPosition.Left => Localize.CrosswalkEditor_InfoSelectLeftBorder,
+                _ => null,
+            };
         }
         public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
@@ -265,10 +262,10 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var borderLine in BorderLines)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.Red, borderLine.Trajectory);
+                borderLine.Render(cameraInfo, Colors.Red);
 
             if (IsHoverLine)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, HoverLine.Trajectory, 1f);
+                HoverLine.Render(cameraInfo, Colors.Hover, 1f);
         }
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
     }

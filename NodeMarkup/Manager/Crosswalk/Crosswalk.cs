@@ -63,7 +63,7 @@ namespace NodeMarkup.Manager
         public ILineTrajectory RightBorderTrajectory { get; private set; }
         public ILineTrajectory LeftBorderTrajectory { get; private set; }
 
-        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, new StraightTrajectory((StraightTrajectory)Line.Trajectory), RightBorderTrajectory, LeftBorderTrajectory };
+        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
 
         public float TotalWidth => Style.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
@@ -103,10 +103,10 @@ namespace NodeMarkup.Manager
                 Markup.Update(this);
         }
         public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
-        public void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             foreach (var trajectory in BorderTrajectories)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory);
+                trajectory.Render(cameraInfo, color, width, alphaBlend);
         }
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;

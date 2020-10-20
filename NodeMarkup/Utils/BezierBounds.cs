@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Utils
 {
-    public class BezierBounds
+    public class BezierBounds : IRender
     {
         private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
         public Bezier3 Bezier { get; }
@@ -35,5 +37,8 @@ namespace NodeMarkup.Utils
         }
         public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
         public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = true) 
+            => NodeMarkupTool.RenderBezier(cameraInfo, Bezier, color, width ?? Size, alphaBlend: alphaBlend);
     }
 }

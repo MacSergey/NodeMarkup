@@ -1,12 +1,14 @@
-﻿using NodeMarkup.Utils;
+﻿using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class FillerContour
+    public class FillerContour : IRender
     {
         public static IEnumerable<IFillerVertex> GetBeginCandidates(Markup markup)
         {
@@ -136,7 +138,8 @@ namespace NodeMarkup.Manager
                 if (maxT > tt && (isStrict ? tt > t : tt >= t))
                     maxT = tt;
             }
-            bool CheckEnter(byte num, byte start, byte end) => (start <= num && num <= end) || (end <= num && num <= start);
+
+            static bool CheckEnter(byte num, byte start, byte end) => (start <= num && num <= end) || (end <= num && num <= start);
 
             resultT = t;
             resultMinT = minT;
@@ -197,5 +200,10 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End);
         }
 
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        {
+            foreach (var trajectory in Trajectories)
+                trajectory.Render(cameraInfo, color, width, alphaBlend);
+        }
     }
 }

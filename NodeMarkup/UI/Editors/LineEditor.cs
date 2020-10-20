@@ -270,15 +270,12 @@ namespace NodeMarkup.UI.Editors
         public override void OnUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()
         {
-            switch (SelectPartEdgePanel.Position)
+            return SelectPartEdgePanel.Position switch
             {
-                case EdgePosition.Start:
-                    return Localize.LineEditor_InfoSelectFrom;
-                case EdgePosition.End:
-                    return Localize.LineEditor_InfoSelectTo;
-                default:
-                    return null;
-            }
+                EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
+                EdgePosition.End => Localize.LineEditor_InfoSelectTo,
+                _ => null,
+            };
         }
         public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
