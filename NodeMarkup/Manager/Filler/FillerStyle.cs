@@ -248,7 +248,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            angleProperty.Text = Localize.Filler_AngleBetween;
+            angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.CheckMin = true;
@@ -264,7 +264,7 @@ namespace NodeMarkup.Manager
         protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
             var fromProperty = parent.AddUIComponent<ChevronFromPropertyPanel>();
-            fromProperty.Text = Localize.Filler_StartingFrom;
+            fromProperty.Text = Localize.StyleOption_StartingFrom;
             fromProperty.Init();
             fromProperty.SelectedObject = chevronStyle.StartingFrom;
             fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom = value;
@@ -273,8 +273,8 @@ namespace NodeMarkup.Manager
         protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
             var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
-            var invertIndex = buttonsPanel.AddButton(Localize.Filler_Invert);
-            var turnIndex = buttonsPanel.AddButton(Localize.Filler_Turn);
+            var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
+            var turnIndex = buttonsPanel.AddButton(Localize.StyleOption_Turn);
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
 
@@ -529,10 +529,10 @@ namespace NodeMarkup.Manager
 
         public enum From
         {
-            [Description(nameof(Localize.Filler_Vertex))]
+            [Description(nameof(Localize.StyleOption_Vertex))]
             Vertex = 0,
 
-            [Description(nameof(Localize.Filler_Edge))]
+            [Description(nameof(Localize.StyleOption_Edge))]
             Edge = 1
         }
     }

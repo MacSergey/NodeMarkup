@@ -161,13 +161,13 @@ namespace NodeMarkup.Manager
 
         public enum LineType
         {
-            [Description(nameof(Localize.LineStyle_RegularGroup))]
+            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             Regular = Markup.Item.RegularLine,
 
-            [Description(nameof(Localize.LineStyle_StopGroup))]
+            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             Stop = Markup.Item.StopLine,
 
-            [Description(nameof(Localize.LineStyle_CrosswalkGroup))]
+            [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
             Crosswalk = Markup.Item.Crosswalk,
         }
         public override string ToString() => PointPair.ToString();

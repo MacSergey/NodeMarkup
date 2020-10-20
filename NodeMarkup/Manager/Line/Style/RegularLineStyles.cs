@@ -389,8 +389,8 @@ namespace NodeMarkup.Manager
         protected static BoolListPropertyPanel AddCenterSolidProperty(SolidAndDashedLineStyle solidAndDashedStyle, UIComponent parent)
         {
             var centerSolidProperty = parent.AddUIComponent<BoolListPropertyPanel>();
-            centerSolidProperty.Text = Localize.LineEditor_SolidInCenter;
-            centerSolidProperty.Init(Localize.LineEditor_SolidInCenterDisable, Localize.LineEditor_SolidInCenterEnable);
+            centerSolidProperty.Text = Localize.StyleOption_SolidInCenter;
+            centerSolidProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             centerSolidProperty.SelectedObject = solidAndDashedStyle.CenterSolid;
             centerSolidProperty.OnSelectObjectChanged += (value) => solidAndDashedStyle.CenterSolid = value;
             return centerSolidProperty;

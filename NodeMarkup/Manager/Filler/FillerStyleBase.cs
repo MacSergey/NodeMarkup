@@ -272,7 +272,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.Filler_MedianOffset;
+            offsetProperty.Text = Localize.StyleOption_MedianOffset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -286,7 +286,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            angleProperty.Text = Localize.Filler_Angle;
+            angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.CheckMin = true;
@@ -302,7 +302,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            stepProperty.Text = Localize.Filler_Step;
+            stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
             stepProperty.CheckMin = true;
@@ -316,7 +316,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.Filler_Offset;
+            offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;

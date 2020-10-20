@@ -172,7 +172,7 @@ namespace NodeMarkup.UI.Editors
         private void AddCopyButton(UIColorPicker popup)
         {
             var button = CreateButton(popup.component, 1, 3);
-            button.text = NodeMarkup.Localize.LineEditor_ColorCopy;
+            button.text = NodeMarkup.Localize.Editor_ColorCopy;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy(popup);
         }
 
@@ -180,13 +180,13 @@ namespace NodeMarkup.UI.Editors
         {
             var button = CreateButton(popup.component, 2, 3);
             button.isEnabled = Buffer.HasValue;
-            button.text = NodeMarkup.Localize.LineEditor_ColorPaste;
+            button.text = NodeMarkup.Localize.Editor_ColorPaste;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste(popup);
         }
         private void AddSetDefaultButton(UIColorPicker popup)
         {
             var button = CreateButton(popup.component, 3, 3);
-            button.text = NodeMarkup.Localize.LineEditor_ColorDefault;
+            button.text = NodeMarkup.Localize.Editor_ColorDefault;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Manager.Style.DefaultColor;
         }
 

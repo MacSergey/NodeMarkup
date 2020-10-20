@@ -583,10 +583,10 @@ namespace NodeMarkup.Manager
 
         public enum Item
         {
-            [Description(nameof(Localize.LineStyle_RegularGroup))]
+            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             RegularLine = 0x100,
 
-            [Description(nameof(Localize.LineStyle_StopGroup))]
+            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             StopLine = 0x200,
 
             [Description(nameof(Localize.FillerStyle_Group))]

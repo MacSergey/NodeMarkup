@@ -139,8 +139,8 @@ namespace NodeMarkup.UI.Editors
         {
             SaveTemplate = Content.AddButton("AddTemplate", NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick);
             ApplyTemplate = Content.AddButton("ApplyTemplate", NodeMarkup.Localize.HeaderPanel_ApplyTemplate, ApplyTemplateClick);
-            Copy = Content.AddButton("Copy", NodeMarkup.Localize.LineEditor_StyleCopy, CopyClick);
-            Paste = Content.AddButton("Paste", NodeMarkup.Localize.LineEditor_StylePaste, PasteClick);
+            Copy = Content.AddButton("Copy", NodeMarkup.Localize.HeaderPanel_StyleCopy, CopyClick);
+            Paste = Content.AddButton("Paste", NodeMarkup.Localize.HeaderPanel_StylePaste, PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, bool isDeletable = true)

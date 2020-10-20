@@ -75,7 +75,7 @@ namespace NodeMarkup.UI.Editors
         private void AddFromProperty()
         {
             From = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            From.Text = NodeMarkup.Localize.LineEditor_From;
+            From.Text = NodeMarkup.Localize.LineRule_From;
             From.Position = EdgePosition.Start;
             From.Init();
             From.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
@@ -86,7 +86,7 @@ namespace NodeMarkup.UI.Editors
         private void AddToProperty()
         {
             To = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            To.Text = NodeMarkup.Localize.LineEditor_To;
+            To.Text = NodeMarkup.Localize.LineRule_To;
             To.Position = EdgePosition.End;
             To.Init();
             To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
@@ -124,7 +124,7 @@ namespace NodeMarkup.UI.Editors
                     return;
             }
 
-            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = Rule.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;

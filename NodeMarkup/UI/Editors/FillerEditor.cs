@@ -49,7 +49,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = SettingsPanel.AddUIComponent<FillerStylePropertyPanel>();
-            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;

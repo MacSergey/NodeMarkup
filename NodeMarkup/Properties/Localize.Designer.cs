@@ -125,51 +125,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Line width.
-        /// </summary>
-        public static string CrosswalkEditor_LineWidth {
-            get {
-                return ResourceManager.GetString("CrosswalkEditor_LineWidth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset after.
-        /// </summary>
-        public static string CrosswalkEditor_OffsetAfter {
-            get {
-                return ResourceManager.GetString("CrosswalkEditor_OffsetAfter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset before.
-        /// </summary>
-        public static string CrosswalkEditor_OffsetBefore {
-            get {
-                return ResourceManager.GetString("CrosswalkEditor_OffsetBefore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset between.
-        /// </summary>
-        public static string CrosswalkEditor_OffsetBetween {
-            get {
-                return ResourceManager.GetString("CrosswalkEditor_OffsetBetween", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Parallel to lanes.
-        /// </summary>
-        public static string CrosswalkEditor_ParallelToLanes {
-            get {
-                return ResourceManager.GetString("CrosswalkEditor_ParallelToLanes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Right border.
         /// </summary>
         public static string CrosswalkEditor_RightBorder {
@@ -496,102 +451,48 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string Editor_ColorCopy {
+            get {
+                return ResourceManager.GetString("Editor_ColorCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Default.
+        /// </summary>
+        public static string Editor_ColorDefault {
+            get {
+                return ResourceManager.GetString("Editor_ColorDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste.
+        /// </summary>
+        public static string Editor_ColorPaste {
+            get {
+                return ResourceManager.GetString("Editor_ColorPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Style.
+        /// </summary>
+        public static string Editor_Style {
+            get {
+                return ResourceManager.GetString("Editor_Style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Scroll the wheel to change
         ///Shift X10, Ctrl X0.1.
         /// </summary>
         public static string FieldPanel_ScrollWheel {
             get {
                 return ResourceManager.GetString("FieldPanel_ScrollWheel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Angle.
-        /// </summary>
-        public static string Filler_Angle {
-            get {
-                return ResourceManager.GetString("Filler_Angle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Angle between.
-        /// </summary>
-        public static string Filler_AngleBetween {
-            get {
-                return ResourceManager.GetString("Filler_AngleBetween", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Edge.
-        /// </summary>
-        public static string Filler_Edge {
-            get {
-                return ResourceManager.GetString("Filler_Edge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Invert.
-        /// </summary>
-        public static string Filler_Invert {
-            get {
-                return ResourceManager.GetString("Filler_Invert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset from median.
-        /// </summary>
-        public static string Filler_MedianOffset {
-            get {
-                return ResourceManager.GetString("Filler_MedianOffset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset from lines.
-        /// </summary>
-        public static string Filler_Offset {
-            get {
-                return ResourceManager.GetString("Filler_Offset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Starting from.
-        /// </summary>
-        public static string Filler_StartingFrom {
-            get {
-                return ResourceManager.GetString("Filler_StartingFrom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Step.
-        /// </summary>
-        public static string Filler_Step {
-            get {
-                return ResourceManager.GetString("Filler_Step", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Turn.
-        /// </summary>
-        public static string Filler_Turn {
-            get {
-                return ResourceManager.GetString("Filler_Turn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Vertex.
-        /// </summary>
-        public static string Filler_Vertex {
-            get {
-                return ResourceManager.GetString("Filler_Vertex", resourceCulture);
             }
         }
         
@@ -723,6 +624,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy.
+        /// </summary>
+        public static string HeaderPanel_StyleCopy {
+            get {
+                return ResourceManager.GetString("HeaderPanel_StyleCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste.
+        /// </summary>
+        public static string HeaderPanel_StylePaste {
+            get {
+                return ResourceManager.GetString("HeaderPanel_StylePaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Unset as default.
         /// </summary>
         public static string HeaderPanel_UnsetAsDefault {
@@ -737,87 +656,6 @@ namespace NodeMarkup {
         public static string LineEditor_AddRuleButton {
             get {
                 return ResourceManager.GetString("LineEditor_AddRuleButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Alignment.
-        /// </summary>
-        public static string LineEditor_Alignment {
-            get {
-                return ResourceManager.GetString("LineEditor_Alignment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Center.
-        /// </summary>
-        public static string LineEditor_AlignmentCenter {
-            get {
-                return ResourceManager.GetString("LineEditor_AlignmentCenter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Left.
-        /// </summary>
-        public static string LineEditor_AlignmentLeft {
-            get {
-                return ResourceManager.GetString("LineEditor_AlignmentLeft", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Right.
-        /// </summary>
-        public static string LineEditor_AlignmentRight {
-            get {
-                return ResourceManager.GetString("LineEditor_AlignmentRight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Color.
-        /// </summary>
-        public static string LineEditor_Color {
-            get {
-                return ResourceManager.GetString("LineEditor_Color", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy.
-        /// </summary>
-        public static string LineEditor_ColorCopy {
-            get {
-                return ResourceManager.GetString("LineEditor_ColorCopy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Default.
-        /// </summary>
-        public static string LineEditor_ColorDefault {
-            get {
-                return ResourceManager.GetString("LineEditor_ColorDefault", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste.
-        /// </summary>
-        public static string LineEditor_ColorPaste {
-            get {
-                return ResourceManager.GetString("LineEditor_ColorPaste", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Dash length.
-        /// </summary>
-        public static string LineEditor_DashedLength {
-            get {
-                return ResourceManager.GetString("LineEditor_DashedLength", resourceCulture);
             }
         }
         
@@ -868,15 +706,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на From.
-        /// </summary>
-        public static string LineEditor_From {
-            get {
-                return ResourceManager.GetString("LineEditor_From", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Select the rule&apos;s &quot;From&quot; point.
         /// </summary>
         public static string LineEditor_InfoSelectFrom {
@@ -895,38 +724,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Invert.
-        /// </summary>
-        public static string LineEditor_Invert {
-            get {
-                return ResourceManager.GetString("LineEditor_Invert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Line count.
-        /// </summary>
-        public static string LineEditor_LineCount {
-            get {
-                return ResourceManager.GetString("LineEditor_LineCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Lines.
         /// </summary>
         public static string LineEditor_Lines {
             get {
                 return ResourceManager.GetString("LineEditor_Lines", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Offset.
-        /// </summary>
-        public static string LineEditor_Offset {
-            get {
-                return ResourceManager.GetString("LineEditor_Offset", resourceCulture);
             }
         }
         
@@ -941,119 +743,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Triangle base.
+        ///   Ищет локализованную строку, похожую на From.
         /// </summary>
-        public static string LineEditor_SharkToothBase {
+        public static string LineRule_From {
             get {
-                return ResourceManager.GetString("LineEditor_SharkToothBase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Triangle height.
-        /// </summary>
-        public static string LineEditor_SharkToothHeight {
-            get {
-                return ResourceManager.GetString("LineEditor_SharkToothHeight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Space between.
-        /// </summary>
-        public static string LineEditor_SharkToothSpace {
-            get {
-                return ResourceManager.GetString("LineEditor_SharkToothSpace", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Solid in center.
-        /// </summary>
-        public static string LineEditor_SolidInCenter {
-            get {
-                return ResourceManager.GetString("LineEditor_SolidInCenter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на No.
-        /// </summary>
-        public static string LineEditor_SolidInCenterDisable {
-            get {
-                return ResourceManager.GetString("LineEditor_SolidInCenterDisable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Yes.
-        /// </summary>
-        public static string LineEditor_SolidInCenterEnable {
-            get {
-                return ResourceManager.GetString("LineEditor_SolidInCenterEnable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Space length.
-        /// </summary>
-        public static string LineEditor_SpaceLength {
-            get {
-                return ResourceManager.GetString("LineEditor_SpaceLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Square side.
-        /// </summary>
-        public static string LineEditor_SquareSide {
-            get {
-                return ResourceManager.GetString("LineEditor_SquareSide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Style.
-        /// </summary>
-        public static string LineEditor_Style {
-            get {
-                return ResourceManager.GetString("LineEditor_Style", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy.
-        /// </summary>
-        public static string LineEditor_StyleCopy {
-            get {
-                return ResourceManager.GetString("LineEditor_StyleCopy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste.
-        /// </summary>
-        public static string LineEditor_StylePaste {
-            get {
-                return ResourceManager.GetString("LineEditor_StylePaste", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на To.
-        /// </summary>
-        public static string LineEditor_To {
-            get {
-                return ResourceManager.GetString("LineEditor_To", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Width.
-        /// </summary>
-        public static string LineEditor_Width {
-            get {
-                return ResourceManager.GetString("LineEditor_Width", resourceCulture);
+                return ResourceManager.GetString("LineRule_From", resourceCulture);
             }
         }
         
@@ -1094,11 +788,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на To.
+        /// </summary>
+        public static string LineRule_To {
+            get {
+                return ResourceManager.GetString("LineRule_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Crosswalk lines.
         /// </summary>
-        public static string LineStyle_CrosswalkGroup {
+        public static string LineStyle_CrosswalkLinesGroup {
             get {
-                return ResourceManager.GetString("LineStyle_CrosswalkGroup", resourceCulture);
+                return ResourceManager.GetString("LineStyle_CrosswalkLinesGroup", resourceCulture);
             }
         }
         
@@ -1132,9 +835,9 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Regular lines.
         /// </summary>
-        public static string LineStyle_RegularGroup {
+        public static string LineStyle_RegularLinesGroup {
             get {
-                return ResourceManager.GetString("LineStyle_RegularGroup", resourceCulture);
+                return ResourceManager.GetString("LineStyle_RegularLinesGroup", resourceCulture);
             }
         }
         
@@ -1162,15 +865,6 @@ namespace NodeMarkup {
         public static string LineStyle_SolidAndDashed {
             get {
                 return ResourceManager.GetString("LineStyle_SolidAndDashed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Solid.
-        /// </summary>
-        public static string LineStyle_Stop {
-            get {
-                return ResourceManager.GetString("LineStyle_Stop", resourceCulture);
             }
         }
         
@@ -1204,9 +898,9 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Stop lines.
         /// </summary>
-        public static string LineStyle_StopGroup {
+        public static string LineStyle_StopLinesGroup {
             get {
-                return ResourceManager.GetString("LineStyle_StopGroup", resourceCulture);
+                return ResourceManager.GetString("LineStyle_StopLinesGroup", resourceCulture);
             }
         }
         
@@ -1216,6 +910,15 @@ namespace NodeMarkup {
         public static string LineStyle_StopSharkTeeth {
             get {
                 return ResourceManager.GetString("LineStyle_StopSharkTeeth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid.
+        /// </summary>
+        public static string LineStyle_StopSolid {
+            get {
+                return ResourceManager.GetString("LineStyle_StopSolid", resourceCulture);
             }
         }
         
@@ -2248,6 +1951,294 @@ namespace NodeMarkup {
         public static string Settings_Troubleshooting {
             get {
                 return ResourceManager.GetString("Settings_Troubleshooting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Alignment.
+        /// </summary>
+        public static string StyleOption_Alignment {
+            get {
+                return ResourceManager.GetString("StyleOption_Alignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Center.
+        /// </summary>
+        public static string StyleOption_AlignmentCenter {
+            get {
+                return ResourceManager.GetString("StyleOption_AlignmentCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left.
+        /// </summary>
+        public static string StyleOption_AlignmentLeft {
+            get {
+                return ResourceManager.GetString("StyleOption_AlignmentLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right.
+        /// </summary>
+        public static string StyleOption_AlignmentRight {
+            get {
+                return ResourceManager.GetString("StyleOption_AlignmentRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle.
+        /// </summary>
+        public static string StyleOption_Angle {
+            get {
+                return ResourceManager.GetString("StyleOption_Angle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle between.
+        /// </summary>
+        public static string StyleOption_AngleBetween {
+            get {
+                return ResourceManager.GetString("StyleOption_AngleBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Color.
+        /// </summary>
+        public static string StyleOption_Color {
+            get {
+                return ResourceManager.GetString("StyleOption_Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dash length.
+        /// </summary>
+        public static string StyleOption_DashedLength {
+            get {
+                return ResourceManager.GetString("StyleOption_DashedLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edge.
+        /// </summary>
+        public static string StyleOption_Edge {
+            get {
+                return ResourceManager.GetString("StyleOption_Edge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert.
+        /// </summary>
+        public static string StyleOption_Invert {
+            get {
+                return ResourceManager.GetString("StyleOption_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Line count.
+        /// </summary>
+        public static string StyleOption_LineCount {
+            get {
+                return ResourceManager.GetString("StyleOption_LineCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset from lines.
+        /// </summary>
+        public static string StyleOption_LinesOffset {
+            get {
+                return ResourceManager.GetString("StyleOption_LinesOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Line width.
+        /// </summary>
+        public static string StyleOption_LineWidth {
+            get {
+                return ResourceManager.GetString("StyleOption_LineWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset from median.
+        /// </summary>
+        public static string StyleOption_MedianOffset {
+            get {
+                return ResourceManager.GetString("StyleOption_MedianOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No.
+        /// </summary>
+        public static string StyleOption_No {
+            get {
+                return ResourceManager.GetString("StyleOption_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset.
+        /// </summary>
+        public static string StyleOption_Offset {
+            get {
+                return ResourceManager.GetString("StyleOption_Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset after.
+        /// </summary>
+        public static string StyleOption_OffsetAfter {
+            get {
+                return ResourceManager.GetString("StyleOption_OffsetAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset before.
+        /// </summary>
+        public static string StyleOption_OffsetBefore {
+            get {
+                return ResourceManager.GetString("StyleOption_OffsetBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset between.
+        /// </summary>
+        public static string StyleOption_OffsetBetween {
+            get {
+                return ResourceManager.GetString("StyleOption_OffsetBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Parallel to lanes.
+        /// </summary>
+        public static string StyleOption_ParallelToLanes {
+            get {
+                return ResourceManager.GetString("StyleOption_ParallelToLanes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Triangle base.
+        /// </summary>
+        public static string StyleOption_SharkToothBase {
+            get {
+                return ResourceManager.GetString("StyleOption_SharkToothBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Triangle height.
+        /// </summary>
+        public static string StyleOption_SharkToothHeight {
+            get {
+                return ResourceManager.GetString("StyleOption_SharkToothHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Space between.
+        /// </summary>
+        public static string StyleOption_SharkToothSpace {
+            get {
+                return ResourceManager.GetString("StyleOption_SharkToothSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Solid in center.
+        /// </summary>
+        public static string StyleOption_SolidInCenter {
+            get {
+                return ResourceManager.GetString("StyleOption_SolidInCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Space length.
+        /// </summary>
+        public static string StyleOption_SpaceLength {
+            get {
+                return ResourceManager.GetString("StyleOption_SpaceLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Square side.
+        /// </summary>
+        public static string StyleOption_SquareSide {
+            get {
+                return ResourceManager.GetString("StyleOption_SquareSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Starting from.
+        /// </summary>
+        public static string StyleOption_StartingFrom {
+            get {
+                return ResourceManager.GetString("StyleOption_StartingFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Step.
+        /// </summary>
+        public static string StyleOption_Step {
+            get {
+                return ResourceManager.GetString("StyleOption_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Turn.
+        /// </summary>
+        public static string StyleOption_Turn {
+            get {
+                return ResourceManager.GetString("StyleOption_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Vertex.
+        /// </summary>
+        public static string StyleOption_Vertex {
+            get {
+                return ResourceManager.GetString("StyleOption_Vertex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width.
+        /// </summary>
+        public static string StyleOption_Width {
+            get {
+                return ResourceManager.GetString("StyleOption_Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Yes.
+        /// </summary>
+        public static string StyleOption_Yes {
+            get {
+                return ResourceManager.GetString("StyleOption_Yes", resourceCulture);
             }
         }
         

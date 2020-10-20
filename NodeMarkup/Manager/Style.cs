@@ -148,7 +148,7 @@ namespace NodeMarkup.Manager
         protected ColorPropertyPanel AddColorProperty(UIComponent parent)
         {
             var colorProperty = parent.AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = Localize.LineEditor_Color;
+            colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.Init();
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color = color;
@@ -157,7 +157,7 @@ namespace NodeMarkup.Manager
         protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = Localize.LineEditor_Width;
+            widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
             widthProperty.CheckMin = true;
@@ -172,7 +172,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            dashLengthProperty.Text = Localize.LineEditor_DashedLength;
+            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
             dashLengthProperty.CheckMin = true;
@@ -186,7 +186,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
+            spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
             spaceLengthProperty.CheckMin = true;
@@ -200,7 +200,7 @@ namespace NodeMarkup.Manager
         protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
         {
             var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
-            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
+            var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
 
@@ -226,7 +226,7 @@ namespace NodeMarkup.Manager
             ItemMask = 0xFF,
             GroupMask = ~ItemMask,
 
-            [Description(nameof(Localize.LineStyle_RegularGroup))]
+            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             RegularLine = Markup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
@@ -248,10 +248,10 @@ namespace NodeMarkup.Manager
             LineSharkTeeth,
 
 
-            [Description(nameof(Localize.LineStyle_StopGroup))]
+            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             StopLine = Markup.Item.StopLine,
 
-            [Description(nameof(Localize.LineStyle_Stop))]
+            [Description(nameof(Localize.LineStyle_StopSolid))]
             StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
