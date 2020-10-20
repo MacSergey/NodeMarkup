@@ -833,6 +833,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Empty.
+        /// </summary>
+        public static string LineStyle_Empty {
+            get {
+                return ResourceManager.GetString("LineStyle_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Regular lines.
         /// </summary>
         public static string LineStyle_RegularLinesGroup {

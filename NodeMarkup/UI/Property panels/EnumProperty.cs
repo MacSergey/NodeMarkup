@@ -36,7 +36,10 @@ namespace NodeMarkup.UI.Editors
         protected override void FillItems()
         {
             foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<Style.StyleType>())
-                Selector.AddItem(value, value.Description());
+            {
+                if (value.IsVisible())
+                    Selector.AddItem(value, value.Description());
+            }
         }
     }
     public class RegularStylePropertyPanel : StylePropertyPanel<RegularLineStyle.RegularLineType> { }

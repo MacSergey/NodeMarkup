@@ -82,17 +82,7 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetAfterProperty(this, parent, onHover, onLeave));
             return components;
         }
-
-        protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
-        {
-            var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
-            parallelProperty.Init();
-            parallelProperty.Value = parallelStyle.Parallel;
-            parallelProperty.OnValueChanged += (bool value) => parallelStyle.Parallel = value;
-            return parallelProperty;
-        }
-        protected static BoolListPropertyPanel AddCenterSolidProperty(IParallel parallelStyle, UIComponent parent)
+        protected static BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
             var parallelProperty = parent.AddUIComponent<BoolListPropertyPanel>();
             parallelProperty.Text = Localize.StyleOption_ParallelToLanes;

@@ -247,6 +247,10 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
+            [Description(nameof(Localize.LineStyle_Empty))]
+            [NotVisible]
+            EmptyLine,
+
 
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             StopLine = Markup.Item.StopLine,

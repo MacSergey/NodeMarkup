@@ -22,7 +22,7 @@ namespace NodeMarkup.Tools
         {
             HoverPoint = null;
             SelectPoint = null;
-            TargetPoints.Clear();
+            SetTarget();
         }
 
         public override void OnUpdate()
@@ -106,7 +106,7 @@ namespace NodeMarkup.Tools
         public override void OnPrimaryMouseClicked(Event e)
         {
             SelectPoint = HoverPoint;
-            SetTarget(SelectPoint.Type, SelectPoint);
+            SetTarget(SelectPoint);
         }
         public override void OnSecondaryMouseClicked()
         {
@@ -124,112 +124,14 @@ namespace NodeMarkup.Tools
 
         #region SET TARGET
 
-        protected void SetTarget(MarkupPoint.PointType pointType = MarkupPoint.PointType.Enter, MarkupPoint ignore = null)
+        protected void SetTarget(MarkupPoint ignore = null)
         {
             TargetPoints.Clear();
-            foreach (var enter in Tool.Markup.Enters)
-            {
-                if ((pointType & MarkupPoint.PointType.Enter) == MarkupPoint.PointType.Enter)
-                    SetEnterTarget(enter, ignore);
-
-                if ((pointType & MarkupPoint.PointType.Crosswalk) == MarkupPoint.PointType.Crosswalk)
-                    SetCrosswalkTarget(enter, ignore);
-            }
+            foreach(var enter in Tool.Markup.Enters)
+                TargetPoints.AddRange(GetTarget(enter, ignore));
         }
-        private void SetEnterTarget(Enter enter, MarkupPoint ignore)
-        {
-            if (ignore == null || ignore.Enter != enter)
-            {
-                TargetPoints.AddRange(enter.Points.Cast<MarkupPoint>());
-                return;
-            }
-
-            var allow = enter.Points.Select(i => 1).ToArray();
-            var ignoreIdx = ignore.Num - 1;
-            var leftIdx = ignoreIdx;
-            var rightIdx = ignoreIdx;
-
-            foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Stop && l.Start.Enter == enter))
-            {
-                var from = Math.Min(line.Start.Num, line.End.Num) - 1;
-                var to = Math.Max(line.Start.Num, line.End.Num) - 1;
-                if (from < ignore.Num - 1 && ignore.Num - 1 < to)
-                    return;
-                allow[from] = 2;
-                allow[to] = 2;
-
-                for (var i = from + 1; i <= to - 1; i += 1)
-                    allow[i] = 0;
-
-                if (line.ContainsPoint(ignore))
-                {
-                    var otherIdx = line.PointPair.GetOther(ignore).Num - 1;
-                    if (otherIdx < ignoreIdx)
-                        leftIdx = otherIdx;
-                    else if (otherIdx > ignoreIdx)
-                        rightIdx = otherIdx;
-                }
-            }
-
-            SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
-            SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
-            allow[ignoreIdx] = 0;
-
-            foreach (var point in enter.Points)
-            {
-                if (allow[point.Num - 1] != 0)
-                    TargetPoints.Add(point);
-            }
-        }
-        private void SetCrosswalkTarget(Enter enter, MarkupPoint ignore)
-        {
-            if (ignore != null && ignore.Enter != enter)
-                return;
-
-            var allow = enter.Crosswalks.Select(i => 1).ToArray();
-            var bridge = new Dictionary<MarkupPoint, int>();
-            foreach (var crosswalk in enter.Crosswalks)
-                bridge.Add(crosswalk, bridge.Count);
-
-            var isIgnore = ignore?.Enter == enter;
-            var ignoreIdx = isIgnore ? bridge[ignore] : 0;
-
-            var leftIdx = ignoreIdx;
-            var rightIdx = ignoreIdx;
-
-            foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Crosswalk && l.Start.Enter == enter))
-            {
-                var from = Math.Min(bridge[line.Start], bridge[line.End]);
-                var to = Math.Max(bridge[line.Start], bridge[line.End]);
-                allow[from] = 2;
-                allow[to] = 2;
-                for (var i = from + 1; i <= to - 1; i += 1)
-                    allow[i] = 0;
-
-                if (isIgnore && line.ContainsPoint(ignore))
-                {
-                    var otherIdx = bridge[line.PointPair.GetOther(ignore)];
-                    if (otherIdx < ignoreIdx)
-                        leftIdx = otherIdx;
-                    else if (otherIdx > ignoreIdx)
-                        rightIdx = otherIdx;
-                }
-            }
-
-            if (isIgnore)
-            {
-                SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
-                SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
-                allow[ignoreIdx] = 0;
-            }
-
-            foreach (var point in bridge)
-            {
-                if (allow[point.Value] != 0)
-                    TargetPoints.Add(point.Key);
-            }
-        }
-        private int Find(int[] allow, int idx, int sign)
+        protected abstract IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore);
+        protected int Find(int[] allow, int idx, int sign)
         {
             do
                 idx += sign;
@@ -237,7 +139,7 @@ namespace NodeMarkup.Tools
 
             return idx;
         }
-        private void SetNotAllow(int[] allow, int idx, int sign)
+        protected void SetNotAllow(int[] allow, int idx, int sign)
         {
             idx += sign;
             while (idx >= 0 && idx < allow.Length)

@@ -13,11 +13,6 @@ namespace NodeMarkup.Tools
     {
         public override ToolModeType Type => ToolModeType.MakeLine;
 
-        protected override void Reset(BaseToolMode prevMode)
-        {
-            base.Reset(prevMode);
-            SetTarget();
-        }
         public override string GetToolInfo()
         {
             if (IsSelectPoint)
@@ -41,7 +36,6 @@ namespace NodeMarkup.Tools
             else if (NodeMarkupTool.OnlyShiftIsPressed)
             {
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
-                SetTarget(MarkupPoint.PointType.Crosswalk);
                 return true;
             }
             else
@@ -77,6 +71,51 @@ namespace NodeMarkup.Tools
                 SetTarget();
             }
         }
+        protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
+        {
+            var allow = enter.Points.Select(i => 1).ToArray();
+
+            if (ignore != null && ignore.Enter == enter)
+            {
+                var ignoreIdx = ignore.Num - 1;
+                var leftIdx = ignoreIdx;
+                var rightIdx = ignoreIdx;
+
+                foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Stop && l.Start.Enter == enter))
+                {
+                    var from = Math.Min(line.Start.Num, line.End.Num) - 1;
+                    var to = Math.Max(line.Start.Num, line.End.Num) - 1;
+                    if (from < ignore.Num - 1 && ignore.Num - 1 < to)
+                        yield break;
+
+                    allow[from] = 2;
+                    allow[to] = 2;
+
+                    for (var i = from + 1; i <= to - 1; i += 1)
+                        allow[i] = 0;
+
+                    if (line.ContainsPoint(ignore))
+                    {
+                        var otherIdx = line.PointPair.GetOther(ignore).Num - 1;
+                        if (otherIdx < ignoreIdx)
+                            leftIdx = otherIdx;
+                        else if (otherIdx > ignoreIdx)
+                            rightIdx = otherIdx;
+                    }
+                }
+
+                SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
+                SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
+                allow[ignoreIdx] = 0;
+            }
+
+            foreach (var point in enter.Points)
+            {
+                if (allow[point.Num - 1] != 0)
+                    yield return point;
+            }
+        }
+
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)

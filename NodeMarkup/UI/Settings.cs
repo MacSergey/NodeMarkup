@@ -253,7 +253,7 @@ namespace NodeMarkup.UI
             UITextField distanceField = null;
             distanceField = group.AddTextfield(Localize.Settings_RenderDistance, RenderDistance.ToString(), OnDistanceChanged, OnDistanceSubmitted) as UITextField;
 
-            void OnDistanceChanged(string distance) { }
+            static void OnDistanceChanged(string distance) { }
             void OnDistanceSubmitted(string text)
             {
                 if (float.TryParse(text, out float distance))
@@ -274,19 +274,19 @@ namespace NodeMarkup.UI
         {
             var showCheckBox = group.AddCheckbox(Localize.Settings_ShowTooltips, ShowToolTip, OnShowToolTipsChanged) as UICheckBox;
 
-            void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
+            static void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
         }
         private static void AddQuickRuleSetup(UIHelper group)
         {
             var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetup, OnQuickRuleSetupChanged) as UICheckBox;
 
-            void OnQuickRuleSetupChanged(bool request) => QuickRuleSetup.value = request;
+            static void OnQuickRuleSetupChanged(bool request) => QuickRuleSetup.value = request;
         }
         private static void AddGroupLines(UIHelper group)
         {
             var groupLinesCheckBox = group.AddCheckbox(Localize.Settings_GroupLines, GroupLines, OnGroupLinesChanged) as UICheckBox;
 
-            void OnGroupLinesChanged(bool groupLines) => GroupLines.value = groupLines;
+            static void OnGroupLinesChanged(bool groupLines) => GroupLines.value = groupLines;
         }
         #endregion
 

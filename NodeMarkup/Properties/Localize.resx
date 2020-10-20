@@ -1098,4 +1098,7 @@ Do you want to apply the marking manually?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>This action cannot be undone.</value>
   </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
 </root>

@@ -16,7 +16,15 @@ namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : GroupedEditor<LineItem, MarkupLine, LineIcon, LineGroup, MarkupLine.LineType>
     {
-        public static Color WhiteAlpha { get; } = new Color(1, 1, 1, 0.5f);
+        public static Color HoverAlpha
+        {
+            get
+            {
+                var color = Colors.Hover;
+                color.a = 128;
+                return color;
+            }
+        }
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
         public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
         protected override bool GroupingEnabled => Settings.GroupLines.value;
@@ -195,8 +203,10 @@ namespace NodeMarkup.UI.Editors
             {
                 if (IsHoverItem)
                     HoverItem.Object.Render(cameraInfo, Colors.Hover, 2f);
+
                 if (IsHoverRulePanel)
-                    HoverRulePanel.Rule.Render(cameraInfo, WhiteAlpha, 2f);
+                    HoverRulePanel.Rule.Render(cameraInfo, HoverAlpha, 2f);
+
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is SupportPoint supportPoint)
                     supportPoint.Render(cameraInfo, Colors.Hover);
             }

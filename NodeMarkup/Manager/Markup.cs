@@ -308,24 +308,7 @@ namespace NodeMarkup.Manager
         #region LINES
 
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        //public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
-        //{
-        //    if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
-        //    {
-        //        RemoveConnect(line);
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
-        //            return null;
 
-        //        line = MarkupLine.FromStyle(this, pointPair, style);
-        //        LinesDictionary[pointPair.Hash] = line;
-        //        NeedRecalculateBatches = true;
-        //        return line;
-        //    }
-        //}
         public MarkupLine AddConnection(MarkupPointPair pointPair, Style.StyleType style)
         {
             var line = MarkupLine.FromStyle(this, pointPair, style);

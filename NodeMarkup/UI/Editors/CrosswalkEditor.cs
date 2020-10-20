@@ -65,8 +65,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void FillBorders()
         {
-            FillBorder(RightBorder, RightBorgerChanged, GetBorderLines(BorderPosition.Right), EditObject.RightBorder);
             FillBorder(LeftBorder, LeftBorgerChanged, GetBorderLines(BorderPosition.Left), EditObject.LeftBorder);
+            FillBorder(RightBorder, RightBorgerChanged, GetBorderLines(BorderPosition.Right), EditObject.RightBorder);
         }
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {

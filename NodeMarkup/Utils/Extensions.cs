@@ -65,6 +65,8 @@ namespace NodeMarkup.Utils
             var description = value.GetAttr<DescriptionAttribute, T>()?.Description ?? value.ToString();
             return Localize.ResourceManager.GetString(description, Localize.Culture);
         }
+        public static bool IsVisible<T>(this T value) where T : Enum => value.GetAttr<NotVisibleAttribute, T>() == null;
+
         public static string Description(this StyleModifier modifier)
         {
             var localeID = "KEYNAME";
@@ -297,4 +299,6 @@ namespace NodeMarkup.Utils
         public static BezierPointComparer Instance { get; } = new BezierPointComparer();
         public int Compare(BezierPoint x, BezierPoint y) => x.Length.CompareTo(y.Length);
     }
+
+    public class NotVisibleAttribute : Attribute { }
 }

@@ -110,10 +110,10 @@ namespace NodeMarkup.Manager
                 case Style.StyleType.RegularLine:
                 default:
                     var regularStyle = (RegularLineStyle.RegularLineType)(int)style;
-                    if (pointPair.IsNormal)
-                        return new MarkupNormalLine(markup, pointPair, regularStyle);
+                    if (regularStyle == RegularLineStyle.RegularLineType.Empty)
+                        return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
                     else
-                        return new MarkupRegularLine(markup, pointPair, regularStyle);
+                        return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair, regularStyle) : new MarkupRegularLine(markup, pointPair, regularStyle);
             }
         }
         public Dependences GetDependences() => Markup.GetLineDependences(this);

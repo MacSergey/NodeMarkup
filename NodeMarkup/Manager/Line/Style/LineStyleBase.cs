@@ -188,6 +188,10 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
+
+            [Description(nameof(Localize.LineStyle_Empty))]
+            [NotVisible]
+            Empty = StyleType.EmptyLine
         }
     }
     public abstract class StopLineStyle : LineStyle
