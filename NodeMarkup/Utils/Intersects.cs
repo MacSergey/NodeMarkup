@@ -216,10 +216,22 @@ namespace NodeMarkup.Utils
         public static MarkupLinesIntersect Calculate(MarkupLine first, MarkupLine second) => Calculate(new MarkupLinePair(first, second));
         public static MarkupLinesIntersect Calculate(MarkupLinePair pair)
         {
-            if (pair.CanIntersect && Calculate(pair.First.Trajectory, pair.Second.Trajectory).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect)
-                return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT, intersect.Angle);
-            else
-                return new MarkupLinesIntersect(pair);
+            var mustIntersect = pair.MustIntersect;
+
+            if (pair.MustIntersect != false)
+            {
+                var firstTrajectory = GetTrajectory(pair.First, mustIntersect);
+                var secondTrajectory = GetTrajectory(pair.Second, mustIntersect);
+
+                var intersect = CalculateSingle(firstTrajectory, secondTrajectory);
+                if(intersect.IsIntersect)
+                    return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT, intersect.Angle);
+            }
+
+            return new MarkupLinesIntersect(pair);
+
+            static ILineTrajectory GetTrajectory(MarkupLine line, bool? mustIntersect)
+                    => mustIntersect == true && line.Trajectory is StraightTrajectory st ? new StraightTrajectory(st, false) : line.Trajectory;
         }
 
         public float this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);

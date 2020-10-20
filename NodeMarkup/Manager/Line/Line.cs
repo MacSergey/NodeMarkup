@@ -424,17 +424,25 @@ namespace NodeMarkup.Manager
 
         public Markup Markup => First.Markup == Second.Markup ? First.Markup : null;
         public bool IsSelf => First == Second;
-        public bool CanIntersect
+        public bool? MustIntersect
         {
             get
             {
                 if (IsSelf || First.IsStopLine || Second.IsStopLine)
                     return false;
 
+                if (First.IsCrosswalk && Second.IsCrosswalk && First.Start.Enter == Second.Start.Enter)
+                    return false;
+
                 if (First.ContainsPoint(Second.Start) || First.ContainsPoint(Second.End))
                     return false;
 
-                return true;
+                if (IsBorder(First, Second) || IsBorder(Second, First))
+                    return true;
+
+                return null;
+
+                static bool IsBorder(MarkupLine line1, MarkupLine line2) => line1 is MarkupCrosswalkLine crosswalkLine && crosswalkLine.Crosswalk.IsBorder(line2);
             }
         }
 

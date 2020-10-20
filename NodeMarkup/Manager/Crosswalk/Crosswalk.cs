@@ -124,7 +124,7 @@ namespace NodeMarkup.Manager
             RightBorderTrajectory = GetBorderTrajectory(trajectory, RightBorder, 0, DefaultRightBorderTrajectory, out float startT);
             LeftBorderTrajectory = GetBorderTrajectory(trajectory, LeftBorder, 1, DefaultLeftBorderTrajectory, out float endT);
 
-            return new StraightTrajectory((StraightTrajectory)trajectory.Cut(startT, endT), false);
+            return (StraightTrajectory)trajectory.Cut(startT, endT);
         }
         private ILineTrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
         {
