@@ -311,9 +311,13 @@ namespace NodeMarkup.Manager
 
         public MarkupLine AddConnection(MarkupPointPair pointPair, Style.StyleType style)
         {
-            var line = MarkupLine.FromStyle(this, pointPair, style);
-            LinesDictionary[pointPair.Hash] = line;
-            NeedRecalculateBatches = true;
+            if (!TryGetLine(pointPair, out MarkupLine line))
+            {
+                line = MarkupLine.FromStyle(this, pointPair, style);
+                LinesDictionary[pointPair.Hash] = line;
+                NeedRecalculateBatches = true;
+            }
+
             return line;
         }
         public void RemoveConnect(MarkupLine line)

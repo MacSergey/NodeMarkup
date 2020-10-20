@@ -126,7 +126,8 @@ namespace NodeMarkup.UI.Editors
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (e) => SetStyle(rulePanel, e)));
         private bool SetStyle(RulePanel rulePanel, Event e)
         {
-            rulePanel.Style.SelectedObject = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
+            var style = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
+            rulePanel.Style.SelectedObject = style != Style.StyleType.EmptyLine ? style : (Style.StyleType)(int)RegularLineStyle.RegularLineType.Dashed;
             SettingsPanel.ScrollToBottom();
             return true;
         }

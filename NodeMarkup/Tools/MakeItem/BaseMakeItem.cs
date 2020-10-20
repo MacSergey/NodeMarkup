@@ -100,6 +100,11 @@ namespace NodeMarkup.Tools
                 Tool.EditMarkup();
                 return true;
             }
+            if (NodeMarkupTool.CreateEdgeLinesShortcut.IsPressed(e))
+            {
+                Tool.CreateEdgeLines();
+                return true;
+            }
 
             return Panel?.OnShortcut(e) == true;
         }

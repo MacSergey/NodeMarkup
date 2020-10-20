@@ -1101,4 +1101,7 @@ Do you want to apply the marking manually?</value>
   <data name="LineStyle_Empty" xml:space="preserve">
     <value>Empty</value>
   </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Create edge lines</value>
+  </data>
 </root>

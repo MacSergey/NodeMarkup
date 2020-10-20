@@ -1811,6 +1811,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Create edge lines.
+        /// </summary>
+        public static string Settings_ShortcutCreateEdgeLines {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutCreateEdgeLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete all node lines.
         /// </summary>
         public static string Settings_ShortcutDeleteAllNodeLines {

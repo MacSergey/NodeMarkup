@@ -31,6 +31,7 @@ namespace NodeMarkup.Tools
         public static SavedInputKey CopyMarkingShortcut { get; } = new SavedInputKey(nameof(CopyMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.C, true, true, false), true);
         public static SavedInputKey PasteMarkingShortcut { get; } = new SavedInputKey(nameof(PasteMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.V, true, true, false), true);
         public static SavedInputKey EditMarkingShortcut { get; } = new SavedInputKey(nameof(EditMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.E, true, true, false), true);
+        public static SavedInputKey CreateEdgeLinesShortcut { get; } = new SavedInputKey(nameof(CreateEdgeLinesShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.W, true, true, false), true);
 
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -140,7 +141,6 @@ namespace NodeMarkup.Tools
         private void Reset()
         {
             Panel.Hide();
-            //SetMarkup(null);
             SetMode(ToolModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
@@ -392,6 +392,13 @@ namespace NodeMarkup.Tools
         {
             CopyMarkup();
             SetMode(ToolModeType.EditEntersOrder);
+        }
+        public void CreateEdgeLines()
+        {
+            foreach (var enter in Markup.Enters)
+                Markup.AddConnection(new MarkupPointPair(enter.FirstPoint, enter.Next.LastPoint), Style.StyleType.EmptyLine);
+
+            Panel.UpdatePanel();
         }
 
         #endregion
