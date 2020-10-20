@@ -194,11 +194,11 @@ namespace NodeMarkup.UI.Editors
         {
             {
                 if (IsHoverItem)
-                    HoverItem.Object.Render(cameraInfo, Colors.White, 2f);
+                    HoverItem.Object.Render(cameraInfo, Colors.Hover, 2f);
                 if (IsHoverRulePanel)
                     HoverRulePanel.Rule.Render(cameraInfo, WhiteAlpha, 2f);
                 if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is SupportPoint supportPoint)
-                    supportPoint.Render(cameraInfo, Colors.White);
+                    supportPoint.Render(cameraInfo, Colors.Hover);
             }
         }
         protected override void OnObjectUpdate()

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IUpdate, IDeletable, IToXml
+    public abstract class MarkupPoint : IItem, IToXml
     {
         public event Action<MarkupPoint> OnUpdate;
         public static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);

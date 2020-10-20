@@ -12,12 +12,6 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public interface IDeletable
-    {
-        string DeleteCaptionDescription { get; }
-        string DeleteMessageDescription { get; }
-        Dependences GetDependences();
-    }
     public abstract class Editor : UIPanel
     {
         public static Dictionary<Style.StyleType, string> SpriteNames { get; set; }

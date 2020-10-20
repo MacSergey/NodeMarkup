@@ -121,10 +121,7 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
-            {
-                foreach (var trajectory in HoverItem.Object.Contour.Trajectories)
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, trajectory, 0.2f);
-            }
+                HoverItem.Object.Render(cameraInfo, Colors.Hover);
         }
         private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);

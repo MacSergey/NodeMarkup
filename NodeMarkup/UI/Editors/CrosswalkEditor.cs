@@ -191,10 +191,10 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
-                HoverItem.Object.Render(cameraInfo, Colors.White);
+                HoverItem.Object.Render(cameraInfo, Colors.Hover);
 
             if (IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, borderLine.Trajectory);
+                borderLine.Render(cameraInfo, Colors.Hover);
         }
 
         #endregion

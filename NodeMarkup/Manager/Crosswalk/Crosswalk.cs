@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IUpdate, IDeletable, IToXml
+    public class MarkupCrosswalk : IItem, IToXml
     {
         #region PROPERTIES
 

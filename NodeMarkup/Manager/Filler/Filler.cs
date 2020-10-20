@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IUpdate, IDeletable, IToXml
+    public class MarkupFiller : IItem, IToXml
     {
         public static string XmlName { get; } = "F";
 
@@ -100,6 +101,12 @@ namespace NodeMarkup.Manager
 
             filler = new MarkupFiller(contour, style);
             return true;
+        }
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        {
+            foreach (var trajectory in Contour.Trajectories)
+                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory, 0.2f);
         }
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();

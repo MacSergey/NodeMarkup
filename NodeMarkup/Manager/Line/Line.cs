@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IUpdate, IDeletable, IToXml
+    public abstract class MarkupLine : IItem, IToXml
     {
         public static string XmlName { get; } = "L";
 
@@ -96,6 +96,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
+        public void Render(RenderManager.CameraInfo cameraInfo, Color color) => Render(cameraInfo, color);
         public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width = 0.2f) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
 

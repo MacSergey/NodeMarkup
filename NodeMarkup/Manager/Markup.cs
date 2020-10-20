@@ -14,6 +14,16 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
+    public interface IItem : IUpdate, IDeletable
+    {
+        void Render(RenderManager.CameraInfo cameraInfo, Color color);
+    }
+    public interface IDeletable
+    {
+        string DeleteCaptionDescription { get; }
+        string DeleteMessageDescription { get; }
+        Dependences GetDependences();
+    }
     public interface IUpdate
     {
         void Update(bool onlySelfUpdate = false);
