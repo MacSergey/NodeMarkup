@@ -46,6 +46,7 @@ namespace NodeMarkup.Tools
         }
         public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : Localize.Tool_InfoNode;
 
+        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
         {
             if (IsHoverNode)

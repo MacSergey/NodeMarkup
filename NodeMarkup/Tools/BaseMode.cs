@@ -30,7 +30,7 @@ namespace NodeMarkup.Tools
         public virtual bool ProcessShortcuts(Event e) => false;
         public virtual void OnMouseDown(Event e) { }
         public virtual void OnMouseDrag(Event e) { }
-        public virtual void OnMouseUp(Event e) { }
+        public virtual void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public virtual void OnPrimaryMouseClicked(Event e) { }
         public virtual void OnSecondaryMouseClicked() { }
         public virtual void RenderOverlay(RenderManager.CameraInfo cameraInfo) { }

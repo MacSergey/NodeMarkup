@@ -51,7 +51,6 @@ namespace NodeMarkup.Tools
 
         protected virtual void OnSetPanel() { }
 
-        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
         public override void OnPrimaryMouseClicked(Event e)
         {

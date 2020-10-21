@@ -108,7 +108,7 @@
     <Compile Include="Tools\Order\PasteClasses.cs" />
     <Compile Include="Tools\Order\EntersOrderMode.cs" />
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
-    <Compile Include="Tools\Panel\BasePanelMode.cs" />
+    <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
