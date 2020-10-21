@@ -1041,9 +1041,27 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>この操作は元に戻せません。</value>
   </data>
   <data name="LineStyle_Empty" xml:space="preserve">
-    <value>無し</value>
+    <value>空のスタイル</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>路肩にラインを追加</value>
+    <value>路肩にラインを一括で追加</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>路肩にラインを一括で追加</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>ポイントのオフセットを全てリセット</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>追加機能</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>横断歩道の基準線を一緒に設定</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>軌道の下部でマーキングを描画（再起動後に有効）</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
   </data>
 </root>

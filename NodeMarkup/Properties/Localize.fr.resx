@@ -1038,6 +1038,28 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Cette action est irréversible.</value>
   </data>
-  
-  
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Créer une ligne de bord</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Créer une ligne de bord</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Autres</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Bordures de passage piétons rapide</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Marquage en dessous des rails (nécessite un redémarrage)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Attention : cet option change l'ordre de rendu des objets</value>
+  </data>
 </root>

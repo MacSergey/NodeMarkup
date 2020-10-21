@@ -325,7 +325,10 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Valitse risteys muokataksesi merkintöjä</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Valitse päätepiste viivalle tai pysäytysviivalle
+Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
@@ -448,7 +451,7 @@ Napauta muokataksesi merkintöjä</value>
     <value>Viivojen välinen kulma</value>
   </data>
   <data name="StyleOption_Turn" xml:space="preserve">
-    <value>Käännä</value>
+    <value>Kierrä</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
     <value>Risteyksessä ei ole vielä viivoja.
@@ -760,15 +763,21 @@ poistaaksesi suojatien</value>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Shakkiruudukko</value>
   </data>
-  
+  <data name="StyleOption_LineCount" xml:space="preserve">
+    <value>Rivimäärä</value>
+  </data>
   <data name="StyleOption_SharkToothBase" xml:space="preserve">
     <value>Kolmion pohja</value>
   </data>
   <data name="StyleOption_SharkToothHeight" xml:space="preserve">
     <value>Kolmion korkeus</value>
   </data>
-  
-  
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
+    <value>Väli</value>
+  </data>
+  <data name="StyleOption_SquareSide" xml:space="preserve">
+    <value>Sivun pituus</value>
+  </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
     <value>Väistämisviiva</value>
   </data>
@@ -778,7 +787,9 @@ poistaaksesi suojatien</value>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
     <value>Sulku- ja katkoviiva</value>
   </data>
-  
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Poista tiemerkinnät</value>
+  </data>
   <data name="Panel_CopyMarking" xml:space="preserve">
     <value>Kopioi tiemerkinnät</value>
   </data>
@@ -837,7 +848,9 @@ Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
   <data name="Settings_BackupTab" xml:space="preserve">
     <value>Varmuuskopiointi</value>
   </data>
-  
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Käyttäytyminen</value>
+  </data>
   <data name="Settings_GeneralTab" xml:space="preserve">
     <value>Yleiset</value>
   </data>
@@ -874,20 +887,27 @@ Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
     <value>Haluatko varmasti nollata kaikkien risteyksen #{0} pisteiden siirtymät?</value>
   </data>
-  
-  
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Raahaa ja pudota ympyröitä asettaaksesi teiden järjestyksen
+Napauta ympurää muokataksesi pisteiden järjestystä</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Pudota ympyrä kohteen sisä-/ulkopuolelle muuttaaksesi pisteiden järjestystä</value>
+  </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Kopioi tiemerkinnät</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
     <value>Liitä tiemerkinnät</value>
   </data>
-  
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Käänteinen järjestys</value>
+  </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
-    <value>Käännä myötäpäivään</value>
+    <value>Kierrä myötäpäivään</value>
   </data>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
-    <value>Käännä vastapäivään</value>
+    <value>Kierrä vastapäivään</value>
   </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>Keskellä</value>
@@ -1016,6 +1036,28 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tätä toimintoa ei voi kumota.</value>
   </data>
-  
-  
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Tyhjä</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Luo ääriviivat</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Luo ääriviivat</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Nollaa pisteiden siirtymät</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Lisää</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Nopea suojateiden reunojen luominen</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Merkinnät raiteiden alla (Vaatii uudelleenkäynnistyksen)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Varoitus: Tämä aswtus muuttaa pelin piirtojärjestyksen</value>
+  </data>
 </root>

@@ -1038,5 +1038,19 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="LineStyle_Empty" xml:space="preserve">
     <value>Prázdné</value>
   </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Vytvořit krajnice</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Vytvořit krajnice</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Resetovat odsazení všech bodů</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Další</value>
+  </data>
+  
+  
   
 </root>

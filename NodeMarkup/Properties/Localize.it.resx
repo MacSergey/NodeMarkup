@@ -758,7 +758,7 @@ cancellare le strisce pedonali</value>
     <value>Continua</value>
   </data>
   <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
-    <value>Modello delle strisce pedonali</value>
+    <value>Strisce pedonali</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>strisce pedonali</value>
@@ -1068,4 +1068,18 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
     <value>Crea bordo linea</value>
   </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Crea bordo linea</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Resetta tutti gli spostamenti</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Impostazioni aggiuntive</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Impostazione rapida bordi attraversamento pedonale</value>
+  </data>
+  
+  
 </root>

@@ -1034,6 +1034,28 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>No se puede deshacer esta acción.</value>
   </data>
-  
-  
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Vacía</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Crear líneas de los bordes</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Crear líneas de los bordes</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Restablecer el desplazamiento de todos los puntos</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Más</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Configuración rápida de bordes del paso de peatones</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Las marcas debajo del carril (Se aplica después del reinicio)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
+  </data>
 </root>

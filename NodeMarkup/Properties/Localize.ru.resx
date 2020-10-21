@@ -1098,6 +1098,28 @@ Shift X10, Ctrl X0.1</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Это действие нельзя отменить.</value>
   </data>
-  
-  
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Пустая</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Создать крайние линии</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Создать крайние линии</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Сброс смещения всех точек</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Дополнительно</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Быстрая настройка границ перехода</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Разметка под рельсами (Изменения вступят в силу после перезагрузки)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Предупреждение: Эта опция меняет порядок отрисовки игровых объектов</value>
+  </data>
 </root>

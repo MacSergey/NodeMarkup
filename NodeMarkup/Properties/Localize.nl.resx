@@ -188,10 +188,10 @@ Shift X10, Ctrl X0.1</value>
     <value>Kantpunt {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Streeplijn</value>
+    <value>Onderbroken</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Dubbele streep</value>
+    <value>Dubbel onderbroken</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
     <value>Dubbel ononderbroken</value>
@@ -351,7 +351,7 @@ een lijn te creëren of te verwijderen</value>
     <value>Breedte</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Ononderbroken en Streeplijn</value>
+    <value>Ononderbroken en onderbroken</value>
   </data>
   <data name="LineStyle_StopSolid" xml:space="preserve">
     <value>Ononderbroken</value>
@@ -432,7 +432,7 @@ een lijn te creëren of te verwijderen</value>
   </data>
   
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Dubbel niet onderbroken</value>
+    <value>Dubbel ononderbroken</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dubbel onderbroken</value>
@@ -1041,4 +1041,16 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
     <value>Maak kantlijn</value>
   </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Maak kantlijnen</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Reset alle punt correctieafstanden</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Extra</value>
+  </data>
+  
+  
+  
 </root>

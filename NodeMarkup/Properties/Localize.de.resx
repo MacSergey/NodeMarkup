@@ -1076,4 +1076,22 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
     <value>Randlinien erstellen</value>
   </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Randlinien erstellen</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Versätze aller Punkte zurücksetzen</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Weiteres</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Schnellerstellung Fußgängerüberwegeränder</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Markierung unter Gleisen (Aktiv nach erneutem Laden)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
+  </data>
 </root>
