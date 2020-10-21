@@ -105,10 +105,14 @@
     <Compile Include="Tools\MakeItem\MakeFiller.cs" />
     <Compile Include="Tools\MakeItem\BaseMakeItem.cs" />
     <Compile Include="Tools\MakeItem\MakeLIne.cs" />
-    <Compile Include="Tools\Paste\PasteClasses.cs" />
-    <Compile Include="Tools\Paste\EntersOrderMode.cs" />
-    <Compile Include="Tools\Paste\PointsOrderMode.cs" />
+    <Compile Include="Tools\Order\PasteClasses.cs" />
+    <Compile Include="Tools\Order\EntersOrderMode.cs" />
+    <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
+    <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
+    <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
+    <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="Utils\DataExtensions\AssetData.cs" />
     <Compile Include="Utils\DataExtensions\Loading.cs" />
     <Compile Include="EarlyAccess.cs" />
@@ -168,7 +172,7 @@
     <Compile Include="UI\Editors\TemplateEditor.cs" />
     <Compile Include="UI\Elements\Keymapping.cs" />
     <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
-    <Compile Include="UI\Panel.cs" />
+    <Compile Include="UI\Panel\Panel.cs" />
     <Compile Include="UI\PointsSelector.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
     <Compile Include="UI\Property panels\BoolProperty.cs" />
@@ -176,7 +180,7 @@
     <Compile Include="UI\Property panels\ColorProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />
     <Compile Include="UI\Property panels\FieldProperty.cs" />
-    <Compile Include="UI\Property panels\HeaderPanel.cs" />
+    <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
     <Compile Include="UI\Property panels\ListProperty.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="UI\Settings.cs" />

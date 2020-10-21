@@ -1,5 +1,6 @@
 ﻿using NodeMarkup.Manager;
 using NodeMarkup.UI;
+using NodeMarkup.UI.Panel;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;

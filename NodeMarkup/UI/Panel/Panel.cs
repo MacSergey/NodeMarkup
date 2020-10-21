@@ -11,7 +11,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace NodeMarkup.UI.Panel
 {
     public class NodeMarkupPanel : UIPanel
     {
@@ -20,7 +20,7 @@ namespace NodeMarkup.UI
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
 
-        private UIPanelDragHeader Header { get; set; }
+        private PanelHeader Header { get; set; }
         private CustomUITabstrip TabStrip { get; set; }
         private UIPanel SizeChanger { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
@@ -62,15 +62,10 @@ namespace NodeMarkup.UI
         }
         private void CreateHeader()
         {
-            Header = AddUIComponent<UIPanelDragHeader>();
+            Header = AddUIComponent<PanelHeader>();
             Header.size = new Vector2(550, 42);
             Header.relativePosition = new Vector2(0, 0);
             Header.target = parent;
-
-            Header.Buttons.OnCopy += OnCopy;
-            Header.Buttons.OnPaste += OnPaste;
-            Header.Buttons.OnClear += OnClear;
-            Header.Buttons.OnEdit += OnEdit;
         }
         private void CreateTabStrip()
         {
@@ -220,72 +215,5 @@ namespace NodeMarkup.UI
         private void OnCopy() => Tool.CopyMarkup();
         private void OnPaste() => Tool.PasteMarkup();
         private void OnEdit() => Tool.EditMarkup();
-    }
-    public class UIPanelDragHeader : UIDragHandle
-    {
-        private UILabel Caption { get; set; }
-        public MainHeaderContent Buttons { get; private set; }
-
-        public string Text
-        {
-            get => Caption.text;
-            set => Caption.text = value;
-        }
-
-        public UIPanelDragHeader()
-        {
-            CreateCaption();
-            CreateButtonsPanel();
-        }
-
-        private void CreateCaption()
-        {
-            Caption = AddUIComponent<UILabel>();
-            Caption.autoSize = false;
-            Caption.text = nameof(NodeMarkupPanel);
-            Caption.textAlignment = UIHorizontalAlignment.Center;
-            Caption.verticalAlignment = UIVerticalAlignment.Middle;
-        }
-        private void CreateButtonsPanel()
-        {
-            Buttons = AddUIComponent<MainHeaderContent>();
-        }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            Buttons.autoLayout = true;
-            Buttons.autoLayout = false;
-            Buttons.FitChildrenHorizontally();
-            Buttons.height = height;
-
-            foreach (var item in Buttons.components)
-                item.relativePosition = new Vector2(item.relativePosition.x, (Buttons.height - item.height) / 2);
-
-            Caption.width = width - Buttons.width;
-            Caption.relativePosition = new Vector2(0, (height - Caption.height) / 2);
-
-            Buttons.relativePosition = new Vector2(Caption.width - 5, (height - Buttons.height) / 2);
-        }
-    }
-    public class MainHeaderContent : HeaderContent
-    {
-        public event Action OnClear;
-        public event Action OnCopy;
-        public event Action OnPaste;
-        public event Action OnEdit;
-
-        UIButton Copy { get; }
-        UIButton Paste { get; }
-        UIButton Clear { get; }
-        UIButton Edit { get; }
-
-        public MainHeaderContent()
-        {
-            Copy = AddButton("Copy", NodeMarkup.Localize.Panel_CopyMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke());
-            Paste = AddButton("Paste", NodeMarkup.Localize.Panel_PasteMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke());
-            Edit = AddButton("Edit", NodeMarkup.Localize.Panel_EditMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke());
-            Clear = AddButton("Clear", NodeMarkup.Localize.Panel_ClearMarking, (UIComponent component, UIMouseEventParameter eventParam) => OnClear?.Invoke());
-        }
-    }
+    } 
 }

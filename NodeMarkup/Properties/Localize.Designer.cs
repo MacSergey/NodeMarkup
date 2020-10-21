@@ -1269,6 +1269,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Additional.
+        /// </summary>
+        public static string Panel_Additional {
+            get {
+                return ResourceManager.GetString("Panel_Additional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Edit node #{0} marking.
         /// </summary>
         public static string Panel_Caption {
@@ -1296,6 +1305,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Create edge lines.
+        /// </summary>
+        public static string Panel_CreateEdgeLines {
+            get {
+                return ResourceManager.GetString("Panel_CreateEdgeLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Edit marking order.
         /// </summary>
         public static string Panel_EditMarking {
@@ -1310,6 +1328,15 @@ namespace NodeMarkup {
         public static string Panel_PasteMarking {
             get {
                 return ResourceManager.GetString("Panel_PasteMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reset all points offset.
+        /// </summary>
+        public static string Panel_ResetOffset {
+            get {
+                return ResourceManager.GetString("Panel_ResetOffset", resourceCulture);
             }
         }
         

@@ -1104,4 +1104,13 @@ Do you want to apply the marking manually?</value>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
     <value>Create edge lines</value>
   </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Create edge lines</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Reset all points offset</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Additional</value>
+  </data>
 </root>

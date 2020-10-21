@@ -59,10 +59,9 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = AddUIComponent<StyleHeaderPanel>();
-            header.Init(Rule.Style.Type, Editor.SupportRules);
+            header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
             header.OnDelete += () => Editor.DeleteRule(this);
             header.OnSaveTemplate += OnSaveTemplate;
-            header.OnSelectTemplate += OnSelectTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
         }
