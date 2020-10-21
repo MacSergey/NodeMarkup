@@ -196,7 +196,11 @@ namespace NodeMarkup.UI.Panel
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
             var editor = SelectEditor<CrosswalksEditor>();
-            editor?.UpdateEditor(crosswalk);
+            if (editor != null)
+            {
+                editor.UpdateEditor(crosswalk);
+                editor.BorderSetup();
+            }
         }
         public void EditTemplate(StyleTemplate template)
         {

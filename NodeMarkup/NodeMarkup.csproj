@@ -108,6 +108,7 @@
     <Compile Include="Tools\Order\PasteClasses.cs" />
     <Compile Include="Tools\Order\EntersOrderMode.cs" />
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
+    <Compile Include="Tools\Panel\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
@@ -294,7 +295,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -105,12 +105,13 @@ namespace NodeMarkup.UI.Editors
             var root = GetRootContainer();
             Popup = root.AddUIComponent<PopupType>();
             Popup.eventLostFocus += OnPopupLostFocus;
-            SetPopupPosition();
-            Popup.parent.eventPositionChanged += SetPopupPosition;
             Popup.Focus();
 
             OnOpenPopup();
             Popup.Init();
+
+            SetPopupPosition();
+            Popup.parent.eventPositionChanged += SetPopupPosition;
         }
         protected virtual void OnOpenPopup() { }
         public virtual void ClosePopup()

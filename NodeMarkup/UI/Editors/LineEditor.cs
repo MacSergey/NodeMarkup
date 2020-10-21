@@ -159,7 +159,7 @@ namespace NodeMarkup.UI.Editors
         public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => SelectRuleEdge(selectPanel, null);
         public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
         {
-            if (Tool.Mode == PartEdgeToolMode && selectPanel == PartEdgeToolMode.SelectPartEdgePanel)
+            if (Tool.Mode == PartEdgeToolMode && selectPanel == PartEdgeToolMode.SelectPanel)
             {
                 Tool.SetDefaultMode();
                 return true;
@@ -167,8 +167,8 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 Tool.SetMode(PartEdgeToolMode);
-                PartEdgeToolMode.SelectPartEdgePanel = selectPanel;
-                PartEdgeToolMode.AfterSelectPartEdgePanel = afterAction;
+                PartEdgeToolMode.SelectPanel = selectPanel;
+                PartEdgeToolMode.AfterSelectPanel = afterAction;
                 selectPanel.Focus();
                 return false;
             }
@@ -242,66 +242,29 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class PartEdgeToolMode : BaseToolMode
+    public class PartEdgeToolMode : BasePanelMode<LinesEditor, MarkupLineSelectPropertyPanel, ILinePartEdge>
     {
-        public override ToolModeType Type => ToolModeType.PanelAction;
-
-        private LinesEditor Editor { get; }
-
-        private MarkupLineSelectPropertyPanel _selectPartEdgePanel;
-        public MarkupLineSelectPropertyPanel SelectPartEdgePanel
-        {
-            get => _selectPartEdgePanel;
-            set
-            {
-                if (_selectPartEdgePanel != null)
-                {
-                    _selectPartEdgePanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    _selectPartEdgePanel.eventLostFocus -= SelectPanelLeaveFocus;
-                }
-
-                _selectPartEdgePanel = value;
-
-                if (_selectPartEdgePanel != null)
-                {
-                    PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, _selectPartEdgePanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
-                    _selectPartEdgePanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    _selectPartEdgePanel.eventLostFocus += SelectPanelLeaveFocus;
-                }
-            }
-        }
-        public Func<Event, bool> AfterSelectPartEdgePanel { get; set; }
+        protected override bool IsHover => PointsSelector.IsHoverPoint;
+        protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
 
-        public PartEdgeToolMode(LinesEditor editor)
-        {
-            Editor = editor;
-        }
+        public PartEdgeToolMode(LinesEditor editor) : base(editor) { }
+
+        protected override void OnSetPanel() 
+            => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
+
         public override void End() => Editor.Refresh();
         public override void OnUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()
         {
-            return SelectPartEdgePanel.Position switch
+            return SelectPanel.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
                 EdgePosition.End => Localize.LineEditor_InfoSelectTo,
                 _ => null,
             };
         }
-        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
-        public override void OnPrimaryMouseClicked(Event e)
-        {
-            if (PointsSelector.IsHoverPoint)
-            {
-                SelectPartEdgePanel.SelectedObject = PointsSelector.HoverPoint;
-                if (AfterSelectPartEdgePanel?.Invoke(e) ?? true)
-                    Tool.SetDefaultMode();
-            }
-        }
-        public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
-
-        private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
     }
 
     public class LineItem : EditableItem<MarkupLine, LineIcon>

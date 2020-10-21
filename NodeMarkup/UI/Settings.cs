@@ -34,6 +34,7 @@ namespace NodeMarkup.UI
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedInt DeleteWarningsType { get; } = new SavedInt(nameof(DeleteWarningsType), SettingsFile, 0, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
+        public static SavedBool QuickBorderSetup { get; } = new SavedBool(nameof(QuickBorderSetup), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
@@ -237,15 +238,16 @@ namespace NodeMarkup.UI
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
-            AddShowToolTipsSetting(group);
+            AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
-            AddQuickRuleSetup(group);
-            }
+            AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
+            AddCheckBox(group, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
+        }
         private static void AddGrouping(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
 
-            AddGroupLines(group);
+            AddCheckBox(group, Localize.Settings_GroupLines, GroupLines);
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle });
             AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
         }
@@ -271,24 +273,6 @@ namespace NodeMarkup.UI
                 }
             }
         }
-        private static void AddShowToolTipsSetting(UIHelper group)
-        {
-            var showCheckBox = group.AddCheckbox(Localize.Settings_ShowTooltips, ShowToolTip, OnShowToolTipsChanged) as UICheckBox;
-
-            static void OnShowToolTipsChanged(bool show) => ShowToolTip.value = show;
-        }
-        private static void AddQuickRuleSetup(UIHelper group)
-        {
-            var quickRuleSetupCheckBox = group.AddCheckbox(Localize.Settings_QuickRuleSetup, QuickRuleSetup, OnQuickRuleSetupChanged) as UICheckBox;
-
-            static void OnQuickRuleSetupChanged(bool request) => QuickRuleSetup.value = request;
-        }
-        private static void AddGroupLines(UIHelper group)
-        {
-            var groupLinesCheckBox = group.AddCheckbox(Localize.Settings_GroupLines, GroupLines, OnGroupLinesChanged) as UICheckBox;
-
-            static void OnGroupLinesChanged(bool groupLines) => GroupLines.value = groupLines;
-        }
         #endregion
 
         #region ACCESS
@@ -306,20 +290,8 @@ namespace NodeMarkup.UI
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
 
-            AddShowWhatsNew(group);
-            AddShowOnlyMajor(group);
-        }
-        private static void AddShowWhatsNew(UIHelper group)
-        {
-            var showWhatsNewCheckBox = group.AddCheckbox(Localize.Settings_ShowWhatsNew, ShowWhatsNew, OnShowWhatsNewChanged) as UICheckBox;
-
-            void OnShowWhatsNewChanged(bool request) => ShowWhatsNew.value = request;
-        }
-        private static void AddShowOnlyMajor(UIHelper group)
-        {
-            var showOnlyMajorCheckBox = group.AddCheckbox(Localize.Settings_ShowOnlyMajor, ShowOnlyMajor, OnShowOnlyMajorChanged) as UICheckBox;
-
-            void OnShowOnlyMajorChanged(bool request) => ShowOnlyMajor.value = request;
+            AddCheckBox(group, Localize.Settings_ShowWhatsNew, ShowWhatsNew);
+            AddCheckBox(group, Localize.Settings_ShowOnlyMajor, ShowOnlyMajor);
         }
         #endregion
 
@@ -407,7 +379,7 @@ namespace NodeMarkup.UI
 
 
         #endregion
-
+        private static void AddCheckBox(UIHelper group, string label, SavedBool saved) => group.AddCheckbox(label, saved, (bool value) => saved.value = value);
         private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels)
         {
             var inProcess = false;

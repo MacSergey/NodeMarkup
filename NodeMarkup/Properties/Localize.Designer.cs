@@ -1674,6 +1674,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Quick crosswalk borders setup.
+        /// </summary>
+        public static string Settings_QuickBorderSetup {
+            get {
+                return ResourceManager.GetString("Settings_QuickBorderSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Quick rule setup.
         /// </summary>
         public static string Settings_QuickRuleSetup {

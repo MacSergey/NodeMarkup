@@ -58,8 +58,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddBordersProperties()
         {
-            AddRightBorderProperty();
             AddLeftBorderProperty();
+            AddRightBorderProperty();
             FillBorders();
         }
         private void FillBorders()
@@ -90,7 +90,7 @@ namespace NodeMarkup.UI.Editors
             RightBorder.Text = NodeMarkup.Localize.CrosswalkEditor_RightBorder;
             RightBorder.Position = BorderPosition.Right;
             RightBorder.Init();
-            RightBorder.OnSelect += SelectBorder;
+            RightBorder.OnSelect += (panel) => SelectBorder(panel);
             RightBorder.OnHover += HoverBorder;
             RightBorder.OnLeave += LeaveBorder;
         }
@@ -100,7 +100,7 @@ namespace NodeMarkup.UI.Editors
             LeftBorder.Text = NodeMarkup.Localize.CrosswalkEditor_LeftBorder;
             LeftBorder.Position = BorderPosition.Left;
             LeftBorder.Init();
-            LeftBorder.OnSelect += SelectBorder;
+            LeftBorder.OnSelect += (panel) => SelectBorder(panel);
             LeftBorder.OnHover += HoverBorder;
             LeftBorder.OnLeave += LeaveBorder;
         }
@@ -176,15 +176,21 @@ namespace NodeMarkup.UI.Editors
         public void HoverBorder(MarkupCrosswalkSelectPropertyPanel selectPanel) => HoverBorderPanel = selectPanel;
         public void LeaveBorder(MarkupCrosswalkSelectPropertyPanel selectPanel) => HoverBorderPanel = null;
 
-        public void SelectBorder(MarkupCrosswalkSelectPropertyPanel selectPanel)
+        public bool SelectBorder(MarkupCrosswalkSelectPropertyPanel selectPanel) => SelectBorder(selectPanel, null);
+        public bool SelectBorder(MarkupCrosswalkSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
         {
-            if (Tool.Mode == CrosswalkBorderToolMode)
+            if (Tool.Mode == CrosswalkBorderToolMode && selectPanel == CrosswalkBorderToolMode.SelectPanel)
+            {
                 Tool.SetDefaultMode();
+                return true;
+            }
             else
             {
                 Tool.SetMode(CrosswalkBorderToolMode);
+                CrosswalkBorderToolMode.SelectPanel = selectPanel;
+                CrosswalkBorderToolMode.AfterSelectPanel = afterAction;
                 selectPanel.Focus();
-                CrosswalkBorderToolMode.SelectBorderPanel = selectPanel;
+                return false;
             }
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
@@ -196,77 +202,53 @@ namespace NodeMarkup.UI.Editors
                 borderLine.Render(cameraInfo, Colors.Hover);
         }
 
+        public void BorderSetup()
+        {
+            if (!Settings.QuickBorderSetup)
+                return;
+
+            var hasLeft = LeftBorder.Objects.Any();
+            var hasRight = RightBorder.Objects.Any();
+
+            if (hasLeft)
+                SelectBorder(LeftBorder, hasRight ? (_) => SelectBorder(RightBorder) : (Func<Event, bool>)null);
+            else if (hasRight)
+                SelectBorder(RightBorder);
+        }
+
         #endregion
     }
-    public class CrosswalkBorderToolMode : BaseToolMode
+    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, MarkupCrosswalkSelectPropertyPanel, MarkupRegularLine>
     {
-        public override ToolModeType Type => ToolModeType.PanelAction;
-
-        private CrosswalksEditor Editor { get; }
-        private MarkupCrosswalkSelectPropertyPanel _selectBorderPanel;
-        public MarkupCrosswalkSelectPropertyPanel SelectBorderPanel
-        {
-            get => _selectBorderPanel;
-            set
-            {
-                BorderLines = null;
-
-                if (_selectBorderPanel != null)
-                {
-                    _selectBorderPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    _selectBorderPanel.eventLostFocus -= SelectPanelLeaveFocus;
-                }
-
-                _selectBorderPanel = value;
-
-                if (_selectBorderPanel != null)
-                {
-                    BorderLines = Editor.HoverBorderPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray();
-                    _selectBorderPanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    _selectBorderPanel.eventLostFocus += SelectPanelLeaveFocus;
-                }
-            }
-        }
-        private bool IsSelectBorderPanelMode => SelectBorderPanel != null;
+        protected override bool IsHover => IsHoverLine;
+        protected override MarkupRegularLine Hover => HoverLine?.Line as MarkupRegularLine;
 
         private MarkupLineBound[] BorderLines { get; set; }
         private MarkupLineBound HoverLine { get; set; }
-        private bool IsHoverLine => IsSelectBorderPanelMode && HoverLine != null;
+        private bool IsHoverLine =>  HoverLine != null;
 
-        public CrosswalkBorderToolMode(CrosswalksEditor editor)
-        {
-            Editor = editor;
-        }
+        public CrosswalkBorderToolMode(CrosswalksEditor editor) : base(editor) { }
+
+        protected override void OnSetPanel() => BorderLines = SelectPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray();
 
         public override void OnUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
         public override string GetToolInfo()
         {
-            return SelectBorderPanel.Position switch
+            return SelectPanel.Position switch
             {
                 BorderPosition.Right => Localize.CrosswalkEditor_InfoSelectRightBorder,
                 BorderPosition.Left => Localize.CrosswalkEditor_InfoSelectLeftBorder,
                 _ => null,
             };
         }
-        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
-        public override void OnPrimaryMouseClicked(Event e)
-        {
-            if (IsHoverLine)
-            {
-                SelectBorderPanel.SelectedObject = HoverLine?.Line as MarkupRegularLine;
-                Tool.SetDefaultMode();
-            }
-        }
-        public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var borderLine in BorderLines)
-                borderLine.Render(cameraInfo, Colors.Red);
+                borderLine.Render(cameraInfo, SelectPanel.Position == BorderPosition.Left ? Colors.Green : Colors.Red);
 
             if (IsHoverLine)
                 HoverLine.Render(cameraInfo, Colors.Hover, 1f);
         }
-        private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
     }
 
     public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>

@@ -294,15 +294,10 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllMarking)}");
 
-            if (UI.Settings.DeleteWarnings)
-            {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
-                messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{Localize.MessageBox_CantUndone}", Markup.Id);
-                messageBox.OnButton1Click = Delete;
-            }
-            else
-                Delete();
+            var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+            messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
+            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{Localize.MessageBox_CantUndone}", Markup.Id);
+            messageBox.OnButton1Click = Delete;
 
             bool Delete()
             {
