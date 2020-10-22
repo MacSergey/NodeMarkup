@@ -392,7 +392,7 @@ namespace NodeMarkup.Tools
         public void CreateEdgeLines()
         {
             foreach (var enter in Markup.Enters)
-                Markup.AddConnection(new MarkupPointPair(enter.FirstPoint, enter.Next.LastPoint), Style.StyleType.EmptyLine);
+                Markup.AddConnection(new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint), Style.StyleType.EmptyLine);
 
             Panel.UpdatePanel();
         }

@@ -42,6 +42,17 @@ namespace NodeMarkup.Manager
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
 
+        public IEnumerable<ILineTrajectory> Borders
+        {
+            get
+            {
+                if (Start.GetBorder(out ILineTrajectory startTrajectory))
+                    yield return startTrajectory;
+                if (End.GetBorder(out ILineTrajectory endTrajectory))
+                    yield return endTrajectory;
+            }
+        }
+
         public string XmlSection => XmlName;
 
         protected MarkupLine(Markup markup, MarkupPointPair pointPair, bool update = true)

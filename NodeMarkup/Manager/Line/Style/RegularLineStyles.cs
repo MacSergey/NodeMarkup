@@ -154,7 +154,16 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        {
+            var borders = line.Borders.ToArray();
+
+            foreach(var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes))
+            {
+                if (CheckDash(line, borders, dash))
+                    yield return dash;
+            }
+        }
 
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
@@ -343,12 +352,16 @@ namespace NodeMarkup.Manager
         {
             var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
+            var borders = line.Borders.ToArray();
 
             foreach (var dash in StyleHelper.CalculateSolid(trajectory, CalculateSolidDash))
                 yield return dash;
 
             foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
-                yield return dash;
+            {
+                if (CheckDash(line, borders, dash))
+                    yield return dash;
+            }
 
             IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
             {
@@ -469,13 +482,11 @@ namespace NodeMarkup.Manager
         }
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
+            var borders = line.Borders.ToArray();
+
             foreach (var dash in StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes))
             {
-                var dir = dash.Angle.Direction().Turn90(true);
-                var toStart = new StraightTrajectory(line.Markup.Position, dash.Position + dir * (dash.Width / 2));
-                var toEnd = new StraightTrajectory(line.Markup.Position, dash.Position - dir * (dash.Width / 2));
-
-                if (!line.Markup.Contour.Any(c => MarkupIntersect.CalculateSingle(c, toStart).IsIntersect || MarkupIntersect.CalculateSingle(c, toEnd).IsIntersect))
+                if(CheckDash(line, borders, dash))
                     yield return dash;
             }
 

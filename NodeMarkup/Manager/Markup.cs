@@ -56,14 +56,23 @@ namespace NodeMarkup.Manager
         Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
-        List<ILineTrajectory> ContourParts { get; set; } = new List<ILineTrajectory>();
+        Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
 
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
-        public IEnumerable<ILineTrajectory> Contour => ContourParts;
+        public IEnumerable<ILineTrajectory> Contour
+        {
+            get
+            {
+                foreach (var enter in Enters)
+                    yield return enter.Line;
+                foreach (var line in BetweenEnters.Values)
+                    yield return line;
+            }
+        }
 
         public bool NeedRecalculateBatches { get; set; }
         public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
@@ -120,7 +129,7 @@ namespace NodeMarkup.Manager
 
             var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
-            newEnters.Sort((e1, e2) => e1.AbsoluteAngle.CompareTo(e2.AbsoluteAngle));
+            newEnters.Sort((e1, e2) => e2.AbsoluteAngle.CompareTo(e1.AbsoluteAngle));
 
             UpdateBackup(delete, add, oldEnters, newEnters);
 
@@ -172,24 +181,23 @@ namespace NodeMarkup.Manager
 
         private void UpdateNodeСontour()
         {
-            var contourParts = new List<ILineTrajectory>();
+            BetweenEnters.Clear();
 
             for (var i = 0; i < EntersList.Count; i += 1)
             {
+                var j = i.NextIndex(EntersList.Count);
                 var prev = EntersList[i];
-                contourParts.Add(new StraightTrajectory(prev.LeftSide, prev.RightSide));
+                var next = EntersList[j];
 
-                var next = GetNextEnter(i);
                 var betweenBezier = new Bezier3()
                 {
-                    a = prev.RightSide,
-                    d = next.LeftSide
+                    a = prev.LastPointSide,
+                    d = next.FirstPointSide
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
-                contourParts.Add(new BezierTrajectory(betweenBezier));
-            }
 
-            ContourParts = contourParts;
+                BetweenEnters[Math.Max(i,j) * 10 + Math.Min(i,j)] = new BezierTrajectory(betweenBezier);
+            }
         }
         private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
@@ -442,6 +450,12 @@ namespace NodeMarkup.Manager
         public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
+        public ILineTrajectory GetEntersLine(Enter first, Enter second)
+        {
+            var i = EntersList.IndexOf(first);
+            var j = EntersList.IndexOf(second);
+            return BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)];
+        }
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));

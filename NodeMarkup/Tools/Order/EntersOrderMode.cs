@@ -210,7 +210,7 @@ namespace NodeMarkup.Tools
 
         private void UpdateCentreAndRadius()
         {
-            var points = Markup.Enters.Where(e => e.Position != null).SelectMany(e => new Vector3[] { e.LeftSide, e.RightSide }).ToArray();
+            var points = Markup.Enters.Where(e => e.Position != null).SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
 
             if (points.Length == 0)
             {

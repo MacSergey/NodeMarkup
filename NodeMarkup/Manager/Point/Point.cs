@@ -122,6 +122,11 @@ namespace NodeMarkup.Manager
         }
 
         public Dependences GetDependences() => throw new NotSupportedException();
+        public virtual bool GetBorder(out ILineTrajectory line)
+        {
+            line = null;
+            return false;
+        }
 
         protected static float DefaultWidth => 1f;
         public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
@@ -165,6 +170,7 @@ namespace NodeMarkup.Manager
                 return position;
             }
         }
+        public override bool GetBorder(out ILineTrajectory line) => Enter.GetBorder(this, out line);
     }
     public class MarkupCrosswalkPoint : MarkupPoint
     {

@@ -85,7 +85,7 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IFillerVertex> GetOtherEnterPoint(FillerContour contour)
         {
-            var otherEnterPoint = Point.IsFirst ? Enter.Next.LastPoint : Enter.Prev.FirstPoint;
+            var otherEnterPoint = Point.IsFirst ? Enter.Prev.LastPoint : Enter.Next.FirstPoint;
             var vertex = new EnterFillerVertex(otherEnterPoint);
             var isCanEnd = vertex.Equals(contour.First) && contour.VertexCount >= 3;
             var isUsed = contour.Vertices.Any(v => vertex.Equals(v));
