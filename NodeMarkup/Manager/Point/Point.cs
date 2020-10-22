@@ -142,11 +142,11 @@ namespace NodeMarkup.Manager
         {
             None = 0,
             Edge = 1,
-            LeftEdge = 2 + Edge,
-            RightEdge = 4 + Edge,
+            LeftEdge = 2 | Edge,
+            RightEdge = 4 | Edge,
             Between = 8,
-            BetweenSomeDir = 16 + Between,
-            BetweenDiffDir = 32 + Between,
+            BetweenSomeDir = 16 | Between,
+            BetweenDiffDir = 32 | Between,
         }
     }
 

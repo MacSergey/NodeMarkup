@@ -16,26 +16,28 @@ namespace NodeMarkup.Manager
         public static float MinLength { get; } = 1f;
         private static int MaxDepth => 5;
 
-        public static IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, SolidGetter calculateDashes)
-            => CalculateSolid(0, trajectory, trajectory.DeltaAngle, calculateDashes);
+        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, Func<ILineTrajectory, IEnumerable<Result>> calculateDashes)
+            => CalculateSolid(trajectory, MinAngleDelta, MinLength, MaxLength, calculateDashes);
+        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, float minAngle, float minLength, float maxLength, Func<ILineTrajectory, IEnumerable<Result>> calculateDashes)
+            => CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle, minLength, maxLength, calculateDashes);
 
-        private static IEnumerable<MarkupStyleDash> CalculateSolid(int depth, ILineTrajectory trajectory, float deltaAngle, SolidGetter calculateDashes)
+        public static IEnumerable<Result> CalculateSolid<Result>(int depth, ILineTrajectory trajectory, float deltaAngle, float minAngle, float minLength, float maxLength, Func<ILineTrajectory, IEnumerable<Result>> calculateDashes)
         {
             var length = trajectory.Magnitude;
 
-            var needDivide = (MinAngleDelta < deltaAngle && MinLength <= length) || MaxLength < length;
+            var needDivide = (minAngle < deltaAngle && minLength <= length) || maxLength < length;
             if (depth < MaxDepth && (needDivide || depth == 0))
             {
                 trajectory.Divide(out ILineTrajectory first, out ILineTrajectory second);
                 var firstDeltaAngle = first.DeltaAngle;
                 var secondDeltaAngle = second.DeltaAngle;
 
-                if (needDivide || MinAngleDelta < deltaAngle || MinAngleDelta < firstDeltaAngle + secondDeltaAngle)
+                if (needDivide || minAngle < deltaAngle || minAngle < firstDeltaAngle + secondDeltaAngle)
                 {
-                    foreach (var dash in CalculateSolid(depth + 1, first, firstDeltaAngle, calculateDashes))
+                    foreach (var dash in CalculateSolid(depth + 1, first, firstDeltaAngle, minAngle, minLength, maxLength, calculateDashes))
                         yield return dash;
 
-                    foreach (var dash in CalculateSolid(depth + 1, second, secondDeltaAngle, calculateDashes))
+                    foreach (var dash in CalculateSolid(depth + 1, second, secondDeltaAngle, minAngle, minLength, maxLength, calculateDashes))
                         yield return dash;
 
                     yield break;
@@ -190,17 +192,17 @@ namespace NodeMarkup.Manager
                         continue;
 
                     var intersect = MarkupIntersect.CalculateSingle(border, new StraightTrajectory(vertex[i].EndPosition, vertex[i + 1].EndPosition));
-                    if(intersect.IsIntersect)
+                    if (intersect.IsIntersect)
                     {
                         if (start.IsIntersect)
                             from = Mathf.Max(from, intersect.SecondT);
-                        else if(end.IsIntersect)
+                        else if (end.IsIntersect)
                             to = Mathf.Min(to, intersect.SecondT);
                     }
                 }
             }
 
-            if(from != 0f || to != 1f)
+            if (from != 0f || to != 1f)
             {
                 var dir = dash.Angle.Direction();
                 var line = new StraightTrajectory(dash.Position + dir * (dash.Length / 2), dash.Position - dir * (dash.Length / 2)).Cut(from, to);

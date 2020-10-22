@@ -418,7 +418,7 @@ namespace NodeMarkup.Manager
                 var i = (int)current;
                 var next = 1f;
                 while (i < lines.Count)
-                {                   
+                {
                     var line = lines[i];
                     var start = current - i;
                     next = line.Travel(start, distance);
@@ -535,5 +535,134 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.StyleOption_Edge))]
             Edge = 1
         }
+    }
+
+    public class TriangulationFillerStyle : FillerStyle
+    {
+        public override StyleType Type => StyleType.FillerTriangulation;
+
+        float _minAngle;
+        float _minLength;
+        float _maxLength;
+        public float MinAngle
+        {
+            get => _minAngle;
+            set
+            {
+                _minAngle = value;
+                StyleChanged();
+            }
+        }
+        public float MinLength
+        {
+            get => _minLength;
+            set
+            {
+                _minLength = value;
+                StyleChanged();
+            }
+        }
+        public float MaxLength
+        {
+            get => _maxLength;
+            set
+            {
+                _maxLength = value;
+                StyleChanged();
+            }
+        }
+
+        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float minAngle, float minLength, float maxLength) : base(color, width, medianOffset) 
+        {
+            MinAngle = MinAngle;
+            MinLength = minLength;
+            MaxLength = maxLength;
+        }
+
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is TriangulationFillerStyle triangulationTarget)
+            {
+                triangulationTarget.MinAngle = MinAngle;
+                triangulationTarget.MinLength = MinLength;
+                triangulationTarget.MaxLength = MaxLength;
+            }
+        }
+
+        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
+        {
+            var points = trajectories.SelectMany(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr))).ToArray();
+            var polygon = new Poly2Tri.Triangulation.Polygon.Polygon(points.Select(p => new Poly2Tri.Triangulation.Polygon.PolygonPoint(p.x,p.z)));
+            Poly2Tri.P2T.Triangulate(polygon);
+
+            foreach (var tr in polygon.Triangles)
+            {
+                var vertex = tr.Points.Select(p => new Vector3((float)p.X, height, (float)p.Y)).ToArray();
+
+                yield return new MarkupStyleDash(vertex[0], vertex[1], Width, Color);
+                yield return new MarkupStyleDash(vertex[1], vertex[2], Width, Color);
+                yield return new MarkupStyleDash(vertex[2], vertex[0], Width, Color);
+            }
+        }
+        static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
+        {
+            yield return trajectory.StartPosition;
+        }
+
+        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
+            components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
+            return components;
+        }
+        private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            minAngleProperty.Text = "Min angle";
+            minAngleProperty.UseWheel = true;
+            minAngleProperty.WheelStep = 1f;
+            minAngleProperty.CheckMin = true;
+            minAngleProperty.MinValue = 5f;
+            minAngleProperty.CheckMax = true;
+            minAngleProperty.MaxValue = 90f;
+            minAngleProperty.Init();
+            minAngleProperty.Value = triangulationStyle.MinAngle;
+            minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinAngle = value;
+            AddOnHoverLeave(minAngleProperty, onHover, onLeave);
+            return minAngleProperty;
+        }
+        private static FloatPropertyPanel AddMinLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            minAngleProperty.Text = "Min length";
+            minAngleProperty.UseWheel = true;
+            minAngleProperty.WheelStep = 0.1f;
+            minAngleProperty.CheckMin = true;
+            minAngleProperty.MinValue = 1f;
+            minAngleProperty.Init();
+            minAngleProperty.Value = triangulationStyle.MinLength;
+            minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinLength = value;
+            AddOnHoverLeave(minAngleProperty, onHover, onLeave);
+            return minAngleProperty;
+        }
+        private static FloatPropertyPanel AddMaxLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            minAngleProperty.Text = "Max length";
+            minAngleProperty.UseWheel = true;
+            minAngleProperty.WheelStep = 0.1f;
+            minAngleProperty.CheckMin = true;
+            minAngleProperty.MinValue = 1f;
+            minAngleProperty.Init();
+            minAngleProperty.Value = triangulationStyle.MaxLength;
+            minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MaxLength = value;
+            AddOnHoverLeave(minAngleProperty, onHover, onLeave);
+            return minAngleProperty;
+        }
+
+        public override FillerStyle CopyFillerStyle() => new TriangulationFillerStyle(Color, Width, MedianOffset, MinAngle, MinLength, MaxLength);
     }
 }

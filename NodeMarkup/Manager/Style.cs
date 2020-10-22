@@ -284,6 +284,9 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Chevron))]
             FillerChevron,
 
+            [Description("Triangulation")]
+            FillerTriangulation,
+
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = Markup.Item.Crosswalk,
@@ -340,6 +343,9 @@ namespace NodeMarkup.Manager
 
         public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) 
             : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
+
+        public MarkupStyleDash(Vector3 start, Vector3 end, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+            : this(start, end, end - start, (end - start).magnitude, width, color, materialType) { }
     }
     public class StyleTemplate : IDeletable, IToXml
     {

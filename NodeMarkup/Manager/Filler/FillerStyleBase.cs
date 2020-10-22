@@ -32,6 +32,7 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            {FillerType.Triangulation, new TriangulationFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
@@ -341,6 +342,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Chevron))]
             Chevron = StyleType.FillerChevron,
+
+            [Description("Triangulation")]
+            Triangulation = StyleType.FillerTriangulation,
         }
     }
 }
