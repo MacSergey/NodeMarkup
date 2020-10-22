@@ -61,19 +61,14 @@ namespace NodeMarkup.Manager
 
         public static T GetDefault<T>(StyleType type) where T : Style
         {
-            switch (type & StyleType.GroupMask)
+            return (type & StyleType.GroupMask) switch
             {
-                case StyleType.RegularLine when RegularLineStyle.GetDefault((RegularLineStyle.RegularLineType)(int)type) is T tStyle:
-                    return tStyle;
-                case StyleType.StopLine when StopLineStyle.GetDefault((StopLineStyle.StopLineType)(int)type) is T tStyle:
-                    return tStyle;
-                case StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle:
-                    return tStyle;
-                case StyleType.Crosswalk when CrosswalkStyle.GetDefault((CrosswalkStyle.CrosswalkType)(int)type) is T tStyle:
-                    return tStyle;
-                default:
-                    return null;
-            }
+                StyleType.RegularLine when RegularLineStyle.GetDefault((RegularLineStyle.RegularLineType)(int)type) is T tStyle => tStyle,
+                StyleType.StopLine when StopLineStyle.GetDefault((StopLineStyle.StopLineType)(int)type) is T tStyle => tStyle,
+                StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle => tStyle,
+                StyleType.Crosswalk when CrosswalkStyle.GetDefault((CrosswalkStyle.CrosswalkType)(int)type) is T tStyle => tStyle,
+                _ => null,
+            };
         }
 
         public static string XmlName { get; } = "S";
