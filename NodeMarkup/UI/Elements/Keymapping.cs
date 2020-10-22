@@ -14,7 +14,6 @@ namespace NodeMarkup.UI
     {
         private static readonly string keyBindingTemplate = "KeyBindingTemplate";
         private SavedInputKey m_EditingBinding;
-        private string m_EditingBindingCategory;
         private int count;
 
         public void AddKeymapping(Shortcut shortcut)
@@ -36,8 +35,6 @@ namespace NodeMarkup.UI
             uibutton.text = shortcut.ToString();
             uibutton.objectUserData = shortcut.InputKey;
         }
-        private void OnEnable() { }
-        private void OnDisable() { }
         private void OnLocaleChanged() => RefreshBindableInputs();
         private bool IsModifierKey(KeyCode code) => code == KeyCode.LeftControl || code == KeyCode.RightControl || code == KeyCode.LeftShift || code == KeyCode.RightShift || code == KeyCode.LeftAlt || code == KeyCode.RightAlt;
         private bool IsControlDown() => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
@@ -46,17 +43,17 @@ namespace NodeMarkup.UI
         private bool IsUnbindableMouseButton(UIMouseButton code) => code == UIMouseButton.Left || code == UIMouseButton.Right;
         private KeyCode ButtonToKeycode(UIMouseButton button)
         {
-            switch (button)
+            return button switch
             {
-                case UIMouseButton.Left: return KeyCode.Mouse0;
-                case UIMouseButton.Right: return KeyCode.Mouse1;
-                case UIMouseButton.Middle: return KeyCode.Mouse2;
-                case UIMouseButton.Special0: return KeyCode.Mouse3;
-                case UIMouseButton.Special1: return KeyCode.Mouse4;
-                case UIMouseButton.Special2: return KeyCode.Mouse5;
-                case UIMouseButton.Special3: return KeyCode.Mouse6;
-                default: return KeyCode.None;
-            }
+                UIMouseButton.Left => KeyCode.Mouse0,
+                UIMouseButton.Right => KeyCode.Mouse1,
+                UIMouseButton.Middle => KeyCode.Mouse2,
+                UIMouseButton.Special0 => KeyCode.Mouse3,
+                UIMouseButton.Special1 => KeyCode.Mouse4,
+                UIMouseButton.Special2 => KeyCode.Mouse5,
+                UIMouseButton.Special3 => KeyCode.Mouse6,
+                _ => KeyCode.None,
+            };
         }
         private void OnBindingKeyDown(UIComponent comp, UIKeyEventParameter p)
         {
@@ -73,7 +70,6 @@ namespace NodeMarkup.UI
                 m_EditingBinding.value = value;
                 (p.source as UITextComponent).text = m_EditingBinding.ToLocalizedString("KEYNAME");
                 m_EditingBinding = null;
-                m_EditingBindingCategory = string.Empty;
             }
         }
         private void OnBindingMouseDown(UIComponent comp, UIMouseEventParameter p)
@@ -82,7 +78,6 @@ namespace NodeMarkup.UI
             {
                 p.Use();
                 m_EditingBinding = (SavedInputKey)p.source.objectUserData;
-                m_EditingBindingCategory = p.source.stringUserData;
                 UIButton uibutton = p.source as UIButton;
                 uibutton.buttonsMask = (UIMouseButton.Left | UIMouseButton.Right | UIMouseButton.Middle | UIMouseButton.Special0 | UIMouseButton.Special1 | UIMouseButton.Special2 | UIMouseButton.Special3);
                 uibutton.text = "Press any key";
@@ -100,7 +95,6 @@ namespace NodeMarkup.UI
                 uibutton2.text = m_EditingBinding.ToLocalizedString("KEYNAME");
                 uibutton2.buttonsMask = UIMouseButton.Left;
                 m_EditingBinding = null;
-                m_EditingBindingCategory = string.Empty;
             }
         }
         private void RefreshBindableInputs()
@@ -120,33 +114,6 @@ namespace NodeMarkup.UI
                 if (uilabel != null)
                 {
                     uilabel.text = uilabel.stringUserData;
-                }
-            }
-        }
-        internal InputKey GetDefaultEntry(string entryName)
-        {
-            FieldInfo field = typeof(DefaultSettings).GetField(entryName, BindingFlags.Static | BindingFlags.Public);
-            if (field == null)
-            {
-                return 0;
-            }
-            object value = field.GetValue(null);
-            if (value is InputKey)
-            {
-                return (InputKey)value;
-            }
-            return 0;
-        }
-        private void RefreshKeyMapping()
-        {
-            UIComponent[] componentsInChildren = base.component.GetComponentsInChildren<UIComponent>();
-            for (int i = 0; i < componentsInChildren.Length; i++)
-            {
-                UITextComponent uitextComponent = componentsInChildren[i].Find<UITextComponent>("Binding");
-                SavedInputKey savedInputKey = (SavedInputKey)uitextComponent.objectUserData;
-                if (m_EditingBinding != savedInputKey)
-                {
-                    uitextComponent.text = savedInputKey.ToLocalizedString("KEYNAME");
                 }
             }
         }

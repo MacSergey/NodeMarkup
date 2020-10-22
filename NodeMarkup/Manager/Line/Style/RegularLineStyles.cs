@@ -93,7 +93,7 @@ namespace NodeMarkup.Manager
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
-                components.Add(AddAlignmentProperty(this, parent, onHover, onLeave));
+                components.Add(AddAlignmentProperty(this, parent));
             return components;
         }
         public override XElement ToXml()
@@ -255,7 +255,7 @@ namespace NodeMarkup.Manager
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
-                components.Add(AddAlignmentProperty(this, parent, onHover, onLeave));
+                components.Add(AddAlignmentProperty(this, parent));
             return components;
         }
         public override XElement ToXml()

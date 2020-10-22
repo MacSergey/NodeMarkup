@@ -123,8 +123,8 @@ namespace NodeMarkup.UI.Editors
 
             RefreshItem();
         }
-        private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (e) => SetStyle(rulePanel, e)));
-        private bool SetStyle(RulePanel rulePanel, Event e)
+        private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (_) => SetStyle(rulePanel)));
+        private bool SetStyle(RulePanel rulePanel)
         {
             var style = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
             rulePanel.Style.SelectedObject = style != Style.StyleType.EmptyLine ? style : (Style.StyleType)(int)RegularLineStyle.RegularLineType.Dashed;

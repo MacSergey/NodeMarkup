@@ -129,7 +129,7 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(spaceProperty, onHover, onLeave);
             return spaceProperty;
         }
-        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
         {
             var alignmentProperty = parent.AddUIComponent<LineAlignmentPropertyPanel>();
             alignmentProperty.Text = Localize.StyleOption_Alignment;

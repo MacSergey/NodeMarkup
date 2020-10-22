@@ -95,17 +95,14 @@ namespace NodeMarkup.UI.Editors
         public event Action OnCopy;
         public event Action OnPaste;
 
-        SimpleHeaderButton SaveTemplate { get;}
         ApplyTemplateHeaderButton ApplyTemplate { get; }
-        SimpleHeaderButton Copy { get; }
-        SimpleHeaderButton Paste { get; }
 
         public StyleHeaderPanel()
         {
-            SaveTemplate = Content.AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
+            Content.AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
             ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(HeaderButton.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            Copy = Content.AddButton(HeaderButton.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
-            Paste = Content.AddButton(HeaderButton.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
+            Content.AddButton(HeaderButton.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
+            Content.AddButton(HeaderButton.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
@@ -124,12 +121,11 @@ namespace NodeMarkup.UI.Editors
         public event Action OnDuplicate;
 
         HeaderButton SetAsDefaultButton { get; }
-        HeaderButton DuplicateButton { get; }
 
         public TemplateHeaderPanel()
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
-            DuplicateButton = Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
         }
         public void Init(bool isDefault)
         {

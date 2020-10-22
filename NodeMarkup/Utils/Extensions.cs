@@ -89,7 +89,6 @@ namespace NodeMarkup.Utils
         }
 
         private static NetManager NetManager => Singleton<NetManager>.instance;
-        private static RenderManager RenderManager => Singleton<RenderManager>.instance;
         public static IEnumerable<NetSegment> Segments(this NetNode node)
         {
             for (var i = 0; i < 8; i += 1)
