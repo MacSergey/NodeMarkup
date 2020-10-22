@@ -3,6 +3,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -42,16 +43,7 @@ namespace NodeMarkup.Manager
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
         public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
 
-        public IEnumerable<ILineTrajectory> Borders
-        {
-            get
-            {
-                if (Start.GetBorder(out ILineTrajectory startTrajectory))
-                    yield return startTrajectory;
-                if (End.GetBorder(out ILineTrajectory endTrajectory))
-                    yield return endTrajectory;
-            }
-        }
+        public LineBorders Borders => new LineBorders(this);
 
         public string XmlSection => XmlName;
 
@@ -477,6 +469,44 @@ namespace NodeMarkup.Manager
         {
             public bool Equals(MarkupLinePair x, MarkupLinePair y) => (x.First == y.First && x.Second == y.Second) || (x.First == y.Second && x.Second == y.First);
             public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
+        }
+    }
+    public class LineBorders : IEnumerable<ILineTrajectory>
+    {
+        public Vector3 Center { get; }
+        public List<ILineTrajectory> Borders { get; }
+        public bool IsEmpty => !Borders.Any();
+        public LineBorders(MarkupLine line)
+        {
+            Center = line.Markup.Position;
+            Borders = GetBorders(line).ToList();
+        }
+        public IEnumerable<ILineTrajectory> GetBorders(MarkupLine line)
+        {
+            if (line.Start.GetBorder(out ILineTrajectory startTrajectory))
+                yield return startTrajectory;
+            if (line.End.GetBorder(out ILineTrajectory endTrajectory))
+                yield return endTrajectory;
+        }
+
+        public IEnumerator<ILineTrajectory> GetEnumerator() => Borders.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public StraightTrajectory[] GetVertex(MarkupStyleDash dash)
+        {
+            var dirX = dash.Angle.Direction();
+            var dirY = dirX.Turn90(true);
+
+            dirX *= (dash.Length / 2);
+            dirY *= (dash.Width / 2);
+
+            return new StraightTrajectory[]
+            {
+                new StraightTrajectory(Center, dash.Position + dirX + dirY),
+                new StraightTrajectory(Center, dash.Position - dirX + dirY),
+                new StraightTrajectory(Center, dash.Position + dirX - dirY),
+                new StraightTrajectory(Center, dash.Position - dirX - dirY),
+            };
         }
     }
 }

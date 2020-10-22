@@ -16,9 +16,6 @@ namespace NodeMarkup.Manager
         public static float MinLength { get; } = 1f;
         private static int MaxDepth => 5;
 
-        public static IEnumerable<MarkupStyleDash> CalculateSolid(MarkupLine line, ILineTrajectory trajectory, SolidGetter calculateDashes)
-            => CalculateSolid(0, trajectory, trajectory.DeltaAngle, calculateDashes);
-
         public static IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, SolidGetter calculateDashes)
             => CalculateSolid(0, trajectory, trajectory.DeltaAngle, calculateDashes);
 
@@ -47,34 +44,6 @@ namespace NodeMarkup.Manager
 
             foreach (var dash in calculateDashes(trajectory))
                 yield return dash;
-        }
-
-        public static IEnumerable<MarkupStyleDash> CalculateDashed(MarkupLine line, ILineTrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
-        {
-            var borders = line.Borders.ToArray();
-
-            foreach (var dash in CalculateDashed(trajectory, dashLength, spaceLength, calculateDashes))
-            {
-                if (!borders.Any())
-                    yield return dash;
-                else
-                {
-                    var dirX = dash.Angle.Direction();
-                    var dirY = dirX.Turn90(true);
-
-                    var vertex = new StraightTrajectory[]
-                    {
-                        new StraightTrajectory(line.Markup.Position, dash.Position + dirX * (dash.Length / 2) + dirY * (dash.Width / 2)),
-                        new StraightTrajectory(line.Markup.Position, dash.Position + dirX * (dash.Length / 2) - dirY * (dash.Width / 2)),
-                        new StraightTrajectory(line.Markup.Position, dash.Position - dirX * (dash.Length / 2) + dirY * (dash.Width / 2)),
-                        new StraightTrajectory(line.Markup.Position, dash.Position - dirX * (dash.Length / 2) - dirY * (dash.Width / 2)),
-                    };
-
-                    var isVisible = !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
-
-                    yield return dash;
-                }
-            }
         }
 
         public static IEnumerable<MarkupStyleDash> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
@@ -160,19 +129,29 @@ namespace NodeMarkup.Manager
 
             return dashesT;
         }
+        public static bool CalculateDashedDash(LineBorders borders, ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color, out MarkupStyleDash dash)
+        {
+            dash = CalculateDashedDash(trajectory, startT, endT, dashLength, offset, width, color);
 
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+            if (borders.IsEmpty)
+                return true;
+
+            var vertex = borders.GetVertex(dash);
+            return !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
+
+        }
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color)
         {
             if (offset == 0)
-                return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color, materialType: materialType);
+                return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
             else
             {
                 var startOffset = trajectory.Tangent(startT).Turn90(true).normalized * offset;
                 var endOffset = trajectory.Tangent(endT).Turn90(true).normalized * offset;
-                return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color, materialType: materialType);
+                return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null, MaterialType materialType = MaterialType.RectangleLines)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -180,12 +159,55 @@ namespace NodeMarkup.Manager
             startPosition += startOffset;
             endPosition += endOffset;
 
-            if (angle == null)
-                return new MarkupStyleDash(startPosition, endPosition, endPosition - startPosition, dashLength, width, color, materialType);
-            else
-                return new MarkupStyleDash(startPosition, endPosition, angle.Value, dashLength, width, color, materialType);
+            var dir = angle?.Direction() ?? (endPosition - startPosition);
+
+            return new MarkupStyleDash(startPosition, endPosition, dir, dashLength, width, color);
         }
 
+        public static bool CalculateSolidDash(LineBorders borders, ILineTrajectory trajectory, float offset, float width, Color color, out MarkupStyleDash dash)
+        {
+            dash = CalculateSolidDash(trajectory, offset, width, color);
+
+            if (borders.IsEmpty)
+                return true;
+
+            var vertex = borders.GetVertex(dash);
+
+            var from = 0f;
+            var to = 1f;
+
+            foreach (var border in borders)
+            {
+                for (var i = 0; i < vertex.Length; i += 2)
+                {
+                    var start = MarkupIntersect.CalculateSingle(border, vertex[i]);
+                    var end = MarkupIntersect.CalculateSingle(border, vertex[i + 1]);
+
+                    if (start.IsIntersect && end.IsIntersect)
+                        return false;
+
+                    if (!start.IsIntersect && !end.IsIntersect)
+                        continue;
+
+                    var intersect = MarkupIntersect.CalculateSingle(border, new StraightTrajectory(vertex[i].EndPosition, vertex[i + 1].EndPosition));
+                    if(intersect.IsIntersect)
+                    {
+                        if (start.IsIntersect)
+                            from = Mathf.Max(from, intersect.SecondT);
+                        else if(end.IsIntersect)
+                            to = Mathf.Min(to, intersect.SecondT);
+                    }
+                }
+            }
+
+            if(from != 0f || to != 1f)
+            {
+                var dir = dash.Angle.Direction();
+                var line = new StraightTrajectory(dash.Position + dir * (dash.Length / 2), dash.Position - dir * (dash.Length / 2)).Cut(from, to);
+                dash = new MarkupStyleDash(line.StartPosition, line.EndPosition, line.Direction, dash.Width, dash.Color);
+            }
+            return true;
+        }
         public static MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, float offset, float width, Color color)
         {
             if (offset == 0)
