@@ -9,13 +9,20 @@ namespace NodeMarkup.Manager
 {
     public static class StyleHelper
     {
+        public delegate IEnumerable<MarkupStyleDash> SolidGetter(ILineTrajectory trajectory);
+        public delegate IEnumerable<MarkupStyleDash> DashedGetter(ILineTrajectory trajectory, float startT, float endT);
         public static float MinAngleDelta { get; } = 5f;
         public static float MaxLength { get; } = 10f;
         public static float MinLength { get; } = 1f;
         private static int MaxDepth => 5;
-        public static IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, Func<ILineTrajectory, IEnumerable<MarkupStyleDash>> calculateDashes)
+
+        public static IEnumerable<MarkupStyleDash> CalculateSolid(MarkupLine line, ILineTrajectory trajectory, SolidGetter calculateDashes)
             => CalculateSolid(0, trajectory, trajectory.DeltaAngle, calculateDashes);
-        private static IEnumerable<MarkupStyleDash> CalculateSolid(int depth, ILineTrajectory trajectory, float deltaAngle, Func<ILineTrajectory, IEnumerable<MarkupStyleDash>> calculateDashes)
+
+        public static IEnumerable<MarkupStyleDash> CalculateSolid(ILineTrajectory trajectory, SolidGetter calculateDashes)
+            => CalculateSolid(0, trajectory, trajectory.DeltaAngle, calculateDashes);
+
+        private static IEnumerable<MarkupStyleDash> CalculateSolid(int depth, ILineTrajectory trajectory, float deltaAngle, SolidGetter calculateDashes)
         {
             var length = trajectory.Magnitude;
 
@@ -42,7 +49,35 @@ namespace NodeMarkup.Manager
                 yield return dash;
         }
 
-        public static IEnumerable<MarkupStyleDash> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, Func<ILineTrajectory, float, float, IEnumerable<MarkupStyleDash>> calculateDashes)
+        public static IEnumerable<MarkupStyleDash> CalculateDashed(MarkupLine line, ILineTrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
+        {
+            var borders = line.Borders.ToArray();
+
+            foreach (var dash in CalculateDashed(trajectory, dashLength, spaceLength, calculateDashes))
+            {
+                if (!borders.Any())
+                    yield return dash;
+                else
+                {
+                    var dirX = dash.Angle.Direction();
+                    var dirY = dirX.Turn90(true);
+
+                    var vertex = new StraightTrajectory[]
+                    {
+                        new StraightTrajectory(line.Markup.Position, dash.Position + dirX * (dash.Length / 2) + dirY * (dash.Width / 2)),
+                        new StraightTrajectory(line.Markup.Position, dash.Position + dirX * (dash.Length / 2) - dirY * (dash.Width / 2)),
+                        new StraightTrajectory(line.Markup.Position, dash.Position - dirX * (dash.Length / 2) + dirY * (dash.Width / 2)),
+                        new StraightTrajectory(line.Markup.Position, dash.Position - dirX * (dash.Length / 2) - dirY * (dash.Width / 2)),
+                    };
+
+                    var isVisible = !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
+
+                    yield return dash;
+                }
+            }
+        }
+
+        public static IEnumerable<MarkupStyleDash> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
         {
             List<DashT> dashesT;
             switch (trajectory)

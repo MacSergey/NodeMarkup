@@ -169,27 +169,6 @@ namespace NodeMarkup.Manager
         public override LineStyle CopyLineStyle() => CopyRegularLineStyle();
         public abstract RegularLineStyle CopyRegularLineStyle();
 
-        protected bool CheckDash(MarkupLine line, ILineTrajectory[] borders, MarkupStyleDash dash)
-        {
-            if (!borders.Any())
-                return true;
-
-            var dirX = dash.Angle.Direction();
-            var dirY = dirX.Turn90(true);
-
-            var vertex = new StraightTrajectory[]
-            {
-                new StraightTrajectory(line.Markup.Position, dash.Position + dirX * (dash.Length / 2) + dirY * (dash.Width / 2)),
-                new StraightTrajectory(line.Markup.Position, dash.Position + dirX * (dash.Length / 2) - dirY * (dash.Width / 2)),
-                new StraightTrajectory(line.Markup.Position, dash.Position - dirX * (dash.Length / 2) + dirY * (dash.Width / 2)),
-                new StraightTrajectory(line.Markup.Position, dash.Position - dirX * (dash.Length / 2) - dirY * (dash.Width / 2)),
-            };
-
-            var isVisible = !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
-
-            return isVisible;
-        }
-
         public enum RegularLineType
         {
             [Description(nameof(Localize.LineStyle_Solid))]

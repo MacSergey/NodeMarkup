@@ -23,7 +23,8 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => StyleHelper.CalculateSolid(trajectory, CalculateDashes);
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+            => StyleHelper.CalculateSolid(line, trajectory, CalculateDashes);
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory)
         {
             yield return StyleHelper.CalculateSolidDash(trajectory, 0f, Width, Color);
@@ -77,12 +78,14 @@ namespace NodeMarkup.Manager
                 StyleAlignment.Left => 2 * Offset,
                 StyleAlignment.Centre => Offset,
                 StyleAlignment.Right => 0,
+                _ => 0,
             };
             var secondOffset = Alignment switch
             {
                 StyleAlignment.Left => 0,
                 StyleAlignment.Centre => -Offset,
                 StyleAlignment.Right => -2 * Offset,
+                _ => 0,
             };
 
             yield return StyleHelper.CalculateSolidDash(trajectory, firstOffset, Width, Color);
@@ -155,15 +158,7 @@ namespace NodeMarkup.Manager
         }
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
-        {
-            var borders = line.Borders.ToArray();
-
-            foreach(var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes))
-            {
-                if (CheckDash(line, borders, dash))
-                    yield return dash;
-            }
-        }
+            => StyleHelper.CalculateDashed(line, trajectory, DashLength, SpaceLength, CalculateDashes);
 
         protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
         {
@@ -239,12 +234,14 @@ namespace NodeMarkup.Manager
                 StyleAlignment.Left => 2 * Offset,
                 StyleAlignment.Centre => Offset,
                 StyleAlignment.Right => 0,
+                _ => 0,
             };
             var secondOffset = Alignment switch
             {
                 StyleAlignment.Left => 0,
                 StyleAlignment.Centre => -Offset,
                 StyleAlignment.Right => -2 * Offset,
+                _ => 0,
             };
 
             yield return StyleHelper.CalculateDashedDash(trajectory, startT, endT, DashLength, firstOffset, Width, Color);
@@ -354,14 +351,11 @@ namespace NodeMarkup.Manager
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
             var borders = line.Borders.ToArray();
 
-            foreach (var dash in StyleHelper.CalculateSolid(trajectory, CalculateSolidDash))
-                yield return dash;
-
-            foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
-            {
-                if (CheckDash(line, borders, dash))
+            foreach (var dash in StyleHelper.CalculateSolid(line, trajectory, CalculateSolidDash))
                     yield return dash;
-            }
+
+            foreach (var dash in StyleHelper.CalculateDashed(line, trajectory, DashLength, SpaceLength, CalculateDashedDash))
+                    yield return dash;
 
             IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
             {
@@ -482,13 +476,7 @@ namespace NodeMarkup.Manager
         }
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
-            var borders = line.Borders.ToArray();
-
-            foreach (var dash in StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes))
-            {
-                if(CheckDash(line, borders, dash))
-                    yield return dash;
-            }
+            return StyleHelper.CalculateDashed(line, trajectory, Base, Space, CalculateDashes);
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
             {
