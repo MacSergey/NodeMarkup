@@ -20,27 +20,22 @@ namespace NodeMarkup.Tools
             else
                 return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
         }
-        public override bool ProcessShortcuts(Event e)
+        public override void OnUpdate()
         {
+            base.OnUpdate();
+
             if (IsSelectPoint)
-                return false;
-            else if (base.ProcessShortcuts(e))
-                return true;
+                return;
             else if (NodeMarkupTool.OnlyAltIsPressed)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
                 if (Tool.Mode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
-                return true;
             }
             else if (NodeMarkupTool.OnlyShiftIsPressed)
-            {
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
-                return true;
-            }
-            else
-                return false;
         }
+
         public override void OnMouseDown(Event e)
         {
             if (!IsSelectPoint && IsHoverPoint && NodeMarkupTool.CtrlIsPressed)

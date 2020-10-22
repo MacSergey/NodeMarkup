@@ -214,10 +214,5 @@ namespace NodeMarkup.UI.Panel
         }
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
-
-        private void OnClear() => Tool.DeleteAllMarking();
-        private void OnCopy() => Tool.CopyMarkup();
-        private void OnPaste() => Tool.PasteMarkup();
-        private void OnEdit() => Tool.EditMarkup();
     } 
 }

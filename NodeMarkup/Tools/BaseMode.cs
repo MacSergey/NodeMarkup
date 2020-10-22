@@ -27,7 +27,7 @@ namespace NodeMarkup.Tools
         public virtual string GetToolInfo() => null;
 
         public virtual void OnGUI(Event e) { }
-        public virtual bool ProcessShortcuts(Event e) => false;
+        //public virtual bool ProcessShortcuts(Event e) => false;
         public virtual void OnMouseDown(Event e) { }
         public virtual void OnMouseDrag(Event e) { }
         public virtual void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
@@ -56,14 +56,18 @@ namespace NodeMarkup.Tools
 
     public enum ToolModeType
     {
-        SelectNode,
-        MakeLine,
-        MakeCrosswalk,
-        MakeFiller,
-        PanelAction,
-        PasteEntersOrder,
-        EditEntersOrder,
-        PointsOrder,
-        DragPoint,
+        None = 0,
+
+        SelectNode = 1,
+        MakeLine = 2,
+        MakeCrosswalk = 4,
+        MakeFiller = 8,
+        PanelAction = 16,
+        PasteEntersOrder = 32,
+        EditEntersOrder = 64,
+        PointsOrder = 128,
+        DragPoint = 256,
+
+        MakeItem = MakeLine | MakeCrosswalk
     }
 }

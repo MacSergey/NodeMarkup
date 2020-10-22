@@ -20,20 +20,13 @@ namespace NodeMarkup.Tools
             else
                 return Localize.Tool_InfoSelectCrosswalkStartPoint;
         }
-        public override bool ProcessShortcuts(Event e)
+
+        public override void OnUpdate()
         {
-            if (IsSelectPoint)
-                return false;
-            else if (base.ProcessShortcuts(e))
-                return true;
-            else if (!NodeMarkupTool.ShiftIsPressed)
-            {
+            base.OnUpdate();
+
+            if (!IsSelectPoint && !NodeMarkupTool.ShiftIsPressed)
                 Tool.SetDefaultMode();
-                SetTarget();
-                return true;
-            }
-            else
-                return false;
         }
         public override void OnPrimaryMouseClicked(Event e)
         {

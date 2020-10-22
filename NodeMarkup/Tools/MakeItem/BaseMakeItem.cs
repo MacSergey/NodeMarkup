@@ -65,49 +65,6 @@ namespace NodeMarkup.Tools
             else
                 return exist ? Localize.Tool_InfoDeleteLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
         }
-        public override bool ProcessShortcuts(Event e)
-        {
-            if (NodeMarkupTool.AddFillerShortcut.IsPressed(e))
-            {
-                Tool.SetMode(ToolModeType.MakeFiller);
-                if (Tool.Mode is MakeFillerToolMode fillerToolMode)
-                    fillerToolMode.DisableByAlt = false;
-                return true;
-            }
-
-            if (NodeMarkupTool.DeleteAllShortcut.IsPressed(e))
-            {
-                Tool.DeleteAllMarking();
-                return true;
-            }
-            if (NodeMarkupTool.ResetOffsetsShortcut.IsPressed(e))
-            {
-                Tool.ResetAllOffsets();
-                return true;
-            }
-            if (NodeMarkupTool.CopyMarkingShortcut.IsPressed(e))
-            {
-                Tool.CopyMarkup();
-                return true;
-            }
-            if (NodeMarkupTool.PasteMarkingShortcut.IsPressed(e))
-            {
-                Tool.PasteMarkup();
-                return true;
-            }
-            if (NodeMarkupTool.EditMarkingShortcut.IsPressed(e))
-            {
-                Tool.EditMarkup();
-                return true;
-            }
-            if (NodeMarkupTool.CreateEdgeLinesShortcut.IsPressed(e))
-            {
-                Tool.CreateEdgeLines();
-                return true;
-            }
-
-            return Panel?.OnShortcut(e) == true;
-        }
         public override void OnPrimaryMouseClicked(Event e)
         {
             SelectPoint = HoverPoint;

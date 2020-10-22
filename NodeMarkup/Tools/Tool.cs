@@ -24,15 +24,29 @@ namespace NodeMarkup.Tools
         #region PROPERTIES
 
         #region STATIC
-        public static SavedInputKey ActivationShortcut { get; } = new SavedInputKey(nameof(ActivationShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.L, true, false, false), true);
-        public static SavedInputKey DeleteAllShortcut { get; } = new SavedInputKey(nameof(DeleteAllShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.D, true, true, false), true);
-        public static SavedInputKey ResetOffsetsShortcut { get; } = new SavedInputKey(nameof(ResetOffsetsShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.R, true, true, false), true);
-        public static SavedInputKey AddRuleShortcut { get; } = new SavedInputKey(nameof(AddRuleShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.A, true, true, false), true);
-        public static SavedInputKey AddFillerShortcut { get; } = new SavedInputKey(nameof(AddFillerShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.F, true, true, false), true);
-        public static SavedInputKey CopyMarkingShortcut { get; } = new SavedInputKey(nameof(CopyMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.C, true, true, false), true);
-        public static SavedInputKey PasteMarkingShortcut { get; } = new SavedInputKey(nameof(PasteMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.V, true, true, false), true);
-        public static SavedInputKey EditMarkingShortcut { get; } = new SavedInputKey(nameof(EditMarkingShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.E, true, true, false), true);
-        public static SavedInputKey CreateEdgeLinesShortcut { get; } = new SavedInputKey(nameof(CreateEdgeLinesShortcut), UI.Settings.SettingsFile, SavedInputKey.Encode(KeyCode.W, true, true, false), true);
+        public static Shortcut DeleteAllShortcut { get; } = new Shortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
+        public static Shortcut ResetOffsetsShortcut { get; } = new Shortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
+        public static Shortcut AddFillerShortcut { get; } = new Shortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => Instance.StartCreateFiller());
+        public static Shortcut CopyMarkingShortcut { get; } = new Shortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => Instance.CopyMarkup());
+        public static Shortcut PasteMarkingShortcut { get; } = new Shortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => Instance.PasteMarkup());
+        public static Shortcut EditMarkingShortcut { get; } = new Shortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => Instance.EditMarkup());
+        public static Shortcut CreateEdgeLinesShortcut { get; } = new Shortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
+        public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
+        public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
+
+        public static IEnumerable<Shortcut> Shortcuts
+        {
+            get
+            {
+                yield return DeleteAllShortcut;
+                yield return ResetOffsetsShortcut;
+                yield return AddFillerShortcut;
+                yield return CopyMarkingShortcut;
+                yield return PasteMarkingShortcut;
+                yield return EditMarkingShortcut;
+                yield return CreateEdgeLinesShortcut;
+            }
+        }
 
         public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -54,6 +68,7 @@ namespace NodeMarkup.Tools
         #endregion
 
         public BaseToolMode Mode { get; private set; }
+        public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
         private Dictionary<ToolModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, BaseToolMode>();
         public Markup Markup { get; private set; }
 
@@ -263,7 +278,7 @@ namespace NodeMarkup.Tools
         {
             Mode.OnGUI(e);
 
-            if (Mode.ProcessShortcuts(e))
+            if (Shortcuts.Any(s => s.IsPressed(e)) || Panel?.OnShortcut(e) == true)
                 return;
 
             switch (e.type)
@@ -289,8 +304,13 @@ namespace NodeMarkup.Tools
                     break;
             }
         }
-
-        public void DeleteAllMarking()
+        private void StartCreateFiller()
+        {
+            SetMode(ToolModeType.MakeFiller);
+            if (Mode is MakeFillerToolMode fillerToolMode)
+                fillerToolMode.DisableByAlt = false;
+        }
+        private void DeleteAllMarking()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllMarking)}");
 
@@ -306,7 +326,7 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
-        public void ResetAllOffsets()
+        private void ResetAllOffsets()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ResetAllOffsets)}");
 
@@ -364,9 +384,9 @@ namespace NodeMarkup.Tools
             return $"{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
         }
 
-        public void CopyMarkup() => MarkupBuffer = new MarkupBuffer(Markup);
+        private void CopyMarkup() => MarkupBuffer = new MarkupBuffer(Markup);
         public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
-        public void PasteMarkup()
+        private void PasteMarkup()
         {
             if (UI.Settings.DeleteWarnings)
             {
@@ -384,12 +404,12 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
-        public void EditMarkup()
+        private void EditMarkup()
         {
             CopyMarkup();
             SetMode(ToolModeType.EditEntersOrder);
         }
-        public void CreateEdgeLines()
+        private void CreateEdgeLines()
         {
             foreach (var enter in Markup.Enters)
                 Markup.AddConnection(new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint), Style.StyleType.EmptyLine);
@@ -470,7 +490,7 @@ namespace NodeMarkup.Tools
     {
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
-            if (!UIView.HasModalInput() && !UIView.HasInputFocus() && NodeMarkupTool.ActivationShortcut.IsKeyUp())
+            if (!UIView.HasModalInput() && !UIView.HasInputFocus() && NodeMarkupTool.ActivationShortcut.InputKey.IsKeyUp())
                 NodeMarkupTool.Instance.ToggleTool();
         }
     }

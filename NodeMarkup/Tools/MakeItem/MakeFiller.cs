@@ -25,7 +25,13 @@ namespace NodeMarkup.Tools
             GetFillerPoints();
         }
 
-        public override void OnUpdate() => FillerPointsSelector.OnUpdate();
+        public override void OnUpdate()
+        {
+            if (DisableByAlt && !NodeMarkupTool.AltIsPressed && Contour.IsEmpty)
+                Tool.SetDefaultMode();
+            else
+                FillerPointsSelector.OnUpdate();
+        }
         public override string GetToolInfo()
         {
             if (FillerPointsSelector.IsHoverPoint)
@@ -41,16 +47,6 @@ namespace NodeMarkup.Tools
                 return Localize.Tool_InfoFillerSelectStart;
             else
                 return Localize.Tool_InfoFillerSelectNext;
-        }
-        public override bool ProcessShortcuts(Event e)
-        {
-            if (DisableByAlt && !NodeMarkupTool.AltIsPressed && Contour.IsEmpty)
-            {
-                Tool.SetDefaultMode();
-                return true;
-            }
-            else
-                return false;
         }
         public override void OnPrimaryMouseClicked(Event e)
         {

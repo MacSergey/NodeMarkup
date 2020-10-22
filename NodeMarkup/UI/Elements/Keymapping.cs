@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace NodeMarkup.UI
         private string m_EditingBindingCategory;
         private int count;
 
-        public void AddKeymapping(string label, SavedInputKey savedInputKey)
+        public void AddKeymapping(Shortcut shortcut)
         {
             UIPanel uipanel = component.AttachUIComponent(UITemplateManager.GetAsGameObject(keyBindingTemplate)) as UIPanel;
 
@@ -31,9 +32,9 @@ namespace NodeMarkup.UI
             UIButton uibutton = uipanel.Find<UIButton>("Binding");
             uibutton.eventKeyDown += OnBindingKeyDown;
             uibutton.eventMouseDown += OnBindingMouseDown;
-            uilabel.text = label;
-            uibutton.text = savedInputKey.ToLocalizedString("KEYNAME");
-            uibutton.objectUserData = savedInputKey;
+            uilabel.text = shortcut.Label;
+            uibutton.text = shortcut.ToString();
+            uibutton.objectUserData = shortcut.InputKey;
         }
         private void OnEnable() { }
         private void OnDisable() { }
