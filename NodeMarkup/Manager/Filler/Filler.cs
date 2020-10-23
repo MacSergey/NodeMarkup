@@ -33,7 +33,7 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
-        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
         public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine);
 
         public string XmlSection => XmlName;
@@ -58,7 +58,7 @@ namespace NodeMarkup.Manager
                     fakeLine.Update(true);
             }
         }
-        public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
+        public void RecalculateStyleData() => StyleData = Style.Calculate(this);
 
         public Dependences GetDependences() => new Dependences();
 

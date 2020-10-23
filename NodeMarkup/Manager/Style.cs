@@ -2,6 +2,7 @@
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -284,8 +285,11 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Chevron))]
             FillerChevron,
 
-            [Description("Triangulation")]
-            FillerTriangulation,
+
+            Filler3D = Filler | 0x80,
+
+            [Description("Pavement")]
+            FillerPavement,
 
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
@@ -315,37 +319,6 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
         }
-    }
-
-    public class MarkupStyleDash
-    {
-        public MaterialType MaterialType { get; set; }
-        public Vector3 Position { get; set; }
-        public float Angle { get; set; }
-        public float Length { get; set; }
-        public float Width { get; set; }
-        public Color Color { get; set; }
-
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
-        {
-            Position = position;
-            Angle = angle;
-            Length = length;
-            Width = width;
-            Color = color;
-            MaterialType = materialType;
-        }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) 
-            : this((start + end) / 2, angle, length, width, color, materialType) { }
-
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) 
-            : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
-
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) 
-            : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
-
-        public MarkupStyleDash(Vector3 start, Vector3 end, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
-            : this(start, end, end - start, (end - start).magnitude, width, color, materialType) { }
     }
     public class StyleTemplate : IDeletable, IToXml
     {

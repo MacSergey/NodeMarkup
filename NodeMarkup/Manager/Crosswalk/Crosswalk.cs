@@ -23,7 +23,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
 
-        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
         public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
@@ -102,7 +102,7 @@ namespace NodeMarkup.Manager
             if(!onlySelfUpdate)
                 Markup.Update(this);
         }
-        public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
+        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(Style.Calculate(this));
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             foreach (var trajectory in BorderTrajectories)

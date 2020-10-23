@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IFillerStyle : IStyle, IColorStyle
+    public interface IFillerStyle : IStyle
     {
         float MedianOffset { get; set; }
     }
@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Triangulation, new TriangulationFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
+            {FillerType.Pavement, new TriangulationFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
@@ -69,11 +69,11 @@ namespace NodeMarkup.Manager
         }
         public override Style Copy() => CopyFillerStyle();
         public abstract FillerStyle CopyFillerStyle();
-        public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
+        public virtual IStyleData Calculate(MarkupFiller filler)
         {
             var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
             var rect = GetRect(trajectories, out float height);
-            return GetDashes(trajectories, rect, height);
+            return GetStyleData(trajectories, rect, height);
         }
         public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
@@ -112,7 +112,7 @@ namespace NodeMarkup.Manager
 
             return trajectories.Where(t => t != null).Select(t => t).ToArray();
         }
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height);
+        protected abstract IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect rect, float height);
 
         protected IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
         {
@@ -343,8 +343,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Chevron))]
             Chevron = StyleType.FillerChevron,
 
-            [Description("Triangulation")]
-            Triangulation = StyleType.FillerTriangulation,
+            [Description("Pavement")]
+            Pavement = StyleType.FillerPavement,
         }
     }
 }

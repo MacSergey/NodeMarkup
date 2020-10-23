@@ -35,6 +35,11 @@ namespace NodeMarkup.Manager
     }
     public interface IItem : IUpdate, IDeletable, IRender { }
 
+    public interface IStyleData
+    {
+        IEnumerable<IDrawData> GetDrawData();
+    }
+
     public class Markup : IUpdate<MarkupPoint>, IUpdate<MarkupLine>, IUpdate<MarkupFiller>, IUpdate<MarkupCrosswalk>, IToXml
     {
         #region STATIC
@@ -74,8 +79,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public bool NeedRecalculateBatches { get; set; }
-        public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
+        public bool NeedRecalculateDrawData { get; set; }
+        public List<IDrawData> DrawData { get; private set; } = new List<IDrawData>();
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -292,23 +297,38 @@ namespace NodeMarkup.Manager
         {
             LineIntersects.Clear();
             foreach (var line in Lines)
-                line.RecalculateDashes();
+                line.RecalculateStyleData();
 
             foreach (var filler in Fillers)
-                filler.RecalculateDashes();
+                filler.RecalculateStyleData();
 
             foreach (var crosswalk in Crosswalks)
-                crosswalk.RecalculateDashes();
+                crosswalk.RecalculateStyleData();
 
-            NeedRecalculateBatches = true;
+            NeedRecalculateDrawData = true;
         }
-        public void RecalculateBatches()
+        public void RecalculateDrawData()
         {
             var dashes = new List<MarkupStyleDash>();
-            dashes.AddRange(Lines.SelectMany(l => l.Dashes));
-            dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
-            dashes.AddRange(Crosswalks.SelectMany(c => c.Dashes));
-            RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
+            var drawData = new List<IDrawData>();
+
+            Seporate(Lines.Select(l => l.StyleData));
+            Seporate(Fillers.Select(l => l.StyleData));
+            Seporate(Crosswalks.Select(l => l.StyleData));
+
+            drawData.AddRange(RenderBatch.FromDashes(dashes));
+            DrawData = drawData;
+
+            void Seporate(IEnumerable<IStyleData> stylesData)
+            {
+                foreach(var styleData in stylesData)
+                {
+                    if (styleData is IEnumerable<MarkupStyleDash> styleDashes)
+                        dashes.AddRange(styleDashes);
+                    else
+                        drawData.AddRange(styleData.GetDrawData());
+                }
+            }
         }
 
         #endregion
@@ -323,7 +343,7 @@ namespace NodeMarkup.Manager
             {
                 line = MarkupLine.FromStyle(this, pointPair, style);
                 LinesDictionary[pointPair.Hash] = line;
-                NeedRecalculateBatches = true;
+                NeedRecalculateDrawData = true;
             }
 
             return line;
@@ -470,13 +490,13 @@ namespace NodeMarkup.Manager
         public void AddFiller(MarkupFiller filler)
         {
             FillersList.Add(filler);
-            filler.RecalculateDashes();
-            NeedRecalculateBatches = true;
+            filler.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
         }
         public void RemoveFiller(MarkupFiller filler)
         {
             FillersList.Remove(filler);
-            NeedRecalculateBatches = true;
+            NeedRecalculateDrawData = true;
         }
 
         #endregion
@@ -486,8 +506,8 @@ namespace NodeMarkup.Manager
         public void AddCrosswalk(MarkupCrosswalk crosswalk)
         {
             CrosswalksDictionary[crosswalk.Line] = crosswalk;
-            crosswalk.RecalculateDashes();
-            NeedRecalculateBatches = true;
+            crosswalk.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
         }
         public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
         public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)

@@ -41,7 +41,7 @@ namespace NodeMarkup.Manager
 
         protected ILineTrajectory LineTrajectory { get; private set; }
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
-        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
 
         public LineBorders Borders => new LineBorders(this);
 
@@ -66,7 +66,7 @@ namespace NodeMarkup.Manager
         }
         protected abstract ILineTrajectory CalculateTrajectory();
 
-        public void RecalculateDashes() => Dashes = GetDashes().ToArray();
+        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(GetDashes());
         protected abstract IEnumerable<MarkupStyleDash> GetDashes();
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
@@ -200,7 +200,7 @@ namespace NodeMarkup.Manager
             }
             Update(true);
             if (Visible)
-                RecalculateDashes();
+                RecalculateStyleData();
         }
 
         protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
@@ -240,7 +240,7 @@ namespace NodeMarkup.Manager
         {
             var lineStyle = TemplateManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
             AddRule(lineStyle, false, false);
-            RecalculateDashes();
+            RecalculateStyleData();
         }
         protected override ILineTrajectory CalculateTrajectory()
         {

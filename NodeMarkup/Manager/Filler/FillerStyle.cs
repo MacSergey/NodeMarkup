@@ -11,20 +11,34 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using Poly2Tri;
+using Poly2Tri.Triangulation.Polygon;
 
 namespace NodeMarkup.Manager
 {
-    public interface IPeriodicFiller : IFillerStyle, IWidthStyle
+    public interface IPeriodicFiller : IFillerStyle, IWidthStyle, IColorStyle
     {
         float Step { get; set; }
         float Offset { get; set; }
     }
-    public interface IRotateFiller : IFillerStyle, IWidthStyle
+    public interface IRotateFiller : IFillerStyle, IWidthStyle, IColorStyle
     {
         float Angle { get; set; }
     }
 
-    public abstract class SimpleFillerStyle : FillerStyle, IPeriodicFiller, IRotateFiller
+    public abstract class Filler2DStyle : FillerStyle
+    {
+        public Filler2DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
+
+        protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect rect, float height) => new MarkupStyleDashes(GetDashesEnum(trajectories, rect, height));
+        protected abstract IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height);
+    }
+    public abstract class Filler3DStyle : FillerStyle
+    {
+        public Filler3DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
+    }
+
+    public abstract class SimpleFillerStyle : Filler2DStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         float _angle;
         float _step;
@@ -110,7 +124,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerStripe;
 
         public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
-        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] parts, Rect rect, float height) => GetDashes(parts, Angle, rect, height, Width, Step, Offset);
+        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, Angle, rect, height, Width, Step, Offset);
 
         public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
     }
@@ -121,23 +135,22 @@ namespace NodeMarkup.Manager
         public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
 
         public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
-
-        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] parts, Rect rect, float height)
+        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height)
         {
-            foreach (var dash in GetDashes(parts, Angle, rect, height, Width, Step, Offset))
+            foreach (var dash in GetDashes(trajectories, Angle, rect, height, Width, Step, Offset))
                 yield return dash;
-            foreach (var dash in GetDashes(parts, Angle < 0 ? Angle + 90 : Angle - 90, rect, height, Width, Step, Offset))
+            foreach (var dash in GetDashes(trajectories, Angle < 0 ? Angle + 90 : Angle - 90, rect, height, Width, Step, Offset))
                 yield return dash;
         }
     }
-    public class SolidFillerStyle : FillerStyle
+    public class SolidFillerStyle : Filler2DStyle, IColorStyle
     {
         public static float DefaultSolidWidth { get; } = 0.2f;
 
         public override StyleType Type => StyleType.FillerSolid;
 
         public SolidFillerStyle(Color32 color, float medianOffset) : base(color, DefaultSolidWidth, medianOffset) { }
-        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] parts, Rect rect, float height) => GetDashes(parts, 0f, rect, height, DefaultSolidWidth, 1, 0);
+        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, 0f, rect, height, DefaultSolidWidth, 1, 0);
 
         public override FillerStyle CopyFillerStyle() => new SolidFillerStyle(Color, DefaultOffset);
         public override void CopyTo(Style target)
@@ -155,7 +168,7 @@ namespace NodeMarkup.Manager
             return components;
         }
     }
-    public class ChevronFillerStyle : FillerStyle, IPeriodicFiller
+    public class ChevronFillerStyle : Filler2DStyle, IPeriodicFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
 
@@ -289,7 +302,7 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
+        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height)
         {
             if (trajectories.Length < 3)
                 yield break;
@@ -537,13 +550,15 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class TriangulationFillerStyle : FillerStyle
+    public class TriangulationFillerStyle : Filler3DStyle
     {
-        public override StyleType Type => StyleType.FillerTriangulation;
+        public override StyleType Type => StyleType.FillerPavement;
 
         float _minAngle;
         float _minLength;
         float _maxLength;
+        float _scaleX;
+        float _scaleY;
         public float MinAngle
         {
             get => _minAngle;
@@ -571,12 +586,32 @@ namespace NodeMarkup.Manager
                 StyleChanged();
             }
         }
+        public float ScaleX
+        {
+            get => _scaleX;
+            set
+            {
+                _scaleX = value;
+                StyleChanged();
+            }
+        }
+        public float ScaleY
+        {
+            get => _scaleY;
+            set
+            {
+                _scaleY = value;
+                StyleChanged();
+            }
+        }
 
-        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float minAngle, float minLength, float maxLength) : base(color, width, medianOffset) 
+        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float minAngle, float minLength, float maxLength) : base(color, width, medianOffset)
         {
             MinAngle = MinAngle;
             MinLength = minLength;
             MaxLength = maxLength;
+            ScaleX = 0.05f;
+            ScaleY = 0.023f;
         }
 
         public override void CopyTo(Style target)
@@ -590,24 +625,23 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height)
+        protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect _, float height)
         {
             var points = trajectories.SelectMany(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr))).ToArray();
-            var polygon = new Poly2Tri.Triangulation.Polygon.Polygon(points.Select(p => new Poly2Tri.Triangulation.Polygon.PolygonPoint(p.x,p.z)));
-            Poly2Tri.P2T.Triangulate(polygon);
+            var rect = Rect.MinMaxRect(points.Min(p => p.x), points.Min(p => p.z), points.Max(p => p.x), points.Max(p => p.z));
 
-            foreach (var tr in polygon.Triangles)
-            {
-                var vertex = tr.Points.Select(p => new Vector3((float)p.X, height, (float)p.Y)).ToArray();
+            for (var i = 0; i < points.Length; i += 1)
+                points[i] = new Vector3(points[i].x - rect.center.x, 0, rect.center.y - points[i].z);
 
-                yield return new MarkupStyleDash(vertex[0], vertex[1], Width, Color);
-                yield return new MarkupStyleDash(vertex[1], vertex[2], Width, Color);
-                yield return new MarkupStyleDash(vertex[2], vertex[0], Width, Color);
-            }
+            var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
+            P2T.Triangulate(polygon);
+
+            var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
+            return new MarkupStyleMesh(rect, height, points, triangles, MaterialType.Pavement, ScaleX, ScaleY);
         }
         static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
         {
-            yield return trajectory.StartPosition;
+            yield return new Vector3(trajectory.StartPosition.x, 0, trajectory.StartPosition.z);
         }
 
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -616,6 +650,8 @@ namespace NodeMarkup.Manager
             components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
             components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
+            components.Add(AddScaleXProperty(this, parent, onHover, onLeave));
+            components.Add(AddScaleYProperty(this, parent, onHover, onLeave));
             return components;
         }
         private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
@@ -661,6 +697,30 @@ namespace NodeMarkup.Manager
             minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MaxLength = value;
             AddOnHoverLeave(minAngleProperty, onHover, onLeave);
             return minAngleProperty;
+        }
+        private static FloatPropertyPanel AddScaleXProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var scaleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            scaleProperty.Text = "ScaleX";
+            scaleProperty.UseWheel = true;
+            scaleProperty.WheelStep = 0.01f;
+            scaleProperty.Init();
+            scaleProperty.Value = triangulationStyle.ScaleX;
+            scaleProperty.OnValueChanged += (float value) => triangulationStyle.ScaleX = value;
+            AddOnHoverLeave(scaleProperty, onHover, onLeave);
+            return scaleProperty;
+        }
+        private static FloatPropertyPanel AddScaleYProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var scaleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            scaleProperty.Text = "ScaleY";
+            scaleProperty.UseWheel = true;
+            scaleProperty.WheelStep = 0.01f;
+            scaleProperty.Init();
+            scaleProperty.Value = triangulationStyle.ScaleY;
+            scaleProperty.OnValueChanged += (float value) => triangulationStyle.ScaleY = value;
+            AddOnHoverLeave(scaleProperty, onHover, onLeave);
+            return scaleProperty;
         }
 
         public override FillerStyle CopyFillerStyle() => new TriangulationFillerStyle(Color, Width, MedianOffset, MinAngle, MinLength, MaxLength);

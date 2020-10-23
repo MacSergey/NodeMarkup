@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,18 @@ namespace NodeMarkup.Utils
 {
     public static class RenderHelper
     {
+        public static Dictionary<MaterialType, Material> MaterialLib { get; private set; } = Init();
+        private static Dictionary<MaterialType, Material> Init()
+        {
+            return new Dictionary<MaterialType, Material>()
+            {
+                { MaterialType.RectangleLines, CreateDecalMaterial(CreateTexture(1,1,Color.white))},
+                { MaterialType.RectangleFillers, CreateDecalMaterial(CreateTexture(1,1,Color.white), renderQueue: 2459)},
+                { MaterialType.Triangle, CreateDecalMaterial(CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth.png", 64,64))},
+                { MaterialType.Pavement, CreateRoadMaterial(CreateTexture(64,64,Color.white), CreateTexture(64,64,new Color32(0,0,0,255))) },
+            };
+        }
+
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         static int[] VerticesIdxs { get; } = new int[]
 {
@@ -102,12 +115,12 @@ namespace NodeMarkup.Utils
         }
         public static Color32 VerticesColor(int i) => new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, (byte)(16 * i));
 
-        public static Material CreateMaterial(Texture2D texture, Texture2D aci = null, int renderQueue = 2460)
+        public static Material CreateDecalMaterial(Texture2D texture, Texture2D aci = null, int renderQueue = 2460)
         {
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
                 mainTexture = texture,
-                name = "NodeMarkup",
+                name = "NodeMarkupDecal",
                 color = new Color(1f, 1f, 1f, 1f),
                 doubleSidedGI = false,
                 enableInstancing = false,
@@ -124,6 +137,24 @@ namespace NodeMarkup.Utils
 
             return material;
         }
+        public static Material CreateRoadMaterial(Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
+        {
+            var material = new Material(Shader.Find("Custom/Net/RoadBridge"))
+            {
+                mainTexture = texture,
+                name = "NodeMarkupRoad",
+                color = new Color(0.5f, 0.5f, 0.5f, 0f),
+                doubleSidedGI = false,
+                enableInstancing = false,
+                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
+                renderQueue = renderQueue,
+            };
+            if (apr != null)
+                material.SetTexture("_APRMap", apr);
+
+            return material;
+        }
+
         public static Texture2D CreateChessBoardTexture()
         {
             var height = 256;
@@ -159,7 +190,116 @@ namespace NodeMarkup.Utils
         }
     }
 
-    public class RenderBatch
+    public interface IDrawData
+    {
+        public void Draw();
+    }
+
+    public class MarkupStyleDash
+    {
+        public MaterialType MaterialType { get; set; }
+        public Vector3 Position { get; set; }
+        public float Angle { get; set; }
+        public float Length { get; set; }
+        public float Width { get; set; }
+        public Color Color { get; set; }
+
+        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+        {
+            Position = position;
+            Angle = angle;
+            Length = length;
+            Width = width;
+            Color = color;
+            MaterialType = materialType;
+        }
+        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+            : this((start + end) / 2, angle, length, width, color, materialType) { }
+
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+            : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
+
+        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+            : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
+
+        public MarkupStyleDash(Vector3 start, Vector3 end, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
+            : this(start, end, end - start, (end - start).magnitude, width, color, materialType) { }
+    }
+    public class MarkupStyleDashes : IStyleData, IEnumerable<MarkupStyleDash>
+    {
+        private List<MarkupStyleDash> Dashes { get; }
+
+        public MarkupStyleDashes() => Dashes = new List<MarkupStyleDash>();
+        public MarkupStyleDashes(IEnumerable<MarkupStyleDash> dashes) => Dashes = dashes.ToList();
+
+        public IEnumerator<MarkupStyleDash> GetEnumerator() => Dashes.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IEnumerable<IDrawData> GetDrawData() => RenderBatch.FromDashes(this);
+    }
+    public class MarkupStyleMesh : IStyleData, IDrawData
+    {
+        private Vector3 Position;
+        private Vector3[] Vertices { get; }
+        private int[] Triangles { get; }
+        private Vector2[] UV { get; }
+        public MaterialType MaterialType { get; }
+        public float ScaleX { get; }
+        public float ScaleY { get; }
+        public Rect Rect { get; }
+
+        private Mesh Mesh { get; set; }
+
+        public MarkupStyleMesh(Rect rect, float height, Vector3[] vertices, int[] triangles, MaterialType materialType, float scaleX, float scaleY)
+        {
+            Position = new Vector3(rect.center.x, height + 0.3f, rect.center.y);
+            MaterialType = materialType;
+            Vertices = vertices;
+            Triangles = triangles;
+            UV = GetUV(rect).ToArray();
+            ScaleX = scaleX;
+            ScaleY = scaleY;
+        }
+        private IEnumerable<Vector2> GetUV(Rect rect)
+        {
+            foreach (var vertex in Vertices)
+                yield return new Vector2((vertex.x - rect.x) / rect.width, (vertex.z - rect.y) / rect.height);
+        }
+
+        public IEnumerable<IDrawData> GetDrawData()
+        {
+            if (Mesh == null)
+            {
+                Mesh = new Mesh();
+
+                Bounds bounds = default;
+                bounds.SetMinMax(new Vector3(-100000f, -100000f, -100000f), new Vector3(100000f, 100000f, 100000f));
+
+                Mesh.vertices = Vertices;
+                Mesh.triangles = Triangles;
+                Mesh.normals = Vertices.Select(v => new Vector3(0f, 1f, 0f)).ToArray();
+                Mesh.tangents = Vertices.Select(v => new Vector4(-1f, 0f, 0f, -1f)).ToArray();
+                Mesh.bounds = bounds;
+                Mesh.uv = UV;
+            }
+            yield return this;
+        }
+        public void Draw()
+        {
+            var instance = Utilities.NetManager;
+            var materialBlock = instance.m_materialBlock;
+            materialBlock.Clear();
+
+            materialBlock.SetVector(instance.ID_MeshScale, new Vector4(ScaleX, ScaleY, 1f, 0f));
+
+            var mesh = Mesh;
+            var material = RenderHelper.MaterialLib[MaterialType];
+
+            Graphics.DrawMesh(mesh, Position, Quaternion.identity, material, 10, null, 0, materialBlock);
+        }
+    }
+
+    public class RenderBatch : IDrawData
     {
         public static float MeshHeight => 3f;
         public MaterialType MaterialType { get; }
@@ -192,7 +332,7 @@ namespace NodeMarkup.Utils
             Mesh = RenderHelper.CreateMesh(Count, size);
         }
 
-        public static IEnumerable<RenderBatch> FromDashes(IEnumerable<MarkupStyleDash> dashes)
+        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkupStyleDash> dashes)
         {
             var materialGroups = dashes.GroupBy(d => d.MaterialType);
 
@@ -233,5 +373,22 @@ namespace NodeMarkup.Utils
         }
 
         public override string ToString() => $"{Count}: {Size}";
+
+        public void Draw()
+        {
+            var instance = Utilities.PropManager;
+            var materialBlock = instance.m_materialBlock;
+            materialBlock.Clear();
+
+            materialBlock.SetVectorArray(instance.ID_PropLocation, Locations);
+            materialBlock.SetVectorArray(instance.ID_PropObjectIndex, Indices);
+            materialBlock.SetVectorArray(instance.ID_PropColor, Colors);
+            materialBlock.SetVector(RenderHelper.ID_DecalSize, Size);
+
+            var mesh = Mesh;
+            var material = RenderHelper.MaterialLib[MaterialType];
+
+            Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
+        }
     }
 }
