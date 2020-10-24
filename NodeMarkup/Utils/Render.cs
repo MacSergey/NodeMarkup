@@ -280,6 +280,7 @@ namespace NodeMarkup.Utils
                 Mesh.normals = Vertices.Select(v => new Vector3(0f, 1f, 0f)).ToArray();
                 Mesh.tangents = Vertices.Select(v => new Vector4(-1f, 0f, 0f, -1f)).ToArray();
                 Mesh.bounds = bounds;
+                Mesh.colors = Vertices.Select(v => new Color(1f, 0f, 1f)).ToArray();
                 Mesh.uv = UV;
             }
             yield return this;
@@ -290,12 +291,11 @@ namespace NodeMarkup.Utils
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
 
-            materialBlock.SetVector(instance.ID_MeshScale, new Vector4(ScaleX, ScaleY, 1f, 0f));
+            //materialBlock.SetVector(instance.ID_MeshScale, new Vector4(ScaleX, ScaleY, 1f, 0f));
 
-            var mesh = Mesh;
             var material = RenderHelper.MaterialLib[MaterialType];
 
-            Graphics.DrawMesh(mesh, Position, Quaternion.identity, material, 10, null, 0, materialBlock);
+            Graphics.DrawMesh(Mesh, Position, Quaternion.identity, material, 10, null, 0, materialBlock);
         }
     }
 

@@ -1116,4 +1116,10 @@ Do you want to apply the marking manually?</value>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Quick crosswalk borders setup</value>
   </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Rail under marking (Apply after reload)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Warning: This option change game objects render order</value>
+  </data>
 </root>

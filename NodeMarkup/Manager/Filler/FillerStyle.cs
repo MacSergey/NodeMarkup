@@ -550,179 +550,193 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class TriangulationFillerStyle : Filler3DStyle
-    {
-        public override StyleType Type => StyleType.FillerPavement;
+    //public class TriangulationFillerStyle : Filler3DStyle
+    //{
+    //    public override StyleType Type => StyleType.FillerPavement;
 
-        float _minAngle;
-        float _minLength;
-        float _maxLength;
-        float _scaleX;
-        float _scaleY;
-        public float MinAngle
-        {
-            get => _minAngle;
-            set
-            {
-                _minAngle = value;
-                StyleChanged();
-            }
-        }
-        public float MinLength
-        {
-            get => _minLength;
-            set
-            {
-                _minLength = value;
-                StyleChanged();
-            }
-        }
-        public float MaxLength
-        {
-            get => _maxLength;
-            set
-            {
-                _maxLength = value;
-                StyleChanged();
-            }
-        }
-        public float ScaleX
-        {
-            get => _scaleX;
-            set
-            {
-                _scaleX = value;
-                StyleChanged();
-            }
-        }
-        public float ScaleY
-        {
-            get => _scaleY;
-            set
-            {
-                _scaleY = value;
-                StyleChanged();
-            }
-        }
+    //    float _minAngle;
+    //    float _minLength;
+    //    float _maxLength;
+    //    float _scaleX;
+    //    float _scaleY;
+    //    public float MinAngle
+    //    {
+    //        get => _minAngle;
+    //        set
+    //        {
+    //            _minAngle = value;
+    //            StyleChanged();
+    //        }
+    //    }
+    //    public float MinLength
+    //    {
+    //        get => _minLength;
+    //        set
+    //        {
+    //            _minLength = value;
+    //            StyleChanged();
+    //        }
+    //    }
+    //    public float MaxLength
+    //    {
+    //        get => _maxLength;
+    //        set
+    //        {
+    //            _maxLength = value;
+    //            StyleChanged();
+    //        }
+    //    }
+    //    public float ScaleX
+    //    {
+    //        get => _scaleX;
+    //        set
+    //        {
+    //            _scaleX = value;
+    //            StyleChanged();
+    //        }
+    //    }
+    //    public float ScaleY
+    //    {
+    //        get => _scaleY;
+    //        set
+    //        {
+    //            _scaleY = value;
+    //            StyleChanged();
+    //        }
+    //    }
 
-        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float minAngle, float minLength, float maxLength) : base(color, width, medianOffset)
-        {
-            MinAngle = MinAngle;
-            MinLength = minLength;
-            MaxLength = maxLength;
-            ScaleX = 0.05f;
-            ScaleY = 0.023f;
-        }
+    //    public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float minAngle, float minLength, float maxLength) : base(color, width, medianOffset)
+    //    {
+    //        MinAngle = MinAngle;
+    //        MinLength = minLength;
+    //        MaxLength = maxLength;
+    //        ScaleX = 0.05f;
+    //        ScaleY = 0.023f;
+    //    }
 
-        public override void CopyTo(Style target)
-        {
-            base.CopyTo(target);
-            if (target is TriangulationFillerStyle triangulationTarget)
-            {
-                triangulationTarget.MinAngle = MinAngle;
-                triangulationTarget.MinLength = MinLength;
-                triangulationTarget.MaxLength = MaxLength;
-            }
-        }
+    //    public override void CopyTo(Style target)
+    //    {
+    //        base.CopyTo(target);
+    //        if (target is TriangulationFillerStyle triangulationTarget)
+    //        {
+    //            triangulationTarget.MinAngle = MinAngle;
+    //            triangulationTarget.MinLength = MinLength;
+    //            triangulationTarget.MaxLength = MaxLength;
+    //        }
+    //    }
 
-        protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect _, float height)
-        {
-            var points = trajectories.SelectMany(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr))).ToArray();
-            var rect = Rect.MinMaxRect(points.Min(p => p.x), points.Min(p => p.z), points.Max(p => p.x), points.Max(p => p.z));
+    //    protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect _, float height)
+    //    {
+    //        var points = trajectories.SelectMany(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr))).ToList();
+    //        var rect = Rect.MinMaxRect(points.Min(p => p.x), points.Min(p => p.z), points.Max(p => p.x), points.Max(p => p.z));
 
-            for (var i = 0; i < points.Length; i += 1)
-                points[i] = new Vector3(points[i].x - rect.center.x, 0, rect.center.y - points[i].z);
+    //        for (var i = 0; i < points.Count; i += 1)
+    //            points[i] = new Vector3(points[i].x - rect.center.x, 2, (rect.center.y - points[i].z) * 0.451f);
 
-            var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
-            P2T.Triangulate(polygon);
+    //        var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
+    //        P2T.Triangulate(polygon);
 
-            var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
-            return new MarkupStyleMesh(rect, height, points, triangles, MaterialType.Pavement, ScaleX, ScaleY);
-        }
-        static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
-        {
-            yield return new Vector3(trajectory.StartPosition.x, 0, trajectory.StartPosition.z);
-        }
+    //        points.Add(new Vector3(rect.width / -2, 0, rect.height / 2));
+    //        points.Add(new Vector3(rect.width / 2, 0, rect.height / 2));
+    //        points.Add(new Vector3(rect.width / 2, 0, rect.height / -2));
+    //        points.Add(new Vector3(rect.width / -2, 0, rect.height / -2));
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-        {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
-            components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddScaleXProperty(this, parent, onHover, onLeave));
-            components.Add(AddScaleYProperty(this, parent, onHover, onLeave));
-            return components;
-        }
-        private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            minAngleProperty.Text = "Min angle";
-            minAngleProperty.UseWheel = true;
-            minAngleProperty.WheelStep = 1f;
-            minAngleProperty.CheckMin = true;
-            minAngleProperty.MinValue = 5f;
-            minAngleProperty.CheckMax = true;
-            minAngleProperty.MaxValue = 90f;
-            minAngleProperty.Init();
-            minAngleProperty.Value = triangulationStyle.MinAngle;
-            minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinAngle = value;
-            AddOnHoverLeave(minAngleProperty, onHover, onLeave);
-            return minAngleProperty;
-        }
-        private static FloatPropertyPanel AddMinLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            minAngleProperty.Text = "Min length";
-            minAngleProperty.UseWheel = true;
-            minAngleProperty.WheelStep = 0.1f;
-            minAngleProperty.CheckMin = true;
-            minAngleProperty.MinValue = 1f;
-            minAngleProperty.Init();
-            minAngleProperty.Value = triangulationStyle.MinLength;
-            minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinLength = value;
-            AddOnHoverLeave(minAngleProperty, onHover, onLeave);
-            return minAngleProperty;
-        }
-        private static FloatPropertyPanel AddMaxLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            minAngleProperty.Text = "Max length";
-            minAngleProperty.UseWheel = true;
-            minAngleProperty.WheelStep = 0.1f;
-            minAngleProperty.CheckMin = true;
-            minAngleProperty.MinValue = 1f;
-            minAngleProperty.Init();
-            minAngleProperty.Value = triangulationStyle.MaxLength;
-            minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MaxLength = value;
-            AddOnHoverLeave(minAngleProperty, onHover, onLeave);
-            return minAngleProperty;
-        }
-        private static FloatPropertyPanel AddScaleXProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var scaleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            scaleProperty.Text = "ScaleX";
-            scaleProperty.UseWheel = true;
-            scaleProperty.WheelStep = 0.01f;
-            scaleProperty.Init();
-            scaleProperty.Value = triangulationStyle.ScaleX;
-            scaleProperty.OnValueChanged += (float value) => triangulationStyle.ScaleX = value;
-            AddOnHoverLeave(scaleProperty, onHover, onLeave);
-            return scaleProperty;
-        }
-        private static FloatPropertyPanel AddScaleYProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        {
-            var scaleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            scaleProperty.Text = "ScaleY";
-            scaleProperty.UseWheel = true;
-            scaleProperty.WheelStep = 0.01f;
-            scaleProperty.Init();
-            scaleProperty.Value = triangulationStyle.ScaleY;
-            scaleProperty.OnValueChanged += (float value) => triangulationStyle.ScaleY = value;
-            AddOnHoverLeave(scaleProperty, onHover, onLeave);
-            return scaleProperty;
-        }
+    //        var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToList();
 
-        public override FillerStyle CopyFillerStyle() => new TriangulationFillerStyle(Color, Width, MedianOffset, MinAngle, MinLength, MaxLength);
-    }
+    //        triangles.Add(points.Count - 2);
+    //        triangles.Add(points.Count - 3);
+    //        triangles.Add(points.Count - 4);
+
+    //        triangles.Add(points.Count - 1);
+    //        triangles.Add(points.Count - 2);
+    //        triangles.Add(points.Count - 4);
+
+    //        return new MarkupStyleMesh(rect, height, points.ToArray(), triangles.ToArray(), MaterialType.Pavement, ScaleX, ScaleY);
+    //    }
+    //    static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
+    //    {
+    //        yield return new Vector3(trajectory.StartPosition.x, 0, trajectory.StartPosition.z);
+    //    }
+
+    //    public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+    //    {
+    //        var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+    //        components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
+    //        components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
+    //        components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
+    //        components.Add(AddScaleXProperty(this, parent, onHover, onLeave));
+    //        components.Add(AddScaleYProperty(this, parent, onHover, onLeave));
+    //        return components;
+    //    }
+    //    private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+    //    {
+    //        var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+    //        minAngleProperty.Text = "Min angle";
+    //        minAngleProperty.UseWheel = true;
+    //        minAngleProperty.WheelStep = 1f;
+    //        minAngleProperty.CheckMin = true;
+    //        minAngleProperty.MinValue = 5f;
+    //        minAngleProperty.CheckMax = true;
+    //        minAngleProperty.MaxValue = 90f;
+    //        minAngleProperty.Init();
+    //        minAngleProperty.Value = triangulationStyle.MinAngle;
+    //        minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinAngle = value;
+    //        AddOnHoverLeave(minAngleProperty, onHover, onLeave);
+    //        return minAngleProperty;
+    //    }
+    //    private static FloatPropertyPanel AddMinLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+    //    {
+    //        var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+    //        minAngleProperty.Text = "Min length";
+    //        minAngleProperty.UseWheel = true;
+    //        minAngleProperty.WheelStep = 0.1f;
+    //        minAngleProperty.CheckMin = true;
+    //        minAngleProperty.MinValue = 1f;
+    //        minAngleProperty.Init();
+    //        minAngleProperty.Value = triangulationStyle.MinLength;
+    //        minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinLength = value;
+    //        AddOnHoverLeave(minAngleProperty, onHover, onLeave);
+    //        return minAngleProperty;
+    //    }
+    //    private static FloatPropertyPanel AddMaxLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+    //    {
+    //        var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+    //        minAngleProperty.Text = "Max length";
+    //        minAngleProperty.UseWheel = true;
+    //        minAngleProperty.WheelStep = 0.1f;
+    //        minAngleProperty.CheckMin = true;
+    //        minAngleProperty.MinValue = 1f;
+    //        minAngleProperty.Init();
+    //        minAngleProperty.Value = triangulationStyle.MaxLength;
+    //        minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MaxLength = value;
+    //        AddOnHoverLeave(minAngleProperty, onHover, onLeave);
+    //        return minAngleProperty;
+    //    }
+    //    private static FloatPropertyPanel AddScaleXProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+    //    {
+    //        var scaleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+    //        scaleProperty.Text = "ScaleX";
+    //        scaleProperty.UseWheel = true;
+    //        scaleProperty.WheelStep = 0.01f;
+    //        scaleProperty.Init();
+    //        scaleProperty.Value = triangulationStyle.ScaleX;
+    //        scaleProperty.OnValueChanged += (float value) => triangulationStyle.ScaleX = value;
+    //        AddOnHoverLeave(scaleProperty, onHover, onLeave);
+    //        return scaleProperty;
+    //    }
+    //    private static FloatPropertyPanel AddScaleYProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+    //    {
+    //        var scaleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+    //        scaleProperty.Text = "ScaleY";
+    //        scaleProperty.UseWheel = true;
+    //        scaleProperty.WheelStep = 0.01f;
+    //        scaleProperty.Init();
+    //        scaleProperty.Value = triangulationStyle.ScaleY;
+    //        scaleProperty.OnValueChanged += (float value) => triangulationStyle.ScaleY = value;
+    //        AddOnHoverLeave(scaleProperty, onHover, onLeave);
+    //        return scaleProperty;
+    //    }
+
+    //    public override FillerStyle CopyFillerStyle() => new TriangulationFillerStyle(Color, Width, MedianOffset, MinAngle, MinLength, MaxLength);
+    //}
 }

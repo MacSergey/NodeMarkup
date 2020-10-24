@@ -146,7 +146,7 @@ namespace NodeMarkup.UI
             ScrollableContent.builtinKeyNavigation = true;
             ScrollableContent.scrollWheelDirection = UIOrientation.Vertical;
             ScrollableContent.maximumSize = new Vector2(Width, MaxContentHeight);
-            UIUtils.AddScrollbar(this, ScrollableContent);
+            this.AddScrollbar(ScrollableContent);
 
             ScrollableContent.eventComponentAdded += (UIComponent container, UIComponent child) => AddChildHandles(child);
             ScrollableContent.eventComponentRemoved += (UIComponent container, UIComponent child) => RemoveChildHandles(child);

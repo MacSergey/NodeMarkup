@@ -56,7 +56,7 @@ namespace NodeMarkup.Tools
         public static bool OnlyCtrlIsPressed => CtrlIsPressed && !AltIsPressed && !ShiftIsPressed;
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } =
-            Utilities.GetEnumValues<Style.StyleType>().ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{(int)(object)i}", UI.Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
+            Utilities.GetEnumValues<Style.StyleType>().ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{(int)(object)i}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -229,7 +229,7 @@ namespace NodeMarkup.Tools
         {
             var position = GetInfoPosition();
 
-            var isToolTipEnable = UI.Settings.ShowToolTip || Mode.Type == ToolModeType.SelectNode;
+            var isToolTipEnable = Settings.ShowToolTip || Mode.Type == ToolModeType.SelectNode;
             var isPanelHover = Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position);
             var isHasText = Mode.GetToolInfo() is string info && !string.IsNullOrEmpty(info);
 
@@ -330,7 +330,7 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ResetAllOffsets)}");
 
-            if (UI.Settings.DeleteWarnings)
+            if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_ResetOffsetsCaption;
@@ -349,7 +349,7 @@ namespace NodeMarkup.Tools
         }
         public void DeleteItem(IDeletable item, Action onDelete)
         {
-            if (UI.Settings.DeleteWarnings)
+            if (Settings.DeleteWarnings)
             {
                 var dependences = item.GetDependences();
                 if (dependences.Exist)
@@ -357,7 +357,7 @@ namespace NodeMarkup.Tools
                     ShowModal(GetDeleteDependences(dependences));
                     return;
                 }
-                else if (UI.Settings.DeleteWarningsType == 0)
+                else if (Settings.DeleteWarningsType == 0)
                 {
                     ShowModal(string.Empty);
                     return;
@@ -388,7 +388,7 @@ namespace NodeMarkup.Tools
         public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
         private void PasteMarkup()
         {
-            if (UI.Settings.DeleteWarnings)
+            if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_PasteMarkingsCaption;

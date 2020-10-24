@@ -286,10 +286,10 @@ namespace NodeMarkup.Manager
             FillerChevron,
 
 
-            Filler3D = Filler | 0x80,
+            //Filler3D = Filler | 0x80,
 
-            [Description("Pavement")]
-            FillerPavement,
+            //[Description("Pavement")]
+            //FillerPavement,
 
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]

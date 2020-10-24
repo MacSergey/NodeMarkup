@@ -45,7 +45,8 @@ namespace NodeMarkup
             PatchNetManagerSimulationStepImpl(harmony);
             PatchBuildingDecorationLoadPaths(harmony);
             PatchLoadAssetPanelOnLoad(harmony);
-            PatchNetInfoNodeInitNodeInfo(harmony);
+            if (Settings.RailUnderMarking)
+                PatchNetInfoNodeInitNodeInfo(harmony);
         }
 
         private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
@@ -136,7 +137,7 @@ namespace NodeMarkup
                 if (prevInstruction != null && prevInstruction.opcode == OpCodes.Ldfld && prevInstruction.operand == nodeBufferField && instruction.opcode == OpCodes.Callvirt && instruction.operand == clearMethod)
                     matchCount += 1;
 
-                if(!inserted && matchCount == 2)
+                if (!inserted && matchCount == 2)
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_0);
                     yield return new CodeInstruction(OpCodes.Ldloc_0);
@@ -147,7 +148,7 @@ namespace NodeMarkup
                     inserted = true;
                 }
 
-                if(prevInstruction != null)
+                if (prevInstruction != null)
                     yield return prevInstruction;
 
                 prevInstruction = instruction;

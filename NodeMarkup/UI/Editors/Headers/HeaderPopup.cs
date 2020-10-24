@@ -54,7 +54,7 @@ namespace NodeMarkup.UI.Editors
             Content.scrollWheelDirection = UIOrientation.Vertical;
             Content.maximumSize = new Vector2(500, 500);
             Content.relativePosition = new Vector2(Padding, Padding);
-            UIUtils.AddScrollbar(this, Content);
+            this.AddScrollbar(Content);
         }
         public void Init()
         {

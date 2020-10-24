@@ -187,7 +187,7 @@
     <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
     <Compile Include="UI\Property panels\ListProperty.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
-    <Compile Include="UI\Settings.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Elements\TabPanel.cs" />
     <Compile Include="UI\UIUtils.cs" />
@@ -299,7 +299,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

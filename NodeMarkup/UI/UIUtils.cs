@@ -79,7 +79,7 @@ namespace NodeMarkup.UI
             NameContains = 1
         }
 
-        public static void AddScrollbar(UIComponent parent, UIScrollablePanel scrollablePanel)
+        public static void AddScrollbar(this UIComponent parent, UIScrollablePanel scrollablePanel)
         {
             var scrollbar = parent.AddUIComponent<UIScrollbar>();
             scrollbar.orientation = UIOrientation.Vertical;
@@ -155,7 +155,16 @@ namespace NodeMarkup.UI
                 panel.scrollPosition = scrollPosition;
             }
         }
+        public static void AddLabel(this UIHelper helper, string text, float size = 1.125f, Color? color = null, int padding = 0)
+        {
+            var component = helper.self as UIComponent;
 
+            var label = component.AddUIComponent<UILabel>();
+            label.text = text;
+            label.textScale = size;
+            label.textColor = color ?? Color.white;
+            label.padding = new RectOffset(padding, 0, 0, 0);
+        }
 
         public static Color32 ButtonNormal = Color.white;
         public static Color32 ButtonHovered = new Color32(224, 224, 224, 255);

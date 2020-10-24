@@ -18,7 +18,7 @@ namespace NodeMarkup.Utils
         public Shortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem)
         {
             LabelKey = labelKey;
-            InputKey = new SavedInputKey(name, UI.Settings.SettingsFile, key, true);
+            InputKey = new SavedInputKey(name, Settings.SettingsFile, key, true);
             ModeType = modeType;
             Action = action;
         }

@@ -90,7 +90,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.atlas = TextureUtil.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
 
-            UIUtils.AddScrollbar(this, ItemsPanel);
+            this.AddScrollbar(ItemsPanel);
 
             ItemsPanel.verticalScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
         }
@@ -118,7 +118,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.backgroundSprite = "UnlockingItemBackground";
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
-            UIUtils.AddScrollbar(this, SettingsPanel);
+            this.AddScrollbar(SettingsPanel);
 
             SettingsPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
         }

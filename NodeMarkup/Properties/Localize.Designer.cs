@@ -1692,6 +1692,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Rail under marking (Apply after reload).
+        /// </summary>
+        public static string Settings_RailUnderMarking {
+            get {
+                return ResourceManager.GetString("Settings_RailUnderMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Warning: This option change game objects render order.
+        /// </summary>
+        public static string Settings_RailUnderMarkingWarning {
+            get {
+                return ResourceManager.GetString("Settings_RailUnderMarkingWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Regular lines modifier.
         /// </summary>
         public static string Settings_RegularLinesModifier {

@@ -45,7 +45,7 @@ namespace NodeMarkup.Manager
             if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
                 return;
 
-            if (!cameraInfo.CheckRenderDistance(data.m_position, UI.Settings.RenderDistance))
+            if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
                 return;
 
             if (markup.NeedRecalculateDrawData)

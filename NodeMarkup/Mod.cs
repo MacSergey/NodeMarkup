@@ -58,7 +58,7 @@ namespace NodeMarkup
         {
             get
             {
-                var locale = string.IsNullOrEmpty(UI.Settings.Locale.value) ? SingletonLite<LocaleManager>.instance.language : UI.Settings.Locale.value;
+                var locale = string.IsNullOrEmpty(Settings.Locale.value) ? SingletonLite<LocaleManager>.instance.language : Settings.Locale.value;
                 if (locale == "zh")
                     locale = "zh-cn";
 
@@ -88,7 +88,7 @@ namespace NodeMarkup
             LocaleManager.eventLocaleChanged += LocaleChanged;
 
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
-            UI.Settings.OnSettingsUI(helper);
+            Settings.OnSettingsUI(helper);
         }
 
         private void LocaleChanged()

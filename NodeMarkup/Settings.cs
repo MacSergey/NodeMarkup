@@ -21,8 +21,9 @@ using static ColossalFramework.UI.UIDropDown;
 using ColossalFramework.Globalization;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Tools;
+using NodeMarkup.UI;
 
-namespace NodeMarkup.UI
+namespace NodeMarkup
 {
     public static class Settings
     {
@@ -30,6 +31,7 @@ namespace NodeMarkup.UI
 
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor().ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
+        public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedInt DeleteWarningsType { get; } = new SavedInt(nameof(DeleteWarningsType), SettingsFile, 0, true);
@@ -98,7 +100,7 @@ namespace NodeMarkup.UI
             TabPanels.Add(tabPanel);
 
             var panel = tabPanel.AddUIComponent<UIScrollablePanel>();
-            UIUtils.AddScrollbar(tabPanel, panel);
+            tabPanel.AddScrollbar(panel);
             panel.verticalScrollbar.eventVisibilityChanged += ScrollbarVisibilityChanged;
 
             panel.size = tabPanel.size;
@@ -127,21 +129,7 @@ namespace NodeMarkup.UI
             }
         }
 
-
-        #region SUPPORT
-
-        private static void AddSupport(UIHelperBase helper)
-        {
-            UIHelper group = helper.AddGroup() as UIHelper;
-            AddWiki(group);
-            AddTroubleshooting(group);
-            AddDiscord(group);
-        }
-        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.OpenUrl(Mod.WikiUrl));
-        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.OpenUrl(Mod.DiscordURL));
-        private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.OpenUrl(Mod.TroubleshootingUrl));
-
-        #endregion
+        #region GENERAL
 
         #region LANGUAGE
 
@@ -197,42 +185,14 @@ namespace NodeMarkup.UI
 
         #endregion
 
-        #region KEYMAPPING
-        private static void AddKeyMapping(UIHelperBase helper)
-        {
-            var keymappingsPanel = (helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper).self as UIPanel;
-
-            var keymappings = keymappingsPanel.gameObject.AddComponent<KeymappingsPanel>();
-            keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
-            keymappings.AddKeymapping(NodeMarkupTool.AddRuleShortcut);
-            foreach(var shortcut in NodeMarkupTool.Shortcuts)
-                keymappings.AddKeymapping(shortcut);
-
-            var regularLinesPanel = (helper.AddGroup(Localize.Settings_RegularLinesModifier) as UIHelper).self as UIPanel;
-            var regularLinesModifier = regularLinesPanel.gameObject.AddComponent<RegularLineModifierPanel>();
-            regularLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
-
-            var stopLinesPanel = (helper.AddGroup(Localize.Settings_StopLinesModifier) as UIHelper).self as UIPanel;
-            var stopLinesModifier = stopLinesPanel.gameObject.AddComponent<StopLineModifierPanel>();
-            stopLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
-
-            var crosswalksPanel = (helper.AddGroup(Localize.Settings_CrosswalksModifier) as UIHelper).self as UIPanel;
-            var crosswalksModifier = crosswalksPanel.gameObject.AddComponent<CrosswalkModifierPanel>();
-            crosswalksModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
-
-            var fillersPanel = (helper.AddGroup(Localize.Settings_FillersModifier) as UIHelper).self as UIPanel;
-            var fillersModifier = fillersPanel.gameObject.AddComponent<FillerModifierPanel>();
-            fillersModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
-        }
-
-        #endregion
-
-        #region GENERAL
+        #region DISPLAY&USAGE
         private static void AddGeneral(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
+            AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
+            group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 1f, Color.red, 25);
             AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
@@ -288,6 +248,38 @@ namespace NodeMarkup.UI
             AddCheckBox(group, Localize.Settings_ShowWhatsNew, ShowWhatsNew);
             AddCheckBox(group, Localize.Settings_ShowOnlyMajor, ShowOnlyMajor);
         }
+        #endregion
+
+        #endregion
+
+        #region KEYMAPPING
+        private static void AddKeyMapping(UIHelperBase helper)
+        {
+            var keymappingsPanel = (helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper).self as UIPanel;
+
+            var keymappings = keymappingsPanel.gameObject.AddComponent<KeymappingsPanel>();
+            keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
+            keymappings.AddKeymapping(NodeMarkupTool.AddRuleShortcut);
+            foreach (var shortcut in NodeMarkupTool.Shortcuts)
+                keymappings.AddKeymapping(shortcut);
+
+            var regularLinesPanel = (helper.AddGroup(Localize.Settings_RegularLinesModifier) as UIHelper).self as UIPanel;
+            var regularLinesModifier = regularLinesPanel.gameObject.AddComponent<RegularLineModifierPanel>();
+            regularLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+
+            var stopLinesPanel = (helper.AddGroup(Localize.Settings_StopLinesModifier) as UIHelper).self as UIPanel;
+            var stopLinesModifier = stopLinesPanel.gameObject.AddComponent<StopLineModifierPanel>();
+            stopLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+
+            var crosswalksPanel = (helper.AddGroup(Localize.Settings_CrosswalksModifier) as UIHelper).self as UIPanel;
+            var crosswalksModifier = crosswalksPanel.gameObject.AddComponent<CrosswalkModifierPanel>();
+            crosswalksModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+
+            var fillersPanel = (helper.AddGroup(Localize.Settings_FillersModifier) as UIHelper).self as UIPanel;
+            var fillersModifier = fillersPanel.gameObject.AddComponent<FillerModifierPanel>();
+            fillersModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+        }
+
         #endregion
 
         #region BACKUP
@@ -374,7 +366,24 @@ namespace NodeMarkup.UI
 
 
         #endregion
+
+        #region SUPPORT
+
+        private static void AddSupport(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup() as UIHelper;
+            AddWiki(group);
+            AddTroubleshooting(group);
+            AddDiscord(group);
+        }
+        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.OpenUrl(Mod.WikiUrl));
+        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.OpenUrl(Mod.DiscordURL));
+        private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.OpenUrl(Mod.TroubleshootingUrl));
+
+        #endregion
+
         private static void AddCheckBox(UIHelper group, string label, SavedBool saved) => group.AddCheckbox(label, saved, (bool value) => saved.value = value);
+
         private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels)
         {
             var inProcess = false;
