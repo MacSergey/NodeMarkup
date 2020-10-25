@@ -1059,4 +1059,5 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：此设置会改变游戏渲染顺序</value>
   </data>
+  
 </root>

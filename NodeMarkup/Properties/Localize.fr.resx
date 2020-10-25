@@ -1062,4 +1062,5 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>
   </data>
+  
 </root>

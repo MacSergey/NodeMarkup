@@ -1094,4 +1094,5 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
   </data>
+  
 </root>

@@ -1058,4 +1058,5 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
   </data>
+  
 </root>

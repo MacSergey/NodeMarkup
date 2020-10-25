@@ -1060,4 +1060,5 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Varoitus: Tämä aswtus muuttaa pelin piirtojärjestyksen</value>
   </data>
+  
 </root>
