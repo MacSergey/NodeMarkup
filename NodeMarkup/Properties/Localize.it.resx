@@ -455,9 +455,7 @@ Trascina dietro il punto per una linea perpendicolare</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>È stata rilasciata la versione 1.4</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia continua</value>
   </data>
@@ -1080,6 +1078,31 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Impostazione rapida bordi attraversamento pedonale</value>
   </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Marcatura sotto le tracce (Applica dopo il riavvio)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Attenzione: Questa opzione cambia l'ordine di render degli oggetti</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>- Aggiunta l'abilità di disegnare le marcature sotto al tracciato. Queste possono esser disabilitate dalle opzioni. ATTENZIONE: Questa opzione cambia l'ordine di render degli oggetti di gioco.
+- Aggiunto modificatore per creare una linea vuota (senza regole).
+- Aggiunta la possibilità di creare i bordi a tutte le linee in una volta (da un capo all'altro della strada)
+- Aggiunta "Configurazione rapida dell'opzione attraversamento pedonale" - apre automaticamente l'interfaccia di selezione del bordo dopo aver creato il passaggio pedonale simile a "Configurazione rapida delle regole". Questo può essere disabilitato nelle opzioni.
+- Aggiunto menù opzioni addizionali.
+- Fixato il click sinistro del mouse nella selezione del nodo.
+- Fixato il pannello fuori dallo schermo.
+- Il colore della sovrapposizione al passaggio del mouse è cambiato da bianco ad azzurro per evitare la fusione con il markup.
+- La linea dell'attraversamento pedonale non crea più incroci non necessari. Potrebbe essere necessario impostare i bordi delle strisce pedonali per quelle già esistenti.</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

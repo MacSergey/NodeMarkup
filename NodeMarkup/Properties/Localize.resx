@@ -456,7 +456,9 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Version 1.4 Released</value>
+    <value>- Added the ability to save style templates as asset and share over workshop
+- Improved performance of the interface: reduced delay when switching tabs and select items.
+- Fix train and monorail roads (and any else without points).</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -1133,5 +1135,40 @@ Do you want to apply the marking manually?</value>
 - Fix panel out of screen.
 - Hover overlay color changed from white to light blue to avoid merging with the markup.
 - Crosswalk line no longer creates unnecessary intersections. You may need to set crosswalk borders for already created crosswalks.</value>
+  </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Save as asset</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+by {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>The list of presets is empty.
+To create a preset, click «{0}» at the panel header.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Presets</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>No presets</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Apply preset</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>New preset</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Exit applying preset mode</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Do you want to apply a preset?</value>
   </data>
 </root>

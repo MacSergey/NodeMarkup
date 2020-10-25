@@ -1134,4 +1134,20 @@ Shift X10, Ctrl X0.1</value>
 - Цвет оверлея выделения изменен с белого на светло голубой для предотвращения сливания с разметкой.
 - Линии переходов больше не создают ненужных пересечений. Возможно потребуется задания границ переходов для уже существующих переходов.</value>
   </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Сохранить как ресурс</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+от {1}</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

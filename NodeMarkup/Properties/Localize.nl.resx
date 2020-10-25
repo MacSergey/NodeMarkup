@@ -1050,6 +1050,23 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Panel_Additional" xml:space="preserve">
     <value>Extra</value>
   </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Snelle zebrapad randen setup</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Markeringen onder spoor (Van toepassing na herstart)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
