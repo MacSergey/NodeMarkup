@@ -386,10 +386,16 @@ namespace NodeMarkup.Tools
             return $"{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
         }
 
-        private void CopyMarkup() => MarkupBuffer = new MarkupBuffer(Markup);
+        private void CopyMarkup()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
+            MarkupBuffer = new MarkupBuffer(Markup);
+        }
         public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
         private void PasteMarkup()
         {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(PasteMarkup)}");
+
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
@@ -408,11 +414,15 @@ namespace NodeMarkup.Tools
         }
         private void EditMarkup()
         {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
+
             CopyMarkup();
             SetMode(ToolModeType.EditEntersOrder);
         }
         private void CreateEdgeLines()
         {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CreateEdgeLines)}");
+
             foreach (var enter in Markup.Enters)
                 Markup.AddConnection(new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint), Style.StyleType.EmptyLine);
 
