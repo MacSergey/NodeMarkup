@@ -1251,6 +1251,19 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
+        ///- Added modifier to create a empty line (without rules).
+        ///- Added the ability to create all edge lines at once (line from road last point to next road first point).
+        ///- Lines no longer climb on pavement. Work only for lines from the first or last road point.
+        ///- Added &quot;Quick crosswalk option setup&quot; - automatically open border selection interface after create crosswalk  [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_4_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_4_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Version 1.4 Released.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
@@ -1692,7 +1705,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Rail under marking (Apply after reload).
+        ///   Ищет локализованную строку, похожую на Marking under tracks (Apply after reload).
         /// </summary>
         public static string Settings_RailUnderMarking {
             get {
