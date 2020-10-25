@@ -18,7 +18,17 @@ namespace NodeMarkup.UI.Editors
 
         public override EditableItemType AddItem(EditableObject editableObject)
         {
-            var item = GroupingEnabled ? GetGroup(editableObject).NewItem() : NewItem();
+            EditableItemType item;
+
+            if (GroupingEnabled)
+            {
+                var group = GetGroup(editableObject);
+                item = GetItem(group);
+                item.isVisible = group.IsExpand;
+            }
+            else
+                item = GetItem(ItemsPanel);
+
             InitItem(item, editableObject);
 
             SwitchEmpty();
@@ -27,20 +37,12 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void DeleteItem(EditableItemType item)
         {
-            DeInitItem(item);
+            var group = GetGroup(item.Object, false);
 
-            if (GroupingEnabled)
-            {
-                var group = GetGroup(item.Object);
-                group.DeleteItem(item);
+            base.DeleteItem(item);
 
-                if (group.IsEmpty)
-                    DeleteGroup(group);
-            }
-            else
-                DeleteUIComponent(item);
-
-            SwitchEmpty();
+            if(group?.IsEmpty == true)
+                DeleteGroup(group);
         }
         private void DeleteGroup(EditableGroupType group)
         {
@@ -56,16 +58,26 @@ namespace NodeMarkup.UI.Editors
             return group;
         }
 
-        private EditableGroupType GetGroup(EditableObject editableObject)
+        private EditableGroupType GetGroup(EditableObject editableObject, bool add = true)
         {
             var groupType = SelectGroup(editableObject);
-            if (!Groups.TryGetValue(groupType, out EditableGroupType group))
+            if (!Groups.TryGetValue(groupType, out EditableGroupType group) && add)
                 group = AddGroup(groupType);
             return group;
         }
         protected override void ClearItems()
         {
-            base.ClearItems();
+            var components = ItemsPanel.components.ToArray();
+            foreach (var component in components)
+            {
+                if (component is EditableItemType item)
+                    DeleteItem(item);
+                else if (component is EditableGroupType group)
+                    ClearItems(group);
+                else
+                    DeleteUIComponent(component);
+            }
+
             Groups.Clear();
         }
 
@@ -112,11 +124,11 @@ namespace NodeMarkup.UI.Editors
         }
         public override void Select(EditableItemType item)
         {
-                var groupKey = SelectGroup(item.Object);
-                if (Groups.TryGetValue(groupKey, out EditableGroupType group))
-                    group.IsExpand = true;
+            var groupKey = SelectGroup(item.Object);
+            if (Groups.TryGetValue(groupKey, out EditableGroupType group))
+                group.IsExpand = true;
 
-                base.Select(item);
+            base.Select(item);
         }
         public override void ScrollTo(EditableItemType item)
         {

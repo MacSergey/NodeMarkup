@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Panel
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
-            CheckPosition();
+            SetPosition();
 
             CreateHeader();
             CreateTabStrip();
@@ -153,10 +153,12 @@ namespace NodeMarkup.UI.Panel
         private void CheckPosition()
         {
             if (absolutePosition.x < 0 || absolutePosition.y < 0)
-            {
-                absolutePosition = DefaultPosition;
-                Logger.LogDebug($"Set default panel position");
-            }
+                SetPosition();
+        }
+        private void SetPosition()
+        {
+            Logger.LogDebug($"Set default panel position");
+            absolutePosition = DefaultPosition;
         }
 
         public void UpdatePanel() => CurrentEditor?.UpdateEditor();

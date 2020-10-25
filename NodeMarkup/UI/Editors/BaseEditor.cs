@@ -195,6 +195,7 @@ namespace NodeMarkup.UI.Editors
                     _selectItem.IsSelect = true;
             }
         }
+        private Queue<EditableItemType> ItemsPool { get; } = new Queue<EditableItemType>();
         public EditableObject EditObject => SelectItem?.Object;
 
         protected override void OnSizeChanged()
@@ -214,17 +215,25 @@ namespace NodeMarkup.UI.Editors
         }
         public virtual EditableItemType AddItem(EditableObject editableObject)
         {
-            var item = NewItem();
+            var item = GetItem(ItemsPanel);
             InitItem(item, editableObject);
 
             SwitchEmpty();
 
             return item;
         }
-        protected EditableItemType NewItem()
+        protected virtual EditableItemType GetItem(UIComponent parent)
         {
-            var newItem = ItemsPanel.AddUIComponent<EditableItemType>();
-            newItem.width = ItemsPanel.width;
+            EditableItemType newItem = null;
+            if (ItemsPool.Any())
+            {
+                newItem = ItemsPool.Dequeue();
+                parent.AttachUIComponent(newItem.gameObject);
+            }
+            else
+                newItem = parent.AddUIComponent<EditableItemType>();
+
+            newItem.width = parent.width;
             return newItem;
         }
         protected void InitItem(EditableItemType item, EditableObject editableObject)
@@ -258,29 +267,43 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        protected override void ClearItems()
+        protected override void ClearItems() => ClearItems(ItemsPanel);
+        protected void ClearItems(UIComponent parent)
         {
-            var componets = ItemsPanel.components.ToArray();
-            foreach (var item in componets)
-                DeleteUIComponent(item);
+            var components = parent.components.ToArray();
+            foreach (var component in components)
+            {
+                if (component is EditableItemType item)
+                    DeleteItem(item);
+                else
+                    DeleteUIComponent(component);
+            }
         }
         protected virtual void DeleteItem(EditableItemType item)
         {
             DeInitItem(item);
-            DeleteUIComponent(item);
+            ReturnItem(item);
 
             SwitchEmpty();
         }
+        protected void ReturnItem(EditableItemType item)
+        {
+            item.parent.RemoveUIComponent(item);
+            ItemsPool.Enqueue(item);
+        }
         protected void DeInitItem(EditableItemType item)
         {
+            item.Text = string.Empty;
+            item.Object = null;
             item.eventClick -= ItemClick;
             item.eventMouseEnter -= ItemHover;
             item.eventMouseLeave -= ItemLeave;
+            item.OnDelete -= ItemDelete;
         }
-        protected void DeleteUIComponent(UIComponent item)
+        protected void DeleteUIComponent(UIComponent component)
         {
-            ItemsPanel.RemoveUIComponent(item);
-            Destroy(item.gameObject);
+            ItemsPanel.RemoveUIComponent(component);
+            Destroy(component);
         }
         protected virtual EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
         public virtual void UpdateEditor(EditableObject selectObject = null)

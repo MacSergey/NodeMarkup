@@ -58,20 +58,6 @@ namespace NodeMarkup.UI.Editors
             Selector = selector;
             Item.Text = groupName;
         }
-
-        public EditableItemType NewItem()
-        {
-            var item = AddUIComponent<EditableItemType>();
-            item.width = width;
-            item.isVisible = _isExpand;
-
-            return item;
-        }
-        public void DeleteItem(EditableItemType item)
-        {
-            RemoveUIComponent(item);
-            Destroy(item.gameObject);
-        }
         public virtual void Refresh()
         {
             foreach (var item in components.OfType<EditableItemType>())

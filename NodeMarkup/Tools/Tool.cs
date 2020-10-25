@@ -16,6 +16,7 @@ using ColossalFramework.PlatformServices;
 using System.Xml.Linq;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.UI.Panel;
+using System.Diagnostics;
 
 namespace NodeMarkup.Tools
 {
