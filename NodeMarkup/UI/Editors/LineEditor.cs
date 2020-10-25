@@ -61,7 +61,6 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void ClearSettings()
         {
-            HoverRulePanel = null;
             DeleteAddButton();
             base.ClearSettings();
         }
@@ -116,6 +115,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void RemoveRulePanel(RulePanel rulePanel)
         {
+            if (HoverRulePanel == rulePanel)
+                HoverRulePanel = null;
+
             DeInitRulePanel(rulePanel);
             FreeRulePanel(rulePanel);
         }
