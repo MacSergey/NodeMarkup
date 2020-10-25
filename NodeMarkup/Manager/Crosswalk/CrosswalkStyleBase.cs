@@ -83,7 +83,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            dashLengthProperty.Text = Localize.LineEditor_DashedLength;
+            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
             dashLengthProperty.CheckMin = true;
@@ -97,7 +97,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
+            spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
             spaceLengthProperty.CheckMin = true;

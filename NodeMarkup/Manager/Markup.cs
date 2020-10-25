@@ -14,6 +14,16 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
+    public interface IRender
+    {
+        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null);
+    }
+    public interface IDeletable
+    {
+        string DeleteCaptionDescription { get; }
+        string DeleteMessageDescription { get; }
+        Dependences GetDependences();
+    }
     public interface IUpdate
     {
         void Update(bool onlySelfUpdate = false);
@@ -23,6 +33,13 @@ namespace NodeMarkup.Manager
     {
         void Update(Type item, bool recalculate = false);
     }
+    public interface IItem : IUpdate, IDeletable, IRender { }
+
+    public interface IStyleData
+    {
+        IEnumerable<IDrawData> GetDrawData();
+    }
+
     public class Markup : IUpdate<MarkupPoint>, IUpdate<MarkupLine>, IUpdate<MarkupFiller>, IUpdate<MarkupCrosswalk>, IToXml
     {
         #region STATIC
@@ -44,17 +61,26 @@ namespace NodeMarkup.Manager
         Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
-        List<ILineTrajectory> ContourParts { get; set; } = new List<ILineTrajectory>();
+        Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
 
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
         public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
-        public IEnumerable<ILineTrajectory> Contour => ContourParts;
+        public IEnumerable<ILineTrajectory> Contour
+        {
+            get
+            {
+                foreach (var enter in Enters)
+                    yield return enter.Line;
+                foreach (var line in BetweenEnters.Values)
+                    yield return line;
+            }
+        }
 
-        public bool NeedRecalculateBatches { get; set; }
-        public RenderBatch[] RenderBatches { get; private set; } = new RenderBatch[0];
+        public bool NeedRecalculateDrawData { get; set; }
+        public List<IDrawData> DrawData { get; private set; } = new List<IDrawData>();
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -108,7 +134,7 @@ namespace NodeMarkup.Manager
 
             var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
-            newEnters.Sort((e1, e2) => e1.AbsoluteAngle.CompareTo(e2.AbsoluteAngle));
+            newEnters.Sort((e1, e2) => e2.AbsoluteAngle.CompareTo(e1.AbsoluteAngle));
 
             UpdateBackup(delete, add, oldEnters, newEnters);
 
@@ -160,24 +186,23 @@ namespace NodeMarkup.Manager
 
         private void UpdateNodeСontour()
         {
-            var contourParts = new List<ILineTrajectory>();
+            BetweenEnters.Clear();
 
             for (var i = 0; i < EntersList.Count; i += 1)
             {
+                var j = i.NextIndex(EntersList.Count);
                 var prev = EntersList[i];
-                contourParts.Add(new StraightTrajectory(prev.LeftSide, prev.RightSide));
+                var next = EntersList[j];
 
-                var next = GetNextEnter(i);
                 var betweenBezier = new Bezier3()
                 {
-                    a = prev.RightSide,
-                    d = next.LeftSide
+                    a = prev.LastPointSide,
+                    d = next.FirstPointSide
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
-                contourParts.Add(new BezierTrajectory(betweenBezier));
-            }
 
-            ContourParts = contourParts;
+                BetweenEnters[Math.Max(i,j) * 10 + Math.Min(i,j)] = new BezierTrajectory(betweenBezier);
+            }
         }
         private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
@@ -272,23 +297,38 @@ namespace NodeMarkup.Manager
         {
             LineIntersects.Clear();
             foreach (var line in Lines)
-                line.RecalculateDashes();
+                line.RecalculateStyleData();
 
             foreach (var filler in Fillers)
-                filler.RecalculateDashes();
+                filler.RecalculateStyleData();
 
             foreach (var crosswalk in Crosswalks)
-                crosswalk.RecalculateDashes();
+                crosswalk.RecalculateStyleData();
 
-            NeedRecalculateBatches = true;
+            NeedRecalculateDrawData = true;
         }
-        public void RecalculateBatches()
+        public void RecalculateDrawData()
         {
             var dashes = new List<MarkupStyleDash>();
-            dashes.AddRange(Lines.SelectMany(l => l.Dashes));
-            dashes.AddRange(Fillers.SelectMany(f => f.Dashes));
-            dashes.AddRange(Crosswalks.SelectMany(c => c.Dashes));
-            RenderBatches = RenderBatch.FromDashes(dashes).ToArray();
+            var drawData = new List<IDrawData>();
+
+            Seporate(Lines.Select(l => l.StyleData));
+            Seporate(Fillers.Select(l => l.StyleData));
+            Seporate(Crosswalks.Select(l => l.StyleData));
+
+            drawData.AddRange(RenderBatch.FromDashes(dashes));
+            DrawData = drawData;
+
+            void Seporate(IEnumerable<IStyleData> stylesData)
+            {
+                foreach(var styleData in stylesData)
+                {
+                    if (styleData is IEnumerable<MarkupStyleDash> styleDashes)
+                        dashes.AddRange(styleDashes);
+                    else
+                        drawData.AddRange(styleData.GetDrawData());
+                }
+            }
         }
 
         #endregion
@@ -296,29 +336,16 @@ namespace NodeMarkup.Manager
         #region LINES
 
         public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
-        //public MarkupLine ToggleConnection(MarkupPointPair pointPair, Style.StyleType style)
-        //{
-        //    if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine line))
-        //    {
-        //        RemoveConnect(line);
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        if (pointPair.IsNormal && !EarlyAccess.CheckFunctionAccess(Localize.EarlyAccess_Function_PerpendicularLines))
-        //            return null;
 
-        //        line = MarkupLine.FromStyle(this, pointPair, style);
-        //        LinesDictionary[pointPair.Hash] = line;
-        //        NeedRecalculateBatches = true;
-        //        return line;
-        //    }
-        //}
         public MarkupLine AddConnection(MarkupPointPair pointPair, Style.StyleType style)
         {
-            var line = MarkupLine.FromStyle(this, pointPair, style);
-            LinesDictionary[pointPair.Hash] = line;
-            NeedRecalculateBatches = true;
+            if (!TryGetLine(pointPair, out MarkupLine line))
+            {
+                line = MarkupLine.FromStyle(this, pointPair, style);
+                LinesDictionary[pointPair.Hash] = line;
+                NeedRecalculateDrawData = true;
+            }
+
             return line;
         }
         public void RemoveConnect(MarkupLine line)
@@ -443,6 +470,12 @@ namespace NodeMarkup.Manager
         public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
+        public ILineTrajectory GetEntersLine(Enter first, Enter second)
+        {
+            var i = EntersList.IndexOf(first);
+            var j = EntersList.IndexOf(second);
+            return BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)];
+        }
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
@@ -457,13 +490,13 @@ namespace NodeMarkup.Manager
         public void AddFiller(MarkupFiller filler)
         {
             FillersList.Add(filler);
-            filler.RecalculateDashes();
-            NeedRecalculateBatches = true;
+            filler.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
         }
         public void RemoveFiller(MarkupFiller filler)
         {
             FillersList.Remove(filler);
-            NeedRecalculateBatches = true;
+            NeedRecalculateDrawData = true;
         }
 
         #endregion
@@ -473,8 +506,8 @@ namespace NodeMarkup.Manager
         public void AddCrosswalk(MarkupCrosswalk crosswalk)
         {
             CrosswalksDictionary[crosswalk.Line] = crosswalk;
-            crosswalk.RecalculateDashes();
-            NeedRecalculateBatches = true;
+            crosswalk.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
         }
         public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
         public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
@@ -571,10 +604,10 @@ namespace NodeMarkup.Manager
 
         public enum Item
         {
-            [Description(nameof(Localize.LineStyle_RegularGroup))]
+            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             RegularLine = 0x100,
 
-            [Description(nameof(Localize.LineStyle_StopGroup))]
+            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             StopLine = 0x200,
 
             [Description(nameof(Localize.FillerStyle_Group))]

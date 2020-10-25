@@ -65,6 +65,8 @@ namespace NodeMarkup.Utils
             var description = value.GetAttr<DescriptionAttribute, T>()?.Description ?? value.ToString();
             return Localize.ResourceManager.GetString(description, Localize.Culture);
         }
+        public static bool IsVisible<T>(this T value) where T : Enum => value.GetAttr<NotVisibleAttribute, T>() == null;
+
         public static string Description(this StyleModifier modifier)
         {
             var localeID = "KEYNAME";
@@ -86,8 +88,8 @@ namespace NodeMarkup.Utils
                 return modifier.ToString();
         }
 
-        private static NetManager NetManager => Singleton<NetManager>.instance;
-        private static RenderManager RenderManager => Singleton<RenderManager>.instance;
+        public static NetManager NetManager => Singleton<NetManager>.instance;
+        public static PropManager PropManager => Singleton<PropManager>.instance;
         public static IEnumerable<NetSegment> Segments(this NetNode node)
         {
             for (var i = 0; i < 8; i += 1)
@@ -297,4 +299,6 @@ namespace NodeMarkup.Utils
         public static BezierPointComparer Instance { get; } = new BezierPointComparer();
         public int Compare(BezierPoint x, BezierPoint y) => x.Length.CompareTo(y.Length);
     }
+
+    public class NotVisibleAttribute : Attribute { }
 }

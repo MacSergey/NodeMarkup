@@ -52,9 +52,7 @@ namespace NodeMarkup.UI
 
             atlas = TextureUtil.GetAtlas(AtlasName);
             if (atlas == UIView.GetAView().defaultAtlas)
-            {
                 atlas = TextureUtil.CreateTextureAtlas("sprites.png", AtlasName, buttonSize, buttonSize, spriteNames);
-            }
 
             Deactivate();
             hoveredBgSprite = ButtonBgHovered;
@@ -65,8 +63,6 @@ namespace NodeMarkup.UI
             Show();
             Unfocus();
             Invalidate();
-
-            Instance = this;
         }
 
         public void Activate()
@@ -97,7 +93,9 @@ namespace NodeMarkup.UI
         public static NodeMarkupButton CreateButton()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
-            return GetContainingPanel().AddUIComponent<NodeMarkupButton>();
+            Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
+            Logger.LogDebug($"Button created");
+            return Instance;
         }
         public static void RemoveButton()
         {
@@ -108,6 +106,7 @@ namespace NodeMarkup.UI
                 GetContainingPanel().RemoveUIComponent(Instance);
                 Destroy(Instance);
                 Instance = null;
+                Logger.LogDebug($"Button removed");
             }
         }
 

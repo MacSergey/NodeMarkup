@@ -13,12 +13,6 @@ namespace NodeMarkup.Tools
     {
         public override ToolModeType Type => ToolModeType.MakeCrosswalk;
 
-        protected override void Reset(BaseToolMode prevMode)
-        {
-            base.Reset(prevMode);
-            SetTarget(MarkupPoint.PointType.Crosswalk);
-        }
-
         public override string GetToolInfo()
         {
             if (IsSelectPoint)
@@ -26,20 +20,13 @@ namespace NodeMarkup.Tools
             else
                 return Localize.Tool_InfoSelectCrosswalkStartPoint;
         }
-        public override bool ProcessShortcuts(Event e)
+
+        public override void OnUpdate()
         {
-            if (IsSelectPoint)
-                return false;
-            else if (base.ProcessShortcuts(e))
-                return true;
-            else if (!NodeMarkupTool.ShiftIsPressed)
-            {
+            base.OnUpdate();
+
+            if (!IsSelectPoint && !NodeMarkupTool.ShiftIsPressed)
                 Tool.SetDefaultMode();
-                SetTarget();
-                return true;
-            }
-            else
-                return false;
         }
         public override void OnPrimaryMouseClicked(Event e)
         {
@@ -64,10 +51,58 @@ namespace NodeMarkup.Tools
                 SetTarget();
             }
         }
+        protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
+        {
+            if (ignore != null && ignore.Enter != enter)
+                yield break;
+
+            var allow = enter.Crosswalks.Select(i => 1).ToArray();
+            var bridge = new Dictionary<MarkupPoint, int>();
+            foreach (var crosswalk in enter.Crosswalks)
+                bridge.Add(crosswalk, bridge.Count);
+
+            var isIgnore = ignore?.Enter == enter;
+            var ignoreIdx = isIgnore ? bridge[ignore] : 0;
+
+            var leftIdx = ignoreIdx;
+            var rightIdx = ignoreIdx;
+
+            foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Crosswalk && l.Start.Enter == enter))
+            {
+                var from = Math.Min(bridge[line.Start], bridge[line.End]);
+                var to = Math.Max(bridge[line.Start], bridge[line.End]);
+                allow[from] = 2;
+                allow[to] = 2;
+                for (var i = from + 1; i <= to - 1; i += 1)
+                    allow[i] = 0;
+
+                if (isIgnore && line.ContainsPoint(ignore))
+                {
+                    var otherIdx = bridge[line.PointPair.GetOther(ignore)];
+                    if (otherIdx < ignoreIdx)
+                        leftIdx = otherIdx;
+                    else if (otherIdx > ignoreIdx)
+                        rightIdx = otherIdx;
+                }
+            }
+
+            if (isIgnore)
+            {
+                SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
+                SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
+                allow[ignoreIdx] = 0;
+            }
+
+            foreach (var point in bridge)
+            {
+                if (allow[point.Value] != 0)
+                    yield return point.Key;
+            }
+        }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, Colors.White, 0.5f);
+                HoverPoint.Render(cameraInfo, Colors.Hover, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
 
@@ -86,7 +121,7 @@ namespace NodeMarkup.Tools
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
 
-            NodeMarkupTool.RenderBezier(cameraInfo, color, bezier, MarkupCrosswalkPoint.Shift * 2, true);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, MarkupCrosswalkPoint.Shift * 2, cut: true);
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -95,7 +130,7 @@ namespace NodeMarkup.Tools
             dir.Normalize();
             var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier, MarkupCrosswalkPoint.Shift * 2, true);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.White, MarkupCrosswalkPoint.Shift * 2, cut: true);
         }
     }
 }

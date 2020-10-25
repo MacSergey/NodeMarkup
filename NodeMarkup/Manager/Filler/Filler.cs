@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IUpdate, IDeletable, IToXml
+    public class MarkupFiller : IItem, IToXml
     {
         public static string XmlName { get; } = "F";
 
@@ -32,7 +33,7 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
-        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
         public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine);
 
         public string XmlSection => XmlName;
@@ -57,7 +58,7 @@ namespace NodeMarkup.Manager
                     fakeLine.Update(true);
             }
         }
-        public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
+        public void RecalculateStyleData() => StyleData = Style.Calculate(this);
 
         public Dependences GetDependences() => new Dependences();
 
@@ -101,6 +102,8 @@ namespace NodeMarkup.Manager
             filler = new MarkupFiller(contour, style);
             return true;
         }
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Contour.Render(cameraInfo, color, width, alphaBlend);
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();
     }

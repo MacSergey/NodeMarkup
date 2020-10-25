@@ -45,6 +45,8 @@ namespace NodeMarkup
             PatchNetManagerSimulationStepImpl(harmony);
             PatchBuildingDecorationLoadPaths(harmony);
             PatchLoadAssetPanelOnLoad(harmony);
+            if (Settings.RailUnderMarking)
+                PatchNetInfoNodeInitNodeInfo(harmony);
         }
 
         private static void AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
@@ -135,7 +137,7 @@ namespace NodeMarkup
                 if (prevInstruction != null && prevInstruction.opcode == OpCodes.Ldfld && prevInstruction.operand == nodeBufferField && instruction.opcode == OpCodes.Callvirt && instruction.operand == clearMethod)
                     matchCount += 1;
 
-                if(!inserted && matchCount == 2)
+                if (!inserted && matchCount == 2)
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_0);
                     yield return new CodeInstruction(OpCodes.Ldloc_0);
@@ -146,7 +148,7 @@ namespace NodeMarkup
                     inserted = true;
                 }
 
-                if(prevInstruction != null)
+                if (prevInstruction != null)
                     yield return prevInstruction;
 
                 prevInstruction = instruction;
@@ -159,6 +161,13 @@ namespace NodeMarkup
         {
             var original = AccessTools.Method(typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
             var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
+
+            AddPostfix(harmony, original, postfix);
+        }
+        private static void PatchNetInfoNodeInitNodeInfo(Harmony harmony)
+        {
+            var original = AccessTools.Method(typeof(NetInfo), "InitNodeInfo");
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
 
             AddPostfix(harmony, original, postfix);
         }

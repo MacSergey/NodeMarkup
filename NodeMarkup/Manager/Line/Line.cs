@@ -3,6 +3,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +14,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IUpdate, IDeletable, IToXml
+    public abstract class MarkupLine : IItem, IToXml
     {
         public static string XmlName { get; } = "L";
 
@@ -40,7 +41,9 @@ namespace NodeMarkup.Manager
 
         protected ILineTrajectory LineTrajectory { get; private set; }
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
-        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
+
+        public LineBorders Borders => new LineBorders(this);
 
         public string XmlSection => XmlName;
 
@@ -63,7 +66,7 @@ namespace NodeMarkup.Manager
         }
         protected abstract ILineTrajectory CalculateTrajectory();
 
-        public void RecalculateDashes() => Dashes = GetDashes().ToArray();
+        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(GetDashes());
         protected abstract IEnumerable<MarkupStyleDash> GetDashes();
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
@@ -96,7 +99,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width = 0.2f) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Trajectory.Render(cameraInfo, color, width, alphaBlend);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
 
         public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
@@ -110,10 +113,10 @@ namespace NodeMarkup.Manager
                 case Style.StyleType.RegularLine:
                 default:
                     var regularStyle = (RegularLineStyle.RegularLineType)(int)style;
-                    if (pointPair.IsNormal)
-                        return new MarkupNormalLine(markup, pointPair, regularStyle);
+                    if (regularStyle == RegularLineStyle.RegularLineType.Empty)
+                        return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
                     else
-                        return new MarkupRegularLine(markup, pointPair, regularStyle);
+                        return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair, regularStyle) : new MarkupRegularLine(markup, pointPair, regularStyle);
             }
         }
         public Dependences GetDependences() => Markup.GetLineDependences(this);
@@ -161,13 +164,13 @@ namespace NodeMarkup.Manager
 
         public enum LineType
         {
-            [Description(nameof(Localize.LineStyle_RegularGroup))]
+            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             Regular = Markup.Item.RegularLine,
 
-            [Description(nameof(Localize.LineStyle_StopGroup))]
+            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             Stop = Markup.Item.StopLine,
 
-            [Description(nameof(Localize.LineStyle_CrosswalkGroup))]
+            [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
             Crosswalk = Markup.Item.Crosswalk,
         }
         public override string ToString() => PointPair.ToString();
@@ -197,7 +200,7 @@ namespace NodeMarkup.Manager
             }
             Update(true);
             if (Visible)
-                RecalculateDashes();
+                RecalculateStyleData();
         }
 
         protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
@@ -237,7 +240,7 @@ namespace NodeMarkup.Manager
         {
             var lineStyle = TemplateManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
             AddRule(lineStyle, false, false);
-            RecalculateDashes();
+            RecalculateStyleData();
         }
         protected override ILineTrajectory CalculateTrajectory()
         {
@@ -383,7 +386,6 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color color, float width) => NodeMarkupTool.RenderTrajectory(cameraInfo, color, Trajectory, width);
     }
     public class MarkupStopLine : MarkupStraightLine<StopLineStyle, StopLineStyle.StopLineType>
     {
@@ -424,17 +426,25 @@ namespace NodeMarkup.Manager
 
         public Markup Markup => First.Markup == Second.Markup ? First.Markup : null;
         public bool IsSelf => First == Second;
-        public bool CanIntersect
+        public bool? MustIntersect
         {
             get
             {
                 if (IsSelf || First.IsStopLine || Second.IsStopLine)
                     return false;
 
+                if (First.IsCrosswalk && Second.IsCrosswalk && First.Start.Enter == Second.Start.Enter)
+                    return false;
+
                 if (First.ContainsPoint(Second.Start) || First.ContainsPoint(Second.End))
                     return false;
 
-                return true;
+                if (IsBorder(First, Second) || IsBorder(Second, First))
+                    return true;
+
+                return null;
+
+                static bool IsBorder(MarkupLine line1, MarkupLine line2) => line1 is MarkupCrosswalkLine crosswalkLine && crosswalkLine.Crosswalk.IsBorder(line2);
             }
         }
 
@@ -459,6 +469,44 @@ namespace NodeMarkup.Manager
         {
             public bool Equals(MarkupLinePair x, MarkupLinePair y) => (x.First == y.First && x.Second == y.Second) || (x.First == y.Second && x.Second == y.First);
             public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
+        }
+    }
+    public class LineBorders : IEnumerable<ILineTrajectory>
+    {
+        public Vector3 Center { get; }
+        public List<ILineTrajectory> Borders { get; }
+        public bool IsEmpty => !Borders.Any();
+        public LineBorders(MarkupLine line)
+        {
+            Center = line.Markup.Position;
+            Borders = GetBorders(line).ToList();
+        }
+        public IEnumerable<ILineTrajectory> GetBorders(MarkupLine line)
+        {
+            if (line.Start.GetBorder(out ILineTrajectory startTrajectory))
+                yield return startTrajectory;
+            if (line.End.GetBorder(out ILineTrajectory endTrajectory))
+                yield return endTrajectory;
+        }
+
+        public IEnumerator<ILineTrajectory> GetEnumerator() => Borders.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public StraightTrajectory[] GetVertex(MarkupStyleDash dash)
+        {
+            var dirX = dash.Angle.Direction();
+            var dirY = dirX.Turn90(true);
+
+            dirX *= (dash.Length / 2);
+            dirY *= (dash.Width / 2);
+
+            return new StraightTrajectory[]
+            {
+                new StraightTrajectory(Center, dash.Position + dirX + dirY),
+                new StraightTrajectory(Center, dash.Position - dirX + dirY),
+                new StraightTrajectory(Center, dash.Position + dirX - dirY),
+                new StraightTrajectory(Center, dash.Position - dirX - dirY),
+            };
         }
     }
 }

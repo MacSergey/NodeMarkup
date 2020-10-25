@@ -46,6 +46,7 @@ namespace NodeMarkup.Tools
         }
         public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : Localize.Tool_InfoNode;
 
+        public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
         {
             if (IsHoverNode)
@@ -85,7 +86,7 @@ namespace NodeMarkup.Tools
             if (IsHoverNode)
             {
                 var node = Utilities.GetNode(HoverNodeId);
-                NodeMarkupTool.RenderCircle(cameraInfo, Colors.Orange, node.m_position, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
+                NodeMarkupTool.RenderCircle(cameraInfo, node.m_position, Colors.Orange, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
         }
     }

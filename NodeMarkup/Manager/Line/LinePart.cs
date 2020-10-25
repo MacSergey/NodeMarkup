@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLinePart : IToXml
+    public abstract class MarkupLinePart : IToXml, IRender
     {
         public Action OnRuleChanged { private get; set; }
 
@@ -74,10 +74,10 @@ namespace NodeMarkup.Manager
             }
 
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color color, float width)
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             if (GetTrajectory(out ILineTrajectory trajectory))
-                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory, width);
+                trajectory.Render(cameraInfo, color, width, alphaBlend);
         }
 
         public virtual XElement ToXml()
@@ -100,7 +100,7 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class MarkupLineBound
+    public class MarkupLineBound : IRender
     {
         private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
         public MarkupLine Line { get; }
@@ -129,5 +129,7 @@ namespace NodeMarkup.Manager
 
         public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
         public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Line.Render(cameraInfo, color, width, alphaBlend);
     }
 }

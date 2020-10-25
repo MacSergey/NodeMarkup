@@ -13,11 +13,6 @@ namespace NodeMarkup.Tools
     {
         public override ToolModeType Type => ToolModeType.MakeLine;
 
-        protected override void Reset(BaseToolMode prevMode)
-        {
-            base.Reset(prevMode);
-            SetTarget();
-        }
         public override string GetToolInfo()
         {
             if (IsSelectPoint)
@@ -25,28 +20,22 @@ namespace NodeMarkup.Tools
             else
                 return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
         }
-        public override bool ProcessShortcuts(Event e)
+        public override void OnUpdate()
         {
+            base.OnUpdate();
+
             if (IsSelectPoint)
-                return false;
-            else if (base.ProcessShortcuts(e))
-                return true;
+                return;
             else if (NodeMarkupTool.OnlyAltIsPressed)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
                 if (Tool.Mode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
-                return true;
             }
             else if (NodeMarkupTool.OnlyShiftIsPressed)
-            {
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
-                SetTarget(MarkupPoint.PointType.Crosswalk);
-                return true;
-            }
-            else
-                return false;
         }
+
         public override void OnMouseDown(Event e)
         {
             if (!IsSelectPoint && IsHoverPoint && NodeMarkupTool.CtrlIsPressed)
@@ -76,10 +65,55 @@ namespace NodeMarkup.Tools
                 SetTarget();
             }
         }
+        protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
+        {
+            var allow = enter.Points.Select(i => 1).ToArray();
+
+            if (ignore != null && ignore.Enter == enter)
+            {
+                var ignoreIdx = ignore.Num - 1;
+                var leftIdx = ignoreIdx;
+                var rightIdx = ignoreIdx;
+
+                foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Stop && l.Start.Enter == enter))
+                {
+                    var from = Math.Min(line.Start.Num, line.End.Num) - 1;
+                    var to = Math.Max(line.Start.Num, line.End.Num) - 1;
+                    if (from < ignore.Num - 1 && ignore.Num - 1 < to)
+                        yield break;
+
+                    allow[from] = 2;
+                    allow[to] = 2;
+
+                    for (var i = from + 1; i <= to - 1; i += 1)
+                        allow[i] = 0;
+
+                    if (line.ContainsPoint(ignore))
+                    {
+                        var otherIdx = line.PointPair.GetOther(ignore).Num - 1;
+                        if (otherIdx < ignoreIdx)
+                            leftIdx = otherIdx;
+                        else if (otherIdx > ignoreIdx)
+                            rightIdx = otherIdx;
+                    }
+                }
+
+                SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
+                SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
+                allow[ignoreIdx] = 0;
+            }
+
+            foreach (var point in enter.Points)
+            {
+                if (allow[point.Num - 1] != 0)
+                    yield return point;
+            }
+        }
+
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                NodeMarkupTool.RenderPointOverlay(cameraInfo, HoverPoint, Colors.White, 0.5f);
+                HoverPoint.Render(cameraInfo, Colors.Hover, 0.5f);
 
             RenderPointsOverlay(cameraInfo);
 
@@ -116,12 +150,12 @@ namespace NodeMarkup.Tools
             var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, color, bezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color);
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Blue;
+            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Purple;
 
             var lineBezier = new Bezier3()
             {
@@ -130,7 +164,7 @@ namespace NodeMarkup.Tools
                 c = SelectPoint.Position,
                 d = HoverPoint.Position,
             };
-            NodeMarkupTool.RenderBezier(cameraInfo, color, lineBezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, lineBezier, color);
 
             var normal = SelectPoint.Direction.Turn90(false);
 
@@ -141,7 +175,7 @@ namespace NodeMarkup.Tools
             };
             normalBezier.b = normalBezier.a + normal / 2;
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
-            NodeMarkupTool.RenderBezier(cameraInfo, color, normalBezier, 2f, true);
+            NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, color, 2f, cut: true);
         }
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -157,7 +191,7 @@ namespace NodeMarkup.Tools
             bezier.c = v >= 0 ? bezier.c : -bezier.c;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Hover);
         }
     }
 }

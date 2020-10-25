@@ -83,6 +83,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Poly2Tri, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Poly2Tri.1.0.1.0\lib\net35-Client\Poly2Tri.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -105,10 +108,15 @@
     <Compile Include="Tools\MakeItem\MakeFiller.cs" />
     <Compile Include="Tools\MakeItem\BaseMakeItem.cs" />
     <Compile Include="Tools\MakeItem\MakeLIne.cs" />
-    <Compile Include="Tools\Paste\PasteClasses.cs" />
-    <Compile Include="Tools\Paste\EntersOrderMode.cs" />
-    <Compile Include="Tools\Paste\PointsOrderMode.cs" />
+    <Compile Include="Tools\Order\PasteClasses.cs" />
+    <Compile Include="Tools\Order\EntersOrderMode.cs" />
+    <Compile Include="Tools\Order\PointsOrderMode.cs" />
+    <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
+    <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
+    <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
+    <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="Utils\DataExtensions\AssetData.cs" />
     <Compile Include="Utils\DataExtensions\Loading.cs" />
     <Compile Include="EarlyAccess.cs" />
@@ -168,7 +176,7 @@
     <Compile Include="UI\Editors\TemplateEditor.cs" />
     <Compile Include="UI\Elements\Keymapping.cs" />
     <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
-    <Compile Include="UI\Panel.cs" />
+    <Compile Include="UI\Panel\Panel.cs" />
     <Compile Include="UI\PointsSelector.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
     <Compile Include="UI\Property panels\BoolProperty.cs" />
@@ -176,10 +184,10 @@
     <Compile Include="UI\Property panels\ColorProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />
     <Compile Include="UI\Property panels\FieldProperty.cs" />
-    <Compile Include="UI\Property panels\HeaderPanel.cs" />
+    <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
     <Compile Include="UI\Property panels\ListProperty.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
-    <Compile Include="UI\Settings.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Elements\TabPanel.cs" />
     <Compile Include="UI\UIUtils.cs" />
@@ -193,6 +201,7 @@
     <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Utils\DataExtensions\SerializableData.cs" />
+    <Compile Include="Utils\Shortcut.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
     <Compile Include="Utils\VersionMigration.cs" />
   </ItemGroup>
@@ -290,7 +299,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

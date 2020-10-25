@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.LineEditor_Offset;
+            offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -90,7 +90,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddBaseProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            baseProperty.Text = Localize.LineEditor_SharkToothBase;
+            baseProperty.Text = Localize.StyleOption_SharkToothBase;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
             baseProperty.CheckMin = true;
@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddHeightProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            heightProperty.Text = Localize.LineEditor_SharkToothHeight;
+            heightProperty.Text = Localize.StyleOption_SharkToothHeight;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
             heightProperty.CheckMin = true;
@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddSpaceProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceProperty.Text = Localize.LineEditor_SharkToothSpace;
+            spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
             spaceProperty.CheckMin = true;
@@ -129,10 +129,10 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(spaceProperty, onHover, onLeave);
             return spaceProperty;
         }
-        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
         {
             var alignmentProperty = parent.AddUIComponent<LineAlignmentPropertyPanel>();
-            alignmentProperty.Text = Localize.LineEditor_Alignment;
+            alignmentProperty.Text = Localize.StyleOption_Alignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;
             alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment = value;
@@ -140,13 +140,13 @@ namespace NodeMarkup.Manager
         }
         public enum StyleAlignment
         {
-            [Description(nameof(Localize.LineEditor_AlignmentLeft))]
+            [Description(nameof(Localize.StyleOption_AlignmentLeft))]
             Left,
 
-            [Description(nameof(Localize.LineEditor_AlignmentCenter))]
+            [Description(nameof(Localize.StyleOption_AlignmentCenter))]
             Centre,
 
-            [Description(nameof(Localize.LineEditor_AlignmentRight))]
+            [Description(nameof(Localize.StyleOption_AlignmentRight))]
             Right
         }
     }
@@ -188,6 +188,10 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
+
+            [Description(nameof(Localize.LineStyle_Empty))]
+            [NotVisible]
+            Empty = StyleType.EmptyLine
         }
     }
     public abstract class StopLineStyle : LineStyle
@@ -217,7 +221,7 @@ namespace NodeMarkup.Manager
 
         public enum StopLineType
         {
-            [Description(nameof(Localize.LineStyle_Stop))]
+            [Description(nameof(Localize.LineStyle_StopSolid))]
             Solid = StyleType.StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]

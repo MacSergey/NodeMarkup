@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using static NetInfo;
 
 namespace NodeMarkup.Manager
 {
@@ -17,18 +18,8 @@ namespace NodeMarkup.Manager
         static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
 
         static PropManager PropManager => Singleton<PropManager>.instance;
-        static Dictionary<MaterialType, Material> MaterialLib { get; set; }
+        
         public static ushort LoadErrors { get; set; } = 0;
-
-        public static void Init()
-        {
-            MaterialLib = new Dictionary<MaterialType, Material>()
-            {
-                { MaterialType.RectangleLines, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white))},
-                { MaterialType.RectangleFillers, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
-                { MaterialType.Triangle, RenderHelper.CreateMaterial(RenderHelper.CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth.png", 64,64))},
-            };
-        }
 
         public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
 
@@ -54,33 +45,17 @@ namespace NodeMarkup.Manager
             if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
                 return;
 
-            if (!cameraInfo.CheckRenderDistance(data.m_position, UI.Settings.RenderDistance))
+            if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
                 return;
 
-            if (markup.NeedRecalculateBatches)
+            if (markup.NeedRecalculateDrawData)
             {
-                markup.NeedRecalculateBatches = false;
-                markup.RecalculateBatches();
+                markup.NeedRecalculateDrawData = false;
+                markup.RecalculateDrawData();
             }
 
-            var instance = PropManager;
-            var materialBlock = instance.m_materialBlock;
-
-            var renderBatches = markup.RenderBatches;
-
-            foreach (var batch in renderBatches)
-            {
-                materialBlock.Clear();
-                materialBlock.SetVectorArray(instance.ID_PropLocation, batch.Locations);
-                materialBlock.SetVectorArray(instance.ID_PropObjectIndex, batch.Indices);
-                materialBlock.SetVectorArray(instance.ID_PropColor, batch.Colors);
-                materialBlock.SetVector(RenderHelper.ID_DecalSize, batch.Size);
-
-                var mesh = batch.Mesh;
-                var material = MaterialLib[batch.MaterialType];
-
-                Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
-            }
+            foreach (var item in markup.DrawData)
+                item.Draw();
         }
 
 
@@ -109,6 +84,11 @@ namespace NodeMarkup.Manager
                 if (NodesMarkup.TryGetValue(nodeId, out Markup markup))
                     markup.Update();
             }
+        }
+        public static void NetInfoNodeInitNodeInfoPostfix(Node info)
+        {
+            if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
+                info.m_nodeMaterial.renderQueue = 2470;
         }
         public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
         {
@@ -152,6 +132,7 @@ namespace NodeMarkup.Manager
     {
         RectangleLines,
         RectangleFillers,
-        Triangle
+        Triangle,
+        Pavement,
     }
 }

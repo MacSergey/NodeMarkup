@@ -75,17 +75,6 @@ namespace NodeMarkup.Manager
                 customTarget.OffsetAfter = OffsetAfter;
             }
         }
-        //protected List<UIComponent> GetBaseUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-        //{
-        //    var components = new List<UIComponent>
-        //    {
-        //        AddColorProperty(parent),
-        //        AddWidthProperty(parent, onHover, onLeave, 0.1f, 0.1f),
-        //        AddOffsetBeforeProperty(this, parent, onHover, onLeave),
-        //        AddOffsetAfterProperty(this, parent, onHover, onLeave),
-        //    };
-        //    return components;
-        //}
         public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
@@ -93,20 +82,20 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetAfterProperty(this, parent, onHover, onLeave));
             return components;
         }
-
-        protected static BoolPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
+        protected static BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
-            var parallelProperty = parent.AddUIComponent<BoolPropertyPanel>();
-            parallelProperty.Text = Localize.CrosswalkEditor_ParallelToLanes;
-            parallelProperty.Init();
-            parallelProperty.Value = parallelStyle.Parallel;
-            parallelProperty.OnValueChanged += (bool value) => parallelStyle.Parallel = value;
+            var parallelProperty = parent.AddUIComponent<BoolListPropertyPanel>();
+            parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
+            parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
+            parallelProperty.SelectedObject = parallelStyle.Parallel;
+            parallelProperty.OnSelectObjectChanged += (value) => parallelStyle.Parallel = value;
             return parallelProperty;
         }
+
         protected static FloatPropertyPanel AddOffsetBeforeProperty(CustomCrosswalkStyle customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetBeforeProperty = AddOffsetProperty(parent, onHover, onLeave);
-            offsetBeforeProperty.Text = Localize.CrosswalkEditor_OffsetBefore;
+            offsetBeforeProperty.Text = Localize.StyleOption_OffsetBefore;
             offsetBeforeProperty.Value = customStyle.OffsetBefore;
             offsetBeforeProperty.OnValueChanged += (float value) => customStyle.OffsetBefore = value;
             return offsetBeforeProperty;
@@ -114,7 +103,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetAfterProperty(CustomCrosswalkStyle customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetAfterProperty = AddOffsetProperty(parent, onHover, onLeave);
-            offsetAfterProperty.Text = Localize.CrosswalkEditor_OffsetAfter;
+            offsetAfterProperty.Text = Localize.StyleOption_OffsetAfter;
             offsetAfterProperty.Value = customStyle.OffsetAfter;
             offsetAfterProperty.OnValueChanged += (float value) => customStyle.OffsetAfter = value;
             return offsetAfterProperty;
@@ -122,7 +111,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetBetweenProperty(IDoubleCrosswalk customStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetAfterProperty = AddOffsetProperty(parent, onHover, onLeave, 0.1f);
-            offsetAfterProperty.Text = Localize.CrosswalkEditor_OffsetBetween;
+            offsetAfterProperty.Text = Localize.StyleOption_OffsetBetween;
             offsetAfterProperty.Value = customStyle.Offset;
             offsetAfterProperty.OnValueChanged += (float value) => customStyle.Offset = value;
             return offsetAfterProperty;
@@ -141,7 +130,7 @@ namespace NodeMarkup.Manager
         protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = Localize.CrosswalkEditor_LineWidth;
+            widthProperty.Text = Localize.StyleOption_LineWidth;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.1f;
             widthProperty.CheckMin = true;
@@ -720,7 +709,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddSquareSideProperty(ChessBoardCrosswalkStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var squareSideProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            squareSideProperty.Text = Localize.LineEditor_SquareSide;
+            squareSideProperty.Text = Localize.StyleOption_SquareSide;
             squareSideProperty.UseWheel = true;
             squareSideProperty.WheelStep = 0.1f;
             squareSideProperty.CheckMin = true;
@@ -734,7 +723,7 @@ namespace NodeMarkup.Manager
         protected static IntPropertyPanel AddLineCountProperty(ChessBoardCrosswalkStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var lineCountProperty = parent.AddUIComponent<IntPropertyPanel>();
-            lineCountProperty.Text = Localize.LineEditor_LineCount;
+            lineCountProperty.Text = Localize.StyleOption_LineCount;
             lineCountProperty.UseWheel = true;
             lineCountProperty.WheelStep = 1;
             lineCountProperty.CheckMin = true;

@@ -9,12 +9,11 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>
+    public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>, IRender
     {
         Vector3 Position { get; }
         bool GetT(MarkupLine line, out float t);
         bool IsIntersect(Ray ray);
-        void Render(RenderManager.CameraInfo cameraInfo, Color color);
     }
     public enum SupportType
     {
@@ -25,8 +24,9 @@ namespace NodeMarkup.Manager
 
     public abstract class SupportPoint : ISupportPoint
     {
-        protected static Vector3 MarkerSize { get; } = Vector3.one * 0.5f;
-        Bounds Bounds { get;}
+        protected static float DefaultWidth => 0.5f;
+        protected static Vector3 MarkerSize { get; } = Vector3.one * DefaultWidth;
+        Bounds Bounds { get; }
         public Vector3 Position => Bounds.center;
 
         public abstract string XmlSection { get; }
@@ -39,7 +39,9 @@ namespace NodeMarkup.Manager
 
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
-        public void Render(RenderManager.CameraInfo cameraInfo, Color color) => NodeMarkupTool.RenderCircle(cameraInfo, color, Position, 0.5f);
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) 
+            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color, width ?? DefaultWidth, alphaBlend);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
 
@@ -64,7 +66,7 @@ namespace NodeMarkup.Manager
         }
         public override bool GetT(MarkupLine line, out float t)
         {
-            if(line.ContainsPoint(Point))
+            if (line.ContainsPoint(Point))
             {
                 t = line.Start == Point ? 0 : 1;
                 return true;
@@ -99,7 +101,7 @@ namespace NodeMarkup.Manager
         public override bool GetT(MarkupLine line, out float t)
         {
             var intersect = line.Markup.GetIntersect(LinePair);
-            if(intersect.IsIntersect)
+            if (intersect.IsIntersect)
             {
                 t = intersect[line];
                 return true;
@@ -111,10 +113,10 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
-            First.Render(cameraInfo, color);
-            Second.Render(cameraInfo, color);
+            First.Render(cameraInfo, color, width, alphaBlend);
+            Second.Render(cameraInfo, color, width, alphaBlend);
         }
     }
 }

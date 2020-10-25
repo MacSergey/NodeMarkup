@@ -39,21 +39,8 @@ namespace NodeMarkup.Tools
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            if (DragPoint.Type == MarkupPoint.PointType.Crosswalk)
-                RenderEnterOverlay(cameraInfo, DragPoint.Enter, DragPoint.Direction * MarkupCrosswalkPoint.Shift, 4f);
-            else
-                RenderEnterOverlay(cameraInfo, DragPoint.Enter, Vector3.zero, 2f);
-
-            NodeMarkupTool.RenderPointOverlay(cameraInfo, DragPoint);
-        }
-
-        private void RenderEnterOverlay(RenderManager.CameraInfo cameraInfo, Enter enter, Vector3 shift, float width)
-        {
-            if (enter.Position == null)
-                return;
-
-            var bezier = new Line3(enter.Position.Value - enter.CornerDir * enter.RoadHalfWidth + shift, enter.Position.Value + enter.CornerDir * enter.RoadHalfWidth + shift).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, Colors.White, bezier, width);
+            DragPoint.Enter.Render(cameraInfo, Colors.Hover, 2f);
+            DragPoint.Render(cameraInfo);
         }
     }
 }

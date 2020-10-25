@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class Enter
+    public class Enter : IRender
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -20,8 +21,9 @@ namespace NodeMarkup.Manager
         public bool IsLaneInvert { get; private set; }
         public float RoadHalfWidth { get; private set; }
         public Vector3? Position { get; private set; } = null;
-        public Vector3 LeftSide { get; set; }
-        public Vector3 RightSide { get; set; }
+        public Vector3 FirstPointSide { get; private set; }
+        public Vector3 LastPointSide { get; private set; }
+        public StraightTrajectory Line { get; private set; }
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
@@ -149,7 +151,7 @@ namespace NodeMarkup.Manager
             AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
 
             CornerDir = DriveLanes.Length <= 1 ?
-                AbsoluteAngle.Direction():
+                AbsoluteAngle.Direction() :
                 (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
             NormalDir = DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero;
             NormalDir = IsStartSide ? -NormalDir : NormalDir;
@@ -166,8 +168,9 @@ namespace NodeMarkup.Manager
                 RoadHalfWidth = (segment.Info.m_halfWidth - segment.Info.m_pavementWidth) / coef;
 
                 Position = position + (IsLaneInvert ? -CornerDir : CornerDir) * driveLane.Position / coef;
-                RightSide = Position.Value - RoadHalfWidth * CornerDir;
-                LeftSide = Position.Value + RoadHalfWidth * CornerDir;
+                FirstPointSide = Position.Value - RoadHalfWidth * CornerDir;
+                LastPointSide = Position.Value + RoadHalfWidth * CornerDir;
+                Line = new StraightTrajectory(FirstPointSide, LastPointSide);
             }
             else
                 Position = null;
@@ -178,7 +181,33 @@ namespace NodeMarkup.Manager
             foreach (var point in Points)
                 point.Offset = 0;
         }
+        public bool GetBorder(MarkupEnterPoint point, out ILineTrajectory line)
+        {
+            if (point.IsFirst)
+            {
+                line = Markup.GetEntersLine(this, Prev);
+                return true;
+            }
+            else if (point.IsLast)
+            {
+                line = Markup.GetEntersLine(this, Next);
+                return true;
+            }
+            else
+            {
+                line = null;
+                return false;
+            }
+        }
 
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        {
+            if (Position == null)
+                return;
+
+            var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidth, Position.Value + CornerDir * RoadHalfWidth).GetBezier();
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend);
+        }
         public override string ToString() => Id.ToString();
     }
     public class DriveLane

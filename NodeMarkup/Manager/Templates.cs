@@ -86,7 +86,7 @@ namespace NodeMarkup.Manager
         {
             try
             {
-                var xml = UI.Settings.Templates.value;
+                var xml = Settings.Templates.value;
                 if (!string.IsNullOrEmpty(xml))
                 {
                     var config = Loader.Parse(xml);
@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
             {
                 var config = ToXml();
                 var xml = config.ToString(SaveOptions.DisableFormatting);
-                UI.Settings.Templates.value = xml;
+                Settings.Templates.value = xml;
 
                 Logger.LogDebug($"Templates was saved: {TemplatesDictionary.Count} items");
             }

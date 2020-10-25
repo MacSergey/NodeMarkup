@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
+using NodeMarkup.UI.Panel;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,6 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public interface IDeletable
-    {
-        string DeleteCaptionDescription { get; }
-        string DeleteMessageDescription { get; }
-        Dependences GetDependences();
-    }
     public abstract class Editor : UIPanel
     {
         public static Dictionary<Style.StyleType, string> SpriteNames { get; set; }
@@ -95,7 +90,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.atlas = TextureUtil.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
 
-            UIUtils.AddScrollbar(this, ItemsPanel);
+            this.AddScrollbar(ItemsPanel);
 
             ItemsPanel.verticalScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
         }
@@ -123,7 +118,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel.backgroundSprite = "UnlockingItemBackground";
             SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
 
-            UIUtils.AddScrollbar(this, SettingsPanel);
+            this.AddScrollbar(SettingsPanel);
 
             SettingsPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
         }

@@ -85,7 +85,7 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IFillerVertex> GetOtherEnterPoint(FillerContour contour)
         {
-            var otherEnterPoint = Point.IsFirst ? Enter.Next.LastPoint : Enter.Prev.FirstPoint;
+            var otherEnterPoint = Point.IsFirst ? Enter.Prev.LastPoint : Enter.Next.FirstPoint;
             var vertex = new EnterFillerVertex(otherEnterPoint);
             var isCanEnd = vertex.Equals(contour.First) && contour.VertexCount >= 3;
             var isUsed = contour.Vertices.Any(v => vertex.Equals(v));
@@ -139,28 +139,22 @@ namespace NodeMarkup.Manager
 
         public MarkupLine GetCommonLine(IFillerVertex other)
         {
-            switch (other)
+            return other switch
             {
-                case EnterSupportPoint otherE:
-                    return First.ContainsPoint(otherE.Point) ? First : Second;
-                case IntersectSupportPoint otherI:
-                    return LinePair.ContainLine(otherI.LinePair.First) ? otherI.LinePair.First : otherI.LinePair.Second;
-                default:
-                    return null;
-            }
+                EnterSupportPoint otherE => First.ContainsPoint(otherE.Point) ? First : Second,
+                IntersectSupportPoint otherI => LinePair.ContainLine(otherI.LinePair.First) ? otherI.LinePair.First : otherI.LinePair.Second,
+                _ => null,
+            };
         }
 
         public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
-            switch (prev)
+            return prev switch
             {
-                case EnterFillerVertex prevE:
-                    return contour.GetLinePoints(this, First.ContainsPoint(prevE.Point) ? Second : First);
-                case IntersectFillerVertex prevI:
-                    return contour.GetLinePoints(this, prevI.LinePair.ContainLine(First) ? Second : First);
-                default:
-                    return GetNextEmptyCandidates(contour);
-            }
+                EnterFillerVertex prevE => contour.GetLinePoints(this, First.ContainsPoint(prevE.Point) ? Second : First),
+                IntersectFillerVertex prevI => contour.GetLinePoints(this, prevI.LinePair.ContainLine(First) ? Second : First),
+                _ => GetNextEmptyCandidates(contour),
+            };
         }
         private IEnumerable<IFillerVertex> GetNextEmptyCandidates(FillerContour contour)
         {

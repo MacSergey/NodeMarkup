@@ -26,12 +26,17 @@ namespace NodeMarkup.UI
 
         public StyleModifierPanel()
         {
+            Init();
+        }
+        protected virtual void Init()
+        {
             foreach (var style in Utilities.GetEnumValues<StyleType>())
-            {
-                var generalStyle = (Style.StyleType)(object)style;
-                var modifier = AddKeymapping((StyleModifier)NodeMarkupTool.StylesModifier[generalStyle].value, style.Description());
-                Modifiers[modifier] = generalStyle;
-            }
+                Add((Style.StyleType)(object)style);
+        }
+        protected void Add(Style.StyleType style, string label = null)
+        {
+            var modifier = AddKeymapping((StyleModifier)NodeMarkupTool.StylesModifier[style].value, label ?? style.Description());
+            Modifiers[modifier] = style;
         }
 
         public ModifierDropDown AddKeymapping(StyleModifier value, string description)
@@ -69,7 +74,14 @@ namespace NodeMarkup.UI
         }
     }
 
-    public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }
+    public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType>
+    {
+        //protected override void Init()
+        //{
+        //    Add(Style.StyleType.RegularLine, Localize.LineStyle_Empty);
+        //    base.Init();
+        //}
+    }
     public class StopLineModifierPanel : StyleModifierPanel<StopLineStyle.StopLineType> { }
     public class CrosswalkModifierPanel : StyleModifierPanel<CrosswalkStyle.CrosswalkType> { }
     public class FillerModifierPanel : StyleModifierPanel<FillerStyle.FillerType> { }

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IFillerStyle : IStyle, IColorStyle
+    public interface IFillerStyle : IStyle
     {
         float MedianOffset { get; set; }
     }
@@ -32,6 +32,7 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            //{FillerType.Pavement, new TriangulationFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
@@ -68,11 +69,11 @@ namespace NodeMarkup.Manager
         }
         public override Style Copy() => CopyFillerStyle();
         public abstract FillerStyle CopyFillerStyle();
-        public virtual IEnumerable<MarkupStyleDash> Calculate(MarkupFiller filler)
+        public virtual IStyleData Calculate(MarkupFiller filler)
         {
             var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
             var rect = GetRect(trajectories, out float height);
-            return GetDashes(trajectories, rect, height);
+            return GetStyleData(trajectories, rect, height);
         }
         public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
@@ -111,7 +112,7 @@ namespace NodeMarkup.Manager
 
             return trajectories.Where(t => t != null).Select(t => t).ToArray();
         }
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, Rect rect, float height);
+        protected abstract IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect rect, float height);
 
         protected IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
         {
@@ -272,7 +273,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.Filler_MedianOffset;
+            offsetProperty.Text = Localize.StyleOption_MedianOffset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -286,7 +287,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            angleProperty.Text = Localize.Filler_Angle;
+            angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.CheckMin = true;
@@ -302,7 +303,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            stepProperty.Text = Localize.Filler_Step;
+            stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
             stepProperty.CheckMin = true;
@@ -316,7 +317,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddOffsetProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            offsetProperty.Text = Localize.Filler_Offset;
+            offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -341,6 +342,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Chevron))]
             Chevron = StyleType.FillerChevron,
+
+            //[Description("Pavement")]
+            //Pavement = StyleType.FillerPavement,
         }
     }
 }

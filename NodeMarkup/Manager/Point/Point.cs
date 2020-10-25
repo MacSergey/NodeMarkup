@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IUpdate, IDeletable, IToXml
+    public abstract class MarkupPoint : IItem, IToXml
     {
         public event Action<MarkupPoint> OnUpdate;
         public static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
@@ -121,6 +122,15 @@ namespace NodeMarkup.Manager
         }
 
         public Dependences GetDependences() => throw new NotSupportedException();
+        public virtual bool GetBorder(out ILineTrajectory line)
+        {
+            line = null;
+            return false;
+        }
+
+        protected static float DefaultWidth => 1f;
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color ?? Color, width ?? DefaultWidth, alphaBlend);
 
         public enum PointType
         {
@@ -132,11 +142,11 @@ namespace NodeMarkup.Manager
         {
             None = 0,
             Edge = 1,
-            LeftEdge = 2 + Edge,
-            RightEdge = 4 + Edge,
+            LeftEdge = 2 | Edge,
+            RightEdge = 4 | Edge,
             Between = 8,
-            BetweenSomeDir = 16 + Between,
-            BetweenDiffDir = 32 + Between,
+            BetweenSomeDir = 16 | Between,
+            BetweenDiffDir = 32 | Between,
         }
     }
 
@@ -160,6 +170,7 @@ namespace NodeMarkup.Manager
                 return position;
             }
         }
+        public override bool GetBorder(out ILineTrajectory line) => Enter.GetBorder(this, out line);
     }
     public class MarkupCrosswalkPoint : MarkupPoint
     {
@@ -183,6 +194,12 @@ namespace NodeMarkup.Manager
         {
             Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Mathf.Sin(Enter.CornerAndNormalAngle));
             Direction = SourcePoint.Direction;
+        }
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        {
+            var dir = Enter.CornerDir.Turn90(true) * Shift;
+            var bezier = new Line3(Position - dir, Position + dir).GetBezier();
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color ?? Color, width ?? DefaultWidth, alphaBlend);
         }
         public override string ToString() => $"{base.ToString()}C";
     }

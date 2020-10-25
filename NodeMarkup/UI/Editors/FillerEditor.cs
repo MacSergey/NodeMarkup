@@ -40,16 +40,15 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             Header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
-            Header.Init(Manager.Style.StyleType.Filler, false);
+            Header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
             Header.OnSaveTemplate += OnSaveTemplate;
-            Header.OnSelectTemplate += OnSelectTemplate;
             Header.OnCopy += CopyStyle;
             Header.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
             Style = SettingsPanel.AddUIComponent<FillerStylePropertyPanel>();
-            Style.Text = NodeMarkup.Localize.LineEditor_Style;
+            Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
@@ -121,10 +120,7 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverItem)
-            {
-                foreach (var trajectory in HoverItem.Object.Contour.Trajectories)
-                    NodeMarkupTool.RenderTrajectory(cameraInfo, Colors.White, trajectory, 0.2f);
-            }
+                HoverItem.Object.Render(cameraInfo, Colors.Hover);
         }
         private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);

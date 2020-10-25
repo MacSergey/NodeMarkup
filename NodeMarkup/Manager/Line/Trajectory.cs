@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace NodeMarkup.Manager
         Line,
         Bezier
     }
-    public interface ILineTrajectory
+    public interface ILineTrajectory : IRender
     {
         TrajectoryType TrajectoryType { get; }
         float Length { get; }
@@ -62,6 +63,9 @@ namespace NodeMarkup.Manager
         public ILineTrajectory Invert() => new BezierTrajectory(Trajectory.Invert());
         public ILineTrajectory Copy() => new BezierTrajectory(Trajectory);
 
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory, color, width, alphaBlend);
+
         public static implicit operator Bezier3(BezierTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator BezierTrajectory(Bezier3 bezier) => new BezierTrajectory(bezier);
     }
@@ -98,6 +102,9 @@ namespace NodeMarkup.Manager
         public float Travel(float start, float distance) => start + (distance / Length);
         public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
         public ILineTrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) 
+            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend);
 
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);

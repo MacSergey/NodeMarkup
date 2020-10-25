@@ -25,7 +25,7 @@ namespace NodeMarkup
                 case LoadMode.NewMap:
                 case LoadMode.LoadMap:
                     NodeMarkupTool.Create();
-                    MarkupManager.Init();
+                    //RenderHelper.Init();
 
                     //EarlyAccess.CheckAccess();
                     ShowWhatsNew();
@@ -56,8 +56,8 @@ namespace NodeMarkup
         private void ShowBetaWarning()
         {
             if (!Mod.IsBeta)
-                UI.Settings.BetaWarning.value = true;
-            else if (UI.Settings.BetaWarning.value)
+                Settings.BetaWarning.value = true;
+            else if (Settings.BetaWarning.value)
             {
                 var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                 messageBox.CaprionText = Localize.Mod_BetaWarningCaption;
@@ -67,12 +67,13 @@ namespace NodeMarkup
                 messageBox.OnButton1Click = AgreeClick;
                 messageBox.OnButton2Click = GetStable;
 
-                bool AgreeClick()
+                static bool AgreeClick()
                 {
-                    UI.Settings.BetaWarning.value = false;
+                    Settings.BetaWarning.value = false;
                     return true;
                 }
-                bool GetStable()
+
+                static bool GetStable()
                 {
                     Utilities.OpenUrl(Mod.StableURL);
                     return true;
@@ -81,9 +82,9 @@ namespace NodeMarkup
         }
         private void ShowWhatsNew()
         {
-            var whatNewVersion = new Version(UI.Settings.WhatsNewVersion);
+            var whatNewVersion = new Version(Settings.WhatsNewVersion);
 
-            if (!UI.Settings.ShowWhatsNew || Mod.Version <= whatNewVersion)
+            if (!Settings.ShowWhatsNew || Mod.Version <= whatNewVersion)
                 return;
 
             var messages = GetWhatsNewMessages(whatNewVersion);
@@ -95,9 +96,9 @@ namespace NodeMarkup
             messageBox.OnButtonClick = Confirm;
             messageBox.Init(messages);
 
-            bool Confirm()
+            static bool Confirm()
             {
-                UI.Settings.WhatsNewVersion.value = Mod.Version.ToString();
+                Settings.WhatsNewVersion.value = Mod.Version.ToString();
                 return true;
             }
         }
@@ -115,7 +116,7 @@ namespace NodeMarkup
                 if (version <= whatNewVersion)
                     break;
 
-                if (UI.Settings.ShowOnlyMajor && !version.IsMinor())
+                if (Settings.ShowOnlyMajor && !version.IsMinor())
                     continue;
 
                 if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))

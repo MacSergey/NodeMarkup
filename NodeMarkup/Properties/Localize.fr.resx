@@ -142,10 +142,10 @@ Maj X10, Ctrl X0.1</value>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Ajouter une règle</value>
   </data>
-  <data name="LineEditor_Color" xml:space="preserve">
+  <data name="StyleOption_Color" xml:space="preserve">
     <value>Couleur</value>
   </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
+  <data name="StyleOption_DashedLength" xml:space="preserve">
     <value>Longueur du tiret</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
@@ -154,7 +154,7 @@ Maj X10, Ctrl X0.1</value>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>Voulez-vous vraiment supprimer la règle ?</value>
   </data>
-  <data name="LineEditor_From" xml:space="preserve">
+  <data name="LineRule_From" xml:space="preserve">
     <value>De</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
@@ -169,16 +169,16 @@ Maj X10, Ctrl X0.1</value>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Lignes</value>
   </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
+  <data name="StyleOption_Offset" xml:space="preserve">
     <value>Décalage</value>
   </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
     <value>Longueur de l'espace</value>
   </data>
-  <data name="LineEditor_Style" xml:space="preserve">
+  <data name="Editor_Style" xml:space="preserve">
     <value>Style</value>
   </data>
-  <data name="LineEditor_To" xml:space="preserve">
+  <data name="LineRule_To" xml:space="preserve">
     <value>À</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
@@ -345,16 +345,16 @@ créer ou supprimer une ligne</value>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  <data name="LineEditor_Invert" xml:space="preserve">
+  <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverser</value>
   </data>
-  <data name="LineEditor_Width" xml:space="preserve">
+  <data name="StyleOption_Width" xml:space="preserve">
     <value>Largeur</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Solide et Tirets</value>
   </data>
-  <data name="LineStyle_Stop" xml:space="preserve">
+  <data name="LineStyle_StopSolid" xml:space="preserve">
     <value>Solide</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
@@ -378,13 +378,13 @@ créer ou supprimer une ligne</value>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Tiret</value>
   </data>
-  <data name="Filler_Step" xml:space="preserve">
+  <data name="StyleOption_Step" xml:space="preserve">
     <value>Intervalle</value>
   </data>
-  <data name="Filler_Angle" xml:space="preserve">
+  <data name="StyleOption_Angle" xml:space="preserve">
     <value>Angle</value>
   </data>
-  <data name="Filler_Offset" xml:space="preserve">
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
     <value>Écart depuis la ligne</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
@@ -402,16 +402,16 @@ créer ou supprimer une ligne</value>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Sélectionnez le prochain point pour le contour</value>
   </data>
-  <data name="Filler_MedianOffset" xml:space="preserve">
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
     <value>Écart depuis séparateur</value>
   </data>
-  <data name="LineEditor_ColorCopy" xml:space="preserve">
+  <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Copier</value>
   </data>
-  <data name="LineEditor_ColorPaste" xml:space="preserve">
+  <data name="Editor_ColorPaste" xml:space="preserve">
     <value>Coller</value>
   </data>
-  <data name="LineEditor_ColorDefault" xml:space="preserve">
+  <data name="Editor_ColorDefault" xml:space="preserve">
     <value>Par défaut</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
@@ -438,22 +438,19 @@ créer ou supprimer une ligne</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Double tiret</value>
   </data>
-  <data name="LineEditor_StyleCopy" xml:space="preserve">
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
     <value>Copier</value>
   </data>
-  <data name="LineEditor_StylePaste" xml:space="preserve">
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>Coller</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
     <value>Chevron</value>
   </data>
-  <data name="Filler_AngleBetween" xml:space="preserve">
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Angle entre les deux</value>
   </data>
-  <data name="Filler_Invert" xml:space="preserve">
-    <value>Inverser</value>
-  </data>
-  <data name="Filler_Turn" xml:space="preserve">
+  <data name="StyleOption_Turn" xml:space="preserve">
     <value>Tourner</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
@@ -484,15 +481,6 @@ Pour créer un modèle, cliquez {0} sur une ligne, passage piéton ou remplisseu
     <value>La fonction "{0}" n'est actuellement disponible que pour les Patreons avec l'accès anticipé
 Elle sera disponible pour tout le monde plus tard.
 En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même vitesse que le développement.</value>
-  </data>
-  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
-    <value>Copier le style</value>
-  </data>
-  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
-    <value>Coller le style</value>
-  </data>
-  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
-    <value>Lignes perpendiculaires</value>
   </data>
   <data name="EarlyAccess_GetButton" xml:space="preserve">
     <value>Obtenir l'accès anticipé</value>
@@ -557,7 +545,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Accès anticipé</value>
   </data>
-  <data name="LineEditor_Alignment" xml:space="preserve">
+  <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignement</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
@@ -631,7 +619,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Passage piéton existant</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
     <value>Décalage entre</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
@@ -650,10 +638,10 @@ Pour créer un passage piéton, maintenez Maj.</value>
   <data name="FillerStyle_Group" xml:space="preserve">
     <value>Remplisseurs</value>
   </data>
-  <data name="LineStyle_RegularGroup" xml:space="preserve">
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
     <value>Lignes régulières</value>
   </data>
-  <data name="LineStyle_StopGroup" xml:space="preserve">
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
     <value>Lignes de stop</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
@@ -677,16 +665,16 @@ Pour créer un passage piéton, maintenez Maj.</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>Double zébra</value>
   </data>
-  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+  <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Largeur de la ligne</value>
   </data>
-  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
     <value>Décalage avant</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
     <value>Décalage après</value>
   </data>
-  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Parallèle aux voies</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
@@ -745,7 +733,7 @@ créer ou supprimer un passage piéton</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
     <value>Passages piétons</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
@@ -777,19 +765,19 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Damiers</value>
   </data>
-  <data name="LineEditor_LineCount" xml:space="preserve">
+  <data name="StyleOption_LineCount" xml:space="preserve">
     <value>Nombre de lignes</value>
   </data>
-  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
     <value>Base du triangle</value>
   </data>
-  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
     <value>Hauteur du triangle</value>
   </data>
-  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
     <value>Espacement</value>
   </data>
-  <data name="LineEditor_SquareSide" xml:space="preserve">
+  <data name="StyleOption_SquareSide" xml:space="preserve">
     <value>Côté du carré</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
@@ -883,13 +871,13 @@ Cela va remplacer le marquage existant.</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Copier</value>
   </data>
-  <data name="Filler_Edge" xml:space="preserve">
+  <data name="StyleOption_Edge" xml:space="preserve">
     <value>Coin</value>
   </data>
-  <data name="Filler_StartingFrom" xml:space="preserve">
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
     <value>À partir de</value>
   </data>
-  <data name="Filler_Vertex" xml:space="preserve">
+  <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vertex</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
@@ -923,13 +911,13 @@ Cliquez le cercle pour modifier l'ordre des points</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Tourner dans le sens inverse des aiguilles d'une montre</value>
   </data>
-  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>Centré</value>
   </data>
-  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
     <value>Gauche</value>
   </data>
-  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
     <value>Droite</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
@@ -1028,13 +1016,13 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
     <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre des points</value>
   </data>
-  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Solide au centre</value>
   </data>
-  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+  <data name="StyleOption_No" xml:space="preserve">
     <value>Non</value>
   </data>
-  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+  <data name="StyleOption_Yes" xml:space="preserve">
     <value>Oui</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
@@ -1049,5 +1037,29 @@ Voulez-vous changer le marquage manuellement ?</value>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Cette action est irréversible.</value>
+  </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Créer une ligne de bord</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Créer une ligne de bord</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Autres</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Bordures de passage piétons rapide</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Marquage en dessous des rails (nécessite un redémarrage)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Attention : cet option change l'ordre de rendu des objets</value>
   </data>
 </root>

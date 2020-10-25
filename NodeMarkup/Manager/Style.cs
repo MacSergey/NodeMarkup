@@ -2,6 +2,7 @@
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -61,19 +62,14 @@ namespace NodeMarkup.Manager
 
         public static T GetDefault<T>(StyleType type) where T : Style
         {
-            switch (type & StyleType.GroupMask)
+            return (type & StyleType.GroupMask) switch
             {
-                case StyleType.RegularLine when RegularLineStyle.GetDefault((RegularLineStyle.RegularLineType)(int)type) is T tStyle:
-                    return tStyle;
-                case StyleType.StopLine when StopLineStyle.GetDefault((StopLineStyle.StopLineType)(int)type) is T tStyle:
-                    return tStyle;
-                case StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle:
-                    return tStyle;
-                case StyleType.Crosswalk when CrosswalkStyle.GetDefault((CrosswalkStyle.CrosswalkType)(int)type) is T tStyle:
-                    return tStyle;
-                default:
-                    return null;
-            }
+                StyleType.RegularLine when RegularLineStyle.GetDefault((RegularLineStyle.RegularLineType)(int)type) is T tStyle => tStyle,
+                StyleType.StopLine when StopLineStyle.GetDefault((StopLineStyle.StopLineType)(int)type) is T tStyle => tStyle,
+                StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle => tStyle,
+                StyleType.Crosswalk when CrosswalkStyle.GetDefault((CrosswalkStyle.CrosswalkType)(int)type) is T tStyle => tStyle,
+                _ => null,
+            };
         }
 
         public static string XmlName { get; } = "S";
@@ -148,7 +144,7 @@ namespace NodeMarkup.Manager
         protected ColorPropertyPanel AddColorProperty(UIComponent parent)
         {
             var colorProperty = parent.AddUIComponent<ColorPropertyPanel>();
-            colorProperty.Text = Localize.LineEditor_Color;
+            colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.Init();
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color = color;
@@ -157,7 +153,7 @@ namespace NodeMarkup.Manager
         protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
         {
             var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            widthProperty.Text = Localize.LineEditor_Width;
+            widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
             widthProperty.CheckMin = true;
@@ -172,7 +168,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            dashLengthProperty.Text = Localize.LineEditor_DashedLength;
+            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
             dashLengthProperty.CheckMin = true;
@@ -186,7 +182,7 @@ namespace NodeMarkup.Manager
         protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            spaceLengthProperty.Text = Localize.LineEditor_SpaceLength;
+            spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
             spaceLengthProperty.CheckMin = true;
@@ -200,7 +196,7 @@ namespace NodeMarkup.Manager
         protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
         {
             var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
-            var invertIndex = buttonsPanel.AddButton(Localize.LineEditor_Invert);
+            var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
 
@@ -226,7 +222,7 @@ namespace NodeMarkup.Manager
             ItemMask = 0xFF,
             GroupMask = ~ItemMask,
 
-            [Description(nameof(Localize.LineStyle_RegularGroup))]
+            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             RegularLine = Markup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
@@ -247,11 +243,15 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
+            [Description(nameof(Localize.LineStyle_Empty))]
+            [NotVisible]
+            EmptyLine,
 
-            [Description(nameof(Localize.LineStyle_StopGroup))]
+
+            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             StopLine = Markup.Item.StopLine,
 
-            [Description(nameof(Localize.LineStyle_Stop))]
+            [Description(nameof(Localize.LineStyle_StopSolid))]
             StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
@@ -286,6 +286,12 @@ namespace NodeMarkup.Manager
             FillerChevron,
 
 
+            //Filler3D = Filler | 0x80,
+
+            //[Description("Pavement")]
+            //FillerPavement,
+
+
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = Markup.Item.Crosswalk,
 
@@ -313,29 +319,6 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
         }
-    }
-
-    public class MarkupStyleDash
-    {
-        public MaterialType MaterialType { get; set; }
-        public Vector3 Position { get; set; }
-        public float Angle { get; set; }
-        public float Length { get; set; }
-        public float Width { get; set; }
-        public Color Color { get; set; }
-
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines)
-        {
-            Position = position;
-            Angle = angle;
-            Length = length;
-            Width = width;
-            Color = color;
-            MaterialType = materialType;
-        }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this((start + end) / 2, angle, length, width, color, materialType) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color color, MaterialType materialType = MaterialType.RectangleLines) : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
     }
     public class StyleTemplate : IDeletable, IToXml
     {

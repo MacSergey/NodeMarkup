@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IUpdate, IDeletable, IToXml
+    public class MarkupCrosswalk : IItem, IToXml
     {
         #region PROPERTIES
 
@@ -23,7 +23,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
 
-        public MarkupStyleDash[] Dashes { get; private set; } = new MarkupStyleDash[0];
+        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
         public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
@@ -63,7 +63,7 @@ namespace NodeMarkup.Manager
         public ILineTrajectory RightBorderTrajectory { get; private set; }
         public ILineTrajectory LeftBorderTrajectory { get; private set; }
 
-        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, new StraightTrajectory((StraightTrajectory)Line.Trajectory), RightBorderTrajectory, LeftBorderTrajectory };
+        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
 
         public float TotalWidth => Style.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
@@ -102,11 +102,11 @@ namespace NodeMarkup.Manager
             if(!onlySelfUpdate)
                 Markup.Update(this);
         }
-        public void RecalculateDashes() => Dashes = Style.Calculate(this).ToArray();
-        public void Render(RenderManager.CameraInfo cameraInfo, Color color)
+        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(Style.Calculate(this));
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             foreach (var trajectory in BorderTrajectories)
-                NodeMarkupTool.RenderTrajectory(cameraInfo, color, trajectory);
+                trajectory.Render(cameraInfo, color, width, alphaBlend);
         }
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
@@ -124,7 +124,7 @@ namespace NodeMarkup.Manager
             RightBorderTrajectory = GetBorderTrajectory(trajectory, RightBorder, 0, DefaultRightBorderTrajectory, out float startT);
             LeftBorderTrajectory = GetBorderTrajectory(trajectory, LeftBorder, 1, DefaultLeftBorderTrajectory, out float endT);
 
-            return new StraightTrajectory((StraightTrajectory)trajectory.Cut(startT, endT), false);
+            return (StraightTrajectory)trajectory.Cut(startT, endT);
         }
         private ILineTrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
         {

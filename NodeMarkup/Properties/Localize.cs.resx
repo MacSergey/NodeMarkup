@@ -142,10 +142,10 @@ Shift ×10, Ctrl ×0.1</value>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Přidat pravidlo</value>
   </data>
-  <data name="LineEditor_Color" xml:space="preserve">
+  <data name="StyleOption_Color" xml:space="preserve">
     <value>Barva</value>
   </data>
-  <data name="LineEditor_DashedLength" xml:space="preserve">
+  <data name="StyleOption_DashedLength" xml:space="preserve">
     <value>Délka čáry</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
@@ -154,7 +154,7 @@ Shift ×10, Ctrl ×0.1</value>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
     <value>Opravdu chcete odstranit toto pravidlo?</value>
   </data>
-  <data name="LineEditor_From" xml:space="preserve">
+  <data name="LineRule_From" xml:space="preserve">
     <value>Z</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
@@ -169,16 +169,16 @@ Shift ×10, Ctrl ×0.1</value>
   <data name="LineEditor_Lines" xml:space="preserve">
     <value>Čáry</value>
   </data>
-  <data name="LineEditor_Offset" xml:space="preserve">
+  <data name="StyleOption_Offset" xml:space="preserve">
     <value>Odsazení</value>
   </data>
-  <data name="LineEditor_SpaceLength" xml:space="preserve">
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
     <value>Vzdálenost mezi čárami</value>
   </data>
-  <data name="LineEditor_Style" xml:space="preserve">
+  <data name="Editor_Style" xml:space="preserve">
     <value>Styl</value>
   </data>
-  <data name="LineEditor_To" xml:space="preserve">
+  <data name="LineRule_To" xml:space="preserve">
     <value>Do</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
@@ -344,17 +344,17 @@ Táhněte za bod pro vytvoření kolmé čáry</value>
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Zrušit</value>
   </data>
-  <data name="LineEditor_Invert" xml:space="preserve">
+  <data name="StyleOption_Invert" xml:space="preserve">
     <value>Obrátit</value>
   </data>
-  <data name="LineEditor_Width" xml:space="preserve">
+  <data name="StyleOption_Width" xml:space="preserve">
     <value>Šířka</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
     <value>Plná i přerušovaná</value>
   </data>
-  <data name="LineStyle_Stop" xml:space="preserve">
-    <value>Plná</value>
+  <data name="LineStyle_StopSolid" xml:space="preserve">
+    <value>Nepřerušovná</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
     <value>Klikněte pro odstranění hranice křižovatky</value>
@@ -377,13 +377,13 @@ Táhněte za bod pro vytvoření kolmé čáry</value>
   <data name="LineStyle_StopDashed" xml:space="preserve">
     <value>Přerušovaná</value>
   </data>
-  <data name="Filler_Step" xml:space="preserve">
+  <data name="StyleOption_Step" xml:space="preserve">
     <value>Mezera</value>
   </data>
-  <data name="Filler_Angle" xml:space="preserve">
+  <data name="StyleOption_Angle" xml:space="preserve">
     <value>Úhel</value>
   </data>
-  <data name="Filler_Offset" xml:space="preserve">
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
     <value>Odsazení od čar</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
@@ -401,16 +401,16 @@ Táhněte za bod pro vytvoření kolmé čáry</value>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Vyberte další bod obvodu výplně</value>
   </data>
-  <data name="Filler_MedianOffset" xml:space="preserve">
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
     <value>Odsazení od mediánu</value>
   </data>
-  <data name="LineEditor_ColorCopy" xml:space="preserve">
+  <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopírovat</value>
   </data>
-  <data name="LineEditor_ColorPaste" xml:space="preserve">
+  <data name="Editor_ColorPaste" xml:space="preserve">
     <value>Vložit</value>
   </data>
-  <data name="LineEditor_ColorDefault" xml:space="preserve">
+  <data name="Editor_ColorDefault" xml:space="preserve">
     <value>Výchozí</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
@@ -437,22 +437,19 @@ Táhněte za bod pro vytvoření kolmé čáry</value>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
     <value>Dvojitá přerušovaná</value>
   </data>
-  <data name="LineEditor_StyleCopy" xml:space="preserve">
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
     <value>Kopírovat</value>
   </data>
-  <data name="LineEditor_StylePaste" xml:space="preserve">
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>Vložit</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
     <value>Lomené pruhy</value>
   </data>
-  <data name="Filler_AngleBetween" xml:space="preserve">
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Úhel mezi</value>
   </data>
-  <data name="Filler_Invert" xml:space="preserve">
-    <value>Prohodit</value>
-  </data>
-  <data name="Filler_Turn" xml:space="preserve">
+  <data name="StyleOption_Turn" xml:space="preserve">
     <value>Otočit</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
@@ -483,15 +480,6 @@ Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry, přechodu 
     <value>Funkce «{0}» je dostupná pouze pro Patreony balíčku early access.
 Funkce bude později přístupna všem.
 Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete vývojářům pokračovat stejnou rychlostí.</value>
-  </data>
-  <data name="EarlyAccess_Function_CopyStyle" xml:space="preserve">
-    <value>Kopírovat styl</value>
-  </data>
-  <data name="EarlyAccess_Function_PasteStyle" xml:space="preserve">
-    <value>Vložit styl</value>
-  </data>
-  <data name="EarlyAccess_Function_PerpendicularLines" xml:space="preserve">
-    <value>Kolmé čáry</value>
   </data>
   <data name="EarlyAccess_GetButton" xml:space="preserve">
     <value>Získat early access</value>
@@ -556,7 +544,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="Settings_EarlyAccess" xml:space="preserve">
     <value>Early access</value>
   </data>
-  <data name="LineEditor_Alignment" xml:space="preserve">
+  <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Zarovnání</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
@@ -628,7 +616,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existující přechod</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBetween" xml:space="preserve">
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
     <value>Odsazení mezi</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
@@ -647,10 +635,10 @@ Pro vytvoření přechodu podržte Shift.</value>
   <data name="FillerStyle_Group" xml:space="preserve">
     <value>Výplně</value>
   </data>
-  <data name="LineStyle_RegularGroup" xml:space="preserve">
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
     <value>Normální čáry</value>
   </data>
-  <data name="LineStyle_StopGroup" xml:space="preserve">
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
     <value>Hranice křižovatky</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
@@ -674,16 +662,16 @@ Pro vytvoření přechodu podržte Shift.</value>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
     <value>Dvojitá zebra</value>
   </data>
-  <data name="CrosswalkEditor_LineWidth" xml:space="preserve">
+  <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Tloušťka čáry</value>
   </data>
-  <data name="CrosswalkEditor_OffsetAfter" xml:space="preserve">
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
     <value>Odsazení za</value>
   </data>
-  <data name="CrosswalkEditor_OffsetBefore" xml:space="preserve">
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
     <value>Odsazení před</value>
   </data>
-  <data name="CrosswalkEditor_ParallelToLanes" xml:space="preserve">
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Souběžná s pruhy</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
@@ -742,7 +730,7 @@ nebo odstranění přechodu</value>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Plná</value>
   </data>
-  <data name="LineStyle_CrosswalkGroup" xml:space="preserve">
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
     <value>Čáry přechodů</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
@@ -774,19 +762,19 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Šachovnice</value>
   </data>
-  <data name="LineEditor_LineCount" xml:space="preserve">
+  <data name="StyleOption_LineCount" xml:space="preserve">
     <value>Počet čar</value>
   </data>
-  <data name="LineEditor_SharkToothBase" xml:space="preserve">
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
     <value>Základna trojuhelníku</value>
   </data>
-  <data name="LineEditor_SharkToothHeight" xml:space="preserve">
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
     <value>Výška trojuhelníku</value>
   </data>
-  <data name="LineEditor_SharkToothSpace" xml:space="preserve">
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
     <value>Mezera</value>
   </data>
-  <data name="LineEditor_SquareSide" xml:space="preserve">
+  <data name="StyleOption_SquareSide" xml:space="preserve">
     <value>Strana čtverce</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
@@ -880,13 +868,13 @@ Původní značení bude odstraněno.</value>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
     <value>Kopírovat</value>
   </data>
-  <data name="Filler_Edge" xml:space="preserve">
+  <data name="StyleOption_Edge" xml:space="preserve">
     <value>Strana</value>
   </data>
-  <data name="Filler_StartingFrom" xml:space="preserve">
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
     <value>Začínat od</value>
   </data>
-  <data name="Filler_Vertex" xml:space="preserve">
+  <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vrchol</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
@@ -920,13 +908,13 @@ Kliknutím na kruh změňte pořadí bodů na silnici</value>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Otočit proti směru hodinových ručiček</value>
   </data>
-  <data name="LineEditor_AlignmentCenter" xml:space="preserve">
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>Na střed</value>
   </data>
-  <data name="LineEditor_AlignmentLeft" xml:space="preserve">
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
     <value>Vlevo</value>
   </data>
-  <data name="LineEditor_AlignmentRight" xml:space="preserve">
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
     <value>Vpravo</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
@@ -1025,13 +1013,13 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
     <value>Přesuňte kruh dovnitř/ven z kružnice pro nastavení/zrušení pořadí bodů</value>
   </data>
-  <data name="LineEditor_SolidInCenter" xml:space="preserve">
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Plná ve středu</value>
   </data>
-  <data name="LineEditor_SolidInCenterDisable" xml:space="preserve">
+  <data name="StyleOption_No" xml:space="preserve">
     <value>Ne</value>
   </data>
-  <data name="LineEditor_SolidInCenterEnable" xml:space="preserve">
+  <data name="StyleOption_Yes" xml:space="preserve">
     <value>Ano</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
@@ -1047,4 +1035,22 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tuto akci nelze vrátit zpět.</value>
   </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Prázdné</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Vytvořit krajnice</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Vytvořit krajnice</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Resetovat odsazení všech bodů</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Další</value>
+  </data>
+  
+  
+  
 </root>
