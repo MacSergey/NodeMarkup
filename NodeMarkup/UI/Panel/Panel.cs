@@ -16,6 +16,7 @@ namespace NodeMarkup.UI.Panel
     public class NodeMarkupPanel : UIPanel
     {
         public static NodeMarkupPanel Instance { get; private set; }
+        private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
@@ -31,26 +32,30 @@ namespace NodeMarkup.UI.Panel
 
         public static NodeMarkupPanel CreatePanel()
         {
+            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
             var uiView = UIView.GetAView();
             Instance = uiView.AddUIComponent(typeof(NodeMarkupPanel)) as NodeMarkupPanel;
             Instance.Init();
+            Logger.LogDebug($"Panel created");
             return Instance;
         }
         public static void RemovePanel()
         {
+            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
             if (Instance != null)
             {
                 Instance.Hide();
                 Destroy(Instance);
                 Instance = null;
+                Logger.LogDebug($"Panel removed");
             }
         }
         public void Init()
         {
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
-            absolutePosition = new Vector3(100, 100);
             name = "NodeMarkupPanel";
+            CheckPosition();
 
             CreateHeader();
             CreateTabStrip();
@@ -113,17 +118,15 @@ namespace NodeMarkup.UI.Panel
             size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
             SizeChanger.relativePosition = size - SizeChanger.size;
         }
-
-        private void CreateEditor<EditorType>() where EditorType : Editor
+        protected override void OnVisibilityChanged()
         {
-            var editor = AddUIComponent<EditorType>();
-            editor.Init(this);
-            TabStrip.AddTab(editor.Name);
+            base.OnVisibilityChanged();
 
-            editor.isVisible = false;
-            editor.relativePosition = EditorPosition;
-
-            Editors.Add(editor);
+            if (isVisible)
+            {
+                CheckPosition();
+                UpdatePanel();
+            }
         }
         protected override void OnSizeChanged()
         {
@@ -136,6 +139,25 @@ namespace NodeMarkup.UI.Panel
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
         }
+        private void CreateEditor<EditorType>() where EditorType : Editor
+        {
+            var editor = AddUIComponent<EditorType>();
+            editor.Init(this);
+            TabStrip.AddTab(editor.Name);
+
+            editor.isVisible = false;
+            editor.relativePosition = EditorPosition;
+
+            Editors.Add(editor);
+        }
+        private void CheckPosition()
+        {
+            if (absolutePosition.x < 0 || absolutePosition.y < 0)
+            {
+                absolutePosition = DefaultPosition;
+                Logger.LogDebug($"Set default panel position");
+            }
+        }
 
         public void UpdatePanel() => CurrentEditor?.UpdateEditor();
         public void SetNode(Markup markup)
@@ -147,13 +169,6 @@ namespace NodeMarkup.UI.Panel
                 TabStrip.selectedIndex = -1;
                 SelectEditor<LinesEditor>();
             }
-        }
-        protected override void OnVisibilityChanged()
-        {
-            base.OnVisibilityChanged();
-
-            if (isVisible)
-                UpdatePanel();
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
         private void TabStripSelectedIndexChanged(UIComponent component, int index)

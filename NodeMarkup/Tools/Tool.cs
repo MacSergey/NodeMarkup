@@ -111,6 +111,7 @@ namespace NodeMarkup.Tools
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
             GameObject nodeMarkupControl = ToolsModifierControl.toolController.gameObject;
             Instance = nodeMarkupControl.AddComponent<NodeMarkupTool>();
+            Logger.LogDebug($"Tool Created");
             return Instance;
         }
         public static void Remove()
@@ -120,6 +121,7 @@ namespace NodeMarkup.Tools
             {
                 Destroy(Instance);
                 Instance = null;
+                Logger.LogDebug($"Tool removed");
             }
         }
         protected override void OnDestroy()
@@ -164,7 +166,7 @@ namespace NodeMarkup.Tools
 
         public void ToggleTool()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}");
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}: {(!enabled ? "enable" : "disable")}");
             enabled = !enabled;
         }
         public void Disable() => enabled = false;
