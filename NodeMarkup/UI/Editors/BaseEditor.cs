@@ -224,7 +224,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual EditableItemType GetItem(UIComponent parent)
         {
-            EditableItemType newItem = null;
+            EditableItemType newItem;
             if (ItemsPool.Any())
             {
                 newItem = ItemsPool.Dequeue();
@@ -281,12 +281,15 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void DeleteItem(EditableItemType item)
         {
+            if (HoverItem == item)
+                HoverItem = null;
+
             DeInitItem(item);
-            ReturnItem(item);
+            FreeItem(item);
 
             SwitchEmpty();
         }
-        protected void ReturnItem(EditableItemType item)
+        protected void FreeItem(EditableItemType item)
         {
             item.parent.RemoveUIComponent(item);
             ItemsPool.Enqueue(item);
@@ -341,14 +344,17 @@ namespace NodeMarkup.UI.Editors
 
         protected override void ClearSettings()
         {
-            var componets = SettingsPanel.components.ToArray();
-            foreach (var item in componets)
+            var components = SettingsPanel.components.ToArray();
+            foreach (var component in components)
             {
-                if (item == EmptyLabel)
-                    continue;
-                SettingsPanel.RemoveUIComponent(item);
-                Destroy(item.gameObject);
+                if (component != EmptyLabel)
+                    RemoveComponent(component);
             }
+        }
+        protected virtual void RemoveComponent(UIComponent component)
+        {
+            SettingsPanel.RemoveUIComponent(component);
+            Destroy(component.gameObject);
         }
 
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);

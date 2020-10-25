@@ -18,6 +18,7 @@ namespace NodeMarkup.UI.Editors
         private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
 
+        public StyleHeaderPanel Header { get; private set; }
         public MarkupLineSelectPropertyPanel From { get; private set; }
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
@@ -32,6 +33,10 @@ namespace NodeMarkup.UI.Editors
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
             autoLayoutPadding = new RectOffset(5, 5, 0, 0);
+
+            AddHeader();
+            From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
+            To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
         }
         public void Init(LinesEditor editor, MarkupLineRawRule rule)
         {
@@ -41,10 +46,27 @@ namespace NodeMarkup.UI.Editors
 
             SetSize();
 
-            AddHeader();
-            AddEdgeProperties();
+            Header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
+            InitEdgeProperty(From);
+            InitEdgeProperty(To);
+            FillEdges();
+
             AddStyleTypeProperty();
             AddStyleProperties();
+        }
+        public void DeInit()
+        {
+            DeInitEdgeProperty(From);
+            DeInitEdgeProperty(To);
+            if (Style != null)
+            {
+                RemoveUIComponent(Style);
+                Destroy(Style);
+            }
+            ClearStyleProperties();
+
+            Editor = null;
+            Rule = null;
         }
 
         private void SetSize()
@@ -58,40 +80,34 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddHeader()
         {
-            var header = AddUIComponent<StyleHeaderPanel>();
-            header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
-            header.OnDelete += () => Editor.DeleteRule(this);
-            header.OnSaveTemplate += OnSaveTemplate;
-            header.OnCopy += CopyStyle;
-            header.OnPaste += PasteStyle;
+            Header = AddUIComponent<StyleHeaderPanel>();
+            Header.OnDelete += () => Editor.DeleteRule(this);
+            Header.OnSaveTemplate += OnSaveTemplate;
+            Header.OnCopy += CopyStyle;
+            Header.OnPaste += PasteStyle;
         }
-        private void AddEdgeProperties()
+        private MarkupLineSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
         {
-            AddFromProperty();
-            AddToProperty();
-            FillEdges();
+            var edgeProperty = AddUIComponent<MarkupLineSelectPropertyPanel>();
+            edgeProperty.Text = text;
+            edgeProperty.Position = position;
+            edgeProperty.Init();
+            return edgeProperty;
         }
-        private void AddFromProperty()
+        private void InitEdgeProperty(MarkupLineSelectPropertyPanel edgeProperty)
         {
-            From = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            From.Text = NodeMarkup.Localize.LineRule_From;
-            From.Position = EdgePosition.Start;
-            From.Init();
-            From.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
-            From.OnHover += Editor.HoverRuleEdge;
-            From.OnLeave += Editor.LeaveRuleEdge;
+            edgeProperty.OnSelect += OnSelectPanel;
+            edgeProperty.OnHover += Editor.HoverRuleEdge;
+            edgeProperty.OnLeave += Editor.LeaveRuleEdge;
         }
+        private void DeInitEdgeProperty(MarkupLineSelectPropertyPanel edgeProperty)
+        {
+            edgeProperty.OnSelect -= OnSelectPanel;
+            edgeProperty.OnHover -= Editor.HoverRuleEdge;
+            edgeProperty.OnLeave -= Editor.LeaveRuleEdge;
+        }
+        private void OnSelectPanel(MarkupLineSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
 
-        private void AddToProperty()
-        {
-            To = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            To.Text = NodeMarkup.Localize.LineRule_To;
-            To.Position = EdgePosition.End;
-            To.Init();
-            To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
-            To.OnHover += Editor.HoverRuleEdge;
-            To.OnLeave += Editor.LeaveRuleEdge;
-        }
         private void FillEdges()
         {
             FillEdge(From, FromChanged, Rule.From);
@@ -142,6 +158,7 @@ namespace NodeMarkup.UI.Editors
                 RemoveUIComponent(property);
                 Destroy(property);
             }
+            StyleProperties.Clear();
         }
 
         private void OnSaveTemplate()

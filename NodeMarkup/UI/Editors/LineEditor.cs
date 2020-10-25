@@ -6,6 +6,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,9 @@ namespace NodeMarkup.UI.Editors
 
         private PartEdgeToolMode PartEdgeToolMode { get; }
 
-        public LinesEditor() 
+        private Queue<RulePanel> PanelPool { get; } = new Queue<RulePanel>();
+
+        public LinesEditor()
         {
             PartEdgeToolMode = new PartEdgeToolMode(this);
         }
@@ -55,6 +58,19 @@ namespace NodeMarkup.UI.Editors
         {
             foreach (var line in Markup.Lines)
                 AddItem(line);
+        }
+        protected override void ClearSettings()
+        {
+            HoverRulePanel = null;
+            DeleteAddButton();
+            base.ClearSettings();
+        }
+        protected override void RemoveComponent(UIComponent component)
+        {
+            if (component is RulePanel rulePanel)
+                RemoveRulePanel(rulePanel);
+            else
+                base.RemoveComponent(component);
         }
         protected override void OnObjectSelect()
         {
@@ -72,37 +88,70 @@ namespace NodeMarkup.UI.Editors
             foreach (var rule in EditObject.Rules)
                 AddRulePanel(rule);
         }
+
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
         {
-            var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
+            var rulePanel = GetRulePanel();
+            InitRulePanel(rulePanel, rule);
+            return rulePanel;
+        }
+        private RulePanel GetRulePanel()
+        {
+            RulePanel rulePanel;
+            if (PanelPool.Any())
+            {
+                rulePanel = PanelPool.Dequeue();
+                SettingsPanel.AttachUIComponent(rulePanel.gameObject);
+            }
+            else
+                rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
+
+            return rulePanel;
+        }
+        private void InitRulePanel(RulePanel rulePanel, MarkupLineRawRule rule)
+        {
             rulePanel.Init(this, rule);
             rulePanel.eventMouseEnter += RuleMouseHover;
             rulePanel.eventMouseLeave += RuleMouseLeave;
-            return rulePanel;
         }
         private void RemoveRulePanel(RulePanel rulePanel)
         {
-            SettingsPanel.RemoveUIComponent(rulePanel);
-            Destroy(rulePanel);
+            DeInitRulePanel(rulePanel);
+            FreeRulePanel(rulePanel);
         }
-
+        private void DeInitRulePanel(RulePanel rulePanel)
+        {
+            rulePanel.DeInit();
+            rulePanel.eventMouseEnter -= RuleMouseHover;
+            rulePanel.eventMouseLeave -= RuleMouseLeave;
+        }
+        private void FreeRulePanel(RulePanel rulePanel)
+        {
+            rulePanel.parent.RemoveUIComponent(rulePanel);
+            PanelPool.Enqueue(rulePanel);
+        }
         private void AddAddButton()
         {
             if (AddRuleAvailable)
             {
-                AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
-                AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
-                AddButton.Init();
+                if (AddButton == null)
+                {
+                    AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
+                    AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
+                    AddButton.Init();
+                }
+                else
+                    SettingsPanel.AttachUIComponent(AddButton.gameObject);
+
                 AddButton.OnButtonClick += AddRule;
             }
         }
         private void DeleteAddButton()
         {
-            if (AddButton != null)
+            if (AddButton != null && AddButton.parent != null)
             {
                 AddButton.OnButtonClick -= AddRule;
-                SettingsPanel.RemoveUIComponent(AddButton);
-                Destroy(AddButton);
+                AddButton.parent.RemoveUIComponent(AddButton);
             }
         }
 
@@ -228,14 +277,14 @@ namespace NodeMarkup.UI.Editors
         {
             var rulePanels = SettingsPanel.components.OfType<RulePanel>().ToArray();
 
-            foreach(var rulePanel in rulePanels)
+            foreach (var rulePanel in rulePanels)
             {
                 if (EditObject.ContainsRule(rulePanel.Rule))
                     rulePanel.Refresh();
                 else
                     RemoveRulePanel(rulePanel);
             }
-            foreach(var rule in EditObject.Rules)
+            foreach (var rule in EditObject.Rules)
             {
                 if (!rulePanels.Any(r => r.Rule == rule))
                     AddRulePanel(rule);
@@ -250,7 +299,7 @@ namespace NodeMarkup.UI.Editors
 
         public PartEdgeToolMode(LinesEditor editor) : base(editor) { }
 
-        protected override void OnSetPanel() 
+        protected override void OnSetPanel()
             => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
 
         public override void End() => Editor.Refresh();
