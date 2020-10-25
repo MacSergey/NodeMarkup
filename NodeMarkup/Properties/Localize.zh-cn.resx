@@ -1041,4 +1041,22 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
     <value>创建新边线</value>
   </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>创建边角线</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>重置全部端点偏移</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>附加</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>快速设置人行横道边界</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>标线显示在轨道下方 (重新载入后有效)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>警告：此设置会改变游戏渲染顺序</value>
+  </data>
 </root>
