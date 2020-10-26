@@ -56,6 +56,7 @@ namespace NodeMarkup.Manager
         public float Radius { get; private set; }
         public float Height => Position.y;
 
+        List<Enter> RowEntersList { get; set; } = new List<Enter>();
         List<Enter> EntersList { get; set; } = new List<Enter>();
         Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
@@ -72,8 +73,8 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                foreach (var enter in Enters)
-                    yield return enter.Line;
+                foreach (var enter in EntersList)
+                        yield return enter.Line;
                 foreach (var line in BetweenEnters.Values)
                     yield return line;
             }
@@ -124,7 +125,7 @@ namespace NodeMarkup.Manager
             var node = Utilities.GetNode(Id);
             Position = node.m_position;
 
-            var oldEnters = EntersList;
+            var oldEnters = RowEntersList;
             var exists = oldEnters.Select(e => e.Id).ToList();
             var update = node.SegmentsId().ToList();
 
@@ -138,8 +139,10 @@ namespace NodeMarkup.Manager
 
             UpdateBackup(delete, add, oldEnters, newEnters);
 
-            foreach (var enter in EntersList)
+            foreach (var enter in RowEntersList)
                 enter.Update();
+
+            EntersList = RowEntersList.Where(e => e.PointCount != 0).ToList();
 
             UpdateNodeСontour();
             UpdateRadius();
@@ -173,15 +176,15 @@ namespace NodeMarkup.Manager
                     var map = new ObjectsMap();
                     map.AddSegment(delete[0], add[0]);
                     var currentData = ToXml();
-                    EntersList = newEnters;
+                    RowEntersList = newEnters;
                     Clear();
                     FromXml(Mod.Version, currentData, map);
                 }
                 else
-                    EntersList = newEnters;
+                    RowEntersList = newEnters;
             }
             else
-                EntersList = newEnters;
+                RowEntersList = newEnters;
         }
 
         private void UpdateNodeСontour()
@@ -201,7 +204,7 @@ namespace NodeMarkup.Manager
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
 
-                BetweenEnters[Math.Max(i,j) * 10 + Math.Min(i,j)] = new BezierTrajectory(betweenBezier);
+                BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)] = new BezierTrajectory(betweenBezier);
             }
         }
         private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
@@ -285,7 +288,7 @@ namespace NodeMarkup.Manager
         }
         public void ResetOffsets()
         {
-            foreach (var enter in EntersList)
+            foreach (var enter in RowEntersList)
                 enter.ResetOffsets();
         }
 
@@ -321,7 +324,7 @@ namespace NodeMarkup.Manager
 
             void Seporate(IEnumerable<IStyleData> stylesData)
             {
-                foreach(var styleData in stylesData)
+                foreach (var styleData in stylesData)
                 {
                     if (styleData is IEnumerable<MarkupStyleDash> styleDashes)
                         dashes.AddRange(styleDashes);
@@ -426,10 +429,10 @@ namespace NodeMarkup.Manager
 
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {
-            enter = EntersList.Find(e => e.Id == enterId);
+            enter = RowEntersList.Find(e => e.Id == enterId);
             return enter != null;
         }
-        public bool ContainsEnter(ushort enterId) => EntersList.Find(e => e.Id == enterId) != null;
+        public bool ContainsEnter(ushort enterId) => RowEntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
         public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false)
@@ -470,10 +473,11 @@ namespace NodeMarkup.Manager
         public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
+
         public ILineTrajectory GetEntersLine(Enter first, Enter second)
         {
-            var i = EntersList.IndexOf(first);
-            var j = EntersList.IndexOf(second);
+            var i = RowEntersList.IndexOf(first);
+            var j = RowEntersList.IndexOf(second);
             return BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)];
         }
 
