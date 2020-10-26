@@ -103,6 +103,11 @@ namespace NodeMarkup
         {
             Utilities.OpenUrl(TroubleshootingUrl);
             return true;
-        }       
+        }
+        public static bool GetStable()
+        {
+            Utilities.OpenUrl(StableURL);
+            return true;
+        }
     }
 }

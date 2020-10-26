@@ -127,7 +127,8 @@ namespace NodeMarkup.Manager
                 var start = Mathf.Clamp(intersects[i - 1].FirstT + startOffset, -halfLength, halfLength);
                 var end = Mathf.Clamp(intersects[i].FirstT - endOffset, -halfLength, halfLength);
 
-                if ((end - start) < 0.1f)
+                var delta = end - start;
+                if (delta < 0.9 * length && delta < 0.67 * width)
                     continue;
 
                 var startPosition = position + direction * start;

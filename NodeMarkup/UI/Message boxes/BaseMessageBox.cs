@@ -219,7 +219,7 @@ namespace NodeMarkup.UI
             button.size = new Vector2(width * (widthRatio ?? 1f / from), ButtonHeight);
             button.relativePosition = new Vector2(Space * (0.5f + i / 2f) + width * (positionRatio ?? 1f / from * (i - 1)), 0);
         }
-        public void SetButtonsRatio(int[] ratio)
+        public void SetButtonsRatio(params int[] ratio)
         {
             var buttons = ButtonPanel.components.OfType<UIButton>().ToArray();
             if (buttons.Length == 0)

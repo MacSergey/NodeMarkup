@@ -65,17 +65,11 @@ namespace NodeMarkup
                 messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
                 messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
                 messageBox.OnButton1Click = AgreeClick;
-                messageBox.OnButton2Click = GetStable;
+                messageBox.OnButton2Click = Mod.GetStable;
 
                 static bool AgreeClick()
                 {
                     Settings.BetaWarning.value = false;
-                    return true;
-                }
-
-                static bool GetStable()
-                {
-                    Utilities.OpenUrl(Mod.StableURL);
                     return true;
                 }
             }
@@ -91,7 +85,7 @@ namespace NodeMarkup
             if (!messages.Any())
                 return;
 
-            var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+            var messageBox = !Mod.IsBeta ? MessageBoxBase.ShowModal<WhatsNewMessageBox>() : MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
             messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.StaticName);
             messageBox.OnButtonClick = Confirm;
             messageBox.Init(messages);

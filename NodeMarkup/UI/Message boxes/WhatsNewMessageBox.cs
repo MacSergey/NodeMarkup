@@ -9,20 +9,12 @@ namespace NodeMarkup.UI
 {
     public class WhatsNewMessageBox : MessageBoxBase
     {
-        private UIButton OkButton { get; set; }
-        private UIButton GetEarlyAccessButton { get; set; }
         public Func<bool> OnButtonClick { get; set; }
 
         public WhatsNewMessageBox()
         {
-            OkButton = AddButton(1, /*EarlyAccess.Status ? 1 : 2*/ 1, OkClick);
-            OkButton.text = NodeMarkup.Localize.MessageBox_OK;
-
-            //if(!EarlyAccess.Status)
-            //{
-            //    GetEarlyAccessButton = AddButton(2, 2, GetEarlyAccessClick);
-            //    GetEarlyAccessButton.text = NodeMarkup.Localize.EarlyAccess_GetButton;
-            //}
+            var okButton = AddButton(1, 1, OkClick);
+            okButton.text = NodeMarkup.Localize.MessageBox_OK;
         }
         protected virtual void OkClick()
         {
@@ -30,7 +22,7 @@ namespace NodeMarkup.UI
                 Cancel();
         }
 
-        public void Init(Dictionary<Version, string> messages)
+        public virtual void Init(Dictionary<Version, string> messages)
         {
             var first = default(VersionMessage);
             foreach (var message in messages)
@@ -93,7 +85,7 @@ namespace NodeMarkup.UI
 
             public void Init(Version version, string message)
             {
-                Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, version);
+                Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, Mod.IsBeta && version == Mod.Version ? $"{version} [BETA]" : version.ToString());
                 Message.text = message;
                 IsMinimize = true;
 
@@ -109,6 +101,27 @@ namespace NodeMarkup.UI
                 if (Message != null)
                     Message.width = width;
             }
+        }
+    }
+    public class BetaWhatsNewMessageBox : WhatsNewMessageBox
+    {
+        public BetaWhatsNewMessageBox()
+        {
+            var getStableButton = AddButton(1, 1, OnGetStable);
+            getStableButton.text = NodeMarkup.Localize.Mod_BetaWarningGetStable;
+            SetButtonsRatio(1, 1);
+        }
+        private void OnGetStable() => Mod.GetStable();
+
+        public override void Init(Dictionary<Version, string> messages)
+        {
+            var betaMessage = ScrollableContent.AddUIComponent<UILabel>();
+            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.StaticName);
+            betaMessage.wordWrap = true;
+            betaMessage.autoHeight = true;
+            betaMessage.textColor = Color.red;
+
+            base.Init(messages);
         }
     }
 }
