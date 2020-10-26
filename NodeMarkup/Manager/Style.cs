@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -17,7 +18,7 @@ namespace NodeMarkup.Manager
     {
         Color32 Color { get; set; }
     }
-    public interface IWidthStyle: IStyle
+    public interface IWidthStyle : IStyle
     {
         float Width { get; set; }
     }
@@ -106,7 +107,7 @@ namespace NodeMarkup.Manager
             Color = color;
             Width = width;
         }
-        protected XElement BaseToXml() =>  new XElement(XmlSection,new XAttribute("T", TypeToInt(Type)));
+        protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
         public virtual XElement ToXml()
         {
             var config = BaseToXml();
@@ -124,7 +125,7 @@ namespace NodeMarkup.Manager
         public abstract Style Copy();
         public virtual void CopyTo(Style target)
         {
-            if(this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
+            if (this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
                 widthTarget.Width = widthSource.Width;
             if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
                 colorTarget.Color = colorSource.Color;
@@ -143,7 +144,7 @@ namespace NodeMarkup.Manager
         }
         protected ColorPropertyPanel AddColorProperty(UIComponent parent)
         {
-            var colorProperty = parent.AddUIComponent<ColorPropertyPanel>();
+            var colorProperty = ComponentPool.Get<ColorPropertyPanel>(parent);
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.Init();
             colorProperty.Value = Color;
@@ -152,7 +153,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
         {
-            var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
@@ -167,7 +168,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
@@ -181,7 +182,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
@@ -195,7 +196,7 @@ namespace NodeMarkup.Manager
         }
         protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
         {
-            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
+            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent);
             var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
@@ -335,8 +336,8 @@ namespace NodeMarkup.Manager
             get => _name;
             set
             {
-                    _name = value;
-                    TemplateChanged();
+                _name = value;
+                TemplateChanged();
             }
         }
         public Style Style

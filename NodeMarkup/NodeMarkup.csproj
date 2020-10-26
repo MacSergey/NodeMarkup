@@ -117,6 +117,7 @@
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
     <Compile Include="UI\Panel\Header.cs" />
+    <Compile Include="UI\ComponentPool.cs" />
     <Compile Include="Utils\DataExtensions\AssetData.cs" />
     <Compile Include="Utils\DataExtensions\Loading.cs" />
     <Compile Include="EarlyAccess.cs" />

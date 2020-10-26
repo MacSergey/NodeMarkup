@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -75,7 +76,7 @@ namespace NodeMarkup.Manager
 
         protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -89,7 +90,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddBaseProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var baseProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
@@ -103,7 +104,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddHeightProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
@@ -117,7 +118,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddSpaceProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var spaceProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
@@ -131,7 +132,7 @@ namespace NodeMarkup.Manager
         }
         protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
         {
-            var alignmentProperty = parent.AddUIComponent<LineAlignmentPropertyPanel>();
+            var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(parent);
             alignmentProperty.Text = Localize.StyleOption_Alignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;

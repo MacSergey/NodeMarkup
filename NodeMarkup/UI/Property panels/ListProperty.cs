@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class ListPropertyPanel<Type, UISelector> : EditorPropertyPanel
+    public abstract class ListPropertyPanel<Type, UISelector> : EditorPropertyPanel, IReusable
         where UISelector : UIComponent, IUISelector<Type>
     {
         public event Action<Type> OnSelectObjectChanged;
@@ -67,6 +67,14 @@ namespace NodeMarkup.UI.Editors
 
             if (AllowNull)
                 Selector.AddItem(default, NullText ?? string.Empty);
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            Selector.Clear();
+
+            OnSelectObjectChanged = null;
+            OnDropDownStateChange = null;
         }
         public void Add(Type item) => Selector.AddItem(item);
         public void AddRange(IEnumerable<Type> items)

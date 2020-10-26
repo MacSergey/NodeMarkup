@@ -35,13 +35,27 @@ namespace NodeMarkup.UI.Editors
             Button.size = size;
         }
     }
-    public class ButtonsPanel : EditorItem
+    public class ButtonsPanel : EditorItem, IReusable
     {
         public event Action<int> OnButtonClick;
         protected List<UIButton> Buttons { get; } = new List<UIButton>();
         public int Count => Buttons.Count;
         private float Padding => 10f;
         private float Height => 20f;
+
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            foreach(var button in Buttons)
+            {
+                button.parent.RemoveUIComponent(button);
+                Destroy(button);
+            }
+
+            OnButtonClick = null;
+            Buttons.Clear();
+        }
 
         public int AddButton(string text)
         {

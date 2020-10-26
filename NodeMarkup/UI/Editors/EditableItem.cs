@@ -86,7 +86,7 @@ namespace NodeMarkup.UI.Editors
             Label.textColor = TextColor;
         }
     }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItemBase
+    public abstract class EditableItem<EditableObject, IconType> : EditableItemBase, IReusable
         where IconType : UIComponent
         where EditableObject : class, IDeletable
     {
@@ -119,6 +119,11 @@ namespace NodeMarkup.UI.Editors
         }
 
         public abstract void Init();
+        public virtual void DeInit() 
+        {
+            Text = string.Empty;
+            Object = null;
+        }
         public void Init(bool showIcon, bool showDelete)
         {
             if (Inited)

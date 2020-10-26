@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -272,7 +273,7 @@ namespace NodeMarkup.Manager
 
         protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_MedianOffset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -286,7 +287,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -302,7 +303,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var stepProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
@@ -316,7 +317,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddOffsetProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;

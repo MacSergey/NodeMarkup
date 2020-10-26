@@ -44,8 +44,6 @@ namespace NodeMarkup.UI.Editors
 
         private PartEdgeToolMode PartEdgeToolMode { get; }
 
-        private Queue<RulePanel> PanelPool { get; } = new Queue<RulePanel>();
-
         public LinesEditor()
         {
             PartEdgeToolMode = new PartEdgeToolMode(this);
@@ -90,47 +88,20 @@ namespace NodeMarkup.UI.Editors
 
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
         {
-            var rulePanel = GetRulePanel();
-            InitRulePanel(rulePanel, rule);
-            return rulePanel;
-        }
-        private RulePanel GetRulePanel()
-        {
-            RulePanel rulePanel;
-            if (PanelPool.Any())
-            {
-                rulePanel = PanelPool.Dequeue();
-                SettingsPanel.AttachUIComponent(rulePanel.gameObject);
-            }
-            else
-                rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
-
-            return rulePanel;
-        }
-        private void InitRulePanel(RulePanel rulePanel, MarkupLineRawRule rule)
-        {
+            var rulePanel = ComponentPool.Get<RulePanel>(SettingsPanel);
             rulePanel.Init(this, rule);
             rulePanel.eventMouseEnter += RuleMouseHover;
             rulePanel.eventMouseLeave += RuleMouseLeave;
+            return rulePanel;
         }
         private void RemoveRulePanel(RulePanel rulePanel)
         {
             if (HoverRulePanel == rulePanel)
                 HoverRulePanel = null;
 
-            DeInitRulePanel(rulePanel);
-            FreeRulePanel(rulePanel);
-        }
-        private void DeInitRulePanel(RulePanel rulePanel)
-        {
-            rulePanel.DeInit();
             rulePanel.eventMouseEnter -= RuleMouseHover;
             rulePanel.eventMouseLeave -= RuleMouseLeave;
-        }
-        private void FreeRulePanel(RulePanel rulePanel)
-        {
-            rulePanel.parent.RemoveUIComponent(rulePanel);
-            PanelPool.Enqueue(rulePanel);
+            ComponentPool.Free(rulePanel);
         }
         private void AddAddButton()
         {

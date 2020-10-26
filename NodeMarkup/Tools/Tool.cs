@@ -130,6 +130,7 @@ namespace NodeMarkup.Tools
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
             NodeMarkupButton.RemoveButton();
             NodeMarkupPanel.RemovePanel();
+            ComponentPool.Clear();
             base.OnDestroy();
         }
         protected override void OnEnable()

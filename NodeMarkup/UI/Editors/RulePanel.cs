@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class RulePanel : UIPanel
+    public class RulePanel : UIPanel, IReusable
     {
         private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
         private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
@@ -58,11 +58,8 @@ namespace NodeMarkup.UI.Editors
         {
             DeInitEdgeProperty(From);
             DeInitEdgeProperty(To);
-            if (Style != null)
-            {
-                RemoveUIComponent(Style);
-                Destroy(Style);
-            }
+            ComponentPool.Free(Style);
+            Style = null;
             ClearStyleProperties();
 
             Editor = null;
@@ -130,10 +127,10 @@ namespace NodeMarkup.UI.Editors
             switch (Editor.EditObject)
             {
                 case MarkupRegularLine regularLine:
-                    Style = AddUIComponent<RegularStylePropertyPanel>();
+                    Style = ComponentPool.Get<RegularStylePropertyPanel>(this);
                     break;
                 case MarkupStopLine stopLine:
-                    Style = AddUIComponent<StopStylePropertyPanel>();
+                    Style = ComponentPool.Get<StopStylePropertyPanel>(this);
                     break;
                 default:
                     return;
@@ -154,10 +151,8 @@ namespace NodeMarkup.UI.Editors
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)
-            {
-                RemoveUIComponent(property);
-                Destroy(property);
-            }
+                ComponentPool.Free(property);
+
             StyleProperties.Clear();
         }
 

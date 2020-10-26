@@ -260,7 +260,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -276,7 +276,7 @@ namespace NodeMarkup.Manager
         }
         protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
-            var fromProperty = parent.AddUIComponent<ChevronFromPropertyPanel>();
+            var fromProperty = ComponentPool.Get<ChevronFromPropertyPanel>(parent);
             fromProperty.Text = Localize.StyleOption_StartingFrom;
             fromProperty.Init();
             fromProperty.SelectedObject = chevronStyle.StartingFrom;
@@ -285,7 +285,7 @@ namespace NodeMarkup.Manager
         }
         protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
-            var buttonsPanel = parent.AddUIComponent<ButtonsPanel>();
+            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent);
             var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
             var turnIndex = buttonsPanel.AddButton(Localize.StyleOption_Turn);
             buttonsPanel.Init();

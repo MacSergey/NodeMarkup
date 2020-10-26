@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class FieldPropertyPanel<ValueType> : EditorPropertyPanel
+    public abstract class FieldPropertyPanel<ValueType> : EditorPropertyPanel, IReusable
     {
         protected UITextField Field { get; set; }
 
@@ -78,6 +78,17 @@ namespace NodeMarkup.UI.Editors
             Field.verticalAlignment = UIVerticalAlignment.Middle;
             Field.padding = new RectOffset(0, 0, 6, 0);
         }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            UseWheel = false;
+            WheelStep = default;
+
+            OnValueChanged = null;
+            OnHover = null;
+            OnLeave = null;
+        }
 
         protected virtual string GetString(ValueType value) => value.ToString();
         protected abstract ValueType Increment(ValueType value, ValueType step, WheelMode mode);
@@ -109,10 +120,10 @@ namespace NodeMarkup.UI.Editors
     public abstract class ComparableFieldPropertyPanel<ValueType> : FieldPropertyPanel<ValueType>
         where ValueType : IComparable<ValueType>
     {
-        public ValueType MinValue { get; set; } = default;
-        public ValueType MaxValue { get; set; } = default;
-        public bool CheckMax { get; set; } = false;
-        public bool CheckMin { get; set; } = false;
+        public ValueType MinValue { get; set; }
+        public ValueType MaxValue { get; set; }
+        public bool CheckMax { get; set; }
+        public bool CheckMin { get; set; }
 
         public override ValueType Value
         {
@@ -129,6 +140,20 @@ namespace NodeMarkup.UI.Editors
 
                 base.Value = newValue;
             }
+        }
+
+        public ComparableFieldPropertyPanel() => SetDefault();
+        public override void DeInit()
+        {
+            base.DeInit();
+            SetDefault();
+        }
+        private void SetDefault()
+        {
+            MinValue = default;
+            MaxValue = default;
+            CheckMin = false;
+            CheckMax = false;
         }
     }
     public class FloatPropertyPanel : ComparableFieldPropertyPanel<float>

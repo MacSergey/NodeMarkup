@@ -2,6 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -418,7 +419,7 @@ namespace NodeMarkup.Manager
         }
         protected static BoolListPropertyPanel AddCenterSolidProperty(SolidAndDashedLineStyle solidAndDashedStyle, UIComponent parent)
         {
-            var centerSolidProperty = parent.AddUIComponent<BoolListPropertyPanel>();
+            var centerSolidProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
             centerSolidProperty.Text = Localize.StyleOption_SolidInCenter;
             centerSolidProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             centerSolidProperty.SelectedObject = solidAndDashedStyle.CenterSolid;

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class ColorPropertyPanel : EditorPropertyPanel
+    public class ColorPropertyPanel : EditorPropertyPanel, IReusable
     {
         private static Color32? Buffer { get; set; }
 
@@ -62,7 +62,12 @@ namespace NodeMarkup.UI.Editors
 
             AddColorSample();
         }
+        public override void DeInit()
+        {
+            base.DeInit();
 
+            OnValueChanged = null;
+        }
         private UITextField AddField(string name)
         {
             var lable = Control.AddUIComponent<UILabel>();

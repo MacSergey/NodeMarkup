@@ -2,6 +2,7 @@
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace NodeMarkup.UI
             return atlas;
         }
         public virtual void Init() => Init(defaultHeight);
+        public virtual void DeInit() { }
         public void Init(float height)
         {
             if (parent is UIScrollablePanel scrollablePanel)
@@ -66,14 +68,13 @@ namespace NodeMarkup.UI
             Label.textScale = 0.8f;
 
             Control = AddUIComponent<UIPanel>();
-            //Control.autoLayout = true;
             Control.autoLayoutDirection = LayoutDirection.Horizontal;
             Control.autoLayoutStart = LayoutStart.TopRight;
             Control.autoLayoutPadding = new RectOffset(5, 0, 0, 0);
 
             Control.eventSizeChanged += ControlSizeChanged;
         }
-
+        public override void DeInit() => Text = string.Empty;
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();

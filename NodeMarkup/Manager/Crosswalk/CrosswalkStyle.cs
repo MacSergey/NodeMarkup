@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -84,7 +85,7 @@ namespace NodeMarkup.Manager
         }
         protected static BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
-            var parallelProperty = parent.AddUIComponent<BoolListPropertyPanel>();
+            var parallelProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
             parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
             parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             parallelProperty.SelectedObject = parallelStyle.Parallel;
@@ -118,7 +119,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddOffsetProperty(UIComponent parent, Action onHover, Action onLeave, float minValue = 0f)
         {
-            var offsetProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -129,7 +130,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var widthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             widthProperty.Text = Localize.StyleOption_LineWidth;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.1f;
@@ -708,7 +709,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddSquareSideProperty(ChessBoardCrosswalkStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var squareSideProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var squareSideProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             squareSideProperty.Text = Localize.StyleOption_SquareSide;
             squareSideProperty.UseWheel = true;
             squareSideProperty.WheelStep = 0.1f;
@@ -722,7 +723,7 @@ namespace NodeMarkup.Manager
         }
         protected static IntPropertyPanel AddLineCountProperty(ChessBoardCrosswalkStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var lineCountProperty = parent.AddUIComponent<IntPropertyPanel>();
+            var lineCountProperty = ComponentPool.Get<IntPropertyPanel>(parent);
             lineCountProperty.Text = Localize.StyleOption_LineCount;
             lineCountProperty.UseWheel = true;
             lineCountProperty.WheelStep = 1;

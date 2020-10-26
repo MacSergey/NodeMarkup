@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -82,7 +83,7 @@ namespace NodeMarkup.Manager
 
         protected static FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var dashLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
@@ -96,7 +97,7 @@ namespace NodeMarkup.Manager
         }
         protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var spaceLengthProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
