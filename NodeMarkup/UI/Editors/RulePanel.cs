@@ -14,8 +14,8 @@ namespace NodeMarkup.UI.Editors
     {
         public PoolList<UIComponent> LIST => m_ChildComponents;
 
-        public event Action<RulePanel> OnHover;
-        public event Action<RulePanel> OnLeave;
+        public event Action<RulePanel, UIMouseEventParameter> OnHover;
+        public event Action<RulePanel, UIMouseEventParameter> OnEnter;
 
         private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
         private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
@@ -72,7 +72,7 @@ namespace NodeMarkup.UI.Editors
             Rule = null;
 
             OnHover = null;
-            OnLeave = null;
+            OnEnter = null;
         }
 
         private void SetSize()
@@ -226,16 +226,15 @@ namespace NodeMarkup.UI.Editors
                 item.width = width - autoLayoutPadding.horizontal;
             }
         }
-        protected override void OnMouseHover(UIMouseEventParameter p)
+        protected override void OnMouseEnter(UIMouseEventParameter p)
         {
-            base.OnMouseHover(p);
-            OnHover?.Invoke(this);
+            base.OnMouseEnter(p);
+            OnHover?.Invoke(this, p);
         }
         protected override void OnMouseLeave(UIMouseEventParameter p)
         {
             base.OnMouseLeave(p);
-            if (p.source == this)
-                OnLeave?.Invoke(this);
+            OnEnter?.Invoke(this, p);
         }
     }
 }

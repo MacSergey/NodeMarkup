@@ -84,7 +84,7 @@ namespace NodeMarkup.UI.Editors
             var rulePanel = ComponentPool.Get<RulePanel>(SettingsPanel);
             rulePanel.Init(this, rule);
             rulePanel.OnHover += RuleMouseHover;
-            rulePanel.OnLeave += RuleMouseLeave;
+            rulePanel.OnEnter += RuleMouseLeave;
             return rulePanel;
         }
         private void RemoveRulePanel(RulePanel rulePanel)
@@ -179,15 +179,15 @@ namespace NodeMarkup.UI.Editors
         }
         public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
         public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
-        private void RuleMouseHover(RulePanel rulePanel) => HoverRulePanel = rulePanel;
-        private void RuleMouseLeave(RulePanel rulePanel)
+        private void RuleMouseHover(RulePanel rulePanel, UIMouseEventParameter eventParam) => HoverRulePanel = rulePanel;
+        private void RuleMouseLeave(RulePanel rulePanel, UIMouseEventParameter eventParam)
         {
-            //var uiView = rulePanel.GetUIView();
-            //var mouse = uiView.ScreenPointToGUI((rulePanel.position + eventParam.moveDelta) / uiView.inputScale);
-            //var ruleRect = new Rect(SettingsPanel.absolutePosition + rulePanel.relativePosition, rulePanel.size);
-            //var settingsRect = new Rect(SettingsPanel.absolutePosition, SettingsPanel.size);
+            var uiView = rulePanel.GetUIView();
+            var mouse = uiView.ScreenPointToGUI((eventParam.position + eventParam.moveDelta) / uiView.inputScale);
+            var ruleRect = new Rect(SettingsPanel.absolutePosition + rulePanel.relativePosition, rulePanel.size);
+            var settingsRect = new Rect(SettingsPanel.absolutePosition, SettingsPanel.size);
 
-            //if (eventParam.source == component || !ruleRect.Contains(mouse) || !settingsRect.Contains(mouse))
+            if (eventParam.source == rulePanel || !ruleRect.Contains(mouse) || !settingsRect.Contains(mouse))
                 HoverRulePanel = null;
         }
         public override bool OnShortcut(Event e)
