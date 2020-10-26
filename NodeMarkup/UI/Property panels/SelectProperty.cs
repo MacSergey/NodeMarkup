@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class SelectPropertyPanel<Type> : EditorPropertyPanel
+    public abstract class SelectPropertyPanel<Type> : EditorPropertyPanel, IReusable
     {
         public event Action<Type> OnSelectChanged;
         public event Action OnSelect;
@@ -117,6 +117,15 @@ namespace NodeMarkup.UI.Editors
         public EdgePosition Position { get; set; }
         protected override float Width => 230f;
 
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            OnSelect = null;
+            OnHover = null;
+            OnLeave = null;
+        }
+
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
@@ -136,6 +145,15 @@ namespace NodeMarkup.UI.Editors
         {
             AddReset();
         }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            OnSelect = null;
+            OnHover = null;
+            OnLeave = null;
+        }
+
         private void AddReset()
         {
             var button = AddButton(Control);

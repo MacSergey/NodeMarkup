@@ -50,7 +50,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            var header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
+            var header = ComponentPool.Get<StyleHeaderPanel>(SettingsPanel);
             header.Init(EditObject.Style.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
@@ -58,8 +58,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddBordersProperties()
         {
-            AddLeftBorderProperty();
-            AddRightBorderProperty();
+            LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
+            RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
             FillBorders();
         }
         private void FillBorders()
@@ -84,32 +84,24 @@ namespace NodeMarkup.UI.Editors
             panel.isVisible = lines.Any();
             panel.OnSelectChanged += action;
         }
-        private void AddRightBorderProperty()
+        private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
         {
-            RightBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
-            RightBorder.Text = NodeMarkup.Localize.CrosswalkEditor_RightBorder;
-            RightBorder.Position = BorderPosition.Right;
-            RightBorder.Init();
-            RightBorder.OnSelect += (panel) => SelectBorder(panel);
-            RightBorder.OnHover += HoverBorder;
-            RightBorder.OnLeave += LeaveBorder;
+            var border = ComponentPool.Get<MarkupCrosswalkSelectPropertyPanel>(SettingsPanel);
+            border.Text = text;
+            border.Position = position;
+            border.Init();
+            border.OnSelect += (panel) => SelectBorder(panel);
+            border.OnHover += HoverBorder;
+            border.OnLeave += LeaveBorder;
+            return border;
         }
-        private void AddLeftBorderProperty()
-        {
-            LeftBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
-            LeftBorder.Text = NodeMarkup.Localize.CrosswalkEditor_LeftBorder;
-            LeftBorder.Position = BorderPosition.Left;
-            LeftBorder.Init();
-            LeftBorder.OnSelect += (panel) => SelectBorder(panel);
-            LeftBorder.OnHover += HoverBorder;
-            LeftBorder.OnLeave += LeaveBorder;
-        }
+
         private void RightBorgerChanged(MarkupRegularLine line) => EditObject.RightBorder = line;
         private void LeftBorgerChanged(MarkupRegularLine line) => EditObject.LeftBorder = line;
 
         private void AddStyleTypeProperty()
         {
-            Style = SettingsPanel.AddUIComponent<CrosswalkPropertyPanel>();
+            Style = ComponentPool.Get<CrosswalkPropertyPanel>(SettingsPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
@@ -162,10 +154,9 @@ namespace NodeMarkup.UI.Editors
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)
-            {
-                RemoveUIComponent(property);
-                Destroy(property);
-            }
+                ComponentPool.Free(property);
+
+            StyleProperties.Clear();
         }
         protected override void OnObjectDelete(MarkupCrosswalk crosswalk) => Markup.RemoveCrosswalk(crosswalk);
         protected override void OnObjectUpdate() => FillBorders();

@@ -9,9 +9,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class HeaderPanel : EditorItem
+    public abstract class HeaderPanel : EditorItem, IReusable
     {
         public event Action OnDelete;
+        protected override float DefaultHeight => 35;
 
         protected HeaderContent Content { get; set; }
         protected UIButton DeleteButton { get; set; }
@@ -22,10 +23,15 @@ namespace NodeMarkup.UI.Editors
             AddContent();
         }
 
-        public virtual void Init(float height = defaultHeight, bool isDeletable = true)
+        public virtual void Init(float? height = null, bool isDeletable = true)
         {
             base.Init(height);
             DeleteButton.enabled = isDeletable;
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnDelete = null;
         }
         protected override void OnSizeChanged()
         {
@@ -107,8 +113,18 @@ namespace NodeMarkup.UI.Editors
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
         {
-            base.Init(35, isDeletable);
+            base.Init(isDeletable: isDeletable);
             ApplyTemplate.Init(styleGroup, onSelectTemplate);
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            OnSaveTemplate = null;
+            OnCopy = null;
+            OnPaste = null;
+
+            ApplyTemplate.DeInit();
         }
         private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
         private void CopyClick(UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke();
@@ -134,12 +150,19 @@ namespace NodeMarkup.UI.Editors
             SetAsDefaultButton.SetSprite(isDefault ? HeaderButton.UnsetDefault : HeaderButton.SetDefault);
             SetAsDefaultButton.tooltip = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
-
-        protected override void OnSizeChanged()
+        public override void DeInit()
         {
-            base.OnSizeChanged();
-            SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
+            base.DeInit();
+
+            OnSetAsDefault = null;
+            OnDuplicate = null;
         }
+
+        //protected override void OnSizeChanged()
+        //{
+        //    base.OnSizeChanged();
+        //    SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
+        //}
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
         private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
     }

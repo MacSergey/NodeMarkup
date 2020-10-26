@@ -17,6 +17,10 @@ namespace NodeMarkup.UI.Editors
             StyleGroup = styleGroup & Style.StyleType.GroupMask;
             OnSelectTemplate = onSelectTemplate;
         }
+        public void DeInit()
+        {
+            OnSelectTemplate = null;
+        }
         protected override void OnOpenPopup()
         {
             Popup.Fill(StyleGroup);

@@ -11,7 +11,7 @@ namespace NodeMarkup.UI
 {
     public abstract class EditorItem : UIPanel
     {
-        protected const float defaultHeight = 30f;
+        protected virtual float DefaultHeight => 30;
 
         public static UITextureAtlas EditorItemAtlas { get; } = GetAtlas();
         private static UITextureAtlas GetAtlas()
@@ -30,9 +30,9 @@ namespace NodeMarkup.UI
 
             return atlas;
         }
-        public virtual void Init() => Init(defaultHeight);
+        public virtual void Init() => Init(null);
         public virtual void DeInit() { }
-        public void Init(float height)
+        public void Init(float? height = null)
         {
             if (parent is UIScrollablePanel scrollablePanel)
                 width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
@@ -41,7 +41,7 @@ namespace NodeMarkup.UI
             else
                 width = parent.width;
 
-            this.height = height;
+            this.height = height ?? DefaultHeight;
         }
 
         protected UIButton AddButton(UIComponent parent)

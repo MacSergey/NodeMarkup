@@ -47,14 +47,14 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            HeaderPanel = SettingsPanel.AddUIComponent<TemplateHeaderPanel>();
+            HeaderPanel = ComponentPool.Get<TemplateHeaderPanel>(SettingsPanel);
             HeaderPanel.Init(EditObject.IsDefault());
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
         }
         private void AddTemplateName()
         {
-            NameProperty = SettingsPanel.AddUIComponent<StringPropertyPanel>();
+            NameProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
             NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.UseWheel = false;

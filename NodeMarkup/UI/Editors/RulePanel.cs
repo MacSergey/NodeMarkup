@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework;
+using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -11,6 +12,11 @@ namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : UIPanel, IReusable
     {
+        public PoolList<UIComponent> LIST => m_ChildComponents;
+
+        public event Action<RulePanel> OnHover;
+        public event Action<RulePanel> OnLeave;
+
         private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
         private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
 
@@ -33,10 +39,6 @@ namespace NodeMarkup.UI.Editors
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
             autoLayoutPadding = new RectOffset(5, 5, 0, 0);
-
-            AddHeader();
-            From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
-            To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
         }
         public void Init(LinesEditor editor, MarkupLineRawRule rule)
         {
@@ -44,26 +46,33 @@ namespace NodeMarkup.UI.Editors
             Rule = rule;
             Refresh();
 
-            SetSize();
-
-            Header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
-            InitEdgeProperty(From);
-            InitEdgeProperty(To);
+            AddHeader();
+            From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
+            To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
             FillEdges();
 
             AddStyleTypeProperty();
             AddStyleProperties();
+
+            SetSize();
         }
         public void DeInit()
         {
-            DeInitEdgeProperty(From);
-            DeInitEdgeProperty(To);
+            ComponentPool.Free(Header);
+            Header = null;
+            ComponentPool.Free(From);
+            From = null;
+            ComponentPool.Free(To);
+            To = null;
             ComponentPool.Free(Style);
             Style = null;
             ClearStyleProperties();
 
             Editor = null;
             Rule = null;
+
+            OnHover = null;
+            OnLeave = null;
         }
 
         private void SetSize()
@@ -77,7 +86,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddHeader()
         {
-            Header = AddUIComponent<StyleHeaderPanel>();
+            Header = ComponentPool.Get<StyleHeaderPanel>(this);
+            Header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
@@ -85,23 +95,14 @@ namespace NodeMarkup.UI.Editors
         }
         private MarkupLineSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
         {
-            var edgeProperty = AddUIComponent<MarkupLineSelectPropertyPanel>();
+            var edgeProperty = ComponentPool.Get<MarkupLineSelectPropertyPanel>(this);
             edgeProperty.Text = text;
             edgeProperty.Position = position;
             edgeProperty.Init();
-            return edgeProperty;
-        }
-        private void InitEdgeProperty(MarkupLineSelectPropertyPanel edgeProperty)
-        {
             edgeProperty.OnSelect += OnSelectPanel;
             edgeProperty.OnHover += Editor.HoverRuleEdge;
             edgeProperty.OnLeave += Editor.LeaveRuleEdge;
-        }
-        private void DeInitEdgeProperty(MarkupLineSelectPropertyPanel edgeProperty)
-        {
-            edgeProperty.OnSelect -= OnSelectPanel;
-            edgeProperty.OnHover -= Editor.HoverRuleEdge;
-            edgeProperty.OnLeave -= Editor.LeaveRuleEdge;
+            return edgeProperty;
         }
         private void OnSelectPanel(MarkupLineSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
 
@@ -224,6 +225,17 @@ namespace NodeMarkup.UI.Editors
             {
                 item.width = width - autoLayoutPadding.horizontal;
             }
+        }
+        protected override void OnMouseHover(UIMouseEventParameter p)
+        {
+            base.OnMouseHover(p);
+            OnHover?.Invoke(this);
+        }
+        protected override void OnMouseLeave(UIMouseEventParameter p)
+        {
+            base.OnMouseLeave(p);
+            if (p.source == this)
+                OnLeave?.Invoke(this);
         }
     }
 }

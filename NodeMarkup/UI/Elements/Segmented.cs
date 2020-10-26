@@ -90,14 +90,16 @@ namespace NodeMarkup.UI
 
         public void Clear()
         {
+            _selectedIndex = -1;
             Objects.Clear();
 
-            var components = this.components.ToArray();
-            foreach(var component in components)
+            foreach(var button in Buttons)
             {
-                RemoveUIComponent(component);
-                Destroy(component);
+                RemoveUIComponent(button);
+                Destroy(button);
             }
+
+            Buttons.Clear();
         }
 
         public void SetDefaultStyle(Vector2? size = null) { }

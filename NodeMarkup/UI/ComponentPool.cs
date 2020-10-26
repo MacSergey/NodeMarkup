@@ -36,9 +36,8 @@ namespace NodeMarkup.UI
         {
             if (component is IReusable reusable)
             {
-                if (component.parent != null)
-                    component.parent.RemoveUIComponent(component);
-
+                component.parent?.RemoveUIComponent(component);
+                component.transform.parent = null;
                 reusable.DeInit();
 
                 var queue = GetQueue(component.GetType());
@@ -75,8 +74,7 @@ namespace NodeMarkup.UI
         {
             if (component != null)
             {
-                if (component.parent != null)
-                    component.parent.RemoveUIComponent(component);
+                component.parent?.RemoveUIComponent(component);
                 UnityEngine.Object.Destroy(component);
             }
         }

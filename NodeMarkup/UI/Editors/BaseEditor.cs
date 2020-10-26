@@ -195,7 +195,6 @@ namespace NodeMarkup.UI.Editors
                     _selectItem.IsSelect = true;
             }
         }
-        //private Queue<EditableItemType> ItemsPool { get; } = new Queue<EditableItemType>();
         public EditableObject EditObject => SelectItem?.Object;
 
         protected override void OnSizeChanged()
@@ -329,13 +328,8 @@ namespace NodeMarkup.UI.Editors
             foreach (var component in components)
             {
                 if (component != EmptyLabel)
-                    RemoveComponent(component);
+                    ComponentPool.Free(component);
             }
-        }
-        protected virtual void RemoveComponent(UIComponent component)
-        {
-            SettingsPanel.RemoveUIComponent(component);
-            Destroy(component.gameObject);
         }
 
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);

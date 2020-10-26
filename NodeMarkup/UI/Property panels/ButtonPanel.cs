@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class ButtonPanel : EditorItem
+    public class ButtonPanel : EditorItem, IReusable
     {
         protected UIButton Button { get; set; }
 
@@ -24,6 +24,13 @@ namespace NodeMarkup.UI.Editors
         {
             Button = AddButton(this);
             Button.eventClick += ButtonClick;
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            Text = string.Empty;
+            OnButtonClick = null;
         }
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
@@ -43,6 +50,11 @@ namespace NodeMarkup.UI.Editors
         private float Padding => 10f;
         private float Height => 20f;
 
+        public override void Init()
+        {
+            base.Init();
+            SetSize();
+        }
         public override void DeInit()
         {
             base.DeInit();
@@ -84,9 +96,12 @@ namespace NodeMarkup.UI.Editors
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
+            SetSize();
+        }
+        private void SetSize()
+        {
             var buttonWidth = (width - Padding * (Count - 1)) / Count;
-            for(var i = 0; i < Count; i +=1)
+            for (var i = 0; i < Count; i += 1)
             {
                 Buttons[i].size = new Vector2(buttonWidth, Height);
                 Buttons[i].relativePosition = new Vector2((buttonWidth + Padding) * i, (height - Height) / 2);

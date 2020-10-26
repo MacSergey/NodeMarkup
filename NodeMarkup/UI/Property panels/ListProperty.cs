@@ -71,10 +71,11 @@ namespace NodeMarkup.UI.Editors
         public override void DeInit()
         {
             base.DeInit();
-            Selector.Clear();
 
             OnSelectObjectChanged = null;
             OnDropDownStateChange = null;
+
+            Selector.Clear();
         }
         public void Add(Type item) => Selector.AddItem(item);
         public void AddRange(IEnumerable<Type> items)

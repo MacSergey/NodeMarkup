@@ -44,6 +44,7 @@ namespace NodeMarkup.UI
         }
         public void Clear()
         {
+            selectedIndex = -1;
             Objects.Clear();
             items = new string[0];
         }

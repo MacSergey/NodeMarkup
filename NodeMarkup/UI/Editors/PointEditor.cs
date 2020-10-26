@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
-            Offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+            Offset = ComponentPool.Get<FloatPropertyPanel>(SettingsPanel);
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
