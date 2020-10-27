@@ -25,9 +25,7 @@ namespace NodeMarkup
                 case LoadMode.NewMap:
                 case LoadMode.LoadMap:
                     NodeMarkupTool.Create();
-                    //RenderHelper.Init();
 
-                    //EarlyAccess.CheckAccess();
                     ShowWhatsNew();
                     ShowBetaWarning();
                     ShowLoadError();

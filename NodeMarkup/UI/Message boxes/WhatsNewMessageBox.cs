@@ -76,7 +76,6 @@ namespace NodeMarkup.UI
                 Message.textScale = 0.8f;
                 Message.wordWrap = true;
                 Message.autoHeight = true;
-                Message.size = new Vector2(width - 2 * Padding, 0);
                 Message.relativePosition = new Vector3(17, 7);
                 Message.anchor = UIAnchorStyle.CenterHorizontal | UIAnchorStyle.CenterVertical;
                 Message.eventTextChanged += (UIComponent component, string value) => Message.PerformLayout();
@@ -109,17 +108,17 @@ namespace NodeMarkup.UI
         {
             var getStableButton = AddButton(1, 1, OnGetStable);
             getStableButton.text = NodeMarkup.Localize.Mod_BetaWarningGetStable;
-            SetButtonsRatio(1, 1);
+            SetButtonsRatio(1, 2);
         }
         private void OnGetStable() => Mod.GetStable();
 
         public override void Init(Dictionary<Version, string> messages)
         {
             var betaMessage = ScrollableContent.AddUIComponent<UILabel>();
-            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.StaticName);
             betaMessage.wordWrap = true;
             betaMessage.autoHeight = true;
             betaMessage.textColor = Color.red;
+            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.StaticName);
 
             base.Init(messages);
         }
