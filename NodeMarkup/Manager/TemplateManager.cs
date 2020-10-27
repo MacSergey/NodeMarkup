@@ -1,10 +1,14 @@
-﻿using ColossalFramework.PlatformServices;
+﻿using ColossalFramework.IO;
+using ColossalFramework.Packaging;
+using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
@@ -183,5 +187,62 @@ namespace NodeMarkup.Manager
 
             return config;
         }
+
+        public static void SaveAsset(StyleTemplate template)
+        {
+            var package = new Package(template.Name);
+            package.packageMainAsset = template.Name;
+            if (PlatformService.active)
+                package.packageAuthor = $"steamid:{PlatformService.user.userID.AsUInt64}";
+
+            var gameObject = new GameObject(typeof(MarkingInfo).Name);
+            var markingInfo = gameObject.AddComponent<MarkingInfo>();
+            markingInfo.data = template.ToXml().ToString(SaveOptions.DisableFormatting);
+            if (PlatformService.active)
+                markingInfo.author = PlatformService.user.personaName;
+
+            var asset = package.AddAsset($"{template.Name}_Data", markingInfo.gameObject);
+
+            var meta = new CustomAssetMetaData()
+            {
+                name = template.Name,
+                timeStamp = DateTime.Now,
+                type = CustomAssetMetaData.Type.Unknown,
+                dlcMask = SteamHelper.DLC_BitMask.None,
+                steamTags = new string[] { "Intersection" },
+                guid = template.Id.ToString(),
+                assetRef = asset,
+            };
+            package.AddAsset(template.Name, meta, UserAssetType.CustomAssetMetaData);
+
+            var path = GetSavePathName(template.Name);
+            package.Save(path);
+        }
+        public static string GetSavePathName(string saveName)
+        {
+            string path = PathUtils.AddExtension(PathEscaper.Escape(saveName), PackageManager.packageExtension);
+            return Path.Combine(DataLocation.assetsPath, path);
+        }
+
+        public static void LoadAsset(GameObject gameObject)
+        {
+            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
+                return;
+
+            var templateConfig = Loader.Parse(markingInfo.data);
+            if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template))
+            {
+                InitTempalte(template);
+                template.Author = markingInfo.author;
+                TemplatesDictionary[template.Id] = template;
+            }
+        }
+    }
+
+    [Serializable]
+    public class MarkingInfo : PrefabInfo
+    {
+        public string data;
+        public string author;
     }
 }

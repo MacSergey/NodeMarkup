@@ -46,6 +46,8 @@ namespace NodeMarkup
             PatchNetManagerSimulationStepImpl(harmony);
             PatchBuildingDecorationLoadPaths(harmony);
             PatchLoadAssetPanelOnLoad(harmony);
+            PatchLoadingManagerLoadCustomContent(harmony);
+
             if (Settings.RailUnderMarking)
                 PatchNetInfoNodeInitNodeInfo(harmony);
         }
@@ -171,6 +173,58 @@ namespace NodeMarkup
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
 
             AddPostfix(harmony, original, postfix);
+        }
+        private static void PatchLoadingManagerLoadCustomContent(Harmony harmony)
+        {
+            var type = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
+            var original = AccessTools.Method(type, "MoveNext");
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingManagerLoadCustomContentTranspiler));
+
+            AddTranspiler(harmony, original, transpiler);
+        }
+        private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            var enumerator = instructions.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                var instruction = enumerator.Current;
+                yield return instruction;
+
+                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 26)
+                    break;
+            }
+
+            var elseLabel = (Label)default;
+            while (enumerator.MoveNext())
+            {
+                var instruction = enumerator.Current;
+                yield return instruction;
+
+                if (instruction.opcode == OpCodes.Brfalse)
+                {
+                    if (instruction.operand is Label label)
+                        elseLabel = label;
+
+                    break;
+                }
+            }
+
+            while (enumerator.MoveNext())
+            {
+                var instruction = enumerator.Current;
+                yield return instruction;
+
+                if (instruction.labels.Contains(elseLabel))
+                {
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, 19);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(TemplateManager), nameof(TemplateManager.LoadAsset)));
+                    break;
+                }
+            }
+
+            while (enumerator.MoveNext())
+                yield return enumerator.Current;
         }
     }
 }

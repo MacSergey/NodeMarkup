@@ -350,6 +350,11 @@ namespace NodeMarkup.Manager
                 TemplateChanged();
             }
         }
+        public string Author { get; set; }
+
+        public bool HasAuthor => !string.IsNullOrEmpty(Author);
+        public bool HasName => !string.IsNullOrEmpty(Name);
+
         public Action OnTemplateChanged { private get; set; }
         public Action<StyleTemplate, Style> OnStyleChanged { private get; set; }
 
@@ -366,7 +371,7 @@ namespace NodeMarkup.Manager
         private void TemplateChanged() => OnTemplateChanged?.Invoke();
         public Dependences GetDependences() => new Dependences();
 
-        public override string ToString() => !string.IsNullOrEmpty(Name) ? Name : Localize.TemplateEditor_UnnamedTemplate;
+        public override string ToString() => $"{(HasName ? Name : Localize.TemplateEditor_UnnamedTemplate)}{(HasAuthor ? $"\nby {Author}" : string.Empty)}";
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {

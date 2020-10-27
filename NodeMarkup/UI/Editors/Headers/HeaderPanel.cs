@@ -135,6 +135,7 @@ namespace NodeMarkup.UI.Editors
     {
         public event Action OnSetAsDefault;
         public event Action OnDuplicate;
+        public event Action OnSaveAsset;
 
         HeaderButton SetAsDefaultButton { get; }
 
@@ -142,6 +143,7 @@ namespace NodeMarkup.UI.Editors
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
             Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            Content.AddButton(HeaderButton.AddTemplate, "Save as asset", onClick: SaveAssetClick);
         }
         public void Init(bool isDefault)
         {
@@ -156,15 +158,12 @@ namespace NodeMarkup.UI.Editors
 
             OnSetAsDefault = null;
             OnDuplicate = null;
+            OnSaveAsset = null;
         }
 
-        //protected override void OnSizeChanged()
-        //{
-        //    base.OnSizeChanged();
-        //    SetAsDefaultButton.relativePosition = new Vector2(5, (height - SetAsDefaultButton.height) / 2);
-        //}
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
         private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
+        private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
     }
 
 }

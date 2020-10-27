@@ -17,6 +17,9 @@ using System.Xml.Linq;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.UI.Panel;
 using System.Diagnostics;
+using ColossalFramework.Packaging;
+using ColossalFramework.IO;
+
 
 namespace NodeMarkup.Tools
 {
@@ -479,11 +482,6 @@ namespace NodeMarkup.Tools
                 Style.StyleType.FillerStripe => StyleModifier.Without,
                 _ => StyleModifier.NotSet,
             };
-        }
-
-        public static void PressShortcut()
-        {
-
         }
     }
     public class MarkupBuffer

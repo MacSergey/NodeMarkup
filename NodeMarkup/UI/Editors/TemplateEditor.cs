@@ -35,6 +35,8 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
+            if (EditObject.HasAuthor)
+                AddAuthor();
             AddTemplateName();
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
@@ -51,6 +53,16 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.Init(EditObject.IsDefault());
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
+            HeaderPanel.OnSaveAsset += SaveAsset;
+        }
+        private void AddAuthor()
+        {
+            NameProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
+            NameProperty.Text = "Author";
+            NameProperty.FieldWidth = 230;
+            NameProperty.UseWheel = false;
+            NameProperty.Init();
+            NameProperty.Value = EditObject.Author;
         }
         private void AddTemplateName()
         {
@@ -107,6 +119,10 @@ namespace NodeMarkup.UI.Editors
         {
             RefreshItems();
             HeaderPanel.Init(EditObject.IsDefault());
+        }
+        private void SaveAsset()
+        {
+            TemplateManager.SaveAsset(EditObject);
         }
         protected override void OnObjectDelete(StyleTemplate template) => TemplateManager.DeleteTemplate(template);
     }
