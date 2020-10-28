@@ -456,7 +456,8 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Improved performance of the interface: reduced delay when switching tabs and select items.
+    <value>- Added the ability to save style templates as asset and share over workshop
+- Improved performance of the interface: reduced delay when switching tabs and select items.
 - Fix train and monorail roads (and any else without points).</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">

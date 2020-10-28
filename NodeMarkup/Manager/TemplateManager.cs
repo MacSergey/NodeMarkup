@@ -211,13 +211,13 @@ namespace NodeMarkup.Manager
             assetTemplate = default;
             return false;
         }
-        public static void LoadAsset(GameObject gameObject, CustomAssetMetaData meta)
+        public static void LoadAsset(GameObject gameObject, Package.Asset asset)
         {
             if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
                 return;
 
             var templateConfig = Loader.Parse(markingInfo.data);
-            if (!AssetStyleTemplate.FromXml(templateConfig, meta, out AssetStyleTemplate template))
+            if (!AssetStyleTemplate.FromXml(templateConfig, asset, out AssetStyleTemplate template))
                 return;
 
             AddAssetTemplate(template);

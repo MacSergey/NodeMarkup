@@ -1273,7 +1273,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Improved performance of the interface: reduced delay when switching tabs and select items.
+        ///   Ищет локализованную строку, похожую на - Added the ability to save style templates as asset and share over workshop
+        ///- Improved performance of the interface: reduced delay when switching tabs and select items.
         ///- Fix train and monorail roads (and any else without points)..
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {

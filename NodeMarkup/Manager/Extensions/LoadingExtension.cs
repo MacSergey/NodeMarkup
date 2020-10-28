@@ -52,12 +52,8 @@ namespace NodeMarkup
         {
             if (MarkupManager.LoadErrors != 0)
             {
-                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                messageBox.CaprionText = Mod.StaticName;
+                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
                 messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors);
-                messageBox.Button1Text = Localize.MessageBox_OK;
-                messageBox.Button2Text = Localize.Mod_Support;
-                messageBox.OnButton2Click = Mod.OpenTroubleshooting;
             }
         }
         private void ShowBetaWarning()

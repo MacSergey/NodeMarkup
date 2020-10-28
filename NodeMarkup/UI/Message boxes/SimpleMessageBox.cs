@@ -124,4 +124,15 @@ namespace NodeMarkup.UI
             Button2Text = NodeMarkup.Localize.MessageBox_No;
         }
     }
+
+    public class ErrorLoadedMessageBox : TwoButtonMessageBox
+    {
+        public ErrorLoadedMessageBox()
+        {
+            CaprionText = Mod.StaticName;
+            Button1Text = NodeMarkup.Localize.MessageBox_OK;
+            Button2Text = NodeMarkup.Localize.Mod_Support;
+            OnButton2Click = Mod.OpenTroubleshooting;
+        }
+    }
 }

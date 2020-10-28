@@ -1,4 +1,5 @@
-﻿using ColossalFramework.PlatformServices;
+﻿using ColossalFramework.Packaging;
+using ColossalFramework.PlatformServices;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -89,16 +90,16 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => $"{base.ToString()}\nby {Author}";
 
-        public static bool FromXml(XElement config, CustomAssetMetaData meta, out AssetStyleTemplate assetTemplate)
+        public static bool FromXml(XElement config, Package.Asset asset, out AssetStyleTemplate assetTemplate)
         {
             var result = FromXml(config, out StyleTemplate template);
             if (result)
             {
                 assetTemplate = new AssetStyleTemplate(template.Name, template.Style)
                 {
-                    AuthorId = ulong.TryParse(meta.assetRef.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0,
-                    IsWorkshop = meta.assetRef.isWorkshopAsset,
-                    FileName = Path.GetFileNameWithoutExtension(meta.assetRef.package.packagePath)
+                    AuthorId = ulong.TryParse(asset.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0,
+                    IsWorkshop = asset.isWorkshopAsset,
+                    FileName = Path.GetFileNameWithoutExtension(asset.package.packagePath)
                 };
             }
             else

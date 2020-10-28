@@ -66,12 +66,11 @@ namespace NodeMarkup
                 return new CultureInfo(locale);
             }
         }
-
         public void OnEnabled()
         {
+            Logger.LogDebug($"Version {Version}");
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
-            //EarlyAccess.CheckAccess();
         }
         public void OnDisabled()
         {
