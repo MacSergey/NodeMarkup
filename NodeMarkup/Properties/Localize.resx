@@ -1135,4 +1135,7 @@ Do you want to apply the marking manually?</value>
 - Hover overlay color changed from white to light blue to avoid merging with the markup.
 - Crosswalk line no longer creates unnecessary intersections. You may need to set crosswalk borders for already created crosswalks.</value>
   </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Save as asset</value>
+  </data>
 </root>

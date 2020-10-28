@@ -31,7 +31,7 @@ namespace NodeMarkup.UI.Editors
         public virtual Color32 FocusColor => new Color32(171, 185, 196, 255);
         public virtual Color32 TextColor => Color.white;
 
-        private bool _isSelect;
+        protected bool _isSelect;
         public bool IsSelect
         {
             get => _isSelect;
@@ -71,6 +71,10 @@ namespace NodeMarkup.UI.Editors
             Label.padding = new RectOffset(0, 0, 3, 0);
             Label.autoHeight = true;
             Label.wordWrap = true;
+        }
+        public virtual void DeInit()
+        {
+            _isSelect = false;
         }
 
         protected virtual void SetColors()
@@ -125,8 +129,10 @@ namespace NodeMarkup.UI.Editors
             Refresh();
             OnSizeChanged();
         }
-        public virtual void DeInit()
+        public override void DeInit()
         {
+            base.DeInit();
+
             Text = string.Empty;
             Object = null;
         }

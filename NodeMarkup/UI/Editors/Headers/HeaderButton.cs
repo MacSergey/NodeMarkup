@@ -19,6 +19,7 @@ namespace NodeMarkup.UI.Editors
         public static string Duplicate => nameof(Duplicate);
         public static string SetDefault => nameof(SetDefault);
         public static string UnsetDefault => nameof(UnsetDefault);
+        public static string Package => nameof(Package);
         public static string Clear => nameof(Clear);
         public static string Edit => nameof(Edit);
         public static string Offset => nameof(Offset);
@@ -39,6 +40,7 @@ namespace NodeMarkup.UI.Editors
                 Duplicate,
                 SetDefault,
                 UnsetDefault,
+                Package,
                 Clear,
                 Edit,
                 Offset,

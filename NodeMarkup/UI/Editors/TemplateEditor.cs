@@ -40,6 +40,15 @@ namespace NodeMarkup.UI.Editors
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
+
+            if (EditObject.IsAsset)
+            {
+                foreach (var component in SettingsPanel.components)
+                {
+                    if (component is EditorPropertyPanel)
+                        component.isEnabled = false;
+                }
+            }
         }
         protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
             => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
@@ -58,12 +67,12 @@ namespace NodeMarkup.UI.Editors
         {
             if (EditObject is AssetStyleTemplate assetTemplate)
             {
-                NameProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
-                NameProperty.Text = "Author";
-                NameProperty.FieldWidth = 230;
-                NameProperty.UseWheel = false;
-                NameProperty.Init();
-                NameProperty.Value = assetTemplate.Author;
+                var authorProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
+                authorProperty.Text = "Author";
+                authorProperty.FieldWidth = 230;
+                authorProperty.UseWheel = false;
+                authorProperty.Init();
+                authorProperty.Value = assetTemplate.Author;
             }
         }
         private void AddTemplateName()

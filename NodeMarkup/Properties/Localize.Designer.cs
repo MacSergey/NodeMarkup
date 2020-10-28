@@ -606,6 +606,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Save as asset.
+        /// </summary>
+        public static string HeaderPanel_SaveAsAsset {
+            get {
+                return ResourceManager.GetString("HeaderPanel_SaveAsAsset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Save as template.
         /// </summary>
         public static string HeaderPanel_SaveAsTemplate {

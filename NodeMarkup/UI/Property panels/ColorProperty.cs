@@ -74,25 +74,9 @@ namespace NodeMarkup.UI.Editors
             lable.text = name;
             lable.textScale = 0.7f;
 
-            var field = Control.AddUIComponent<UITextField>();
-            field.atlas = EditorItemAtlas;
-            field.normalBgSprite = "TextFieldPanel";
-            field.hoveredBgSprite = "TextFieldPanelHovered";
-            field.focusedBgSprite = "TextFieldPanel";
-            field.selectionSprite = "EmptySprite";
-            field.allowFloats = true;
-            field.isInteractive = true;
-            field.enabled = true;
-            field.readOnly = false;
-            field.builtinKeyNavigation = true;
-            field.cursorWidth = 1;
-            field.cursorBlinkTime = 0.45f;
-            field.eventTextSubmitted += FieldTextSubmitted;
+            var field = AddTextField(Control);
             field.width = 30;
-            field.textScale = 0.7f;
-            field.selectOnFocus = true;
-            field.verticalAlignment = UIVerticalAlignment.Middle;
-            field.padding = new RectOffset(0, 0, 6, 0);
+            field.eventTextSubmitted += FieldTextSubmitted;
 
             return field;
         }

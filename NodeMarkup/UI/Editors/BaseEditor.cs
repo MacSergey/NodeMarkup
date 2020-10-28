@@ -259,6 +259,8 @@ namespace NodeMarkup.UI.Editors
         protected override void ClearItems() => ClearItems(ItemsPanel);
         protected void ClearItems(UIComponent parent)
         {
+            _selectItem = null;
+
             var components = parent.components.ToArray();
             foreach (var component in components)
             {
@@ -267,8 +269,6 @@ namespace NodeMarkup.UI.Editors
                 else
                     DeleteUIComponent(component);
             }
-
-            _selectItem = null;
         }
         protected virtual void DeleteItem(EditableItemType item)
         {

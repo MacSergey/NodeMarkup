@@ -74,15 +74,15 @@ namespace NodeMarkup.UI
         {
             if(isSelect)
             {
-                button.normalBgSprite = "TextFieldPanelFocus";
-                button.hoveredBgSprite = "TextFieldPanelFocus";
-                button.pressedBgSprite = "TextFieldPanelFocus";
+                button.normalBgSprite = EditorItem.FocusedSprite;
+                button.hoveredBgSprite = EditorItem.FocusedSprite;
+                button.pressedBgSprite = EditorItem.FocusedSprite;
             }
             else
             {
-                button.normalBgSprite = "TextFieldPanel";
-                button.hoveredBgSprite = "TextFieldPanelHovered";
-                button.pressedBgSprite = "TextFieldPanelHovered";
+                button.normalBgSprite = EditorItem.NormalSprite;
+                button.hoveredBgSprite = EditorItem.HoveredSprite;
+                button.pressedBgSprite = EditorItem.HoveredSprite;
             }
         }
 

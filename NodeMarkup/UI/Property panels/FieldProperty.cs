@@ -55,28 +55,13 @@ namespace NodeMarkup.UI.Editors
 
         public FieldPropertyPanel()
         {
-            Field = Control.AddUIComponent<UITextField>();
-            Field.atlas = EditorItemAtlas;
-            Field.normalBgSprite = "TextFieldPanel";
-            Field.hoveredBgSprite = "TextFieldPanelHovered";
-            Field.focusedBgSprite = "TextFieldPanel";
-            Field.selectionSprite = "EmptySprite";
-            Field.allowFloats = true;
-            Field.isInteractive = true;
-            Field.enabled = true;
-            Field.readOnly = false;
-            Field.builtinKeyNavigation = true;
-            Field.cursorWidth = 1;
-            Field.cursorBlinkTime = 0.45f;
-            Field.selectOnFocus = true;
+            Field = AddTextField(Control);
+
             Field.tooltip = Settings.ShowToolTip && CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
             Field.eventMouseWheel += FieldMouseWheel;
             Field.eventTextSubmitted += FieldTextSubmitted;
             Field.eventMouseHover += FieldHover;
             Field.eventMouseLeave += FieldLeave;
-            Field.textScale = 0.7f;
-            Field.verticalAlignment = UIVerticalAlignment.Middle;
-            Field.padding = new RectOffset(0, 0, 6, 0);
         }
         public override void DeInit()
         {

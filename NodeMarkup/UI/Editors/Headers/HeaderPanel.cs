@@ -144,7 +144,7 @@ namespace NodeMarkup.UI.Editors
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
             Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
-            SaveAsAsset = Content.AddButton(HeaderButton.AddTemplate, "Save as asset", onClick: SaveAssetClick);
+            SaveAsAsset = Content.AddButton(HeaderButton.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
         }
         public void Init(StyleTemplate template)
         {

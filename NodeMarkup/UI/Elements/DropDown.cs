@@ -54,12 +54,12 @@ namespace NodeMarkup.UI
         {
             atlas = EditorItem.EditorItemAtlas;
             this.size = size ?? new Vector2(230, 20);
-            listBackground = "TextFieldPanelHovered";
+            listBackground = EditorItem.HoveredSprite;
             itemHeight = 20;
-            itemHover = "TextFieldPanel";
-            itemHighlight = "TextFieldPanelFocus";
-            normalBgSprite = "TextFieldPanel";
-            hoveredBgSprite = "TextFieldPanelHovered";
+            itemHover = EditorItem.NormalSprite;
+            itemHighlight = EditorItem.FocusedSprite;
+            normalBgSprite = EditorItem.NormalSprite;
+            hoveredBgSprite = EditorItem.HoveredSprite;
             listWidth = (int)width;
             listHeight = 700;
             listPosition = PopupListPosition.Below;

@@ -187,22 +187,29 @@ namespace NodeMarkup.Manager
         }
         public static bool MakeAsset(StyleTemplate template, out AssetStyleTemplate assetTemplate)
         {
-            if (template.IsAsset)
+            if (!template.IsAsset)
             {
-                assetTemplate = default;
-                return false;
+                try
+                {
+                    assetTemplate = new AssetStyleTemplate(template.Name, template.Style);
+                    assetTemplate.SetDefault();
+
+                    SaveAsset(assetTemplate);
+
+                    AddAssetTemplate(assetTemplate);
+
+                    TemplatesDictionary.Remove(template.Id);
+                    TemplatesDictionary[assetTemplate.Id] = assetTemplate;
+                    return true;
+                }
+                catch (Exception error)
+                {
+                    Logger.LogError(() => $"Could make template asset", error);
+                }
             }
 
-            assetTemplate = new AssetStyleTemplate(template.Name, template.Style);
-            assetTemplate.SetDefault();
-
-            SaveAsset(assetTemplate);
-
-            AddAssetTemplate(assetTemplate);
-
-            TemplatesDictionary.Remove(template.Id);
-            TemplatesDictionary[assetTemplate.Id] = assetTemplate;
-            return true;
+            assetTemplate = default;
+            return false;
         }
         public static void LoadAsset(GameObject gameObject, CustomAssetMetaData meta)
         {

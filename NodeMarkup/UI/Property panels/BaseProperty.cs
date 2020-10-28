@@ -11,6 +11,12 @@ namespace NodeMarkup.UI
 {
     public abstract class EditorItem : UIPanel
     {
+        public static string NormalSprite => nameof(NormalSprite);
+        public static string HoveredSprite => nameof(HoveredSprite);
+        public static string FocusedSprite => nameof(FocusedSprite);
+        public static string DisabledSprite => nameof(DisabledSprite);
+        public static string EmptySprite => nameof(EmptySprite);
+
         protected virtual float DefaultHeight => 30;
 
         public static UITextureAtlas EditorItemAtlas { get; } = GetAtlas();
@@ -18,10 +24,11 @@ namespace NodeMarkup.UI
         {
             var spriteNames = new string[]
             {
-                "TextFieldPanel",
-                "TextFieldPanelHovered",
-                "TextFieldPanelFocus",
-                "EmptySprite"
+                NormalSprite,
+                HoveredSprite,
+                FocusedSprite,
+                DisabledSprite,
+                EmptySprite
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(EditorItemAtlas));
@@ -74,7 +81,11 @@ namespace NodeMarkup.UI
 
             Control.eventSizeChanged += ControlSizeChanged;
         }
-        public override void DeInit() => Text = string.Empty;
+        public override void DeInit()
+        {
+            Text = string.Empty;
+            isEnabled = true;
+        }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -91,6 +102,33 @@ namespace NodeMarkup.UI
 
             foreach (var item in Control.components)
                 item.relativePosition = new Vector2(item.relativePosition.x, (Control.size.y - item.size.y) / 2);
+        }
+
+        protected UITextField AddTextField(UIComponent parent)
+        {
+            var field = parent.AddUIComponent<UITextField>();
+
+            field.atlas = EditorItemAtlas;
+            field.normalBgSprite = NormalSprite;
+            field.hoveredBgSprite = HoveredSprite;
+            field.focusedBgSprite = NormalSprite;
+            field.disabledBgSprite = DisabledSprite;
+            field.selectionSprite = EmptySprite;
+
+            field.allowFloats = true;
+            field.isInteractive = true;
+            field.enabled = true;
+            field.readOnly = false;
+            field.builtinKeyNavigation = true;
+            field.cursorWidth = 1;
+            field.cursorBlinkTime = 0.45f;
+            field.selectOnFocus = true;
+
+            field.textScale = 0.7f;
+            field.verticalAlignment = UIVerticalAlignment.Middle;
+            field.padding = new RectOffset(0, 0, 6, 0);
+
+            return field;
         }
     }
 }

@@ -52,8 +52,8 @@ namespace NodeMarkup.UI.Editors
             Selector = Control.AddUIComponent<UIButton>();
             Selector.text = NodeMarkup.Localize.SelectPanel_NotSet;
             Selector.atlas = EditorItemAtlas;
-            Selector.normalBgSprite = "TextFieldPanel";
-            Selector.hoveredBgSprite = "TextFieldPanelHovered";
+            Selector.normalBgSprite = NormalSprite;
+            Selector.hoveredBgSprite = HoveredSprite;
             Selector.isInteractive = true;
             Selector.enabled = true;
             Selector.autoSize = false;
