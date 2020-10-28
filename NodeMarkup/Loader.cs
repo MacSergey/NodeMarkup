@@ -34,14 +34,10 @@ namespace NodeMarkup
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(Parse)}");
 
-            using (StringReader input = new StringReader(text))
-            {
-                XmlReaderSettings xmlReaderSettings = GetXmlReaderSettings(options);
-                using (XmlReader reader = XmlReader.Create(input, xmlReaderSettings))
-                {
-                    return XElement.Load(reader, options);
-                }
-            }
+            using StringReader input = new StringReader(text);
+            XmlReaderSettings xmlReaderSettings = GetXmlReaderSettings(options);
+            using XmlReader reader = XmlReader.Create(input, xmlReaderSettings);
+            return XElement.Load(reader, options);
         }
 
         static XmlReaderSettings GetXmlReaderSettings(LoadOptions o)
@@ -62,36 +58,32 @@ namespace NodeMarkup
 
             var buffer = Encoding.UTF8.GetBytes(xml);
 
-            using (var outStream = new MemoryStream())
+            using var outStream = new MemoryStream();
+            using (var zipStream = new GZipStream(outStream, CompressionMode.Compress))
             {
-                using (var zipStream = new GZipStream(outStream, CompressionMode.Compress))
-                {
-                    zipStream.Write(buffer, 0, buffer.Length);
-                }
-                var compresed = outStream.ToArray();
-                return compresed;
+                zipStream.Write(buffer, 0, buffer.Length);
             }
+            var compresed = outStream.ToArray();
+            return compresed;
         }
 
         public static string Decompress(byte[] data)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(Decompress)}");
 
-            using (var inStream = new MemoryStream(data))
-            using (var zipStream = new GZipStream(inStream, CompressionMode.Decompress))
-            using (var outStream = new MemoryStream())
+            using var inStream = new MemoryStream(data);
+            using var zipStream = new GZipStream(inStream, CompressionMode.Decompress);
+            using var outStream = new MemoryStream();
+            byte[] buffer = new byte[1000000];
+            int readed;
+            while ((readed = zipStream.Read(buffer, 0, buffer.Length)) > 0)
             {
-                byte[] buffer = new byte[1000000];
-                int readed;
-                while ((readed = zipStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    outStream.Write(buffer, 0, readed);
-                }
-
-                var decompressed = outStream.ToArray();
-                var xml = Encoding.UTF8.GetString(decompressed);
-                return xml;
+                outStream.Write(buffer, 0, readed);
             }
+
+            var decompressed = outStream.ToArray();
+            var xml = Encoding.UTF8.GetString(decompressed);
+            return xml;
         }
 
         public static string GetSaveName()
@@ -120,6 +112,7 @@ namespace NodeMarkup
                 var match = MarkingRegex.Match(file);
                 if (!match.Success)
                     continue;
+
                 var date = new DateTime(long.Parse(match.Groups["date"].Value));
                 result[file] = $"{match.Groups["name"].Value} {date}";
             }
@@ -134,6 +127,7 @@ namespace NodeMarkup
                 var match = TemplatesRegex.Match(file);
                 if (!match.Success)
                     continue;
+
                 var date = new DateTime(long.Parse(match.Groups["date"].Value));
                 result[file] = date.ToString();
             }
@@ -153,7 +147,11 @@ namespace NodeMarkup
         public static bool ImportTemplatesData(string file)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportTemplatesData)}");
-            return ImportData(file, (config) => TemplateManager.Import(config));
+            return ImportData(file, (config) =>
+            {
+                Settings.Templates.value = config.ToString(SaveOptions.DisableFormatting);
+                TemplateManager.Load();
+            });
         }
         private static bool ImportData(string file, Action<XElement> processData)
         {
@@ -161,18 +159,16 @@ namespace NodeMarkup
 
             try
             {
-                using (var fileStream = File.OpenRead(file))
-                using (var reader = new StreamReader(fileStream))
-                {
-                    var xml = reader.ReadToEnd();
-                    var config = Parse(xml);
+                using var fileStream = File.OpenRead(file);
+                using var reader = new StreamReader(fileStream);
+                var xml = reader.ReadToEnd();
+                var config = Parse(xml);
 
-                    processData(config);
+                processData(config);
 
-                    Logger.LogDebug($"Data was imported");
+                Logger.LogDebug($"Data was imported");
 
-                    return true;
-                }
+                return true;
             }
             catch (Exception error)
             {
@@ -183,23 +179,20 @@ namespace NodeMarkup
         public static bool DumpMarkingData(out string path)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpMarkingData)}");
-            return DumpData(() => MarkupManager.ToXml(), MarkingName, out path);
+            return DumpData(MarkupManager.ToXml().ToString(SaveOptions.DisableFormatting), MarkingName, out path);
         }
         public static bool DumpTemplatesData(out string path)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpTemplatesData)}");
-            return DumpData(() => TemplateManager.ToXml(), TemplatesRecovery, out path);
+            return DumpData(Settings.Templates, TemplatesRecovery, out path);
         }
-        private static bool DumpData(Func<XElement> prepareData, string name, out string path)
+        private static bool DumpData(string data, string name, out string path)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpData)}");
 
             try
             {
-                var config = prepareData();
-                var xml = config.ToString(SaveOptions.DisableFormatting);
-
-                return SaveToFile(name, xml, out path);
+                return SaveToFile(name, data, out path);
             }
             catch (Exception error)
             {

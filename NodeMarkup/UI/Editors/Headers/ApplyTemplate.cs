@@ -55,10 +55,8 @@ namespace NodeMarkup.UI.Editors
 
             foreach (var template in templates)
             {
-                var item = Content.AddUIComponent<TemplateItem>();
-                item.Init(true, false);
-                item.name = template.ToString();
-                item.Object = template;
+                var item = Content.AddUIComponent<TemplatePopupItem>();
+                item.Init(template);
                 item.eventClick += ItemClick;
             }
         }
@@ -68,5 +66,9 @@ namespace NodeMarkup.UI.Editors
             if (component is TemplateItem item)
                 OnSelectTemplate?.Invoke(item.Object);
         }
+    }
+    public class TemplatePopupItem : TemplateItem
+    {
+        public override bool ShowDelete => false;
     }
 }

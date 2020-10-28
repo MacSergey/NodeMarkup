@@ -14,25 +14,19 @@ namespace NodeMarkup.Manager
 {
     public static class TemplateManager
     {
-        static string DefaultName => Localize.Template_NewTemplate;
+        private static string DefaultName => Localize.Template_NewTemplate;
 
-        static Dictionary<Guid, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<Guid, StyleTemplate>();
-        static Dictionary<Style.StyleType, StyleTemplate> DefaultTemplates { get; } = new Dictionary<Style.StyleType, StyleTemplate>();
+        private static Dictionary<Guid, StyleTemplate> TemplatesDictionary { get; } = new Dictionary<Guid, StyleTemplate>();
+        private static Dictionary<Style.StyleType, Guid> DefaultTemplates { get; } = new Dictionary<Style.StyleType, Guid>();
+        private static Dictionary<Guid, StyleTemplate> AssetTemplates { get; } = new Dictionary<Guid, StyleTemplate>();
+        private static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
 
         public static IEnumerable<StyleTemplate> Templates => TemplatesDictionary.Values;
-        public static IEnumerable<StyleTemplate> GetTemplates(Style.StyleType groupType) => Templates.Where(t => (t.Style.Type & groupType & Style.StyleType.GroupMask) != 0).OrderBy(t => !t.IsDefault());
+        public static IEnumerable<StyleTemplate> GetTemplates(Style.StyleType groupType) => Templates.Where(t => (t.Style.Type & groupType & Style.StyleType.GroupMask) != 0).OrderBy(t => !t.IsDefault);
 
-        static TemplateManager()
-        {
-            Load();
-        }
-        private static void InitTempalte(StyleTemplate template)
-        {
-            template.OnTemplateChanged = OnTemplateChanged;
-            template.OnStyleChanged = OnTemplateStyleChanged;
-        }
+        private static void InitTempalte(StyleTemplate template) => template.OnTemplateChanged = OnTemplateChanged;
         public static bool AddTemplate(Style style, out StyleTemplate template) => AddTemplate(GetNewName(), style, out template);
-        public static bool DuplicateTemplate(StyleTemplate template, out StyleTemplate duplicate) 
+        public static bool DuplicateTemplate(StyleTemplate template, out StyleTemplate duplicate)
             => AddTemplate(GetNewName($"{template.Name} {Localize.Template_DuplicateTemplateSuffix}"), template.Style, out duplicate);
         private static bool AddTemplate(string name, Style style, out StyleTemplate template)
         {
@@ -47,17 +41,17 @@ namespace NodeMarkup.Manager
         public static void DeleteTemplate(StyleTemplate template)
         {
             TemplatesDictionary.Remove(template.Id);
-            if (template.IsDefault())
+            if (template.IsDefault)
                 DefaultTemplates.Remove(template.Style.Type);
 
             Save();
         }
         public static void ToggleAsDefaultTemplate(StyleTemplate template)
         {
-            if (template.IsDefault())
+            if (template.IsDefault)
                 DefaultTemplates.Remove(template.Style.Type);
             else
-                DefaultTemplates[template.Style.Type] = template;
+                DefaultTemplates[template.Style.Type] = template.Id;
 
             Save();
         }
@@ -78,18 +72,18 @@ namespace NodeMarkup.Manager
         }
         public static T GetDefault<T>(Style.StyleType type) where T : Style
         {
-            if (DefaultTemplates.TryGetValue(type, out StyleTemplate template) && template.Style.Copy() is T tStyle)
+            if (DefaultTemplates.TryGetValue(type, out Guid id) && TemplatesDictionary.TryGetValue(id, out StyleTemplate template) && template.Style.Copy() is T tStyle)
                 return tStyle;
             else
                 return Style.GetDefault<T>(type);
         }
-        public static bool IsDefault(this StyleTemplate template) =>
-            DefaultTemplates.TryGetValue(template.Style.Type, out StyleTemplate defaultTemplate) && template == defaultTemplate;
+        public static bool IsDefault(StyleTemplate template) => DefaultTemplates.TryGetValue(template.Style.Type, out Guid id) && template.Id == id;
 
-        static void Load()
+        public static void Load()
         {
             try
             {
+                Clear();
                 var xml = Settings.Templates.value;
                 if (!string.IsNullOrEmpty(xml))
                 {
@@ -120,32 +114,30 @@ namespace NodeMarkup.Manager
             }
         }
         static void OnTemplateChanged() => Save();
-        static void OnTemplateStyleChanged(StyleTemplate template, Style newStyle)
-        {
-            if (template.IsDefault())
-            {
-                DefaultTemplates.Remove(template.Style.Type);
-
-                if (!DefaultTemplates.ContainsKey(newStyle.Type))
-                    DefaultTemplates[newStyle.Type] = template;
-            }
-        }
 
         public static bool ContainsName(string name, StyleTemplate ignore) => TemplatesDictionary.Values.Any(t => t != ignore && t.Name == name);
-        private static void Clear()
+        public static void Clear(bool clearAssets = false)
         {
             TemplatesDictionary.Clear();
-            DefaultTemplates.Clear();
+
+            if (clearAssets)
+            {
+                AssetTemplates.Clear();
+                Authors.Clear();
+            }
+
+            var keys = DefaultTemplates.Keys.ToArray();
+            foreach (var key in keys)
+            {
+                if (!AssetTemplates.ContainsKey(DefaultTemplates[key]))
+                    DefaultTemplates.Remove(key);
+            }
         }
         public static void DeleteAll()
         {
             Clear();
             Save();
-        }
-        public static void Import(XElement config)
-        {
-            FromXml(config);
-            Save();
+            Load();
         }
         public static void FromXml(XElement config)
         {
@@ -154,19 +146,22 @@ namespace NodeMarkup.Manager
             foreach (var templateConfig in config.Elements(StyleTemplate.XmlName))
             {
                 if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template) && !TemplatesDictionary.ContainsKey(template.Id))
-                {
-                    InitTempalte(template);
                     TemplatesDictionary[template.Id] = template;
-                }
             }
+
+            foreach (var template in AssetTemplates)
+                TemplatesDictionary[template.Key] = template.Value;
+
+            foreach (var template in TemplatesDictionary.Values)
+                InitTempalte(template);
 
             foreach (var defaultConfig in config.Elements("D"))
             {
                 var styleType = (Style.StyleType)defaultConfig.GetAttrValue<int>("T");
                 var templateId = defaultConfig.GetAttrValue<Guid>("Id");
 
-                if (TemplatesDictionary.TryGetValue(templateId, out StyleTemplate template))
-                    DefaultTemplates[styleType] = template;
+                if (TemplatesDictionary.ContainsKey(templateId))
+                    DefaultTemplates[styleType] = templateId;
             }
         }
         public static XElement ToXml()
@@ -174,32 +169,70 @@ namespace NodeMarkup.Manager
             var config = new XElement("C");
 
             foreach (var template in Templates)
-                config.Add(template.ToXml());
+            {
+                if (!template.IsAsset)
+                    config.Add(template.ToXml());
+            }
 
             foreach (var def in DefaultTemplates)
             {
                 var defaultConfig = new XElement("D");
                 defaultConfig.Add(new XAttribute("T", (int)def.Key));
-                defaultConfig.Add(new XAttribute("Id", def.Value.Id));
-                    
+                defaultConfig.Add(new XAttribute("Id", def.Value));
+
                 config.Add(defaultConfig);
             }
 
             return config;
         }
+        public static bool MakeAsset(StyleTemplate template, out AssetStyleTemplate assetTemplate)
+        {
+            if (template.IsAsset)
+            {
+                assetTemplate = default;
+                return false;
+            }
 
-        public static void SaveAsset(StyleTemplate template)
+            assetTemplate = new AssetStyleTemplate(template.Name, template.Style);
+            assetTemplate.SetDefault();
+
+            SaveAsset(assetTemplate);
+
+            AddAssetTemplate(assetTemplate);
+
+            TemplatesDictionary.Remove(template.Id);
+            TemplatesDictionary[assetTemplate.Id] = assetTemplate;
+            return true;
+        }
+        public static void LoadAsset(GameObject gameObject, CustomAssetMetaData meta)
+        {
+            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
+                return;
+
+            var templateConfig = Loader.Parse(markingInfo.data);
+            if (!AssetStyleTemplate.FromXml(templateConfig, meta, out AssetStyleTemplate template))
+                return;
+
+            AddAssetTemplate(template);
+
+            Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(LoadAsset)}: {template.Name}");
+        }
+        public static void AddAssetTemplate(AssetStyleTemplate template)
+        {
+            AssetTemplates[template.Id] = template;
+
+            if (template.AuthorId != 0 && !Authors.ContainsKey(template.AuthorId))
+                Authors[template.AuthorId] = new Friend(new UserID(template.AuthorId)).personaName;
+        }
+        public static void SaveAsset(AssetStyleTemplate template)
         {
             var package = new Package(template.Name);
             package.packageMainAsset = template.Name;
-            if (PlatformService.active)
-                package.packageAuthor = $"steamid:{PlatformService.user.userID.AsUInt64}";
+            package.packageAuthor = $"steamid:{template.AuthorId}";
 
             var gameObject = new GameObject(typeof(MarkingInfo).Name);
             var markingInfo = gameObject.AddComponent<MarkingInfo>();
             markingInfo.data = template.ToXml().ToString(SaveOptions.DisableFormatting);
-            if (PlatformService.active)
-                markingInfo.author = PlatformService.user.personaName;
 
             var asset = package.AddAsset($"{template.Name}_Data", markingInfo.gameObject);
 
@@ -209,13 +242,13 @@ namespace NodeMarkup.Manager
                 timeStamp = DateTime.Now,
                 type = CustomAssetMetaData.Type.Unknown,
                 dlcMask = SteamHelper.DLC_BitMask.None,
-                steamTags = new string[] { "Intersection" },
+                steamTags = new string[] { "Marking" },
                 guid = template.Id.ToString(),
                 assetRef = asset,
             };
             package.AddAsset(template.Name, meta, UserAssetType.CustomAssetMetaData);
 
-            var path = GetSavePathName(template.Name);
+            var path = GetSavePathName(template.FileName);
             package.Save(path);
         }
         public static string GetSavePathName(string saveName)
@@ -223,26 +256,6 @@ namespace NodeMarkup.Manager
             string path = PathUtils.AddExtension(PathEscaper.Escape(saveName), PackageManager.packageExtension);
             return Path.Combine(DataLocation.assetsPath, path);
         }
-
-        public static void LoadAsset(GameObject gameObject)
-        {
-            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
-                return;
-
-            var templateConfig = Loader.Parse(markingInfo.data);
-            if (StyleTemplate.FromXml(templateConfig, out StyleTemplate template))
-            {
-                InitTempalte(template);
-                template.Author = markingInfo.author;
-                TemplatesDictionary[template.Id] = template;
-            }
-        }
-    }
-
-    [Serializable]
-    public class MarkingInfo : PrefabInfo
-    {
-        public string data;
-        public string author;
+        public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
     }
 }

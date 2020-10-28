@@ -287,7 +287,7 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{Localize.MessageBox_CantUndone}", () => MarkupManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{Localize.MessageBox_CantUndone}", () => MarkupManager.Clear());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
             AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{Localize.MessageBox_CantUndone}");
         }

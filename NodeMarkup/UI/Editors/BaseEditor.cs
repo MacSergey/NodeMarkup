@@ -229,9 +229,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected void InitItem(EditableItemType item, EditableObject editableObject)
         {
-            item.Text = editableObject.ToString();
-            item.Init();
-            item.Object = editableObject;
+            item.Init(editableObject);
             item.eventClick += ItemClick;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
@@ -269,6 +267,8 @@ namespace NodeMarkup.UI.Editors
                 else
                     DeleteUIComponent(component);
             }
+
+            _selectItem = null;
         }
         protected virtual void DeleteItem(EditableItemType item)
         {

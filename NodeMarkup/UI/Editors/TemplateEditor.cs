@@ -35,8 +35,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
-            if (EditObject.HasAuthor)
-                AddAuthor();
+            AddAuthor();
             AddTemplateName();
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
@@ -50,19 +49,22 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             HeaderPanel = ComponentPool.Get<TemplateHeaderPanel>(SettingsPanel);
-            HeaderPanel.Init(EditObject.IsDefault());
+            HeaderPanel.Init(EditObject);
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
             HeaderPanel.OnSaveAsset += SaveAsset;
         }
         private void AddAuthor()
         {
-            NameProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
-            NameProperty.Text = "Author";
-            NameProperty.FieldWidth = 230;
-            NameProperty.UseWheel = false;
-            NameProperty.Init();
-            NameProperty.Value = EditObject.Author;
+            if (EditObject is AssetStyleTemplate assetTemplate)
+            {
+                NameProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
+                NameProperty.Text = "Author";
+                NameProperty.FieldWidth = 230;
+                NameProperty.UseWheel = false;
+                NameProperty.Init();
+                NameProperty.Value = assetTemplate.Author;
+            }
         }
         private void AddTemplateName()
         {
@@ -118,35 +120,36 @@ namespace NodeMarkup.UI.Editors
         private void AsDefaultRefresh()
         {
             RefreshItems();
-            HeaderPanel.Init(EditObject.IsDefault());
+            HeaderPanel.Init(EditObject);
         }
         private void SaveAsset()
         {
-            TemplateManager.SaveAsset(EditObject);
+            if (TemplateManager.MakeAsset(EditObject, out AssetStyleTemplate assetTemplate))
+            {
+                SelectItem.Init(assetTemplate);
+                ItemClick(SelectItem);
+            }
         }
         protected override void OnObjectDelete(StyleTemplate template) => TemplateManager.DeleteTemplate(template);
     }
 
     public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>
     {
-        private bool IsDefault { get; set; }
+        public override bool ShowDelete => !Object.IsAsset;
+
+        private bool IsDefault => Object.IsDefault;
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
         public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
         public override Color32 FocusColor => IsDefault ? new Color32(255, 228, 92, 255) : base.FocusColor;
 
-
-        public override void Init() => Init(true, true);
-
-        protected override void OnObjectSet() => Refresh();
         public override void Refresh()
         {
             base.Refresh();
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style.Color;
 
-            IsDefault = Object.IsDefault();
-            OnSelectChanged();
+            SetColors();
         }
     }
     public class TemplateIcon : StyleIcon

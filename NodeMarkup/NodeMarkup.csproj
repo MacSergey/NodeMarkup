@@ -102,6 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markup\Template.cs" />
     <Compile Include="Tools\BaseMode.cs" />
     <Compile Include="Tools\DragPointMode.cs" />
     <Compile Include="Tools\MakeItem\MakeCrosswalk.cs" />
@@ -118,36 +119,36 @@
     <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
     <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="UI\ComponentPool.cs" />
-    <Compile Include="Utils\DataExtensions\AssetData.cs" />
-    <Compile Include="Utils\DataExtensions\Loading.cs" />
+    <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
+    <Compile Include="Manager\Extensions\LoadingExtension.cs" />
     <Compile Include="EarlyAccess.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Manager\Crosswalk\Crosswalk.cs" />
-    <Compile Include="Manager\Crosswalk\CrosswalkStyleBase.cs" />
-    <Compile Include="Manager\Filler\Filler.cs" />
-    <Compile Include="Manager\Filler\FillerContour.cs" />
-    <Compile Include="Manager\Filler\FillerStyle.cs" />
-    <Compile Include="Manager\Filler\FillerStyleBase.cs" />
-    <Compile Include="Manager\Filler\FillerVertex.cs" />
-    <Compile Include="Manager\Line\Line.cs" />
-    <Compile Include="Manager\Line\LinePart.cs" />
-    <Compile Include="Manager\Line\LineRule.cs" />
-    <Compile Include="Manager\Crosswalk\CrosswalkStyle.cs" />
-    <Compile Include="Manager\Line\Style\StopLineStyle.cs" />
-    <Compile Include="Manager\Line\Style\RegularLineStyles.cs" />
-    <Compile Include="Manager\Line\Trajectory.cs" />
-    <Compile Include="Manager\Markup.cs" />
-    <Compile Include="Manager\Line\LinePartEdge.cs" />
-    <Compile Include="Manager\Point\Point.cs" />
-    <Compile Include="Manager\Point\Enter.cs" />
-    <Compile Include="Manager\Point\SupportPoint.cs" />
-    <Compile Include="Manager\Line\Style\LineStyleBase.cs" />
-    <Compile Include="Manager\Style.cs" />
-    <Compile Include="Manager\StyleHelper.cs" />
+    <Compile Include="Markup\Crosswalk\Crosswalk.cs" />
+    <Compile Include="Markup\Crosswalk\CrosswalkStyleBase.cs" />
+    <Compile Include="Markup\Filler\Filler.cs" />
+    <Compile Include="Markup\Filler\FillerContour.cs" />
+    <Compile Include="Markup\Filler\FillerStyle.cs" />
+    <Compile Include="Markup\Filler\FillerStyleBase.cs" />
+    <Compile Include="Markup\Filler\FillerVertex.cs" />
+    <Compile Include="Markup\Line\Line.cs" />
+    <Compile Include="Markup\Line\LinePart.cs" />
+    <Compile Include="Markup\Line\LineRule.cs" />
+    <Compile Include="Markup\Crosswalk\CrosswalkStyle.cs" />
+    <Compile Include="Markup\Line\Style\StopLineStyle.cs" />
+    <Compile Include="Markup\Line\Style\RegularLineStyles.cs" />
+    <Compile Include="Markup\Line\Trajectory.cs" />
+    <Compile Include="Markup\Markup.cs" />
+    <Compile Include="Markup\Line\LinePartEdge.cs" />
+    <Compile Include="Markup\Point\Point.cs" />
+    <Compile Include="Markup\Point\Enter.cs" />
+    <Compile Include="Markup\Point\SupportPoint.cs" />
+    <Compile Include="Markup\Line\Style\LineStyleBase.cs" />
+    <Compile Include="Markup\Style.cs" />
+    <Compile Include="Markup\StyleHelper.cs" />
     <Compile Include="Manager\TemplateManager.cs" />
     <Compile Include="Mod.cs" />
-    <Compile Include="Manager\Manager.cs" />
+    <Compile Include="Manager\MarkupManager.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Localize.Designer.cs">
@@ -201,7 +202,7 @@
     <Compile Include="Utils\ObjectId.cs" />
     <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
-    <Compile Include="Utils\DataExtensions\SerializableData.cs" />
+    <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
     <Compile Include="Utils\Shortcut.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
     <Compile Include="Utils\VersionMigration.cs" />
@@ -300,7 +301,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

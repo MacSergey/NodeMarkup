@@ -14,7 +14,7 @@ namespace NodeMarkup
     {
         public override void OnLevelLoaded(LoadMode mode)
         {
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelLoaded)}");
+            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnLevelLoaded)}");
             switch (mode)
             {
                 case LoadMode.NewGame:
@@ -25,6 +25,7 @@ namespace NodeMarkup
                 case LoadMode.NewMap:
                 case LoadMode.LoadMap:
                     NodeMarkupTool.Create();
+                    TemplateManager.Load();
 
                     ShowWhatsNew();
                     ShowBetaWarning();
@@ -35,10 +36,18 @@ namespace NodeMarkup
 
         public override void OnLevelUnloading()
         {
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnLevelUnloading)}");
+            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnLevelUnloading)}");
             NodeMarkupTool.Remove();
         }
 
+        public override void OnCreated(ILoading loading)
+        {
+            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnCreated)}");
+            base.OnCreated(loading);
+
+            MarkupManager.Clear();
+            TemplateManager.Clear(true);
+        }
         private void ShowLoadError()
         {
             if (MarkupManager.LoadErrors != 0)

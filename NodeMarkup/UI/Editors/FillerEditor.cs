@@ -126,16 +126,10 @@ namespace NodeMarkup.UI.Editors
     }
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
-        public override void Init() => Init(true, true);
-
-        protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {
             base.Refresh();
-            SetIcon();
-        }
-        private void SetIcon()
-        {
+
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style.Color;
         }

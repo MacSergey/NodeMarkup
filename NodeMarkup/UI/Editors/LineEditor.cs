@@ -275,17 +275,14 @@ namespace NodeMarkup.UI.Editors
         public override Color32 HoveredColor => HasOverlapped ? new Color32(247, 100, 100, 255) : base.HoveredColor;
         public override Color32 PressedColor => HasOverlapped ? new Color32(248, 114, 114, 255) : base.PressedColor;
         public override Color32 FocusColor => HasOverlapped ? new Color32(249, 127, 127, 255) : base.FocusColor;
-
-        public override void Init() => Init(true, true);
-
-        protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {
             base.Refresh();
+
             SetIcon();
 
             HasOverlapped = Object.HasOverlapped;
-            OnSelectChanged();
+            SetColors();
         }
         private void SetIcon()
         {

@@ -138,19 +138,21 @@ namespace NodeMarkup.UI.Editors
         public event Action OnSaveAsset;
 
         HeaderButton SetAsDefaultButton { get; }
+        HeaderButton SaveAsAsset { get; }
 
         public TemplateHeaderPanel()
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
             Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
-            Content.AddButton(HeaderButton.AddTemplate, "Save as asset", onClick: SaveAssetClick);
+            SaveAsAsset = Content.AddButton(HeaderButton.AddTemplate, "Save as asset", onClick: SaveAssetClick);
         }
-        public void Init(bool isDefault)
+        public void Init(StyleTemplate template)
         {
             base.Init(isDeletable: false);
 
-            SetAsDefaultButton.SetSprite(isDefault ? HeaderButton.UnsetDefault : HeaderButton.SetDefault);
-            SetAsDefaultButton.tooltip = isDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
+            SetAsDefaultButton.SetSprite(template.IsDefault ? HeaderButton.UnsetDefault : HeaderButton.SetDefault);
+            SetAsDefaultButton.tooltip = template.IsDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
+            SaveAsAsset.isVisible = !template.IsAsset;
         }
         public override void DeInit()
         {

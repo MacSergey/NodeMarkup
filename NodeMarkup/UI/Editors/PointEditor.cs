@@ -56,7 +56,11 @@ namespace NodeMarkup.UI.Editors
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
-        public override void Init() => Init(true, false);
-        protected override void OnObjectSet() => Icon.InnerColor = Object.Color;
+        public override bool ShowDelete => false;
+        public override void Init(MarkupPoint editableObject)
+        {
+            base.Init(editableObject);
+            Icon.InnerColor = Object.Color;
+        }
     }
 }

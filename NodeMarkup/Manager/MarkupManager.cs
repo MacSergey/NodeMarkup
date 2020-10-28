@@ -97,10 +97,10 @@ namespace NodeMarkup.Manager
 
             FromXml(assetMarking.Config, assetMarking.GetMap(segments.m_buffer, nodes.m_buffer), false);
         }
-
-        public static void DeleteAll()
+        public static void Clear()
         {
-            Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(DeleteAll)}");
+            Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(Clear)}");
+            NeedUpdate.Clear();
             NodesMarkup.Clear();
         }
         public static void Import(XElement config) => FromXml(config, new ObjectsMap());
@@ -117,7 +117,7 @@ namespace NodeMarkup.Manager
         public static void FromXml(XElement config, ObjectsMap map, bool clear = true)
         {
             if (clear)
-                NodesMarkup.Clear();
+                Clear();
             LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);

@@ -90,7 +90,11 @@ namespace NodeMarkup.UI.Editors
             AddExpandIcon();
         }
 
-        public void Init() => OnSizeChanged();
+        public void Init()
+        {
+            SetColors();
+            OnSizeChanged();
+        }
         private void AddExpandIcon()
         {
             ExpandIcon = AddUIComponent<UIPanel>();

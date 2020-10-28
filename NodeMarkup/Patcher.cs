@@ -218,6 +218,10 @@ namespace NodeMarkup
                 if (instruction.labels.Contains(elseLabel))
                 {
                     yield return new CodeInstruction(OpCodes.Ldloc_S, 19);
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    var type = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
+                    var field = AccessTools.Field(type, "<metaData>__4");
+                    yield return new CodeInstruction(OpCodes.Ldfld, field);
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(TemplateManager), nameof(TemplateManager.LoadAsset)));
                     break;
                 }

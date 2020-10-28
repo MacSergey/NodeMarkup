@@ -40,7 +40,7 @@ namespace NodeMarkup.UI.Editors
                 if (_isSelect != value)
                 {
                     _isSelect = value;
-                    OnSelectChanged();
+                    SetColors();
                 }
             }
         }
@@ -59,8 +59,6 @@ namespace NodeMarkup.UI.Editors
             atlas = ItemAtlas;
             normalBgSprite = "Item";
             height = 25;
-
-            OnSelectChanged();
         }
 
         private void AddLable()
@@ -69,14 +67,13 @@ namespace NodeMarkup.UI.Editors
             Label.textAlignment = UIHorizontalAlignment.Left;
             Label.verticalAlignment = UIVerticalAlignment.Middle;
             Label.autoSize = false;
-            //Label.autoHeight = false;
             Label.textScale = 0.55f;
             Label.padding = new RectOffset(0, 0, 3, 0);
             Label.autoHeight = true;
             Label.wordWrap = true;
         }
 
-        protected virtual void OnSelectChanged()
+        protected virtual void SetColors()
         {
             color = NormalColor;
             hoveredColor = HoveredColor;
@@ -93,53 +90,45 @@ namespace NodeMarkup.UI.Editors
         public event Action<EditableItem<EditableObject, IconType>> OnDelete;
 
         EditableObject _object;
-        private bool Inited { get; set; } = false;
         public EditableObject Object
         {
             get => _object;
-            set
+            private set
             {
                 _object = value;
                 if (_object != null)
-                {
                     Refresh();
-                    OnObjectSet();
-                }
             }
         }
+        protected bool Inited => Object != null;
+
         protected IconType Icon { get; set; }
         private UIButton DeleteButton { get; set; }
 
-        public bool ShowIcon { get; set; }
-        public bool ShowDelete { get; set; }
+        public virtual bool ShowIcon => true;
+        public virtual bool ShowDelete => true;
 
         public EditableItem()
         {
             Label.eventSizeChanged += LabelSizeChanged;
+            AddIcon();
+            AddDeleteButton();
         }
 
-        public abstract void Init();
-        public virtual void DeInit() 
+        public virtual void Init(EditableObject editableObject)
+        {
+            Object = editableObject;
+
+            Icon.isVisible = ShowIcon;
+            DeleteButton.isVisible = ShowDelete;
+
+            Refresh();
+            OnSizeChanged();
+        }
+        public virtual void DeInit()
         {
             Text = string.Empty;
             Object = null;
-        }
-        public void Init(bool showIcon, bool showDelete)
-        {
-            if (Inited)
-                return;
-
-            ShowIcon = showIcon;
-            ShowDelete = showDelete;
-
-            if (ShowIcon)
-                AddIcon();
-            if (ShowDelete)
-                AddDeleteButton();
-
-            OnSizeChanged();
-
-            Inited = true;
         }
 
         private void AddIcon() => Icon = AddUIComponent<IconType>();
@@ -152,10 +141,9 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.hoveredBgSprite = "buttonclosehover";
             DeleteButton.pressedBgSprite = "buttonclosepressed";
             DeleteButton.size = new Vector2(20, 20);
-            DeleteButton.isEnabled = ShowDelete;
             DeleteButton.eventClick += DeleteClick;
         }
-        protected override void OnSelectChanged()
+        protected override void SetColors()
         {
             if (IsSelect)
             {
@@ -166,13 +154,15 @@ namespace NodeMarkup.UI.Editors
                 Label.textColor = TextColor;
             }
             else
-                base.OnSelectChanged();
+                base.SetColors();
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
-        protected virtual void OnObjectSet() { }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
+
+            if (!Inited)
+                return;
 
             var labelWidth = size.x;
             if (ShowIcon)
@@ -190,11 +180,14 @@ namespace NodeMarkup.UI.Editors
             }
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
-            //Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
         }
         private void LabelSizeChanged(UIComponent component, Vector2 value) => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
 
-        public virtual void Refresh() => Text = Object.ToString();
+        public virtual void Refresh()
+        {
+            Text = Object.ToString();
+            SetColors();
+        }
     }
 
     public class ColorIcon : UIButton
