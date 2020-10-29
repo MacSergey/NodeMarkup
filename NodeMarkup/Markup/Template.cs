@@ -156,6 +156,8 @@ namespace NodeMarkup.Manager
         public EnterData[] Enters { get; private set; }
         public ObjectsMap Map { get; } = new ObjectsMap();
 
+        public int EntersCount => Enters.Length;
+
         private IntersectionTemplate() : base() { }
 
         public IntersectionTemplate(Markup markup) : this($"Intersection #{markup.Id}", markup) { }

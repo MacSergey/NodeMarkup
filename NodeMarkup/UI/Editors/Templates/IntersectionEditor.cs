@@ -1,8 +1,10 @@
-﻿using NodeMarkup.Manager;
+﻿using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -34,8 +36,35 @@ namespace NodeMarkup.UI.Editors
 
     public class PresetItem : EditableItem<IntersectionTemplate, PresetIcon>
     {
+        public override bool ShowDelete => !Object.IsAsset;
 
+        public override void Refresh()
+        {
+            base.Refresh();
+            Icon.Count = Object.EntersCount;
+        }
     }
-    public class PresetIcon : StyleIcon { }
+    public class PresetIcon : ColorIcon
+    {
+        protected UILabel CountLabel { get; }
+        public int Count { set => CountLabel.text = value.ToString(); }
+        public PresetIcon()
+        {
+            CountLabel = AddUIComponent<UILabel>();
+            CountLabel.textColor = Color.white;
+            CountLabel.textScale = 0.7f;
+            CountLabel.relativePosition = new Vector3(0, 0);
+            CountLabel.autoSize = false;
+            CountLabel.textAlignment = UIHorizontalAlignment.Center;
+            CountLabel.verticalAlignment = UIVerticalAlignment.Middle;
+            CountLabel.padding = new RectOffset(0, 0, 5, 0);
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            if (CountLabel != null)
+                CountLabel.size = size;
+        }
+    }
     public class PresetGroup : EditableGroup<bool, PresetItem, IntersectionTemplate, PresetIcon> { }
 }

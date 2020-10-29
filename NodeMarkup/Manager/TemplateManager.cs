@@ -18,16 +18,6 @@ namespace NodeMarkup.Manager
     {
         public static StyleTemplateManager StyleManager { get; } = new StyleTemplateManager();
         public static IntersectionTemplateManager IntersectionManager { get; } = new IntersectionTemplateManager();
-        //public static TemplateManager<TemplateType> Instance<TemplateType>()
-        //    where TemplateType : Template
-        //{
-        //    if (typeof(TemplateType) == typeof(StyleTemplate))
-        //        return StyleManager as TemplateManager<TemplateType>;
-        //    else if (typeof(TemplateType) == typeof(IntersectionTemplate))
-        //        return IntersectionManager as TemplateManager<TemplateType>;
-        //    else
-        //        return null;
-        //}
 
         private static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
         public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
