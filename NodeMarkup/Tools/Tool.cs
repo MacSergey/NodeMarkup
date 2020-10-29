@@ -446,8 +446,12 @@ namespace NodeMarkup.Tools
 
         private static float DefaultWidth => 0.2f;
         private static bool DefaultBlend => true;
-        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Bezier3 bezier, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) =>
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color ?? Colors.White, bezier, width ?? DefaultWidth, cut == true ? (width ?? DefaultWidth) / 2 : 0f, cut == true ? (width ?? DefaultWidth) / 2 : 0f, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
+        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Bezier3 bezier, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            var cutValue = cut == true ? (width ?? DefaultWidth) / 2 : 0f;
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color ?? Colors.White, bezier, width ?? DefaultWidth, cutValue, cutValue, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
+        }
+            
         public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Vector3 position, Color? color = null, float? width = null, bool? alphaBlend = null) =>
             RenderManager.OverlayEffect.DrawCircle(cameraInfo, color ?? Colors.White, position, width ?? DefaultWidth, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
 

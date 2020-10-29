@@ -390,12 +390,12 @@ namespace NodeMarkup.Tools
         }
         public override void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourcePoint> toolMode)
         {
-            Connect.Render(cameraInfo, Color, Width);
+            Connect.Render(cameraInfo, Color, Width, cut: true);
 
             if (Count <= 0)
                 NodeMarkupTool.RenderCircle(cameraInfo, Position, width: TargetPoint.Size, alphaBlend: false);
             else
-                Line.Render(cameraInfo, width: TargetPoint.Size, alphaBlend: false, cut: true);
+                Line.Render(cameraInfo, width: TargetPoint.Size, alphaBlend: false);
 
         }
         public override Vector3 GetSourcePosition(SourcePoint source)
