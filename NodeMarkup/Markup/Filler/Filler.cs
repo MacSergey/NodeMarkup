@@ -41,12 +41,12 @@ namespace NodeMarkup.Manager
         public MarkupFiller(FillerContour contour, FillerStyle style)
         {
             Contour = contour;
-            Markup = Contour.Markup;
             Style = style;
+            Markup = Contour.Markup;
         }
         public MarkupFiller(FillerContour contour, Style.StyleType fillerType) : this(contour, TemplateManager.GetDefault<FillerStyle>(fillerType)) { }
 
-        private void OnStyleChanged() => Markup.Update(this, true);
+        private void OnStyleChanged() => Markup?.Update(this, true);
         public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => Contour.Vertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
