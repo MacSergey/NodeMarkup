@@ -65,7 +65,7 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeaderContent()
         {
-            AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsPreset, NodeMarkupTool.SaveAsPresetShortcut);
+            AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsPresetShortcut);
 
             AddButton(HeaderButton.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
             AddButton(HeaderButton.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
