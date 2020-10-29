@@ -1060,4 +1060,20 @@ Shift x10，Ctrl x0.1</value>
     <value>警告：此设置会改变游戏渲染顺序</value>
   </data>
   
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>保存为资产</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+作者： {1}</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

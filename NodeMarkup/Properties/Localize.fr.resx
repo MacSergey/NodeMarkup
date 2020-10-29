@@ -558,7 +558,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
     <value>Obtenez la version stable</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Vous utilisez la beta version du {0}. C'est une version de test avec de nouvelles fonctionnalités et cela peut contenir des erreurs qui vont casser ou supprimer vos marquages. Si vous vous êtes abonné par erreur, veuillez vous abonner à la version stable.</value>
+    <value>Vous utilisez la version d'{0}. C'est une version de test avec de nouvelles fonctionnalités et cela peut contenir des erreurs qui vont casser ou supprimer vos marquages. Si vous vous êtes abonné par erreur, veuillez vous abonner à la version stable.</value>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Langue du jeu</value>
@@ -1042,10 +1042,10 @@ Voulez-vous changer le marquage manuellement ?</value>
     <value>Vide</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>Créer une ligne de bord</value>
+    <value>Créer les lignes de bord</value>
   </data>
   <data name="Panel_CreateEdgeLines" xml:space="preserve">
-    <value>Créer une ligne de bord</value>
+    <value>Créer les lignes de bord</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Réinitialiser tout les décalages de points</value>
@@ -1062,5 +1062,16 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>

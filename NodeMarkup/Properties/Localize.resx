@@ -1157,7 +1157,7 @@ To create a preset, click «{0}» at the panel header.</value>
     <value>Save as preset</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>no presets</value>
+    <value>No presets</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
     <value>Apply preset</value>

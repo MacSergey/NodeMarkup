@@ -1050,6 +1050,23 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Panel_Additional" xml:space="preserve">
     <value>Další</value>
   </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Rychlé nastavení krajů přechodu</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Značení pod kolejemi (po restartu)</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

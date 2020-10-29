@@ -455,17 +455,7 @@ Hinter den Punkt zurückziehen um eine orthogonale Linie zu erstellen</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
-- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
-- Kopieren/Einfügen von Linien und Füllungs-Stilen.
-- Haltelinien verbessert.
-- Weiterführende (or­tho­go­nale) Linien hinzugefügt.
-- Verlinkung von Patreon-Accounts für Vorabzugriff.
-- Möglichkeit hinzugefügt, die Mod-Sprache unabhängig von der Spielsprache zu ändern.
-- Fußgängerüberweg-Markierungen hinzugefügt.
-- Gruppieren von Linien und Vorlagen hinzugefügt.</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelt durchgezogen</value>
   </data>
@@ -1094,5 +1084,32 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>- Möglichkeit hinzugefügt, Markierungen unter Gleisen verlaufen zu lassen. Dies kann in den Optionen deaktiviert werden. WARNUNG: Diese Funktion ändert die Reihenfolge, in der Spiel-Objekte gerendert werden.
+- Funktion hinzugefügt um unsichtbare Linien zu erstellen (ohne Regeln).
+- Funktion hinzugefügt alle Randlinien gleichzeitig zu erstellen (Linie vom, letzten Punkt der Straße zum ersten Punkt der nächsten Straße).
+- Linien überlagern nicht mehr den Bürgersteig. Funktioniert nur für Linien vom ersten oder letzten Punkt einer Straße.
+- "Schnell-Erstellung für Fußgängerüberwegsmarkierungen" hinzugefügt - öffnet automatisch den Ränder-Auswahl sowie es bei der "Schnell-Regel-Erstellung" der Fall ist. Kann in den Einstellungen deaktiviert werden.
+- Menü für "Zusätzliche Funktionen" hinzugefügt.
+- Linken Maus-Klick aus einen Node repariert.
+- Oberfläche außerhalb des Bildschirms repariert.
+- Overlay-Farbe beim hinüberfahren mit der Maus von weiß in ein schwaches blau geändert, damit es sich besser von den Markierungen abhebt.
+- Fußgängerüberwegemarkierungen erstellen keine unnötigen Überschneidungen mehr. Möglicherweise musst du für bereits erstellte Fußgängerüberwegemarkierungen nun Ränder festlegen.</value>
+  </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Als Asset speichern</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+von {1}</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>
