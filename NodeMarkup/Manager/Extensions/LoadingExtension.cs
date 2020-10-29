@@ -25,7 +25,7 @@ namespace NodeMarkup
                 case LoadMode.NewMap:
                 case LoadMode.LoadMap:
                     NodeMarkupTool.Create();
-                    TemplateManager.Load();
+                    TemplateManager.Reload();
 
                     ShowWhatsNew();
                     ShowBetaWarning();
@@ -46,7 +46,7 @@ namespace NodeMarkup
             base.OnCreated(loading);
 
             MarkupManager.Clear();
-            TemplateManager.Clear(true);
+            TemplateManager.Clear();
         }
         private void ShowLoadError()
         {

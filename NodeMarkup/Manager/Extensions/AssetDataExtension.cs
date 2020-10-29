@@ -55,9 +55,8 @@ namespace NodeMarkup
             if (!(asset is BuildingInfo prefab) || !prefab.m_paths.Any())
                 return;
 
-            var config = MarkupManager.ToXml();
-            var xml = config.ToString(SaveOptions.DisableFormatting);
-            var compress = Loader.Compress(xml);
+            var config = Loader.GetString(MarkupManager.ToXml());
+            var compress = Loader.Compress(config);
 
             userData[DataId] = compress;
 

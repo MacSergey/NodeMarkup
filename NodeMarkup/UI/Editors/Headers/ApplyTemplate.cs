@@ -39,7 +39,7 @@ namespace NodeMarkup.UI.Editors
         public event Action<StyleTemplate> OnSelectTemplate;
         public void Fill(Style.StyleType styleGroup)
         {
-            var templates = TemplateManager.GetTemplates(styleGroup).ToArray();
+            var templates = TemplateManager.StyleManager.GetTemplates(styleGroup).ToArray();
             if (!templates.Any())
             {
                 var emptyLabel = Content.AddUIComponent<UILabel>();

@@ -28,7 +28,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var templates in TemplateManager.Templates.OrderBy(t => t.Style.Type))
+            foreach (var templates in TemplateManager.StyleManager.Templates.OrderBy(t => t.Style.Type))
                 AddItem(templates);
         }
 
@@ -65,14 +65,14 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddAuthor()
         {
-            if (EditObject is AssetStyleTemplate assetTemplate)
+            if (EditObject.IsAsset)
             {
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
                 authorProperty.Text = "Author";
                 authorProperty.FieldWidth = 230;
                 authorProperty.UseWheel = false;
                 authorProperty.Init();
-                authorProperty.Value = assetTemplate.Author;
+                authorProperty.Value = EditObject.Asset.Author;
             }
         }
         private void AddTemplateName()
@@ -92,7 +92,7 @@ namespace NodeMarkup.UI.Editors
             if (name == EditObject.Name)
                 return;
 
-            if (!string.IsNullOrEmpty(name) && TemplateManager.ContainsName(name, EditObject))
+            if (!string.IsNullOrEmpty(name) && TemplateManager.StyleManager.ContainsName(name, EditObject))
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
@@ -118,12 +118,12 @@ namespace NodeMarkup.UI.Editors
 
         private void ToggleAsDefault()
         {
-            TemplateManager.ToggleAsDefaultTemplate(EditObject);
+            TemplateManager.StyleManager.ToggleAsDefaultTemplate(EditObject);
             AsDefaultRefresh();
         }
         private void Duplicate()
         {
-            if (TemplateManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
+            if (TemplateManager.StyleManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
                 NodeMarkupPanel.EditTemplate(duplicate);
         }
         private void AsDefaultRefresh()
@@ -133,13 +133,13 @@ namespace NodeMarkup.UI.Editors
         }
         private void SaveAsset()
         {
-            if (TemplateManager.MakeAsset(EditObject, out AssetStyleTemplate assetTemplate))
+            if (TemplateManager.MakeAsset(EditObject))
             {
-                SelectItem.Init(assetTemplate);
+                SelectItem.Init(EditObject);
                 ItemClick(SelectItem);
             }
         }
-        protected override void OnObjectDelete(StyleTemplate template) => TemplateManager.DeleteTemplate(template);
+        protected override void OnObjectDelete(StyleTemplate template) => TemplateManager.StyleManager.DeleteTemplate(template);
     }
 
     public class TemplateItem : EditableItem<StyleTemplate, TemplateIcon>

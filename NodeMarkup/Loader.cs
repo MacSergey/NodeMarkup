@@ -39,6 +39,7 @@ namespace NodeMarkup
             using XmlReader reader = XmlReader.Create(input, xmlReaderSettings);
             return XElement.Load(reader, options);
         }
+        public static string GetString(XElement config) => config.ToString(SaveOptions.DisableFormatting);
 
         static XmlReaderSettings GetXmlReaderSettings(LoadOptions o)
         {
@@ -144,15 +145,25 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportMarkingData)}");
             return ImportData(file, (config) => MarkupManager.Import(config));
         }
-        public static bool ImportTemplatesData(string file)
+        public static bool ImportStylesData(string file)
         {
-            Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportTemplatesData)}");
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportStylesData)}");
+            return ImportTemplatesData(file, TemplateManager.StyleManager);
+        }
+        public static bool ImportIntersectionsData(string file)
+        {
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportIntersectionsData)}");
+            return ImportTemplatesData(file, TemplateManager.IntersectionManager);
+        }
+        private static bool ImportTemplatesData(string file, TemplateManager manager)
+        {
             return ImportData(file, (config) =>
             {
-                Settings.Templates.value = config.ToString(SaveOptions.DisableFormatting);
-                TemplateManager.Load();
+                manager.Saved.value = GetString(config);
+                manager.Load();
             });
         }
+
         private static bool ImportData(string file, Action<XElement> processData)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(ImportData)}");
@@ -179,7 +190,7 @@ namespace NodeMarkup
         public static bool DumpMarkingData(out string path)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpMarkingData)}");
-            return DumpData(MarkupManager.ToXml().ToString(SaveOptions.DisableFormatting), MarkingName, out path);
+            return DumpData(GetString(MarkupManager.ToXml()), MarkingName, out path);
         }
         public static bool DumpTemplatesData(out string path)
         {

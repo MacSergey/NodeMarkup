@@ -113,7 +113,7 @@ namespace NodeMarkup.UI.Editors
 
         private void SaveTemplate()
         {
-            if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
                 NodeMarkupPanel.EditTemplate(template);
         }
         private void ApplyStyle(CrosswalkStyle style)
@@ -142,7 +142,7 @@ namespace NodeMarkup.UI.Editors
             if (style == EditObject.Style.Type)
                 return;
 
-            var newStyle = TemplateManager.GetDefault<CrosswalkStyle>(style);
+            var newStyle = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(style);
             EditObject.Style.CopyTo(newStyle);
 
             EditObject.Style = newStyle;

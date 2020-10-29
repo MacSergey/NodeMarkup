@@ -51,17 +51,15 @@ namespace NodeMarkup.Utils
         {
             Logger.LogDebug($"{nameof(SerializableDataExtension)}.{nameof(OnSaveData)}");
 
-            string xml = string.Empty;
+            string config = string.Empty;
             try
             {
                 var sw = Stopwatch.StartNew();
-
-                var config = MarkupManager.ToXml();
-                xml = config.ToString(SaveOptions.DisableFormatting);
+                config = Loader.GetString(MarkupManager.ToXml());
 #if DEBUG
-            Logger.LogDebug(xml);
+            Logger.LogDebug(config);
 #endif
-                var compress = Loader.Compress(xml);
+                var compress = Loader.Compress(config);
                 serializableDataManager.SaveData(Loader.Id, compress);
 
                 sw.Stop();
@@ -70,7 +68,7 @@ namespace NodeMarkup.Utils
             catch(Exception error)
             {
                 Logger.LogError(() => "Save data failed", error);
-                Loader.SaveToFile(Loader.MarkingName, xml, out _);
+                Loader.SaveToFile(Loader.MarkingName, config, out _);
                 throw;
             }
         }

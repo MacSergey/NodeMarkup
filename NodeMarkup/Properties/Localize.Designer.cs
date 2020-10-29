@@ -2413,6 +2413,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}
+        ///by {1}.
+        /// </summary>
+        public static string TemplateEditor_TemplateByAuthor {
+            get {
+                return ResourceManager.GetString("TemplateEditor_TemplateByAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Templates.
         /// </summary>
         public static string TemplateEditor_Templates {

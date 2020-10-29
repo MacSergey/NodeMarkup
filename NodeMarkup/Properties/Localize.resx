@@ -1139,4 +1139,8 @@ Do you want to apply the marking manually?</value>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Save as asset</value>
   </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+by {1}</value>
+  </data>
 </root>

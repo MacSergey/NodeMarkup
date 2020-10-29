@@ -80,7 +80,7 @@ namespace NodeMarkup.UI
         protected override Dictionary<string, string> GetList() => Loader.GetTemplatesRestoreList();
         protected override void ImportClick()
         {
-            var result = Loader.ImportTemplatesData(DropDown.SelectedObject);
+            var result = Loader.ImportStylesData(DropDown.SelectedObject);
 
             var resultMessageBox = ShowModal<OkMessageBox>();
             resultMessageBox.CaprionText = NodeMarkup.Localize.Settings_RestoreTemplatesCaption;

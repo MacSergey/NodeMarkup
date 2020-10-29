@@ -64,7 +64,7 @@ namespace NodeMarkup.UI.Editors
             if (style == EditObject.Style.Type)
                 return;
 
-            var newStyle = TemplateManager.GetDefault<FillerStyle>(style);
+            var newStyle = TemplateManager.StyleManager.GetDefault<FillerStyle>(style);
             EditObject.Style.CopyTo(newStyle);
 
             EditObject.Style = newStyle;
@@ -76,7 +76,7 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
                 NodeMarkupPanel.EditTemplate(template);
         }
         private void ApplyStyle(FillerStyle style)

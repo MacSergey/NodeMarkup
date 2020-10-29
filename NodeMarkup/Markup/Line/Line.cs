@@ -238,7 +238,7 @@ namespace NodeMarkup.Manager
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
             base(markup, pointPair)
         {
-            var lineStyle = TemplateManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
+            var lineStyle = TemplateManager.StyleManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
             AddRule(lineStyle, false, false);
             RecalculateStyleData();
         }
@@ -275,7 +275,7 @@ namespace NodeMarkup.Manager
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
 
-        public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true) => AddRule(TemplateManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty);
+        public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true) => AddRule(TemplateManager.StyleManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty);
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
             RawRules.Remove(rule);
@@ -395,7 +395,7 @@ namespace NodeMarkup.Manager
         public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType = StopLineStyle.StopLineType.Solid) : base(markup, pointPair, lineType) { }
 
         protected override StopLineStyle GetDefaultStyle(StopLineStyle.StopLineType lineType)
-            => TemplateManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
+            => TemplateManager.StyleManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
 
         public override IEnumerable<ILinePartEdge> RulesEdges
         {

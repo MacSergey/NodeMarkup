@@ -28,7 +28,7 @@ namespace NodeMarkup.Manager
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
-            if (TemplateManager.GetDefault<T>(type) is T defaultStyle)
+            if (TemplateManager.StyleManager.GetDefault<T>(type) is T defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config, map, invert);

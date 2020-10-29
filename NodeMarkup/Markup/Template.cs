@@ -1,4 +1,5 @@
-﻿using ColossalFramework.Packaging;
+﻿using ColossalFramework.IO;
+using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
@@ -19,9 +21,12 @@ namespace NodeMarkup.Manager
         public abstract TemplateType Type { get; }
 
         public Action OnTemplateChanged { private get; set; }
-        public virtual bool IsAsset => false;
+
+        public TemplateAsset Asset { get; set; }
+        public bool IsAsset => Asset != null;
 
         public Guid Id { get; private set; }
+        public abstract string Description { get; }
 
         string _name;
         public string Name
@@ -39,7 +44,7 @@ namespace NodeMarkup.Manager
         public abstract string DeleteCaptionDescription { get; }
         public abstract string DeleteMessageDescription { get; }
 
-        protected Template() : this(TemplateManager.GetNewName()) { }
+        protected Template() { }
         protected Template(string name) : this(Guid.NewGuid(), name) { }
         protected Template(Guid id, string name)
         {
@@ -50,20 +55,20 @@ namespace NodeMarkup.Manager
         protected void TemplateChanged() => OnTemplateChanged?.Invoke();
 
         public Dependences GetDependences() => new Dependences();
-
-        public static bool FromXml(XElement config, out Template template)
+        public static bool FromXml<RequestType>(XElement config, out RequestType template)
+            where RequestType : Template
         {
-            var type = (TemplateType)config.GetAttrValue<int>("T");
+            var type = (TemplateType)config.GetAttrValue("T", (int)TemplateType.Style);
             switch (type)
             {
                 case TemplateType.Style when StyleTemplate.FromXml(config, out StyleTemplate styleTemplate):
-                    template = styleTemplate;
-                    return true;
+                    template = styleTemplate as RequestType;
+                    return template != null;
                 case TemplateType.Intersection when IntersectionTemplate.FromXml(config, out IntersectionTemplate intersectionTemplate):
-                    template = intersectionTemplate;
-                    return true;
+                    template = intersectionTemplate as RequestType;
+                    return template != null;
                 default:
-                    template = null;
+                    template = default;
                     return false;
             }
         }
@@ -76,8 +81,18 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("N", Name));
             return config;
         }
+        public virtual bool FromXml(XElement config)
+        {
+            Name = config.GetAttrValue("N", string.Empty);
+            Id = config.GetAttrValue(nameof(Id), Guid.NewGuid());
+            return true;
+        }
 
-        public override string ToString() => HasName ? Name : Localize.TemplateEditor_UnnamedTemplate;
+        public override string ToString()
+        {
+            var name = HasName? Name : Localize.TemplateEditor_UnnamedTemplate;
+            return IsAsset && Asset.HasAuthor ? string.Format(Localize.TemplateEditor_TemplateByAuthor, name, Asset.Author) : name;
+        }
     }
     public enum TemplateType
     {
@@ -90,18 +105,13 @@ namespace NodeMarkup.Manager
 
         public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
         public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+        public override string Description => Style.Type.ToString();
 
         public Style Style { get; private set; }
-        public bool IsDefault => TemplateManager.IsDefault(this);
+        public bool IsDefault => TemplateManager.StyleManager.IsDefault(this);
 
-        public StyleTemplate(string name, Style style) : base(name)
-        {
-            Init(style);
-        }
-        private StyleTemplate(Guid id, string name, Style style) : base(id, name)
-        {
-            Init(style);
-        }
+        private StyleTemplate() : base() { }
+        public StyleTemplate(string name, Style style) : base(name) => Init(style);
         private void Init(Style style)
         {
             Style = style.Copy();
@@ -110,18 +120,8 @@ namespace NodeMarkup.Manager
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
-            if (config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), false, out Style style))
-            {
-                var id = config.GetAttrValue(nameof(Id), Guid.Empty);
-                var name = config.GetAttrValue<string>("N");
-                template = id == Guid.Empty ? new StyleTemplate(name, style) : new StyleTemplate(id, name, style);
-                return true;
-            }
-            else
-            {
-                template = default;
-                return false;
-            }
+            template = new StyleTemplate();
+            return template.FromXml(config);
         }
 
         public override XElement ToXml()
@@ -130,6 +130,16 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
+        public override bool FromXml(XElement config)
+        {
+            if (base.FromXml(config) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), false, out Style style))
+            {
+                Style = style;
+                return true;
+            }
+            else
+                return false;
+        }
     }
     public class IntersectionTemplate : Template
     {
@@ -137,41 +147,25 @@ namespace NodeMarkup.Manager
 
         public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
         public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+        public override string Description => "Intersection";
 
         public XElement Data { get; private set; }
         public EnterData[] Enters { get; private set; }
         public ObjectsMap Map { get; } = new ObjectsMap();
 
-        public IntersectionTemplate(Markup markup) : this(markup.ToXml(), markup.Enters.Select(e => e.Data).ToArray()) { }
-        public IntersectionTemplate(XElement data, EnterData[] enters) : base()
+        private IntersectionTemplate() : base() { }
+
+        public IntersectionTemplate(Markup markup) : this($"Intersection #{markup.Id}", markup) { }
+        public IntersectionTemplate(string name, Markup markup) : base(name) 
         {
-            Init(data, enters);
-        }
-        public IntersectionTemplate(string name, XElement data, EnterData[] enters) : base(name)
-        {
-            Init(data, enters);
-        }
-        public IntersectionTemplate(Guid id, string name, XElement data, EnterData[] enters) : base(id, name)
-        {
-            Init(data, enters);
-        }
-        private void Init(XElement data, EnterData[] enters)
-        {
-            Data = data;
-            Enters = enters;
+            Data = markup.ToXml();
+            Enters = markup.Enters.Select(e => e.Data).ToArray();
         }
 
         public static bool FromXml(XElement config, out IntersectionTemplate template)
         {
-            if (false)
-            {
-
-            }
-            else
-            {
-                template = default;
-                return false;
-            }
+            template = new IntersectionTemplate();
+            return template.FromXml(config);
         }
 
         public override XElement ToXml()
@@ -184,43 +178,61 @@ namespace NodeMarkup.Manager
 
             return config;
         }
+
+        public override bool FromXml(XElement config)
+        {
+            if (base.FromXml(config) && config.Element(Markup.XmlName) is XElement data)
+            {
+                Data = data;
+                Enters = config.Elements(Enter.XmlName).Select(c => EnterData.FromXml(c)).ToArray();
+                return true;
+            }
+            else
+                return false;
+        }
     }
 
-    public class AssetStyleTemplate : StyleTemplate
+    public class TemplateAsset
     {
-        public override bool IsAsset => true;
+        public Template Template { get; protected set; }
+
         public ulong AuthorId { get; set; }
         public string Author => TemplateManager.GetAuthor(AuthorId);
         public bool HasAuthor => !string.IsNullOrEmpty(Author);
         public bool IsWorkshop { get; set; }
         public string FileName { get; set; }
 
-        public AssetStyleTemplate(string name, Style style) : base(name, style) { }
-
-        public override string ToString() => $"{base.ToString()}\nby {Author}";
-
-        public static bool FromXml(XElement config, Package.Asset asset, out AssetStyleTemplate assetTemplate)
+        public TemplateAsset(Template template, Package.Asset asset = null)
         {
-            var result = FromXml(config, out StyleTemplate template);
-            if (result)
+            Template = template;
+            Template.Asset = this;
+
+            if (asset != null)
             {
-                assetTemplate = new AssetStyleTemplate(template.Name, template.Style)
-                {
-                    AuthorId = ulong.TryParse(asset.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0,
-                    IsWorkshop = asset.isWorkshopAsset,
-                    FileName = Path.GetFileNameWithoutExtension(asset.package.packagePath)
-                };
+                AuthorId = ulong.TryParse(asset.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0;
+                IsWorkshop = asset.isWorkshopAsset;
+                FileName = Path.GetFileNameWithoutExtension(asset.package.packagePath);
             }
             else
-                assetTemplate = default;
-
-            return result;
+            {
+                AuthorId = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
+                IsWorkshop = false;
+                FileName = $"IMT_{Template.Description}_{Template.Name.Replace(' ', '_').Replace('.', '_')}_{Template.Id.ToString().Substring(0, 8)}";
+            }
         }
-        public void SetDefault()
+
+        public static bool FromPackage(XElement config, Package.Asset asset, out TemplateAsset templateAsset)
         {
-            AuthorId = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
-            IsWorkshop = false;
-            FileName = $"IMT_{Style.Type}_{Name.Replace(' ', '_').Replace('.', '_')}_{Id.ToString().Substring(0, 8)}";
+            if (Template.FromXml(config, out Template template))
+            {
+                templateAsset = new TemplateAsset(template, asset);
+                return true;
+            }
+            else
+            {
+                templateAsset = default;
+                return false;
+            }
         }
     }
 

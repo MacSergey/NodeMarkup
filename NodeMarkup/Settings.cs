@@ -40,6 +40,7 @@ namespace NodeMarkup
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
+        public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
         public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
@@ -295,7 +296,7 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{Localize.MessageBox_CantUndone}", () => TemplateManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{Localize.MessageBox_CantUndone}", () => TemplateManager.StyleManager.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpTemplatesData);
             AddRestore<ImportTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{Localize.MessageBox_CantUndone}");
         }

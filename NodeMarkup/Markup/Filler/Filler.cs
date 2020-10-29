@@ -44,7 +44,7 @@ namespace NodeMarkup.Manager
             Style = style;
             Markup = Contour.Markup;
         }
-        public MarkupFiller(FillerContour contour, Style.StyleType fillerType) : this(contour, TemplateManager.GetDefault<FillerStyle>(fillerType)) { }
+        public MarkupFiller(FillerContour contour, Style.StyleType fillerType) : this(contour, TemplateManager.StyleManager.GetDefault<FillerStyle>(fillerType)) { }
 
         private void OnStyleChanged() => Markup?.Update(this, true);
         public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
