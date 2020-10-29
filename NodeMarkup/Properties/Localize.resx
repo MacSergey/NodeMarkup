@@ -1143,9 +1143,6 @@ Do you want to apply the marking manually?</value>
     <value>{0}
 by {1}</value>
   </data>
-  <data name="HeaderPanel_SaveAsPreset" xml:space="preserve">
-    <value>Save as preset</value>
-  </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>The list of presets is empty.
 To create a preset, click «{0}» at the panel header.</value>

@@ -624,15 +624,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Save as preset.
-        /// </summary>
-        public static string HeaderPanel_SaveAsPreset {
-            get {
-                return ResourceManager.GetString("HeaderPanel_SaveAsPreset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Save as template.
         /// </summary>
         public static string HeaderPanel_SaveAsTemplate {
