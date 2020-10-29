@@ -289,9 +289,6 @@ namespace NodeMarkup.Manager
         private Dictionary<Style.StyleType, Guid> DefaultTemplates { get; } = new Dictionary<Style.StyleType, Guid>();
         public bool IsDefault(StyleTemplate template) => DefaultTemplates.TryGetValue(template.Style.Type, out Guid id) && template.Id == id;
 
-        public IEnumerable<StyleTemplate> GetTemplates(Style.StyleType groupType)
-            => Templates.Where(t => (t.Style.Type & groupType & Style.StyleType.GroupMask) != 0).OrderBy(t => !t.IsDefault);
-
         protected override StyleTemplate GetInstance(string name, Style style) => new StyleTemplate(name, style);
 
         public override void Clear(bool clearAssets = false)
@@ -364,7 +361,7 @@ namespace NodeMarkup.Manager
     }
     public class IntersectionTemplateManager : TemplateManager<IntersectionTemplate, Markup>
     {
-        protected override string DefaultName => Localize.Template_NewTemplate;
+        protected override string DefaultName => Localize.Preset_NewPreset;
         public override SavedString Saved => Settings.Intersections;
 
         protected override IntersectionTemplate GetInstance(string name, Markup markup) => new IntersectionTemplate(name, markup);

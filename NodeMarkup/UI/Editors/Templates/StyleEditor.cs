@@ -25,23 +25,11 @@ namespace NodeMarkup.UI.Editors
         protected override string GroupName(Style.StyleType group)
             => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
-
-        protected override void OnObjectSelect()
+        protected override void AddAditional()
         {
-            base.OnObjectSelect();
-
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
-
-            if (EditObject.IsAsset)
-            {
-                foreach (var component in SettingsPanel.components)
-                {
-                    if (component is EditorPropertyPanel)
-                        component.isEnabled = false;
-                }
-            }
         }
 
         protected override void AddHeader()

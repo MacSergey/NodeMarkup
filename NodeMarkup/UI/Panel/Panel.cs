@@ -87,6 +87,7 @@ namespace NodeMarkup.UI.Panel
             CreateEditor<CrosswalksEditor>();
             CreateEditor<FillerEditor>();
             CreateEditor<StyleTemplateEditor>();
+            CreateEditor<IntersectionTemplateEditor>();
         }
 
         public static UITextureAtlas ResizeAtlas { get; } = GetStylesIcons();
@@ -219,16 +220,22 @@ namespace NodeMarkup.UI.Panel
                 editor.BorderSetup();
             }
         }
-        public void EditTemplate(StyleTemplate template)
-        {
-            var editor = SelectEditor<StyleTemplateEditor>();
-            editor?.UpdateEditor(template);
-        }
         public void EditFiller(MarkupFiller filler)
         {
             var editor = SelectEditor<FillerEditor>();
             editor?.UpdateEditor(filler);
         }
+        public void EditTemplate(StyleTemplate template)
+        {
+            var editor = SelectEditor<StyleTemplateEditor>();
+            editor?.UpdateEditor(template);
+        }
+        public void EditPreset(IntersectionTemplate preset)
+        {
+            var editor = SelectEditor<IntersectionTemplateEditor>();
+            editor?.UpdateEditor(preset);
+        }
+
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
     } 

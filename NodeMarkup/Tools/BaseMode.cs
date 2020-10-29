@@ -27,7 +27,6 @@ namespace NodeMarkup.Tools
         public virtual string GetToolInfo() => null;
 
         public virtual void OnGUI(Event e) { }
-        //public virtual bool ProcessShortcuts(Event e) => false;
         public virtual void OnMouseDown(Event e) { }
         public virtual void OnMouseDrag(Event e) { }
         public virtual void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
@@ -65,8 +64,9 @@ namespace NodeMarkup.Tools
         PanelAction = 16,
         PasteEntersOrder = 32,
         EditEntersOrder = 64,
-        PointsOrder = 128,
-        DragPoint = 256,
+        ApplyPresetOrder = 128,
+        PointsOrder = 256,
+        DragPoint = 512,
 
         MakeItem = MakeLine | MakeCrosswalk
     }

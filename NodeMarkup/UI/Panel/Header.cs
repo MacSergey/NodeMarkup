@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -64,9 +65,12 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeaderContent()
         {
-            AddButton(HeaderButton.Copy, GetText(NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut), onClick: (UIComponent _, UIMouseEventParameter __) => NodeMarkupTool.CopyMarkingShortcut.Press());
-            AddButton(HeaderButton.Paste, GetText(NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut), onClick: (UIComponent _, UIMouseEventParameter __) => NodeMarkupTool.PasteMarkingShortcut.Press());
-            AddButton(HeaderButton.Clear, GetText(NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut), onClick: (UIComponent _, UIMouseEventParameter __) => NodeMarkupTool.DeleteAllShortcut.Press());
+            AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsPreset, NodeMarkupTool.SaveAsPresetShortcut);
+
+            AddButton(HeaderButton.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
+            AddButton(HeaderButton.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            AddButton(HeaderButton.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
+
             Additionally = AddButton<AdditionallyHeaderButton>(HeaderButton.Additionally, NodeMarkup.Localize.Panel_Additional);
             Additionally.OpenPopupEvent += OnAdditionallyPopup;
         }
@@ -75,12 +79,12 @@ namespace NodeMarkup.UI.Panel
         {
             var buttons = new List<SimpleHeaderButton>
             {
-                AddButton(popup.Content, HeaderButton.Edit, GetText(NodeMarkup.Localize.Panel_EditMarking,NodeMarkupTool.EditMarkingShortcut), true, GetOnAdditionallyClick(() => NodeMarkupTool.EditMarkingShortcut.Press())),
-                AddButton(popup.Content, HeaderButton.Offset, GetText(NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut), true, GetOnAdditionallyClick(() => NodeMarkupTool.ResetOffsetsShortcut.Press())),
-                AddButton(popup.Content, HeaderButton.EdgeLines, GetText(NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut), true, GetOnAdditionallyClick(() => NodeMarkupTool.CreateEdgeLinesShortcut.Press())),
+                AddButton(popup.Content, HeaderButton.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
+                AddButton(popup.Content, HeaderButton.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
+                AddButton(popup.Content, HeaderButton.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
             };
 
-            foreach(var button in buttons)
+            foreach (var button in buttons)
             {
                 button.autoSize = true;
                 button.autoSize = false;
@@ -88,24 +92,44 @@ namespace NodeMarkup.UI.Panel
 
             popup.Width = buttons.Max(b => b.width);
         }
-
-        MouseEventHandler GetOnAdditionallyClick(Action onClick)
+        private SimpleHeaderButton AddButton(string sprite, string text, Shortcut shortcut) => AddButton(sprite, GetText(text, shortcut), onClick: (UIComponent _, UIMouseEventParameter __) => shortcut.Press());
+        private SimpleHeaderButton AddButton(UIComponent parent, string sprite, string text, Shortcut shortcut)
         {
-            return (UIComponent component, UIMouseEventParameter eventParam) =>
+            return AddButton(parent, sprite, GetText(text, shortcut), true, action);
+
+            void action(UIComponent component, UIMouseEventParameter eventParam)
             {
                 Additionally.ClosePopup();
-                onClick?.Invoke();
-            };
+                shortcut.Press();
+            }
         }
-        string GetText(string text, Shortcut shortcut) => $"{text} ({shortcut})";
+
+
+        private string GetText(string text, Shortcut shortcut) => $"{text} ({shortcut})";
     }
     public class AdditionallyHeaderButton : HeaderPopupButton<AdditionallyPopup>
     {
         public event Action<AdditionallyPopup> OpenPopupEvent;
         protected override void OnOpenPopup() => OpenPopupEvent?.Invoke(Popup);
     }
-    public class AdditionallyPopup : PopupPanel 
+    public class AdditionallyPopup : PopupPanel
     {
         protected override Color32 Background => Color.white;
+    }
+
+    public class ApplyPresetHeaderButton : ApplyHeaderButton<IntersectionTemplate, ApplyPresetPopupPanel, PresetPopupItem, PresetIcon, string>
+    {
+        protected override Func<IntersectionTemplate, bool> Selector => (t) => true;
+        protected override Func<IntersectionTemplate, string> Order => (t) => t.Name;
+    }
+
+    public class ApplyPresetPopupPanel : ApplyPopupPanel<IntersectionTemplate, PresetPopupItem, PresetIcon>
+    {
+        protected override string EmptyText => NodeMarkup.Localize.HeaderPanel_NoPresets;
+        protected override IEnumerable<IntersectionTemplate> GetItems(Func<IntersectionTemplate, bool> selector) => TemplateManager.IntersectionManager.Templates;
+    }
+    public class PresetPopupItem : PresetItem
+    {
+        public override bool ShowDelete => false;
     }
 }

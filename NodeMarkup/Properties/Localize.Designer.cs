@@ -597,6 +597,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на no presets.
+        /// </summary>
+        public static string HeaderPanel_NoPresets {
+            get {
+                return ResourceManager.GetString("HeaderPanel_NoPresets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No templates.
         /// </summary>
         public static string HeaderPanel_NoTemplates {
@@ -615,11 +624,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Save as sample.
+        ///   Ищет локализованную строку, похожую на Save as preset.
         /// </summary>
-        public static string HeaderPanel_SaveAsSample {
+        public static string HeaderPanel_SaveAsPreset {
             get {
-                return ResourceManager.GetString("HeaderPanel_SaveAsSample", resourceCulture);
+                return ResourceManager.GetString("HeaderPanel_SaveAsPreset", resourceCulture);
             }
         }
         
@@ -1374,6 +1383,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Save as preset.
+        /// </summary>
+        public static string Panel_SaveAsPreset {
+            get {
+                return ResourceManager.GetString("Panel_SaveAsPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на point.
         /// </summary>
         public static string PointEditor_DeleteCaptionDescription {
@@ -1410,21 +1428,39 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на The list of samples is empty.
-        ///To create a sample, click «{0}» at the panel header..
+        ///   Ищет локализованную строку, похожую на New preset.
         /// </summary>
-        public static string SampleEditor_EmptyMessage {
+        public static string Preset_NewPreset {
             get {
-                return ResourceManager.GetString("SampleEditor_EmptyMessage", resourceCulture);
+                return ResourceManager.GetString("Preset_NewPreset", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Samples.
+        ///   Ищет локализованную строку, похожую на Apply preset.
         /// </summary>
-        public static string SampleEditor_Samples {
+        public static string PresetEditor_ApplyPreset {
             get {
-                return ResourceManager.GetString("SampleEditor_Samples", resourceCulture);
+                return ResourceManager.GetString("PresetEditor_ApplyPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The list of presets is empty.
+        ///To create a preset, click «{0}» at the panel header..
+        /// </summary>
+        public static string PresetEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("PresetEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Presets.
+        /// </summary>
+        public static string PresetEditor_Presets {
+            get {
+                return ResourceManager.GetString("PresetEditor_Presets", resourceCulture);
             }
         }
         
@@ -1976,6 +2012,15 @@ namespace NodeMarkup {
         public static string Settings_ShortcutsAndModifiersTab {
             get {
                 return ResourceManager.GetString("Settings_ShortcutsAndModifiersTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save as preset.
+        /// </summary>
+        public static string Settings_ShortcutSaveAsPreset {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutSaveAsPreset", resourceCulture);
             }
         }
         
@@ -2573,6 +2618,24 @@ namespace NodeMarkup {
         public static string Tool_DeleteMessage {
             get {
                 return ResourceManager.GetString("Tool_DeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit applying preset mode.
+        /// </summary>
+        public static string Tool_EndApplyPresetOrderCaption {
+            get {
+                return ResourceManager.GetString("Tool_EndApplyPresetOrderCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to apply a preset?.
+        /// </summary>
+        public static string Tool_EndApplyPresetOrderMessage {
+            get {
+                return ResourceManager.GetString("Tool_EndApplyPresetOrderMessage", resourceCulture);
             }
         }
         

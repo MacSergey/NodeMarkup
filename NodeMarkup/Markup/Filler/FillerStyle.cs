@@ -423,7 +423,8 @@ namespace NodeMarkup.Manager
 
             Vector3 Position(float t)
             {
-                var i = (int)t == t ? (int)t - 1 : (int)t;
+                var i = (int)t;
+                i = i > 0 && i == t ? i - 1 : i;
                 return lines[i].Position(t - i);
             }
             float Travel(float current, float distance)

@@ -37,6 +37,7 @@ namespace NodeMarkup.Tools
         public static Shortcut CreateEdgeLinesShortcut { get; } = new Shortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
         public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
+        public static Shortcut SaveAsPresetShortcut { get;  } = new Shortcut(nameof(SaveAsPresetShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsPreset());
 
         public static IEnumerable<Shortcut> Shortcuts
         {
@@ -49,6 +50,7 @@ namespace NodeMarkup.Tools
                 yield return PasteMarkingShortcut;
                 yield return EditMarkingShortcut;
                 yield return CreateEdgeLinesShortcut;
+                yield return SaveAsPresetShortcut;
             }
         }
 
@@ -102,6 +104,7 @@ namespace NodeMarkup.Tools
                 { ToolModeType.DragPoint, new DragPointToolMode() },
                 { ToolModeType.PasteEntersOrder, new PasteEntersOrderToolMode()},
                 { ToolModeType.EditEntersOrder, new EditEntersOrderToolMode()},
+                { ToolModeType.ApplyPresetOrder, new ApplyPresetOrderToolMode()},
                 { ToolModeType.PointsOrder, new PointsOrderToolMode()},
             };
 
@@ -396,7 +399,6 @@ namespace NodeMarkup.Tools
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
             MarkupBuffer = new IntersectionTemplate(Markup);
         }
-        public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
         private void PasteMarkup()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(PasteMarkup)}");
@@ -413,6 +415,7 @@ namespace NodeMarkup.Tools
 
             bool Paste()
             {
+                BaseOrderToolMode.Preset = MarkupBuffer;
                 SetMode(ToolModeType.PasteEntersOrder);
                 return true;
             }
@@ -421,8 +424,15 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
 
-            CopyMarkup();
+            BaseOrderToolMode.Preset = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
+        }
+        public void ApplyPreset(IntersectionTemplate preset)
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ApplyPreset)}");
+
+            BaseOrderToolMode.Preset = preset;
+            SetMode(ToolModeType.ApplyPresetOrder);
         }
         private void CreateEdgeLines()
         {
@@ -432,6 +442,12 @@ namespace NodeMarkup.Tools
                 Markup.AddConnection(new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint), Style.StyleType.EmptyLine);
 
             Panel.UpdatePanel();
+        }
+        private void SaveAsPreset()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsPreset)}");
+            if (TemplateManager.IntersectionManager.AddTemplate(Markup, out IntersectionTemplate preset))
+                Panel.EditPreset(preset);
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
@@ -18,8 +19,9 @@ namespace NodeMarkup.Tools
         public Vector3 Centre { get; protected set; }
         public float Radius { get; protected set; }
 
+        public static IntersectionTemplate Preset { get; set; }
+
         protected XElement Backup { get; set; }
-        protected IntersectionTemplate Buffer => Tool.MarkupBuffer;
 
         public bool IsMirror { get; protected set; }
         public SourceEnter[] SourceEnters { get; set; } = new SourceEnter[0];
@@ -38,7 +40,7 @@ namespace NodeMarkup.Tools
             {
                 Backup = Markup.ToXml();
                 IsMirror = false;
-                SourceEnters = Tool.MarkupBuffer.Enters.Select((e, i) => new SourceEnter(e, i)).ToArray();
+                SourceEnters = Preset.Enters.Select((e, i) => new SourceEnter(e, i)).ToArray();
                 TargetEnters = Markup.Enters.Select((e, i) => new TargetEnter(e, i)).ToArray();
 
                 var min = Math.Min(TargetEnters.Length, SourceEnters.Length);
@@ -65,7 +67,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            Markup.FromXml(Mod.Version, Buffer.Data, map);
+            Markup.FromXml(Mod.Version, Preset.Data, map);
             Panel.UpdatePanel();
         }
     }

@@ -67,7 +67,7 @@ namespace NodeMarkup.Tools
 
                 bool OnYes()
                 {
-                    Tool.CopyMarkupBackup();
+                    BaseOrderToolMode.Preset = markup.Backup;
                     Tool.SetMode(ToolModeType.EditEntersOrder);
                     markup.NeedSetOrder = false;
                     return true;

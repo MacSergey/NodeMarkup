@@ -316,4 +316,10 @@ namespace NodeMarkup.Tools
         protected override string EndCaption => Localize.Tool_EndEditOrderCaption;
         protected override string EndMessage => Localize.Tool_EndEditOrderMessage;
     }
+    public class ApplyPresetOrderToolMode : BaseEntersOrderToolMode
+    {
+        public override ToolModeType Type => ToolModeType.ApplyPresetOrder;
+        protected override string EndCaption => Localize.Tool_EndApplyPresetOrderCaption;
+        protected override string EndMessage => Localize.Tool_EndApplyPresetOrderMessage;
+    }
 }

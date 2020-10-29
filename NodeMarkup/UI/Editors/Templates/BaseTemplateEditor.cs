@@ -30,7 +30,20 @@ namespace NodeMarkup.UI.Editors
             AddHeader();
             AddAuthor();
             AddTemplateName();
+
+            AddAditional();
+
+            if (EditObject.IsAsset)
+            {
+                foreach (var component in SettingsPanel.components)
+                {
+                    if (component is EditorPropertyPanel)
+                        component.isEnabled = false;
+                }
+            }
         }
+        protected virtual void AddAditional() { }
+
         protected override void OnObjectDelete(TemplateType template) => (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
 
         protected virtual void AddHeader()

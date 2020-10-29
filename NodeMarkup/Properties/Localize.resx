@@ -1143,14 +1143,35 @@ Do you want to apply the marking manually?</value>
     <value>{0}
 by {1}</value>
   </data>
-  <data name="HeaderPanel_SaveAsSample" xml:space="preserve">
-    <value>Save as sample</value>
+  <data name="HeaderPanel_SaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
   </data>
-  <data name="SampleEditor_EmptyMessage" xml:space="preserve">
-    <value>The list of samples is empty.
-To create a sample, click «{0}» at the panel header.</value>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>The list of presets is empty.
+To create a preset, click «{0}» at the panel header.</value>
   </data>
-  <data name="SampleEditor_Samples" xml:space="preserve">
-    <value>Samples</value>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Presets</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>no presets</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Apply preset</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>New preset</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Exit applying preset mode</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Do you want to apply a preset?</value>
   </data>
 </root>
