@@ -615,6 +615,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Save as sample.
+        /// </summary>
+        public static string HeaderPanel_SaveAsSample {
+            get {
+                return ResourceManager.GetString("HeaderPanel_SaveAsSample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Save as template.
         /// </summary>
         public static string HeaderPanel_SaveAsTemplate {
@@ -1397,6 +1406,25 @@ namespace NodeMarkup {
         public static string PointEditor_Points {
             get {
                 return ResourceManager.GetString("PointEditor_Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The list of samples is empty.
+        ///To create a sample, click «{0}» at the panel header..
+        /// </summary>
+        public static string SampleEditor_EmptyMessage {
+            get {
+                return ResourceManager.GetString("SampleEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Samples.
+        /// </summary>
+        public static string SampleEditor_Samples {
+            get {
+                return ResourceManager.GetString("SampleEditor_Samples", resourceCulture);
             }
         }
         

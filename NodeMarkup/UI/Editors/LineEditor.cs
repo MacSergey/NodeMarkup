@@ -46,6 +46,7 @@ namespace NodeMarkup.UI.Editors
 
         public LinesEditor()
         {
+            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
             PartEdgeToolMode = new PartEdgeToolMode(this);
         }
 

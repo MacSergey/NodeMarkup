@@ -86,7 +86,7 @@ namespace NodeMarkup.UI.Panel
             CreateEditor<LinesEditor>();
             CreateEditor<CrosswalksEditor>();
             CreateEditor<FillerEditor>();
-            CreateEditor<TemplateEditor>();
+            CreateEditor<StyleTemplateEditor>();
         }
 
         public static UITextureAtlas ResizeAtlas { get; } = GetStylesIcons();
@@ -221,7 +221,7 @@ namespace NodeMarkup.UI.Panel
         }
         public void EditTemplate(StyleTemplate template)
         {
-            var editor = SelectEditor<TemplateEditor>();
+            var editor = SelectEditor<StyleTemplateEditor>();
             editor?.UpdateEditor(template);
         }
         public void EditFiller(MarkupFiller filler)

@@ -108,9 +108,11 @@
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="UI\Editors\Templates\BaseTemplateEditor.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
+    <Compile Include="UI\Editors\Templates\IntersectionEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="UI\ComponentPool.cs" />
     <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
@@ -153,11 +155,11 @@
     <Compile Include="Tools\Tool.cs" />
     <Compile Include="Tools\BaseOrderMode.cs" />
     <Compile Include="UI\Elements\DropDown.cs" />
-    <Compile Include="UI\Editors\BaseEditor.cs" />
-    <Compile Include="UI\Editors\BaseGroupEditor.cs" />
+    <Compile Include="UI\Editors\Base\BaseEditor.cs" />
+    <Compile Include="UI\Editors\Base\BaseGroupEditor.cs" />
     <Compile Include="UI\Editors\CrosswalkEditor.cs" />
-    <Compile Include="UI\Editors\EditableGroup.cs" />
-    <Compile Include="UI\Editors\EditableItem.cs" />
+    <Compile Include="UI\Editors\Items\EditableGroup.cs" />
+    <Compile Include="UI\Editors\Items\EditableItem.cs" />
     <Compile Include="UI\Editors\FillerEditor.cs" />
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
@@ -169,7 +171,7 @@
     <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
     <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
     <Compile Include="UI\Editors\RulePanel.cs" />
-    <Compile Include="UI\Editors\TemplateEditor.cs" />
+    <Compile Include="UI\Editors\Templates\StyleEditor.cs" />
     <Compile Include="UI\Elements\Keymapping.cs" />
     <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel\Panel.cs" />

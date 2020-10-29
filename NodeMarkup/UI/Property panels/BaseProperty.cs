@@ -81,6 +81,11 @@ namespace NodeMarkup.UI
 
             Control.eventSizeChanged += ControlSizeChanged;
         }
+        public override void Init()
+        {
+            base.Init();
+            RefreshContent();
+        }
         public override void DeInit()
         {
             Text = string.Empty;

@@ -4,6 +4,7 @@ using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,16 @@ namespace NodeMarkup.Manager
     {
         public static StyleTemplateManager StyleManager { get; } = new StyleTemplateManager();
         public static IntersectionTemplateManager IntersectionManager { get; } = new IntersectionTemplateManager();
+        //public static TemplateManager<TemplateType> Instance<TemplateType>()
+        //    where TemplateType : Template
+        //{
+        //    if (typeof(TemplateType) == typeof(StyleTemplate))
+        //        return StyleManager as TemplateManager<TemplateType>;
+        //    else if (typeof(TemplateType) == typeof(IntersectionTemplate))
+        //        return IntersectionManager as TemplateManager<TemplateType>;
+        //    else
+        //        return null;
+        //}
 
         private static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
         public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
@@ -123,15 +134,17 @@ namespace NodeMarkup.Manager
             return Save(asset);
         }
     }
-    public abstract class TemplateManager<TemplateType, Item> : TemplateManager
+    public abstract class TemplateManager<TemplateType> : TemplateManager
         where TemplateType : Template
     {
         protected abstract string DefaultName { get; }
         protected Dictionary<Guid, TemplateType> TemplatesDictionary { get; } = new Dictionary<Guid, TemplateType>();
-
         public IEnumerable<TemplateType> Templates => TemplatesDictionary.Values;
 
         #region SAVE&LOAD
+
+        private void InitTempalte(TemplateType template) => template.OnTemplateChanged = OnTemplateChanged;
+        private void OnTemplateChanged() => Save();
 
         public override void Load()
         {
@@ -187,17 +200,6 @@ namespace NodeMarkup.Manager
 
         #region ADD&DELETE
 
-        private void InitTempalte(TemplateType template) => template.OnTemplateChanged = OnTemplateChanged;
-        private void OnTemplateChanged() => Save();
-
-        public bool AddTemplate(Item item, out TemplateType template) => AddTemplate(GetNewName(), item, out template);
-        protected bool AddTemplate(string name, Item item, out TemplateType template)
-        {
-            template = GetInstance(name, item);
-            AddTemplate(template);
-            Save();
-            return true;
-        }
         public void AddTemplate(TemplateType template)
         {
             InitTempalte(template);
@@ -212,9 +214,8 @@ namespace NodeMarkup.Manager
         }
         protected virtual void OnDeleteTemplate(TemplateType template) { }
 
-        protected abstract TemplateType GetInstance(string name, Item item);
-
         #endregion
+
 
         #region NAME
 
@@ -265,6 +266,20 @@ namespace NodeMarkup.Manager
         }
 
         #endregion
+    }
+
+    public abstract class TemplateManager<TemplateType, Item> : TemplateManager<TemplateType>
+        where TemplateType : Template
+    {
+        public bool AddTemplate(Item item, out TemplateType template) => AddTemplate(GetNewName(), item, out template);
+        protected bool AddTemplate(string name, Item item, out TemplateType template)
+        {
+            template = GetInstance(name, item);
+            AddTemplate(template);
+            Save();
+            return true;
+        }
+        protected abstract TemplateType GetInstance(string name, Item item);
     }
     public class StyleTemplateManager : TemplateManager<StyleTemplate, Style>
     {

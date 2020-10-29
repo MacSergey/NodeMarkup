@@ -19,10 +19,6 @@ namespace NodeMarkup.UI.Editors
         private StyleHeaderPanel Header { get; set; }
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
-        public FillerEditor()
-        {
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-        }
         protected override void FillItems()
         {
             foreach (var filler in Markup.Fillers)

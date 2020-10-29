@@ -28,7 +28,6 @@ namespace NodeMarkup.UI.Editors
         public CrosswalksEditor()
         {
             CrosswalkBorderToolMode = new CrosswalkBorderToolMode(this);
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
         }
 
         protected override void FillItems()

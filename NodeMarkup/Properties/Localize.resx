@@ -1143,4 +1143,14 @@ Do you want to apply the marking manually?</value>
     <value>{0}
 by {1}</value>
   </data>
+  <data name="HeaderPanel_SaveAsSample" xml:space="preserve">
+    <value>Save as sample</value>
+  </data>
+  <data name="SampleEditor_EmptyMessage" xml:space="preserve">
+    <value>The list of samples is empty.
+To create a sample, click «{0}» at the panel header.</value>
+  </data>
+  <data name="SampleEditor_Samples" xml:space="preserve">
+    <value>Samples</value>
+  </data>
 </root>

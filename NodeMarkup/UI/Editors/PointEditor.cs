@@ -17,11 +17,6 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => string.Empty;
 
         private FloatPropertyPanel Offset { get; set; }
-
-        public PointsEditor()
-        {
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-        }
         protected override void FillItems()
         {
             foreach (var enter in Markup.Enters)

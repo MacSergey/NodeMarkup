@@ -110,7 +110,7 @@ namespace NodeMarkup.UI.Editors
             SettingsPanel = AddUIComponent<UIScrollablePanel>();
             SettingsPanel.autoLayout = true;
             SettingsPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
             SettingsPanel.builtinKeyNavigation = true;
             SettingsPanel.clipChildren = true;

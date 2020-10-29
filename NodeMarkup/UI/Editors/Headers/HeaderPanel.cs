@@ -133,26 +133,51 @@ namespace NodeMarkup.UI.Editors
 
     public class TemplateHeaderPanel : HeaderPanel
     {
-        public event Action OnSetAsDefault;
-        public event Action OnDuplicate;
         public event Action OnSaveAsset;
-
-        HeaderButton SetAsDefaultButton { get; }
-        HeaderButton SaveAsAsset { get; }
+        HeaderButton SaveAsAsset { get; set; }
 
         public TemplateHeaderPanel()
         {
+            AddButtons();
+        }
+        protected virtual void AddButtons()
+        {
+            SaveAsAsset = Content.AddButton(HeaderButton.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+        }
+
+        public virtual void Init(Template template)
+        {
+            base.Init(isDeletable: false);
+            SaveAsAsset.isVisible = !template.IsAsset;
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnSaveAsset = null;
+        }
+        private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
+    }
+
+    public class StyleTemplateHeaderPanel : TemplateHeaderPanel
+    {
+        public event Action OnSetAsDefault;
+        public event Action OnDuplicate;
+
+        HeaderButton SetAsDefaultButton { get; set; }
+
+        protected override void AddButtons()
+        {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
             Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
-            SaveAsAsset = Content.AddButton(HeaderButton.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+
+            base.AddButtons();
         }
         public void Init(StyleTemplate template)
         {
-            base.Init(isDeletable: false);
+            base.Init(template);
 
             SetAsDefaultButton.SetSprite(template.IsDefault ? HeaderButton.UnsetDefault : HeaderButton.SetDefault);
             SetAsDefaultButton.tooltip = template.IsDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
-            SaveAsAsset.isVisible = !template.IsAsset;
         }
         public override void DeInit()
         {
@@ -160,12 +185,9 @@ namespace NodeMarkup.UI.Editors
 
             OnSetAsDefault = null;
             OnDuplicate = null;
-            OnSaveAsset = null;
         }
 
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
         private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
-        private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
     }
-
 }

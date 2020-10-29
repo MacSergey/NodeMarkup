@@ -19,6 +19,7 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
         public abstract TemplateType Type { get; }
+        public abstract TemplateManager Manager { get; }
 
         public Action OnTemplateChanged { private get; set; }
 
@@ -102,6 +103,7 @@ namespace NodeMarkup.Manager
     public class StyleTemplate : Template
     {
         public override TemplateType Type => TemplateType.Style;
+        public override TemplateManager Manager => TemplateManager.StyleManager;
 
         public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
         public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
@@ -144,6 +146,7 @@ namespace NodeMarkup.Manager
     public class IntersectionTemplate : Template
     {
         public override TemplateType Type => TemplateType.Intersection;
+        public override TemplateManager Manager => TemplateManager.IntersectionManager;
 
         public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
         public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
