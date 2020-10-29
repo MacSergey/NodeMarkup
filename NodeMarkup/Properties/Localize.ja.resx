@@ -168,7 +168,7 @@
     <value>ライン</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>ラインの一覧</value>
+    <value>ライン</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
     <value>オフセット</value>
@@ -225,7 +225,7 @@
     <value>オフセット</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>ポイントの一覧</value>
+    <value>ポイント</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未設定</value>
@@ -301,7 +301,7 @@
     <value>名前</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>テンプレートの一覧</value>
+    <value>テンプレート</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>新規テンプレート</value>
@@ -365,7 +365,7 @@
     <value>クリックして停止線の追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗り潰しの一覧</value>
+    <value>塗り潰し</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>塗り潰し</value>
@@ -561,7 +561,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>現在、 {0} のβ版を使用しています。
-これは新機能をテストするMODで、マーキングの破損や消えるエラーが含まれている可能性があります。
+新機能をテストするMODで、エラーやマーキングの破損・消える可能性があります。
 間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
@@ -625,7 +625,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>横断歩道の始点</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
-    <value>横断歩道の一覧</value>
+    <value>横断歩道</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>交差点（ノード）に、横断歩道の設定がありません。
@@ -1068,14 +1068,37 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>アセットで保存</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+製作者: {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>プリセットの一覧は空です。
+保存するにはヘッダー部分から、 {0} をクリックします。</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>プリセット</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>プリセットの保存</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>プリセットの保存</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>プリセットがありません</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>プリセットを適用</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>新しいプリセット</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>プリセットの編集モードを終了しますか？</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>プリセットを適用しますか？</value>
+  </data>
   
 </root>
