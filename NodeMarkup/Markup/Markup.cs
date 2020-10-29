@@ -93,12 +93,12 @@ namespace NodeMarkup.Manager
                 if (_needSetOrder && !value)
                     Backup = null;
                 else if (!_needSetOrder && value)
-                    Backup = new MarkupBuffer(this);
+                    Backup = new IntersectionTemplate(this);
 
                 _needSetOrder = value;
             }
         }
-        public MarkupBuffer Backup { get; private set; }
+        public IntersectionTemplate Backup { get; private set; }
 
         #endregion
 

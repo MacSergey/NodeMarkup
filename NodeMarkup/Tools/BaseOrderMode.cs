@@ -19,7 +19,7 @@ namespace NodeMarkup.Tools
         public float Radius { get; protected set; }
 
         protected XElement Backup { get; set; }
-        protected MarkupBuffer Buffer => Tool.MarkupBuffer;
+        protected IntersectionTemplate Buffer => Tool.MarkupBuffer;
 
         public bool IsMirror { get; protected set; }
         public SourceEnter[] SourceEnters { get; set; } = new SourceEnter[0];

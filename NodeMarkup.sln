@@ -13,34 +13,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EarlyAccess", "EarlyAccess"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug noWorkshop|Any CPU = Debug noWorkshop|Any CPU
 		Debug|Any CPU = Debug|Any CPU
-		Release noWorkshop|Any CPU = Release noWorkshop|Any CPU
+		nwDebug|Any CPU = nwDebug|Any CPU
+		nwRelease|Any CPU = nwRelease|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug noWorkshop|Any CPU.ActiveCfg = Debug noWorkshop|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug noWorkshop|Any CPU.Build.0 = Debug noWorkshop|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release noWorkshop|Any CPU.ActiveCfg = Release noWorkshop|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release noWorkshop|Any CPU.Build.0 = Release noWorkshop|Any CPU
+		{94B9B12B-0D2B-4685-BF64-4F0488470569}.nwDebug|Any CPU.ActiveCfg = Debug noWorkshop|Any CPU
+		{94B9B12B-0D2B-4685-BF64-4F0488470569}.nwDebug|Any CPU.Build.0 = Debug noWorkshop|Any CPU
+		{94B9B12B-0D2B-4685-BF64-4F0488470569}.nwRelease|Any CPU.ActiveCfg = Release noWorkshop|Any CPU
+		{94B9B12B-0D2B-4685-BF64-4F0488470569}.nwRelease|Any CPU.Build.0 = Release noWorkshop|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Debug noWorkshop|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Debug noWorkshop|Any CPU.Build.0 = Debug|Any CPU
 		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Release noWorkshop|Any CPU.ActiveCfg = Release|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Release noWorkshop|Any CPU.Build.0 = Release|Any CPU
+		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwDebug|Any CPU.Build.0 = Debug|Any CPU
+		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwRelease|Any CPU.Build.0 = Release|Any CPU
 		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Debug noWorkshop|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Debug noWorkshop|Any CPU.Build.0 = Debug|Any CPU
 		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Release noWorkshop|Any CPU.ActiveCfg = Release|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Release noWorkshop|Any CPU.Build.0 = Release|Any CPU
+		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwDebug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwRelease|Any CPU.Build.0 = Release|Any CPU
 		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
@@ -52,11 +52,11 @@ Global
 		{8FA0A542-B2D4-4E00-ABD6-E7470906351D} = {D2DC72D8-B263-4A42-8849-420B582E197A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ExcelExportMode = MultipleSheets
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		RESX_ExcelExportMode = MultipleSheets
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 EndGlobal

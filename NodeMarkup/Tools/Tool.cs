@@ -82,7 +82,7 @@ namespace NodeMarkup.Tools
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
-        public MarkupBuffer MarkupBuffer { get; private set; } = new MarkupBuffer();
+        public IntersectionTemplate MarkupBuffer { get; private set; }
 
         #endregion
 
@@ -394,7 +394,7 @@ namespace NodeMarkup.Tools
         private void CopyMarkup()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
-            MarkupBuffer = new MarkupBuffer(Markup);
+            MarkupBuffer = new IntersectionTemplate(Markup);
         }
         public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
         private void PasteMarkup()
@@ -482,20 +482,6 @@ namespace NodeMarkup.Tools
                 Style.StyleType.FillerStripe => StyleModifier.Without,
                 _ => StyleModifier.NotSet,
             };
-        }
-    }
-    public class MarkupBuffer
-    {
-        public XElement Data { get; }
-        public EnterData[] Enters { get; }
-        public ObjectsMap Map { get; }
-        public MarkupBuffer(Markup markup) : this(markup.ToXml(), markup.Enters.Select(e => e.Data).ToArray()) { }
-        public MarkupBuffer() : this(new XElement("Markup"), new EnterData[0]) { }
-        private MarkupBuffer(XElement data, EnterData[] enters)
-        {
-            Data = data;
-            Enters = enters;
-            Map = new ObjectsMap();
         }
     }
     public class ThreadingExtension : ThreadingExtensionBase

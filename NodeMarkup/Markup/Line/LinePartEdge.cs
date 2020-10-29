@@ -135,11 +135,6 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color color)
-        {
-
-        }
-
         public override bool Equals(ISupportPoint other) => other is CrosswalkBorderEdge otherBorder && otherBorder.Border == Border;
         public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
 

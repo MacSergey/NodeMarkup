@@ -55,7 +55,7 @@ namespace NodeMarkup.Manager
 
             Save();
         }
-        private static string GetNewName(string newName = null)
+        public static string GetNewName(string newName = null)
         {
             if (string.IsNullOrEmpty(newName))
                 newName = DefaultName;

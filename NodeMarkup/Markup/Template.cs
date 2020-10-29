@@ -11,14 +11,17 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public class StyleTemplate : IDeletable, IToXml
+    public abstract class Template : IDeletable, IToXml
     {
         public static string XmlName { get; } = "T";
 
+        public string XmlSection => XmlName;
+        public abstract TemplateType Type { get; }
+
+        public Action OnTemplateChanged { private get; set; }
         public virtual bool IsAsset => false;
 
-        public string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
-        public string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+        public Guid Id { get; private set; }
 
         string _name;
         public string Name
@@ -30,27 +33,80 @@ namespace NodeMarkup.Manager
                 TemplateChanged();
             }
         }
-        public Guid Id { get; private set; }
-        public Style Style { get; private set; }
-        public bool IsDefault => TemplateManager.IsDefault(this);
+
         public bool HasName => !string.IsNullOrEmpty(Name);
 
-        public Action OnTemplateChanged { private get; set; }
+        public abstract string DeleteCaptionDescription { get; }
+        public abstract string DeleteMessageDescription { get; }
 
-        public string XmlSection => XmlName;
-
-        public StyleTemplate(string name, Style style) : this(Guid.NewGuid(), name, style) { }
-        private StyleTemplate(Guid id, string name, Style style)
+        protected Template() : this(TemplateManager.GetNewName()) { }
+        protected Template(string name) : this(Guid.NewGuid(), name) { }
+        protected Template(Guid id, string name)
         {
             Id = id;
             Name = name;
+        }
+
+        protected void TemplateChanged() => OnTemplateChanged?.Invoke();
+
+        public Dependences GetDependences() => new Dependences();
+
+        public static bool FromXml(XElement config, out Template template)
+        {
+            var type = (TemplateType)config.GetAttrValue<int>("T");
+            switch (type)
+            {
+                case TemplateType.Style when StyleTemplate.FromXml(config, out StyleTemplate styleTemplate):
+                    template = styleTemplate;
+                    return true;
+                case TemplateType.Intersection when IntersectionTemplate.FromXml(config, out IntersectionTemplate intersectionTemplate):
+                    template = intersectionTemplate;
+                    return true;
+                default:
+                    template = null;
+                    return false;
+            }
+        }
+
+        public virtual XElement ToXml()
+        {
+            var config = new XElement(XmlSection);
+            config.Add(new XAttribute("T", (int)Type));
+            config.Add(new XAttribute(nameof(Id), Id));
+            config.Add(new XAttribute("N", Name));
+            return config;
+        }
+
+        public override string ToString() => HasName ? Name : Localize.TemplateEditor_UnnamedTemplate;
+    }
+    public enum TemplateType
+    {
+        Style = 1,
+        Intersection = 2
+    }
+    public class StyleTemplate : Template
+    {
+        public override TemplateType Type => TemplateType.Style;
+
+        public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
+        public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+
+        public Style Style { get; private set; }
+        public bool IsDefault => TemplateManager.IsDefault(this);
+
+        public StyleTemplate(string name, Style style) : base(name)
+        {
+            Init(style);
+        }
+        private StyleTemplate(Guid id, string name, Style style) : base(id, name)
+        {
+            Init(style);
+        }
+        private void Init(Style style)
+        {
             Style = style.Copy();
             Style.OnStyleChanged = TemplateChanged;
         }
-        private void TemplateChanged() => OnTemplateChanged?.Invoke();
-        public Dependences GetDependences() => new Dependences();
-
-        public override string ToString() => HasName ? Name : Localize.TemplateEditor_UnnamedTemplate;
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {
@@ -68,15 +124,68 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public XElement ToXml()
+        public override XElement ToXml()
         {
-            var config = new XElement(XmlName);
-            config.Add(new XAttribute(nameof(Id), Id));
-            config.Add(new XAttribute("N", Name));
+            var config = base.ToXml();
             config.Add(Style.ToXml());
             return config;
         }
     }
+    public class IntersectionTemplate : Template
+    {
+        public override TemplateType Type => TemplateType.Intersection;
+
+        public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
+        public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+
+        public XElement Data { get; private set; }
+        public EnterData[] Enters { get; private set; }
+        public ObjectsMap Map { get; } = new ObjectsMap();
+
+        public IntersectionTemplate(Markup markup) : this(markup.ToXml(), markup.Enters.Select(e => e.Data).ToArray()) { }
+        public IntersectionTemplate(XElement data, EnterData[] enters) : base()
+        {
+            Init(data, enters);
+        }
+        public IntersectionTemplate(string name, XElement data, EnterData[] enters) : base(name)
+        {
+            Init(data, enters);
+        }
+        public IntersectionTemplate(Guid id, string name, XElement data, EnterData[] enters) : base(id, name)
+        {
+            Init(data, enters);
+        }
+        private void Init(XElement data, EnterData[] enters)
+        {
+            Data = data;
+            Enters = enters;
+        }
+
+        public static bool FromXml(XElement config, out IntersectionTemplate template)
+        {
+            if (false)
+            {
+
+            }
+            else
+            {
+                template = default;
+                return false;
+            }
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(Data);
+
+            foreach (var enter in Enters)
+                config.Add(enter.ToXml());
+
+            return config;
+        }
+    }
+
     public class AssetStyleTemplate : StyleTemplate
     {
         public override bool IsAsset => true;

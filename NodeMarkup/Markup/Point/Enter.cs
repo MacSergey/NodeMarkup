@@ -313,19 +313,36 @@ namespace NodeMarkup.Manager
             position += Enter.CornerDir * shift;
         }
     }
-    public class EnterData
+    public class EnterData : IToXml, IFromXml
     {
-        public ushort Id { get; }
-        public int Points { get; }
-        public Vector3 Corner { get; }
-        public Vector3 Normal { get; }
+        public ushort Id { get; private set; }
+        public int Points { get; private set; }
+        public float Angle { get; private set; }
 
+        public string XmlSection => Enter.XmlName;
+
+        protected EnterData() { }
         public EnterData(Enter enter)
         {
             Id = enter.Id;
             Points = enter.PointCount;
-            Corner = enter.CornerDir;
-            Normal = enter.NormalDir;
+            Angle = enter.AbsoluteAngle;
+        }
+
+        public XElement ToXml()
+        {
+            var config = new XElement(XmlSection);
+            config.Add(new XAttribute(nameof(Id), Id));
+            config.Add(new XAttribute("P", Points));
+            config.Add(new XAttribute("A", Angle));
+            return config;
+        }
+
+        public void FromXml(XElement config)
+        {
+            Id = config.GetAttrValue<ushort>(nameof(Id));
+            Points = config.GetAttrValue<ushort>("P");
+            Angle = config.GetAttrValue<ushort>("A");
         }
     }
 }
