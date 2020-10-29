@@ -63,8 +63,8 @@ namespace NodeMarkup.Manager
         public ILineTrajectory Invert() => new BezierTrajectory(Trajectory.Invert());
         public ILineTrajectory Copy() => new BezierTrajectory(Trajectory);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
-            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory, color, width, alphaBlend);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory, color, width, alphaBlend, cut);
 
         public static implicit operator Bezier3(BezierTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator BezierTrajectory(Bezier3 bezier) => new BezierTrajectory(bezier);
@@ -103,8 +103,8 @@ namespace NodeMarkup.Manager
         public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
         public ILineTrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) 
-            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
+            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend, cut);
 
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);

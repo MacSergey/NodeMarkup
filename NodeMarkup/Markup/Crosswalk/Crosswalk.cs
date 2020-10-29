@@ -103,10 +103,10 @@ namespace NodeMarkup.Manager
                 Markup.Update(this);
         }
         public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(Style.Calculate(this));
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             foreach (var trajectory in BorderTrajectories)
-                trajectory.Render(cameraInfo, color, width, alphaBlend);
+                trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
         }
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;

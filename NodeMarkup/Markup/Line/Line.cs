@@ -99,8 +99,9 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Trajectory.Render(cameraInfo, color, width, alphaBlend);
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) => Trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
+        public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
 
         public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
         {
@@ -275,7 +276,8 @@ namespace NodeMarkup.Manager
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
 
-        public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true) => AddRule(TemplateManager.StyleManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty);
+        public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true) 
+            => AddRule(TemplateManager.StyleManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
             RawRules.Remove(rule);
@@ -289,7 +291,7 @@ namespace NodeMarkup.Manager
             RawRules.RemoveAll(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
 
             if (!RawRules.Any())
-                AddRule(false);
+                AddRule(false, false);
         }
         private bool Match(MarkupLine intersectLine, ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
         public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));

@@ -395,7 +395,7 @@ namespace NodeMarkup.Tools
             if (Count <= 0)
                 NodeMarkupTool.RenderCircle(cameraInfo, Position, width: TargetPoint.Size, alphaBlend: false);
             else
-                Line.Render(cameraInfo, width: TargetPoint.Size, alphaBlend: false);
+                Line.Render(cameraInfo, width: TargetPoint.Size, alphaBlend: false, cut: true);
 
         }
         public override Vector3 GetSourcePosition(SourcePoint source)

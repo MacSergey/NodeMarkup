@@ -200,13 +200,13 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             if (Position == null)
                 return;
 
             var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidth, Position.Value + CornerDir * RoadHalfWidth).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
         }
         public override string ToString() => Id.ToString();
     }

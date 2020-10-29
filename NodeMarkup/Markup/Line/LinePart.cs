@@ -74,10 +74,10 @@ namespace NodeMarkup.Manager
             }
 
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             if (GetTrajectory(out ILineTrajectory trajectory))
-                trajectory.Render(cameraInfo, color, width, alphaBlend);
+                trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
         }
 
         public virtual XElement ToXml()
@@ -130,6 +130,7 @@ namespace NodeMarkup.Manager
         public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
         public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Line.Render(cameraInfo, color, width, alphaBlend);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
+            => Line.Render(cameraInfo, color, width, alphaBlend, cut);
     }
 }

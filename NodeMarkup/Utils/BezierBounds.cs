@@ -38,7 +38,7 @@ namespace NodeMarkup.Utils
         public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
         public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = true) 
-            => NodeMarkupTool.RenderBezier(cameraInfo, Bezier, color, width ?? Size, alphaBlend: alphaBlend);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = true, bool? cut = null) 
+            => NodeMarkupTool.RenderBezier(cameraInfo, Bezier, color, width ?? Size, alphaBlend, cut);
     }
 }

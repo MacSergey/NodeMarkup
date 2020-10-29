@@ -129,7 +129,7 @@ namespace NodeMarkup.Manager
         }
 
         protected static float DefaultWidth => 1f;
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
             => NodeMarkupTool.RenderCircle(cameraInfo, Position, color ?? Color, width ?? DefaultWidth, alphaBlend);
 
         public enum PointType
@@ -195,11 +195,11 @@ namespace NodeMarkup.Manager
             Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Mathf.Sin(Enter.CornerAndNormalAngle));
             Direction = SourcePoint.Direction;
         }
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             var dir = Enter.CornerDir.Turn90(true) * Shift;
             var bezier = new Line3(Position - dir, Position + dir).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color ?? Color, width ?? DefaultWidth, alphaBlend);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color ?? Color, width ?? DefaultWidth, alphaBlend, cut);
         }
         public override string ToString() => $"{base.ToString()}C";
     }
@@ -276,6 +276,7 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
 
         public bool ContainPoint(MarkupPoint point) => First == point || Second == point;
+        public bool ContainsEnter(Enter enter) => First.Enter == enter || Second.Enter == enter;
         public MarkupPoint GetOther(MarkupPoint point)
         {
             if (!ContainPoint(point))

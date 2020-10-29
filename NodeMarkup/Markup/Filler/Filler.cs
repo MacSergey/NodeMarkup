@@ -103,7 +103,8 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) => Contour.Render(cameraInfo, color, width, alphaBlend);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
+            => Contour.Render(cameraInfo, color, width, alphaBlend);
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();
     }

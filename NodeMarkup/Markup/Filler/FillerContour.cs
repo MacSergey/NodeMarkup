@@ -200,7 +200,7 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End);
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             foreach (var trajectory in Trajectories)
                 trajectory.Render(cameraInfo, color, width, alphaBlend);

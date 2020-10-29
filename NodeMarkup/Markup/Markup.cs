@@ -16,7 +16,7 @@ namespace NodeMarkup.Manager
 {
     public interface IRender
     {
-        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null);
+        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null);
     }
     public interface IDeletable
     {
@@ -63,6 +63,8 @@ namespace NodeMarkup.Manager
         List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
         Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
+
+        public bool IsEmpty => !LinesDictionary.Any() && !FillersList.Any();
 
         public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
         public IEnumerable<Enter> Enters => EntersList;
@@ -154,10 +156,13 @@ namespace NodeMarkup.Manager
         {
             if (delete.Length == 1 && add.Length == 1)
             {
-                var before = oldEnters.Find(e => e.Id == delete[0]).PointCount;
-                var after = newEnters.Find(e => e.Id == add[0]).PointCount;
+                var oldEnter = oldEnters.Find(e => e.Id == delete[0]);
+                var newEnter = newEnters.Find(e => e.Id == add[0]);
 
-                if (before != after && !NeedSetOrder)
+                var before = oldEnter.PointCount;
+                var after = newEnter.PointCount;
+
+                if (before != after && !NeedSetOrder && !IsEmpty && HaveLines(oldEnter))
                     NeedSetOrder = true;
 
                 if (NeedSetOrder)
@@ -214,7 +219,7 @@ namespace NodeMarkup.Manager
             foreach (var line in LinesDictionary.Values.ToArray())
             {
                 if (ContainsEnter(line.Start.Enter.Id) && ContainsEnter(line.End.Enter.Id))
-                    line.Update();
+                    line.Update(true);
                 else
                     RemoveLine(line);
             }
@@ -283,6 +288,7 @@ namespace NodeMarkup.Manager
             LinesDictionary.Clear();
             FillersList.Clear();
             CrosswalksDictionary.Clear();
+            NeedSetOrder = false;
 
             RecalculateDashes();
         }
@@ -486,6 +492,8 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupFiller> GetPointFillers(MarkupPoint point) => FillersList.Where(f => f.ContainsPoint(point));
         public IEnumerable<MarkupCrosswalk> GetPointCrosswalks(MarkupPoint point) => Crosswalks.Where(c => c.ContainsPoint(point));
         public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
+
+        public bool HaveLines(Enter enter) => Lines.Any(l => l.ContainsEnter(enter));
 
         #endregion
 
