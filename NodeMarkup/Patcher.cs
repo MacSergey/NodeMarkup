@@ -64,24 +64,25 @@ namespace NodeMarkup
             //    messageBox.MessageText = "Mod loaded with errors";
             //}
         }
+        private static bool AddPrefix(Harmony harmony, MethodInfo prefix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
+            => AddPatch((original) => harmony.Patch(original, prefix: new HarmonyMethod(prefix)), type, method, originalGetter);
 
-        private static bool AddPrefix(Harmony harmony, MethodInfo original, MethodInfo prefix)
-            => AddPatch(original, () => harmony.Patch(original, prefix: new HarmonyMethod(prefix)));
+        private static bool AddPostfix(Harmony harmony, MethodInfo postfix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
+            => AddPatch((original) => harmony.Patch(original, postfix: new HarmonyMethod(postfix)), type, method, originalGetter);
 
-        private static bool AddPostfix(Harmony harmony, MethodInfo original, MethodInfo postfix)
-            => AddPatch(original, () => harmony.Patch(original, postfix: new HarmonyMethod(postfix)));
+        private static bool AddTranspiler(Harmony harmony, MethodInfo transpiler, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
+            => AddPatch((original) => harmony.Patch(original, transpiler: new HarmonyMethod(transpiler)), type, method, originalGetter);
 
-        private static bool AddTranspiler(Harmony harmony, MethodInfo original, MethodInfo transpiler)
-            => AddPatch(original, () => harmony.Patch(original, transpiler: new HarmonyMethod(transpiler)));
-
-        private static bool AddPatch(MethodInfo original, Action patch)
+        private static bool AddPatch(Action<MethodInfo> patch, Type type, string method, Func<Type, string, MethodInfo> originalGetter)
         {
-            var methodName = $"{original.DeclaringType.Name}.{original.Name}";
-
+            var methodName = $"{type.Name}.{method}()";
             try
             {
                 Logger.LogDebug($"Patch {methodName}");
-                patch();
+
+                var original = originalGetter?.Invoke(type, method) ?? AccessTools.Method(type, method);
+                patch(original);
+
                 Logger.LogDebug($"Patched {methodName}");
                 return true;
             }
@@ -94,49 +95,46 @@ namespace NodeMarkup
 
         private static bool PatchNetNodeRenderInstance(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(NetNode), "RenderInstance", new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix));
 
-            return AddPostfix(harmony, original, postfix);
+            return AddPostfix(harmony, postfix, typeof(NetNode), "RenderInstance", OriginalGetter);
         }
 
         private static bool PatchNetManagerUpdateNode(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(NetManager), nameof(NetManager.UpdateNode), new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix));
 
-            return AddPostfix(harmony, original, postfix);
+            return AddPostfix(harmony, postfix, typeof(NetManager), nameof(NetManager.UpdateNode), OriginalGetter);
         }
 
         private static bool PatchNetManagerReleaseNodeImplementation(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(NetManager), "ReleaseNodeImplementation", new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() });
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() });
             var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix));
 
-            return AddPrefix(harmony, original, prefix);
+            return AddPrefix(harmony, prefix, typeof(NetManager), "ReleaseNodeImplementation", OriginalGetter);
         }
 
         private static bool PatchNetSegmentUpdateLanes(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(NetSegment), nameof(NetSegment.UpdateLanes));
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentUpdateLanesPostfix));
 
-            return AddPostfix(harmony, original, postfix);
+            return AddPostfix(harmony, postfix, typeof(NetSegment), nameof(NetSegment.UpdateLanes));
         }
 
         private static bool PatchNetManagerSimulationStepImpl(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(NetManager), "SimulationStepImpl");
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix));
 
-            return AddPostfix(harmony, original, postfix);
+            return AddPostfix(harmony, postfix, typeof(NetManager), "SimulationStepImpl");
         }
         private static bool PatchBuildingDecorationLoadPaths(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
             var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler));
 
-            return AddTranspiler(harmony, original, transpiler);
+            return AddTranspiler(harmony, transpiler, typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
         }
         private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
@@ -177,25 +175,22 @@ namespace NodeMarkup
         }
         private static bool PatchLoadAssetPanelOnLoad(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
             var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
 
-            return AddPostfix(harmony, original, postfix);
+            return AddPostfix(harmony, postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
         private static bool PatchNetInfoNodeInitNodeInfo(Harmony harmony)
         {
-            var original = AccessTools.Method(typeof(NetInfo), "InitNodeInfo");
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
 
-            return AddPostfix(harmony, original, postfix);
+            return AddPostfix(harmony, postfix, typeof(NetInfo), "InitNodeInfo");
         }
         private static bool PatchLoadingManagerLoadCustomContent(Harmony harmony)
         {
-            var type = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
-            var original = AccessTools.Method(type, "MoveNext");
+            var nestedType = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
             var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingManagerLoadCustomContentTranspiler));
 
-            return AddTranspiler(harmony, original, transpiler);
+            return AddTranspiler(harmony, transpiler, nestedType, "MoveNext");
         }
 
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
@@ -213,11 +208,18 @@ namespace NodeMarkup
             return LoadingTranspiler(instructions, OpCodes.Ldloc_S, 26, additional);
         }
         private static bool PatchLoadingScreenModLoadImpl(Harmony harmony)
-        {
-            var original = AccessTools.Method(AccessTools.TypeByName("LoadingScreenMod.AssetLoader"), "LoadImpl");
-            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler));
-
-            return AddTranspiler(harmony, original, transpiler);
+        {            
+            try
+            {
+                var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader");
+                var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler));
+                return AddTranspiler(harmony, transpiler, type, "LoadImpl");
+            }
+            catch (Exception error)
+            {
+                Logger.LogError(() => $"LSM not founded", error);
+                return false;
+            }
         }
         private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
