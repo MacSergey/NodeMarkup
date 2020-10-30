@@ -112,14 +112,22 @@ namespace NodeMarkup.Manager
 
         #region UPDATE
 
+        private bool UpdateProgress { get; set; } = false;
         public void Update()
         {
+            if (UpdateProgress)
+                return;
+
+            UpdateProgress = true; 
+
             UpdateEnters();
             UpdateLines();
             UpdateFillers();
             UpdateCrosswalks();
 
             RecalculateDashes();
+
+            UpdateProgress = false;
         }
 
         private void UpdateEnters()
@@ -248,7 +256,7 @@ namespace NodeMarkup.Manager
             foreach (var crosswalk in GetPointCrosswalks(point))
                 crosswalk.Update();
 
-            if (recalculate)
+            if (recalculate && !UpdateProgress)
                 RecalculateDashes();
         }
         public void Update(MarkupLine line, bool recalculate = false)
@@ -267,19 +275,19 @@ namespace NodeMarkup.Manager
             foreach (var crosswalk in GetLinesIsBorder(line))
                 crosswalk.Update();
 
-            if (recalculate)
+            if (recalculate && !UpdateProgress)
                 RecalculateDashes();
         }
         public void Update(MarkupFiller filler, bool recalculate = false)
         {
             filler.Update();
-            if (recalculate)
+            if (recalculate && !UpdateProgress)
                 RecalculateDashes();
         }
         public void Update(MarkupCrosswalk crosswalk, bool recalculate = false)
         {
             crosswalk.Line.Update();
-            if (recalculate)
+            if (recalculate && !UpdateProgress)
                 RecalculateDashes();
         }
 
