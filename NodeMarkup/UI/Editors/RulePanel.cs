@@ -18,13 +18,13 @@ namespace NodeMarkup.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
 
         private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
-        private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
 
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
         public MarkupLineRawRule Rule { get; private set; }
 
-        public StyleHeaderPanel Header { get; private set; }
+        private StyleHeaderPanel Header { get; set; }
+        private TextProperty Warning { get; set; }
         public MarkupLineSelectPropertyPanel From { get; private set; }
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
@@ -35,6 +35,8 @@ namespace NodeMarkup.UI.Editors
         {
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "ButtonWhite";
+            color = NormalColor;
+
             autoLayout = true;
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
@@ -44,12 +46,13 @@ namespace NodeMarkup.UI.Editors
         {
             Editor = editor;
             Rule = rule;
-            Refresh();
 
             AddHeader();
+            AddWarning();
             From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
             To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
-            FillEdges();
+
+            Refresh();
 
             AddStyleTypeProperty();
             AddStyleProperties();
@@ -60,6 +63,8 @@ namespace NodeMarkup.UI.Editors
         {
             ComponentPool.Free(Header);
             Header = null;
+            ComponentPool.Free(Warning);
+            Warning = null;
             ComponentPool.Free(From);
             From = null;
             ComponentPool.Free(To);
@@ -93,6 +98,14 @@ namespace NodeMarkup.UI.Editors
             Header.OnCopy += CopyStyle;
             Header.OnPaste += PasteStyle;
         }
+
+        private void AddWarning()
+        {
+            Warning = ComponentPool.Get<TextProperty>(this);
+            Warning.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Warning.Init();
+        }
+
         private MarkupLineSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
         {
             var edgeProperty = ComponentPool.Get<MarkupLineSelectPropertyPanel>(this);
@@ -203,17 +216,7 @@ namespace NodeMarkup.UI.Editors
         }
         public void Refresh()
         {
-            if (Rule.IsOverlapped)
-            {
-                color = ErrorColor;
-                tooltip = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
-            }
-            else
-            {
-                color = NormalColor;
-                tooltip = string.Empty;
-            }
-
+            Warning.isVisible = Rule.IsOverlapped;
             FillEdges();
         }
 
