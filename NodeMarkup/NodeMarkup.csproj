@@ -153,7 +153,7 @@
       <DependentUpon>Localize.resx</DependentUpon>
     </Compile>
     <Compile Include="Tools\Tool.cs" />
-    <Compile Include="Tools\BaseOrderMode.cs" />
+    <Compile Include="Tools\Order\BaseOrderMode.cs" />
     <Compile Include="UI\Elements\DropDown.cs" />
     <Compile Include="UI\Editors\Base\BaseEditor.cs" />
     <Compile Include="UI\Editors\Base\BaseGroupEditor.cs" />

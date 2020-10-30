@@ -103,6 +103,8 @@ namespace NodeMarkup.Manager
                 var path = GetSavePathName(templateAsset.FileName);
                 package.Save(path);
 
+                Logger.LogError($"Template asset saved");
+
                 return true;
             }
             catch (Exception error)
@@ -150,11 +152,11 @@ namespace NodeMarkup.Manager
                     FromXml(config);
                 }
 
-                Logger.LogDebug($"Templates was loaded: {TemplatesDictionary.Count} items");
+                Logger.LogDebug($"{typeof(TemplateType).Name} was loaded: {TemplatesDictionary.Count} items");
             }
             catch (Exception error)
             {
-                Logger.LogError("Could load templates", error);
+                Logger.LogError($"Could load {typeof(TemplateType).Name}", error);
             }
         }
         protected void Save()
@@ -164,11 +166,11 @@ namespace NodeMarkup.Manager
                 var config = Loader.GetString(ToXml());
                 Saved.value = config;
 
-                Logger.LogDebug($"Templates was saved: {TemplatesDictionary.Count} items");
+                Logger.LogDebug($"{typeof(TemplateType).Name} was saved: {TemplatesDictionary.Count} items");
             }
             catch (Exception error)
             {
-                Logger.LogError("Could save templates", error);
+                Logger.LogError($"Could save {typeof(TemplateType).Name}", error);
             }
         }
 

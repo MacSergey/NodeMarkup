@@ -171,10 +171,7 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var basket in Baskets)
-            {
-                //if (!IsSelectedSource || SelectedSource.Target == basket)
                 basket.Render(cameraInfo, this);
-            }
 
             RenderOverlayAfterBaskets(cameraInfo);
 

@@ -109,6 +109,8 @@ namespace NodeMarkup.Tools
         protected override void Reset(BaseToolMode prevMode)
         {
             NodeMarkupTool.GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
+            Centre = centre;
+            Radius = radius;
 
             base.Reset(prevMode);
         }
