@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
             get
             {
                 foreach (var enter in EntersList)
-                        yield return enter.Line;
+                    yield return enter.Line;
                 foreach (var line in BetweenEnters.Values)
                     yield return line;
             }
@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
             if (UpdateProgress)
                 return;
 
-            UpdateProgress = true; 
+            UpdateProgress = true;
 
             UpdateEnters();
             UpdateLines();
@@ -488,11 +488,12 @@ namespace NodeMarkup.Manager
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
 
-        public ILineTrajectory GetEntersLine(Enter first, Enter second)
+        public bool GetEntersLine(Enter first, Enter second, out ILineTrajectory line)
         {
             var i = RowEntersList.IndexOf(first);
             var j = RowEntersList.IndexOf(second);
-            return BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)];
+            return BetweenEnters.TryGetValue(Math.Max(i, j) * 10 + Math.Min(i, j), out line);
+
         }
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
