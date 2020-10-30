@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class IntersectionTemplateEditor : BaseTemplateEditor<PresetItem, IntersectionTemplate, PresetIcon, PresetGroup, bool, TemplateHeaderPanel>
+    public class IntersectionTemplateEditor : BaseTemplateEditor<PresetItem, IntersectionTemplate, PresetIcon, PresetGroup, bool, IntersectionTemplateHeaderPanel>
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);

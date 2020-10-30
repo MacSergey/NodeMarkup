@@ -12,7 +12,7 @@ namespace NodeMarkup.UI.Editors
         where Icon : UIComponent
         where TemplateType : Template
         where Group : EditableGroup<GroupType, Item, TemplateType, Icon>
-        where HeaderPanelType : TemplateHeaderPanel
+        where HeaderPanelType : TemplateHeaderPanel<TemplateType>
     {
         protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
             if (EditObject.IsAsset)
             {
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
-                authorProperty.Text = "Author";
+                authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.UseWheel = false;
                 authorProperty.Init();

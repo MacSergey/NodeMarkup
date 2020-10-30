@@ -131,7 +131,8 @@ namespace NodeMarkup.UI.Editors
         private void PasteClick(UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke();
     }
 
-    public class TemplateHeaderPanel : HeaderPanel
+    public abstract class TemplateHeaderPanel<TemplateType> : HeaderPanel
+        where TemplateType : Template
     {
         public event Action OnSaveAsset;
         HeaderButton SaveAsAsset { get; set; }
@@ -145,7 +146,7 @@ namespace NodeMarkup.UI.Editors
             SaveAsAsset = Content.AddButton(HeaderButton.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
         }
 
-        public virtual void Init(Template template)
+        public virtual void Init(TemplateType template)
         {
             base.Init(isDeletable: false);
             SaveAsAsset.isVisible = !template.IsAsset;
@@ -158,7 +159,7 @@ namespace NodeMarkup.UI.Editors
         private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
     }
 
-    public class StyleTemplateHeaderPanel : TemplateHeaderPanel
+    public class StyleTemplateHeaderPanel : TemplateHeaderPanel<StyleTemplate>
     {
         public event Action OnSetAsDefault;
         public event Action OnDuplicate;
@@ -172,7 +173,7 @@ namespace NodeMarkup.UI.Editors
 
             base.AddButtons();
         }
-        public void Init(StyleTemplate template)
+        public override void Init(StyleTemplate template)
         {
             base.Init(template);
 
@@ -190,4 +191,5 @@ namespace NodeMarkup.UI.Editors
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
         private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
     }
+    public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate> { }
 }

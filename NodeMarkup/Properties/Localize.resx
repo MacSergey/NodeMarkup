@@ -1171,4 +1171,7 @@ To create a preset, click «{0}» at the panel header.</value>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
     <value>Do you want to apply a preset?</value>
   </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
 </root>

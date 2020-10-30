@@ -597,7 +597,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на no presets.
+        ///   Ищет локализованную строку, похожую на No presets.
         /// </summary>
         public static string HeaderPanel_NoPresets {
             get {
@@ -2417,6 +2417,15 @@ namespace NodeMarkup {
         public static string Template_NewTemplate {
             get {
                 return ResourceManager.GetString("Template_NewTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Author.
+        /// </summary>
+        public static string TemplateEditor_Author {
+            get {
+                return ResourceManager.GetString("TemplateEditor_Author", resourceCulture);
             }
         }
         
