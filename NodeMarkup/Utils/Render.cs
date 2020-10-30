@@ -388,7 +388,7 @@ namespace NodeMarkup.Utils
             var mesh = Mesh;
             var material = RenderHelper.MaterialLib[MaterialType];
 
-            Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 10, null, 0, materialBlock);
+            Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 9, null, 0, materialBlock);
         }
     }
 }

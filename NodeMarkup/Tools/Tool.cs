@@ -19,7 +19,8 @@ using NodeMarkup.UI.Panel;
 using System.Diagnostics;
 using ColossalFramework.Packaging;
 using ColossalFramework.IO;
-
+using System.IO;
+using ColossalFramework.Importers;
 
 namespace NodeMarkup.Tools
 {
@@ -37,7 +38,7 @@ namespace NodeMarkup.Tools
         public static Shortcut CreateEdgeLinesShortcut { get; } = new Shortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
         public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
-        public static Shortcut SaveAsPresetShortcut { get;  } = new Shortcut(nameof(SaveAsPresetShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsPreset());
+        public static Shortcut SaveAsPresetShortcut { get; } = new Shortcut(nameof(SaveAsPresetShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsPreset());
 
         public static IEnumerable<Shortcut> Shortcuts
         {
@@ -448,8 +449,68 @@ namespace NodeMarkup.Tools
         private void SaveAsPreset()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsPreset)}");
+
             if (TemplateManager.IntersectionManager.AddTemplate(Markup, out IntersectionTemplate preset))
                 Panel.EditPreset(preset);
+
+            StartCoroutine(MakeScreenshot());
+        }
+        private int ScreenshotSize => 400;
+        private IEnumerator MakeScreenshot()
+        {
+            yield return new WaitForEndOfFrame();
+
+            var camera = Camera.main;
+            var backupMask = camera.cullingMask;
+            var backupRect = camera.rect;
+            var backupPosition = camera.transform.position;
+            var backupRotation = camera.transform.rotation;
+            camera.cullingMask = LayerMask.GetMask("Road");
+            camera.rect = new Rect(0f, 0f, 1f, 1f);
+
+            GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
+
+            var deltaHeight = radius / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2);
+            camera.transform.position = new Vector3(centre.x, Markup.Height + deltaHeight, centre.z);
+            camera.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+            var scale = ScreenshotSize * 4;
+
+            var render = new RenderTexture(scale, scale, 24);
+            camera.targetTexture = render;
+            var screenShot = new Texture2D(scale, scale, TextureFormat.RGB24, false);
+
+            bool smaaEnabled = false;
+            var smaa = camera.GetComponent<SMAA>();
+            if (smaa != null)
+            {
+                smaaEnabled = smaa.enabled;
+                smaa.enabled = true;
+            }
+
+            Singleton<RenderManager>.instance.UpdateCameraInfo();
+            camera.Render();
+
+            if (smaa != null)
+                smaa.enabled = smaaEnabled;
+
+            RenderTexture.active = render;
+            screenShot.ReadPixels(new Rect(0, 0, scale, scale), 0, 0);
+            camera.targetTexture = null;
+            camera.cullingMask = backupMask;
+            camera.rect = backupRect;
+            camera.transform.position = backupPosition;
+            camera.transform.rotation = backupRotation;
+            RenderTexture.active = null;
+            Destroy(render);
+
+            var data = screenShot.GetPixels32();
+            var image = new Image(scale, scale, TextureFormat.RGB24, data);
+            image.Resize(ScreenshotSize, ScreenshotSize);
+            var formattedImage = image.GetFormattedImage(Image.BufferFileFormat.PNG);
+
+            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "preset.png");
+            File.WriteAllBytes(filename, formattedImage);
         }
 
         #endregion
@@ -469,7 +530,7 @@ namespace NodeMarkup.Tools
             var cutValue = cut == true ? (width ?? DefaultWidth) / 2 : 0f;
             RenderManager.OverlayEffect.DrawBezier(cameraInfo, color ?? Colors.White, bezier, width ?? DefaultWidth, cutValue, cutValue, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
         }
-            
+
         public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Vector3 position, Color? color = null, float? width = null, bool? alphaBlend = null) =>
             RenderManager.OverlayEffect.DrawCircle(cameraInfo, color ?? Colors.White, position, width ?? DefaultWidth, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
 
@@ -504,6 +565,82 @@ namespace NodeMarkup.Tools
                 Style.StyleType.FillerStripe => StyleModifier.Without,
                 _ => StyleModifier.NotSet,
             };
+        }
+
+        public static void GetCentreAndRadius(Markup markup, out Vector3 centre, out float radius)
+        {
+            var points = markup.Enters.Where(e => e.Position != null).SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
+
+            if (points.Length == 0)
+            {
+                centre = markup.Position;
+                radius = markup.Radius;
+                return;
+            }
+
+            centre = markup.Position;
+            radius = 1000f;
+
+            for (var i = 0; i < points.Length; i += 1)
+            {
+                for (var j = i + 1; j < points.Length; j += 1)
+                {
+                    GetCircle2Points(points, i, j, ref centre, ref radius);
+
+                    for (var k = j + 1; k < points.Length; k += 1)
+                        GetCircle3Points(points, i, j, k, ref centre, ref radius);
+                }
+            }
+
+            radius += TargetEnter.Size / 2;
+        }
+        private static void GetCircle2Points(Vector3[] points, int i, int j, ref Vector3 centre, ref float radius)
+        {
+            var newCentre = (points[i] + points[j]) / 2;
+            var newRadius = (points[i] - points[j]).magnitude / 2;
+
+            if (newRadius >= radius)
+                return;
+
+            if (AllPointsInCircle(points, newCentre, newRadius, i, j))
+            {
+                centre = newCentre;
+                radius = newRadius;
+            }
+        }
+        private static void GetCircle3Points(Vector3[] points, int i, int j, int k, ref Vector3 centre, ref float radius)
+        {
+            var pos1 = (points[i] + points[j]) / 2;
+            var pos2 = (points[j] + points[k]) / 2;
+
+            var dir1 = (points[i] - points[j]).Turn90(true).normalized;
+            var dir2 = (points[j] - points[k]).Turn90(true).normalized;
+
+            Line2.Intersect(pos1.XZ(), (pos1 + dir1).XZ(), pos2.XZ(), (pos2 + dir2).XZ(), out float p, out _);
+            var newCentre = pos1 + dir1 * p;
+            var newRadius = (newCentre - points[i]).magnitude;
+
+            if (newRadius >= radius)
+                return;
+
+            if (AllPointsInCircle(points, newCentre, newRadius, i, j, k))
+            {
+                centre = newCentre;
+                radius = newRadius;
+            }
+        }
+        private static bool AllPointsInCircle(Vector3[] points, Vector3 centre, float radius, params int[] ignore)
+        {
+            for (var i = 0; i < points.Length; i += 1)
+            {
+                if (ignore.Any(j => j == i))
+                    continue;
+
+                if ((centre - points[i]).magnitude > radius)
+                    return false;
+            }
+
+            return true;
         }
     }
     public class ThreadingExtension : ThreadingExtensionBase

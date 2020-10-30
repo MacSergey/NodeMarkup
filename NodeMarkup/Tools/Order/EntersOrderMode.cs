@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.Utils;
 using System;
@@ -107,7 +108,7 @@ namespace NodeMarkup.Tools
 
         protected override void Reset(BaseToolMode prevMode)
         {
-            UpdateCentreAndRadius();
+            NodeMarkupTool.GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
 
             base.Reset(prevMode);
         }
@@ -207,83 +208,6 @@ namespace NodeMarkup.Tools
         }
         protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo) 
             => NodeMarkupTool.RenderCircle(cameraInfo, Centre, width: Radius * 2);
-
-        private void UpdateCentreAndRadius()
-        {
-            var points = Markup.Enters.Where(e => e.Position != null).SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
-
-            if (points.Length == 0)
-            {
-                Centre = Markup.Position;
-                Radius = Markup.Radius;
-                return;
-            }
-
-            var centre = Markup.Position;
-            var radius = 1000f;
-
-            for (var i = 0; i < points.Length; i += 1)
-            {
-                for (var j = i + 1; j < points.Length; j += 1)
-                {
-                    GetCircle2Points(points, i, j, ref centre, ref radius);
-
-                    for (var k = j + 1; k < points.Length; k += 1)
-                        GetCircle3Points(points, i, j, k, ref centre, ref radius);
-                }
-            }
-
-            Centre = centre;
-            Radius = radius + TargetEnter.Size / 2;
-        }
-        private void GetCircle2Points(Vector3[] points, int i, int j, ref Vector3 centre, ref float radius)
-        {
-            var newCentre = (points[i] + points[j]) / 2;
-            var newRadius = (points[i] - points[j]).magnitude / 2;
-
-            if (newRadius >= radius)
-                return;
-
-            if (AllPointsInCircle(points, newCentre, newRadius, i, j))
-            {
-                centre = newCentre;
-                radius = newRadius;
-            }
-        }
-        private void GetCircle3Points(Vector3[] points, int i, int j, int k, ref Vector3 centre, ref float radius)
-        {
-            var pos1 = (points[i] + points[j]) / 2;
-            var pos2 = (points[j] + points[k]) / 2;
-
-            var dir1 = (points[i] - points[j]).Turn90(true).normalized;
-            var dir2 = (points[j] - points[k]).Turn90(true).normalized;
-
-            Line2.Intersect(pos1.XZ(), (pos1 + dir1).XZ(), pos2.XZ(), (pos2 + dir2).XZ(), out float p, out _);
-            var newCentre = pos1 + dir1 * p;
-            var newRadius = (newCentre - points[i]).magnitude;
-
-            if (newRadius >= radius)
-                return;
-
-            if (AllPointsInCircle(points, newCentre, newRadius, i, j, k))
-            {
-                centre = newCentre;
-                radius = newRadius;
-            }
-        }
-        private bool AllPointsInCircle(Vector3[] points, Vector3 centre, float radius, params int[] ignore)
-        {
-            for (var i = 0; i < points.Length; i += 1)
-            {
-                if (ignore.Any(j => j == i))
-                    continue;
-
-                if ((centre - points[i]).magnitude > radius)
-                    return false;
-            }
-
-            return true;
-        }
 
         private Vector2 GetMouse()
         {
