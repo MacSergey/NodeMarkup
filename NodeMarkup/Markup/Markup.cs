@@ -568,7 +568,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError(() => $"Could load node #{nodeId} markup", error);
+                Logger.LogError($"Could load node #{nodeId} markup", error);
                 markup = null;
                 MarkupManager.LoadErrors += 1;
                 return false;

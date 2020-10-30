@@ -183,7 +183,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError(() => "Could import data", error);
+                Logger.LogError("Could import data", error);
                 return false;
             }
         }
@@ -207,7 +207,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError(() => "Save dump failed", error);
+                Logger.LogError("Save dump failed", error);
 
                 path = string.Empty;
                 return false;
@@ -233,7 +233,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError(() => "Save dump failed", error);
+                Logger.LogError("Save dump failed", error);
 
                 file = string.Empty;
                 return false;

@@ -41,7 +41,7 @@ namespace NodeMarkup.Utils
                 }
                 catch(Exception error)
                 {
-                    Logger.LogError(() => "Could load data", error);
+                    Logger.LogError("Could load data", error);
                 }
             }
             else
@@ -67,7 +67,7 @@ namespace NodeMarkup.Utils
             }
             catch(Exception error)
             {
-                Logger.LogError(() => "Save data failed", error);
+                Logger.LogError("Save data failed", error);
                 Loader.SaveToFile(Loader.MarkingName, config, out _);
                 throw;
             }

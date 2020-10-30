@@ -88,7 +88,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError(() => $"Failed Patch {methodName}", error);
+                Logger.LogError($"Failed Patch {methodName}", error);
                 return false;
             }
         }
@@ -217,7 +217,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError(() => $"LSM not founded", error);
+                Logger.LogError($"LSM not founded", error);
                 return false;
             }
         }

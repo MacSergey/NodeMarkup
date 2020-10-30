@@ -76,9 +76,11 @@ namespace NodeMarkup.Manager
         {
             try
             {
-                var package = new Package(templateAsset.Template.Name);
-                package.packageMainAsset = templateAsset.Template.Name;
-                package.packageAuthor = $"steamid:{templateAsset.AuthorId}";
+                var package = new Package(templateAsset.Template.Name)
+                {
+                    packageMainAsset = templateAsset.Template.Name,
+                    packageAuthor = $"steamid:{templateAsset.AuthorId}"
+                };
 
                 var gameObject = new GameObject(typeof(MarkingInfo).Name);
                 var markingInfo = gameObject.AddComponent<MarkingInfo>();
@@ -105,7 +107,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError(() => $"Could save template asset", error);
+                Logger.LogError($"Could save template asset", error);
                 return false;
             }
         }
@@ -152,7 +154,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError(() => "Could load templates", error);
+                Logger.LogError("Could load templates", error);
             }
         }
         protected void Save()
@@ -166,7 +168,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError(() => "Could save templates", error);
+                Logger.LogError("Could save templates", error);
             }
         }
 
