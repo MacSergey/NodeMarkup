@@ -1119,7 +1119,7 @@ Do you want to apply the marking manually?</value>
     <value>Quick crosswalk borders setup</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marking under tracks (Apply after reload)</value>
+    <value>Marking under tracks</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Warning: This option change game objects render order</value>
@@ -1173,5 +1173,74 @@ To create a preset, click «{0}» at the panel header.</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Author</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Apply after game restart</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Load marking assets</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod loaded with errors.
+It is not recommended to use the mod in this state, it can lead to unpredictable behavior.
+Restart the game.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Crosswalks:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Fillers:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Lines:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>No screenshot</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Road #{0} points:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Roads:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Cut new line by crosswalks</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Cut lines by this crosswalk</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup presets</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Delete all presets</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Delete all presets</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Do you really want to remove all presets?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Dump presets to file</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Dump presets</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Restore presets from file</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Restore presets</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Do you really want to restore presets?
+The restored presets will replace all existing presets.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Presets restore failed</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Presets successfully restored</value>
   </data>
 </root>

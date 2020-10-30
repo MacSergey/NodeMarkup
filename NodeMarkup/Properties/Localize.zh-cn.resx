@@ -1095,5 +1095,51 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
     <value>要应用预设吗？</value>
   </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>游戏重启后生效</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>载入标线资产</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod加载出错。
+不建议此状况下继续使用本mod，否则可能工作异常。
+请重启游戏。</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>人行横道:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>填充图案:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>线段:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>无截图</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>道路 #{0} 端点：</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>道路：</value>
+  </data>
+  
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>从人行横道后生成标线</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>
