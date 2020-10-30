@@ -38,7 +38,7 @@ namespace NodeMarkup.Tools
         public override string GetToolInfo()
         {
             if (IsHover)
-                HoverInfo();
+                return HoverInfo();
             //return $"{HoverInfo()}\n({Hover})";
             else if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerSelectStart;
