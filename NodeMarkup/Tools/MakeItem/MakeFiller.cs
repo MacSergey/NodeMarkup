@@ -19,6 +19,9 @@ namespace NodeMarkup.Tools
 
         public bool DisableByAlt { get; set; }
 
+        private bool IsHover => FillerPointsSelector.IsHoverPoint;
+        private IFillerVertex Hover => FillerPointsSelector.HoverPoint;
+
         protected override void Reset(BaseToolMode prevMode)
         {
             Contour = new FillerContour(Tool.Markup);
@@ -34,25 +37,29 @@ namespace NodeMarkup.Tools
         }
         public override string GetToolInfo()
         {
-            if (FillerPointsSelector.IsHoverPoint)
-            {
-                if (Contour.IsEmpty)
-                    return Localize.Tool_InfoFillerClickStart;
-                else if (FillerPointsSelector.HoverPoint == Contour.First)
-                    return GetCreateToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
-                else
-                    return Localize.Tool_InfoFillerClickNext;
-            }
+            if (IsHover)
+                HoverInfo();
+            //return $"{HoverInfo()}\n({Hover})";
             else if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerSelectStart;
             else
                 return Localize.Tool_InfoFillerSelectNext;
         }
+        private string HoverInfo()
+        {
+            if (Contour.IsEmpty)
+                return Localize.Tool_InfoFillerClickStart;
+            else if (Hover == Contour.First)
+                return GetCreateToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
+            else
+                return Localize.Tool_InfoFillerClickNext;
+        }
+
         public override void OnPrimaryMouseClicked(Event e)
         {
-            if (FillerPointsSelector.IsHoverPoint)
+            if (IsHover)
             {
-                if (Contour.Add(FillerPointsSelector.HoverPoint))
+                if (Contour.Add(Hover))
                 {
                     var filler = new MarkupFiller(Contour, NodeMarkupTool.GetStyle(FillerStyle.FillerType.Stripe));
                     Tool.Markup.AddFiller(filler);
@@ -83,7 +90,7 @@ namespace NodeMarkup.Tools
 
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = FillerPointsSelector.IsHoverPoint && FillerPointsSelector.HoverPoint.Equals(Contour.First) ? Colors.Green : Colors.Hover;
+            var color = IsHover && Hover.Equals(Contour.First) ? Colors.Green : Colors.Hover;
             Contour.Render(cameraInfo, color);
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
@@ -91,9 +98,9 @@ namespace NodeMarkup.Tools
             if (Contour.IsEmpty)
                 return;
 
-            if (FillerPointsSelector.IsHoverPoint)
+            if (IsHover)
             {
-                var linePart = Contour.GetFillerLine(Contour.Last, FillerPointsSelector.HoverPoint);
+                var linePart = Contour.GetFillerLine(Contour.Last, Hover);
                 if (linePart.GetTrajectory(out ILineTrajectory trajectory))
                     trajectory.Render(cameraInfo, Colors.Green);
             }

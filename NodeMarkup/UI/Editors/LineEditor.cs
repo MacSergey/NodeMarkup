@@ -259,12 +259,15 @@ namespace NodeMarkup.UI.Editors
         public override void OnUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()
         {
-            return SelectPanel.Position switch
+            var info = SelectPanel.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
                 EdgePosition.End => Localize.LineEditor_InfoSelectTo,
-                _ => null,
+                _ => string.Empty,
             };
+
+            return info;
+            //return IsHover ? $"{info}\n({Hover})" : info;
         }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }
