@@ -379,14 +379,19 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return new CrosswalkBorderEdge(this, BorderPosition.Right);
                 yield return new CrosswalkBorderEdge(this, BorderPosition.Left);
+                yield return new CrosswalkBorderEdge(this, BorderPosition.Right);
 
-                foreach (var edge in RulesLinesIntersectEdge)
-                {
-                    if (edge.GetT(this, out float t) && 0 < t && t < 1)
-                        yield return edge;
-                }
+                var lines = IntersectLines.ToDictionary(i => i.PointPair, i => i);
+
+                if (Crosswalk.LeftBorder is MarkupRegularLine leftBorder)
+                    lines[leftBorder.PointPair] = leftBorder;
+
+                if (Crosswalk.RightBorder is MarkupRegularLine rightBorder)
+                    lines[rightBorder.PointPair] = rightBorder;
+
+                foreach (var line in lines.Values)
+                    yield return new LinesIntersectEdge(this, line);
             }
         }
     }

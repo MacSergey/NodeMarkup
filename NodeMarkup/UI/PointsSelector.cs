@@ -68,7 +68,6 @@ namespace NodeMarkup.UI
         protected Dictionary<PointType, Bounds> PointsBounds { get; } = new Dictionary<PointType, Bounds>();
         protected Vector3 Position { get; set; }
         public Bounds HoverBounds { get; set; }
-        protected Vector3 Direction { get; set; }
 
         public bool IsHover { get; private set; }
 
@@ -89,11 +88,6 @@ namespace NodeMarkup.UI
             UpdatePosition();
             HoverBounds = new Bounds(Position, Vector3.one * PointSize);
             PointsBounds.Clear();
-
-            var dir = NodeMarkupTool.CameraDirection;
-            dir.y = 0;
-            Direction = dir.normalized;
-
             UpdateBounds();
         }
         protected void UpdatePosition()
@@ -158,7 +152,7 @@ namespace NodeMarkup.UI
         protected override void UpdateBounds()
         {
             var r = Mathf.Max((Step / 2) / Mathf.Sin(180 / Points.Count * Mathf.Deg2Rad), Step);
-            var dir = Direction.Turn90(true);
+            var dir = NodeMarkupTool.CameraDirection.Turn90(true);
 
             CircleLeaveBounds = new Bounds(Position, Vector3.one * (Points.Count > 1 ? (2 * r + PointSize + 3 * Space) : PointSize));
             LineLeaveBounds = new TrajectoryBound(new StraightTrajectory(Position - dir * r, Position + dir * r), PointSize + 3 * Space);
@@ -191,18 +185,18 @@ namespace NodeMarkup.UI
 
         protected override void UpdateBounds()
         {
-            LeaveBounds = new TrajectoryBound(new StraightTrajectory(Position, Position + Direction * (Step * Points.Count)), PointSize + 3 * Space);
+            LeaveBounds = new TrajectoryBound(new StraightTrajectory(Position, Position + NodeMarkupTool.CameraDirection * (Step * Points.Count)), PointSize + 3 * Space);
 
             foreach (var point in Points)
             {
-                var pointPosition = Points.Count > 1 ? Position + Direction * (Step * (PointsBounds.Count + 1)) : Position;
+                var pointPosition = Points.Count > 1 ? Position + NodeMarkupTool.CameraDirection * (Step * (PointsBounds.Count + 1)) : Position;
                 var pointBounds = new Bounds(pointPosition, Vector3.one * PointSize);
                 PointsBounds.Add(point, pointBounds);
             }
         }
 
         protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.White, LeaveBounds.Size - 0.43f, false);
-        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.Blue);
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.Blue, LeaveBounds.Size);
 
         protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
     }

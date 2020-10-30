@@ -225,7 +225,9 @@ namespace NodeMarkup.Tools
             RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
             RayCast(input, out RaycastOutput output);
             MouseWorldPosition = output.m_hitPos;
-            CameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
+            var cameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
+            cameraDirection.y = 0;
+            CameraDirection = cameraDirection.normalized;
 
             Mode.OnUpdate();
             Info();

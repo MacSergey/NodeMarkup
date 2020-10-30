@@ -113,6 +113,7 @@ namespace NodeMarkup.Manager
         public override string XmlSection => LinePartEdge.XmlName;
         public override SupportType Type => SupportType.CrosswalkBorder;
         public MarkupCrosswalkLine CrosswalkLine { get; }
+        public MarkupCrosswalk Crosswalk => CrosswalkLine.Crosswalk;
         public BorderPosition Border { get; }
 
         public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalkLine, BorderPosition border) : base(crosswalkLine.Trajectory.Position(crosswalkLine.GetT(border)))
@@ -145,7 +146,21 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        override 
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            Crosswalk.Render(cameraInfo, Colors.Hover);
+            CrosswalkLine.Render(cameraInfo, color, width, alphaBlend, cut);
+
+            switch(Border)
+            {
+                case BorderPosition.Left:
+                    Crosswalk.LeftBorderTrajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+                    break;
+                case BorderPosition.Right:
+                    Crosswalk.RightBorderTrajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+                    break;
+            }
+        }
 
         public override string ToString() => Border == BorderPosition.Right ? Localize.LineRule_RightBorder : Localize.LineRule_LeftBorder;
     }
