@@ -1103,13 +1103,33 @@ Möchtest du die Markierungen manuell zuordnen?</value>
     <value>{0}
 von {1}</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>Die Liste mit Voreinstellungen ist leer.
+Um eine Voreinstellung zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Voreinstellungen</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Als Voreinstellung speichern</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Als Voreinstellung speichern</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Keine Voreinstellungen</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Voreinstellung übernehmen</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Neue Voreinstellung</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Modus zum Übernehmen von Voreinstellungen verlassen</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Möchtest du die Voreinstellung anwenden?</value>
+  </data>
   
 </root>

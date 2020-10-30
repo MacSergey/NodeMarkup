@@ -1141,13 +1141,35 @@ Shift X10, Ctrl X0.1</value>
     <value>{0}
 от {1}</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>Список трафаретов пуст.
+Для создания трафарета нажмите «{0}» в заголовке панели.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Трафареты</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Сохранить как трафарет</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Сохранить как трафарет</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Нет трафаретов</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Применить трафарет</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Новый трафарет</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Выход из настройки трафарета</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Хотите ли вы применить трафарет?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
 </root>
