@@ -23,14 +23,31 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnObjectSelect();
             AddApplyButton();
+            if (EditObject.HasScreenshot)
+                AddScreenshot();
         }
         protected override void AddHeader()
         {
             if (!EditObject.IsAsset)
                 base.AddHeader();
         }
+        private void AddScreenshot()
+        {
+            var spaceBefore = SettingsPanel.AddUIComponent<UIPanel>();
+            spaceBefore.height = 10;
+
+            var screenshot = ComponentPool.Get<ScreenshotProperty>(SettingsPanel);
+            screenshot.Texture = EditObject.Texture;
+            screenshot.Init();
+
+            var spaceAfter = SettingsPanel.AddUIComponent<UIPanel>();
+            spaceAfter.height = 10;
+        }
         private void AddApplyButton()
         {
+            var spaceBefore = SettingsPanel.AddUIComponent<UIPanel>();
+            spaceBefore.height = 10;
+
             var applyButton = ComponentPool.Get<ButtonPanel>(SettingsPanel);
             applyButton.Text = NodeMarkup.Localize.PresetEditor_ApplyPreset;
             applyButton.Init();

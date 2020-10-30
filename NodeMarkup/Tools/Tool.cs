@@ -450,22 +450,30 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsPreset)}");
 
-            if (TemplateManager.IntersectionManager.AddTemplate(Markup, out IntersectionTemplate preset))
-                Panel.EditPreset(preset);
+            StartCoroutine(MakeScreenshot(Callback));
 
-            StartCoroutine(MakeScreenshot());
+            void Callback(Texture2D texture)
+            {
+                if (TemplateManager.IntersectionManager.AddTemplate(Markup, texture, out IntersectionTemplate preset))
+                    Panel.EditPreset(preset);
+            }
         }
         private int ScreenshotSize => 400;
-        private IEnumerator MakeScreenshot()
+        private IEnumerator MakeScreenshot(Action<Texture2D> callback)
         {
+            if (callback == null)
+                yield break;
+
             yield return new WaitForEndOfFrame();
+
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(MakeScreenshot)}");
 
             var camera = Camera.main;
             var backupMask = camera.cullingMask;
             var backupRect = camera.rect;
             var backupPosition = camera.transform.position;
             var backupRotation = camera.transform.rotation;
-            camera.cullingMask = LayerMask.GetMask("Road");
+            camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
             camera.rect = new Rect(0f, 0f, 1f, 1f);
 
             GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
@@ -473,6 +481,8 @@ namespace NodeMarkup.Tools
             var deltaHeight = radius / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2);
             camera.transform.position = new Vector3(centre.x, Markup.Height + deltaHeight, centre.z);
             camera.transform.rotation = Quaternion.Euler(90, 0, 0);
+            camera.clearFlags = CameraClearFlags.Nothing;
+            camera.backgroundColor = Color.white;
 
             var scale = ScreenshotSize * 4;
 
@@ -501,16 +511,16 @@ namespace NodeMarkup.Tools
             camera.rect = backupRect;
             camera.transform.position = backupPosition;
             camera.transform.rotation = backupRotation;
+            camera.clearFlags = CameraClearFlags.Skybox;
             RenderTexture.active = null;
             Destroy(render);
 
             var data = screenShot.GetPixels32();
             var image = new Image(scale, scale, TextureFormat.RGB24, data);
             image.Resize(ScreenshotSize, ScreenshotSize);
-            var formattedImage = image.GetFormattedImage(Image.BufferFileFormat.PNG);
+            var texture = image.CreateTexture();
 
-            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "preset.png");
-            File.WriteAllBytes(filename, formattedImage);
+            callback(texture);
         }
 
         #endregion

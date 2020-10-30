@@ -158,6 +158,9 @@ namespace NodeMarkup.Manager
 
         public int EntersCount => Enters.Length;
 
+        public Texture2D Texture { get; set; }
+        public bool HasScreenshot => Texture != null;
+
         private IntersectionTemplate() : base() { }
 
         public IntersectionTemplate(Markup markup) : this($"Intersection #{markup.Id}", markup) { }

@@ -122,14 +122,21 @@ namespace NodeMarkup.UI.Editors
 
             SettingsPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
         }
+
         private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
         {
             foreach (var item in SettingsPanel.components)
                 item.width = SettingsPanel.width - SettingsPanel.autoLayoutPadding.horizontal;
         }
+        private bool InProgress { get; set; } = false;
         private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
+            if (InProgress && !value)
+                return;
+
+            InProgress = true;
             SettingsPanel.width = size.x / 10 * 7 - (value ? SettingsPanel.verticalScrollbar.width : 0);
+            InProgress = false;
         }
         private void AddEmptyLabel()
         {

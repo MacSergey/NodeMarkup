@@ -357,5 +357,16 @@ namespace NodeMarkup.Manager
         public override SavedString Saved => Settings.Intersections;
 
         protected override IntersectionTemplate GetInstance(string name, Markup markup) => new IntersectionTemplate(name, markup);
+
+        public bool AddTemplate(Markup markup, Texture2D texture, out IntersectionTemplate template)
+        {
+            if (AddTemplate(GetNewName(), markup, out template))
+            {
+                template.Texture = texture;
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }
