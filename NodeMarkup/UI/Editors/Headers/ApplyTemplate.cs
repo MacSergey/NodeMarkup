@@ -37,7 +37,7 @@ namespace NodeMarkup.UI.Editors
     {
         private Style.StyleType StyleGroup { get; set; }
         protected override Func<StyleTemplate, bool> Selector => (t) => (t.Style.Type & StyleGroup & Style.StyleType.GroupMask) != 0;
-        protected override Func<StyleTemplate, bool> Order => t => t.IsDefault;
+        protected override Func<StyleTemplate, bool> Order => t => !t.IsDefault;
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate)
         {
             Init(onSelectTemplate);

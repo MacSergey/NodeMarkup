@@ -19,13 +19,13 @@ namespace NodeMarkup.UI
         public PointType HoverPoint => HoverGroup?.HoverPoint;
         public bool IsHoverPoint => HoverPoint != null;
 
-        public PointsSelector(IEnumerable<PointType> points, Color color, float size = 0.5f)
+        public PointsSelector(IEnumerable<PointType> points, Color color, float pointSize = 0.5f)
         {
             foreach (var point in points)
             {
                 if (!(Groups.FirstOrDefault(g => g.Intersect(point)) is PointsGroup<PointType> group))
                 {
-                    group = Settings.GroupPointsType != 1 ? (PointsGroup<PointType>)new RoundPointsGroup<PointType>(color, size) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, size);
+                    group = Settings.GroupPointsType != 1 ? (PointsGroup<PointType>)new RoundPointsGroup<PointType>(color, pointSize) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, pointSize);
                     Groups.Add(group);
                 }
 
@@ -60,24 +60,26 @@ namespace NodeMarkup.UI
     {
         protected Color Color { get; }
         protected float Space { get; } = 0.5f;
-        protected float OverlaySize { get; }
+        protected float PointSize { get; }
+        protected float Step => PointSize + Space;
         protected float IntersectSize { get; }
         protected List<PointType> Points { get; } = new List<PointType>();
         public int Count => Points.Count;
         protected Dictionary<PointType, Bounds> PointsBounds { get; } = new Dictionary<PointType, Bounds>();
         protected Vector3 Position { get; set; }
         public Bounds HoverBounds { get; set; }
+        protected Vector3 Direction { get; set; }
 
         public bool IsHover { get; private set; }
 
         public PointType HoverPoint { get; set; }
         public bool IsHoverPoint => HoverPoint != null;
 
-        public PointsGroup(Color color, float overlaySize)
+        public PointsGroup(Color color, float pointSize)
         {
             Color = color;
-            OverlaySize = overlaySize;
-            IntersectSize = Settings.GroupPoints ? 1.5f * OverlaySize : 0f;
+            PointSize = pointSize;
+            IntersectSize = Settings.GroupPoints ? 1.5f * PointSize : 0f;
         }
 
         public void Add(PointType point) => Points.Add(point);
@@ -85,17 +87,21 @@ namespace NodeMarkup.UI
         public void Update()
         {
             UpdatePosition();
-            HoverBounds = new Bounds(Position, Vector3.one * OverlaySize);
+            HoverBounds = new Bounds(Position, Vector3.one * PointSize);
             PointsBounds.Clear();
+
+            var dir = NodeMarkupTool.CameraDirection;
+            dir.y = 0;
+            Direction = dir.normalized;
+
             UpdateBounds();
         }
         protected void UpdatePosition()
         {
             var position = Vector3.zero;
             foreach (var point in Points)
-            {
                 position += point.Position - Points.First().Position;
-            }
+
             Position = Points.First().Position + position / Points.Count;
         }
         protected abstract void UpdateBounds();
@@ -109,7 +115,6 @@ namespace NodeMarkup.UI
             return IsHover;
         }
         protected abstract bool OnLeave(Ray ray);
-        public abstract bool Intersects(PointsGroup<PointType> group);
 
         public void Render(RenderManager.CameraInfo cameraInfo)
         {
@@ -117,91 +122,88 @@ namespace NodeMarkup.UI
             {
                 if (PointsBounds.Count > 1)
                 {
+                    RenderGroupBG(cameraInfo);
                     if (IsHoverPoint)
                         HoverPoint.Render(cameraInfo, Color);
-                    RenderGroup(cameraInfo);
+                    RenderGroupFG(cameraInfo);
                 }
 
                 foreach (var bound in PointsBounds.Values)
-                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Color, OverlaySize);
+                {
+                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Colors.White, PointSize + 0.1f);
+                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Colors.White, PointSize - 0.05f);
+                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Color, PointSize);
+                }
 
                 if (IsHoverPoint)
-                    NodeMarkupTool.RenderCircle(cameraInfo, PointsBounds[HoverPoint].center, Colors.Hover, OverlaySize + Space);
+                    NodeMarkupTool.RenderCircle(cameraInfo, PointsBounds[HoverPoint].center, Colors.Hover, PointSize + Space);
             }
             else
-                NodeMarkupTool.RenderCircle(cameraInfo, Position, Color, OverlaySize);
+                NodeMarkupTool.RenderCircle(cameraInfo, Position, Color, PointSize);
         }
-        protected abstract void RenderGroup(RenderManager.CameraInfo cameraInfo);
+        protected abstract void RenderGroupBG(RenderManager.CameraInfo cameraInfo);
+        protected abstract void RenderGroupFG(RenderManager.CameraInfo cameraInfo);
 
         public override string ToString() => $"{Points.Count} Points";
     }
     public class RoundPointsGroup<PointType> : PointsGroup<PointType>
         where PointType : ISupportPoint
     {
-        private float R { get; set; }
-        private float GroupSize { get; set; }
+        private Bounds CircleLeaveBounds { get; set; }
+        private TrajectoryBound LineLeaveBounds { get; set; }
+        private float Width => Points.Count > 2 ? CircleLeaveBounds.Magnitude() : LineLeaveBounds.Size;
 
-        public Bounds LeaveBounds { get; set; }
-
-        public RoundPointsGroup(Color color, float size) : base(color, size) { }
+        public RoundPointsGroup(Color color, float pointSize) : base(color, pointSize) { }
 
         protected override void UpdateBounds()
         {
-            R = Points.Count > 1 ? (OverlaySize + Space) / 2 / Mathf.Sin(180 / Points.Count * Mathf.Deg2Rad) : OverlaySize;
-            GroupSize = Points.Count > 1 ? (R + OverlaySize + Space) * 2 : OverlaySize;
-            LeaveBounds = new Bounds(Position, Vector3.one * GroupSize);
+            var r = Mathf.Max((Step / 2) / Mathf.Sin(180 / Points.Count * Mathf.Deg2Rad), Step);
+            var dir = Direction.Turn90(true);
+
+            CircleLeaveBounds = new Bounds(Position, Vector3.one * (Points.Count > 1 ? (2 * r + PointSize + 3 * Space) : PointSize));
+            LineLeaveBounds = new TrajectoryBound(new StraightTrajectory(Position - dir * r, Position + dir * r), PointSize + 3 * Space);
 
             foreach (var point in Points)
             {
-                var pointPosition = Points.Count > 1 ? Position + Vector3.forward.TurnDeg(360 / Points.Count * PointsBounds.Count, true) * R : Position;
-                var pointBounds = new Bounds(pointPosition, Vector3.one * OverlaySize);
+                var pointPosition = Points.Count > 1 ? Position + dir.TurnDeg(360 / Points.Count * PointsBounds.Count, true) * r : Position;
+                var pointBounds = new Bounds(pointPosition, Vector3.one * PointSize);
                 PointsBounds.Add(point, pointBounds);
             }
         }
-        protected override void RenderGroup(RenderManager.CameraInfo cameraInfo)
+        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => RenderGroup(cameraInfo, Colors.White, Width - 0.43f, false);
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => RenderGroup(cameraInfo, Colors.Blue, Width);
+        private void RenderGroup(RenderManager.CameraInfo cameraInfo, Color color, float width, bool? alphaBlend = null)
         {
-            NodeMarkupTool.RenderCircle(cameraInfo, Position, Colors.White, GroupSize -0.43f, false);
-            NodeMarkupTool.RenderCircle(cameraInfo, Position, Colors.Blue, GroupSize);
+            if (Points.Count > 2)
+                NodeMarkupTool.RenderCircle(cameraInfo, Position, color, width, alphaBlend);
+            else
+                LineLeaveBounds.Render(cameraInfo, color, width, alphaBlend);
         }
 
-        protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
-        public override bool Intersects(PointsGroup<PointType> group) => 2 * (group.HoverBounds.center - LeaveBounds.center).magnitude <= group.HoverBounds.size.XZ().magnitude + LeaveBounds.size.XZ().magnitude;
+        protected override bool OnLeave(Ray ray) => Points.Count != 2 ? CircleLeaveBounds.IntersectRay(ray) : LineLeaveBounds.IntersectRay(ray);
     }
     public class LinePointsGroup<PointType> : PointsGroup<PointType>
         where PointType : ISupportPoint
     {
-        BezierBounds LeaveBounds { get; set; }
+        private TrajectoryBound LeaveBounds { get; set; }
 
-        public LinePointsGroup(Color color, float size) : base(color, size) { }
-
+        public LinePointsGroup(Color color, float pointSize) : base(color, pointSize) { }
 
         protected override void UpdateBounds()
         {
-            var dir = NodeMarkupTool.CameraDirection;
-            dir.y = 0;
-            dir.Normalize();
-            var step = OverlaySize + Space;
-            var bezier = new Bezier3();
-            bezier.a = bezier.c = Position;
-            bezier.d = bezier.b = Position + dir * (step * Points.Count);
-            LeaveBounds = new BezierBounds(bezier, OverlaySize + 4 * Space);
+            LeaveBounds = new TrajectoryBound(new StraightTrajectory(Position, Position + Direction * (Step * Points.Count)), PointSize + 3 * Space);
 
             foreach (var point in Points)
             {
-                var pointPosition = Points.Count > 1 ? Position + dir * (step * (PointsBounds.Count + 1)) : Position;
-                var pointBounds = new Bounds(pointPosition, Vector3.one * OverlaySize);
+                var pointPosition = Points.Count > 1 ? Position + Direction * (Step * (PointsBounds.Count + 1)) : Position;
+                var pointBounds = new Bounds(pointPosition, Vector3.one * PointSize);
                 PointsBounds.Add(point, pointBounds);
             }
         }
 
-
-        protected override void RenderGroup(RenderManager.CameraInfo cameraInfo)
-        {
-            LeaveBounds.Render(cameraInfo, Colors.White, LeaveBounds.Size - 0.43f, false);
-            LeaveBounds.Render(cameraInfo, Colors.Blue);
-        }
+        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.White, LeaveBounds.Size - 0.43f, false);
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.Blue);
 
         protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
-        public override bool Intersects(PointsGroup<PointType> group) => LeaveBounds.Bounds.Any(b => 2 * (group.HoverBounds.center - b.center).magnitude <= group.HoverBounds.size.XZ().magnitude + b.size.XZ().magnitude);
     }
 }

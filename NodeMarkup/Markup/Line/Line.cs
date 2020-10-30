@@ -99,7 +99,8 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) => Trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
+            => Trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
         public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
 

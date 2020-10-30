@@ -189,7 +189,6 @@
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Elements\TabPanel.cs" />
     <Compile Include="UI\UIUtils.cs" />
-    <Compile Include="Utils\BezierBounds.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -297,7 +296,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

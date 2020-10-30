@@ -144,6 +144,9 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("B", (int)Border));
             return config;
         }
+
+        override 
+
         public override string ToString() => Border == BorderPosition.Right ? Localize.LineRule_RightBorder : Localize.LineRule_LeftBorder;
     }
     public enum EdgePosition

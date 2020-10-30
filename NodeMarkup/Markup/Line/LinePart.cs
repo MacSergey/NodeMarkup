@@ -100,37 +100,13 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class MarkupLineBound : IRender
+
+    public class MarkupLineBound : TrajectoryBound
     {
-        private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
-        public MarkupLine Line { get; }
-        public ILineTrajectory Trajectory => Line.Trajectory;
-        public float Size { get; }
-        private List<Bounds> BoundsList { get; } = new List<Bounds>();
-        public IEnumerable<Bounds> Bounds => BoundsList;
-        public MarkupLineBound(MarkupLine line, float size)
+        public MarkupRegularLine Line {get;}
+        public MarkupLineBound(MarkupRegularLine line, float size) : base(line.Trajectory, size)
         {
             Line = line;
-            Size = size;
-            CalculateBounds();
         }
-
-        private void CalculateBounds()
-        {
-            var size = Size * Coef;
-            var t = 0f;
-            while (t < 1f)
-            {
-                t = Line.Trajectory.Travel(t, size / 2);
-                var bounds = new Bounds(Trajectory.Position(t), Vector3.one * size);
-                BoundsList.Add(bounds);
-            }
-        }
-
-        public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
-        public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
-
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
-            => Line.Render(cameraInfo, color, width, alphaBlend, cut);
     }
 }

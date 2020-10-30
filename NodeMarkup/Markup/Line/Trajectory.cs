@@ -109,4 +109,37 @@ namespace NodeMarkup.Manager
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);
     }
+    public class TrajectoryBound : IRender
+    {
+        private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
+        public ILineTrajectory Trajectory { get; }
+        public float Size { get; }
+        private List<Bounds> BoundsList { get; } = new List<Bounds>();
+        public IEnumerable<Bounds> Bounds => BoundsList;
+        public TrajectoryBound(ILineTrajectory trajectory, float size)
+        {
+            Trajectory = trajectory;
+            Size = size;
+            CalculateBounds();
+        }
+
+        private void CalculateBounds()
+        {
+            var size = Size * Coef;
+            var t = 0f;
+            while (t < 1f)
+            {
+                t = Trajectory.Travel(t, size / 2);
+                BoundsList.Add(new Bounds(Trajectory.Position(t), Vector3.one * size));
+            }
+            BoundsList.Add(new Bounds(Trajectory.Position(0), Vector3.one * Size));
+            BoundsList.Add(new Bounds(Trajectory.Position(1), Vector3.one * Size));
+        }
+
+        public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
+        public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
+
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+            => Trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+    }
 }

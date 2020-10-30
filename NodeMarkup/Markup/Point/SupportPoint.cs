@@ -113,10 +113,10 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
-            First.Render(cameraInfo, color, width, alphaBlend);
-            Second.Render(cameraInfo, color, width, alphaBlend);
+            First.Render(cameraInfo, color, width, alphaBlend, cut);
+            Second.Render(cameraInfo, color, width, alphaBlend, cut);
         }
     }
 }

@@ -5,6 +5,7 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
@@ -281,6 +282,10 @@ namespace NodeMarkup.Utils
         public static int PrevIndex(this int i, int count, int shift = 1) => shift > i ? i + count - (shift % count) : i - shift;
 
         public static LineStyle.StyleAlignment Invert(this LineStyle.StyleAlignment alignment) => (LineStyle.StyleAlignment)(1 - ((int)alignment - 1));
+
+        public static float Magnitude(this Bounds bounds) => bounds.size.magnitude / Mathf.Sqrt(3);
+        public static void Render(this Bounds bounds, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+            => NodeMarkupTool.RenderCircle(cameraInfo, bounds.center, color, width ?? bounds.Magnitude(), alphaBlend);
     }
 
     public struct BezierPoint
