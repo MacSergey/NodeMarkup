@@ -55,14 +55,14 @@ namespace NodeMarkup
             if (Settings.RailUnderMarking)
                 Success &= PatchNetInfoNodeInitNodeInfo(harmony);
 
-            Success &= PatchLoadingManagerLoadCustomContent(harmony);
-            Success &= PatchLoadingScreenModLoadImpl(harmony);
+            if (Settings.LoadMarkingAssets)
+            {
+                Success &= PatchLoadingManagerLoadCustomContent(harmony);
+                Success &= PatchLoadingScreenModLoadImpl(harmony);
+            }
 
-            //if (!success)
-            //{
-            //    var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-            //    messageBox.MessageText = "Mod loaded with errors";
-            //}
+            if (!Mod.InGame)
+                Mod.LoadedError();
         }
         private static bool AddPrefix(Harmony harmony, MethodInfo prefix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
             => AddPatch((original) => harmony.Patch(original, prefix: new HarmonyMethod(prefix)), type, method, originalGetter);

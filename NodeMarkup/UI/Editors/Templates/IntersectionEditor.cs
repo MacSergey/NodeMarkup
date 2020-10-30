@@ -24,6 +24,11 @@ namespace NodeMarkup.UI.Editors
             base.OnObjectSelect();
             AddApplyButton();
         }
+        protected override void AddHeader()
+        {
+            if (!EditObject.IsAsset)
+                base.AddHeader();
+        }
         private void AddApplyButton()
         {
             var applyButton = ComponentPool.Get<ButtonPanel>(SettingsPanel);

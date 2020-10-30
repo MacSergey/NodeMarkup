@@ -13,6 +13,7 @@ using ColossalFramework.UI;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using NodeMarkup.Tools;
+using UnityEngine.SceneManagement;
 
 namespace NodeMarkup
 {
@@ -55,6 +56,7 @@ namespace NodeMarkup
         public string Description => Localize.Mod_Description;
 #endif
 
+        public static bool InGame => SceneManager.GetActiveScene().name is string scene && scene != "MainMenu" && scene != "IntroScreen";
         static CultureInfo Culture
         {
             get
@@ -68,12 +70,14 @@ namespace NodeMarkup
         }
         public void OnEnabled()
         {
+            LoadingManager.instance.m_introLoaded += LoadedError;
             Logger.LogDebug($"Version {Version}");
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
         }
         public void OnDisabled()
         {
+            LoadingManager.instance.m_introLoaded -= LoadedError;
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnDisabled)}");
             Patcher.Unpatch();
             NodeMarkupTool.Remove();
@@ -107,6 +111,15 @@ namespace NodeMarkup
         {
             Utilities.OpenUrl(StableURL);
             return true;
+        }
+
+        public static void LoadedError()
+        {
+            if (!Patcher.Success)
+            {
+                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+                messageBox.MessageText = Localize.Mod_LoaledWithErrors;
+            }
         }
     }
 }

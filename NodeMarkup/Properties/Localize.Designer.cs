@@ -751,7 +751,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на The rule is overlapped by another rule.
+        ///   Ищет локализованную строку, похожую на This rule is overlapped by another rule.
         ///Check other rule&apos;s &quot;From&quot; and &quot;To&quot; points..
         /// </summary>
         public static string LineEditor_RuleOverlappedWarning {
@@ -1055,6 +1055,17 @@ namespace NodeMarkup {
         public static string Mod_LoadFailed {
             get {
                 return ResourceManager.GetString("Mod_LoadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Mod loaded with errors.
+        ///It is not recommended to use the mod in this state, it can lead to unpredictable behavior.
+        ///Restart the game..
+        /// </summary>
+        public static string Mod_LoaledWithErrors {
+            get {
+                return ResourceManager.GetString("Mod_LoaledWithErrors", resourceCulture);
             }
         }
         
@@ -1465,6 +1476,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply after game restart.
+        /// </summary>
+        public static string Settings_ApplyAfterRestart {
+            get {
+                return ResourceManager.GetString("Settings_ApplyAfterRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup marking.
         /// </summary>
         public static string Settings_BackupMarking {
@@ -1744,6 +1764,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Load marking assets.
+        /// </summary>
+        public static string Settings_LoadMarkingAssets {
+            get {
+                return ResourceManager.GetString("Settings_LoadMarkingAssets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Notifications.
         /// </summary>
         public static string Settings_Notifications {
@@ -1771,7 +1800,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking under tracks (Apply after reload).
+        ///   Ищет локализованную строку, похожую на Marking under tracks.
         /// </summary>
         public static string Settings_RailUnderMarking {
             get {

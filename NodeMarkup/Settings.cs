@@ -31,6 +31,7 @@ namespace NodeMarkup
 
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor().ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
+        public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
@@ -192,7 +193,8 @@ namespace NodeMarkup
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
-            AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
+            AddCheckBox(group, $"{Localize.Settings_LoadMarkingAssets} ({Localize.Settings_ApplyAfterRestart})", LoadMarkingAssets);
+            AddCheckBox(group, $"{Localize.Settings_RailUnderMarking} ({Localize.Settings_ApplyAfterRestart})", RailUnderMarking);
             group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 1f, Color.red, 25);
             AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
@@ -336,6 +338,7 @@ namespace NodeMarkup
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
                     messageBox.Button2Text = Localize.MessageBox_OK;
                     messageBox.OnButton1Click = CopyToClipboard;
+                    messageBox.SetButtonsRatio(2, 1);
 
                     bool CopyToClipboard()
                     {
