@@ -211,14 +211,14 @@ namespace NodeMarkup
         {            
             try
             {
-                var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader");
+                var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader");
                 var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler));
                 return AddTranspiler(harmony, transpiler, type, "LoadImpl");
             }
             catch (Exception error)
             {
                 Logger.LogError($"LSM not founded", error);
-                return false;
+                return true;
             }
         }
         private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)

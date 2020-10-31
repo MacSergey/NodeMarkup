@@ -21,7 +21,10 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnObjectSelect()
         {
+            RemovePreview();
+
             base.OnObjectSelect();
+
             AddScreenshot();
             AddApplyButton();
         }
@@ -32,9 +35,9 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddScreenshot()
         {
-            var info = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
-            var screenshot = ComponentPool.Get<PresetInfoProperty>(info);
-            screenshot.Init(EditObject);
+            var group = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            var info = ComponentPool.Get<PresetInfoProperty>(group);
+            info.Init(EditObject);
         }
         private void AddApplyButton()
         {
@@ -44,6 +47,49 @@ namespace NodeMarkup.UI.Editors
             applyButton.OnButtonClick += OnApply;
         }
         private void OnApply() => Tool.ApplyPreset(EditObject);
+        protected override void OnObjectDelete(IntersectionTemplate template)
+        {
+            base.OnObjectDelete(template);
+            RemovePreview();
+        }
+
+        PropertyGroupPanel Preview { get; set; }
+        protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            base.ItemHover(component, eventParam);
+            AddPreview(component);
+        }
+        protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            base.ItemLeave(component, eventParam);
+            RemovePreview();
+        }
+        private void AddPreview(UIComponent component)
+        {
+            if (HoverItem == SelectItem)
+                return;
+
+            ContentPanel.opacity = 0.15f;
+
+            var root = GetRootContainer();
+            Preview = ComponentPool.Get<PropertyGroupPanel>(root);
+            var info = ComponentPool.Get<PresetInfoProperty>(Preview);
+            info.Init(HoverItem.Object);
+            Preview.width = 365f;
+
+            var x = component.absolutePosition.x + component.width;
+            var y = Mathf.Min(component.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
+            Preview.absolutePosition = new Vector2(x, y);
+        }
+        private void RemovePreview()
+        {
+            if (Preview == null)
+                return;
+
+            ContentPanel.opacity = 1f;
+            ComponentPool.Free(Preview);
+            Preview = null;
+        }
     }
 
     public class PresetItem : EditableItem<IntersectionTemplate, PresetIcon>
