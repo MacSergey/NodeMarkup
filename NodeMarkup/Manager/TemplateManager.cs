@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Importers;
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
@@ -41,21 +42,10 @@ namespace NodeMarkup.Manager
             IntersectionManager.Clear(true);
             Authors.Clear();
         }
-        public static void LoadAsset(GameObject gameObject, Package.Asset asset)
-        {
-            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
-                return;
-
-            var templateConfig = Loader.Parse(markingInfo.data);
-            if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
-                AddAssetTemplate(templateAsset);
-
-            Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(LoadAsset)}: {templateAsset.Template.Name}");
-        }
 
         public static void AddAssetTemplate(TemplateAsset templateAsset)
         {
-            switch(templateAsset.Template)
+            switch (templateAsset.Template)
             {
                 case StyleTemplate styleTemplate:
                     StyleManager.AddTemplate(styleTemplate);
@@ -72,60 +62,13 @@ namespace NodeMarkup.Manager
                 Authors[authorId] = new Friend(new UserID(authorId)).personaName;
         }
 
-        public static bool Save(TemplateAsset templateAsset)
-        {
-            try
-            {
-                var package = new Package(templateAsset.Template.Name)
-                {
-                    packageMainAsset = templateAsset.Template.Name,
-                    packageAuthor = $"steamid:{templateAsset.AuthorId}"
-                };
-
-                var gameObject = new GameObject(typeof(MarkingInfo).Name);
-                var markingInfo = gameObject.AddComponent<MarkingInfo>();
-                markingInfo.data = Loader.GetString(templateAsset.Template.ToXml());
-
-                var asset = package.AddAsset($"{templateAsset.Template.Name}_Data", markingInfo.gameObject);
-
-                var meta = new CustomAssetMetaData()
-                {
-                    name = templateAsset.Template.Name,
-                    timeStamp = DateTime.Now,
-                    type = CustomAssetMetaData.Type.Unknown,
-                    dlcMask = SteamHelper.DLC_BitMask.None,
-                    steamTags = new string[] { "Marking" },
-                    guid = templateAsset.Template.Id.ToString(),
-                    assetRef = asset,
-                };
-                package.AddAsset(templateAsset.Template.Name, meta, UserAssetType.CustomAssetMetaData);
-
-                var path = GetSavePathName(templateAsset.FileName);
-                package.Save(path);
-
-                Logger.LogError($"Template asset saved");
-
-                return true;
-            }
-            catch (Exception error)
-            {
-                Logger.LogError($"Could save template asset", error);
-                return false;
-            }
-        }
-        public static string GetSavePathName(string saveName)
-        {
-            string path = PathUtils.AddExtension(PathEscaper.Escape(saveName), PackageManager.packageExtension);
-            return Path.Combine(DataLocation.assetsPath, path);
-        }
-
         public static bool MakeAsset(Template template)
         {
             if (template.IsAsset)
                 return true;
 
             var asset = new TemplateAsset(template);
-            return Save(asset);
+            return Loader.SaveAsset(asset);
         }
     }
     public abstract class TemplateManager<TemplateType> : TemplateManager
@@ -209,7 +152,6 @@ namespace NodeMarkup.Manager
         protected virtual void OnDeleteTemplate(TemplateType template) { }
 
         #endregion
-
 
         #region NAME
 
@@ -360,15 +302,26 @@ namespace NodeMarkup.Manager
 
         protected override IntersectionTemplate GetInstance(string name, Markup markup) => new IntersectionTemplate(name, markup);
 
-        public bool AddTemplate(Markup markup, Texture2D texture, out IntersectionTemplate template)
+        public bool AddTemplate(Markup markup, Image image, out IntersectionTemplate template)
         {
             if (AddTemplate(GetNewName(), markup, out template))
             {
-                template.Screenshot = texture;
+                if (Loader.SaveScreenshot(image, template.Id))
+                    template.Screenshot = image.CreateTexture();
                 return true;
             }
             else
                 return false;
+        }
+        protected override void FromXml(XElement config)
+        {
+            base.FromXml(config);
+
+            foreach(var template in Templates.Where(t => !t.IsAsset))
+            {
+                if (Loader.LoadScreenshot(template.Id, out Image image))
+                    template.Screenshot = image.CreateTexture();
+            }
         }
     }
 }

@@ -1209,4 +1209,38 @@ Restart the game.</value>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>Cut lines by this crosswalk</value>
   </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup presets</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Delete all presets</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Delete all presets</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Do you really want to remove all presets?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Dump presets to file</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Dump presets</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Restore presets from file</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Restore presets</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Do you really want to restore presets?
+The restored presets will replace all existing presets.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Presets restore failed</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Presets successfully restored</value>
+  </data>
 </root>

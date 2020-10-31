@@ -1557,6 +1557,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Backup presets.
+        /// </summary>
+        public static string Settings_BackupPresets {
+            get {
+                return ResourceManager.GetString("Settings_BackupPresets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup.
         /// </summary>
         public static string Settings_BackupTab {
@@ -1638,6 +1647,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all presets.
+        /// </summary>
+        public static string Settings_DeletePresetsButton {
+            get {
+                return ResourceManager.GetString("Settings_DeletePresetsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all presets.
+        /// </summary>
+        public static string Settings_DeletePresetsCaption {
+            get {
+                return ResourceManager.GetString("Settings_DeletePresetsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to remove all presets?.
+        /// </summary>
+        public static string Settings_DeletePresetsMessage {
+            get {
+                return ResourceManager.GetString("Settings_DeletePresetsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete all templates.
         /// </summary>
         public static string Settings_DeleteTemplatesButton {
@@ -1706,6 +1742,24 @@ namespace NodeMarkup {
         public static string Settings_DumpMessageSuccess {
             get {
                 return ResourceManager.GetString("Settings_DumpMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dump presets to file.
+        /// </summary>
+        public static string Settings_DumpPresetsButton {
+            get {
+                return ResourceManager.GetString("Settings_DumpPresetsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Dump presets.
+        /// </summary>
+        public static string Settings_DumpPresetsCaption {
+            get {
+                return ResourceManager.GetString("Settings_DumpPresetsCaption", resourceCulture);
             }
         }
         
@@ -1959,6 +2013,52 @@ namespace NodeMarkup {
         public static string Settings_RestoreMarkingMessageSuccess {
             get {
                 return ResourceManager.GetString("Settings_RestoreMarkingMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore presets from file.
+        /// </summary>
+        public static string Settings_RestorePresetsButton {
+            get {
+                return ResourceManager.GetString("Settings_RestorePresetsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore presets.
+        /// </summary>
+        public static string Settings_RestorePresetsCaption {
+            get {
+                return ResourceManager.GetString("Settings_RestorePresetsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to restore presets?
+        ///The restored presets will replace all existing presets..
+        /// </summary>
+        public static string Settings_RestorePresetsMessage {
+            get {
+                return ResourceManager.GetString("Settings_RestorePresetsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Presets restore failed.
+        /// </summary>
+        public static string Settings_RestorePresetsMessageFailed {
+            get {
+                return ResourceManager.GetString("Settings_RestorePresetsMessageFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Presets successfully restored.
+        /// </summary>
+        public static string Settings_RestorePresetsMessageSuccess {
+            get {
+                return ResourceManager.GetString("Settings_RestorePresetsMessageSuccess", resourceCulture);
             }
         }
         

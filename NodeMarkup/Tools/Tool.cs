@@ -452,14 +452,14 @@ namespace NodeMarkup.Tools
 
             StartCoroutine(MakeScreenshot(Callback));
 
-            void Callback(Texture2D texture)
+            void Callback(Image image)
             {
-                if (TemplateManager.IntersectionManager.AddTemplate(Markup, texture, out IntersectionTemplate preset))
+                if (TemplateManager.IntersectionManager.AddTemplate(Markup, image, out IntersectionTemplate preset))
                     Panel.EditPreset(preset);
             }
         }
         private int ScreenshotSize => 400;
-        private IEnumerator MakeScreenshot(Action<Texture2D> callback)
+        private IEnumerator MakeScreenshot(Action<Image> callback)
         {
             if (callback == null)
                 yield break;
@@ -518,9 +518,8 @@ namespace NodeMarkup.Tools
             var data = screenShot.GetPixels32();
             var image = new Image(scale, scale, TextureFormat.RGB24, data);
             image.Resize(ScreenshotSize, ScreenshotSize);
-            var texture = image.CreateTexture();
 
-            callback(texture);
+            callback(image);
         }
 
         #endregion

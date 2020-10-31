@@ -19,10 +19,14 @@ namespace NodeMarkup.UI.Editors
         protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         protected override string GroupName(bool group) => throw new NotSupportedException();
 
-        protected override void OnObjectSelect()
+        protected override void ClearSettings()
         {
             RemovePreview();
+            base.ClearSettings();
+        }
 
+        protected override void OnObjectSelect()
+        {
             base.OnObjectSelect();
 
             AddScreenshot();
@@ -72,8 +76,8 @@ namespace NodeMarkup.UI.Editors
             ContentPanel.opacity = 0.15f;
 
             var root = GetRootContainer();
-            Preview = ComponentPool.Get<PropertyGroupPanel>(root);
-            var info = ComponentPool.Get<PresetInfoProperty>(Preview);
+            Preview = ComponentPool.Get<PreviewPanel>(root);
+            var info = ComponentPool.Get<PreviewPresetInfo>(Preview);
             info.Init(HoverItem.Object);
             Preview.width = 365f;
 
@@ -125,4 +129,12 @@ namespace NodeMarkup.UI.Editors
         }
     }
     public class PresetGroup : EditableGroup<bool, PresetItem, IntersectionTemplate, PresetIcon> { }
+    public class PreviewPanel : PropertyGroupPanel
+    {
+        protected override Color32 Color => UnityEngine.Color.white;
+    }
+    public class PreviewPresetInfo : PresetInfoProperty
+    {
+        protected override Color32 TextColor => Color.black;
+    }
 }

@@ -14,6 +14,8 @@ namespace NodeMarkup.UI
         private float Size => 200f;
         protected override float DefaultHeight => Size + 10;
 
+        protected virtual Color32 TextColor => Color.white;
+
         private static Material Material { get; } = new Material(Shader.Find("UI/Default UI Shader"));
         private static Texture2D Empty { get; } = RenderHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
@@ -130,6 +132,7 @@ namespace NodeMarkup.UI
             label.padding = new RectOffset(2, 2, 1, 1);
             label.text = text;
             label.textScale = 0.8f;
+            label.textColor = TextColor;
             label.textAlignment = alignment;
             return label;
         }

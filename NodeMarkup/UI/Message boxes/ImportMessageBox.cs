@@ -12,6 +12,10 @@ namespace NodeMarkup.UI
 {
     public abstract class ImportMessageBox : SimpleMessageBox
     {
+        protected abstract string Caption { get; }
+        protected abstract string SuccessMessage { get; }
+        protected abstract string FailedMessage { get; }
+
         private UIButton ImportButton { get; set; }
         private UIButton CancelButton { get; set; }
         protected FileDropDown DropDown { get; set; }
@@ -55,7 +59,17 @@ namespace NodeMarkup.UI
                 DropDown.AddItem(file.Key, file.Value);
         }
         protected abstract Dictionary<string, string> GetList();
-        protected abstract void ImportClick();
+        private void ImportClick()
+        {
+            var result = Import(DropDown.SelectedObject);
+
+            var resultMessageBox = ShowModal<OkMessageBox>();
+            resultMessageBox.CaprionText = Caption;
+            resultMessageBox.MessageText = result ? SuccessMessage : FailedMessage;
+
+            Cancel();
+        }
+        protected abstract bool Import(string file);
 
         protected virtual void CancelClick() => Cancel();
 
@@ -63,30 +77,27 @@ namespace NodeMarkup.UI
     }
     public class ImportMarkingMessageBox : ImportMessageBox
     {
+        protected override string Caption => NodeMarkup.Localize.Settings_RestoreMarkingCaption;
+        protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestoreMarkingMessageSuccess;
+        protected override string FailedMessage => NodeMarkup.Localize.Settings_RestoreMarkingMessageFailed;
         protected override Dictionary<string, string> GetList() => Loader.GetMarkingRestoreList();
-        protected override void ImportClick()
-        {
-            var result = Loader.ImportMarkingData(DropDown.SelectedObject);
-
-            var resultMessageBox = ShowModal<OkMessageBox>();
-            resultMessageBox.CaprionText = NodeMarkup.Localize.Settings_RestoreMarkingCaption;
-            resultMessageBox.MessageText = result ? NodeMarkup.Localize.Settings_RestoreMarkingMessageSuccess : NodeMarkup.Localize.Settings_RestoreMarkingMessageFailed;
-
-            Cancel();
-        }
+        protected override bool Import(string file) => Loader.ImportMarkingData(file);
     }
     public class ImportTemplatesMessageBox : ImportMessageBox
     {
-        protected override Dictionary<string, string> GetList() => Loader.GetTemplatesRestoreList();
-        protected override void ImportClick()
-        {
-            var result = Loader.ImportStylesData(DropDown.SelectedObject);
+        protected override string Caption => NodeMarkup.Localize.Settings_RestoreTemplatesCaption;
+        protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageSuccess;
+        protected override string FailedMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageFailed;
+        protected override Dictionary<string, string> GetList() => Loader.GetStylesRestoreList();
+        protected override bool Import(string file) =>  Loader.ImportStylesData(file);
+    }
+    public class ImportPresetsMessageBox : ImportMessageBox
+    {
+        protected override string Caption => NodeMarkup.Localize.Settings_RestorePresetsCaption;
+        protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestorePresetsMessageSuccess;
+        protected override string FailedMessage => NodeMarkup.Localize.Settings_RestorePresetsMessageFailed;
+        protected override Dictionary<string, string> GetList() => Loader.GetIntersectionsRestoreList();
+        protected override bool Import(string file) => Loader.ImportIntersectionsData(file);
 
-            var resultMessageBox = ShowModal<OkMessageBox>();
-            resultMessageBox.CaprionText = NodeMarkup.Localize.Settings_RestoreTemplatesCaption;
-            resultMessageBox.MessageText = result ? NodeMarkup.Localize.Settings_RestoreTemplatesMessageSuccess : NodeMarkup.Localize.Settings_RestoreTemplatesMessageFailed;
-
-            Cancel();
-        }
     }
 }

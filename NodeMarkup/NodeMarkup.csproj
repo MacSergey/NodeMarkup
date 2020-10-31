@@ -186,7 +186,6 @@
     <Compile Include="UI\Property panels\FieldProperty.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
     <Compile Include="UI\Property panels\ListProperty.cs" />
-    <Compile Include="UI\Property panels\ScreenshotProperty.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />

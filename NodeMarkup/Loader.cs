@@ -1,4 +1,7 @@
 ﻿using ColossalFramework.Globalization;
+using ColossalFramework.Importers;
+using ColossalFramework.IO;
+using ColossalFramework.Packaging;
 using HarmonyLib;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
@@ -11,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
+using UnityEngine;
 
 namespace NodeMarkup
 {
@@ -98,11 +102,14 @@ namespace NodeMarkup
         }
         public static string MarkingRecovery => nameof(MarkingRecovery);
         public static string TemplatesRecovery => nameof(TemplatesRecovery);
+        public static string PresetsRecovery => nameof(PresetsRecovery);
 
         public static string MarkingName => $"{MarkingRecovery}.{GetSaveName()}";
         private static Regex MarkingRegex { get; } = new Regex(@$"{MarkingRecovery}\.(?<name>.+)\.(?<date>\d+)");
         private static Regex TemplatesRegex { get; } = new Regex(@$"{TemplatesRecovery}\.(?<date>\d+)");
+        private static Regex PresetsRegex { get; } = new Regex(@$"{PresetsRecovery}\.(?<date>\d+)");
         private static string RecoveryDirectory => Path.Combine(Directory.GetCurrentDirectory(), "IntersectionMarkingTool");
+        private static string ScreenshotDirectory => Path.Combine(RecoveryDirectory, "TemplateScreenshots");
 
         public static Dictionary<string, string> GetMarkingRestoreList()
         {
@@ -119,13 +126,16 @@ namespace NodeMarkup
             }
             return result;
         }
-        public static Dictionary<string, string> GetTemplatesRestoreList()
+        public static Dictionary<string, string> GetStylesRestoreList() => GetTemplatesRestoreList(TemplatesRecovery, TemplatesRegex);
+        public static Dictionary<string, string> GetIntersectionsRestoreList() => GetTemplatesRestoreList(PresetsRecovery, PresetsRegex);
+
+        private static Dictionary<string, string> GetTemplatesRestoreList(string name, Regex regex)
         {
-            var files = GetRestoreList($"{TemplatesRecovery}*.xml");
+            var files = GetRestoreList($"{name}*.xml");
             var result = new Dictionary<string, string>();
             foreach (var file in files)
             {
-                var match = TemplatesRegex.Match(file);
+                var match = regex.Match(file);
                 if (!match.Success)
                     continue;
 
@@ -197,6 +207,12 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpTemplatesData)}");
             return DumpData(Settings.Templates, TemplatesRecovery, out path);
         }
+        public static bool DumpPresetsData(out string path)
+        {
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpPresetsData)}");
+            return DumpData(Settings.Intersections, PresetsRecovery, out path);
+        }
+
         private static bool DumpData(string data, string name, out string path)
         {
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpData)}");
@@ -238,6 +254,100 @@ namespace NodeMarkup
                 file = string.Empty;
                 return false;
             }
+        }
+
+        public static void LoadAsset(GameObject gameObject, Package.Asset asset)
+        {
+            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
+                return;
+
+            var templateConfig = Loader.Parse(markingInfo.data);
+            if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
+                TemplateManager.AddAssetTemplate(templateAsset);
+
+            Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(LoadAsset)}: {templateAsset.Template.Name}");
+        }
+        public static bool SaveAsset(TemplateAsset templateAsset)
+        {
+            try
+            {
+                var package = new Package(templateAsset.Template.Name)
+                {
+                    packageMainAsset = templateAsset.Template.Name,
+                    packageAuthor = $"steamid:{templateAsset.AuthorId}"
+                };
+
+                var gameObject = new GameObject(typeof(MarkingInfo).Name);
+                var markingInfo = gameObject.AddComponent<MarkingInfo>();
+                markingInfo.data = Loader.GetString(templateAsset.Template.ToXml());
+
+                var asset = package.AddAsset($"{templateAsset.Template.Name}_Data", markingInfo.gameObject);
+
+                var meta = new CustomAssetMetaData()
+                {
+                    name = templateAsset.Template.Name,
+                    timeStamp = DateTime.Now,
+                    type = CustomAssetMetaData.Type.Unknown,
+                    dlcMask = SteamHelper.DLC_BitMask.None,
+                    steamTags = new string[] { "Marking" },
+                    guid = templateAsset.Template.Id.ToString(),
+                    assetRef = asset,
+                };
+                package.AddAsset(templateAsset.Template.Name, meta, UserAssetType.CustomAssetMetaData);
+
+                var path = GetSavePathName(templateAsset.FileName);
+                package.Save(path);
+
+                Logger.LogError($"Template asset saved");
+
+                return true;
+            }
+            catch (Exception error)
+            {
+                Logger.LogError($"Could save template asset", error);
+                return false;
+            }
+        }
+        public static string GetSavePathName(string saveName)
+        {
+            string path = PathUtils.AddExtension(PathEscaper.Escape(saveName), PackageManager.packageExtension);
+            return Path.Combine(DataLocation.assetsPath, path);
+        }
+
+        public static bool SaveScreenshot(Image image, Guid id)
+        {
+            try
+            {
+                var data = image.GetFormattedImage(Image.BufferFileFormat.PNG);
+                var path = Path.Combine(ScreenshotDirectory, $"{id}.png");
+                File.WriteAllBytes(path, data);
+                return true;
+            }
+            catch (Exception error)
+            {
+                Logger.LogError($"Couldnt save screenshot {id}", error);
+                return false;
+            }
+        }
+        public static bool LoadScreenshot(Guid id, out Image image)
+        {
+            try
+            {
+                if (!Directory.Exists(ScreenshotDirectory))
+                    Directory.CreateDirectory(ScreenshotDirectory);
+
+                var path = Path.Combine(ScreenshotDirectory, $"{id}.png");
+                var data = File.ReadAllBytes(path);
+                image = new Image(data);
+                return true;
+            }
+            catch (Exception error)
+            {
+                Logger.LogError($"Couldnt load screenshot {id}", error);
+                image = null;
+                return false;
+            }
+
         }
     }
 }
