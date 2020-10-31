@@ -280,7 +280,7 @@
     <value>マーキングデータの復元に成功しました</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>ルールのクイックセットアップ</value>
+    <value>追加ルールのクイックセットアップ</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>マーキングの描画距離（m）</value>
@@ -1074,7 +1074,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>プリセットの一覧は空です。
-保存するにはヘッダー部分から、 {0} をクリックします。</value>
+保存するにはパネルのヘッダー部分から、 {0} をクリックします。</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
     <value>プリセット</value>
@@ -1092,7 +1092,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>プリセットを適用</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
-    <value>新しいプリセット</value>
+    <value>名無しのプリセット</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
     <value>プリセットの編集モードを終了しますか？</value>
@@ -1114,23 +1114,68 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
 この状態で、MODの使用はお勧め出来ません。
 ゲームを再起動してください。</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>横断歩道の数:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>塗り潰しの数:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>ラインの数:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>画像なし</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>道路 #{0} のポイント数:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>接続道路の数:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>横断歩道と重なる新たなラインは自動的に除去</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>横断歩道と重なるラインを除去</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>プリセットのバックアップ</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>プリセットを全て削除</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>プリセットを全て削除</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>本当に全てのプリセットを削除しますか？</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>プリセットをファイルに保存</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>プリセットのダンプ出力</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>プリセットをファイルから復元</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>プリセットの復元</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>本当にテンプレートを復元しますか？
+復元すると、既存のプリセットを全て置き換えます。</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>プリセットの復元に失敗しました</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>プリセットの復元に成功しました</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>全ての横断歩道で重なるラインを除去</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>全ての横断歩道で重なるラインを除去</value>
+  </data>
 </root>

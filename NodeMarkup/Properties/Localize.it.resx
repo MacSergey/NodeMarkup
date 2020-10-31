@@ -1106,14 +1106,32 @@ Vuoi applicare l'incrocio manualmente?</value>
   
   
   
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Autore</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Applica dopo il riavvio del gioco</value>
+  </data>
   
   
-  
-  
-  
-  
-  
-  
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Attraversamento pedonale:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Riempimenti:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Linee:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Nessun screenshot</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Punto #{0} della strada:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Strade:</value>
+  </data>
   
   
   

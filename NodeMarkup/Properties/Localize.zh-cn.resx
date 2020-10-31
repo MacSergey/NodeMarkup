@@ -1127,19 +1127,50 @@ Shift x10，Ctrl x0.1</value>
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>道路：</value>
   </data>
-  
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>在人行横道后创建线</value>
+  </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>从人行横道后生成标线</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>备份预设</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>删除所有预设​​​​​​​​​</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>删除所有预设​​​​​​​​​</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>确定要删除所有预设吗?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>导出预设到文件</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>导出预设</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>从文件中恢复预设</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>恢复预设</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>确定要恢复预设吗?
+恢复后的数据会覆盖既存的预设。</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>预设恢复失败</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>预设恢复成功</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>从人行横道后生成标线</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>从人行横道后生成标线</value>
+  </data>
 </root>
