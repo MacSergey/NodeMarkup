@@ -281,8 +281,8 @@ namespace NodeMarkup.Manager
             if (!Settings.CutLineByCrosswalk || point.Type == MarkupPoint.PointType.Normal)
                 return new EnterPointEdge(point);
 
-            var intersects = Markup.Crosswalks.Where(c => c.Line.PointPair.ContainsEnter(point.Enter)).Select(c => MarkupLinesIntersect.Calculate(this, c.Line)).Where(i => i.IsIntersect).ToArray();
-            if(!intersects.Any())
+            var intersects = Markup.GetIntersects(this).Where(i => i.Pair.GetOther(this) is MarkupCrosswalkLine line && line.PointPair.ContainsEnter(point.Enter)).ToArray();
+            if (!intersects.Any())
                 return new EnterPointEdge(point);
 
             var intersect = intersects.Aggregate((i, j) => point == End ^ (i.FirstT > i.SecondT) ? i : j);

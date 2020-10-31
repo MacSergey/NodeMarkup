@@ -25,6 +25,7 @@ namespace NodeMarkup.UI.Editors
         public static string Offset => nameof(Offset);
         public static string EdgeLines => nameof(EdgeLines);
         public static string Additionally => nameof(Additionally);
+        public static string Cut => nameof(Cut);
 
         public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
         private static UITextureAtlas GetButtonsIcons()
@@ -46,6 +47,7 @@ namespace NodeMarkup.UI.Editors
                 Offset,
                 EdgeLines,
                 Additionally,
+                Cut
             };
 
             var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));

@@ -543,6 +543,32 @@ namespace NodeMarkup.Manager
             dependences.Lines = 1;
             return dependences;
         }
+        public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            var enter = crosswalk.Line.Start.Enter;
+            var lines = Lines.Where(l => l.Type == MarkupLine.LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
+
+            foreach (var line in lines)
+            {
+                var intersect = GetIntersect(line, crosswalk.Line);
+                if (!intersect.IsIntersect)
+                    continue;
+
+                foreach (var rule in line.Rules)
+                {
+                    if (!rule.GetFromT(out float fromT) || !rule.GetToT(out float toT))
+                        continue;
+
+                    if (!(fromT < intersect.FirstT && intersect.FirstT < toT) && !(toT < intersect.FirstT && intersect.FirstT < fromT))
+                        continue;
+
+                    if ((line.End.Type == MarkupPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
+                        rule.From = new LinesIntersectEdge(intersect.Pair);
+                    else
+                        rule.To = new LinesIntersectEdge(intersect.Pair);
+                }
+            }
+        }
 
         #endregion
 

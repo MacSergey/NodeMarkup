@@ -53,11 +53,12 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
+            var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel);
             header.Init(EditObject.Style.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
+            header.OnCut += CutLines;
         }
         private void AddBordersProperties()
         {
@@ -133,7 +134,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() =>  Buffer = EditObject.Style.CopyCrosswalkStyle();
+        private void CopyStyle() => Buffer = EditObject.Style.CopyCrosswalkStyle();
         private void PasteStyle()
         {
             if (Buffer is CrosswalkStyle style)
@@ -161,6 +162,7 @@ namespace NodeMarkup.UI.Editors
 
             StyleProperties.Clear();
         }
+        private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);
         protected override void OnObjectDelete(MarkupCrosswalk crosswalk) => Markup.RemoveCrosswalk(crosswalk);
         protected override void OnObjectUpdate() => FillBorders();
         public void RefreshItem() => SelectItem.Refresh();
@@ -219,7 +221,7 @@ namespace NodeMarkup.UI.Editors
 
         private MarkupLineBound[] BorderLines { get; set; }
         private MarkupLineBound HoverLine { get; set; }
-        private bool IsHoverLine =>  HoverLine != null;
+        private bool IsHoverLine => HoverLine != null;
 
         public CrosswalkBorderToolMode(CrosswalksEditor editor) : base(editor) { }
 

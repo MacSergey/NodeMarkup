@@ -588,6 +588,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cut lines by this crosswalk.
+        /// </summary>
+        public static string HeaderPanel_CutLinesByCrosswalk {
+            get {
+                return ResourceManager.GetString("HeaderPanel_CutLinesByCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Duplicate.
         /// </summary>
         public static string HeaderPanel_Duplicate {

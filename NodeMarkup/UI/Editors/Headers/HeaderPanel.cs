@@ -130,6 +130,23 @@ namespace NodeMarkup.UI.Editors
         private void CopyClick(UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke();
         private void PasteClick(UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke();
     }
+    public class CrosswalkHeaderPanel : StyleHeaderPanel
+    {
+        public event Action OnCut;
+
+        public CrosswalkHeaderPanel()
+        {
+            Content.AddButton(HeaderButton.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            OnCut = null;
+        }
+
+        private void CutClick(UIComponent component, UIMouseEventParameter eventParam) => OnCut?.Invoke();
+    }
 
     public abstract class TemplateHeaderPanel<TemplateType> : HeaderPanel
         where TemplateType : Template
