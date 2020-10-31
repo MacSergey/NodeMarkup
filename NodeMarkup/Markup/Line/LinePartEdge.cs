@@ -80,6 +80,7 @@ namespace NodeMarkup.Manager
         public MarkupLine Main => First;
         public MarkupLine Slave => Second;
 
+        public LinesIntersectEdge(MarkupLinePair pair) : base(pair) { }
         public LinesIntersectEdge(MarkupLine first, MarkupLine second) : base(first, second) { }
 
         public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);

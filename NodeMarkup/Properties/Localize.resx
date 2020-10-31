@@ -1203,4 +1203,7 @@ Restart the game.</value>
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>Roads:</value>
   </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Cut new line by crosswalk</value>
+  </data>
 </root>

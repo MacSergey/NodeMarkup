@@ -1593,6 +1593,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cut new line by crosswalk.
+        /// </summary>
+        public static string Settings_CutLineByCrosswalk {
+            get {
+                return ResourceManager.GetString("Settings_CutLineByCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete marking from all intersections.
         /// </summary>
         public static string Settings_DeleteMarkingButton {

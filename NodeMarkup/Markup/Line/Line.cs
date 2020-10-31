@@ -272,9 +272,21 @@ namespace NodeMarkup.Manager
         }
         protected virtual MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
         {
-            var from = empty ? null : new EnterPointEdge(Start);
-            var to = empty ? null : new EnterPointEdge(End);
+            var from = empty ? null : GetDefaultEdge(Start);
+            var to = empty ? null : GetDefaultEdge(End);
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
+        }
+        private ILinePartEdge GetDefaultEdge(MarkupPoint point)
+        {
+            if (!Settings.CutLineByCrosswalk || point.Type == MarkupPoint.PointType.Normal)
+                return new EnterPointEdge(point);
+
+            var intersects = Markup.Crosswalks.Where(c => c.Line.PointPair.ContainsEnter(point.Enter)).Select(c => MarkupLinesIntersect.Calculate(this, c.Line)).Where(i => i.IsIntersect).ToArray();
+            if(!intersects.Any())
+                return new EnterPointEdge(point);
+
+            var intersect = intersects.Aggregate((i, j) => point == End ^ (i.FirstT > i.SecondT) ? i : j);
+            return new LinesIntersectEdge(intersect.Pair);
         }
 
         public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true) 
