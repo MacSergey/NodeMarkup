@@ -1467,6 +1467,60 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Crosswalks:.
+        /// </summary>
+        public static string PresetInfo_Crosswalks {
+            get {
+                return ResourceManager.GetString("PresetInfo_Crosswalks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Fillers:.
+        /// </summary>
+        public static string PresetInfo_Fillers {
+            get {
+                return ResourceManager.GetString("PresetInfo_Fillers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Lines:.
+        /// </summary>
+        public static string PresetInfo_Lines {
+            get {
+                return ResourceManager.GetString("PresetInfo_Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No screenshot.
+        /// </summary>
+        public static string PresetInfo_NoScreenshot {
+            get {
+                return ResourceManager.GetString("PresetInfo_NoScreenshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Road #{0} points:.
+        /// </summary>
+        public static string PresetInfo_RoadPoints {
+            get {
+                return ResourceManager.GetString("PresetInfo_RoadPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Roads:.
+        /// </summary>
+        public static string PresetInfo_Roads {
+            get {
+                return ResourceManager.GetString("PresetInfo_Roads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not set.
         /// </summary>
         public static string SelectPanel_NotSet {

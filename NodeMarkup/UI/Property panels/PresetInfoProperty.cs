@@ -45,7 +45,7 @@ namespace NodeMarkup.UI
 
             for(var i = 0; i < template.Enters.Length; i += 1)
             {
-                Temp.Add(AddTitleData($"Road #{i + 1} points: "));
+                Temp.Add(AddTitleData(string.Format(NodeMarkup.Localize.PresetInfo_RoadPoints, i + 1)));
                 Temp.Add(AddValueData( template.Enters[i].Points.ToString()));
             }
 
@@ -85,7 +85,7 @@ namespace NodeMarkup.UI
             NoScreenshot.position = new Vector2(0, 0);
 
             NoScreenshot.textScale = 1.2f;
-            NoScreenshot.text = "No screenshot";
+            NoScreenshot.text = NodeMarkup.Localize.PresetInfo_NoScreenshot;
 
             NoScreenshot.atlas = atlas;
             NoScreenshot.backgroundSprite = EmptySprite;
@@ -102,10 +102,10 @@ namespace NodeMarkup.UI
 
             Titles.eventSizeChanged += (UIComponent component, Vector2 value) => SetPosition();
 
-            AddTitleData("Roads: ");
-            AddTitleData("Lines: ");
-            AddTitleData("Crosswalks: ");
-            AddTitleData("Fillers: ");
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Roads);
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Lines);
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Crosswalks);
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Fillers);
         }
         private void AddValues()
         {
@@ -127,7 +127,7 @@ namespace NodeMarkup.UI
         {
             var label = parent.AddUIComponent<UILabel>();
             label.eventTextChanged += (UIComponent component, string value) => SetSize(parent);
-            label.padding = new RectOffset(0, 0, 1, 1);
+            label.padding = new RectOffset(2, 2, 1, 1);
             label.text = text;
             label.textScale = 0.8f;
             label.textAlignment = alignment;
