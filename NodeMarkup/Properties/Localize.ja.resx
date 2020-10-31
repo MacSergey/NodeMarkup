@@ -1059,7 +1059,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>横断歩道の基準線を一緒に設定</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>軌道の下部でマーキングを描画（再起動後に有効）</value>
+    <value>軌道の下部でマーキングを描画</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
@@ -1070,7 +1070,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
     <value>{0}
-製作者: {1}</value>
+作成者: {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>プリセットの一覧は空です。
@@ -1100,5 +1100,37 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
     <value>プリセットを適用しますか？</value>
   </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>作成者</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>再起動後に有効</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>マーキングのカスタムアセットを読み込む</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>MODのロード中に、エラーが発生しました。
+この状態で、MODの使用はお勧め出来ません。
+ゲームを再起動してください。</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>

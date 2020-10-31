@@ -1131,5 +1131,37 @@ Um eine Voreinstellung zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
     <value>Möchtest du die Voreinstellung anwenden?</value>
   </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Ersteller</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Nach Neustart des Spiels anwenden</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Lade Markierungs-Assets</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod fehlerhaft geladen.
+Es wird nicht empfohlen, den Mod in diesem Status zu nutzen, da es zu unvorhersehbarem Verhalten kommen kann.
+Starte das Spiel neu.</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>

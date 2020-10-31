@@ -1172,4 +1172,73 @@ Shift X10, Ctrl X0.1</value>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Автор</value>
   </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Применится после перезагрузки игры</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Загружать игровые ресурсы маркировки</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Мод загрузился с ошибками.
+Не рекомендуется использовать мод в таком состояние, это может привести к непредсказуемым результатам.
+Перезагрузите игру.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Переходов:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Заполнителей:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Линий:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Нет скриншота</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Точек у дороги №{0}:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Дорог:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Обрезать новые линии у переходов</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Обрезать линии до этого перехода</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Резервирование трафаретов</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Удалить все трафареты</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Удалить все трафареты</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить все трафареты?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Сохранить трафареты в файл</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Сохранение трафаретов</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Восстановление трафаретов из файла</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Восстановление трафаретов</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Вы действительно хотите восстановить трафареты?
+Они заменит все существующие трафареты.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Не удалось восстановить трафареты</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Трафареты успешно восстановлены</value>
+  </data>
 </root>

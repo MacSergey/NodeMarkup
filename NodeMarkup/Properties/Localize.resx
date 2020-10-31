@@ -1204,7 +1204,7 @@ Restart the game.</value>
     <value>Roads:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>Cut new line by crosswalk</value>
+    <value>Cut new line by crosswalks</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>Cut lines by this crosswalk</value>
