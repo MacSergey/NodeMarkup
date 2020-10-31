@@ -156,10 +156,13 @@ namespace NodeMarkup.Manager
         public EnterData[] Enters { get; private set; }
         public ObjectsMap Map { get; } = new ObjectsMap();
 
-        public int EntersCount => Enters.Length;
+        public int Roads => Enters.Length;
+        public int Lines { get; private set; }
+        public int Crosswalks { get; private set; }
+        public int Fillers { get; private set; }
 
-        public Texture2D Texture { get; set; }
-        public bool HasScreenshot => Texture != null;
+        public Texture2D Screenshot { get; set; }
+        public bool HasScreenshot => Screenshot != null;
 
         private IntersectionTemplate() : base() { }
 
@@ -168,6 +171,9 @@ namespace NodeMarkup.Manager
         {
             Data = markup.ToXml();
             Enters = markup.Enters.Select(e => e.Data).ToArray();
+            Lines = markup.LinesCount;
+            Crosswalks = markup.CrosswalksCount;
+            Fillers = markup.FillersCount;
         }
 
         public static bool FromXml(XElement config, out IntersectionTemplate template)
@@ -184,6 +190,10 @@ namespace NodeMarkup.Manager
             foreach (var enter in Enters)
                 config.Add(enter.ToXml());
 
+            config.Add(new XAttribute("LC", Lines));
+            config.Add(new XAttribute("CC", Crosswalks));
+            config.Add(new XAttribute("FC", Fillers));
+
             return config;
         }
 
@@ -193,6 +203,11 @@ namespace NodeMarkup.Manager
             {
                 Data = data;
                 Enters = config.Elements(Enter.XmlName).Select(c => EnterData.FromXml(c)).ToArray();
+
+                Lines = config.GetAttrValue<int>("LC");
+                Crosswalks = config.GetAttrValue<int>("CC");
+                Fillers = config.GetAttrValue<int>("FC");
+
                 return true;
             }
             else

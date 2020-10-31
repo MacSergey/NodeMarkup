@@ -46,7 +46,7 @@ namespace NodeMarkup.UI.Editors
 
         public LinesEditor()
         {
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
             PartEdgeToolMode = new PartEdgeToolMode(this);
         }
 
@@ -58,10 +58,9 @@ namespace NodeMarkup.UI.Editors
             foreach (var line in Markup.Lines)
                 AddItem(line);
         }
-        protected override void ClearSettings()
+        protected override void OnClear()
         {
             HoverRulePanel = null;
-            base.ClearSettings();
         }
         protected override void OnObjectSelect()
         {
@@ -82,7 +81,7 @@ namespace NodeMarkup.UI.Editors
 
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
         {
-            var rulePanel = ComponentPool.Get<RulePanel>(SettingsPanel);
+            var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel);
             rulePanel.Init(this, rule);
             rulePanel.OnHover += RuleMouseHover;
             rulePanel.OnEnter += RuleMouseLeave;
@@ -99,7 +98,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (AddRuleAvailable)
             {
-                AddButton = ComponentPool.Get<ButtonPanel>(SettingsPanel);
+                AddButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
                 AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
                 AddButton.Init();
                 AddButton.OnButtonClick += AddRule;
@@ -121,7 +120,7 @@ namespace NodeMarkup.UI.Editors
             var rulePanel = AddRulePanel(newRule);
             AddAddButton();
 
-            SettingsPanel.ScrollToBottom();
+            ContentPanel.ScrollToBottom();
 
             if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
@@ -133,7 +132,7 @@ namespace NodeMarkup.UI.Editors
         {
             var style = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
             rulePanel.Style.SelectedObject = style != Style.StyleType.EmptyLine ? style : (Style.StyleType)(int)RegularLineStyle.RegularLineType.Dashed;
-            SettingsPanel.ScrollToBottom();
+            ContentPanel.ScrollToBottom();
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)
@@ -185,8 +184,8 @@ namespace NodeMarkup.UI.Editors
         {
             var uiView = rulePanel.GetUIView();
             var mouse = uiView.ScreenPointToGUI((eventParam.position + eventParam.moveDelta) / uiView.inputScale);
-            var ruleRect = new Rect(SettingsPanel.absolutePosition + rulePanel.relativePosition, rulePanel.size);
-            var settingsRect = new Rect(SettingsPanel.absolutePosition, SettingsPanel.size);
+            var ruleRect = new Rect(ContentPanel.absolutePosition + rulePanel.relativePosition, rulePanel.size);
+            var settingsRect = new Rect(ContentPanel.absolutePosition, ContentPanel.size);
 
             if (eventParam.source == rulePanel || !ruleRect.Contains(mouse) || !settingsRect.Contains(mouse))
                 HoverRulePanel = null;
@@ -228,7 +227,7 @@ namespace NodeMarkup.UI.Editors
         public void RefreshItem() => SelectItem.Refresh();
         private void RefreshRulePanels()
         {
-            var rulePanels = SettingsPanel.components.OfType<RulePanel>().ToArray();
+            var rulePanels = ContentPanel.components.OfType<RulePanel>().ToArray();
 
             foreach (var rulePanel in rulePanels)
             {

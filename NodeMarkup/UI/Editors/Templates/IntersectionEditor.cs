@@ -22,9 +22,8 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             base.OnObjectSelect();
+            AddScreenshot();
             AddApplyButton();
-            if (EditObject.HasScreenshot)
-                AddScreenshot();
         }
         protected override void AddHeader()
         {
@@ -33,22 +32,13 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddScreenshot()
         {
-            var spaceBefore = SettingsPanel.AddUIComponent<UIPanel>();
-            spaceBefore.height = 10;
-
-            var screenshot = ComponentPool.Get<ScreenshotProperty>(SettingsPanel);
-            screenshot.Texture = EditObject.Texture;
-            screenshot.Init();
-
-            var spaceAfter = SettingsPanel.AddUIComponent<UIPanel>();
-            spaceAfter.height = 10;
+            var info = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            var screenshot = ComponentPool.Get<PresetInfoProperty>(info);
+            screenshot.Init(EditObject);
         }
         private void AddApplyButton()
         {
-            var spaceBefore = SettingsPanel.AddUIComponent<UIPanel>();
-            spaceBefore.height = 10;
-
-            var applyButton = ComponentPool.Get<ButtonPanel>(SettingsPanel);
+            var applyButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
             applyButton.Text = NodeMarkup.Localize.PresetEditor_ApplyPreset;
             applyButton.Init();
             applyButton.OnButtonClick += OnApply;
@@ -63,7 +53,7 @@ namespace NodeMarkup.UI.Editors
         public override void Refresh()
         {
             base.Refresh();
-            Icon.Count = Object.EntersCount;
+            Icon.Count = Object.Roads;
         }
     }
     public class PresetIcon : ColorIcon

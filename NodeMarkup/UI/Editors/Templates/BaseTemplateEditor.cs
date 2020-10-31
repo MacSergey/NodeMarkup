@@ -14,6 +14,8 @@ namespace NodeMarkup.UI.Editors
         where Group : EditableGroup<GroupType, Item, TemplateType, Icon>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
     {
+        protected override bool UseGroupPanel => true;
+
         protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
 
@@ -35,12 +37,17 @@ namespace NodeMarkup.UI.Editors
 
             if (EditObject.IsAsset)
             {
-                foreach (var component in SettingsPanel.components)
+                foreach (var component in PropertiesPanel.components)
                 {
                     if (component is EditorPropertyPanel)
                         component.isEnabled = false;
                 }
             }
+        }
+        protected override void OnClear()
+        {
+            NameProperty = null;
+            HeaderPanel = null;
         }
         protected virtual void AddAditional() { }
 
@@ -48,7 +55,7 @@ namespace NodeMarkup.UI.Editors
 
         protected virtual void AddHeader()
         {
-            HeaderPanel = ComponentPool.Get<HeaderPanelType>(SettingsPanel);
+            HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel);
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
         }
@@ -56,7 +63,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (EditObject.IsAsset)
             {
-                var authorProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
+                var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
                 authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.UseWheel = false;
@@ -66,7 +73,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddTemplateName()
         {
-            NameProperty = ComponentPool.Get<StringPropertyPanel>(SettingsPanel);
+            NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
             NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.UseWheel = false;

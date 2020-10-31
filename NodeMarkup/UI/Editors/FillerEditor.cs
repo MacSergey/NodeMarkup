@@ -10,6 +10,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
+        protected override bool UseGroupPanel => true;
+
         private static FillerStyle Buffer { get; set; }
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
@@ -32,10 +34,16 @@ namespace NodeMarkup.UI.Editors
             AddStyleTypeProperty();
             AddStyleProperties();
         }
+        protected override void OnClear()
+        {
+            Style = null;
+            Header = null;
+            StyleProperties.Clear();
+        }
 
         private void AddHeader()
         {
-            Header = ComponentPool.Get<StyleHeaderPanel>(SettingsPanel);
+            Header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
             Header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
@@ -43,7 +51,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            Style = ComponentPool.Get<FillerStylePropertyPanel>(SettingsPanel);
+            Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
@@ -51,7 +59,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties()
         {
-            StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel);
+            StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }

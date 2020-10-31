@@ -38,7 +38,12 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: true);
+        protected override void OnClear()
+        {
+            base.OnClear();
+            StyleProperties.Clear();
+        }
+        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel, isTemplate: true);
 
         private void ToggleAsDefault()
         {

@@ -364,7 +364,7 @@ namespace NodeMarkup.Manager
         {
             if (AddTemplate(GetNewName(), markup, out template))
             {
-                template.Texture = texture;
+                template.Screenshot = texture;
                 return true;
             }
             else

@@ -60,7 +60,7 @@ namespace NodeMarkup.UI.Editors
         protected Markup Markup => NodeMarkupPanel.Markup;
 
         protected UIScrollablePanel ItemsPanel { get; set; }
-        protected UIScrollablePanel SettingsPanel { get; set; }
+        protected UIScrollablePanel ContentPanel { get; set; }
 
         protected UILabel EmptyLabel { get; set; }
 
@@ -77,21 +77,29 @@ namespace NodeMarkup.UI.Editors
             AddSettingPanel();
             AddEmptyLabel();
         }
+        private UIScrollablePanel AddPanel(string background)
+        {
+            var panel = AddUIComponent<UIScrollablePanel>();
+
+            panel.autoLayout = true;
+            panel.autoLayoutDirection = LayoutDirection.Vertical;
+            panel.scrollWheelDirection = UIOrientation.Vertical;
+            panel.builtinKeyNavigation = true;
+            panel.clipChildren = true;
+
+            panel.atlas = TextureUtil.InGameAtlas;
+            panel.backgroundSprite = background;
+
+            this.AddScrollbar(panel);
+
+            return panel;
+        }
+
         private void AddItemsPanel()
         {
-            ItemsPanel = AddUIComponent<UIScrollablePanel>();
-            ItemsPanel.autoLayout = true;
-            ItemsPanel.autoLayoutDirection = LayoutDirection.Vertical;
+            ItemsPanel = AddPanel("ScrollbarTrack");
             ItemsPanel.autoLayoutPadding = new RectOffset(0, 0, 0, 0);
-            ItemsPanel.scrollWheelDirection = UIOrientation.Vertical;
-            ItemsPanel.builtinKeyNavigation = true;
-            ItemsPanel.clipChildren = true;
             ItemsPanel.eventSizeChanged += ItemsPanelSizeChanged;
-            ItemsPanel.atlas = TextureUtil.InGameAtlas;
-            ItemsPanel.backgroundSprite = "ScrollbarTrack";
-
-            this.AddScrollbar(ItemsPanel);
-
             ItemsPanel.verticalScrollbar.eventVisibilityChanged += ItemsScrollbarVisibilityChanged;
         }
 
@@ -107,26 +115,16 @@ namespace NodeMarkup.UI.Editors
 
         private void AddSettingPanel()
         {
-            SettingsPanel = AddUIComponent<UIScrollablePanel>();
-            SettingsPanel.autoLayout = true;
-            SettingsPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-            SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
-            SettingsPanel.builtinKeyNavigation = true;
-            SettingsPanel.clipChildren = true;
-            SettingsPanel.atlas = TextureUtil.InGameAtlas;
-            SettingsPanel.backgroundSprite = "UnlockingItemBackground";
-            SettingsPanel.eventSizeChanged += SettingsPanelSizeChanged;
-
-            this.AddScrollbar(SettingsPanel);
-
-            SettingsPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
+            ContentPanel = AddPanel("UnlockingItemBackground");
+            ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
+            ContentPanel.eventSizeChanged += SettingsPanelSizeChanged;
+            ContentPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
         }
 
         private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
         {
-            foreach (var item in SettingsPanel.components)
-                item.width = SettingsPanel.width - SettingsPanel.autoLayoutPadding.horizontal;
+            foreach (var item in ContentPanel.components)
+                item.width = ContentPanel.width - ContentPanel.autoLayoutPadding.horizontal;
         }
         private bool InProgress { get; set; } = false;
         private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
@@ -135,7 +133,7 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             InProgress = true;
-            SettingsPanel.width = size.x / 10 * 7 - (value ? SettingsPanel.verticalScrollbar.width : 0);
+            ContentPanel.width = size.x / 10 * 7 - (value ? ContentPanel.verticalScrollbar.width : 0);
             InProgress = false;
         }
         private void AddEmptyLabel()
@@ -176,14 +174,18 @@ namespace NodeMarkup.UI.Editors
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemLeave(UIComponent component, UIMouseEventParameter eventParam);
 
-        public void StopScroll() => SettingsPanel.scrollWheelDirection = UIOrientation.Horizontal;
-        public void StartScroll() => SettingsPanel.scrollWheelDirection = UIOrientation.Vertical;
+        public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
+        public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
     }
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
         where EditableObject : class, IDeletable
     {
+        protected PropertyGroupPanel GroupPanel { get; private set; }
+        protected virtual bool UseGroupPanel => false;
+        protected UIComponent PropertiesPanel => UseGroupPanel ? (UIComponent)GroupPanel : (UIComponent)ContentPanel;
+
         EditableItemType _selectItem;
 
         protected EditableItemType HoverItem { get; set; }
@@ -204,6 +206,12 @@ namespace NodeMarkup.UI.Editors
         }
         public EditableObject EditObject => SelectItem?.Object;
 
+        public Editor()
+        {
+            if (UseGroupPanel)
+                ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+        }
+
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -212,12 +220,12 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.size = new Vector2(itemsPanelWidth, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
-            var settingsPanelWidth = size.x / 10 * 7 - (SettingsPanel.verticalScrollbar.isVisible ? SettingsPanel.verticalScrollbar.width : 0);
-            SettingsPanel.size = new Vector2(settingsPanelWidth, size.y);
-            SettingsPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
+            var settingsPanelWidth = size.x / 10 * 7 - (ContentPanel.verticalScrollbar.isVisible ? ContentPanel.verticalScrollbar.width : 0);
+            ContentPanel.size = new Vector2(settingsPanelWidth, size.y);
+            ContentPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
 
             EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);
-            EmptyLabel.relativePosition = SettingsPanel.relativePosition;
+            EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         public virtual EditableItemType AddItem(EditableObject editableObject)
         {
@@ -331,7 +339,19 @@ namespace NodeMarkup.UI.Editors
 
         protected override void ClearSettings()
         {
-            var components = SettingsPanel.components.ToArray();
+            if (UseGroupPanel)
+                ClearSettings(GroupPanel);
+
+            ClearSettings(ContentPanel);
+
+            OnClear();
+        }
+        private void ClearSettings(UIComponent parent)
+        {
+            if (parent == null)
+                return;
+
+            var components = parent.components.ToArray();
             foreach (var component in components)
             {
                 if (component != EmptyLabel)
@@ -342,15 +362,20 @@ namespace NodeMarkup.UI.Editors
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
         protected virtual void ItemClick(EditableItemType item)
         {
-            SettingsPanel.autoLayout = false;
+            ContentPanel.autoLayout = false;
             ClearSettings();
             SelectItem = item;
+            if (UseGroupPanel)
+                GroupPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             OnObjectSelect();
-            SettingsPanel.autoLayout = true;
+            if (UseGroupPanel)
+                GroupPanel.Init();
+            ContentPanel.autoLayout = true;
         }
         protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as EditableItemType;
         protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = null;
         protected virtual void OnObjectSelect() { }
+        protected virtual void OnClear() { }
         protected virtual void OnObjectDelete(EditableObject editableObject) { }
         protected virtual void OnObjectUpdate() { }
         public override void Select(int index)

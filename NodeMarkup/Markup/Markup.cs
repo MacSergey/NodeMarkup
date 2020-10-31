@@ -71,6 +71,11 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupFiller> Fillers => FillersList;
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+
+        public int LinesCount => LinesDictionary.Count;
+        public int CrosswalksCount => CrosswalksDictionary.Count;
+        public int FillersCount => FillersList.Count;
+
         public IEnumerable<ILineTrajectory> Contour
         {
             get

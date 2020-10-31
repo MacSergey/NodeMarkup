@@ -13,9 +13,13 @@ namespace NodeMarkup.UI.Editors
 {
     public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
+        protected override bool UseGroupPanel => true;
+
         private static CrosswalkStyle Buffer { get; set; }
+
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => NodeMarkup.Localize.CrosswalkEditor_EmptyMessage;
+
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
         private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }
         private MarkupCrosswalkSelectPropertyPanel LeftBorder { get; set; }
@@ -49,7 +53,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            var header = ComponentPool.Get<StyleHeaderPanel>(SettingsPanel);
+            var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
             header.Init(EditObject.Style.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
@@ -85,7 +89,7 @@ namespace NodeMarkup.UI.Editors
         }
         private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
         {
-            var border = ComponentPool.Get<MarkupCrosswalkSelectPropertyPanel>(SettingsPanel);
+            var border = ComponentPool.Get<MarkupCrosswalkSelectPropertyPanel>(PropertiesPanel);
             border.Text = text;
             border.Position = position;
             border.Init();
@@ -100,13 +104,13 @@ namespace NodeMarkup.UI.Editors
 
         private void AddStyleTypeProperty()
         {
-            Style = ComponentPool.Get<CrosswalkPropertyPanel>(SettingsPanel);
+            Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: false);
+        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel, isTemplate: false);
 
         #endregion
 

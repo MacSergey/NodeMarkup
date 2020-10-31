@@ -13,6 +13,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
+        protected override bool UseGroupPanel => true;
+
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
 
@@ -27,13 +29,17 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
-            Offset = ComponentPool.Get<FloatPropertyPanel>(SettingsPanel);
+            Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
             Offset.Init();
             Offset.Value = EditObject.Offset;
             Offset.OnValueChanged += OffsetChanged;
+        }
+        protected override void OnClear()
+        {
+            Offset = null;
         }
         protected override void OnObjectUpdate()
         {

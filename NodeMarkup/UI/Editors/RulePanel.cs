@@ -10,14 +10,12 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class RulePanel : UIPanel, IReusable
+    public class RulePanel : PropertyGroupPanel
     {
-        public PoolList<UIComponent> LIST => m_ChildComponents;
-
         public event Action<RulePanel, UIMouseEventParameter> OnHover;
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
 
-        private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
+        protected override Color32 Color => new Color32(90, 123, 135, 255);
 
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
@@ -31,17 +29,7 @@ namespace NodeMarkup.UI.Editors
 
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
-        public RulePanel()
-        {
-            atlas = TextureUtil.InGameAtlas;
-            backgroundSprite = "ButtonWhite";
-            color = NormalColor;
-
-            autoLayout = true;
-            autoFitChildrenVertically = true;
-            autoLayoutDirection = LayoutDirection.Vertical;
-            autoLayoutPadding = new RectOffset(5, 5, 0, 0);
-        }
+        public RulePanel() { }
         public void Init(LinesEditor editor, MarkupLineRawRule rule)
         {
             Editor = editor;
@@ -57,37 +45,24 @@ namespace NodeMarkup.UI.Editors
             AddStyleTypeProperty();
             AddStyleProperties();
 
-            SetSize();
+            base.Init();
         }
-        public void DeInit()
+        public override void DeInit()
         {
-            ComponentPool.Free(Header);
+            base.DeInit();
+
             Header = null;
-            ComponentPool.Free(Warning);
             Warning = null;
-            ComponentPool.Free(From);
             From = null;
-            ComponentPool.Free(To);
             To = null;
-            ComponentPool.Free(Style);
             Style = null;
-            ClearStyleProperties();
+            StyleProperties.Clear();
 
             Editor = null;
             Rule = null;
 
             OnHover = null;
             OnEnter = null;
-        }
-
-        private void SetSize()
-        {
-            if (parent is UIScrollablePanel scrollablePanel)
-                width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
-            else if (parent is UIPanel panel)
-                width = panel.width - panel.autoLayoutPadding.horizontal;
-            else
-                width = parent.width;
         }
         private void AddHeader()
         {
@@ -218,16 +193,6 @@ namespace NodeMarkup.UI.Editors
         {
             Warning.isVisible = Rule.IsOverlapped;
             FillEdges();
-        }
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            foreach (var item in components)
-            {
-                item.width = width - autoLayoutPadding.horizontal;
-            }
         }
         protected override void OnMouseEnter(UIMouseEventParameter p)
         {
