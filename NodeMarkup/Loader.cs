@@ -261,9 +261,15 @@ namespace NodeMarkup
             if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
                 return;
 
-            var templateConfig = Loader.Parse(markingInfo.data);
+            var templateConfig = Parse(markingInfo.data);
             if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
+            {
+                if(asset.package.Find($"{templateAsset.Template.Name}_Preview") is Package.Asset assetScreenshot && assetScreenshot.Instantiate<Texture>() is Texture2D screenshot)
+                    templateAsset.Template.Screenshot = screenshot;
+
                 TemplateManager.AddAssetTemplate(templateAsset);
+
+            }
 
             Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(LoadAsset)}: {templateAsset.Template.Name}");
         }
@@ -271,18 +277,6 @@ namespace NodeMarkup
         {
             try
             {
-                var package = new Package(templateAsset.Template.Name)
-                {
-                    packageMainAsset = templateAsset.Template.Name,
-                    packageAuthor = $"steamid:{templateAsset.AuthorId}"
-                };
-
-                var gameObject = new GameObject(typeof(MarkingInfo).Name);
-                var markingInfo = gameObject.AddComponent<MarkingInfo>();
-                markingInfo.data = Loader.GetString(templateAsset.Template.ToXml());
-
-                var asset = package.AddAsset($"{templateAsset.Template.Name}_Data", markingInfo.gameObject);
-
                 var meta = new CustomAssetMetaData()
                 {
                     name = templateAsset.Template.Name,
@@ -291,9 +285,23 @@ namespace NodeMarkup
                     dlcMask = SteamHelper.DLC_BitMask.None,
                     steamTags = new string[] { "Marking" },
                     guid = templateAsset.Template.Id.ToString(),
-                    assetRef = asset,
                 };
-                package.AddAsset(templateAsset.Template.Name, meta, UserAssetType.CustomAssetMetaData);
+
+                var package = new Package(meta.name)
+                {
+                    packageMainAsset = meta.name,
+                    packageAuthor = $"steamid:{templateAsset.AuthorId}"
+                };
+
+                var gameObject = new GameObject(typeof(MarkingInfo).Name);
+                var markingInfo = gameObject.AddComponent<MarkingInfo>();
+                markingInfo.data = GetString(templateAsset.Template.ToXml());
+                meta.assetRef = package.AddAsset(templateAsset.MetaData, markingInfo.gameObject);
+
+                if (templateAsset.Image is Image image)
+                    meta.steamPreviewRef = meta.imageRef = package.AddAsset(templateAsset.MetaScreenshot, image, false, Image.BufferFileFormat.PNG, false, false);
+
+                package.AddAsset(meta.name, meta, UserAssetType.CustomAssetMetaData);
 
                 var path = GetSavePathName(templateAsset.FileName);
                 package.Save(path);

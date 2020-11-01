@@ -1,4 +1,5 @@
-﻿using ColossalFramework.IO;
+﻿using ColossalFramework.Importers;
+using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Manager;
@@ -41,6 +42,9 @@ namespace NodeMarkup.Manager
         }
 
         public bool HasName => !string.IsNullOrEmpty(Name);
+
+        public Texture2D Screenshot { get; set; }
+        public bool HasScreenshot => Screenshot != null;
 
         public abstract string DeleteCaptionDescription { get; }
         public abstract string DeleteMessageDescription { get; }
@@ -91,7 +95,7 @@ namespace NodeMarkup.Manager
 
         public override string ToString()
         {
-            var name = HasName? Name : Localize.TemplateEditor_UnnamedTemplate;
+            var name = HasName ? Name : Localize.TemplateEditor_UnnamedTemplate;
             return IsAsset && Asset.HasAuthor ? string.Format(Localize.TemplateEditor_TemplateByAuthor, name, Asset.Author) : name;
         }
     }
@@ -161,13 +165,10 @@ namespace NodeMarkup.Manager
         public int Crosswalks { get; private set; }
         public int Fillers { get; private set; }
 
-        public Texture2D Screenshot { get; set; }
-        public bool HasScreenshot => Screenshot != null;
-
         private IntersectionTemplate() : base() { }
 
         public IntersectionTemplate(Markup markup) : this($"Intersection #{markup.Id}", markup) { }
-        public IntersectionTemplate(string name, Markup markup) : base(name) 
+        public IntersectionTemplate(string name, Markup markup) : base(name)
         {
             Data = markup.ToXml();
             Enters = markup.Enters.Select(e => e.Data).ToArray();
@@ -224,6 +225,9 @@ namespace NodeMarkup.Manager
         public bool HasAuthor => !string.IsNullOrEmpty(Author);
         public bool IsWorkshop { get; set; }
         public string FileName { get; set; }
+        public Image Image => Template.HasScreenshot ? new Image(Template.Screenshot.width, Template.Screenshot.height, TextureFormat.RGB24, Template.Screenshot.GetPixels32()) : null;
+        public string MetaData => $"{Template.Name}_Data";
+        public string MetaScreenshot => $"{Template.Name}_Preview";
 
         public TemplateAsset(Template template, Package.Asset asset = null)
         {
