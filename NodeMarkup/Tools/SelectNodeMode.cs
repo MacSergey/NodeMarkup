@@ -18,7 +18,7 @@ namespace NodeMarkup.Tools
         ushort HoverNodeId { get; set; } = 0;
         bool IsHoverNode => HoverNodeId != 0;
 
-        bool JustFun => true;
+        bool JustFun => false;
         ushort HoverSegmentId { get; set; } = 0;
         bool IsHoverSegment => HoverSegmentId != 0;
 

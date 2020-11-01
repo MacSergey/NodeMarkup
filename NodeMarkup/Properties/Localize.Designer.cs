@@ -1367,6 +1367,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cut lines by all crosswalks.
+        /// </summary>
+        public static string Panel_CutLinesByCrosswalks {
+            get {
+                return ResourceManager.GetString("Panel_CutLinesByCrosswalks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Edit marking order.
         /// </summary>
         public static string Panel_EditMarking {
@@ -1611,7 +1620,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cut new line by crosswalk.
+        ///   Ищет локализованную строку, похожую на Cut new line by crosswalks.
         /// </summary>
         public static string Settings_CutLineByCrosswalk {
             get {
@@ -2150,6 +2159,15 @@ namespace NodeMarkup {
         public static string Settings_ShortcutCreateEdgeLines {
             get {
                 return ResourceManager.GetString("Settings_ShortcutCreateEdgeLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cut lines by all crosswalks.
+        /// </summary>
+        public static string Settings_ShortcutCutLinesByCrosswalks {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutCutLinesByCrosswalks", resourceCulture);
             }
         }
         

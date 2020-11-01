@@ -82,6 +82,7 @@ namespace NodeMarkup.UI.Panel
                 AddButton(popup.Content, HeaderButton.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
                 AddButton(popup.Content, HeaderButton.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
                 AddButton(popup.Content, HeaderButton.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
+                AddButton(popup.Content, HeaderButton.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
             };
 
             foreach (var button in buttons)

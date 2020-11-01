@@ -1243,4 +1243,10 @@ The restored presets will replace all existing presets.</value>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
     <value>Presets successfully restored</value>
   </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Cut lines by all crosswalks</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Cut lines by all crosswalks</value>
+  </data>
 </root>

@@ -39,6 +39,7 @@ namespace NodeMarkup.Tools
         public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
         public static Shortcut SaveAsPresetShortcut { get; } = new Shortcut(nameof(SaveAsPresetShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsPreset());
+        public static Shortcut CutLinesByCrosswalks { get; } = new Shortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
 
         public static IEnumerable<Shortcut> Shortcuts
         {
@@ -52,6 +53,7 @@ namespace NodeMarkup.Tools
                 yield return EditMarkingShortcut;
                 yield return CreateEdgeLinesShortcut;
                 yield return SaveAsPresetShortcut;
+                yield return CutLinesByCrosswalks;
             }
         }
 
@@ -467,6 +469,13 @@ namespace NodeMarkup.Tools
                 if (TemplateManager.IntersectionManager.AddTemplate(Markup, image, out IntersectionTemplate preset))
                     Panel.EditPreset(preset);
             }
+        }
+        private void CutByCrosswalks()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CutByCrosswalks)}");
+
+            foreach (var crosswalk in Markup.Crosswalks)
+                Markup.CutLinesByCrosswalk(crosswalk);
         }
         private int ScreenshotSize => 400;
         private IEnumerator MakeScreenshot(Action<Image> callback)
