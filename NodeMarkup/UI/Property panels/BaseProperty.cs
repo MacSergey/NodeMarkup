@@ -59,11 +59,17 @@ namespace NodeMarkup.UI
             get => Label.text;
             set => Label.text = value;
         }
+        public bool EnableControl
+        {
+            get => Control.isEnabled;
+            set => Control.isEnabled = value;
+        }
 
         public EditorPropertyPanel()
         {
             Label = AddUIComponent<UILabel>();
             Label.textScale = 0.8f;
+            Label.disabledTextColor = new Color32(160, 160, 160, 255);
 
             Control = AddUIComponent<UIPanel>();
             Control.autoLayoutDirection = LayoutDirection.Horizontal;

@@ -37,11 +37,8 @@ namespace NodeMarkup.UI.Editors
 
             if (EditObject.IsAsset)
             {
-                foreach (var component in PropertiesPanel.components)
-                {
-                    if (component is EditorPropertyPanel)
-                        component.isEnabled = false;
-                }
+                foreach (var propertyPanel in PropertiesPanel.components.OfType<EditorPropertyPanel>())
+                    propertyPanel.EnableControl = false;
             }
         }
         protected override void OnClear()

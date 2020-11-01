@@ -17,7 +17,11 @@ namespace NodeMarkup.UI.Editors
         private bool InProcess { get; set; } = false;
 
         private static string OpacitySlider { get; } = nameof(OpacitySlider);
-        private static UITextureAtlas OpacityAtlas { get; } = TextureUtil.CreateTextureAtlas("OpacitySlider.png", nameof(ColorPropertyPanel), 18, 200, new string[] { OpacitySlider });
+        private static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
+        private static string ColorPickerHover { get; } = nameof(ColorPickerHover);
+        private static string ColorPickerColor { get; } = nameof(ColorPickerColor);
+        private static UITextureAtlas OpacitySliderAtlas { get; } = TextureUtil.CreateTextureAtlas("OpacitySlider.png", nameof(OpacitySliderAtlas), 18, 200, new string[] { OpacitySlider });
+        private static UITextureAtlas ColorPickerAtlas { get; } = TextureUtil.CreateTextureAtlas("ColorPicker.png", nameof(ColorPickerAtlas), 43, 49, new string[] { ColorPickerNormal, ColorPickerHover, ColorPickerColor });
 
         private UITextField R { get; set; }
         private UITextField G { get; set; }
@@ -93,6 +97,10 @@ namespace NodeMarkup.UI.Editors
             Control.AttachUIComponent(ColorSample.gameObject);
             ColorSample.anchor = UIAnchorStyle.None;
             ColorSample.size = new Vector2(26f, 28f);
+            ColorSample.atlas = ColorPickerAtlas;
+            ColorSample.normalBgSprite = ColorPickerNormal;
+            ColorSample.hoveredBgSprite = ColorPickerHover;
+            ColorSample.hoveredFgSprite = ColorPickerColor;
 
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
             ColorSample.eventColorPickerOpen += ColorPickerOpen;
@@ -123,7 +131,7 @@ namespace NodeMarkup.UI.Editors
             opacitySlider.eventValueChanged += OpacityChanged;
 
             var opacity = opacitySlider.AddUIComponent<UISlicedSprite>();
-            opacity.atlas = OpacityAtlas;
+            opacity.atlas = OpacitySliderAtlas;
             opacity.spriteName = OpacitySlider;
             opacity.relativePosition = Vector2.zero;
             opacity.size = opacitySlider.size;
@@ -139,44 +147,33 @@ namespace NodeMarkup.UI.Editors
 
             return opacitySlider;
         }
-        private UIButton CreateButton(UIComponent parent, int count, int of)
+        private UIButton CreateButton(UIComponent parent, string text, int count, int of)
         {
             var width = (parent.width - (10 * (of + 1))) / of;
 
-            var button = parent.AddUIComponent<UIButton>();
+            var button = AddButton(parent);
             button.size = new Vector2(width, 20f);
             button.relativePosition = new Vector2(10 * count + width * (count - 1), 223f);
-            button.textPadding = new RectOffset(0, 0, 5, 0);
-            button.horizontalAlignment = UIHorizontalAlignment.Center;
-            button.textVerticalAlignment = UIVerticalAlignment.Middle;
+            button.textPadding = new RectOffset(0, 0, 5, 0);          
             button.textScale = 0.6f;
-            button.atlas = TextureUtil.InGameAtlas;
-            button.normalBgSprite = "ButtonMenu";
-            button.disabledBgSprite = "ButtonMenuDisabled";
-            button.hoveredBgSprite = "ButtonMenuHovered";
-            button.focusedBgSprite = "ButtonMenu";
-            button.pressedBgSprite = "ButtonMenuPressed";
-
+            button.text = text;
             return button;
         }
         private void AddCopyButton(UIColorPicker popup)
         {
-            var button = CreateButton(popup.component, 1, 3);
-            button.text = NodeMarkup.Localize.Editor_ColorCopy;
+            var button = CreateButton(popup.component, NodeMarkup.Localize.Editor_ColorCopy, 1, 3);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy(popup);
         }
 
         private void AddPasteButton(UIColorPicker popup)
         {
-            var button = CreateButton(popup.component, 2, 3);
+            var button = CreateButton(popup.component, NodeMarkup.Localize.Editor_ColorPaste, 2, 3);
             button.isEnabled = Buffer.HasValue;
-            button.text = NodeMarkup.Localize.Editor_ColorPaste;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste(popup);
         }
         private void AddSetDefaultButton(UIColorPicker popup)
         {
-            var button = CreateButton(popup.component, 3, 3);
-            button.text = NodeMarkup.Localize.Editor_ColorDefault;
+            var button = CreateButton(popup.component, NodeMarkup.Localize.Editor_ColorDefault, 3, 3);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Manager.Style.DefaultColor;
         }
 

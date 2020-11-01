@@ -62,7 +62,7 @@ namespace NodeMarkup.UI.Panel
             CreateEditors();
             CreateSizeChanger();
 
-            size = new Vector2(550, Header.height + TabStrip.height + 450);
+            size = new Vector2(550, Header.height + TabStrip.height + 400);
             minimumSize = new Vector2(550, Header.height + TabStrip.height + 200);
         }
         private void CreateHeader()
