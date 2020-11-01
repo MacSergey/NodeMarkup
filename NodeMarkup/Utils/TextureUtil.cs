@@ -16,7 +16,7 @@ namespace NodeMarkup.Utils
         public static string ArrowDown { get; } = nameof(ArrowDown);
         public static string ArrowRight { get; } = nameof(ArrowRight);
         private static string[] DeleteSprites { get; } = new string[] { DeleteNormal, DeleteHover, DeletePressed, ArrowDown, ArrowRight };
-        public static UITextureAtlas AdditionalAtlas { get; } = CreateTextureAtlas("buttonclose.png", nameof(AdditionalAtlas), 32, 32, DeleteSprites);
+        public static UITextureAtlas AdditionalAtlas { get; } = CreateTextureAtlas("AdditionalButtons.png", nameof(AdditionalAtlas), 32, 32, DeleteSprites);
 
         public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames, RectOffset border = null, int space = 0)
         {
@@ -125,7 +125,7 @@ namespace NodeMarkup.Utils
             manifestResourceStream.Read(array, 0, array.Length);
 
             var texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            texture.filterMode = FilterMode.Trilinear;
+            texture.filterMode = FilterMode.Bilinear;
             texture.LoadImage(array);
             texture.Apply(true, true);
 
