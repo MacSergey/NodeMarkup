@@ -96,7 +96,6 @@ namespace NodeMarkup.Manager
             get => _needSetOrder;
             set
             {
-
                 if (_needSetOrder && !value)
                     Backup = null;
                 else if (!_needSetOrder && value)
@@ -150,13 +149,13 @@ namespace NodeMarkup.Manager
 
             var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
+            foreach (var enter in newEnters)
+                enter.Update();
             newEnters.Sort((e1, e2) => e2.AbsoluteAngle.CompareTo(e1.AbsoluteAngle));
 
             UpdateBackup(delete, add, oldEnters, newEnters);
 
-            foreach (var enter in RowEntersList)
-                enter.Update();
-
+            RowEntersList = newEnters;
             EntersList = RowEntersList.Where(e => e.PointCount != 0).ToList();
 
             UpdateNodeСontour();
@@ -167,42 +166,38 @@ namespace NodeMarkup.Manager
         }
         private void UpdateBackup(ushort[] delete, ushort[] add, List<Enter> oldEnters, List<Enter> newEnters)
         {
-            if (delete.Length == 1 && add.Length == 1)
+            if (delete.Length != 1 || add.Length != 1)
+                return;
+
+            var oldEnter = oldEnters.Find(e => e.Id == delete[0]);
+            var newEnter = newEnters.Find(e => e.Id == add[0]);
+
+            var before = oldEnter.PointCount;
+            var after = newEnter.PointCount;
+
+            if (before != after && !NeedSetOrder && !IsEmpty && HaveLines(oldEnter))
+                NeedSetOrder = true;
+
+            if (NeedSetOrder)
             {
-                var oldEnter = oldEnters.Find(e => e.Id == delete[0]);
-                var newEnter = newEnters.Find(e => e.Id == add[0]);
-
-                var before = oldEnter.PointCount;
-                var after = newEnter.PointCount;
-
-                if (before != after && !NeedSetOrder && !IsEmpty && HaveLines(oldEnter))
-                    NeedSetOrder = true;
-
-                if (NeedSetOrder)
+                if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectType.Segment && p.Value.Segment == delete[0]) is KeyValuePair<ObjectId, ObjectId> pair)
                 {
-                    if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectType.Segment && p.Value.Segment == delete[0]) is KeyValuePair<ObjectId, ObjectId> pair)
-                    {
-                        Backup.Map.Remove(pair.Key);
-                        Backup.Map.AddSegment(pair.Key.Segment, add[0]);
-                    }
-                    else
-                        Backup.Map.AddSegment(delete[0], add[0]);
-                }
-
-                if (before == after)
-                {
-                    var map = new ObjectsMap();
-                    map.AddSegment(delete[0], add[0]);
-                    var currentData = ToXml();
-                    RowEntersList = newEnters;
-                    Clear();
-                    FromXml(Mod.Version, currentData, map);
+                    Backup.Map.Remove(pair.Key);
+                    Backup.Map.AddSegment(pair.Key.Segment, add[0]);
                 }
                 else
-                    RowEntersList = newEnters;
+                    Backup.Map.AddSegment(delete[0], add[0]);
             }
-            else
-                RowEntersList = newEnters;
+
+            if (before != after)
+                return;
+
+            var map = new ObjectsMap();
+            map.AddSegment(delete[0], add[0]);
+            var currentData = ToXml();
+            RowEntersList = newEnters;
+            Clear();
+            FromXml(Mod.Version, currentData, map);
         }
 
         private void UpdateNodeСontour()
@@ -307,7 +302,7 @@ namespace NodeMarkup.Manager
         }
         public void ResetOffsets()
         {
-            foreach (var enter in RowEntersList)
+            foreach (var enter in EntersList)
                 enter.ResetOffsets();
         }
 
@@ -493,12 +488,11 @@ namespace NodeMarkup.Manager
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
 
-        public bool GetEntersLine(Enter first, Enter second, out ILineTrajectory line)
+        public bool GetBordersLine(Enter first, Enter second, out ILineTrajectory line)
         {
-            var i = RowEntersList.IndexOf(first);
-            var j = RowEntersList.IndexOf(second);
+            var i = EntersList.IndexOf(first);
+            var j = EntersList.IndexOf(second);
             return BetweenEnters.TryGetValue(Math.Max(i, j) * 10 + Math.Min(i, j), out line);
-
         }
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));

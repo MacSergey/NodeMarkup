@@ -75,6 +75,7 @@ namespace NodeMarkup.Tools
         #endregion
 
         public BaseToolMode Mode { get; private set; }
+        public BaseToolMode NextMode { get; private set; }
         public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
         private Dictionary<ToolModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, BaseToolMode>();
         public Markup Markup { get; private set; }
@@ -168,7 +169,7 @@ namespace NodeMarkup.Tools
         private void Reset()
         {
             Panel.Hide();
-            SetMode(ToolModeType.SelectNode);
+            SetModeNow(ToolModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
         }
@@ -182,7 +183,9 @@ namespace NodeMarkup.Tools
 
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
         public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
-        public void SetMode(BaseToolMode mode)
+        public void SetMode(BaseToolMode mode) => NextMode = mode;
+        private void SetModeNow(ToolModeType mode) => SetModeNow(ToolModes[mode]);
+        private void SetModeNow(BaseToolMode mode)
         {
             Mode?.End();
             var prevMode = Mode;
@@ -194,6 +197,7 @@ namespace NodeMarkup.Tools
             else
                 Panel.Hide();
         }
+
         public void SetMarkup(Markup markup)
         {
             Markup = markup;
@@ -205,6 +209,12 @@ namespace NodeMarkup.Tools
 
         protected override void OnToolUpdate()
         {
+            if(NextMode != null)
+            {
+                SetModeNow(NextMode);
+                NextMode = null;
+            }
+
             if (PauseMenu?.isVisible == true)
             {
                 PrevTool = null;
@@ -320,7 +330,7 @@ namespace NodeMarkup.Tools
         private void StartCreateFiller()
         {
             SetMode(ToolModeType.MakeFiller);
-            if (Mode is MakeFillerToolMode fillerToolMode)
+            if (NextMode is MakeFillerToolMode fillerToolMode)
                 fillerToolMode.DisableByAlt = false;
         }
         private void DeleteAllMarking()

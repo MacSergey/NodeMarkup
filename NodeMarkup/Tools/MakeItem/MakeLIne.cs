@@ -29,7 +29,7 @@ namespace NodeMarkup.Tools
             else if (NodeMarkupTool.OnlyAltIsPressed)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
-                if (Tool.Mode is MakeFillerToolMode fillerToolMode)
+                if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
             else if (NodeMarkupTool.OnlyShiftIsPressed)
