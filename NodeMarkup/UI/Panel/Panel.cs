@@ -90,21 +90,14 @@ namespace NodeMarkup.UI.Panel
             CreateEditor<IntersectionTemplateEditor>();
         }
 
-        public static UITextureAtlas ResizeAtlas { get; } = GetStylesIcons();
-        private static UITextureAtlas GetStylesIcons()
-        {
-            var atlas = TextureUtil.GetAtlas(nameof(ResizeAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("resize.png", nameof(ResizeAtlas), 9, 9, new string[] { "resize" }, space: 2);
-
-            return atlas;
-        }
+        public static string Resize { get; } = nameof(Resize);
+        public static UITextureAtlas ResizeAtlas { get; } = TextureUtil.CreateTextureAtlas("Resize.png", nameof(ResizeAtlas), 9, 9, new string[] { Resize }, space: 2);
         private void CreateSizeChanger()
         {
             SizeChanger = AddUIComponent<UIPanel>();
             SizeChanger.size = new Vector2(9, 9);
             SizeChanger.atlas = ResizeAtlas;
-            SizeChanger.backgroundSprite = "resize";
+            SizeChanger.backgroundSprite = Resize;
             SizeChanger.color = new Color32(255, 255, 255, 160);
             SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
 

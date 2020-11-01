@@ -54,6 +54,7 @@ namespace NodeMarkup.UI.Editors
             Selector.atlas = EditorItemAtlas;
             Selector.normalBgSprite = NormalSprite;
             Selector.hoveredBgSprite = HoveredSprite;
+            Selector.disabledBgSprite = DisabledSprite;
             Selector.isInteractive = true;
             Selector.enabled = true;
             Selector.autoSize = false;

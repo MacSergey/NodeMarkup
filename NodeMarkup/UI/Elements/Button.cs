@@ -12,15 +12,26 @@ namespace NodeMarkup.UI
     public class NodeMarkupButton : UIButton
     {
         const string CONTAINING_PANEL_NAME = "RoadsOptionPanel";
-        const string ButtonBg = "NodeMarkupButtonBg";
-        const string ButtonBgActive = "NodeMarkupButtonBgActive";
-        const string ButtonBgHovered = "NodeMarkupButtonBgHovered";
-        const string Icon = "NodeMarkupIcon";
-        const string IconActive = "NodeMarkupIconActived";
-        const string IconHovered = "NodeMarkupIconHovered";
-        const int buttonSize = 31;
-        readonly static Vector2 buttonPosition = new Vector3(64, 38);
-        public static string AtlasName = nameof(NodeMarkupButton);
+        private static string ButtonBg => nameof(ButtonBg);
+        private static string ButtonBgActive => nameof(ButtonBgActive);
+        private static string ButtonBgHovered => nameof(ButtonBgHovered);
+        private static string Icon => nameof(Icon);
+        private static string IconActive => nameof(IconActive);
+        private static string IconHovered => nameof(IconHovered);
+
+        private static string[] Sprites { get; } = new string[]
+        {
+                ButtonBg,
+                ButtonBgActive,
+                ButtonBgHovered,
+                Icon,
+                IconActive,
+                IconHovered
+        };
+        private static UITextureAtlas Atlas { get; } = TextureUtil.CreateTextureAtlas("Button.png", nameof(NodeMarkupButton), ButtonSize, ButtonSize, Sprites);
+
+        private static int ButtonSize => 31;
+        private static Vector2 ButtonPosition => new Vector3(64, 38);
         public static NodeMarkupButton Instance { get; private set; }
 
         static UIComponent GetContainingPanel()
@@ -40,26 +51,14 @@ namespace NodeMarkup.UI
             if(!(UIUtils.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None) is UITabstrip builtinTabstrip))
                 return;
 
-            string[] spriteNames = new string[]
-            {
-                ButtonBg,
-                ButtonBgActive,
-                ButtonBgHovered,
-                Icon,
-                IconActive,
-                IconHovered
-            };
-
-            atlas = TextureUtil.GetAtlas(AtlasName);
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("sprites.png", AtlasName, buttonSize, buttonSize, spriteNames);
+            atlas = Atlas;
 
             Deactivate();
             hoveredBgSprite = ButtonBgHovered;
             hoveredFgSprite = IconHovered;
 
-            relativePosition = buttonPosition;
-            size = new Vector2(buttonSize, buttonSize);
+            relativePosition = ButtonPosition;
+            size = new Vector2(ButtonSize, ButtonSize);
             Show();
             Unfocus();
             Invalidate();

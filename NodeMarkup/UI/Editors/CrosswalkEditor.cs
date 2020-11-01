@@ -85,7 +85,7 @@ namespace NodeMarkup.UI.Editors
             panel.Clear();
             panel.AddRange(lines);
             panel.SelectedObject = value;
-            panel.isVisible = lines.Any();
+            panel.isEnabled = lines.Any();
             panel.OnSelectChanged += action;
         }
         private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)

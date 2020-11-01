@@ -13,17 +13,8 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class EditableItemBase : UIButton
     {
-        public static UITextureAtlas ItemAtlas { get; } = GetStylesIcons();
-        private static UITextureAtlas GetStylesIcons()
-        {
-            var spriteNames = new string[] { "Item" };
-
-            var atlas = TextureUtil.GetAtlas(nameof(ItemAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("ListItem.png", nameof(ItemAtlas), 21, 26, spriteNames, new RectOffset(1, 1, 1, 1));
-
-            return atlas;
-        }
+        private static string Item { get; } = nameof(Item);
+        public static UITextureAtlas ItemAtlas { get; } = TextureUtil.CreateTextureAtlas("ListItem.png", nameof(ItemAtlas), 21, 26, new string[] { Item }, new RectOffset(1, 1, 1, 1));
 
         public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
         public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
@@ -57,7 +48,7 @@ namespace NodeMarkup.UI.Editors
             AddLable();
 
             atlas = ItemAtlas;
-            normalBgSprite = "Item";
+            normalBgSprite = Item;
             height = 25;
         }
 
@@ -142,10 +133,10 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = TextureUtil.InGameAtlas;
-            DeleteButton.normalBgSprite = "buttonclose";
-            DeleteButton.hoveredBgSprite = "buttonclosehover";
-            DeleteButton.pressedBgSprite = "buttonclosepressed";
+            DeleteButton.atlas = TextureUtil.AdditionalAtlas;
+            DeleteButton.normalBgSprite = TextureUtil.DeleteNormal;
+            DeleteButton.hoveredBgSprite = TextureUtil.DeleteHover;
+            DeleteButton.pressedBgSprite = TextureUtil.DeletePressed;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }

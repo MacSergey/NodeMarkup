@@ -15,11 +15,7 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class Editor : UIPanel
     {
-        public static Dictionary<Style.StyleType, string> SpriteNames { get; set; }
-        public static UITextureAtlas StylesAtlas { get; } = GetStylesIcons();
-        private static UITextureAtlas GetStylesIcons()
-        {
-            SpriteNames = new Dictionary<Style.StyleType, string>()
+        public static Dictionary<Style.StyleType, string> SpriteNames { get;} = new Dictionary<Style.StyleType, string>()
             {
                 {Style.StyleType.LineSolid, nameof(Style.StyleType.LineSolid) },
                 {Style.StyleType.LineDashed,  nameof(Style.StyleType.LineDashed) },
@@ -46,15 +42,8 @@ namespace NodeMarkup.UI.Editors
                 {Style.StyleType.CrosswalkSolid, nameof(Style.StyleType.CrosswalkSolid) },
                 {Style.StyleType.CrosswalkChessBoard, nameof(Style.StyleType.CrosswalkChessBoard) },
             };
+        public static UITextureAtlas StylesAtlas { get; } = TextureUtil.CreateTextureAtlas("Styles.png", nameof(StylesAtlas), 19, 19, SpriteNames.Values.ToArray());
 
-            var atlas = TextureUtil.GetAtlas(nameof(StylesAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-            {
-                atlas = TextureUtil.CreateTextureAtlas("Styles.png", nameof(StylesAtlas), 19, 19, SpriteNames.Values.ToArray());
-            }
-
-            return atlas;
-        }
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public NodeMarkupPanel NodeMarkupPanel { get; private set; }
         protected Markup Markup => NodeMarkupPanel.Markup;

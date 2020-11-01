@@ -27,11 +27,8 @@ namespace NodeMarkup.UI.Editors
         public static string Additionally => nameof(Additionally);
         public static string Cut => nameof(Cut);
 
-        public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
-        private static UITextureAtlas GetButtonsIcons()
+        private static string[] Sprites { get; } = new string[]
         {
-            var spriteNames = new string[]
-            {
                 Hovered,
                 "_",
                 AddTemplate,
@@ -48,14 +45,8 @@ namespace NodeMarkup.UI.Editors
                 EdgeLines,
                 Additionally,
                 Cut
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames, new RectOffset(2, 2, 2, 2));
-
-            return atlas;
-        }
+        };
+        public static UITextureAtlas ButtonAtlas { get; } = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, Sprites, new RectOffset(2, 2, 2, 2));
 
         public UIPanel Panel { get; }
         protected virtual Color32 HoveredColor => Color.black;

@@ -13,25 +13,17 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>
     {
-        public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
-        private static UITextureAtlas GetButtonsIcons()
+
+        private static string[] Sprites = new string[]
         {
-            var spriteNames = new string[]
-            {
                 nameof(TurnLeftButton),
                 nameof(FlipButton),
                 nameof(TurnRightButton),
                 nameof(ApplyButton),
                 nameof(NotApplyButton),
                 nameof(ResetButton)
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(BaseEntersOrderToolMode));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(BaseEntersOrderToolMode), 50, 50, spriteNames, new RectOffset(0, 0, 0, 0));
-
-            return atlas;
-        }
+        };
+        public static UITextureAtlas ButtonAtlas { get; } = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(BaseEntersOrderToolMode), 50, 50, Sprites, new RectOffset(0, 0, 0, 0));
 
         private GUIButton TurnLeftButton { get; }
         private GUIButton FlipButton { get; }
@@ -208,7 +200,7 @@ namespace NodeMarkup.Tools
             ResetButton.OnGUI(e);
 
         }
-        protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo) 
+        protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo)
             => NodeMarkupTool.RenderCircle(cameraInfo, Centre, width: Radius * 2);
 
         private Vector2 GetMouse()

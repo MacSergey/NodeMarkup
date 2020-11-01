@@ -19,24 +19,15 @@ namespace NodeMarkup.UI
 
         protected virtual float DefaultHeight => 30;
 
-        public static UITextureAtlas EditorItemAtlas { get; } = GetAtlas();
-        private static UITextureAtlas GetAtlas()
+        private static string[] Sprites { get; } = new string[]
         {
-            var spriteNames = new string[]
-            {
                 NormalSprite,
                 HoveredSprite,
                 FocusedSprite,
                 DisabledSprite,
                 EmptySprite
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(EditorItemAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, spriteNames, new RectOffset(4, 4, 4, 4), 2);
-
-            return atlas;
-        }
+        };
+        public static UITextureAtlas EditorItemAtlas { get; } = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, Sprites, new RectOffset(4, 4, 4, 4), 2);
         public virtual void Init() => Init(null);
         public virtual void DeInit() { }
         public void Init(float? height = null)
@@ -96,7 +87,7 @@ namespace NodeMarkup.UI
             base.OnSizeChanged();
 
             Label.relativePosition = new Vector2(0, (height - Label.height) / 2);
-            Control.size = size;           
+            Control.size = size;
         }
 
         private void ControlSizeChanged(UIComponent component, Vector2 value) => RefreshContent();
