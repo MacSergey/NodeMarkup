@@ -132,9 +132,16 @@ namespace NodeMarkup.UI.Editors
     public class PreviewPanel : PropertyGroupPanel
     {
         protected override Color32 Color => UnityEngine.Color.white;
+
+        protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
+        protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
+        protected override void OnTooltipLeave(UIMouseEventParameter p) { return; }
     }
     public class PreviewPresetInfo : PresetInfoProperty
     {
         protected override Color32 TextColor => Color.black;
+        protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
+        protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
+        protected override void OnTooltipLeave(UIMouseEventParameter p) { return; }
     }
 }

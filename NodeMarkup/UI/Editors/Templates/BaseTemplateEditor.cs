@@ -115,7 +115,7 @@ namespace NodeMarkup.UI.Editors
 
         private void SaveAsset()
         {
-            if (TemplateManager.MakeAsset(EditObject))
+            if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
             {
                 SelectItem.Init(EditObject);
                 ItemClick(SelectItem);

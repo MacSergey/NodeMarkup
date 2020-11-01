@@ -74,7 +74,7 @@ namespace NodeMarkup.UI
 
         private void AddScreenshot()
         {
-            Screenshot = AddUIComponent<UITextureSprite>();
+            Screenshot = AddUIComponent<CustomUITextureSprite>();
             Screenshot.material = Material;
             Screenshot.size = new Vector2(Size, Size);
             Screenshot.relativePosition = new Vector2(0, 5);
@@ -168,6 +168,12 @@ namespace NodeMarkup.UI
                 Titles.relativePosition = new Vector2(Screenshot.width + space, (height - Titles.height) / 2);
                 Values.relativePosition = new Vector2(Titles.relativePosition.x + Titles.width, (height - Values.height) / 2);
             }
+        }
+        private class CustomUITextureSprite : UITextureSprite
+        {
+            protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
+            protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
+            protected override void OnTooltipLeave(UIMouseEventParameter p) { return; }
         }
     }
 }

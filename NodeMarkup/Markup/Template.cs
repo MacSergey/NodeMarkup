@@ -218,7 +218,7 @@ namespace NodeMarkup.Manager
 
     public class TemplateAsset
     {
-        public Template Template { get; protected set; }
+        public Template Template { get; private set; }
 
         public ulong AuthorId { get; set; }
         public string Author => TemplateManager.GetAuthor(AuthorId);

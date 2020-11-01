@@ -17,13 +17,27 @@ namespace NodeMarkup.Manager
 {
     public abstract class TemplateManager
     {
-        public static StyleTemplateManager StyleManager { get; } = new StyleTemplateManager();
-        public static IntersectionTemplateManager IntersectionManager { get; } = new IntersectionTemplateManager();
+        public static StyleTemplateManager StyleManager
+        {
+            get => StyleTemplateManager.Instance;
+            private set => StyleTemplateManager.Instance = value;
+        }
+        public static IntersectionTemplateManager IntersectionManager
+        {
+            get => IntersectionTemplateManager.Instance;
+            set => IntersectionTemplateManager.Instance = value;
+        }
 
         private static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
         public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
 
         public abstract SavedString Saved { get; }
+
+        static TemplateManager()
+        {
+            StyleManager = new StyleTemplateManager();
+            IntersectionManager = new IntersectionTemplateManager();
+        }
 
         public abstract void Load();
 
@@ -61,19 +75,12 @@ namespace NodeMarkup.Manager
             if (authorId != 0 && !Authors.ContainsKey(authorId))
                 Authors[authorId] = new Friend(new UserID(authorId)).personaName;
         }
-
-        public static bool MakeAsset(Template template)
-        {
-            if (template.IsAsset)
-                return true;
-
-            var asset = new TemplateAsset(template);
-            return Loader.SaveAsset(asset);
-        }
     }
     public abstract class TemplateManager<TemplateType> : TemplateManager
         where TemplateType : Template
     {
+        public static TemplateManager<TemplateType> Instance { get; protected set; }
+
         protected abstract string DefaultName { get; }
         protected Dictionary<Guid, TemplateType> TemplatesDictionary { get; } = new Dictionary<Guid, TemplateType>();
         public IEnumerable<TemplateType> Templates => TemplatesDictionary.Values;
@@ -132,6 +139,19 @@ namespace NodeMarkup.Manager
         {
             Clear();
             Save();
+        }
+
+        public bool MakeAsset(TemplateType template)
+        {
+            if (template.IsAsset)
+                return true;
+
+            var asset = new TemplateAsset(template);
+            var saved = Loader.SaveAsset(asset);
+            if (saved)
+                Save();
+
+            return saved;
         }
         #endregion
 
@@ -219,6 +239,12 @@ namespace NodeMarkup.Manager
     }
     public class StyleTemplateManager : TemplateManager<StyleTemplate, Style>
     {
+        public static new StyleTemplateManager Instance
+        {
+            get => TemplateManager<StyleTemplate>.Instance as StyleTemplateManager;
+            set => TemplateManager<StyleTemplate>.Instance = value;
+        }
+
         protected override string DefaultName => Localize.Template_NewTemplate;
         public override SavedString Saved => Settings.Templates;
 
@@ -297,6 +323,12 @@ namespace NodeMarkup.Manager
     }
     public class IntersectionTemplateManager : TemplateManager<IntersectionTemplate, Markup>
     {
+        public static new IntersectionTemplateManager Instance
+        {
+            get => TemplateManager<IntersectionTemplate>.Instance as IntersectionTemplateManager;
+            set => TemplateManager<IntersectionTemplate>.Instance = value;
+        }
+
         protected override string DefaultName => Localize.Preset_NewPreset;
         public override SavedString Saved => Settings.Intersections;
 
@@ -317,7 +349,7 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config);
 
-            foreach(var template in Templates.Where(t => !t.IsAsset))
+            foreach (var template in Templates.Where(t => !t.IsAsset))
             {
                 if (Loader.LoadScreenshot(template.Id, out Image image))
                     template.Screenshot = image.CreateTexture();
