@@ -90,7 +90,7 @@ namespace NodeMarkup.UI
             NoScreenshot.text = NodeMarkup.Localize.PresetInfo_NoScreenshot;
 
             NoScreenshot.atlas = atlas;
-            NoScreenshot.backgroundSprite = EmptySprite;
+            NoScreenshot.backgroundSprite = TextureUtil.FieldEmpty;
             NoScreenshot.color = Color.black;
 
             NoScreenshot.textAlignment = UIHorizontalAlignment.Center;

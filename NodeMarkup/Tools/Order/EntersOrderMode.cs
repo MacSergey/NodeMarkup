@@ -13,18 +13,6 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>
     {
-
-        private static string[] Sprites = new string[]
-        {
-                nameof(TurnLeftButton),
-                nameof(FlipButton),
-                nameof(TurnRightButton),
-                nameof(ApplyButton),
-                nameof(NotApplyButton),
-                nameof(ResetButton)
-        };
-        public static UITextureAtlas ButtonAtlas { get; } = TextureUtil.CreateTextureAtlas("PasteButtons.png", nameof(BaseEntersOrderToolMode), 50, 50, Sprites, new RectOffset(0, 0, 0, 0));
-
         private GUIButton TurnLeftButton { get; }
         private GUIButton FlipButton { get; }
         private GUIButton TurnRightButton { get; }
@@ -37,22 +25,22 @@ namespace NodeMarkup.Tools
 
         public BaseEntersOrderToolMode()
         {
-            TurnLeftButton = new GUIButton(1, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(TurnLeftButton)].region);
+            TurnLeftButton = new GUIButton(1, 3, 1, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.TurnLeftButton].region);
             TurnLeftButton.OnClick += TurnLeftClick;
 
-            FlipButton = new GUIButton(2, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(FlipButton)].region);
+            FlipButton = new GUIButton(2, 3, 1, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.FlipButton].region);
             FlipButton.OnClick += FlipClick;
 
-            TurnRightButton = new GUIButton(3, 3, 1, 2, ButtonAtlas.texture, ButtonAtlas[nameof(TurnRightButton)].region);
+            TurnRightButton = new GUIButton(3, 3, 1, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.TurnRightButton].region);
             TurnRightButton.OnClick += TurnRightClick;
 
-            ApplyButton = new GUIButton(1, 3, 2, 2, ButtonAtlas.texture, ButtonAtlas[nameof(ApplyButton)].region);
+            ApplyButton = new GUIButton(1, 3, 2, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.ApplyButton].region);
             ApplyButton.OnClick += ApplyClick;
 
-            NotApplyButton = new GUIButton(2, 3, 2, 2, ButtonAtlas.texture, ButtonAtlas[nameof(NotApplyButton)].region);
+            NotApplyButton = new GUIButton(2, 3, 2, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.NotApplyButton].region);
             NotApplyButton.OnClick += NotApplyClick;
 
-            ResetButton = new GUIButton(3, 3, 2, 2, ButtonAtlas.texture, ButtonAtlas[nameof(ResetButton)].region);
+            ResetButton = new GUIButton(3, 3, 2, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.ResetButton].region);
             ResetButton.OnClick += ResetClick;
         }
         private void TurnLeftClick()

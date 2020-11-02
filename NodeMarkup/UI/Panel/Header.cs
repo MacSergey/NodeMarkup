@@ -65,13 +65,13 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeaderContent()
         {
-            AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsPresetShortcut);
+            AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsPresetShortcut);
 
-            AddButton(HeaderButton.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
-            AddButton(HeaderButton.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
-            AddButton(HeaderButton.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
+            AddButton(TextureUtil.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
+            AddButton(TextureUtil.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            AddButton(TextureUtil.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
 
-            Additionally = AddButton<AdditionallyHeaderButton>(HeaderButton.Additionally, NodeMarkup.Localize.Panel_Additional);
+            Additionally = AddButton<AdditionallyHeaderButton>(TextureUtil.Additionally, NodeMarkup.Localize.Panel_Additional);
             Additionally.OpenPopupEvent += OnAdditionallyPopup;
         }
 
@@ -79,10 +79,10 @@ namespace NodeMarkup.UI.Panel
         {
             var buttons = new List<SimpleHeaderButton>
             {
-                AddButton(popup.Content, HeaderButton.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
-                AddButton(popup.Content, HeaderButton.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
-                AddButton(popup.Content, HeaderButton.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
-                AddButton(popup.Content, HeaderButton.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
+                AddButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
+                AddButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
+                AddButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
+                AddButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
             };
 
             foreach (var button in buttons)

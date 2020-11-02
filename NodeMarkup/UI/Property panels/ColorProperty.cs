@@ -16,13 +16,6 @@ namespace NodeMarkup.UI.Editors
 
         private bool InProcess { get; set; } = false;
 
-        private static string OpacitySlider { get; } = nameof(OpacitySlider);
-        private static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
-        private static string ColorPickerHover { get; } = nameof(ColorPickerHover);
-        private static string ColorPickerColor { get; } = nameof(ColorPickerColor);
-        private static UITextureAtlas OpacitySliderAtlas { get; } = TextureUtil.CreateTextureAtlas("OpacitySlider.png", nameof(OpacitySliderAtlas), 18, 200, new string[] { OpacitySlider });
-        private static UITextureAtlas ColorPickerAtlas { get; } = TextureUtil.CreateTextureAtlas("ColorPicker.png", nameof(ColorPickerAtlas), 43, 49, new string[] { ColorPickerNormal, ColorPickerHover, ColorPickerColor });
-
         private UITextField R { get; set; }
         private UITextField G { get; set; }
         private UITextField B { get; set; }
@@ -97,10 +90,10 @@ namespace NodeMarkup.UI.Editors
             Control.AttachUIComponent(ColorSample.gameObject);
             ColorSample.anchor = UIAnchorStyle.None;
             ColorSample.size = new Vector2(26f, 28f);
-            ColorSample.atlas = ColorPickerAtlas;
-            ColorSample.normalBgSprite = ColorPickerNormal;
-            ColorSample.hoveredBgSprite = ColorPickerHover;
-            ColorSample.hoveredFgSprite = ColorPickerColor;
+            ColorSample.atlas = TextureUtil.Atlas;
+            ColorSample.normalBgSprite = TextureUtil.ColorPickerNormal;
+            ColorSample.hoveredBgSprite = TextureUtil.ColorPickerHover;
+            ColorSample.hoveredFgSprite = TextureUtil.ColorPickerColor;
 
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
             ColorSample.eventColorPickerOpen += ColorPickerOpen;
@@ -131,8 +124,8 @@ namespace NodeMarkup.UI.Editors
             opacitySlider.eventValueChanged += OpacityChanged;
 
             var opacity = opacitySlider.AddUIComponent<UISlicedSprite>();
-            opacity.atlas = OpacitySliderAtlas;
-            opacity.spriteName = OpacitySlider;
+            opacity.atlas = TextureUtil.Atlas;
+            opacity.spriteName = TextureUtil.OpacitySliderSprite;
             opacity.relativePosition = Vector2.zero;
             opacity.size = opacitySlider.size;
             opacity.fillDirection = UIFillDirection.Vertical;

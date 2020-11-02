@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = TextureUtil.AdditionalAtlas;
+            DeleteButton.atlas = TextureUtil.Atlas;
             DeleteButton.normalBgSprite = TextureUtil.DeleteNormal;
             DeleteButton.hoveredBgSprite = TextureUtil.DeleteHover;
             DeleteButton.pressedBgSprite = TextureUtil.DeletePressed;
@@ -105,10 +105,10 @@ namespace NodeMarkup.UI.Editors
 
         public StyleHeaderPanel()
         {
-            Content.AddButton(HeaderButton.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
-            ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(HeaderButton.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            Content.AddButton(HeaderButton.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
-            Content.AddButton(HeaderButton.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
+            Content.AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
+            ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(TextureUtil.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
+            Content.AddButton(TextureUtil.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
+            Content.AddButton(TextureUtil.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
@@ -136,7 +136,7 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalkHeaderPanel()
         {
-            Content.AddButton(HeaderButton.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
+            Content.AddButton(TextureUtil.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
         }
         public override void DeInit()
         {
@@ -160,7 +160,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void AddButtons()
         {
-            SaveAsAsset = Content.AddButton(HeaderButton.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+            SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
         }
 
         public virtual void Init(TemplateType template)
@@ -186,7 +186,7 @@ namespace NodeMarkup.UI.Editors
         protected override void AddButtons()
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
-            Content.AddButton(HeaderButton.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            Content.AddButton(TextureUtil.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
 
             base.AddButtons();
         }
@@ -194,7 +194,7 @@ namespace NodeMarkup.UI.Editors
         {
             base.Init(template);
 
-            SetAsDefaultButton.SetSprite(template.IsDefault ? HeaderButton.UnsetDefault : HeaderButton.SetDefault);
+            SetAsDefaultButton.SetSprite(template.IsDefault ? TextureUtil.UnsetDefault : TextureUtil.SetDefault);
             SetAsDefaultButton.tooltip = template.IsDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
         public override void DeInit()

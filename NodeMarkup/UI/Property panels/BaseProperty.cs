@@ -11,23 +11,8 @@ namespace NodeMarkup.UI
 {
     public abstract class EditorItem : UIPanel
     {
-        public static string NormalSprite => nameof(NormalSprite);
-        public static string HoveredSprite => nameof(HoveredSprite);
-        public static string FocusedSprite => nameof(FocusedSprite);
-        public static string DisabledSprite => nameof(DisabledSprite);
-        public static string EmptySprite => nameof(EmptySprite);
-
         protected virtual float DefaultHeight => 30;
 
-        private static string[] Sprites { get; } = new string[]
-        {
-                NormalSprite,
-                HoveredSprite,
-                FocusedSprite,
-                DisabledSprite,
-                EmptySprite
-        };
-        public static UITextureAtlas EditorItemAtlas { get; } = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, Sprites, new RectOffset(4, 4, 4, 4), 2);
         public virtual void Init() => Init(null);
         public virtual void DeInit() { }
         public void Init(float? height = null)
@@ -110,12 +95,12 @@ namespace NodeMarkup.UI
         {
             var field = parent.AddUIComponent<UITextField>();
 
-            field.atlas = EditorItemAtlas;
-            field.normalBgSprite = NormalSprite;
-            field.hoveredBgSprite = HoveredSprite;
-            field.focusedBgSprite = NormalSprite;
-            field.disabledBgSprite = DisabledSprite;
-            field.selectionSprite = EmptySprite;
+            field.atlas = TextureUtil.Atlas;
+            field.normalBgSprite = TextureUtil.FieldNormal;
+            field.hoveredBgSprite = TextureUtil.FieldHovered;
+            field.focusedBgSprite = TextureUtil.FieldNormal;
+            field.disabledBgSprite = TextureUtil.FieldDisabled;
+            field.selectionSprite = TextureUtil.FieldEmpty;
 
             field.allowFloats = true;
             field.isInteractive = true;

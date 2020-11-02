@@ -11,53 +11,16 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class HeaderButton : UIButton
     {
-        public static string Hovered => nameof(Hovered);
-        public static string AddTemplate => nameof(AddTemplate);
-        public static string ApplyTemplate => nameof(ApplyTemplate);
-        public static string Copy => nameof(Copy);
-        public static string Paste => nameof(Paste);
-        public static string Duplicate => nameof(Duplicate);
-        public static string SetDefault => nameof(SetDefault);
-        public static string UnsetDefault => nameof(UnsetDefault);
-        public static string Package => nameof(Package);
-        public static string Clear => nameof(Clear);
-        public static string Edit => nameof(Edit);
-        public static string Offset => nameof(Offset);
-        public static string EdgeLines => nameof(EdgeLines);
-        public static string Additionally => nameof(Additionally);
-        public static string Cut => nameof(Cut);
-
-        private static string[] Sprites { get; } = new string[]
-        {
-                Hovered,
-                "_",
-                AddTemplate,
-                ApplyTemplate,
-                Copy,
-                Paste,
-                Duplicate,
-                SetDefault,
-                UnsetDefault,
-                Package,
-                Clear,
-                Edit,
-                Offset,
-                EdgeLines,
-                Additionally,
-                Cut
-        };
-        public static UITextureAtlas ButtonAtlas { get; } = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, Sprites, new RectOffset(2, 2, 2, 2));
-
         public UIPanel Panel { get; }
         protected virtual Color32 HoveredColor => Color.black;
         protected virtual Color32 PressedColor => new Color32(160, 160, 160, 255);
 
         public HeaderButton()
         {
-            hoveredBgSprite = Hovered;
-            pressedBgSprite = Hovered;
+            hoveredBgSprite = TextureUtil.HeaderHovered;
+            pressedBgSprite = TextureUtil.HeaderHovered;
             size = new Vector2(25, 25);
-            atlas = ButtonAtlas;
+            atlas = TextureUtil.Atlas;
             hoveredColor = HoveredColor;
             pressedColor = PressedColor;
             clipChildren = true;

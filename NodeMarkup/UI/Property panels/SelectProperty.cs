@@ -51,10 +51,10 @@ namespace NodeMarkup.UI.Editors
         {
             Selector = Control.AddUIComponent<UIButton>();
             Selector.text = NodeMarkup.Localize.SelectPanel_NotSet;
-            Selector.atlas = EditorItemAtlas;
-            Selector.normalBgSprite = NormalSprite;
-            Selector.hoveredBgSprite = HoveredSprite;
-            Selector.disabledBgSprite = DisabledSprite;
+            Selector.atlas = TextureUtil.Atlas;
+            Selector.normalBgSprite = TextureUtil.FieldNormal;
+            Selector.hoveredBgSprite = TextureUtil.FieldHovered;
+            Selector.disabledBgSprite = TextureUtil.FieldDisabled;
             Selector.isInteractive = true;
             Selector.enabled = true;
             Selector.autoSize = false;

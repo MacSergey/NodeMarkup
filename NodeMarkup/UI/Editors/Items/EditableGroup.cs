@@ -98,7 +98,7 @@ namespace NodeMarkup.UI.Editors
         private void AddExpandIcon()
         {
             ExpandIcon = AddUIComponent<UIPanel>();
-            ExpandIcon.atlas = TextureUtil.AdditionalAtlas;
+            ExpandIcon.atlas = TextureUtil.Atlas;
             ExpandIcon.size = new Vector2(20, 20);
             IsExpand = true;
         }

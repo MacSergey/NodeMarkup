@@ -234,7 +234,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Buttons.png" />
     <EmbeddedResource Include="Resources\Styles.png" />
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SharkTooth.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\PasteButtons.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AdditionalButtons.png" />
@@ -263,6 +259,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ColorPicker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HeaderButtons.png" />
+    <EmbeddedResource Include="Resources\OrderButtons.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">

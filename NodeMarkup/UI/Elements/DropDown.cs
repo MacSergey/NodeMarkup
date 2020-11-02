@@ -52,14 +52,14 @@ namespace NodeMarkup.UI
 
         public void SetDefaultStyle(Vector2? size = null)
         {
-            atlas = EditorItem.EditorItemAtlas;
+            atlas = TextureUtil.Atlas;
             this.size = size ?? new Vector2(230, 20);
-            listBackground = EditorItem.HoveredSprite;
+            listBackground = TextureUtil.FieldHovered;
             itemHeight = 20;
-            itemHover = EditorItem.NormalSprite;
-            itemHighlight = EditorItem.FocusedSprite;
-            normalBgSprite = EditorItem.NormalSprite;
-            hoveredBgSprite = EditorItem.HoveredSprite;
+            itemHover = TextureUtil.FieldNormal;
+            itemHighlight = TextureUtil.FieldFocused;
+            normalBgSprite = TextureUtil.FieldNormal;
+            hoveredBgSprite = TextureUtil.FieldHovered;
             listWidth = (int)width;
             listHeight = 700;
             listPosition = PopupListPosition.Below;

@@ -58,7 +58,7 @@ namespace NodeMarkup.UI
 
             var button = AddUIComponent<UIButton>();
 
-            button.atlas = EditorItem.EditorItemAtlas;
+            button.atlas = TextureUtil.Atlas;
             SetSprite(button, false);
             button.text = label ?? item.ToString();
             button.textScale = 0.8f;
@@ -73,16 +73,11 @@ namespace NodeMarkup.UI
         private void SetSprite(UIButton button, bool isSelect)
         {
             if(isSelect)
-            {
-                button.normalBgSprite = EditorItem.FocusedSprite;
-                button.hoveredBgSprite = EditorItem.FocusedSprite;
-                button.pressedBgSprite = EditorItem.FocusedSprite;
-            }
+                button.normalBgSprite = button.hoveredBgSprite = button.pressedBgSprite = TextureUtil.FieldFocused;
             else
             {
-                button.normalBgSprite = EditorItem.NormalSprite;
-                button.hoveredBgSprite = EditorItem.HoveredSprite;
-                button.pressedBgSprite = EditorItem.HoveredSprite;
+                button.normalBgSprite = TextureUtil.FieldNormal;
+                button.hoveredBgSprite = button.pressedBgSprite = TextureUtil.FieldHovered;
             }
         }
 

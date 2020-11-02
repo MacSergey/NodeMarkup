@@ -15,35 +15,6 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class Editor : UIPanel
     {
-        public static Dictionary<Style.StyleType, string> SpriteNames { get;} = new Dictionary<Style.StyleType, string>()
-            {
-                {Style.StyleType.LineSolid, nameof(Style.StyleType.LineSolid) },
-                {Style.StyleType.LineDashed,  nameof(Style.StyleType.LineDashed) },
-                {Style.StyleType.LineDoubleSolid,   nameof(Style.StyleType.LineDoubleSolid) },
-                {Style.StyleType.LineDoubleDashed, nameof(Style.StyleType.LineDoubleDashed) },
-                {Style.StyleType.LineSolidAndDashed, nameof(Style.StyleType.LineSolidAndDashed) },
-                {Style.StyleType.LineSharkTeeth, nameof(Style.StyleType.LineSharkTeeth) },
-                {Style.StyleType.StopLineSolid, nameof(Style.StyleType.StopLineSolid) },
-                {Style.StyleType.StopLineDashed, nameof(Style.StyleType.StopLineDashed) },
-                {Style.StyleType.StopLineDoubleSolid, nameof(Style.StyleType.StopLineDoubleSolid) },
-                {Style.StyleType.StopLineDoubleDashed, nameof(Style.StyleType.StopLineDoubleDashed) },
-                {Style.StyleType.StopLineSolidAndDashed, nameof(Style.StyleType.StopLineSolidAndDashed) },
-                {Style.StyleType.StopLineSharkTeeth, nameof(Style.StyleType.StopLineSharkTeeth) },
-                {Style.StyleType.FillerStripe, nameof(Style.StyleType.FillerStripe) },
-                {Style.StyleType.FillerGrid, nameof(Style.StyleType.FillerGrid) },
-                {Style.StyleType.FillerSolid, nameof(Style.StyleType.FillerSolid) },
-                {Style.StyleType.FillerChevron, nameof(Style.StyleType.FillerChevron) },
-                {Style.StyleType.CrosswalkExistent, nameof(Style.StyleType.CrosswalkExistent) },
-                {Style.StyleType.CrosswalkZebra, nameof(Style.StyleType.CrosswalkZebra) },
-                {Style.StyleType.CrosswalkDoubleZebra, nameof(Style.StyleType.CrosswalkDoubleZebra) },
-                {Style.StyleType.CrosswalkParallelSolidLines, nameof(Style.StyleType.CrosswalkParallelSolidLines) },
-                {Style.StyleType.CrosswalkParallelDashedLines, nameof(Style.StyleType.CrosswalkParallelDashedLines) },
-                {Style.StyleType.CrosswalkLadder, nameof(Style.StyleType.CrosswalkLadder) },
-                {Style.StyleType.CrosswalkSolid, nameof(Style.StyleType.CrosswalkSolid) },
-                {Style.StyleType.CrosswalkChessBoard, nameof(Style.StyleType.CrosswalkChessBoard) },
-            };
-        public static UITextureAtlas StylesAtlas { get; } = TextureUtil.CreateTextureAtlas("Styles.png", nameof(StylesAtlas), 19, 19, SpriteNames.Values.ToArray());
-
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public NodeMarkupPanel NodeMarkupPanel { get; private set; }
         protected Markup Markup => NodeMarkupPanel.Markup;

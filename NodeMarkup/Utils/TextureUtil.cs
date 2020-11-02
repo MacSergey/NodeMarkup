@@ -1,6 +1,11 @@
-﻿using ColossalFramework.PlatformServices;
+﻿using ColossalFramework.Importers;
+using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using NodeMarkup.Manager;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -10,102 +15,56 @@ namespace NodeMarkup.Utils
     {
         public static UITextureAtlas InGameAtlas { get; } = GetAtlas("Ingame");
 
-        public static string DeleteNormal { get; } = nameof(DeleteNormal);
-        public static string DeleteHover { get; } = nameof(DeleteHover);
-        public static string DeletePressed { get; } = nameof(DeletePressed);
-        public static string ArrowDown { get; } = nameof(ArrowDown);
-        public static string ArrowRight { get; } = nameof(ArrowRight);
-        private static string[] DeleteSprites { get; } = new string[] { DeleteNormal, DeleteHover, DeletePressed, ArrowDown, ArrowRight };
-        public static UITextureAtlas AdditionalAtlas { get; } = CreateTextureAtlas("AdditionalButtons.png", nameof(AdditionalAtlas), 32, 32, DeleteSprites);
+        public static UITextureAtlas Atlas;
+        public static Texture2D Texture => Atlas.texture;
 
-        public static UITextureAtlas CreateTextureAtlas(string textureFile, string atlasName, int spriteWidth, int spriteHeight, string[] spriteNames, RectOffset border = null, int space = 0)
+        static Dictionary<string, Action<Texture2D, Rect>> Files { get; } = new Dictionary<string, Action<Texture2D, Rect>>
         {
-            var atlas = GetAtlas(atlasName);
+            {nameof(OrderButtons), OrderButtons},
+            {nameof(Styles), Styles},
+            {nameof(HeaderButtons), HeaderButtons},
+            {nameof(ListItem), ListItem},
+            {nameof(Button), Button},
+            {nameof(Resize), Resize},
+            {nameof(TextFieldPanel), TextFieldPanel},
+            {nameof(OpacitySlider), OpacitySlider},
+            {nameof(ColorPicker), ColorPicker},
+            {nameof(AdditionalButtons), AdditionalButtons},
+        };
 
-            if (atlas == UIView.GetAView().defaultAtlas)
-            {
-                var texture = LoadTextureFromAssembly(textureFile, spriteWidth * spriteNames.Length + space * (spriteNames.Length + 1), spriteHeight + 2 * space);
-
-                atlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-                var material = Object.Instantiate(UIView.GetAView().defaultAtlas.material);
-                material.mainTexture = texture;
-                atlas.material = material;
-                atlas.name = atlasName;
-
-                var heightRatio = spriteHeight / (float)texture.height;
-                var widthRatio = spriteWidth / (float)texture.width;
-                var spaceHeightRatio = space / (float)texture.height;
-                var spaceWidthRatio = space / (float)texture.width;
-
-                for (int i = 0; i < spriteNames.Length; i += 1)
-                    atlas.AddSprite(spriteNames[i], new Rect(i * widthRatio + (i + 1) * spaceWidthRatio, spaceHeightRatio, widthRatio, heightRatio), border);
-            }
-
-            return atlas;
-        }
-        public static void AddSprite(this UITextureAtlas atlas, string name, Rect region, RectOffset border = null)
+        static TextureUtil()
         {
-            UITextureAtlas.SpriteInfo spriteInfo = new UITextureAtlas.SpriteInfo
-            {
-                name = name,
-                texture = atlas.material.mainTexture as Texture2D,
-                region = region,
-                border = border ?? new RectOffset()
-            };
-            atlas.AddSprite(spriteInfo);
+            var textures = Files.Select(f => LoadTextureFromAssembly($"{f.Key}.png")).ToArray();
+            var rects = CreateAtlas(textures);
+            var actions = Files.Values.ToArray();
+
+            for (var i = 0; i < actions.Length; i += 1)
+                actions[i](textures[i], rects[i]);
         }
 
-        public static void AddTexturesInAtlas(UITextureAtlas atlas, Texture2D[] newTextures, bool locked = false)
+        public static Texture2D LoadTextureFromAssembly(string textureFile)
         {
-            Texture2D[] textures = new Texture2D[atlas.count + newTextures.Length];
+            var executingAssembly = Assembly.GetExecutingAssembly();
+            var path = $"{nameof(NodeMarkup)}.Resources.{textureFile}";
+            var manifestResourceStream = executingAssembly.GetManifestResourceStream(path);
+            var data = new byte[manifestResourceStream.Length];
+            manifestResourceStream.Read(data, 0, data.Length);
 
-            for (int i = 0; i < atlas.count; i++)
-            {
-                Texture2D texture2D = atlas.sprites[i].texture;
-
-                if (locked)
-                {
-                    // Locked textures workaround
-                    RenderTexture renderTexture = RenderTexture.GetTemporary(texture2D.width, texture2D.height, 0);
-                    Graphics.Blit(texture2D, renderTexture);
-
-                    RenderTexture active = RenderTexture.active;
-                    texture2D = new Texture2D(renderTexture.width, renderTexture.height);
-                    RenderTexture.active = renderTexture;
-                    texture2D.ReadPixels(new Rect(0f, 0f, (float)renderTexture.width, (float)renderTexture.height), 0, 0);
-                    texture2D.Apply();
-                    RenderTexture.active = active;
-
-                    RenderTexture.ReleaseTemporary(renderTexture);
-                }
-
-                textures[i] = texture2D;
-                textures[i].name = atlas.sprites[i].name;
-            }
-
-            for (int i = 0; i < newTextures.Length; i++)
-                textures[atlas.count + i] = newTextures[i];
-
-            Rect[] regions = atlas.texture.PackTextures(textures, atlas.padding, 4096, false);
-
-            atlas.sprites.Clear();
-
-            for (int i = 0; i < textures.Length; i++)
-            {
-                UITextureAtlas.SpriteInfo spriteInfo = atlas[textures[i].name];
-                atlas.sprites.Add(new UITextureAtlas.SpriteInfo
-                {
-                    texture = textures[i],
-                    name = textures[i].name,
-                    border = (spriteInfo != null) ? spriteInfo.border : new RectOffset(),
-                    region = regions[i]
-                });
-            }
-
-            atlas.RebuildIndexes();
+            var texture = new Image(data).CreateTexture();
+            return texture;
         }
 
-        public static UITextureAtlas GetAtlas(string name)
+        static Rect[] CreateAtlas(Texture2D[] textures)
+        {
+            Atlas = ScriptableObject.CreateInstance<UITextureAtlas>();
+            Atlas.material = UnityEngine.Object.Instantiate(UIView.GetAView().defaultAtlas.material);
+            Atlas.material.mainTexture = RenderHelper.CreateTexture(1, 1, Color.white);
+            Atlas.name = nameof(NodeMarkup);
+
+            var rects = Atlas.texture.PackTextures(textures, Atlas.padding, 4096, false);
+            return rects;
+        }
+        static UITextureAtlas GetAtlas(string name)
         {
             UITextureAtlas[] atlases = Resources.FindObjectsOfTypeAll(typeof(UITextureAtlas)) as UITextureAtlas[];
             for (int i = 0; i < atlases.Length; i++)
@@ -116,20 +75,151 @@ namespace NodeMarkup.Utils
             return UIView.GetAView().defaultAtlas;
         }
 
-        public static Texture2D LoadTextureFromAssembly(string textureFile, int width, int height)
+        static void OrderButtons(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton);
+
+        static void Styles(Texture2D texture, Rect rect) => AddSprites(texture, rect, 19, 19, StyleNames);
+
+        static void HeaderButtons(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Package, Clear, Edit, Offset, EdgeLines, Additionally, Cut);
+
+        static void ListItem(Texture2D texture, Rect rect) => AddSprites(texture, rect, new RectOffset(1, 1, 1, 1), 0, ListItemSprite);
+
+        static void Button(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
+
+        static void Resize(Texture2D texture, Rect rect) => AddSprites(texture, rect, ResizeSprite);
+
+        static void TextFieldPanel(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 32, 32, new RectOffset(4, 4, 4, 4), 2, FieldNormal, FieldHovered, FieldFocused, FieldDisabled, FieldEmpty);
+
+        static void OpacitySlider(Texture2D texture, Rect rect) => AddSprites(texture, rect, new RectOffset(), 0, OpacitySliderSprite);
+
+        static void ColorPicker(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor);
+
+        static void AdditionalButtons(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed, ArrowDown, ArrowRight);
+
+
+
+        static void AddSprites(Texture2D texture, Rect rect, string sprite)
+            => AddSprites(texture, rect, new RectOffset(), 0, sprite);
+
+        static void AddSprites(Texture2D texture, Rect rect, RectOffset border, int space, string sprite)
+            => AddSprites(texture, rect, texture.width, texture.height, border, space, sprite);
+
+        static void AddSprites(Texture2D texture, Rect rect, int spriteWidth, int spriteHeight, params string[] sprites)
+            => AddSprites(texture, rect, spriteWidth, spriteHeight, new RectOffset(), 0, sprites);
+
+        static void AddSprites(Texture2D texture, Rect rect, int spriteWidth, int spriteHeight, RectOffset border, int space, params string[] sprites)
         {
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            var path = $"{nameof(NodeMarkup)}.Resources.{textureFile}";
-            var manifestResourceStream = executingAssembly.GetManifestResourceStream(path);
-            var array = new byte[manifestResourceStream.Length];
-            manifestResourceStream.Read(array, 0, array.Length);
+            var width = spriteWidth / (float)texture.width * rect.width;
+            var height = spriteHeight / (float)texture.height * rect.height;
+            var spaceWidth = space / (float)texture.width * rect.width;
+            var spaceHeight = space / (float)texture.height * rect.height;
 
-            var texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            texture.filterMode = FilterMode.Bilinear;
-            texture.LoadImage(array);
-            texture.Apply(true, true);
+            for (int i = 0; i < sprites.Length; i += 1)
+            {
+                var x = rect.x + i * width + (i + 1) * spaceWidth;
+                var y = rect.y + spaceHeight;
+                AddSprite(sprites[i], new Rect(x, y, width, height), border);
 
-            return texture;
+            }
         }
+        static void AddSprite(string name, Rect region, RectOffset border = null)
+        {
+            UITextureAtlas.SpriteInfo spriteInfo = new UITextureAtlas.SpriteInfo
+            {
+                name = name,
+                texture = Atlas.material.mainTexture as Texture2D,
+                region = region,
+                border = border ?? new RectOffset()
+            };
+            Atlas.AddSprite(spriteInfo);
+        }
+
+        public static string TurnLeftButton => nameof(TurnLeftButton);
+        public static string FlipButton => nameof(FlipButton);
+        public static string TurnRightButton => nameof(TurnRightButton);
+        public static string ApplyButton => nameof(ApplyButton);
+        public static string NotApplyButton => nameof(NotApplyButton);
+        public static string ResetButton => nameof(ResetButton);
+
+        private static string[] StyleNames { get; } = new string[]
+            {
+                nameof(Style.StyleType.LineSolid),
+                nameof(Style.StyleType.LineDashed),
+                nameof(Style.StyleType.LineDoubleSolid),
+                nameof(Style.StyleType.LineDoubleDashed),
+                nameof(Style.StyleType.LineSolidAndDashed),
+                nameof(Style.StyleType.LineSharkTeeth),
+
+                nameof(Style.StyleType.StopLineSolid),
+                nameof(Style.StyleType.StopLineDashed),
+                nameof(Style.StyleType.StopLineDoubleSolid),
+                nameof(Style.StyleType.StopLineDoubleDashed),
+                nameof(Style.StyleType.StopLineSolidAndDashed),
+                nameof(Style.StyleType.StopLineSharkTeeth),
+
+                nameof(Style.StyleType.FillerStripe),
+                nameof(Style.StyleType.FillerGrid),
+                nameof(Style.StyleType.FillerSolid),
+                nameof(Style.StyleType.FillerChevron),
+
+                nameof(Style.StyleType.CrosswalkExistent),
+                nameof(Style.StyleType.CrosswalkZebra),
+                nameof(Style.StyleType.CrosswalkDoubleZebra),
+                nameof(Style.StyleType.CrosswalkParallelSolidLines),
+                nameof(Style.StyleType.CrosswalkParallelDashedLines),
+                nameof(Style.StyleType.CrosswalkLadder),
+                nameof(Style.StyleType.CrosswalkSolid),
+                nameof(Style.StyleType.CrosswalkChessBoard),
+            };
+
+        public static string HeaderHovered => nameof(HeaderHovered);
+        public static string AddTemplate => nameof(AddTemplate);
+        public static string ApplyTemplate => nameof(ApplyTemplate);
+        public static string Copy => nameof(Copy);
+        public static string Paste => nameof(Paste);
+        public static string Duplicate => nameof(Duplicate);
+        public static string SetDefault => nameof(SetDefault);
+        public static string UnsetDefault => nameof(UnsetDefault);
+        public static string Package => nameof(Package);
+        public static string Clear => nameof(Clear);
+        public static string Edit => nameof(Edit);
+        public static string Offset => nameof(Offset);
+        public static string EdgeLines => nameof(EdgeLines);
+        public static string Additionally => nameof(Additionally);
+        public static string Cut => nameof(Cut);
+
+        public static string ListItemSprite { get; } = nameof(ListItemSprite);
+
+        public static string ButtonNormal => nameof(ButtonNormal);
+        public static string ButtonActive => nameof(ButtonActive);
+        public static string ButtonHover => nameof(ButtonHover);
+        public static string Icon => nameof(Icon);
+        public static string IconActive => nameof(IconActive);
+        public static string IconHover => nameof(IconHover);
+
+        public static string ResizeSprite { get; } = nameof(ResizeSprite);
+
+        public static string FieldNormal => nameof(FieldNormal);
+        public static string FieldHovered => nameof(FieldHovered);
+        public static string FieldFocused => nameof(FieldFocused);
+        public static string FieldDisabled => nameof(FieldDisabled);
+        public static string FieldEmpty => nameof(FieldEmpty);
+
+        public static string OpacitySliderSprite { get; } = nameof(OpacitySliderSprite);
+
+        public static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
+        public static string ColorPickerHover { get; } = nameof(ColorPickerHover);
+        public static string ColorPickerColor { get; } = nameof(ColorPickerColor);
+
+        public static string DeleteNormal { get; } = nameof(DeleteNormal);
+        public static string DeleteHover { get; } = nameof(DeleteHover);
+        public static string DeletePressed { get; } = nameof(DeletePressed);
+        public static string ArrowDown { get; } = nameof(ArrowDown);
+        public static string ArrowRight { get; } = nameof(ArrowRight);
     }
 }

@@ -13,9 +13,6 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class EditableItemBase : UIButton
     {
-        private static string Item { get; } = nameof(Item);
-        public static UITextureAtlas ItemAtlas { get; } = TextureUtil.CreateTextureAtlas("ListItem.png", nameof(ItemAtlas), 21, 26, new string[] { Item }, new RectOffset(1, 1, 1, 1));
-
         public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
         public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
         public virtual Color32 PressedColor => new Color32(51, 100, 132, 255);
@@ -47,8 +44,8 @@ namespace NodeMarkup.UI.Editors
         {
             AddLable();
 
-            atlas = ItemAtlas;
-            normalBgSprite = Item;
+            atlas = TextureUtil.Atlas;
+            normalBgSprite = TextureUtil.ListItemSprite;
             height = 25;
         }
 
@@ -133,7 +130,7 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = TextureUtil.AdditionalAtlas;
+            DeleteButton.atlas = TextureUtil.Atlas;
             DeleteButton.normalBgSprite = TextureUtil.DeleteNormal;
             DeleteButton.hoveredBgSprite = TextureUtil.DeleteHover;
             DeleteButton.pressedBgSprite = TextureUtil.DeletePressed;
@@ -231,21 +228,12 @@ namespace NodeMarkup.UI.Editors
         protected UIButton Thumbnail { get; set; }
 
         public Color32 StyleColor { set => Thumbnail.color = GetStyleColor(value); }
-        public Style.StyleType Type
-        {
-            set
-            {
-                if (!Editor.SpriteNames.TryGetValue(value, out string sprite))
-                    sprite = string.Empty;
-
-                Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = sprite;
-            }
-        }
+        public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = value.ToString(); }
 
         public StyleIcon()
         {
             Thumbnail = AddUIComponent<UIButton>();
-            Thumbnail.atlas = Editor.StylesAtlas;
+            Thumbnail.atlas = TextureUtil.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;
         }
