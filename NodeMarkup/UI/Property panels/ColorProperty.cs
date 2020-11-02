@@ -84,12 +84,15 @@ namespace NodeMarkup.UI.Editors
             if (!(UITemplateManager.Get("LineTemplate") is UIComponent template))
                 return;
 
-            var colorFieldTemplate = template.Find<UIColorField>("LineColor");
+            var panel = Control.AddUIComponent<UIPanel>();
+            panel.atlas = TextureUtil.Atlas;
+            panel.backgroundSprite = TextureUtil.ColorPickerBoard;
 
-            ColorSample = Instantiate(colorFieldTemplate.gameObject).GetComponent<UIColorField>();
-            Control.AttachUIComponent(ColorSample.gameObject);
+            ColorSample = Instantiate(template.Find<UIColorField>("LineColor").gameObject).GetComponent<UIColorField>();
+            panel.AttachUIComponent(ColorSample.gameObject);
+            ColorSample.size = panel.size = new Vector2(26f, 28f);
+            ColorSample.relativePosition = new Vector2(0, 0);
             ColorSample.anchor = UIAnchorStyle.None;
-            ColorSample.size = new Vector2(26f, 28f);
             ColorSample.atlas = TextureUtil.Atlas;
             ColorSample.normalBgSprite = TextureUtil.ColorPickerNormal;
             ColorSample.hoveredBgSprite = TextureUtil.ColorPickerHover;
@@ -103,6 +106,13 @@ namespace NodeMarkup.UI.Editors
         {
             popup.component.size += new Vector2(31, 31);
             popup.component.relativePosition -= new Vector3(31, 0);
+
+            if(popup.component is UIPanel panel)
+            {
+                panel.atlas = TextureUtil.Atlas;
+                panel.backgroundSprite = TextureUtil.FieldNormal;
+            }
+
             var slider = AddOpacitySlider(popup.component);
             slider.value = Value.a;
 

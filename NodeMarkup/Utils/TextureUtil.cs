@@ -98,7 +98,7 @@ namespace NodeMarkup.Utils
         static void OpacitySlider(Texture2D texture, Rect rect) => AddSprites(texture, rect, new RectOffset(), 0, OpacitySliderSprite);
 
         static void ColorPicker(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor);
+            => AddSprites(texture, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor, ColorPickerBoard);
 
         static void CloseButton(Texture2D texture, Rect rect)
             => AddSprites(texture, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
@@ -219,6 +219,7 @@ namespace NodeMarkup.Utils
         public static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
         public static string ColorPickerHover { get; } = nameof(ColorPickerHover);
         public static string ColorPickerColor { get; } = nameof(ColorPickerColor);
+        public static string ColorPickerBoard { get; } = nameof(ColorPickerBoard);
 
         public static string DeleteNormal { get; } = nameof(DeleteNormal);
         public static string DeleteHover { get; } = nameof(DeleteHover);
