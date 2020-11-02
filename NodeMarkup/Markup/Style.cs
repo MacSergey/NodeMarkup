@@ -209,7 +209,8 @@ namespace NodeMarkup.Manager
 
             return buttonsPanel;
         }
-        protected static void AddOnHoverLeave<T>(FieldPropertyPanel<T> fieldPanel, Action onHover, Action onLeave)
+        protected static void AddOnHoverLeave<ValueType, FieldType>(FieldPropertyPanel<ValueType, FieldType> fieldPanel, Action onHover, Action onLeave)
+            where FieldType : UITextField<ValueType>
         {
             if (onHover != null)
                 fieldPanel.OnHover += onHover;

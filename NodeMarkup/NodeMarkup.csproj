@@ -191,6 +191,7 @@
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Elements\TabPanel.cs" />
     <Compile Include="UI\Property panels\TextProperty.cs" />
+    <Compile Include="UI\Property panels\ValueField.cs" />
     <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
@@ -235,6 +236,7 @@
     <EmbeddedResource Include="Resources\TextFieldPanel.tga" />
     <EmbeddedResource Include="Resources\ColorPicker.tga" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
+    <EmbeddedResource Include="Resources\OpacitySlider.tga" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Styles.png" />
@@ -247,9 +249,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resize.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\OpacitySlider.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Button.png" />

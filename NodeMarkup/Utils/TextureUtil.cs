@@ -95,7 +95,7 @@ namespace NodeMarkup.Utils
         static void TextFieldPanel(Texture2D texture, Rect rect)
             => AddSprites(texture, rect, 32, 32, new RectOffset(4, 4, 4, 4), 2, FieldNormal, FieldHovered, FieldFocused, FieldDisabled, FieldEmpty);
 
-        static void OpacitySlider(Texture2D texture, Rect rect) => AddSprites(texture, rect, new RectOffset(), 0, OpacitySliderSprite);
+        static void OpacitySlider(Texture2D texture, Rect rect) => AddSprites(texture, rect, 18, 200, new RectOffset(), 2, OpacitySliderBoard, OpacitySliderColor);
 
         static void ColorPicker(Texture2D texture, Rect rect)
             => AddSprites(texture, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor, ColorPickerBoard);
@@ -214,7 +214,8 @@ namespace NodeMarkup.Utils
         public static string FieldDisabled => nameof(FieldDisabled);
         public static string FieldEmpty => nameof(FieldEmpty);
 
-        public static string OpacitySliderSprite { get; } = nameof(OpacitySliderSprite);
+        public static string OpacitySliderBoard { get; } = nameof(OpacitySliderBoard);
+        public static string OpacitySliderColor { get; } = nameof(OpacitySliderColor);
 
         public static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
         public static string ColorPickerHover { get; } = nameof(ColorPickerHover);

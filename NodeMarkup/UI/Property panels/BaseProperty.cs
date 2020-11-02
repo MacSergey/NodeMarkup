@@ -1,7 +1,9 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -91,9 +93,10 @@ namespace NodeMarkup.UI
                 item.relativePosition = new Vector2(item.relativePosition.x, (Control.size.y - item.size.y) / 2);
         }
 
-        protected UITextField AddTextField(UIComponent parent)
+        protected FieldType AddTextField<ValueType, FieldType>(UIComponent parent)
+            where FieldType : UITextField<ValueType>
         {
-            var field = parent.AddUIComponent<UITextField>();
+            var field = parent.AddUIComponent<FieldType>();
 
             field.atlas = TextureUtil.Atlas;
             field.normalBgSprite = TextureUtil.FieldNormal;

@@ -63,7 +63,6 @@ namespace NodeMarkup.UI.Editors
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
                 authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
-                authorProperty.UseWheel = false;
                 authorProperty.Init();
                 authorProperty.Value = EditObject.Asset.Author;
             }
@@ -73,7 +72,6 @@ namespace NodeMarkup.UI.Editors
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
             NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
-            NameProperty.UseWheel = false;
             NameProperty.Init();
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += NameSubmitted;

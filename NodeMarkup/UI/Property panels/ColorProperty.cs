@@ -16,40 +16,24 @@ namespace NodeMarkup.UI.Editors
 
         private bool InProcess { get; set; } = false;
 
-        private UITextField R { get; set; }
-        private UITextField G { get; set; }
-        private UITextField B { get; set; }
-        private UITextField A { get; set; }
+        private ByteUITextField R { get; set; }
+        private ByteUITextField G { get; set; }
+        private ByteUITextField B { get; set; }
+        private ByteUITextField A { get; set; }
         private UIColorField ColorSample { get; set; }
+        private UIColorPicker Popup { get; set; }
+        private UISlider Opacity { get; set; }
 
         public Color32 Value
         {
-            get
+            get => new Color32(R, G, B, A);
+            set => ValueChanged(value, (c) =>
             {
-                var color = new Color32(CetComponent(R.text), CetComponent(G.text), CetComponent(B.text), CetComponent(A.text));
-                return color;
-            }
-            set
-            {
-                if (!InProcess)
-                {
-                    InProcess = true;
-
-                    R.text = value.r.ToString();
-                    G.text = value.g.ToString();
-                    B.text = value.b.ToString();
-                    A.text = value.a.ToString();
-
-                    if (ColorSample != null)
-                        ColorSample.selectedColor = value;
-
-                    OnValueChanged?.Invoke(value);
-
-                    InProcess = false;
-                }
-            }
+                SetFields(c);
+                SetSample(c);
+                SetOpacity(c);
+            });
         }
-        private byte CetComponent(string text) => byte.TryParse(text, out byte value) ? value : byte.MaxValue;
 
         public ColorPropertyPanel()
         {
@@ -60,21 +44,84 @@ namespace NodeMarkup.UI.Editors
 
             AddColorSample();
         }
+        private void ValueChanged(Color32 color, Action<Color32> action)
+        {
+            if (!InProcess)
+            {
+                InProcess = true;
+
+                action(color);
+                OnValueChanged?.Invoke(Value);
+
+                InProcess = false;
+            }
+        }
+
+        private void FieldChanged(byte value) => ValueChanged(Value, (c) =>
+        {
+            SetSample(c);
+            SetOpacity(c);
+        });
+        private void SelectedColorChanged(UIComponent component, Color value)
+        {
+            var color = (Color32)value;
+            color.a = A;
+
+            ValueChanged(color, (c) =>
+            {
+                SetFields(c);
+                SetOpacity(color);
+            });
+        }
+        private void OpacityChanged(UIComponent component, float value) => A.Value = (byte)value;
+
+        private void SetFields(Color32 color)
+        {
+            R.Value = color.r;
+            G.Value = color.g;
+            B.Value = color.b;
+            A.Value = color.a;
+        }
+        private void SetSample(Color32 color)
+        {
+            color.a = byte.MaxValue;
+
+            if (ColorSample != null)
+                ColorSample.selectedColor = color;
+            if (Popup != null)
+                Popup.color = color;
+        }
+        private void SetOpacity(Color32 color)
+        {
+            if (Opacity != null)
+            {
+                Opacity.value = color.a;
+                color.a = byte.MaxValue;
+                Opacity.Find<UISlicedSprite>("color").color = color;
+            }
+        }
+
         public override void DeInit()
         {
             base.DeInit();
 
             OnValueChanged = null;
         }
-        private UITextField AddField(string name)
+        private ByteUITextField AddField(string name)
         {
             var lable = Control.AddUIComponent<UILabel>();
             lable.text = name;
             lable.textScale = 0.7f;
 
-            var field = AddTextField(Control);
+            var field = AddTextField<byte, ByteUITextField>(Control);
+            field.MinValue = byte.MinValue;
+            field.MaxValue = byte.MaxValue;
+            field.CheckMax = true;
+            field.CheckMin = true;
+            field.UseWheel = true;
+            field.WheelStep = 10;
             field.width = 30;
-            field.eventTextSubmitted += FieldTextSubmitted;
+            field.OnValueChanged += FieldChanged;
 
             return field;
         }
@@ -100,25 +147,32 @@ namespace NodeMarkup.UI.Editors
 
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
             ColorSample.eventColorPickerOpen += ColorPickerOpen;
+            ColorSample.eventColorPickerClose += ColorPickerClose;
         }
-
         private void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
-            popup.component.size += new Vector2(31, 31);
-            popup.component.relativePosition -= new Vector3(31, 0);
+            Popup = popup;
 
-            if(popup.component is UIPanel panel)
+            Popup.component.size += new Vector2(31, 31);
+            Popup.component.relativePosition -= new Vector3(31, 0);
+
+            if (Popup.component is UIPanel panel)
             {
                 panel.atlas = TextureUtil.Atlas;
                 panel.backgroundSprite = TextureUtil.FieldNormal;
             }
 
-            var slider = AddOpacitySlider(popup.component);
-            slider.value = Value.a;
+            Opacity = AddOpacitySlider(popup.component);
+            Opacity.value = A;
 
-            AddCopyButton(popup);
-            AddPasteButton(popup);
-            AddSetDefaultButton(popup);
+            AddCopyButton();
+            AddPasteButton();
+            AddSetDefaultButton();
+        }
+        private void ColorPickerClose(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
+        {
+            Popup = null;
+            Opacity = null;
         }
         private UISlider AddOpacitySlider(UIComponent parent)
         {
@@ -133,12 +187,20 @@ namespace NodeMarkup.UI.Editors
             opacitySlider.stepSize = 1f;
             opacitySlider.eventValueChanged += OpacityChanged;
 
-            var opacity = opacitySlider.AddUIComponent<UISlicedSprite>();
-            opacity.atlas = TextureUtil.Atlas;
-            opacity.spriteName = TextureUtil.OpacitySliderSprite;
-            opacity.relativePosition = Vector2.zero;
-            opacity.size = opacitySlider.size;
-            opacity.fillDirection = UIFillDirection.Vertical;
+            var opacityBoard = opacitySlider.AddUIComponent<UISlicedSprite>();
+            opacityBoard.atlas = TextureUtil.Atlas;
+            opacityBoard.spriteName = TextureUtil.OpacitySliderBoard;
+            opacityBoard.relativePosition = Vector2.zero;
+            opacityBoard.size = opacitySlider.size;
+            opacityBoard.fillDirection = UIFillDirection.Vertical;
+
+            var opacityColor = opacitySlider.AddUIComponent<UISlicedSprite>();
+            opacityColor.name = "color";
+            opacityColor.atlas = TextureUtil.Atlas;
+            opacityColor.spriteName = TextureUtil.OpacitySliderColor;
+            opacityColor.relativePosition = Vector2.zero;
+            opacityColor.size = opacitySlider.size;
+            opacityColor.fillDirection = UIFillDirection.Vertical;
 
             UISlicedSprite thumbSprite = opacitySlider.AddUIComponent<UISlicedSprite>();
             thumbSprite.relativePosition = Vector2.zero;
@@ -157,59 +219,46 @@ namespace NodeMarkup.UI.Editors
             var button = AddButton(parent);
             button.size = new Vector2(width, 20f);
             button.relativePosition = new Vector2(10 * count + width * (count - 1), 223f);
-            button.textPadding = new RectOffset(0, 0, 5, 0);          
+            button.textPadding = new RectOffset(0, 0, 5, 0);
             button.textScale = 0.6f;
             button.text = text;
             return button;
         }
-        private void AddCopyButton(UIColorPicker popup)
-        {
-            var button = CreateButton(popup.component, NodeMarkup.Localize.Editor_ColorCopy, 1, 3);
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy(popup);
-        }
 
-        private void AddPasteButton(UIColorPicker popup)
+        private void AddCopyButton()
         {
-            var button = CreateButton(popup.component, NodeMarkup.Localize.Editor_ColorPaste, 2, 3);
+            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorCopy, 1, 3);
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy();
+        }
+        private void AddPasteButton()
+        {
+            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorPaste, 2, 3);
             button.isEnabled = Buffer.HasValue;
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste(popup);
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste();
         }
-        private void AddSetDefaultButton(UIColorPicker popup)
+        private void AddSetDefaultButton()
         {
-            var button = CreateButton(popup.component, NodeMarkup.Localize.Editor_ColorDefault, 3, 3);
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Value = Manager.Style.DefaultColor;
+            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorDefault, 3, 3);
+            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => SetDefault();
         }
 
-        private void Copy(UIColorPicker popup)
+        private void Copy()
         {
             Buffer = Value;
-            popup.component.Hide();
+            Popup.component.Hide();
         }
-        private void Paste(UIColorPicker popup)
+        private void Paste()
         {
             if (Buffer != null)
             {
                 Value = Buffer.Value;
-                popup.component.Hide();
+                Popup.component.Hide();
             }
         }
+        private void SetDefault() => Value = Manager.Style.DefaultColor;
 
-
-        private void SelectedColorChanged(UIComponent component, Color value)
-        {
-            value.a = ((Color)Value).a;
-            Value = value;
-        }
-        private void OpacityChanged(UIComponent component, float value)
-        {
-            var color = Value;
-            color.a = (byte)value;
-            Value = color;
-        }
-        protected virtual void FieldTextSubmitted(UIComponent component, string text)
-        {
-            Value = Value;
-        }
+        public override string ToString() => Value.ToString();
+        public static implicit operator Color32(ColorPropertyPanel property) => property.Value;
     }
 }
 
