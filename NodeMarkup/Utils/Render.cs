@@ -19,7 +19,7 @@ namespace NodeMarkup.Utils
             {
                 { MaterialType.RectangleLines, CreateDecalMaterial(CreateTexture(1,1,Color.white))},
                 { MaterialType.RectangleFillers, CreateDecalMaterial(CreateTexture(1,1,Color.white), renderQueue: 2459)},
-                { MaterialType.Triangle, CreateDecalMaterial(CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth.png"))},
+                { MaterialType.Triangle, CreateDecalMaterial(CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth"))},
                 { MaterialType.Pavement, CreateRoadMaterial(CreateTexture(64,64,Color.white), CreateTexture(64,64,new Color32(0,0,0,255))) },
             };
         }

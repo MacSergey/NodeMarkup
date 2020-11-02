@@ -29,12 +29,13 @@ namespace NodeMarkup.Utils
             {nameof(TextFieldPanel), TextFieldPanel},
             {nameof(OpacitySlider), OpacitySlider},
             {nameof(ColorPicker), ColorPicker},
-            {nameof(AdditionalButtons), AdditionalButtons},
+            {nameof(CloseButton), CloseButton},
+            {nameof(Arrows), Arrows},
         };
 
         static TextureUtil()
         {
-            var textures = Files.Select(f => LoadTextureFromAssembly($"{f.Key}.png")).ToArray();
+            var textures = Files.Select(f => LoadTextureFromAssembly(f.Key)).ToArray();
             var rects = CreateAtlas(textures);
             var actions = Files.Values.ToArray();
 
@@ -45,7 +46,8 @@ namespace NodeMarkup.Utils
         public static Texture2D LoadTextureFromAssembly(string textureFile)
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
-            var path = $"{nameof(NodeMarkup)}.Resources.{textureFile}";
+            //var path = $"{nameof(NodeMarkup)}.Resources.{textureFile}";
+            var path = executingAssembly.GetManifestResourceNames().FirstOrDefault(n => n.Contains(textureFile));
             var manifestResourceStream = executingAssembly.GetManifestResourceStream(path);
             var data = new byte[manifestResourceStream.Length];
             manifestResourceStream.Read(data, 0, data.Length);
@@ -98,9 +100,11 @@ namespace NodeMarkup.Utils
         static void ColorPicker(Texture2D texture, Rect rect)
             => AddSprites(texture, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor);
 
-        static void AdditionalButtons(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed, ArrowDown, ArrowRight);
+        static void CloseButton(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
 
+        static void Arrows(Texture2D texture, Rect rect)
+            => AddSprites(texture, rect, 32, 32, ArrowDown, ArrowRight);
 
 
         static void AddSprites(Texture2D texture, Rect rect, string sprite)
