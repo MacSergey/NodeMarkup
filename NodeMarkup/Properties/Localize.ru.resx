@@ -1247,4 +1247,5 @@ Shift X10, Ctrl X0.1</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Обрезать линии по всем переходам</value>
   </data>
+  
 </root>

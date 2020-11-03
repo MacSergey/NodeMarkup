@@ -1249,7 +1249,4 @@ The restored presets will replace all existing presets.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Cut lines by all crosswalks</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>English UK</value>
-  </data>
 </root>

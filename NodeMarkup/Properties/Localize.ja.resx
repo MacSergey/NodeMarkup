@@ -1178,4 +1178,5 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>全ての横断歩道で重なるラインを除去</value>
   </data>
+  
 </root>
