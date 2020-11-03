@@ -1106,6 +1106,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на English UK.
+        /// </summary>
+        public static string Mod_Locale_en_gb {
+            get {
+                return ResourceManager.GetString("Mod_Locale_en-gb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Spanish.
         /// </summary>
         public static string Mod_Locale_es {

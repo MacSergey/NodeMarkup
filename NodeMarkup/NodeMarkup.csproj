@@ -211,6 +211,7 @@
     <EmbeddedResource Include="Properties\Localize.de.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.en-GB.resx" />
     <EmbeddedResource Include="Properties\Localize.es.resx" />
     <EmbeddedResource Include="Properties\Localize.fi.resx" />
     <EmbeddedResource Include="Properties\Localize.fr.resx" />
@@ -229,10 +230,10 @@
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Localize.zh-cn.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
     <EmbeddedResource Include="Resources\TextFieldPanel.tga" />
     <EmbeddedResource Include="Resources\ColorPicker.tga" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
@@ -306,7 +307,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
