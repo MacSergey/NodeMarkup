@@ -1212,9 +1212,15 @@ Die wieder hergestellten Voreinstellungen werden alle vorhandenen Voreinstellung
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>Englisch UK</value>
   </data>
-  
-  
-  
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Voreinstellungs-Asset überarbeiten</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Diese Voreinstellung ist ein Asset. Um den Namen zu ändern muss die Voreinstellungs-Datei neu geschrieben werden. Fortfahren?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Vorlagen-Asset überarbeiten</value>
+  </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>Diese Vorlage ist ein Asset. Um den Namen zu ändern muss die Asset-Datei neu geschrieben werden. Fortfahren?</value>
   </data>
@@ -1222,7 +1228,16 @@ Die wieder hergestellten Voreinstellungen werden alle vorhandenen Voreinstellung
     <value>Shift+Doppelklick zum Kopieren der Farbe
 Doppelklick zum Einfügen der Farbe</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Um Fußgängerüberwege-Ränder festzusetzen, müssen Linien vorhanden sein, die von dem selben Punkt starten wie die Fußgängerüberweg-Markierung</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Um Regeln von "Von" und "Zu" Punkten verändern zu können und zusätzliche Regeln zu erstellen, müssen Linien vorhanden sein, die sich mit dieser Linie überschneiden</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Tipps in der Oberfläche anzeigen</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
 </root>
