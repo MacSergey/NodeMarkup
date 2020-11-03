@@ -34,6 +34,8 @@ namespace NodeMarkup.UI
             AddNoScreenshot();
             AddTitles();
             AddValues();
+            AddTitleDatas();
+            AddValueDatas();
         }
         public void Init(IntersectionTemplate template)
         {
@@ -99,11 +101,6 @@ namespace NodeMarkup.UI
             Titles.clipChildren = true;
 
             Titles.eventSizeChanged += (UIComponent component, Vector2 value) => SetPosition();
-
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Roads);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Lines);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Crosswalks);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Fillers);
         }
         private void AddValues()
         {
@@ -111,25 +108,38 @@ namespace NodeMarkup.UI
             Values.autoLayoutDirection = LayoutDirection.Vertical;
             Values.clipChildren = true;
             Values.eventSizeChanged += (UIComponent component, Vector2 value) => SetPosition();
-
+        }
+        private void AddTitleDatas()
+        {
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Roads);
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Lines);
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Crosswalks);
+            AddTitleData(NodeMarkup.Localize.PresetInfo_Fillers);
+        }
+        private void AddValueDatas()
+        {
             Roads = AddValueData(string.Empty);
             Lines = AddValueData(string.Empty);
             Crosswalks = AddValueData(string.Empty);
             Fillers = AddValueData(string.Empty);
         }
 
-        private UILabel AddTitleData(string text) => AddData(Titles, text, UIHorizontalAlignment.Right);
-        private UILabel AddValueData(string text) => AddData(Values, text, UIHorizontalAlignment.Left);
+        private UILabel AddTitleData(string text) => AddData(Titles, Values, text,  UIHorizontalAlignment.Right);
+        private UILabel AddValueData(string text) => AddData(Values, Titles, text, UIHorizontalAlignment.Left);
 
-        private UILabel AddData(UIPanel parent, string text, UIHorizontalAlignment alignment)
+        private UILabel AddData(UIPanel parent, UIPanel other, string text, UIHorizontalAlignment alignment)
         {
             var label = parent.AddUIComponent<UILabel>();
-            label.eventTextChanged += (UIComponent component, string value) => SetSize(parent);
-            label.padding = new RectOffset(2, 2, 1, 1);
+            label.autoSize = false;
+            label.autoHeight = false;
+            label.textScale = 0.65f;
+            label.height = 0;
+            label.eventTextChanged += (UIComponent component, string value) => SetSize(parent, other);
+            label.padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
             label.text = text;
-            label.textScale = 0.8f;
             label.textColor = TextColor;
             label.textAlignment = alignment;
+            label.verticalAlignment = UIVerticalAlignment.Bottom;
             return label;
         }
 
@@ -138,15 +148,20 @@ namespace NodeMarkup.UI
             base.OnSizeChanged();
             SetPosition();
         }
-        private void SetSize(UIPanel panel)
+        private void SetSize(UIPanel panel, UIPanel other)
         {
             if (panel != null)
             {
                 var labels = panel.components.OfType<UILabel>().ToArray();
-                foreach (var label in labels)
+                var otherLabels = other.components.OfType<UILabel>().ToArray();
+
+                for(var i = 0; i < labels.Length; i+=1)
                 {
-                    label.autoSize = true;
-                    label.autoSize = false;
+                    labels[i].autoSize = true;
+                    labels[i].autoSize = false;
+
+                    if (i < otherLabels.Length)
+                        labels[i].height = Mathf.Max(labels[i].height, otherLabels[i].height);
                 }
 
                 var width = labels.Max(l => l.width);
@@ -160,9 +175,10 @@ namespace NodeMarkup.UI
         {
             if (Screenshot != null && Titles != null && Values != null)
             {
-                var space = (width - Screenshot.width - Titles.width - Values.width) / 2;
-                Titles.relativePosition = new Vector2(Screenshot.width + space, (height - Titles.height) / 2);
-                Values.relativePosition = new Vector2(Titles.relativePosition.x + Titles.width, (height - Values.height) / 2);
+                var space = Mathf.Max(width - Screenshot.width - Titles.width - Values.width, 0f) / 2;
+                Values.relativePosition = new Vector2(width - Values.width - space, (height - Values.height) / 2);
+                Titles.relativePosition = new Vector2(Values.relativePosition.x - Titles.width, (height - Titles.height) / 2);
+
             }
         }
         private class CustomUITextureSprite : UITextureSprite

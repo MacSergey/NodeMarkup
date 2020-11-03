@@ -195,9 +195,11 @@ namespace NodeMarkup
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
-            AddCheckBox(group, $"{Localize.Settings_LoadMarkingAssets} ({Localize.Settings_ApplyAfterRestart})", LoadMarkingAssets);
-            AddCheckBox(group, $"{Localize.Settings_RailUnderMarking} ({Localize.Settings_ApplyAfterRestart})", RailUnderMarking);
-            group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 1f, Color.red, 25);
+            AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
+            group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
+            group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
+            group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);

@@ -18,6 +18,8 @@ namespace NodeMarkup.UI.Panel
         public static NodeMarkupPanel Instance { get; private set; }
         private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
 
+        private float Width => 550f;
+
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
 
@@ -62,13 +64,13 @@ namespace NodeMarkup.UI.Panel
             CreateEditors();
             CreateSizeChanger();
 
-            size = new Vector2(550, Header.height + TabStrip.height + 400);
-            minimumSize = new Vector2(550, Header.height + TabStrip.height + 200);
+            size = new Vector2(Width, Header.height + TabStrip.height + 400);
+            minimumSize = new Vector2(Width, Header.height + TabStrip.height + 200);
         }
         private void CreateHeader()
         {
             Header = AddUIComponent<PanelHeader>();
-            Header.size = new Vector2(550, 42);
+            Header.size = new Vector2(Width, 42);
             Header.relativePosition = new Vector2(0, 0);
             Header.target = parent;
         }

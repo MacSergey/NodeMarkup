@@ -22,6 +22,9 @@ namespace NodeMarkup.UI.Editors
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollablePanel ContentPanel { get; set; }
 
+        protected static float ItemsRatio => 0.3f;
+        protected static float ContentRatio => 1f - ItemsRatio;
+
         protected UILabel EmptyLabel { get; set; }
 
         public abstract string Name { get; }
@@ -70,7 +73,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
         {
-            ItemsPanel.width = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
+            ItemsPanel.width = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
         }
 
         private void AddSettingPanel()
@@ -93,7 +96,7 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             InProgress = true;
-            ContentPanel.width = size.x / 10 * 7 - (value ? ContentPanel.verticalScrollbar.width : 0);
+            ContentPanel.width = size.x * ContentRatio - (value ? ContentPanel.verticalScrollbar.width : 0);
             InProgress = false;
         }
         private void AddEmptyLabel()
@@ -176,15 +179,15 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnSizeChanged();
 
-            var itemsPanelWidth = size.x / 10 * 3 - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
+            var itemsPanelWidth = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
             ItemsPanel.size = new Vector2(itemsPanelWidth, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
-            var settingsPanelWidth = size.x / 10 * 7 - (ContentPanel.verticalScrollbar.isVisible ? ContentPanel.verticalScrollbar.width : 0);
+            var settingsPanelWidth = size.x * ContentRatio - (ContentPanel.verticalScrollbar.isVisible ? ContentPanel.verticalScrollbar.width : 0);
             ContentPanel.size = new Vector2(settingsPanelWidth, size.y);
-            ContentPanel.relativePosition = new Vector2(size.x / 10 * 3, 0);
+            ContentPanel.relativePosition = new Vector2(size.x * ItemsRatio, 0);
 
-            EmptyLabel.size = new Vector2(size.x / 10 * 7, size.y / 2);
+            EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y / 2);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         public virtual EditableItemType AddItem(EditableObject editableObject)
