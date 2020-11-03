@@ -531,4 +531,15 @@ crossings:</value>
     <value>Cut lines by all pedestrian crossings</value>
   </data>
   
+  
+  
+  
+  
+  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
+    <value>Double click with Shift to copy colour
+Double click to paste colour</value>
+  </data>
+  
+  
+  
 </root>
