@@ -1173,5 +1173,15 @@ Shift x10，Ctrl x0.1</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>从人行横道后生成标线</value>
   </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>英语（英国）</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
   
 </root>

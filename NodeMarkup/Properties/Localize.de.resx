@@ -1212,4 +1212,17 @@ Die wieder hergestellten Voreinstellungen werden alle vorhandenen Voreinstellung
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>Englisch UK</value>
   </data>
+  
+  
+  
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Diese Vorlage ist ein Asset. Um den Namen zu ändern muss die Asset-Datei neu geschrieben werden. Fortfahren?</value>
+  </data>
+  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
+    <value>Shift+Doppelklick zum Kopieren der Farbe
+Doppelklick zum Einfügen der Farbe</value>
+  </data>
+  
+  
+  
 </root>
