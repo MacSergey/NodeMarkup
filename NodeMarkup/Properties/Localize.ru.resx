@@ -595,7 +595,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Немецкий</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Американский Английский</value>
+    <value>Английский</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Испанский</value>

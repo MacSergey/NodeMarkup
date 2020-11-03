@@ -598,7 +598,7 @@ By registering early access, you will support the ability to develop this mod at
     <value>German</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>English US</value>
+    <value>English</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanish</value>
