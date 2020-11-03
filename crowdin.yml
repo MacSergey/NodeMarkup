@@ -4,5 +4,5 @@ files:
     update_option: update_as_unapproved
     languages_mapping:
       two_letters_code:
-        "zh-CN": "zh-cn"
-        "en-GB": "en-gb"
+        "zh-CN": "zh-CN"
+        "en-GB": "en-GB"
