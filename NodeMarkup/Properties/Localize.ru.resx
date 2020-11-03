@@ -1241,4 +1241,10 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
     <value>Трафареты успешно восстановлены</value>
   </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Обрезать линии по всем переходам</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Обрезать линии по всем переходам</value>
+  </data>
 </root>
