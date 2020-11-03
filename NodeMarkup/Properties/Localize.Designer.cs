@@ -61,6 +61,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на To be able to set the crosswalk borders, you must have lines started from the same points as the crosswalk.
+        /// </summary>
+        public static string CrosswalkEditor_BordersWarning {
+            get {
+                return ResourceManager.GetString("CrosswalkEditor_BordersWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Crosswalks.
         /// </summary>
         public static string CrosswalkEditor_Crosswalks {
@@ -776,6 +785,15 @@ namespace NodeMarkup {
         public static string LineEditor_RuleOverlappedWarning {
             get {
                 return ResourceManager.GetString("LineEditor_RuleOverlappedWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на To be able to change rule&apos;s &quot;From&quot; and &quot;To&quot; points and create additional rules, you must have lines that intersect with this line.
+        /// </summary>
+        public static string LineEditor_RulesWarning {
+            get {
+                return ResourceManager.GetString("LineEditor_RulesWarning", resourceCulture);
             }
         }
         
@@ -2304,6 +2322,15 @@ namespace NodeMarkup {
         public static string Settings_ShowOnlyMajor {
             get {
                 return ResourceManager.GetString("Settings_ShowOnlyMajor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show panel tips.
+        /// </summary>
+        public static string Settings_ShowPaneltips {
+            get {
+                return ResourceManager.GetString("Settings_ShowPaneltips", resourceCulture);
             }
         }
         

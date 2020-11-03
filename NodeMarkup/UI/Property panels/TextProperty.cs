@@ -10,9 +10,11 @@ namespace NodeMarkup.UI
 {
     public class TextProperty : EditorItem, IReusable
     {
-        private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
+        protected static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
+        protected static Color32 WarningColor { get; } = new Color32(255, 228, 92, 255);
 
         private UILabel Label { get; set; }
+        protected virtual Color32 Color { get; } = UnityEngine.Color.white;
 
         public string Text
         {
@@ -24,7 +26,7 @@ namespace NodeMarkup.UI
         {
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "ButtonWhite";
-            color = ErrorColor;
+            color = Color;
 
             autoLayout = true;
             autoFitChildrenVertically = true;
@@ -43,5 +45,14 @@ namespace NodeMarkup.UI
 
             Label.width = width;
         }
+    }
+
+    public class ErrorTextProperty : TextProperty
+    {
+        protected override Color32 Color => ErrorColor;
+    }
+    public class WarningTextProperty : TextProperty
+    {
+        protected override Color32 Color => WarningColor;
     }
 }

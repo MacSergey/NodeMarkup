@@ -34,6 +34,7 @@ namespace NodeMarkup
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
+        public static SavedBool ShowPanelTip { get; } = new SavedBool(nameof(ShowPanelTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedInt DeleteWarningsType { get; } = new SavedInt(nameof(DeleteWarningsType), SettingsFile, 0, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
@@ -201,6 +202,7 @@ namespace NodeMarkup
             group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
             group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
+            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
             AddCheckBox(group, Localize.Settings_QuickBorderSetup, QuickBorderSetup);

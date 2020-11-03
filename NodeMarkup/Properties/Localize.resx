@@ -1268,4 +1268,13 @@ The restored presets will replace all existing presets.</value>
     <value>Double click with Shift to copy color
 Double click to paste color</value>
   </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>To be able to set the crosswalk borders, you must have lines started from the same points as the crosswalk</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>To be able to change rule's "From" and "To" points and create additional rules, you must have lines that intersect with this line</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Show panel tips</value>
+  </data>
 </root>

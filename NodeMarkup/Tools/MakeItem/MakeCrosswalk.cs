@@ -40,7 +40,11 @@ namespace NodeMarkup.Tools
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
-                    Tool.DeleteItem(line, () => Tool.Markup.RemoveConnect(line));
+                    Tool.DeleteItem(line, () =>
+                    {
+                        Tool.Markup.RemoveConnect(line);
+                        Panel.UpdatePanel();
+                    });
                 else
                 {
                     var newCrosswalkLine = Tool.Markup.AddConnection(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;

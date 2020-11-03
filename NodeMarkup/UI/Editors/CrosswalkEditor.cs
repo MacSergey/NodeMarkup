@@ -23,7 +23,7 @@ namespace NodeMarkup.UI.Editors
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
         private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }
         private MarkupCrosswalkSelectPropertyPanel LeftBorder { get; set; }
-        private TextProperty Warning { get; set; }
+        private WarningTextProperty Warning { get; set; }
         private StylePropertyPanel Style { get; set; }
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
 
@@ -49,6 +49,15 @@ namespace NodeMarkup.UI.Editors
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
+        protected override void OnClear()
+        {
+            RightBorder = null;
+            LeftBorder = null;
+            Warning = null;
+            Style = null;
+
+            StyleProperties.Clear();
+        }
 
         #region PROPERTIES PANELS
 
@@ -66,8 +75,8 @@ namespace NodeMarkup.UI.Editors
             LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
             RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
 
-            Warning = ComponentPool.Get<TextProperty>(this);
-            Warning.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
+            Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
             Warning.Init();
 
             FillBorders();
@@ -76,6 +85,8 @@ namespace NodeMarkup.UI.Editors
         {
             FillBorder(LeftBorder, LeftBorgerChanged, GetBorderLines(BorderPosition.Left), EditObject.LeftBorder);
             FillBorder(RightBorder, RightBorgerChanged, GetBorderLines(BorderPosition.Right), EditObject.RightBorder);
+
+            Warning.isVisible = Settings.ShowPanelTip &&  (!LeftBorder.EnableControl || !RightBorder.EnableControl);
         }
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {
@@ -91,7 +102,18 @@ namespace NodeMarkup.UI.Editors
             panel.Clear();
             panel.AddRange(lines);
             panel.SelectedObject = value;
-            panel.EnableControl = lines.Any();
+
+            if (Settings.ShowPanelTip)
+            {
+                panel.isVisible = true;
+                panel.EnableControl = lines.Any();
+            }
+            else
+            {
+                panel.EnableControl = true;
+                panel.isVisible = lines.Any();
+            }
+
             panel.OnSelectChanged += action;
         }
         private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)

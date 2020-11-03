@@ -22,7 +22,8 @@ namespace NodeMarkup.UI.Editors
         public MarkupLineRawRule Rule { get; private set; }
 
         private StyleHeaderPanel Header { get; set; }
-        private TextProperty Warning { get; set; }
+        private ErrorTextProperty Error { get; set; }
+        private WarningTextProperty Warning { get; set; }
         public MarkupLineSelectPropertyPanel From { get; private set; }
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
@@ -36,9 +37,10 @@ namespace NodeMarkup.UI.Editors
             Rule = rule;
 
             AddHeader();
-            AddWarning();
+            AddError();
             From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
             To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
+            AddWarning();
 
             Refresh();
 
@@ -52,6 +54,7 @@ namespace NodeMarkup.UI.Editors
             base.DeInit();
 
             Header = null;
+            Error = null;
             Warning = null;
             From = null;
             To = null;
@@ -74,10 +77,16 @@ namespace NodeMarkup.UI.Editors
             Header.OnPaste += PasteStyle;
         }
 
+        private void AddError()
+        {
+            Error = ComponentPool.Get<ErrorTextProperty>(this);
+            Error.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Error.Init();
+        }
         private void AddWarning()
         {
-            Warning = ComponentPool.Get<TextProperty>(this);
-            Warning.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Warning = ComponentPool.Get<WarningTextProperty>(this);
+            Warning.Text = NodeMarkup.Localize.LineEditor_RulesWarning;
             Warning.Init();
         }
 
@@ -98,6 +107,7 @@ namespace NodeMarkup.UI.Editors
         {
             FillEdge(From, FromChanged, Rule.From);
             FillEdge(To, ToChanged, Rule.To);
+            Warning.isVisible = Settings.ShowPanelTip && !Editor.CanDivide;
         }
         private void FillEdge(MarkupLineSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
         {
@@ -108,7 +118,18 @@ namespace NodeMarkup.UI.Editors
             panel.Clear();
             panel.AddRange(Editor.SupportPoints);
             panel.SelectedObject = value;
-            panel.isVisible = Editor.CanDivide;
+
+            if (Settings.ShowPanelTip)
+            {
+                panel.isVisible = true;
+                panel.EnableControl = Editor.CanDivide;
+            }
+            else
+            {
+                panel.EnableControl = true;
+                panel.isVisible = Editor.CanDivide;
+            }
+
             panel.OnSelectChanged += action;
         }
         private void AddStyleTypeProperty()
@@ -191,7 +212,7 @@ namespace NodeMarkup.UI.Editors
         }
         public void Refresh()
         {
-            Warning.isVisible = Rule.IsOverlapped;
+            Error.isVisible = Rule.IsOverlapped;
             FillEdges();
         }
         protected override void OnMouseEnter(UIMouseEventParameter p)

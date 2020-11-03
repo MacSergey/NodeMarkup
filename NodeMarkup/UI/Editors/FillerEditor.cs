@@ -18,15 +18,12 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
 
         public StylePropertyPanel Style { get; private set; }
-        private StyleHeaderPanel Header { get; set; }
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
 
         protected override void FillItems()
         {
             foreach (var filler in Markup.Fillers)
-            {
                 AddItem(filler);
-            }
         }
         protected override void OnObjectSelect()
         {
@@ -37,17 +34,16 @@ namespace NodeMarkup.UI.Editors
         protected override void OnClear()
         {
             Style = null;
-            Header = null;
             StyleProperties.Clear();
         }
 
         private void AddHeader()
         {
-            Header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
-            Header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
-            Header.OnSaveTemplate += OnSaveTemplate;
-            Header.OnCopy += CopyStyle;
-            Header.OnPaste += PasteStyle;
+            var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
+            header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
+            header.OnSaveTemplate += OnSaveTemplate;
+            header.OnCopy += CopyStyle;
+            header.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
