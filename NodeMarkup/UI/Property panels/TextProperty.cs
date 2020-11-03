@@ -10,8 +10,12 @@ namespace NodeMarkup.UI
 {
     public class TextProperty : EditorItem, IReusable
     {
-        protected static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
-        protected static Color32 WarningColor { get; } = new Color32(255, 228, 92, 255);
+        protected static Color32 ErrorColorBak { get; } = new Color32(246, 85, 85, 255);
+        protected static Color32 ErrorColorvar1 { get; } = new Color32(235, 56, 56, 255);
+        protected static Color32 ErrorColor { get; } = new Color32(240, 70, 70, 255);
+        protected static Color32 WarningColorBak { get; } = new Color32(255, 228, 92, 255);
+        protected static Color32 WarningColorVar1 { get; } = new Color32(249, 141, 8, 255);
+        protected static Color32 WarningColor { get; } = new Color32(253, 155, 71, 255);
 
         private UILabel Label { get; set; }
         protected virtual Color32 Color { get; } = UnityEngine.Color.white;

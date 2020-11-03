@@ -15,7 +15,7 @@ namespace NodeMarkup.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnHover;
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
 
-        protected override Color32 Color => new Color32(90, 123, 135, 255);
+        //protected override Color32 Color => new Color32(90, 123, 135, 255);
 
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
