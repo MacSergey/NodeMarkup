@@ -529,4 +529,5 @@ Restart the game.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Cut lines by all pedestrian crossings</value>
   </data>
+  
 </root>

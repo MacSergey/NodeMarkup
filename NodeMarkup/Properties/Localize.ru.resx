@@ -1247,5 +1247,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Обрезать линии по всем переходам</value>
   </data>
-  
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Английский UK</value>
+  </data>
 </root>
