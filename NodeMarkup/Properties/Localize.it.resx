@@ -593,7 +593,9 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Tedesco</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglese</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spagnolo</value>
   </data>

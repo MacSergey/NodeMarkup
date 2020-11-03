@@ -593,7 +593,9 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Deutsch</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanisch</value>
   </data>

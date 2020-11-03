@@ -569,7 +569,9 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Allemand</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espagnol</value>
   </data>

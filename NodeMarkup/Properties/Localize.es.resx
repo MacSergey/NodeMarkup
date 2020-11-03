@@ -568,7 +568,9 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Alemán</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Español</value>
   </data>
