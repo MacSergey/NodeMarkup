@@ -25,18 +25,42 @@ namespace NodeMarkup.UI
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             tabButton.verticalAlignment = UIVerticalAlignment.Middle;
 
-            tabButton.atlas = TextureUtil.InGameAtlas;
-
-            tabButton.normalBgSprite = "SubBarButtonBase";
-            tabButton.disabledBgSprite = "SubBarButtonBaseDisabled";
-            tabButton.focusedBgSprite = "SubBarButtonBaseFocused";
-            tabButton.hoveredBgSprite = "SubBarButtonBaseHovered";
-            tabButton.pressedBgSprite = "SubBarButtonBasePressed";
+            SetStyle(tabButton);
 
             tabButton.Invalidate();
 
             FitChildrenVertically();
         }
+        protected virtual void SetStyle(UIButton tabButton)
+        {
+            tabButton.atlas = TextureUtil.InGameAtlas;
+
+            tabButton.normalBgSprite = "SubBarButtonBase";
+            //tabButton.disabledBgSprite = "SubBarButtonBaseDisabled";
+            tabButton.focusedBgSprite = "SubBarButtonBaseFocused";
+            tabButton.hoveredBgSprite = "SubBarButtonBaseHovered";
+            //tabButton.pressedBgSprite = "SubBarButtonBasePressed";
+        }
         protected override void OnSizeChanged() => FitChildrenVertically();
+    }
+
+    public class PanelTabStrip : CustomUITabstrip
+    {
+        private static Color32 NormalColor { get; } = new Color32(107, 113, 115, 255);
+        private static Color32 HoverColor { get; } = new Color32(143, 149, 150, 255);
+        private static Color32 FocusColor { get; } = new Color32(177, 195, 94, 255);
+
+        protected override void SetStyle(UIButton tabButton)
+        {
+            tabButton.atlas = TextureUtil.Atlas;
+
+            tabButton.normalBgSprite = TextureUtil.Tab;
+            tabButton.focusedBgSprite = TextureUtil.Tab;
+            tabButton.hoveredBgSprite = TextureUtil.Tab;
+
+            tabButton.color = NormalColor;
+            tabButton.hoveredColor = HoverColor;
+            tabButton.focusedColor = FocusColor;
+        }
     }
 }

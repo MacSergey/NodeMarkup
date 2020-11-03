@@ -24,7 +24,7 @@ namespace NodeMarkup.UI.Panel
         public Markup Markup { get; private set; }
 
         private PanelHeader Header { get; set; }
-        private CustomUITabstrip TabStrip { get; set; }
+        private PanelTabStrip TabStrip { get; set; }
         private UIPanel SizeChanger { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
@@ -76,7 +76,7 @@ namespace NodeMarkup.UI.Panel
         }
         private void CreateTabStrip()
         {
-            TabStrip = AddUIComponent<CustomUITabstrip>();
+            TabStrip = AddUIComponent<PanelTabStrip>();
             TabStrip.relativePosition = new Vector3(0, Header.height);
             TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
             TabStrip.selectedIndex = -1;

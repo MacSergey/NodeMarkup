@@ -238,6 +238,7 @@
     <EmbeddedResource Include="Resources\ColorPicker.tga" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
     <EmbeddedResource Include="Resources\OpacitySlider.tga" />
+    <EmbeddedResource Include="Resources\TabButton.tga" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Styles.png" />

@@ -43,6 +43,8 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
+            AddWarning();
+
             AddBordersProperties();
             AddStyleTypeProperty();
             AddStyleProperties();
@@ -70,14 +72,16 @@ namespace NodeMarkup.UI.Editors
             header.OnPaste += PasteStyle;
             header.OnCut += CutLines;
         }
+        private void AddWarning()
+        {
+            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
+            Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
+            Warning.Init();
+        }
         private void AddBordersProperties()
         {
             LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
             RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
-
-            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
-            Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
-            Warning.Init();
 
             FillBorders();
         }

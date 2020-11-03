@@ -25,6 +25,7 @@ namespace NodeMarkup.Utils
             {nameof(HeaderButtons), HeaderButtons},
             {nameof(ListItem), ListItem},
             {nameof(Button), Button},
+            {nameof(TabButton), TabButton},
             {nameof(Resize), Resize},
             {nameof(TextFieldPanel), TextFieldPanel},
             {nameof(OpacitySlider), OpacitySlider},
@@ -89,6 +90,8 @@ namespace NodeMarkup.Utils
 
         static void Button(int texWidth, int texHeight, Rect rect)
             => AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
+
+        static void TabButton(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(4, 4, 4, 0), 1, Tab);
 
         static void Resize(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, ResizeSprite);
 
@@ -226,6 +229,8 @@ namespace NodeMarkup.Utils
         public static string Icon => nameof(Icon);
         public static string IconActive => nameof(IconActive);
         public static string IconHover => nameof(IconHover);
+
+        public static string Tab { get; } = nameof(Tab);
 
         public static string ResizeSprite { get; } = nameof(ResizeSprite);
 
