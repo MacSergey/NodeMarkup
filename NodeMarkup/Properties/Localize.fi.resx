@@ -569,9 +569,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Saksa</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englanti</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanja</value>
   </data>
@@ -1055,7 +1053,7 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Nopea suojateiden reunojen luominen</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Merkinnät raiteiden alla (Vaatii uudelleenkäynnistyksen)</value>
+    <value>Merkinnät raiteiden alla</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Varoitus: Tämä aswtus muuttaa pelin piirtojärjestyksen</value>

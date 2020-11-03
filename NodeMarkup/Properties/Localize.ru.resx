@@ -182,7 +182,7 @@ Shift X10, Ctrl X0.1</value>
     <value>До</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Пересеч. с {0}</value>
+    <value>Пересечение с {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Собственная точка {0}</value>
@@ -595,7 +595,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Немецкий</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Английский</value>
+    <value>Американский Английский</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Испанский</value>
@@ -1117,7 +1117,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Быстрая настройка границ перехода</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Разметка под рельсами (Изменения вступят в силу после перезагрузки)</value>
+    <value>Разметка под рельсами</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Предупреждение: Эта опция меняет порядок отрисовки игровых объектов</value>
@@ -1173,7 +1173,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Автор</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>Применится после перезагрузки игры</value>
+    <value>Изменения вступят в силу после перезагрузки игры</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Загружать игровые ресурсы маркировки</value>
@@ -1196,7 +1196,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Нет скриншота</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
-    <value>Точек у дороги №{0}:</value>
+    <value>Точек у дороги #{0}:</value>
   </data>
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>Дорог:</value>
@@ -1248,6 +1248,6 @@ Shift X10, Ctrl X0.1</value>
     <value>Обрезать линии по всем переходам</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Английский UK</value>
+    <value>Великобританский Английский</value>
   </data>
 </root>

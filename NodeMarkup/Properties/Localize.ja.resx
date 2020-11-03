@@ -574,7 +574,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>ドイツ語</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>英語</value>
+    <value>英語 - US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>スペイン語</value>
@@ -1178,5 +1178,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>全ての横断歩道で重なるラインを除去</value>
   </data>
-  
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>英語 - UK</value>
+  </data>
 </root>

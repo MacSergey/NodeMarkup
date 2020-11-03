@@ -568,9 +568,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Duits</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Engels</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spaans</value>
   </data>
@@ -1054,7 +1052,7 @@ Wil je de markering handmatig toepassen?</value>
     <value>Snelle zebrapad randen setup</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Markeringen onder spoor (Van toepassing na herstart)</value>
+    <value>Markeringen onder spoor</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>

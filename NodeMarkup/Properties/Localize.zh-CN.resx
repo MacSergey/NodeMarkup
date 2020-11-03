@@ -568,9 +568,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>德语</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>英语</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>西班牙语</value>
   </data>
@@ -1054,7 +1052,7 @@ Shift x10，Ctrl x0.1</value>
     <value>快速设置人行横道边界</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>标线显示在轨道下方 (重新载入后有效)</value>
+    <value>标线显示在轨道下方</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：此设置会改变游戏渲染顺序</value>

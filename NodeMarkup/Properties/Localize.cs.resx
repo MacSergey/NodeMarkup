@@ -568,9 +568,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Němčina</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Angličtina</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Španělština</value>
   </data>
@@ -1054,7 +1052,7 @@ Chcete nastavit předchozí značení manuálně?</value>
     <value>Rychlé nastavení krajů přechodu</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Značení pod kolejemi (po restartu)</value>
+    <value>Značení pod kolejemi</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>

@@ -568,9 +568,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Alemán</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglés</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Español</value>
   </data>
@@ -1053,7 +1051,7 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Configuración rápida de bordes del paso de peatones</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Las marcas debajo del carril (Se aplica después del reinicio)</value>
+    <value>Las marcas debajo del carril</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
