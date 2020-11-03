@@ -85,7 +85,7 @@ namespace NodeMarkup.Utils
         static void HeaderButtons(int texWidth, int texHeight, Rect rect)
             => AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Package, Clear, Edit, Offset, EdgeLines, Additionally, Cut);
 
-        static void ListItem(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(1, 1, 1, 1), 0, ListItemSprite);
+        static void ListItem(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
 
         static void Button(int texWidth, int texHeight, Rect rect)
             => AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
@@ -118,7 +118,7 @@ namespace NodeMarkup.Utils
             => AddSprites(texWidth, texHeight, rect, new RectOffset(), 0, sprite);
 
         static void AddSprites(int texWidth, int texHeight, Rect rect, RectOffset border, int space, string sprite)
-            => AddSprites(texWidth, texHeight, rect, texWidth, texHeight, border, space, sprite);
+            => AddSprites(texWidth, texHeight, rect, texWidth - 2 * space, texHeight - 2 * space, border, space, sprite);
 
         static void AddSprites(int texWidth, int texHeight, Rect rect, int spriteWidth, int spriteHeight, params string[] sprites)
             => AddSprites(texWidth, texHeight, rect, spriteWidth, spriteHeight, new RectOffset(), 0, sprites);
