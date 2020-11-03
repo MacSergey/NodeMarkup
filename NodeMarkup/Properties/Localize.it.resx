@@ -593,9 +593,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Tedesco</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglese</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spagnolo</value>
   </data>
@@ -1079,7 +1077,7 @@ Vuoi applicare l'incrocio manualmente?</value>
     <value>Impostazione rapida bordi attraversamento pedonale</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marcatura sotto le tracce (Applica dopo il riavvio)</value>
+    <value>Marcatura sotto le tracce</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attenzione: Questa opzione cambia l'ordine di render degli oggetti</value>

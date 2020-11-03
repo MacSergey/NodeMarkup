@@ -593,9 +593,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Deutsch</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englisch</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanisch</value>
   </data>
@@ -1079,7 +1077,7 @@ Möchtest du die Markierungen manuell zuordnen?</value>
     <value>Schnellerstellung Fußgängerüberwegeränder</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Markierung unter Gleisen (Aktiv nach erneutem Laden)</value>
+    <value>Markierung unter Gleisen</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
@@ -1209,5 +1207,7 @@ Die wieder hergestellten Voreinstellungen werden alle vorhandenen Voreinstellung
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Linien an allen Fußgängerüberwegen beenden</value>
   </data>
-  
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Englisch UK</value>
+  </data>
 </root>

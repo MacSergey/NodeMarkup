@@ -499,7 +499,8 @@ It is not recommended to use the mod in this state, it can lead to unpredictable
 Restart the game.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
-    <value>Pedestrian crossings:</value>
+    <value>Pedestrian
+crossings:</value>
   </data>
   
   

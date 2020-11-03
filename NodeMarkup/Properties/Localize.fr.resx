@@ -569,9 +569,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Allemand</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espagnol</value>
   </data>
@@ -1057,7 +1055,7 @@ Voulez-vous changer le marquage manuellement ?</value>
     <value>Bordures de passage piétons rapide</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marquage en dessous des rails (nécessite un redémarrage)</value>
+    <value>Marquage en dessous des rails</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>

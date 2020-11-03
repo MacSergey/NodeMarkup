@@ -569,9 +569,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Niemiecki</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Angielski</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Hiszpański</value>
   </data>
