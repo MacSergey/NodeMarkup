@@ -11,7 +11,7 @@ namespace NodeMarkup.UI
     public class TextProperty : EditorItem, IReusable
     {
         protected static Color32 ErrorColor { get; } = new Color32(253, 77, 60, 255);
-        protected static Color32 WarningColorBak { get; } = new Color32(253, 140, 44, 255);
+        protected static Color32 WarningColor { get; } = new Color32(253, 140, 44, 255);
 
         private UILabel Label { get; set; }
         protected virtual Color32 Color { get; } = UnityEngine.Color.white;
