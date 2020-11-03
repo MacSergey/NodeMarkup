@@ -34,6 +34,11 @@ namespace NodeMarkup.UI.Editors
             get => Field.width;
             set => Field.width = value;
         }
+        public bool SubmitOnFocusLost
+        {
+            get => Field.submitOnFocusLost;
+            set => Field.submitOnFocusLost = value;
+        }
 
         public ValueType Value
         {
@@ -58,8 +63,9 @@ namespace NodeMarkup.UI.Editors
         {
             base.DeInit();
 
-            Field.UseWheel = false;
-            Field.WheelStep = default;
+            UseWheel = false;
+            WheelStep = default;
+            SubmitOnFocusLost = true;
 
             OnValueChanged = null;
             OnHover = null;

@@ -15,35 +15,33 @@ namespace NodeMarkup.UI
         public bool UseWheel { get; set; }
         public ValueType WheelStep { get; set; }
 
-        private bool ValueProgress { get; set; } = false;
+        private bool InProcess { get; set; } = false;
         public virtual ValueType Value
         {
             get
             {
-                try
-                {
-                    return (ValueType)TypeDescriptor.GetConverter(typeof(ValueType)).ConvertFromString(text);
-                }
-                catch
-                {
-                    return default;
-                }
+                try { return (ValueType)TypeDescriptor.GetConverter(typeof(ValueType)).ConvertFromString(text); }
+                catch { return default; }
             }
-            set
-            {
-                if (!ValueProgress)
-                {
-                    ValueProgress = true;
-                    text = GetString(value);
-                    OnValueChanged?.Invoke(value);
-                    ValueProgress = false;
-                }
-            }
+            set => ValueChanged(value, (v) => text = GetString(v));
         }
 
         public UITextField()
         {
             tooltip = Settings.ShowToolTip && CanUseWheel ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
+        }
+
+        private void ValueChanged(ValueType value, Action<ValueType> action = null)
+        {
+            if (!InProcess)
+            {
+                InProcess = true;
+
+                action?.Invoke(value);
+                OnValueChanged?.Invoke(Value);
+
+                InProcess = false;
+            }
         }
 
         protected virtual string GetString(ValueType value) => value.ToString();
@@ -54,7 +52,7 @@ namespace NodeMarkup.UI
         protected override void OnSubmit()
         {
             base.OnSubmit();
-            Value = Value;
+            ValueChanged(Value);
         }
         protected override void OnMouseWheel(UIMouseEventParameter p)
         {

@@ -478,6 +478,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Double click with Shift to copy color
+        ///Double click to paste color.
+        /// </summary>
+        public static string Editor_ColorSampleTooltip {
+            get {
+                return ResourceManager.GetString("Editor_ColorSampleTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Style.
         /// </summary>
         public static string Editor_Style {
@@ -1490,6 +1500,24 @@ namespace NodeMarkup {
         public static string PresetEditor_Presets {
             get {
                 return ResourceManager.GetString("PresetEditor_Presets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Rewrite preset asset.
+        /// </summary>
+        public static string PresetEditor_RewriteCaption {
+            get {
+                return ResourceManager.GetString("PresetEditor_RewriteCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This preset is a asset. To change its name need rewrite asset file. Continue?.
+        /// </summary>
+        public static string PresetEditor_RewriteMessage {
+            get {
+                return ResourceManager.GetString("PresetEditor_RewriteMessage", resourceCulture);
             }
         }
         
@@ -2710,6 +2738,24 @@ namespace NodeMarkup {
         public static string TemplateEditor_NameExistMessage {
             get {
                 return ResourceManager.GetString("TemplateEditor_NameExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Rewrite template asset.
+        /// </summary>
+        public static string TemplateEditor_RewriteCaption {
+            get {
+                return ResourceManager.GetString("TemplateEditor_RewriteCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This template is a asset. To change its name need rewrite asset file. Continue?.
+        /// </summary>
+        public static string TemplateEditor_RewriteMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_RewriteMessage", resourceCulture);
             }
         }
         

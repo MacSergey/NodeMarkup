@@ -74,6 +74,7 @@ namespace NodeMarkup.UI
         {
             Text = string.Empty;
             isEnabled = true;
+            Control.isEnabled = true;
         }
         protected override void OnSizeChanged()
         {

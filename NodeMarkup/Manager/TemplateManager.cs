@@ -77,7 +77,7 @@ namespace NodeMarkup.Manager
         }
     }
     public abstract class TemplateManager<TemplateType> : TemplateManager
-        where TemplateType : Template
+        where TemplateType : Template<TemplateType>
     {
         public static TemplateManager<TemplateType> Instance { get; protected set; }
 
@@ -88,7 +88,13 @@ namespace NodeMarkup.Manager
         #region SAVE&LOAD
 
         private void InitTempalte(TemplateType template) => template.OnTemplateChanged = OnTemplateChanged;
-        private void OnTemplateChanged() => Save();
+        private void OnTemplateChanged(TemplateType template)
+        {
+            if (template.IsAsset)
+                Loader.SaveAsset(template.Asset);
+            else
+                Save();
+        }
 
         public override void Load()
         {
@@ -106,7 +112,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could load {typeof(TemplateType).Name}", error);
+                Logger.LogError($"Could not load {typeof(TemplateType).Name}", error);
             }
         }
         protected void Save()
@@ -120,7 +126,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could save {typeof(TemplateType).Name}", error);
+                Logger.LogError($"Could not save {typeof(TemplateType).Name}", error);
             }
         }
 
@@ -225,7 +231,7 @@ namespace NodeMarkup.Manager
     }
 
     public abstract class TemplateManager<TemplateType, Item> : TemplateManager<TemplateType>
-        where TemplateType : Template
+        where TemplateType : Template<TemplateType>
     {
         public bool AddTemplate(Item item, out TemplateType template) => AddTemplate(GetNewName(), item, out template);
         protected bool AddTemplate(string name, Item item, out TemplateType template)

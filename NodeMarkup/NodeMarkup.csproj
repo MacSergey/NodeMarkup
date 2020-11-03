@@ -110,11 +110,11 @@
     <Compile Include="Tools\SelectNodeMode.cs" />
     <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
     <Compile Include="UI\Property panels\PropertyGroupPanel.cs" />
-    <Compile Include="UI\Editors\Templates\BaseTemplateEditor.cs" />
+    <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
-    <Compile Include="UI\Editors\Templates\IntersectionEditor.cs" />
+    <Compile Include="UI\Editors\IntersectionEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="UI\ComponentPool.cs" />
     <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
@@ -173,7 +173,7 @@
     <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
     <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
     <Compile Include="UI\Editors\RulePanel.cs" />
-    <Compile Include="UI\Editors\Templates\StyleEditor.cs" />
+    <Compile Include="UI\Editors\StyleEditor.cs" />
     <Compile Include="UI\Elements\Keymapping.cs" />
     <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
@@ -307,7 +307,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

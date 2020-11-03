@@ -22,8 +22,6 @@ namespace NodeMarkup.Manager
         public abstract TemplateType Type { get; }
         public abstract TemplateManager Manager { get; }
 
-        public Action OnTemplateChanged { private get; set; }
-
         public TemplateAsset Asset { get; set; }
         public bool IsAsset => Asset != null;
 
@@ -57,7 +55,7 @@ namespace NodeMarkup.Manager
             Name = name;
         }
 
-        protected void TemplateChanged() => OnTemplateChanged?.Invoke();
+        protected abstract void TemplateChanged();
 
         public Dependences GetDependences() => new Dependences();
         public static bool FromXml<RequestType>(XElement config, out RequestType template)
@@ -104,7 +102,17 @@ namespace NodeMarkup.Manager
         Style = 1,
         Intersection = 2
     }
-    public class StyleTemplate : Template
+    public abstract class Template<TemplateType> : Template
+        where TemplateType : Template<TemplateType>
+    {
+        public Action<TemplateType> OnTemplateChanged { private get; set; }
+
+        protected Template() : base() { }
+        protected Template(string name) : base(name) { }
+
+        protected override void TemplateChanged() => OnTemplateChanged?.Invoke(this as TemplateType);
+    }
+    public class StyleTemplate : Template<StyleTemplate>
     {
         public override TemplateType Type => TemplateType.Style;
         public override TemplateManager Manager => TemplateManager.StyleManager;
@@ -147,7 +155,7 @@ namespace NodeMarkup.Manager
                 return false;
         }
     }
-    public class IntersectionTemplate : Template
+    public class IntersectionTemplate : Template<IntersectionTemplate>
     {
         public override TemplateType Type => TemplateType.Intersection;
         public override TemplateManager Manager => TemplateManager.IntersectionManager;
@@ -228,6 +236,8 @@ namespace NodeMarkup.Manager
         public Image Image => Template.HasScreenshot ? new Image(Template.Screenshot.width, Template.Screenshot.height, TextureFormat.RGB24, Template.Screenshot.GetPixels32()) : null;
         public string MetaData => $"{Template.Name}_Data";
         public string MetaScreenshot => $"{Template.Name}_Preview";
+
+        public override string ToString() => $"{Template.Type}:{Template.Name} - {Template.Id}";
 
         public TemplateAsset(Template template, Package.Asset asset = null)
         {

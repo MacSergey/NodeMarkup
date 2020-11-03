@@ -193,7 +193,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError("Could import data", error);
+                Logger.LogError("Could not import data", error);
                 return false;
             }
         }
@@ -258,20 +258,26 @@ namespace NodeMarkup
 
         public static void LoadAsset(GameObject gameObject, Package.Asset asset)
         {
-            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
-                return;
-
-            var templateConfig = Parse(markingInfo.data);
-            if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
+            try
             {
-                if(asset.package.Find($"{templateAsset.Template.Name}_Preview") is Package.Asset assetScreenshot && assetScreenshot.Instantiate<Texture>() is Texture2D screenshot)
-                    templateAsset.Template.Screenshot = screenshot;
+                if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
+                    return;
 
-                TemplateManager.AddAssetTemplate(templateAsset);
+                var templateConfig = Parse(markingInfo.data);
+                if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
+                {
+                    if (asset.package.Find($"{templateAsset.Template.Name}_Preview") is Package.Asset assetScreenshot && assetScreenshot.Instantiate<Texture>() is Texture2D screenshot)
+                        templateAsset.Template.Screenshot = screenshot;
 
+                    TemplateManager.AddAssetTemplate(templateAsset);
+
+                }
+                Logger.LogDebug($"Asset loaded: {templateAsset}");
             }
-
-            Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(LoadAsset)}: {templateAsset.Template.Name}");
+            catch (Exception error)
+            {
+                Logger.LogError($"Could not load asset: {asset.fullName}", error);
+            }
         }
         public static bool SaveAsset(TemplateAsset templateAsset)
         {
@@ -306,13 +312,13 @@ namespace NodeMarkup
                 var path = GetSavePathName(templateAsset.FileName);
                 package.Save(path);
 
-                Logger.LogError($"Template asset saved");
+                Logger.LogDebug($"Asset {templateAsset} saved to {path}");
 
                 return true;
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could save template asset", error);
+                Logger.LogError($"Could not save asset {templateAsset}", error);
                 return false;
             }
         }
@@ -333,7 +339,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError($"Couldnt save screenshot {id}", error);
+                Logger.LogError($"Could not save screenshot {id}", error);
                 return false;
             }
         }
@@ -351,7 +357,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError($"Couldnt load screenshot {id}", error);
+                Logger.LogError($"Could not load screenshot {id}", error);
                 image = null;
                 return false;
             }

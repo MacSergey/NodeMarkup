@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -148,7 +149,19 @@ namespace NodeMarkup.UI.Editors
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
             ColorSample.eventColorPickerOpen += ColorPickerOpen;
             ColorSample.eventColorPickerClose += ColorPickerClose;
+            ColorSample.eventDoubleClick += ColorSampleDoubleClick;
+
+            ColorSample.tooltip = NodeMarkup.Localize.Editor_ColorSampleTooltip;
         }
+
+        private void ColorSampleDoubleClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (NodeMarkupTool.OnlyShiftIsPressed)
+                Copy();
+            else
+                Paste();
+        }
+
         private void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
             Popup = popup;
@@ -245,14 +258,16 @@ namespace NodeMarkup.UI.Editors
         private void Copy()
         {
             Buffer = Value;
-            Popup.component.Hide();
+            if (Popup != null)
+                Popup.component.Hide();
         }
         private void Paste()
         {
             if (Buffer != null)
             {
                 Value = Buffer.Value;
-                Popup.component.Hide();
+                if (Popup != null)
+                    Popup.component.Hide();
             }
         }
         private void SetDefault() => Value = Manager.Style.DefaultColor;

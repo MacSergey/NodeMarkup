@@ -15,6 +15,9 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
+        protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
+        protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;
+
         protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();

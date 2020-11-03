@@ -12,6 +12,8 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
+        protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
+        protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;
 
         protected override bool GroupingEnabled => false;
 

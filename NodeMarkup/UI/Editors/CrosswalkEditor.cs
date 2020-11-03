@@ -23,6 +23,7 @@ namespace NodeMarkup.UI.Editors
         private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
         private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }
         private MarkupCrosswalkSelectPropertyPanel LeftBorder { get; set; }
+        private TextProperty Warning { get; set; }
         private StylePropertyPanel Style { get; set; }
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
 
@@ -64,6 +65,11 @@ namespace NodeMarkup.UI.Editors
         {
             LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
             RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
+
+            Warning = ComponentPool.Get<TextProperty>(this);
+            Warning.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Warning.Init();
+
             FillBorders();
         }
         private void FillBorders()
@@ -85,7 +91,7 @@ namespace NodeMarkup.UI.Editors
             panel.Clear();
             panel.AddRange(lines);
             panel.SelectedObject = value;
-            panel.isEnabled = lines.Any();
+            panel.EnableControl = lines.Any();
             panel.OnSelectChanged += action;
         }
         private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)

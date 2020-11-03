@@ -10,7 +10,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class BaseTemplateEditor<Item, TemplateType, Icon, Group, GroupType, HeaderPanelType> : GroupedEditor<Item, TemplateType, Icon, Group, GroupType>
         where Item : EditableItem<TemplateType, Icon>
         where Icon : UIComponent
-        where TemplateType : Template
+        where TemplateType : Template<TemplateType>
         where Group : EditableGroup<GroupType, Item, TemplateType, Icon>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
     {
@@ -18,6 +18,8 @@ namespace NodeMarkup.UI.Editors
 
         protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
+        protected abstract string RewriteCaption { get; }
+        protected abstract string RewriteMessage { get; }
 
         protected abstract IEnumerable<TemplateType> GetTemplates();
 
@@ -40,6 +42,8 @@ namespace NodeMarkup.UI.Editors
                 foreach (var propertyPanel in PropertiesPanel.components.OfType<EditorPropertyPanel>())
                     propertyPanel.EnableControl = false;
             }
+            if (!EditObject.IsAsset || !EditObject.Asset.IsWorkshop)
+                NameProperty.EnableControl = true;
         }
         protected override void OnClear()
         {
@@ -72,6 +76,7 @@ namespace NodeMarkup.UI.Editors
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
             NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
+            NameProperty.SubmitOnFocusLost = false;
             NameProperty.Init();
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += NameSubmitted;
@@ -83,16 +88,32 @@ namespace NodeMarkup.UI.Editors
             if (name == EditObject.Name)
                 return;
 
+            var messageBox = default(YesNoMessageBox);
             if (!string.IsNullOrEmpty(name) && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
                 messageBox.MessageText = string.Format(NodeMarkup.Localize.TemplateEditor_NameExistMessage, name);
-                messageBox.OnButton1Click = Set;
+                messageBox.OnButton1Click = AgreeExistName;
                 messageBox.OnButton2Click = NotSet;
             }
             else
-                Set();
+                AgreeExistName();
+
+            bool AgreeExistName()
+            {
+                if (EditObject.IsAsset)
+                {
+                    messageBox ??= MessageBoxBase.ShowModal<YesNoMessageBox>();
+                    messageBox.CaprionText = RewriteCaption;
+                    messageBox.MessageText = RewriteMessage;
+                    messageBox.OnButton1Click = Set;
+                    messageBox.OnButton2Click = NotSet;
+                    return false;
+                }
+                else
+                    return Set();
+            }
 
             bool Set()
             {
@@ -100,8 +121,10 @@ namespace NodeMarkup.UI.Editors
                 SelectItem.Refresh();
                 return true;
             }
+
             bool NotSet()
             {
+                NameProperty.Value = EditObject.Name;
                 NameProperty.Edit();
                 return true;
             }
