@@ -59,7 +59,6 @@ namespace NodeMarkup.UI
             var button = AddUIComponent<UIButton>();
 
             button.atlas = TextureUtil.Atlas;
-            SetSprite(button, false);
             button.text = label ?? item.ToString();
             button.textScale = 0.8f;
             button.textPadding = new RectOffset(8, 8, 4, 0);
@@ -68,17 +67,33 @@ namespace NodeMarkup.UI
             button.height = 20;
             button.eventClick += ButtonClick;
 
+            var last = Buttons.LastOrDefault();
             Buttons.Add(button);
+
+            SetSprite(button, false);
+            if(last != null)
+                SetSprite(last, SelectedIndex == Buttons.Count - 2);
         }
         private void SetSprite(UIButton button, bool isSelect)
         {
-            if(isSelect)
-                button.normalBgSprite = button.hoveredBgSprite = button.pressedBgSprite = TextureUtil.FieldFocused;
+            var index = Buttons.IndexOf(button);
+            var suffix = Suffix(index);
+
+            if (isSelect)
+                button.normalBgSprite = button.hoveredBgSprite = button.pressedBgSprite = $"{TextureUtil.FieldFocused}{suffix}";
             else
             {
-                button.normalBgSprite = TextureUtil.FieldNormal;
-                button.hoveredBgSprite = button.pressedBgSprite = TextureUtil.FieldHovered;
+                button.normalBgSprite = $"{TextureUtil.FieldNormal}{suffix}";
+                button.hoveredBgSprite = button.pressedBgSprite = $"{TextureUtil.FieldHovered}{suffix}";
             }
+        }
+
+        private string Suffix(int index)
+        {
+            if (index == 0)
+                return Buttons.Count == 1 ? string.Empty : "Left";
+            else
+                return index == Buttons.Count - 1 ? "Right" : "Middle";
         }
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => SelectedIndex = Buttons.FindIndex(b => b == component);

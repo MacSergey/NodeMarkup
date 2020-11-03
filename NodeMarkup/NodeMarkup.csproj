@@ -260,6 +260,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\CloseButton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Empty.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
     <PostBuildEvent>

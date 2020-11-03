@@ -18,7 +18,7 @@ namespace NodeMarkup.Utils
         public static UITextureAtlas Atlas;
         public static Texture2D Texture => Atlas.texture;
 
-        static Dictionary<string, Action<Texture2D, Rect>> Files { get; } = new Dictionary<string, Action<Texture2D, Rect>>
+        static Dictionary<string, Action<int, int, Rect>> Files { get; } = new Dictionary<string, Action<int, int, Rect>>
         {
             {nameof(OrderButtons), OrderButtons},
             {nameof(Styles), Styles},
@@ -31,6 +31,7 @@ namespace NodeMarkup.Utils
             {nameof(ColorPicker), ColorPicker},
             {nameof(CloseButton), CloseButton},
             {nameof(Arrows), Arrows},
+            {nameof(Empty), Empty},
         };
 
         static TextureUtil()
@@ -40,13 +41,12 @@ namespace NodeMarkup.Utils
             var actions = Files.Values.ToArray();
 
             for (var i = 0; i < actions.Length; i += 1)
-                actions[i](textures[i], rects[i]);
+                actions[i](textures[i].width, textures[i].height, rects[i]);
         }
 
         public static Texture2D LoadTextureFromAssembly(string textureFile)
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
-            //var path = $"{nameof(NodeMarkup)}.Resources.{textureFile}";
             var path = executingAssembly.GetManifestResourceNames().FirstOrDefault(n => n.Contains(textureFile));
             var manifestResourceStream = executingAssembly.GetManifestResourceStream(path);
             var data = new byte[manifestResourceStream.Length];
@@ -77,51 +77,72 @@ namespace NodeMarkup.Utils
             return UIView.GetAView().defaultAtlas;
         }
 
-        static void OrderButtons(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton);
+        static void OrderButtons(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton);
 
-        static void Styles(Texture2D texture, Rect rect) => AddSprites(texture, rect, 19, 19, StyleNames);
+        static void Styles(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
 
-        static void HeaderButtons(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Package, Clear, Edit, Offset, EdgeLines, Additionally, Cut);
+        static void HeaderButtons(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Package, Clear, Edit, Offset, EdgeLines, Additionally, Cut);
 
-        static void ListItem(Texture2D texture, Rect rect) => AddSprites(texture, rect, new RectOffset(1, 1, 1, 1), 0, ListItemSprite);
+        static void ListItem(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(1, 1, 1, 1), 0, ListItemSprite);
 
-        static void Button(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
+        static void Button(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
 
-        static void Resize(Texture2D texture, Rect rect) => AddSprites(texture, rect, ResizeSprite);
+        static void Resize(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, ResizeSprite);
 
-        static void TextFieldPanel(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 32, 32, new RectOffset(4, 4, 4, 4), 2, FieldNormal, FieldHovered, FieldFocused, FieldDisabled, FieldEmpty);
+        static void TextFieldPanel(int texWidth, int texHeight, Rect rect)
+            => AddSpritesRows(texWidth, texHeight, rect, 32, 32, new RectOffset(4, 4, 4, 4), 2, 4, 
+                FieldNormal, FieldHovered, FieldFocused, FieldDisabled, 
+                FieldNormalLeft, FieldHoveredLeft, FieldFocusedLeft, FieldDisabledLeft, 
+                FieldNormalRight, FieldHoveredRight, FieldFocusedRight, FieldDisabledRight, 
+                FieldNormalMiddle, FieldHoveredMiddle, FieldFocusedMiddle, FieldDisabledMiddle);
 
-        static void OpacitySlider(Texture2D texture, Rect rect) => AddSprites(texture, rect, 18, 200, new RectOffset(), 2, OpacitySliderBoard, OpacitySliderColor);
+        static void OpacitySlider(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, 18, 200, new RectOffset(), 2, OpacitySliderBoard, OpacitySliderColor);
 
-        static void ColorPicker(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor, ColorPickerBoard);
+        static void ColorPicker(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor, ColorPickerBoard);
 
-        static void CloseButton(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
+        static void CloseButton(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
 
-        static void Arrows(Texture2D texture, Rect rect)
-            => AddSprites(texture, rect, 32, 32, ArrowDown, ArrowRight);
+        static void Arrows(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight);
+
+        static void Empty(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 32, 32, EmptySprite);
 
 
-        static void AddSprites(Texture2D texture, Rect rect, string sprite)
-            => AddSprites(texture, rect, new RectOffset(), 0, sprite);
+        static void AddSprites(int texWidth, int texHeight, Rect rect, string sprite)
+            => AddSprites(texWidth, texHeight, rect, new RectOffset(), 0, sprite);
 
-        static void AddSprites(Texture2D texture, Rect rect, RectOffset border, int space, string sprite)
-            => AddSprites(texture, rect, texture.width, texture.height, border, space, sprite);
+        static void AddSprites(int texWidth, int texHeight, Rect rect, RectOffset border, int space, string sprite)
+            => AddSprites(texWidth, texHeight, rect, texWidth, texHeight, border, space, sprite);
 
-        static void AddSprites(Texture2D texture, Rect rect, int spriteWidth, int spriteHeight, params string[] sprites)
-            => AddSprites(texture, rect, spriteWidth, spriteHeight, new RectOffset(), 0, sprites);
+        static void AddSprites(int texWidth, int texHeight, Rect rect, int spriteWidth, int spriteHeight, params string[] sprites)
+            => AddSprites(texWidth, texHeight, rect, spriteWidth, spriteHeight, new RectOffset(), 0, sprites);
 
-        static void AddSprites(Texture2D texture, Rect rect, int spriteWidth, int spriteHeight, RectOffset border, int space, params string[] sprites)
+        static void AddSpritesRows(int texWidth, int texHeight, Rect rect, int spriteWidth, int spriteHeight, RectOffset border, int space, int inRow, params string[] sprites)
         {
-            var width = spriteWidth / (float)texture.width * rect.width;
-            var height = spriteHeight / (float)texture.height * rect.height;
-            var spaceWidth = space / (float)texture.width * rect.width;
-            var spaceHeight = space / (float)texture.height * rect.height;
+            var rows = sprites.Length / inRow + (sprites.Length % inRow == 0 ? 0 : 1);
+
+            var rowHeight = rect.height / texHeight * spriteHeight;
+            var spaceHeight = rect.height / texHeight * space;
+
+            for (var i = 0; i < rows; i += 1)
+            {
+                var rowRect = new Rect(rect.x, rect.y + (spaceHeight + rowHeight) * (rows - i - 1), rect.width, rowHeight + 2 * spaceHeight);
+                var rowSprites = sprites.Skip(inRow * i).Take(inRow).ToArray();
+                AddSprites(texWidth, spriteHeight + 2 * space, rowRect, spriteWidth, spriteHeight, border, space, rowSprites);
+            }
+        }
+        static void AddSprites(int texWidth, int texHeight, Rect rect, int spriteWidth, int spriteHeight, RectOffset border, int space, params string[] sprites)
+        {
+            var width = spriteWidth / (float)texWidth * rect.width;
+            var height = spriteHeight / (float)texHeight * rect.height;
+            var spaceWidth = space / (float)texWidth * rect.width;
+            var spaceHeight = space / (float)texHeight * rect.height;
 
             for (int i = 0; i < sprites.Length; i += 1)
             {
@@ -212,7 +233,18 @@ namespace NodeMarkup.Utils
         public static string FieldHovered => nameof(FieldHovered);
         public static string FieldFocused => nameof(FieldFocused);
         public static string FieldDisabled => nameof(FieldDisabled);
-        public static string FieldEmpty => nameof(FieldEmpty);
+        public static string FieldNormalLeft => nameof(FieldNormalLeft);
+        public static string FieldHoveredLeft => nameof(FieldHoveredLeft);
+        public static string FieldFocusedLeft => nameof(FieldFocusedLeft);
+        public static string FieldDisabledLeft => nameof(FieldDisabledLeft);
+        public static string FieldNormalRight => nameof(FieldNormalRight);
+        public static string FieldHoveredRight => nameof(FieldHoveredRight);
+        public static string FieldFocusedRight => nameof(FieldFocusedRight);
+        public static string FieldDisabledRight => nameof(FieldDisabledRight);
+        public static string FieldNormalMiddle => nameof(FieldNormalMiddle);
+        public static string FieldHoveredMiddle => nameof(FieldHoveredMiddle);
+        public static string FieldFocusedMiddle => nameof(FieldFocusedMiddle);
+        public static string FieldDisabledMiddle => nameof(FieldDisabledMiddle);
 
         public static string OpacitySliderBoard { get; } = nameof(OpacitySliderBoard);
         public static string OpacitySliderColor { get; } = nameof(OpacitySliderColor);
@@ -225,7 +257,10 @@ namespace NodeMarkup.Utils
         public static string DeleteNormal { get; } = nameof(DeleteNormal);
         public static string DeleteHover { get; } = nameof(DeleteHover);
         public static string DeletePressed { get; } = nameof(DeletePressed);
+
         public static string ArrowDown { get; } = nameof(ArrowDown);
         public static string ArrowRight { get; } = nameof(ArrowRight);
+
+        public static string EmptySprite => nameof(EmptySprite);
     }
 }

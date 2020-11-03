@@ -103,7 +103,7 @@ namespace NodeMarkup.UI
             field.hoveredBgSprite = TextureUtil.FieldHovered;
             field.focusedBgSprite = TextureUtil.FieldNormal;
             field.disabledBgSprite = TextureUtil.FieldDisabled;
-            field.selectionSprite = TextureUtil.FieldEmpty;
+            field.selectionSprite = TextureUtil.EmptySprite;
 
             field.allowFloats = true;
             field.isInteractive = true;

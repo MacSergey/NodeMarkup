@@ -89,10 +89,6 @@ namespace NodeMarkup.UI
             NoScreenshot.textScale = 1.2f;
             NoScreenshot.text = NodeMarkup.Localize.PresetInfo_NoScreenshot;
 
-            NoScreenshot.atlas = atlas;
-            NoScreenshot.backgroundSprite = TextureUtil.FieldEmpty;
-            NoScreenshot.color = Color.black;
-
             NoScreenshot.textAlignment = UIHorizontalAlignment.Center;
             NoScreenshot.verticalAlignment = UIVerticalAlignment.Middle;
         }
