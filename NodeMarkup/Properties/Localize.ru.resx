@@ -215,7 +215,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Это BETA версия, стабильная работа и отсутствие ошибок не гарантировано!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Редактирование разметки перекрестка #{0}</value>
+    <value>Редактирование перекрестка #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>точку</value>
@@ -1274,5 +1274,8 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
     <value>Показывать подсказки панели</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Редактировать</value>
   </data>
 </root>

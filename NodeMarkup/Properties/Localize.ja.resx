@@ -410,7 +410,7 @@
     <value>コピー</value>
   </data>
   <data name="Editor_ColorPaste" xml:space="preserve">
-    <value>ペースト</value>
+    <value>貼り付け</value>
   </data>
   <data name="Editor_ColorDefault" xml:space="preserve">
     <value>既定色</value>
@@ -443,7 +443,7 @@
     <value>コピー</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
-    <value>ペースト</value>
+    <value>貼り付け</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
     <value>V字</value>
@@ -574,7 +574,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>ドイツ語</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>英語</value>
+    <value>英語 - US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>スペイン語</value>
@@ -1066,7 +1066,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
-    <value>アセットで保存</value>
+    <value>カスタムアセットで保存</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
     <value>{0}
@@ -1181,12 +1181,32 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>英語 - UK</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>プリセット（カスタムアセット）を上書きしますか？</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>このプリセットはカスタムアセットです。
+名前の変更は、カスタムアセットのファイルを上書きします。</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>テンプレート（カスタムアセット）を上書きしますか？</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>このテンプレートはカスタムアセットです。
+名前の変更は、カスタムアセットのファイルを上書きします。</value>
+  </data>
+  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
+    <value>ダブルクリック+Shiftで、色のコピー
+ダブルクリックで、色の貼り付け</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>横断歩道の基準線を設定するには、横断歩道と同じポイントから始まるラインが必要です。</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>ラインの始点と終点のポイントを変更して、追加ルールを作成したい場合は他のラインが交差する必要があります。</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>パネル内にTipsを表示</value>
+  </data>
   
 </root>

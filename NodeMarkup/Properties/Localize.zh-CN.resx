@@ -1176,12 +1176,32 @@ Shift x10，Ctrl x0.1</value>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>英语（英国）</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>重写预设资产</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>本预设是资产。需要覆写资产文件才能更改名称。要继续吗？</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>重写模板资产</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>本模板是资产。需要覆写资产文件才能更改名称。要继续吗？</value>
+  </data>
+  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
+    <value>按住Shift双击鼠标左键来复制颜色
+双击鼠标左键以粘贴</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>若要建立人行道边界，请在人行横道端点处划线</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>若要改变线段起始点与终点并创建附加规则，另一线段必须与本线段交叉</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>显示面板提示</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
 </root>
