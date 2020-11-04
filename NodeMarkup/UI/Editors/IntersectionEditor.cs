@@ -17,12 +17,16 @@ namespace NodeMarkup.UI.Editors
 
         protected override bool GroupingEnabled => false;
 
+        private ButtonPanel ApplyButton { get; set; }
+
         protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates;
         protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         protected override string GroupName(bool group) => throw new NotSupportedException();
 
         protected override void ClearSettings()
         {
+            ApplyButton = null;
+
             RemovePreview();
             base.ClearSettings();
         }
@@ -42,10 +46,10 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddApplyButton()
         {
-            var applyButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
-            applyButton.Text = NodeMarkup.Localize.PresetEditor_ApplyPreset;
-            applyButton.Init();
-            applyButton.OnButtonClick += OnApply;
+            ApplyButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
+            ApplyButton.Text = NodeMarkup.Localize.PresetEditor_ApplyPreset;
+            ApplyButton.Init();
+            ApplyButton.OnButtonClick += OnApply;
         }
         private void OnApply() => Tool.ApplyPreset(EditObject);
         protected override void OnObjectDelete(IntersectionTemplate template)
@@ -55,17 +59,17 @@ namespace NodeMarkup.UI.Editors
         }
 
         PropertyGroupPanel Preview { get; set; }
-        protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
+        protected override void ItemHover(PresetItem editableItem)
         {
-            base.ItemHover(component, eventParam);
-            AddPreview(component);
+            base.ItemHover(editableItem);
+            AddPreview(editableItem);
         }
-        protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam)
+        protected override void ItemLeave()
         {
-            base.ItemLeave(component, eventParam);
+            base.ItemLeave();
             RemovePreview();
         }
-        private void AddPreview(UIComponent component)
+        private void AddPreview(PresetItem editableItem)
         {
             if (HoverItem == SelectItem)
                 return;
@@ -78,8 +82,8 @@ namespace NodeMarkup.UI.Editors
             info.Init(HoverItem.Object);
             Preview.width = 365f;
 
-            var x = component.absolutePosition.x + component.width;
-            var y = Mathf.Min(component.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
+            var x = editableItem.absolutePosition.x + editableItem.width;
+            var y = Mathf.Min(editableItem.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
             Preview.absolutePosition = new Vector2(x, y);
         }
         private void RemovePreview()
@@ -90,6 +94,11 @@ namespace NodeMarkup.UI.Editors
             ContentPanel.opacity = 1f;
             ComponentPool.Free(Preview);
             Preview = null;
+        }
+        protected override void EditAsset()
+        {
+            base.EditAsset();
+            ApplyButton.EnableControl = !EditMode;
         }
     }
 

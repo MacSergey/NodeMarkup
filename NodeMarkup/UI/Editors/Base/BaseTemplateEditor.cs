@@ -16,7 +16,7 @@ namespace NodeMarkup.UI.Editors
     {
         protected override bool UseGroupPanel => true;
 
-        private bool EditMode { get; set; }
+        protected bool EditMode { get; private set; }
 
         protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
@@ -25,18 +25,26 @@ namespace NodeMarkup.UI.Editors
 
         private EditorItem[] Aditional { get; set; }
 
+        public override bool Active 
+        {
+            set
+            {
+                base.Active = value;
+                EditMode = false;
+                if (SelectItem is Item)
+                    SetEditable();
+            }
+        }
         protected abstract IEnumerable<TemplateType> GetTemplates();
+
 
         protected override void FillItems()
         {
             foreach (var templates in GetTemplates())
                 AddItem(templates);
         }
-
         protected override void OnObjectSelect()
         {
-            EditMode = false;
-
             AddHeader();
             AddAuthor();
             AddTemplateName();
@@ -44,7 +52,7 @@ namespace NodeMarkup.UI.Editors
             Aditional = AddAditional().ToArray();
 
             if (EditObject.IsAsset)
-                SetEditable(false);
+                SetEditable();
         }
         protected override void OnClear()
         {
@@ -135,12 +143,12 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        private void SetEditable(bool isEdit)
+        protected virtual void SetEditable()
         {
-            NameProperty.EnableControl = isEdit;
+            NameProperty.EnableControl = EditMode;
 
             foreach (var aditional in Aditional)
-                aditional.EnableControl = isEdit;
+                aditional.EnableControl = EditMode;
         }
 
         private void SaveAsset()
@@ -153,10 +161,11 @@ namespace NodeMarkup.UI.Editors
         }
 
         
-        private void EditAsset()
+        protected virtual void EditAsset()
         {
             EditMode = !EditMode;
-            SetEditable(EditMode);
+            SetEditable();
+            Panel.AvailableHeader = Panel.AvailableTabStrip = AvailableItems = !EditMode;
         }
     }
 }

@@ -168,7 +168,7 @@ namespace NodeMarkup.UI.Editors
         private void OnSaveTemplate()
         {
             if (TemplateManager.StyleManager.AddTemplate(Rule.Style, out StyleTemplate template))
-                Editor.NodeMarkupPanel.EditTemplate(template);
+                Editor.Panel.EditTemplate(template);
         }
         private void ApplyStyle(LineStyle style)
         {

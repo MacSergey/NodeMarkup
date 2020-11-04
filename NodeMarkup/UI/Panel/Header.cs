@@ -15,7 +15,7 @@ namespace NodeMarkup.UI.Panel
     public class PanelHeader : UIDragHandle
     {
         private UILabel Caption { get; set; }
-        public PanelHeaderContent Header { get; private set; }
+        public PanelHeaderContent Buttons { get; private set; }
 
         public string Text
         {
@@ -39,24 +39,24 @@ namespace NodeMarkup.UI.Panel
         }
         private void CreateButtonsPanel()
         {
-            Header = AddUIComponent<PanelHeaderContent>();
+            Buttons = AddUIComponent<PanelHeaderContent>();
         }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
-            Header.autoLayout = true;
-            Header.autoLayout = false;
-            Header.FitChildrenHorizontally();
-            Header.height = height;
+            Buttons.autoLayout = true;
+            Buttons.autoLayout = false;
+            Buttons.FitChildrenHorizontally();
+            Buttons.height = height;
 
-            foreach (var item in Header.components)
-                item.relativePosition = new Vector2(item.relativePosition.x, (Header.height - item.height) / 2);
+            foreach (var item in Buttons.components)
+                item.relativePosition = new Vector2(item.relativePosition.x, (Buttons.height - item.height) / 2);
 
-            Caption.width = width - Header.width;
-            Caption.relativePosition = new Vector2(0, (height - Caption.height) / 2);
+            Caption.width = width - Buttons.width - 20;
+            Caption.relativePosition = new Vector2(10, (height - Caption.height) / 2);
 
-            Header.relativePosition = new Vector2(Caption.width - 5, (height - Header.height) / 2);
+            Buttons.relativePosition = new Vector2(Caption.width - 5 + 20, (height - Buttons.height) / 2);
         }
     }
     public class PanelHeaderContent : HeaderContent

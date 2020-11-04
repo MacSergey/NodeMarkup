@@ -41,32 +41,21 @@ namespace NodeMarkup.UI.Panel
         private Vector2 EditorSize => size - new Vector2(0, Header.height + TabStrip.height);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
-        public static NodeMarkupPanel CreatePanel()
+        public bool AvailableHeader { set => Header.SetAvailable(value); }
+        public bool AvailableTabStrip { set => TabStrip.SetAvailable(value); }
+
+        public static void CreatePanel()
         {
             Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
-
-            var uiView = UIView.GetAView();
-            Instance = uiView.AddUIComponent(typeof(NodeMarkupPanel)) as NodeMarkupPanel;
-            Instance.Init();
-            Instance.Active = false;
-
+            UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
             Logger.LogDebug($"Panel created");
+        }
+        public override void Awake()
+        {
+            base.Awake();
 
-            return Instance;
-        }
-        public static void RemovePanel()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
-            if (Instance != null)
-            {
-                Instance.Hide();
-                Destroy(Instance);
-                Instance = null;
-                Logger.LogDebug($"Panel removed");
-            }
-        }
-        public void Init()
-        {
+            Instance = this;
+
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
@@ -79,6 +68,19 @@ namespace NodeMarkup.UI.Panel
 
             size = new Vector2(Width, Header.height + TabStrip.height + 400);
             minimumSize = new Vector2(Width, Header.height + TabStrip.height + 200);
+
+            Instance.Active = false;
+        }
+        public static void RemovePanel()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
+            if (Instance != null)
+            {
+                Instance.Hide();
+                Destroy(Instance);
+                Instance = null;
+                Logger.LogDebug($"Panel removed");
+            }
         }
         private void CreateHeader()
         {
@@ -165,7 +167,16 @@ namespace NodeMarkup.UI.Panel
             absolutePosition = DefaultPosition;
         }
 
-        public void UpdatePanel() => CurrentEditor?.UpdateEditor();
+        private void Reset()
+        {
+            AvailableHeader = true;
+            AvailableTabStrip = true;
+        }
+        public void UpdatePanel()
+        {
+            Reset();
+            CurrentEditor?.UpdateEditor();
+        }
         public void SetNode(Markup markup)
         {
             Markup = markup;
@@ -206,16 +217,19 @@ namespace NodeMarkup.UI.Panel
 
         public void EditPoint(MarkupPoint point)
         {
+            Reset();
             var editor = SelectEditor<PointsEditor>();
             editor?.UpdateEditor(point);
         }
         public void EditLine(MarkupLine line)
         {
+            Reset();
             var editor = SelectEditor<LinesEditor>();
             editor?.UpdateEditor(line);
         }
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
+            Reset();
             var editor = SelectEditor<CrosswalksEditor>();
             if (editor != null)
             {
@@ -225,16 +239,19 @@ namespace NodeMarkup.UI.Panel
         }
         public void EditFiller(MarkupFiller filler)
         {
+            Reset();
             var editor = SelectEditor<FillerEditor>();
             editor?.UpdateEditor(filler);
         }
         public void EditTemplate(StyleTemplate template)
         {
+            Reset();
             var editor = SelectEditor<StyleTemplateEditor>();
             editor?.UpdateEditor(template);
         }
         public void EditPreset(IntersectionTemplate preset)
         {
+            Reset();
             var editor = SelectEditor<IntersectionTemplateEditor>();
             editor?.UpdateEditor(preset);
         }

@@ -60,7 +60,10 @@ namespace NodeMarkup.UI.Editors
             Label.autoHeight = true;
             Label.wordWrap = true;
         }
-        public virtual void DeInit() { }
+        public virtual void DeInit() 
+        {
+            IsSelect = false;
+        }
 
         protected virtual void SetColors()
         {

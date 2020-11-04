@@ -286,6 +286,12 @@ namespace NodeMarkup.Utils
         public static float Magnitude(this Bounds bounds) => bounds.size.magnitude / Mathf.Sqrt(3);
         public static void Render(this Bounds bounds, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
             => NodeMarkupTool.RenderCircle(cameraInfo, bounds.center, color, width ?? bounds.Magnitude(), alphaBlend);
+
+        public static void SetAvailable(this UIComponent component, bool value)
+        {
+            component.isEnabled = value;
+            component.opacity = value ? 1f : 0.15f;
+        }
     }
 
     public struct BezierPoint

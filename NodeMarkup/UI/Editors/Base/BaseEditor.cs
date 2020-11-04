@@ -16,11 +16,14 @@ namespace NodeMarkup.UI.Editors
     public abstract class Editor : UIPanel
     {
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
-        public NodeMarkupPanel NodeMarkupPanel { get; private set; }
-        protected Markup Markup => NodeMarkupPanel.Markup;
+        public NodeMarkupPanel Panel { get; private set; }
+        protected Markup Markup => Panel.Markup;
 
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollablePanel ContentPanel { get; set; }
+
+        public bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
+        public bool AvailableContent { set => ContentPanel.SetAvailable(value); }
 
         protected static float ItemsRatio => 0.3f;
         protected static float ContentRatio => 1f - ItemsRatio;
@@ -30,7 +33,7 @@ namespace NodeMarkup.UI.Editors
         public abstract string Name { get; }
         public abstract string EmptyMessage { get; }
 
-        public bool Active
+        public virtual bool Active
         {
             set
             {
@@ -80,10 +83,8 @@ namespace NodeMarkup.UI.Editors
             foreach (var item in ItemsPanel.components)
                 item.width = ItemsPanel.width;
         }
-        private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
-        {
-            ItemsPanel.width = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
-        }
+        private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value) 
+            =>ItemsPanel.width = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
 
         private void AddSettingPanel()
         {
@@ -130,11 +131,12 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        public virtual void Init(NodeMarkupPanel panel)
+        public virtual void Init(NodeMarkupPanel panel) => Panel = panel;
+        public virtual void UpdateEditor()
         {
-            NodeMarkupPanel = panel;
+            AvailableItems = true;
+            AvailableContent = true;
         }
-        public virtual void UpdateEditor() { }
         protected virtual void ClearItems() { }
         protected virtual void ClearSettings() { }
         protected virtual void FillItems() { }
@@ -188,8 +190,8 @@ namespace NodeMarkup.UI.Editors
         {
             base.Update();
 
-            if (_selectItem != null)
-                _selectItem.IsSelect = true;
+            if (SelectItem is EditableItemType editableItem)
+                editableItem.IsSelect = true;
         }
         protected override void OnSizeChanged()
         {
@@ -253,7 +255,7 @@ namespace NodeMarkup.UI.Editors
         protected override void ClearItems() => ClearItems(ItemsPanel);
         protected void ClearItems(UIComponent parent)
         {
-            _selectItem = null;
+            SelectItem = null;
 
             var components = parent.components.ToArray();
             foreach (var component in components)
@@ -285,6 +287,8 @@ namespace NodeMarkup.UI.Editors
         protected virtual EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
         public virtual void UpdateEditor(EditableObject selectObject = null)
         {
+            base.UpdateEditor();
+
             var editObject = EditObject;
 
             if (selectObject != null && selectObject == editObject)
@@ -351,8 +355,15 @@ namespace NodeMarkup.UI.Editors
                 GroupPanel.Init();
             ContentPanel.autoLayout = true;
         }
-        protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as EditableItemType;
-        protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = null;
+        protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (ItemsPanel.isEnabled && component is EditableItemType editableItem)
+                ItemHover(editableItem);
+        }
+        protected virtual void ItemHover(EditableItemType editableItem) => HoverItem = editableItem;
+        protected override void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => ItemLeave();
+        protected virtual void ItemLeave() => HoverItem = null;
+
         protected virtual void OnObjectSelect() { }
         protected virtual void OnClear() { }
         protected virtual void OnObjectDelete(EditableObject editableObject) { }
@@ -364,8 +375,7 @@ namespace NodeMarkup.UI.Editors
         }
         public virtual void Select(EditableItemType item)
         {
-            item.SimulateClick();
-            item.Focus();
+            ItemClick(item);
             ScrollTo(item);
         }
         public virtual void ScrollTo(EditableItemType item)

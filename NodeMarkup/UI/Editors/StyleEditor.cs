@@ -59,7 +59,7 @@ namespace NodeMarkup.UI.Editors
         private void Duplicate()
         {
             if (TemplateManager.StyleManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
-                NodeMarkupPanel.EditTemplate(duplicate);
+                Panel.EditTemplate(duplicate);
         }
     }
 
@@ -67,7 +67,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override bool ShowDelete => !Object.IsAsset;
 
-        private bool IsDefault => Object.IsDefault;
+        private bool IsDefault => Object?.IsDefault == true;
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
         public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
