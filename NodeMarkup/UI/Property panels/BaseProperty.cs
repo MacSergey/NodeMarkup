@@ -15,8 +15,14 @@ namespace NodeMarkup.UI
     {
         protected virtual float DefaultHeight => 30;
 
+        public virtual bool EnableControl { get; set; }
+
         public virtual void Init() => Init(null);
-        public virtual void DeInit() { }
+        public virtual void DeInit() 
+        {
+            isEnabled = true;
+            EnableControl = true;
+        }
         public void Init(float? height = null)
         {
             if (parent is UIScrollablePanel scrollablePanel)
@@ -46,7 +52,7 @@ namespace NodeMarkup.UI
             get => Label.text;
             set => Label.text = value;
         }
-        public bool EnableControl
+        public override bool EnableControl
         {
             get => Control.isEnabled;
             set => Control.isEnabled = value;
@@ -72,9 +78,8 @@ namespace NodeMarkup.UI
         }
         public override void DeInit()
         {
+            base.DeInit();
             Text = string.Empty;
-            isEnabled = true;
-            Control.isEnabled = true;
         }
         protected override void OnSizeChanged()
         {

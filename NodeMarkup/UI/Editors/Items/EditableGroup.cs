@@ -75,9 +75,9 @@ namespace NodeMarkup.UI.Editors
 
     public class GroupItem : EditableItemBase
     {
-        public override Color32 NormalColor => new Color32(91, 187, 251, 255);
-        public override Color32 HoveredColor => new Color32(79, 171, 232, 255);
-        public override Color32 PressedColor => new Color32(70, 157, 216, 255);
+        public override Color32 NormalColor => new Color32(114, 197, 255, 255);
+        public override Color32 HoveredColor => new Color32(97, 180, 239, 255);
+        public override Color32 PressedColor => new Color32(86, 167, 225, 255);
         public override Color32 FocusColor => NormalColor;
 
         public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? TextureUtil.ArrowDown : TextureUtil.ArrowRight; }

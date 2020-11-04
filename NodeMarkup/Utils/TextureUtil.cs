@@ -105,7 +105,7 @@ namespace NodeMarkup.Utils
         static void OpacitySlider(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, 18, 200, new RectOffset(), 2, OpacitySliderBoard, OpacitySliderColor);
 
         static void ColorPicker(int texWidth, int texHeight, Rect rect)
-            => AddSprites(texWidth, texHeight, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerColor, ColorPickerBoard);
+            => AddSprites(texWidth, texHeight, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerDisable, ColorPickerColor, ColorPickerBoard);
 
         static void CloseButton(int texWidth, int texHeight, Rect rect)
             => AddSprites(texWidth, texHeight, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
@@ -256,6 +256,7 @@ namespace NodeMarkup.Utils
 
         public static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
         public static string ColorPickerHover { get; } = nameof(ColorPickerHover);
+        public static string ColorPickerDisable { get; } = nameof(ColorPickerDisable);
         public static string ColorPickerColor { get; } = nameof(ColorPickerColor);
         public static string ColorPickerBoard { get; } = nameof(ColorPickerBoard);
 

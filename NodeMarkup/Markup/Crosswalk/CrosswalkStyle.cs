@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
                 customTarget.OffsetAfter = OffsetAfter;
             }
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetBeforeProperty(this, parent, onHover, onLeave));
@@ -199,7 +199,7 @@ namespace NodeMarkup.Manager
             if (target is ILinedCrosswalk linedTarget)
                 linedTarget.LineWidth = LineWidth;
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddLineWidthProperty(this, parent, onHover, onLeave));
@@ -294,10 +294,10 @@ namespace NodeMarkup.Manager
                 => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
-        protected List<UIComponent> GetBaseUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        protected List<EditorItem> GetBaseUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
             => base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = GetBaseUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
@@ -377,7 +377,7 @@ namespace NodeMarkup.Manager
                 => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = GetBaseUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetBetweenProperty(this, parent, onHover, onLeave));
@@ -471,7 +471,7 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength = SpaceLength;
             }
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
@@ -575,7 +575,7 @@ namespace NodeMarkup.Manager
                 => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
@@ -698,7 +698,7 @@ namespace NodeMarkup.Manager
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(SquareSide * LineCount, crosswalk);
         protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddSquareSideProperty(this, parent, onHover, onLeave));

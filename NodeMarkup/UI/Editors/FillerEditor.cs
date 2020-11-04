@@ -18,7 +18,7 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
 
         public StylePropertyPanel Style { get; private set; }
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         protected override void FillItems()
         {

@@ -26,7 +26,7 @@ namespace NodeMarkup.UI.Editors
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         public RulePanel() { }
         public void Init(LinesEditor editor, MarkupLineRawRule rule)

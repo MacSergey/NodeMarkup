@@ -266,7 +266,6 @@ namespace NodeMarkup.UI.Editors
             };
 
             return info;
-            //return IsHover ? $"{info}\n({Hover})" : info;
         }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }

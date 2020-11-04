@@ -20,7 +20,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetTemplates() => TemplateManager.StyleManager.Templates.OrderBy(t => t.Style.Type);
         protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
@@ -28,11 +28,13 @@ namespace NodeMarkup.UI.Editors
         protected override string GroupName(Style.StyleType group)
             => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
-        protected override void AddAditional()
+        protected override IEnumerable<EditorItem> AddAditional()
         {
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
+
+            return StyleProperties;
         }
 
         protected override void AddHeader()

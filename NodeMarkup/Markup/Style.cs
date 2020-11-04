@@ -131,9 +131,9 @@ namespace NodeMarkup.Manager
                 colorTarget.Color = colorSource.Color;
         }
 
-        public virtual List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = new List<UIComponent>();
+            var components = new List<EditorItem>();
 
             if (this is IColorStyle)
                 components.Add(AddColorProperty(parent));

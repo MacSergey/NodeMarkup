@@ -20,7 +20,7 @@ namespace NodeMarkup.UI.Editors
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => NodeMarkup.Localize.CrosswalkEditor_EmptyMessage;
 
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
         private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }
         private MarkupCrosswalkSelectPropertyPanel LeftBorder { get; set; }
         private WarningTextProperty Warning { get; set; }

@@ -1277,4 +1277,7 @@ Double click to paste color</value>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
     <value>Show panel tips</value>
   </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

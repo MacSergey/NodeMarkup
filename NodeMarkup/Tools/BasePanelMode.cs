@@ -29,6 +29,7 @@ namespace NodeMarkup.Tools
                 {
                     _selectPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
                     _selectPanel.eventLostFocus -= SelectPanelLeaveFocus;
+                    _selectPanel.Selected = false;
                 }
 
                 _selectPanel = value;
@@ -38,17 +39,20 @@ namespace NodeMarkup.Tools
                     OnSetPanel();
                     _selectPanel.eventLeaveFocus += SelectPanelLeaveFocus;
                     _selectPanel.eventLostFocus += SelectPanelLeaveFocus;
+                    _selectPanel.Selected = true;
                 }
             }
         }
 
         public Func<Event, bool> AfterSelectPanel { get; set; }
 
-        public BasePanelMode(EditorType editor)
+        public BasePanelMode(EditorType editor) => Editor = editor;
+        public override void OnUpdate()
         {
-            Editor = editor;
+            if (_selectPanel != null)
+                _selectPanel.Selected = true;
         }
-
+        public override void End() => SelectPanel = null;
         protected virtual void OnSetPanel() { }
 
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();

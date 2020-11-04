@@ -152,7 +152,9 @@ namespace NodeMarkup.UI.Editors
         where TemplateType : Template
     {
         public event Action OnSaveAsset;
+        public event Action OnEdit;
         HeaderButton SaveAsAsset { get; set; }
+        HeaderButton Edit { get; set; }
 
         public TemplateHeaderPanel()
         {
@@ -161,19 +163,23 @@ namespace NodeMarkup.UI.Editors
         protected virtual void AddButtons()
         {
             SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+            Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
         }
 
         public virtual void Init(TemplateType template)
         {
             base.Init(isDeletable: false);
             SaveAsAsset.isVisible = !template.IsAsset;
+            Edit.isVisible = template.IsAsset && !template.Asset.IsWorkshop;
         }
         public override void DeInit()
         {
             base.DeInit();
             OnSaveAsset = null;
+            OnEdit = null;
         }
         private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
+        private void EditClick(UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke();
     }
 
     public class StyleTemplateHeaderPanel : TemplateHeaderPanel<StyleTemplate>

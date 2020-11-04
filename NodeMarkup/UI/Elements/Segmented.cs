@@ -71,7 +71,7 @@ namespace NodeMarkup.UI
             Buttons.Add(button);
 
             SetSprite(button, false);
-            if(last != null)
+            if (last != null)
                 SetSprite(last, SelectedIndex == Buttons.Count - 2);
         }
         private void SetSprite(UIButton button, bool isSelect)
@@ -80,11 +80,16 @@ namespace NodeMarkup.UI
             var suffix = Suffix(index);
 
             if (isSelect)
-                button.normalBgSprite = button.hoveredBgSprite = button.pressedBgSprite = $"{TextureUtil.FieldFocused}{suffix}";
+            {
+                button.normalBgSprite = button.hoveredBgSprite = button.pressedBgSprite = button.disabledBgSprite = $"{TextureUtil.FieldFocused}{suffix}";
+                button.disabledColor = new Color32(192, 192, 192, 255);
+            }
             else
             {
                 button.normalBgSprite = $"{TextureUtil.FieldNormal}{suffix}";
                 button.hoveredBgSprite = button.pressedBgSprite = $"{TextureUtil.FieldHovered}{suffix}";
+                button.disabledBgSprite = $"{TextureUtil.FieldDisabled}{suffix}";
+                button.disabledColor = Color.white;
             }
         }
 
@@ -103,7 +108,7 @@ namespace NodeMarkup.UI
             _selectedIndex = -1;
             Objects.Clear();
 
-            foreach(var button in Buttons)
+            foreach (var button in Buttons)
             {
                 RemoveUIComponent(button);
                 Destroy(button);

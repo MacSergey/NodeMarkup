@@ -24,6 +24,7 @@ namespace NodeMarkup.UI
             tabButton.textScale = textScale;
             tabButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             tabButton.verticalAlignment = UIVerticalAlignment.Middle;
+            tabButton.eventIsEnabledChanged += TabButtonIsEnabledChanged;
 
             SetStyle(tabButton);
 
@@ -31,15 +32,23 @@ namespace NodeMarkup.UI
 
             FitChildrenVertically();
         }
+
+        private void TabButtonIsEnabledChanged(UIComponent component, bool value)
+        {
+            if (!component.isEnabled)
+            {
+                var button = component as UIButton;
+                button.disabledColor = button.state == UIButton.ButtonState.Focused ? button.focusedColor : button.color;
+            }
+        }
+
         protected virtual void SetStyle(UIButton tabButton)
         {
             tabButton.atlas = TextureUtil.InGameAtlas;
 
             tabButton.normalBgSprite = "SubBarButtonBase";
-            //tabButton.disabledBgSprite = "SubBarButtonBaseDisabled";
             tabButton.focusedBgSprite = "SubBarButtonBaseFocused";
             tabButton.hoveredBgSprite = "SubBarButtonBaseHovered";
-            //tabButton.pressedBgSprite = "SubBarButtonBasePressed";
         }
         protected override void OnSizeChanged() => FitChildrenVertically();
     }
@@ -57,6 +66,7 @@ namespace NodeMarkup.UI
             tabButton.normalBgSprite = TextureUtil.Tab;
             tabButton.focusedBgSprite = TextureUtil.Tab;
             tabButton.hoveredBgSprite = TextureUtil.Tab;
+            tabButton.disabledBgSprite = TextureUtil.Tab;
 
             tabButton.color = NormalColor;
             tabButton.hoveredColor = HoverColor;

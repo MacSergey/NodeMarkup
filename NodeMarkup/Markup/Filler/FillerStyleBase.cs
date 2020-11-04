@@ -61,7 +61,7 @@ namespace NodeMarkup.Manager
                 fillerTarget.MedianOffset = MedianOffset;
         }
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             if (!isTemplate && editObject is MarkupFiller filler && filler.IsMedian)

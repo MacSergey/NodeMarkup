@@ -34,11 +34,6 @@ namespace NodeMarkup.UI.Editors
             AddScreenshot();
             AddApplyButton();
         }
-        protected override void AddHeader()
-        {
-            if (!EditObject.IsAsset)
-                base.AddHeader();
-        }
         private void AddScreenshot()
         {
             var group = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
@@ -133,7 +128,7 @@ namespace NodeMarkup.UI.Editors
     public class PresetGroup : EditableGroup<bool, PresetItem, IntersectionTemplate, PresetIcon> { }
     public class PreviewPanel : PropertyGroupPanel
     {
-        protected override Color32 Color => UnityEngine.Color.white;
+        protected override Color32 Color => new Color32(201, 211, 216, 255);
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
@@ -141,7 +136,6 @@ namespace NodeMarkup.UI.Editors
     }
     public class PreviewPresetInfo : PresetInfoProperty
     {
-        protected override Color32 TextColor => Color.black;
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
         protected override void OnTooltipLeave(UIMouseEventParameter p) { return; }

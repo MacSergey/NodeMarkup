@@ -19,17 +19,13 @@ namespace NodeMarkup.UI.Editors
         public virtual Color32 FocusColor => new Color32(171, 185, 196, 255);
         public virtual Color32 TextColor => Color.white;
 
-        protected bool _isSelect;
         public bool IsSelect
         {
-            get => _isSelect;
+            get => state == ButtonState.Focused;
             set
             {
-                if (_isSelect != value)
-                {
-                    _isSelect = value;
-                    SetColors();
-                }
+                state = value ? ButtonState.Focused : ButtonState.Normal;
+                SetColors();
             }
         }
 
@@ -60,10 +56,7 @@ namespace NodeMarkup.UI.Editors
             Label.autoHeight = true;
             Label.wordWrap = true;
         }
-        public virtual void DeInit()
-        {
-            _isSelect = false;
-        }
+        public virtual void DeInit() => IsSelect = false;
 
         protected virtual void SetColors()
         {
@@ -71,8 +64,16 @@ namespace NodeMarkup.UI.Editors
             hoveredColor = HoveredColor;
             pressedColor = PressedColor;
             focusedColor = FocusColor;
+            disabledColor = IsSelect ? FocusColor : NormalColor;
 
             Label.textColor = TextColor;
+        }
+        protected override void OnIsEnabledChanged()
+        {
+            base.OnIsEnabledChanged();
+
+            if (!isEnabled)
+                SetColors();
         }
     }
     public abstract class EditableItem<EditableObject, IconType> : EditableItemBase, IReusable
@@ -193,20 +194,18 @@ namespace NodeMarkup.UI.Editors
         public ColorIcon()
         {
             atlas = TextureUtil.InGameAtlas;
-            normalBgSprite = "PieChartWhiteBg";
-            disabledBgSprite = "PieChartWhiteBg";
+            normalBgSprite = disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
             color = Color.white;
 
             InnerCircule = AddUIComponent<UIButton>();
             InnerCircule.atlas = TextureUtil.InGameAtlas;
-            InnerCircule.normalBgSprite = "PieChartWhiteBg";
-            InnerCircule.normalFgSprite = "PieChartWhiteFg";
-            InnerCircule.disabledBgSprite = "PieChartWhiteBg";
-            InnerCircule.disabledFgSprite = "PieChartWhiteFg";
+            InnerCircule.normalBgSprite = InnerCircule.normalFgSprite = "PieChartWhiteBg";
+            InnerCircule.disabledBgSprite = InnerCircule.disabledFgSprite = "PieChartWhiteBg";
             InnerCircule.isInteractive = false;
             InnerCircule.relativePosition = new Vector3(Border, Border);
-            InnerCircule.color = Color.black;
+            InnerCircule.color = InnerCircule.disabledColor = Color.black;
+
         }
         protected override void OnSizeChanged()
         {
@@ -227,7 +226,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected UIButton Thumbnail { get; set; }
 
-        public Color32 StyleColor { set => Thumbnail.color = GetStyleColor(value); }
+        public Color32 StyleColor { set => Thumbnail.color = Thumbnail.disabledColor = GetStyleColor(value); }
         public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = value.ToString(); }
 
         public StyleIcon()

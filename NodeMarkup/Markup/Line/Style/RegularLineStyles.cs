@@ -101,7 +101,7 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateSolidDash(borders, trajectory, secondOffset, Width, Color, out MarkupStyleDash secondDash))
                 yield return secondDash;
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
@@ -182,7 +182,7 @@ namespace NodeMarkup.Manager
                 yield return dash;
         }
 
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
@@ -268,7 +268,7 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateDashedDash(borders, trajectory, startT, endT, DashLength, secondOffset, Width, Color, out MarkupStyleDash secondDash))
                 yield return secondDash;
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
@@ -404,7 +404,7 @@ namespace NodeMarkup.Manager
             if (target is IDoubleAlignmentLine doubleAlignmentTarget)
                 doubleAlignmentTarget.Alignment = Alignment;
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
@@ -524,7 +524,7 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space = Space;
             }
         }
-        public override List<UIComponent> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             components.Add(AddBaseProperty(this, parent, onHover, onLeave));

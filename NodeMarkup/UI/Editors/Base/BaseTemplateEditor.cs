@@ -16,10 +16,14 @@ namespace NodeMarkup.UI.Editors
     {
         protected override bool UseGroupPanel => true;
 
+        private bool EditMode { get; set; }
+
         protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
         protected abstract string RewriteCaption { get; }
         protected abstract string RewriteMessage { get; }
+
+        private EditorItem[] Aditional { get; set; }
 
         protected abstract IEnumerable<TemplateType> GetTemplates();
 
@@ -31,26 +35,24 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnObjectSelect()
         {
+            EditMode = false;
+
             AddHeader();
             AddAuthor();
             AddTemplateName();
 
-            AddAditional();
+            Aditional = AddAditional().ToArray();
 
             if (EditObject.IsAsset)
-            {
-                foreach (var propertyPanel in PropertiesPanel.components.OfType<EditorPropertyPanel>())
-                    propertyPanel.EnableControl = false;
-            }
-            if (!EditObject.IsAsset || !EditObject.Asset.IsWorkshop)
-                NameProperty.EnableControl = true;
+                SetEditable(false);
         }
         protected override void OnClear()
         {
             NameProperty = null;
             HeaderPanel = null;
+            Aditional = null;
         }
-        protected virtual void AddAditional() { }
+        protected virtual IEnumerable<EditorItem> AddAditional() { yield break; }
 
         protected override void OnObjectDelete(TemplateType template) => (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
 
@@ -59,7 +61,9 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel);
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
+            HeaderPanel.OnEdit += EditAsset;
         }
+
         private void AddAuthor()
         {
             if (EditObject.IsAsset)
@@ -67,6 +71,7 @@ namespace NodeMarkup.UI.Editors
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
                 authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
+                authorProperty.EnableControl = false;
                 authorProperty.Init();
                 authorProperty.Value = EditObject.Asset.Author;
             }
@@ -130,6 +135,13 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
+        private void SetEditable(bool isEdit)
+        {
+            NameProperty.EnableControl = isEdit;
+
+            foreach (var aditional in Aditional)
+                aditional.EnableControl = isEdit;
+        }
 
         private void SaveAsset()
         {
@@ -138,6 +150,13 @@ namespace NodeMarkup.UI.Editors
                 SelectItem.Init(EditObject);
                 ItemClick(SelectItem);
             }
+        }
+
+        
+        private void EditAsset()
+        {
+            EditMode = !EditMode;
+            SetEditable(EditMode);
         }
     }
 }

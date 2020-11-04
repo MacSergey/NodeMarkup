@@ -141,10 +141,14 @@ namespace NodeMarkup.UI.Editors
             ColorSample.size = panel.size = new Vector2(26f, 28f);
             ColorSample.relativePosition = new Vector2(0, 0);
             ColorSample.anchor = UIAnchorStyle.None;
+
             ColorSample.atlas = TextureUtil.Atlas;
             ColorSample.normalBgSprite = TextureUtil.ColorPickerNormal;
+            ColorSample.normalFgSprite = TextureUtil.ColorPickerColor;
             ColorSample.hoveredBgSprite = TextureUtil.ColorPickerHover;
             ColorSample.hoveredFgSprite = TextureUtil.ColorPickerColor;
+            ColorSample.disabledBgSprite = TextureUtil.ColorPickerDisable;
+            ColorSample.disabledFgSprite = TextureUtil.ColorPickerColor;
 
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
             ColorSample.eventColorPickerOpen += ColorPickerOpen;

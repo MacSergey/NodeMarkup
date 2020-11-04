@@ -17,6 +17,11 @@ namespace NodeMarkup.UI.Editors
             get => Button.text;
             set => Button.text = value;
         }
+        public override bool EnableControl
+        {
+            get => Button.isEnabled;
+            set => Button.isEnabled = value;
+        }
 
         public event Action OnButtonClick;
 
@@ -50,6 +55,18 @@ namespace NodeMarkup.UI.Editors
         private float Padding => 10f;
         private float Height => 20f;
 
+        private bool _enableControl;
+        public override bool EnableControl 
+        { 
+            get => _enableControl; 
+            set
+            {
+                _enableControl = value;
+                foreach (var button in Buttons)
+                    button.isEnabled = _enableControl;
+            }
+        }
+
         public override void Init()
         {
             base.Init();
@@ -76,6 +93,7 @@ namespace NodeMarkup.UI.Editors
             button.text = text;
             button.textScale = 0.8f;
             button.textPadding = new RectOffset(0, 0, 3, 0);
+            button.isEnabled = _enableControl;
             button.eventClick += ButtonClick;
 
             Buttons.Add(button);

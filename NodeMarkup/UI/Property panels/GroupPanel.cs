@@ -11,7 +11,7 @@ namespace NodeMarkup.UI.Editors
     public class PropertyGroupPanel : UIPanel, IReusable
     {
         
-        private static Color32 NormalColor { get; } = new Color32(63, 93, 118, 255);
+        private static Color32 NormalColor { get; } = new Color32(82, 101, 117, 255);
 
         protected virtual Color32 Color => NormalColor;
 

@@ -625,6 +625,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit.
+        /// </summary>
+        public static string HeaderPanel_Edit {
+            get {
+                return ResourceManager.GetString("HeaderPanel_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No presets.
         /// </summary>
         public static string HeaderPanel_NoPresets {
