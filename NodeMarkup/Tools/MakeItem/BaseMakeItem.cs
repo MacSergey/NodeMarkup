@@ -25,7 +25,7 @@ namespace NodeMarkup.Tools
             SetTarget();
         }
 
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
             if (NodeMarkupTool.MouseRayValid)
             {

@@ -30,6 +30,15 @@ namespace NodeMarkup.UI.Editors
         public abstract string Name { get; }
         public abstract string EmptyMessage { get; }
 
+        public bool Active
+        {
+            set
+            {
+                enabled = value;
+                isVisible = value;
+            }
+        }
+
         public Editor()
         {
             clipChildren = true;
@@ -175,6 +184,13 @@ namespace NodeMarkup.UI.Editors
                 ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
         }
 
+        public override void Update()
+        {
+            base.Update();
+
+            if (_selectItem != null)
+                _selectItem.IsSelect = true;
+        }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();

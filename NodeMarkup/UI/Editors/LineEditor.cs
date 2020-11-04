@@ -47,7 +47,8 @@ namespace NodeMarkup.UI.Editors
         public LinesEditor()
         {
             ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
-            PartEdgeToolMode = new PartEdgeToolMode(this);
+            PartEdgeToolMode = Tool.CreateToolMode<PartEdgeToolMode>();
+            PartEdgeToolMode.Init(this);
         }
 
         protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
@@ -58,10 +59,7 @@ namespace NodeMarkup.UI.Editors
             foreach (var line in Markup.Lines)
                 AddItem(line);
         }
-        protected override void OnClear()
-        {
-            HoverRulePanel = null;
-        }
+        protected override void OnClear() => HoverRulePanel = null;
         protected override void OnObjectSelect()
         {
             GetRuleEdges();
@@ -248,17 +246,18 @@ namespace NodeMarkup.UI.Editors
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-
-        public PartEdgeToolMode(LinesEditor editor) : base(editor) { }
-
         protected override void OnSetPanel()
             => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
 
-        public override void End() => Editor.Refresh();
-        public override void OnUpdate() => PointsSelector?.OnUpdate();
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            Editor.Refresh();
+        }
+        public override void OnToolUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()
         {
-            var info = SelectPanel.Position switch
+            var info = SelectPanel?.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
                 EdgePosition.End => Localize.LineEditor_InfoSelectTo,

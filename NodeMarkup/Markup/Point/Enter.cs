@@ -327,8 +327,8 @@ namespace NodeMarkup.Manager
             var data = new EnterData
             {
                 Id = config.GetAttrValue<ushort>(nameof(Id)),
-                Points = config.GetAttrValue<ushort>("P"),
-                Angle = config.GetAttrValue<ushort>("A")
+                Points = config.GetAttrValue<int>("P"),
+                Angle = config.GetAttrValue<float>("A")
             };
             return data;
         }

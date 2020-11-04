@@ -21,9 +21,9 @@ namespace NodeMarkup.Tools
                 return Localize.Tool_InfoSelectCrosswalkStartPoint;
         }
 
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
-            base.OnUpdate();
+            base.OnToolUpdate();
 
             if (!IsSelectPoint && !NodeMarkupTool.ShiftIsPressed)
                 Tool.SetDefaultMode();

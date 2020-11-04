@@ -27,7 +27,7 @@ namespace NodeMarkup.Tools
             HoverNodeId = 0;
         }
 
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
             if (NodeMarkupTool.MouseRayValid)
             {

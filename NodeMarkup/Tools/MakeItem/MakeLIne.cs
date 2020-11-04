@@ -20,9 +20,9 @@ namespace NodeMarkup.Tools
             else
                 return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
         }
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
-            base.OnUpdate();
+            base.OnToolUpdate();
 
             if (IsSelectPoint)
                 return;

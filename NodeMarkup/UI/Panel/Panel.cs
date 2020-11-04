@@ -18,6 +18,15 @@ namespace NodeMarkup.UI.Panel
         public static NodeMarkupPanel Instance { get; private set; }
         private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
 
+        public bool Active
+        {
+            set
+            {
+                enabled = value;
+                isVisible = value;
+            }
+        }
+
         private float Width => 550f;
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
@@ -35,10 +44,14 @@ namespace NodeMarkup.UI.Panel
         public static NodeMarkupPanel CreatePanel()
         {
             Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
+
             var uiView = UIView.GetAView();
             Instance = uiView.AddUIComponent(typeof(NodeMarkupPanel)) as NodeMarkupPanel;
             Instance.Init();
+            Instance.Active = false;
+
             Logger.LogDebug($"Panel created");
+
             return Instance;
         }
         public static void RemovePanel()
@@ -112,15 +125,12 @@ namespace NodeMarkup.UI.Panel
             size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
             SizeChanger.relativePosition = size - SizeChanger.size;
         }
-        protected override void OnVisibilityChanged()
+        public override void OnEnable()
         {
-            base.OnVisibilityChanged();
+            base.OnEnable();
 
-            if (isVisible)
-            {
-                CheckPosition();
-                UpdatePanel();
-            }
+            CheckPosition();
+            UpdatePanel();
         }
         protected override void OnSizeChanged()
         {
@@ -139,7 +149,7 @@ namespace NodeMarkup.UI.Panel
             editor.Init(this);
             TabStrip.AddTab(editor.Name);
 
-            editor.isVisible = false;
+            editor.Active = false;
             editor.relativePosition = EditorPosition;
 
             Editors.Add(editor);
@@ -177,10 +187,10 @@ namespace NodeMarkup.UI.Panel
             if (index >= 0 && Editors.Count > index)
             {
                 foreach (var editor in Editors)
-                    editor.isVisible = false;
+                    editor.Active = false;
 
                 var selectEditor = Editors[index];
-                selectEditor.isVisible = true;
+                selectEditor.Active = true;
                 selectEditor.size = EditorSize;
                 return selectEditor;
             }

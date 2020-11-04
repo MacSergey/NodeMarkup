@@ -32,7 +32,8 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalksEditor()
         {
-            CrosswalkBorderToolMode = new CrosswalkBorderToolMode(this);
+            CrosswalkBorderToolMode = Tool.CreateToolMode<CrosswalkBorderToolMode>();
+            CrosswalkBorderToolMode.Init(this);
         }
 
         protected override void FillItems()
@@ -90,7 +91,7 @@ namespace NodeMarkup.UI.Editors
             FillBorder(LeftBorder, LeftBorgerChanged, GetBorderLines(BorderPosition.Left), EditObject.LeftBorder);
             FillBorder(RightBorder, RightBorgerChanged, GetBorderLines(BorderPosition.Right), EditObject.RightBorder);
 
-            Warning.isVisible = Settings.ShowPanelTip &&  (!LeftBorder.EnableControl || !RightBorder.EnableControl);
+            Warning.isVisible = Settings.ShowPanelTip && (!LeftBorder.EnableControl || !RightBorder.EnableControl);
         }
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {
@@ -255,11 +256,9 @@ namespace NodeMarkup.UI.Editors
         private MarkupLineBound HoverLine { get; set; }
         private bool IsHoverLine => HoverLine != null;
 
-        public CrosswalkBorderToolMode(CrosswalksEditor editor) : base(editor) { }
-
         protected override void OnSetPanel() => BorderLines = SelectPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray();
 
-        public override void OnUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
+        public override void OnToolUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
         public override string GetToolInfo()
         {
             return SelectPanel.Position switch

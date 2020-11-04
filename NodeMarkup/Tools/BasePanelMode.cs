@@ -15,7 +15,7 @@ namespace NodeMarkup.Tools
     {
         public override ToolModeType Type => ToolModeType.PanelAction;
 
-        protected EditorType Editor { get; }
+        protected EditorType Editor { get; private set; }
         protected abstract bool IsHover { get; }
         protected abstract ObjectType Hover { get; }
 
@@ -46,13 +46,23 @@ namespace NodeMarkup.Tools
 
         public Func<Event, bool> AfterSelectPanel { get; set; }
 
-        public BasePanelMode(EditorType editor) => Editor = editor;
-        public override void OnUpdate()
+        public void Init(EditorType editor) => Editor = editor;
+
+        public override void Update()
         {
-            if (_selectPanel != null)
-                _selectPanel.Selected = true;
+            base.Update();
+            if (SelectPanel is PanelType panel)
+                panel.Selected = true;
         }
-        public override void End() => SelectPanel = null;
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            if (SelectPanel is PanelType panel)
+            {
+                panel.Selected = true;
+                SelectPanel = null;
+            }
+        }
         protected virtual void OnSetPanel() { }
 
         public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();

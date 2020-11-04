@@ -114,7 +114,7 @@ namespace NodeMarkup.Tools
         public void GetHoverSource() => HoverSource = NodeMarkupTool.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(NodeMarkupTool.MouseRay)) : null;
         public void GetHoverTarget() => HoverTarget = NodeMarkupTool.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(NodeMarkupTool.MouseRay)) : null;
 
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
             foreach (var source in Sources)
                 source.Update(this);

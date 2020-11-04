@@ -168,7 +168,7 @@ namespace NodeMarkup.Tools
             Markup.FromXml(Mod.Version, Backup, new ObjectsMap());
         }
 
-        public override void OnGUI(Event e)
+        public override void OnToolGUI(Event e)
         {
             var uiView = UIView.GetAView();
             var screenPos = uiView.WorldPointToGUI(Camera.main, Centre) * uiView.inputScale;

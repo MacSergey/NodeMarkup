@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.PlatformServices;
+using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
@@ -24,8 +25,11 @@ namespace NodeMarkup.UI.Editors
             get => state == ButtonState.Focused;
             set
             {
-                state = value ? ButtonState.Focused : ButtonState.Normal;
-                SetColors();
+                if (IsSelect != value)
+                {
+                    state = value ? ButtonState.Focused : ButtonState.Normal;
+                    SetColors();
+                }
             }
         }
 
@@ -56,7 +60,7 @@ namespace NodeMarkup.UI.Editors
             Label.autoHeight = true;
             Label.wordWrap = true;
         }
-        public virtual void DeInit() => IsSelect = false;
+        public virtual void DeInit() { }
 
         protected virtual void SetColors()
         {
@@ -64,16 +68,9 @@ namespace NodeMarkup.UI.Editors
             hoveredColor = HoveredColor;
             pressedColor = PressedColor;
             focusedColor = FocusColor;
-            disabledColor = IsSelect ? FocusColor : NormalColor;
+            disabledColor = NormalColor;
 
             Label.textColor = TextColor;
-        }
-        protected override void OnIsEnabledChanged()
-        {
-            base.OnIsEnabledChanged();
-
-            if (!isEnabled)
-                SetColors();
         }
     }
     public abstract class EditableItem<EditableObject, IconType> : EditableItemBase, IReusable
@@ -137,19 +134,6 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.pressedBgSprite = TextureUtil.DeletePressed;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
-        }
-        protected override void SetColors()
-        {
-            if (IsSelect)
-            {
-                color = FocusColor;
-                hoveredColor = FocusColor;
-                pressedColor = FocusColor;
-
-                Label.textColor = TextColor;
-            }
-            else
-                base.SetColors();
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
         protected override void OnSizeChanged()

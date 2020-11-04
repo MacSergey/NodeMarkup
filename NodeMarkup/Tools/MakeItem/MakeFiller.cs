@@ -28,7 +28,7 @@ namespace NodeMarkup.Tools
             GetFillerPoints();
         }
 
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
             if (DisableByAlt && !NodeMarkupTool.AltIsPressed && Contour.IsEmpty)
                 Tool.SetDefaultMode();

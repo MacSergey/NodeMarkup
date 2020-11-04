@@ -99,31 +99,32 @@ namespace NodeMarkup.Tools
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
             base.Awake();
 
+            Instance = this;
+            Logger.LogDebug($"Tool Created");
+
             ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
-                { ToolModeType.SelectNode, new SelectNodeToolMode() },
-                { ToolModeType.MakeLine, new MakeLineToolMode() },
-                { ToolModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
-                { ToolModeType.MakeFiller, new MakeFillerToolMode() },
-                { ToolModeType.DragPoint, new DragPointToolMode() },
-                { ToolModeType.PasteEntersOrder, new PasteEntersOrderToolMode()},
-                { ToolModeType.EditEntersOrder, new EditEntersOrderToolMode()},
-                { ToolModeType.ApplyPresetOrder, new ApplyPresetOrderToolMode()},
-                { ToolModeType.PointsOrder, new PointsOrderToolMode()},
+                { ToolModeType.SelectNode, Instance.CreateToolMode<SelectNodeToolMode>() },
+                { ToolModeType.MakeLine, Instance.CreateToolMode<MakeLineToolMode>() },
+                { ToolModeType.MakeCrosswalk, Instance.CreateToolMode<MakeCrosswalkToolMode>() },
+                { ToolModeType.MakeFiller, Instance.CreateToolMode<MakeFillerToolMode>() },
+                { ToolModeType.DragPoint, Instance.CreateToolMode<DragPointToolMode>() },
+                { ToolModeType.PasteEntersOrder, Instance.CreateToolMode<PasteEntersOrderToolMode>()},
+                { ToolModeType.EditEntersOrder, Instance.CreateToolMode<EditEntersOrderToolMode>()},
+                { ToolModeType.ApplyPresetOrder, Instance.CreateToolMode<ApplyPresetOrderToolMode>()},
+                { ToolModeType.PointsOrder, Instance.CreateToolMode<PointsOrderToolMode>()},
             };
 
             NodeMarkupButton.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
-            Disable();
+            enabled = false;
         }
-        public static NodeMarkupTool Create()
+        public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
+        public static void Create()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
-            GameObject nodeMarkupControl = ToolsModifierControl.toolController.gameObject;
-            Instance = nodeMarkupControl.AddComponent<NodeMarkupTool>();
-            Logger.LogDebug($"Tool Created");
-            return Instance;
+            ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
         }
         public static void Remove()
         {
@@ -170,7 +171,6 @@ namespace NodeMarkup.Tools
         }
         private void Reset()
         {
-            Panel.Hide();
             SetModeNow(ToolModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
@@ -189,15 +189,12 @@ namespace NodeMarkup.Tools
         private void SetModeNow(ToolModeType mode) => SetModeNow(ToolModes[mode]);
         private void SetModeNow(BaseToolMode mode)
         {
-            Mode?.End();
+            Mode?.Deactivate();
             var prevMode = Mode;
             Mode = mode;
-            Mode?.Start(prevMode);
+            Mode?.Activate(prevMode);
 
-            if (Mode?.ShowPanel == true)
-                Panel.Show();
-            else
-                Panel.Hide();
+            Panel.Active = Mode?.ShowPanel == true;
         }
 
         public void SetMarkup(Markup markup)
@@ -208,7 +205,6 @@ namespace NodeMarkup.Tools
         #endregion
 
         #region UPDATE
-
         protected override void OnToolUpdate()
         {
             if(NextMode != null)
@@ -242,7 +238,7 @@ namespace NodeMarkup.Tools
             cameraDirection.y = 0;
             CameraDirection = cameraDirection.normalized;
 
-            Mode.OnUpdate();
+            Mode.OnToolUpdate();
             Info();
 
             base.OnToolUpdate();
@@ -301,7 +297,7 @@ namespace NodeMarkup.Tools
         private bool IsMouseMove { get; set; }
         protected override void OnToolGUI(Event e)
         {
-            Mode.OnGUI(e);
+            Mode.OnToolGUI(e);
 
             if (Shortcuts.Any(s => s.IsPressed(e)) || Panel?.OnShortcut(e) == true)
                 return;
