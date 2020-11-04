@@ -95,10 +95,10 @@ namespace NodeMarkup.UI.Editors
             ComponentPool.Free(Preview);
             Preview = null;
         }
-        protected override void EditAsset()
+        protected override void EditTemplate()
         {
-            base.EditAsset();
-            ApplyButton.EnableControl = !EditMode;
+            base.EditTemplate();
+            ApplyButton.isVisible = !EditMode;
         }
     }
 

@@ -162,15 +162,15 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void AddButtons()
         {
-            SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
             Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
+            SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
         }
 
         public virtual void Init(TemplateType template)
         {
             base.Init(isDeletable: false);
             SaveAsAsset.isVisible = !template.IsAsset;
-            Edit.isVisible = template.IsAsset && !template.Asset.IsWorkshop;
+            Edit.isVisible = !template.IsAsset || !template.Asset.IsWorkshop;
         }
         public override void DeInit()
         {

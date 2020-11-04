@@ -59,7 +59,6 @@ namespace NodeMarkup.UI.Panel
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
-            SetPosition();
 
             CreateHeader();
             CreateTabStrip();
@@ -70,6 +69,11 @@ namespace NodeMarkup.UI.Panel
             minimumSize = new Vector2(Width, Header.height + TabStrip.height + 200);
 
             Instance.Active = false;
+        }
+        public override void Start()
+        {
+            base.Start();
+            SetPosition();
         }
         public static void RemovePanel()
         {

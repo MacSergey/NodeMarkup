@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
 
         private EditorItem[] Aditional { get; set; }
 
-        public override bool Active 
+        public override bool Active
         {
             set
             {
@@ -51,8 +51,7 @@ namespace NodeMarkup.UI.Editors
 
             Aditional = AddAditional().ToArray();
 
-            if (EditObject.IsAsset)
-                SetEditable();
+            SetEditable();
         }
         protected override void OnClear()
         {
@@ -69,7 +68,7 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel);
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
-            HeaderPanel.OnEdit += EditAsset;
+            HeaderPanel.OnEdit += EditTemplate;
         }
 
         private void AddAuthor()
@@ -160,8 +159,8 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        
-        protected virtual void EditAsset()
+
+        protected virtual void EditTemplate()
         {
             EditMode = !EditMode;
             SetEditable();
