@@ -38,7 +38,7 @@ namespace NodeMarkup.UI
                 InProcess = true;
 
                 action?.Invoke(value);
-                OnValueChanged?.Invoke(Value);
+                OnValueChanged?.Invoke(value);
 
                 InProcess = false;
             }

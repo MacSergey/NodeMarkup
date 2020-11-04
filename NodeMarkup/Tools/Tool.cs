@@ -185,7 +185,11 @@ namespace NodeMarkup.Tools
 
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
         public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
-        public void SetMode(BaseToolMode mode) => NextMode = mode;
+        public void SetMode(BaseToolMode mode)
+        {
+            if (Mode != mode)
+                NextMode = mode;
+        }
         private void SetModeNow(ToolModeType mode) => SetModeNow(ToolModes[mode]);
         private void SetModeNow(BaseToolMode mode)
         {
@@ -207,7 +211,7 @@ namespace NodeMarkup.Tools
         #region UPDATE
         protected override void OnToolUpdate()
         {
-            if(NextMode != null)
+            if (NextMode != null)
             {
                 SetModeNow(NextMode);
                 NextMode = null;
