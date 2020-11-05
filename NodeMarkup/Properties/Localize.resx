@@ -1280,11 +1280,11 @@ Double click to paste color</value>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="HeaderPanel_Apply" xml:space="preserve">
-    <value>Appy changes</value>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Save changes</value>
   </data>
-  <data name="HeaderPanel_NotApply" xml:space="preserve">
-    <value>Not apply changes</value>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Not save changes</value>
   </data>
   <data name="MessageBox_Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -1297,5 +1297,9 @@ Double click to paste color</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
     <value>Do you want to save template values changes?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>The name "{0}" is already used by another preset.
+Are you sure you want to have multiple presets with the same name?</value>
   </data>
 </root>

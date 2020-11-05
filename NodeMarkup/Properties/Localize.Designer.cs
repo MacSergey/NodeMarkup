@@ -598,15 +598,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Appy changes.
-        /// </summary>
-        public static string HeaderPanel_Apply {
-            get {
-                return ResourceManager.GetString("HeaderPanel_Apply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply template.
         /// </summary>
         public static string HeaderPanel_ApplyTemplate {
@@ -652,20 +643,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Not apply changes.
-        /// </summary>
-        public static string HeaderPanel_NotApply {
-            get {
-                return ResourceManager.GetString("HeaderPanel_NotApply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на No templates.
         /// </summary>
         public static string HeaderPanel_NoTemplates {
             get {
                 return ResourceManager.GetString("HeaderPanel_NoTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not save changes.
+        /// </summary>
+        public static string HeaderPanel_NotSave {
+            get {
+                return ResourceManager.GetString("HeaderPanel_NotSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save changes.
+        /// </summary>
+        public static string HeaderPanel_Save {
+            get {
+                return ResourceManager.GetString("HeaderPanel_Save", resourceCulture);
             }
         }
         
@@ -1545,6 +1545,16 @@ namespace NodeMarkup {
         public static string PresetEditor_EmptyMessage {
             get {
                 return ResourceManager.GetString("PresetEditor_EmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The name &quot;{0}&quot; is already used by another preset.
+        ///Are you sure you want to have multiple presets with the same name?.
+        /// </summary>
+        public static string PresetEditor_NameExistMessage {
+            get {
+                return ResourceManager.GetString("PresetEditor_NameExistMessage", resourceCulture);
             }
         }
         

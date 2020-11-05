@@ -29,6 +29,7 @@ namespace NodeMarkup.UI.Editors
         protected abstract string RewriteCaption { get; }
         protected abstract string RewriteMessage { get; }
         protected abstract string SaveChangesMessage { get; }
+        protected abstract string NameExistMessage { get; }
 
         private EditorItem[] Aditional { get; set; }
 
@@ -92,8 +93,8 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
             HeaderPanel.OnEdit += StartEditTemplate;
-            HeaderPanel.OnApply += SaveChanges;
-            HeaderPanel.OnNotApply += NotSaveChanges;
+            HeaderPanel.OnSave += SaveChanges;
+            HeaderPanel.OnNotSave += NotSaveChanges;
         }
 
         private void AddAuthor()
@@ -160,7 +161,7 @@ namespace NodeMarkup.UI.Editors
             {
                 messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
-                messageBox.MessageText = string.Format(NodeMarkup.Localize.TemplateEditor_NameExistMessage, name);
+                messageBox.MessageText = string.Format(NameExistMessage, name);
                 messageBox.OnButton1Click = AgreeExistName;
                 messageBox.OnButton2Click = EditName;
             }

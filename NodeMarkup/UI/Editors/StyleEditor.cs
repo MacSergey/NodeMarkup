@@ -18,6 +18,7 @@ namespace NodeMarkup.UI.Editors
         protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;
         protected override string SaveChangesMessage => NodeMarkup.Localize.TemplateEditor_SaveChangesMessage;
+        protected override string NameExistMessage => NodeMarkup.Localize.TemplateEditor_NameExistMessage;
 
         protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 

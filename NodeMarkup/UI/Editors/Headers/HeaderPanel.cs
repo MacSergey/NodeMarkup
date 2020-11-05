@@ -179,12 +179,12 @@ namespace NodeMarkup.UI.Editors
     {
         public event Action OnSaveAsset;
         public event Action OnEdit;
-        public event Action OnApply;
-        public event Action OnNotApply;
+        public event Action OnSave;
+        public event Action OnNotSave;
         HeaderButton SaveAsAsset { get; set; }
         HeaderButton Edit { get; set; }
-        HeaderButton Apply { get; set; }
-        HeaderButton NotApply { get; set; }
+        HeaderButton Save { get; set; }
+        HeaderButton NotSave { get; set; }
 
         private bool IsAsset { get; set; }
         private bool IsWorkshop { get; set; }
@@ -195,7 +195,7 @@ namespace NodeMarkup.UI.Editors
             {
                 SaveAsAsset.isVisible = !IsAsset && !value;
                 Edit.isVisible = (!IsAsset || !IsWorkshop) && !value;
-                Apply.isVisible = NotApply.isVisible = value;
+                Save.isVisible = NotSave.isVisible = value;
             }
         }
 
@@ -207,8 +207,8 @@ namespace NodeMarkup.UI.Editors
         {
             Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
             SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
-            Apply = Content.AddButton(TextureUtil.Apply, NodeMarkup.Localize.HeaderPanel_Apply, onClick: ApplyClick);
-            NotApply = Content.AddButton(TextureUtil.NotApply, NodeMarkup.Localize.HeaderPanel_NotApply, onClick: NotApplyClick);
+            Save = Content.AddButton(TextureUtil.Apply, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
+            NotSave = Content.AddButton(TextureUtil.NotApply, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
         }
 
         public virtual void Init(TemplateType template)
@@ -225,13 +225,13 @@ namespace NodeMarkup.UI.Editors
             base.DeInit();
             OnSaveAsset = null;
             OnEdit = null;
-            OnApply = null;
-            OnNotApply = null;
+            OnSave = null;
+            OnNotSave = null;
         }
         private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
         private void EditClick(UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke();
-        private void ApplyClick(UIComponent component, UIMouseEventParameter eventParam) => OnApply?.Invoke();
-        private void NotApplyClick(UIComponent component, UIMouseEventParameter eventParam) => OnNotApply?.Invoke();
+        private void SaveClick(UIComponent component, UIMouseEventParameter eventParam) => OnSave?.Invoke();
+        private void NotSaveClick(UIComponent component, UIMouseEventParameter eventParam) => OnNotSave?.Invoke();
     }
 
     public class StyleTemplateHeaderPanel : TemplateHeaderPanel<StyleTemplate>

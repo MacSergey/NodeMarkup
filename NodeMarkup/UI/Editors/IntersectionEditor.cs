@@ -15,6 +15,7 @@ namespace NodeMarkup.UI.Editors
         protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;
         protected override string SaveChangesMessage => NodeMarkup.Localize.PresetEditor_SaveChangesMessage;
+        protected override string NameExistMessage => NodeMarkup.Localize.PresetEditor_NameExistMessage;
 
         protected override bool GroupingEnabled => false;
 
