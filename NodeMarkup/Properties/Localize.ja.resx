@@ -573,9 +573,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>ドイツ語</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>英語 - US</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>スペイン語</value>
   </data>
@@ -1193,20 +1191,46 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>このテンプレートはカスタムアセットです。
-名前の変更は、カスタムアセットのファイルを上書きします。</value>
+名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
   </data>
   <data name="Editor_ColorSampleTooltip" xml:space="preserve">
     <value>ダブルクリック+Shiftで、色のコピー
 ダブルクリックで、色の貼り付け</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>横断歩道の基準線を設定するには、横断歩道と同じポイントから始まるラインが必要です。</value>
+    <value>基準線の設定方法
+横断歩道を設定した、同じポイントから始まるラインが必要です。</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>ラインの始点と終点のポイントを変更して、追加ルールを作成したい場合は他のラインが交差する必要があります。</value>
+    <value>追加ルールの作成方法
+ラインの始点と終点を変更したい場合は、他のラインと交差する必要があります。</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
     <value>パネル内にTipsを表示</value>
   </data>
-  
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>内容を編集</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>変更を保存する</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>変更を保存しない</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>プリセットの名前を変更しますか？</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>変更内容を保存</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>テンプレートの内容を変更しますか？</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>{0} という名前は、他のプリセットで使用されています。
+重複したプリセットを保存しても良いですか？</value>
+  </data>
 </root>

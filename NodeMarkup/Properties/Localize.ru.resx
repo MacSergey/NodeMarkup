@@ -595,7 +595,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Немецкий</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Английский</value>
+    <value>Английский US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Испанский</value>
@@ -1248,7 +1248,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Обрезать линии по всем переходам</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Великобританский Английский</value>
+    <value>Английский UK</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Перезапись ресурса трафарета</value>
@@ -1277,5 +1277,27 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Сохранить изменения</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Не сохранять изменения</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Вы хотите сохранить изменения имени трафарета?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Сохранение изменений</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Вы хотите сохранить изменения параметров шаблона?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Имя "{0}" уже используется другим трафаретом.
+Вы уверены, что хотите иметь несколько трафаретов с одинаковым именем?</value>
   </data>
 </root>

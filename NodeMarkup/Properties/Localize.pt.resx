@@ -578,9 +578,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Alemão</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglês</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanhol</value>
   </data>
@@ -1046,6 +1044,13 @@ Quer aplicar as marcações manualmente?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

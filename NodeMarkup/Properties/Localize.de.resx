@@ -593,9 +593,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Deutsch</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englisch</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanisch</value>
   </data>
@@ -949,7 +947,7 @@ Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
     <value>Name wird bereits verwendet</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Der Name "{0}" wird bereits für eine anderen Vorlage verwendet.
+    <value>Der Name "{0}" wird bereits für eine andere Vorlage verwendet.
 Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
@@ -1239,5 +1237,27 @@ Doppelklick zum Einfügen der Farbe</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Bearbeiten</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Änderungen speichern</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Änderungen nicht übernehmen</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Möchtest du die Namensänderung der Voreinstellungen speichern?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Änderungen speichern</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Möchtest du die Änderungen der Vorlagen-Werte speichern?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Der Name "{0}" wird bereits für eine andere Voreinstellung verwendet.
+Bist du dir sicher, dass du mehrere Voreinstellungen mit dem gleichen Namen haben willst?</value>
   </data>
 </root>
