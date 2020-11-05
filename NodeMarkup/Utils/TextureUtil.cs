@@ -47,8 +47,9 @@ namespace NodeMarkup.Utils
 
         public static Texture2D LoadTextureFromAssembly(string textureFile)
         {
+            var search = $".{textureFile}.";
             var executingAssembly = Assembly.GetExecutingAssembly();
-            var path = executingAssembly.GetManifestResourceNames().FirstOrDefault(n => n.Contains(textureFile));
+            var path = executingAssembly.GetManifestResourceNames().FirstOrDefault(n => n.Contains(search));
             var manifestResourceStream = executingAssembly.GetManifestResourceStream(path);
             var data = new byte[manifestResourceStream.Length];
             manifestResourceStream.Read(data, 0, data.Length);
