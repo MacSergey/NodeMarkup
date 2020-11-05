@@ -598,6 +598,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Appy changes.
+        /// </summary>
+        public static string HeaderPanel_Apply {
+            get {
+                return ResourceManager.GetString("HeaderPanel_Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply template.
         /// </summary>
         public static string HeaderPanel_ApplyTemplate {
@@ -639,6 +648,15 @@ namespace NodeMarkup {
         public static string HeaderPanel_NoPresets {
             get {
                 return ResourceManager.GetString("HeaderPanel_NoPresets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not apply changes.
+        /// </summary>
+        public static string HeaderPanel_NotApply {
+            get {
+                return ResourceManager.GetString("HeaderPanel_NotApply", resourceCulture);
             }
         }
         

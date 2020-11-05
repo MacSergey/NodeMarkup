@@ -59,7 +59,6 @@ namespace NodeMarkup.UI.Panel
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
-            clipChildren = true;
 
             CreateHeader();
             CreateTabStrip();

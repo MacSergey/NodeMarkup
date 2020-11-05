@@ -1280,4 +1280,10 @@ Double click to paste color</value>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="HeaderPanel_Apply" xml:space="preserve">
+    <value>Appy changes</value>
+  </data>
+  <data name="HeaderPanel_NotApply" xml:space="preserve">
+    <value>Not apply changes</value>
+  </data>
 </root>

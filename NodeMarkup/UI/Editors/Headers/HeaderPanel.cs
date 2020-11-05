@@ -153,8 +153,25 @@ namespace NodeMarkup.UI.Editors
     {
         public event Action OnSaveAsset;
         public event Action OnEdit;
+        public event Action OnApply;
+        public event Action OnNotApply;
         HeaderButton SaveAsAsset { get; set; }
         HeaderButton Edit { get; set; }
+        HeaderButton Apply { get; set; }
+        HeaderButton NotApply { get; set; }
+
+        private bool IsAsset { get; set; }
+        private bool IsWorkshop { get; set; }
+
+        public virtual bool EditMode
+        {
+            set
+            {
+                SaveAsAsset.isVisible = IsAsset && !value;
+                Edit.isVisible = (!IsAsset || !IsWorkshop) && !value;
+                Apply.isVisible = NotApply.isVisible = value;
+            }
+        }
 
         public TemplateHeaderPanel()
         {
@@ -164,13 +181,18 @@ namespace NodeMarkup.UI.Editors
         {
             Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
             SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+            Apply = Content.AddButton(TextureUtil.Apply, NodeMarkup.Localize.HeaderPanel_Apply, onClick: ApplyClick);
+            NotApply = Content.AddButton(TextureUtil.NotApply, NodeMarkup.Localize.HeaderPanel_NotApply, onClick: NotApplyClick);
         }
 
         public virtual void Init(TemplateType template)
         {
             base.Init(isDeletable: false);
-            SaveAsAsset.isVisible = !template.IsAsset;
-            Edit.isVisible = !template.IsAsset || !template.Asset.IsWorkshop;
+
+            IsAsset = template.IsAsset;
+            IsWorkshop = !IsAsset || template.Asset.IsWorkshop;
+
+            EditMode = false;
         }
         public override void DeInit()
         {
@@ -180,6 +202,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
         private void EditClick(UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke();
+        private void ApplyClick(UIComponent component, UIMouseEventParameter eventParam) => OnApply?.Invoke();
+        private void NotApplyClick(UIComponent component, UIMouseEventParameter eventParam) => OnNotApply?.Invoke();
     }
 
     public class StyleTemplateHeaderPanel : TemplateHeaderPanel<StyleTemplate>
@@ -188,11 +212,21 @@ namespace NodeMarkup.UI.Editors
         public event Action OnDuplicate;
 
         HeaderButton SetAsDefaultButton { get; set; }
+        HeaderButton Duplicate { get; set; }
+
+        public override bool EditMode 
+        {
+            set
+            {
+                base.EditMode = value;
+                SetAsDefaultButton.isVisible = Duplicate.isVisible = !value;
+            }
+        }
 
         protected override void AddButtons()
         {
             SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
-            Content.AddButton(TextureUtil.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            Duplicate = Content.AddButton(TextureUtil.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
 
             base.AddButtons();
         }

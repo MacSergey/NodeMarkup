@@ -69,6 +69,8 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
             HeaderPanel.OnEdit += EditTemplate;
+            HeaderPanel.OnApply += ApplyChanges;
+            HeaderPanel.OnNotApply += NotApplyChanges;
         }
 
         private void AddAuthor()
@@ -144,6 +146,8 @@ namespace NodeMarkup.UI.Editors
 
         protected virtual void SetEditable()
         {
+            HeaderPanel.EditMode = EditMode;
+
             NameProperty.EnableControl = EditMode;
 
             foreach (var aditional in Aditional)
@@ -165,6 +169,15 @@ namespace NodeMarkup.UI.Editors
             EditMode = !EditMode;
             SetEditable();
             Panel.AvailableHeader = Panel.AvailableTabStrip = AvailableItems = !EditMode;
+        }
+
+        protected virtual void ApplyChanges()
+        {
+            EditTemplate();
+        }
+        protected virtual void NotApplyChanges()
+        {
+            EditTemplate();
         }
     }
 }

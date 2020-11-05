@@ -29,6 +29,11 @@ namespace NodeMarkup.UI
             }
         }
         private List<UIButton> Tabs { get; } = new List<UIButton>();
+
+        public TabStrip()
+        {
+            clipChildren = true;
+        }
         public override void Update()
         {
             base.Update();
@@ -104,9 +109,18 @@ namespace NodeMarkup.UI
                 {
                     if (totalRowWidth + tabRow[j].width > width)
                     {
-                        if (i == tabRows.Count - 1)
-                            tabRows.Add(new List<UIButton>());
-                        tabRows[i + 1].InsertRange(0, tabRow.Skip(j));
+                        var toMove = tabRow.Skip(j == 0 ? j + 1 : j).ToArray();
+
+                        if(toMove.Any())
+                        {
+                            if (i == tabRows.Count - 1)
+                                tabRows.Add(new List<UIButton>());
+
+                            tabRows[i + 1].InsertRange(0, toMove);
+                            foreach (var tab in toMove)
+                                tabRow.Remove(tab);
+                        }
+
                         break;
                     }
                     else
@@ -122,7 +136,7 @@ namespace NodeMarkup.UI
                 var tabRow = tabRows[i];
                 var rowWidth = tabRow.Sum(t => t.width);
                 var rowHeight = tabRow.Max(t => t.height);
-                if (i != tabRows.Count - 1)
+                if (i < tabRows.Count - 1)
                     rowHeight += 4;
 
                 var space = (width - rowWidth) / tabRow.Count;

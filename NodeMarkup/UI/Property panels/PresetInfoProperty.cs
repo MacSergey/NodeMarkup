@@ -87,6 +87,7 @@ namespace NodeMarkup.UI
             NoScreenshot.autoSize = false;
             NoScreenshot.size = new Vector2(Size, Size);
             NoScreenshot.position = new Vector2(0, 0);
+            NoScreenshot.wordWrap = true;
 
             NoScreenshot.textScale = 1.2f;
             NoScreenshot.text = NodeMarkup.Localize.PresetInfo_NoScreenshot;
