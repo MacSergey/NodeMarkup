@@ -59,6 +59,7 @@ namespace NodeMarkup.UI.Panel
             atlas = TextureUtil.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
+            clipChildren = true;
 
             CreateHeader();
             CreateTabStrip();
@@ -97,8 +98,8 @@ namespace NodeMarkup.UI.Panel
         {
             TabStrip = AddUIComponent<PanelTabStrip>();
             TabStrip.relativePosition = new Vector3(0, Header.height);
-            TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
-            TabStrip.selectedIndex = -1;
+            TabStrip.SelectedTabChanged += OnSelectedTabChanged;
+            TabStrip.SelectedTab = -1;
         }
 
         private void CreateEditors()
@@ -142,21 +143,24 @@ namespace NodeMarkup.UI.Panel
         {
             base.OnSizeChanged();
 
-            if (CurrentEditor != null)
-                CurrentEditor.size = EditorSize;
             if (Header != null)
-                Header.size = new Vector2(size.x, Header.height);
+                Header.size = new Vector2(width, Header.height);
+            if (TabStrip != null)
+                TabStrip.width = width;
+            if (CurrentEditor != null)
+            {
+                CurrentEditor.size = EditorSize;
+                CurrentEditor.relativePosition = EditorPosition;
+            }
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
         }
         private void CreateEditor<EditorType>() where EditorType : Editor
         {
             var editor = AddUIComponent<EditorType>();
+            editor.Active = false;
             editor.Init(this);
             TabStrip.AddTab(editor.Name);
-
-            editor.Active = false;
-            editor.relativePosition = EditorPosition;
 
             Editors.Add(editor);
         }
@@ -187,12 +191,12 @@ namespace NodeMarkup.UI.Panel
             if (Markup != null)
             {
                 Header.Text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
-                TabStrip.selectedIndex = -1;
+                TabStrip.SelectedTab = -1;
                 SelectEditor<LinesEditor>();
             }
         }
         private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
-        private void TabStripSelectedIndexChanged(UIComponent component, int index)
+        private void OnSelectedTabChanged(int index)
         {
             CurrentEditor = SelectEditor(index);
             UpdatePanel();
@@ -207,6 +211,7 @@ namespace NodeMarkup.UI.Panel
                 var selectEditor = Editors[index];
                 selectEditor.Active = true;
                 selectEditor.size = EditorSize;
+                selectEditor.relativePosition = EditorPosition;
                 return selectEditor;
             }
             else
@@ -215,7 +220,7 @@ namespace NodeMarkup.UI.Panel
         private EditorType SelectEditor<EditorType>() where EditorType : Editor
         {
             var editorIndex = GetEditor(typeof(EditorType));
-            TabStrip.selectedIndex = editorIndex;
+            TabStrip.SelectedTab = editorIndex;
             return Editors[editorIndex] as EditorType;
         }
 

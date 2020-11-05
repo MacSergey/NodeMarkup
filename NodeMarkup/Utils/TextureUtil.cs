@@ -26,6 +26,7 @@ namespace NodeMarkup.Utils
             {nameof(ListItem), ListItem},
             {nameof(Button), Button},
             {nameof(TabButton), TabButton},
+            {nameof(DefaultTabButtons), DefaultTabButtons},
             {nameof(Resize), Resize},
             {nameof(TextFieldPanel), TextFieldPanel},
             {nameof(OpacitySlider), OpacitySlider},
@@ -93,6 +94,9 @@ namespace NodeMarkup.Utils
             => AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
 
         static void TabButton(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(4, 4, 4, 0), 1, Tab);
+
+        static void DefaultTabButtons(int texWidth, int texHeight, Rect rect)
+            => AddSprites(texWidth, texHeight, rect, 58, 25, new RectOffset(4, 4, 4, 0), 2, TabNormal, TabHover, TabPressed, TabFocused, TabDisabled);
 
         static void Resize(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, ResizeSprite);
 
@@ -232,6 +236,12 @@ namespace NodeMarkup.Utils
         public static string IconHover => nameof(IconHover);
 
         public static string Tab { get; } = nameof(Tab);
+
+        public static string TabNormal { get; } = nameof(TabNormal);
+        public static string TabHover { get; } = nameof(TabHover);
+        public static string TabPressed { get; } = nameof(TabPressed);
+        public static string TabFocused { get; } = nameof(TabFocused);
+        public static string TabDisabled { get; } = nameof(TabDisabled);
 
         public static string ResizeSprite { get; } = nameof(ResizeSprite);
 

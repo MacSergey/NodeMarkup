@@ -52,7 +52,7 @@ namespace NodeMarkup
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedInt GroupPointsType { get; } = new SavedInt(nameof(GroupPointsType), SettingsFile, 0, true);
 
-        private static CustomUITabstrip TabStrip { get; set; }
+        private static TabStrip TabStrip { get; set; }
         private static List<UIPanel> TabPanels { get; set; }
 
         static Settings()
@@ -85,22 +85,32 @@ namespace NodeMarkup
 
             var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
             AddSupport(supportTab);
-            //AddAccess(supportTab);
+
+            TabStrip.SelectedTab = 0;
         }
         private static void CreateTabStrip(UIScrollablePanel mainPanel)
         {
             TabPanels = new List<UIPanel>();
 
-            TabStrip = mainPanel.AddUIComponent<CustomUITabstrip>();
-            TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
-            TabStrip.selectedIndex = -1;
+            TabStrip = mainPanel.AddUIComponent<TabStrip>();
+            TabStrip.SelectedTabChanged += OnSelectedTabChanged;
+            TabStrip.SelectedTab = -1;
+            TabStrip.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal - mainPanel.scrollPadding.horizontal;
+            TabStrip.eventSizeChanged += (UIComponent component, Vector2 value) => TabStripSizeChanged(mainPanel);
         }
+
+        private static void TabStripSizeChanged(UIScrollablePanel mainPanel)
+        {
+            foreach (var tab in TabPanels)
+                SetTabSize(tab, mainPanel);
+        }
+
         private static UIHelper CreateTab(UIScrollablePanel mainPanel, string name)
         {
             TabStrip.AddTab(name, 1.25f);
 
             var tabPanel = mainPanel.AddUIComponent<UIPanel>();
-            tabPanel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
+            SetTabSize(tabPanel, mainPanel);
             tabPanel.isVisible = false;
             TabPanels.Add(tabPanel);
 
@@ -122,8 +132,12 @@ namespace NodeMarkup
                 panel.width = tabPanel.width - (panel.verticalScrollbar.isVisible ? panel.verticalScrollbar.width : 0);
             }
         }
+        private  static void SetTabSize(UIPanel panel, UIScrollablePanel mainPanel)
+        {
+            panel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
+        }
 
-        private static void TabStripSelectedIndexChanged(UIComponent component, int index)
+        private static void OnSelectedTabChanged(int index)
         {
             if (index >= 0 && TabPanels.Count > index)
             {
