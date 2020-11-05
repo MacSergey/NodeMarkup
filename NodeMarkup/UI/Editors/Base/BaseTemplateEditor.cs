@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,11 @@ using System.Text;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class BaseTemplateEditor<Item, TemplateType, Icon, Group, GroupType, HeaderPanelType> : GroupedEditor<Item, TemplateType, Icon, Group, GroupType>
+    public interface ITemplateEditor
+    {
+        void Cancel();
+    }
+    public abstract class BaseTemplateEditor<Item, TemplateType, Icon, Group, GroupType, HeaderPanelType> : GroupedEditor<Item, TemplateType, Icon, Group, GroupType>, ITemplateEditor
         where Item : EditableItem<TemplateType, Icon>
         where Icon : UIComponent
         where TemplateType : Template<TemplateType>
@@ -17,11 +22,13 @@ namespace NodeMarkup.UI.Editors
         protected override bool UseGroupPanel => true;
 
         protected bool EditMode { get; private set; }
+        protected bool HasChanges { get; set; }
 
         protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
         protected abstract string RewriteCaption { get; }
         protected abstract string RewriteMessage { get; }
+        protected abstract string SaveChangesMessage { get; }
 
         private EditorItem[] Aditional { get; set; }
 
@@ -35,9 +42,15 @@ namespace NodeMarkup.UI.Editors
                     SetEditable();
             }
         }
+        private EditTemplateMode ToolMode { get; }
+
+        public BaseTemplateEditor()
+        {
+            ToolMode = Tool.CreateToolMode<EditTemplateMode>();
+            ToolMode.Init(this);
+        }
+
         protected abstract IEnumerable<TemplateType> GetTemplates();
-
-
         protected override void FillItems()
         {
             foreach (var templates in GetTemplates())
@@ -49,9 +62,19 @@ namespace NodeMarkup.UI.Editors
             AddAuthor();
             AddTemplateName();
 
-            Aditional = AddAditional().ToArray();
+            ReloadAdditional();
 
             SetEditable();
+        }
+        private void ReloadAdditional()
+        {
+            if (Aditional != null)
+            {
+                foreach (var aditional in Aditional)
+                    ComponentPool.Free(aditional);
+            }
+
+            Aditional = AddAditional().ToArray();
         }
         protected override void OnClear()
         {
@@ -68,9 +91,9 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel);
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
-            HeaderPanel.OnEdit += EditTemplate;
-            HeaderPanel.OnApply += ApplyChanges;
-            HeaderPanel.OnNotApply += NotApplyChanges;
+            HeaderPanel.OnEdit += StartEditTemplate;
+            HeaderPanel.OnApply += SaveChanges;
+            HeaderPanel.OnNotApply += NotSaveChanges;
         }
 
         private void AddAuthor()
@@ -90,65 +113,16 @@ namespace NodeMarkup.UI.Editors
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
             NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
-            NameProperty.SubmitOnFocusLost = false;
+            NameProperty.SubmitOnFocusLost = true;
             NameProperty.Init();
             NameProperty.Value = EditObject.Name;
-            NameProperty.OnValueChanged += NameSubmitted;
-        }
-
-
-        private void NameSubmitted(string name)
-        {
-            if (name == EditObject.Name)
-                return;
-
-            var messageBox = default(YesNoMessageBox);
-            if (!string.IsNullOrEmpty(name) && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
-            {
-                messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
-                messageBox.MessageText = string.Format(NodeMarkup.Localize.TemplateEditor_NameExistMessage, name);
-                messageBox.OnButton1Click = AgreeExistName;
-                messageBox.OnButton2Click = NotSet;
-            }
-            else
-                AgreeExistName();
-
-            bool AgreeExistName()
-            {
-                if (EditObject.IsAsset)
-                {
-                    messageBox ??= MessageBoxBase.ShowModal<YesNoMessageBox>();
-                    messageBox.CaprionText = RewriteCaption;
-                    messageBox.MessageText = RewriteMessage;
-                    messageBox.OnButton1Click = Set;
-                    messageBox.OnButton2Click = NotSet;
-                    return false;
-                }
-                else
-                    return Set();
-            }
-
-            bool Set()
-            {
-                EditObject.Name = name;
-                SelectItem.Refresh();
-                return true;
-            }
-
-            bool NotSet()
-            {
-                NameProperty.Value = EditObject.Name;
-                NameProperty.Edit();
-                return true;
-            }
+            NameProperty.OnValueChanged += (name) => OnChanged();
         }
 
         protected virtual void SetEditable()
         {
-            HeaderPanel.EditMode = EditMode;
-
-            NameProperty.EnableControl = EditMode;
+            Panel.Available = AvailableItems = !EditMode;
+            HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
 
             foreach (var aditional in Aditional)
                 aditional.EnableControl = EditMode;
@@ -163,21 +137,114 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-
-        protected virtual void EditTemplate()
+        protected virtual void StartEditTemplate()
         {
-            EditMode = !EditMode;
+            EditMode = true;
+            HasChanges = false;
             SetEditable();
-            Panel.AvailableHeader = Panel.AvailableTabStrip = AvailableItems = !EditMode;
+            Tool.SetMode(ToolMode);
+        }
+        protected void OnChanged() => HasChanges = true;
+        protected virtual void EndEditTemplate()
+        {
+            EditMode = false;
+            HasChanges = false;
+            SetEditable();
         }
 
-        protected virtual void ApplyChanges()
+        private void SaveChanges()
         {
-            EditTemplate();
+            var name = NameProperty.Value;
+            var messageBox = default(YesNoMessageBox);
+            if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
+            {
+                messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
+                messageBox.MessageText = string.Format(NodeMarkup.Localize.TemplateEditor_NameExistMessage, name);
+                messageBox.OnButton1Click = AgreeExistName;
+                messageBox.OnButton2Click = EditName;
+            }
+            else
+                AgreeExistName();
+
+
+            bool AgreeExistName()
+            {
+                if (EditObject.IsAsset)
+                {
+                    messageBox ??= MessageBoxBase.ShowModal<YesNoMessageBox>();
+                    messageBox.CaprionText = RewriteCaption;
+                    messageBox.MessageText = RewriteMessage;
+                    messageBox.OnButton1Click = Save;
+                    return false;
+                }
+                else
+                    return Save();
+            }
+
+            bool EditName()
+            {
+                NameProperty.Edit();
+                return true;
+            }
+
+            bool Save()
+            {
+                OnApplyChanges();
+                (EditObject.Manager as TemplateManager<TemplateType>).TemplateChanged(EditObject);
+                EndEditTemplate();
+                SelectItem.Refresh();
+                return true;
+            }
         }
-        protected virtual void NotApplyChanges()
+        protected virtual void OnApplyChanges() => EditObject.Name = NameProperty.Value;
+
+        private void NotSaveChanges()
         {
-            EditTemplate();
+            OnNotApplyChanges();
+            ReloadAdditional();
+            EndEditTemplate();
         }
+        protected virtual void OnNotApplyChanges() => NameProperty.Value = EditObject.Name;
+
+        public void Cancel()
+        {
+            if (HasChanges)
+            {
+                var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
+                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
+                messageBox.MessageText = SaveChangesMessage;
+                messageBox.Button1Text = MessageBoxBase.Yes;
+                messageBox.Button2Text = MessageBoxBase.No;
+                messageBox.Button3Text = MessageBoxBase.Cancel;
+                messageBox.OnButton1Click = OnSave;
+                messageBox.OnButton2Click = OnNotSave;
+            }
+            else
+                OnNotSave();
+
+            bool OnSave()
+            {
+                SaveChanges();
+                Tool.SetDefaultMode();
+                return true;
+            }
+            bool OnNotSave()
+            {
+                NotSaveChanges();
+                Tool.SetDefaultMode();
+                return true;
+            }
+        }
+    }
+
+    public class EditTemplateMode : BaseToolMode
+    {
+        public override ToolModeType Type => ToolModeType.PanelAction;
+
+        private ITemplateEditor Editor { get; set; }
+
+        public void Init(ITemplateEditor editor) => Editor = editor;
+        public override void OnSecondaryMouseClicked() => Editor?.Cancel();
     }
 }

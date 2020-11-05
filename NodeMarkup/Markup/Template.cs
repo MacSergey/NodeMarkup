@@ -28,17 +28,7 @@ namespace NodeMarkup.Manager
         public Guid Id { get; private set; }
         public abstract string Description { get; }
 
-        string _name;
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                TemplateChanged();
-            }
-        }
-
+        public string Name { get; set; }
         public bool HasName => !string.IsNullOrEmpty(Name);
 
         public Texture2D Screenshot { get; set; }
@@ -54,9 +44,6 @@ namespace NodeMarkup.Manager
             Id = id;
             Name = name;
         }
-
-        protected abstract void TemplateChanged();
-
         public Dependences GetDependences() => new Dependences();
         public static bool FromXml<RequestType>(XElement config, out RequestType template)
             where RequestType : Template
@@ -105,12 +92,8 @@ namespace NodeMarkup.Manager
     public abstract class Template<TemplateType> : Template
         where TemplateType : Template<TemplateType>
     {
-        public Action<TemplateType> OnTemplateChanged { private get; set; }
-
         protected Template() : base() { }
         protected Template(string name) : base(name) { }
-
-        protected override void TemplateChanged() => OnTemplateChanged?.Invoke(this as TemplateType);
     }
     public class StyleTemplate : Template<StyleTemplate>
     {
@@ -121,16 +104,11 @@ namespace NodeMarkup.Manager
         public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
         public override string Description => Style.Type.ToString();
 
-        public Style Style { get; private set; }
+        public Style Style { get; set; }
         public bool IsDefault => TemplateManager.StyleManager.IsDefault(this);
 
         private StyleTemplate() : base() { }
-        public StyleTemplate(string name, Style style) : base(name) => Init(style);
-        private void Init(Style style)
-        {
-            Style = style.Copy();
-            Style.OnStyleChanged = TemplateChanged;
-        }
+        public StyleTemplate(string name, Style style) : base(name) => Style = style.Copy();
 
         public static bool FromXml(XElement config, out StyleTemplate template)
         {

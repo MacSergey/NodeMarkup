@@ -14,12 +14,12 @@ namespace NodeMarkup.UI
         public WhatsNewMessageBox()
         {
             var okButton = AddButton(1, 1, OkClick);
-            okButton.text = NodeMarkup.Localize.MessageBox_OK;
+            okButton.text = Ok;
         }
         protected virtual void OkClick()
         {
             if (OnButtonClick?.Invoke() != false)
-                Cancel();
+                Close();
         }
 
         public virtual void Init(Dictionary<Version, string> messages)

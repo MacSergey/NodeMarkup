@@ -67,11 +67,11 @@ namespace NodeMarkup.UI
             resultMessageBox.CaprionText = Caption;
             resultMessageBox.MessageText = result ? SuccessMessage : FailedMessage;
 
-            Cancel();
+            Close();
         }
         protected abstract bool Import(string file);
 
-        protected virtual void CancelClick() => Cancel();
+        protected virtual void CancelClick() => Close();
 
         public class FileDropDown : UIDropDown<string> { }
     }

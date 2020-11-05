@@ -14,6 +14,7 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
         protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;
+        protected override string SaveChangesMessage => NodeMarkup.Localize.PresetEditor_SaveChangesMessage;
 
         protected override bool GroupingEnabled => false;
 
@@ -95,9 +96,9 @@ namespace NodeMarkup.UI.Editors
             ComponentPool.Free(Preview);
             Preview = null;
         }
-        protected override void EditTemplate()
+        protected override void StartEditTemplate()
         {
-            base.EditTemplate();
+            base.StartEditTemplate();
             ApplyButton.isVisible = !EditMode;
         }
     }

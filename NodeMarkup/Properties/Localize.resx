@@ -1262,7 +1262,7 @@ The restored presets will replace all existing presets.</value>
     <value>Rewrite template asset</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>This template is a asset. To change its name need rewrite asset file. Continue?</value>
+    <value>This template is a asset. To change its name and values need rewrite asset file. Continue?</value>
   </data>
   <data name="Editor_ColorSampleTooltip" xml:space="preserve">
     <value>Double click with Shift to copy color
@@ -1285,5 +1285,17 @@ Double click to paste color</value>
   </data>
   <data name="HeaderPanel_NotApply" xml:space="preserve">
     <value>Not apply changes</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Do you want to save preset name change?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Do you want to save template values changes?</value>
   </data>
 </root>

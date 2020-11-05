@@ -41,8 +41,14 @@ namespace NodeMarkup.UI.Panel
         private Vector2 EditorSize => size - new Vector2(0, Header.height + TabStrip.height);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
-        public bool AvailableHeader { set => Header.SetAvailable(value); }
-        public bool AvailableTabStrip { set => TabStrip.SetAvailable(value); }
+        public bool Available
+        {
+            set
+            {
+                Header.Available = value;
+                TabStrip.SetAvailable(value);
+            }
+        }
 
         public static void CreatePanel()
         {
@@ -174,11 +180,7 @@ namespace NodeMarkup.UI.Panel
             absolutePosition = DefaultPosition;
         }
 
-        private void Reset()
-        {
-            AvailableHeader = true;
-            AvailableTabStrip = true;
-        }
+        private void Reset() => Available = true;
         public void UpdatePanel()
         {
             Reset();

@@ -17,9 +17,11 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
         protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;
+        protected override string SaveChangesMessage => NodeMarkup.Localize.TemplateEditor_SaveChangesMessage;
 
         protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 
+        private Style EditStyle { get; set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetTemplates() => TemplateManager.StyleManager.Templates.OrderBy(t => t.Style.Type);
@@ -28,6 +30,16 @@ namespace NodeMarkup.UI.Editors
         protected override string GroupName(Style.StyleType group)
             => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
+        protected override void OnObjectSelect()
+        {
+            CopyStyle();
+            base.OnObjectSelect();
+        }
+        private void CopyStyle()
+        {
+            EditStyle = EditObject.Style.Copy();
+            EditStyle.OnStyleChanged = OnChanged;
+        }
         protected override IEnumerable<EditorItem> AddAditional()
         {
             AddStyleProperties();
@@ -48,7 +60,7 @@ namespace NodeMarkup.UI.Editors
             base.OnClear();
             StyleProperties.Clear();
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel, isTemplate: true);
+        private void AddStyleProperties() => StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, isTemplate: true);
 
         private void ToggleAsDefault()
         {
@@ -60,6 +72,16 @@ namespace NodeMarkup.UI.Editors
         {
             if (TemplateManager.StyleManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
                 Panel.EditTemplate(duplicate);
+        }
+        protected override void OnApplyChanges()
+        {
+            base.OnApplyChanges();
+            EditObject.Style = EditStyle.Copy();
+        }
+        protected override void OnNotApplyChanges()
+        {
+            base.OnNotApplyChanges();
+            CopyStyle();
         }
     }
 

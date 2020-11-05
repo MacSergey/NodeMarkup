@@ -224,6 +224,7 @@ namespace NodeMarkup.UI
 
             tabButton.color = NormalColor;
             tabButton.hoveredColor = HoverColor;
+            tabButton.pressedColor = FocusColor;
             tabButton.focusedColor = FocusColor;
         }
     }

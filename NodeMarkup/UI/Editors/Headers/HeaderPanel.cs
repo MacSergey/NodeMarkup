@@ -38,12 +38,7 @@ namespace NodeMarkup.UI.Editors
             base.OnSizeChanged();
 
             Content.size = new Vector2(DeleteButton.enabled ? width - DeleteButton.width - 10 : width, height);
-            Content.autoLayout = true;
-            Content.autoLayout = false;
             DeleteButton.relativePosition = new Vector2(width - DeleteButton.width - 5, (height - DeleteButton.height) / 2);
-
-            foreach (var item in Content.components)
-                item.relativePosition = new Vector2(item.relativePosition.x, (Content.height - item.height) / 2);
         }
 
         private void AddContent()
@@ -92,6 +87,37 @@ namespace NodeMarkup.UI.Editors
             if (onClick != null)
                 button.eventClick += onClick;
             return button;
+        }
+
+        protected override void OnComponentAdded(UIComponent child)
+        {
+            base.OnComponentAdded(child);
+            child.eventVisibilityChanged += ChildVisibilityChanged;
+            child.eventSizeChanged += ChildSizeChanged;
+        }
+        protected override void OnComponentRemoved(UIComponent child)
+        {
+            base.OnComponentRemoved(child);
+            child.eventVisibilityChanged -= ChildVisibilityChanged;
+            child.eventSizeChanged -= ChildSizeChanged;
+        }
+
+        private void ChildVisibilityChanged(UIComponent component, bool value) => PlaceChildren();
+        private void ChildSizeChanged(UIComponent component, Vector2 value) => PlaceChildren();
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            PlaceChildren();
+        }
+
+        public void PlaceChildren()
+        {
+            autoLayout = true;
+            autoLayout = false;
+
+            foreach (var item in components)
+                item.relativePosition = new Vector2(item.relativePosition.x, (height - item.height) / 2);
         }
     }
 
@@ -167,7 +193,7 @@ namespace NodeMarkup.UI.Editors
         {
             set
             {
-                SaveAsAsset.isVisible = IsAsset && !value;
+                SaveAsAsset.isVisible = !IsAsset && !value;
                 Edit.isVisible = (!IsAsset || !IsWorkshop) && !value;
                 Apply.isVisible = NotApply.isVisible = value;
             }
@@ -199,6 +225,8 @@ namespace NodeMarkup.UI.Editors
             base.DeInit();
             OnSaveAsset = null;
             OnEdit = null;
+            OnApply = null;
+            OnNotApply = null;
         }
         private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
         private void EditClick(UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke();

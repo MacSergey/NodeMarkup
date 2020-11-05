@@ -22,6 +22,7 @@ namespace NodeMarkup.UI.Panel
             get => Caption.text;
             set => Caption.text = value;
         }
+        public bool Available { set => Buttons.SetAvailable(value); }
 
         public PanelHeader()
         {

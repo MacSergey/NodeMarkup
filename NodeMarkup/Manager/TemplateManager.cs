@@ -87,8 +87,7 @@ namespace NodeMarkup.Manager
 
         #region SAVE&LOAD
 
-        private void InitTempalte(TemplateType template) => template.OnTemplateChanged = OnTemplateChanged;
-        private void OnTemplateChanged(TemplateType template)
+        public void TemplateChanged(TemplateType template)
         {
             if (template.IsAsset)
                 Loader.SaveAsset(template.Asset);
@@ -163,11 +162,7 @@ namespace NodeMarkup.Manager
 
         #region ADD&DELETE
 
-        public void AddTemplate(TemplateType template)
-        {
-            InitTempalte(template);
-            TemplatesDictionary[template.Id] = template;
-        }
+        public void AddTemplate(TemplateType template) => TemplatesDictionary[template.Id] = template;
         public void DeleteTemplate(TemplateType template)
         {
             TemplatesDictionary.Remove(template.Id);
@@ -222,9 +217,6 @@ namespace NodeMarkup.Manager
                 if (Template.FromXml(templateConfig, out TemplateType template) && !TemplatesDictionary.ContainsKey(template.Id))
                     TemplatesDictionary[template.Id] = template;
             }
-
-            foreach (var template in TemplatesDictionary.Values)
-                InitTempalte(template);
         }
 
         #endregion

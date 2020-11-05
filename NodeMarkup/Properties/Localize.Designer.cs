@@ -1023,6 +1023,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        public static string MessageBox_Cancel {
+            get {
+                return ResourceManager.GetString("MessageBox_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на This action cannot be undone..
         /// </summary>
         public static string MessageBox_CantUndone {
@@ -1563,6 +1572,15 @@ namespace NodeMarkup {
         public static string PresetEditor_RewriteMessage {
             get {
                 return ResourceManager.GetString("PresetEditor_RewriteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to save preset name change?.
+        /// </summary>
+        public static string PresetEditor_SaveChangesMessage {
+            get {
+                return ResourceManager.GetString("PresetEditor_SaveChangesMessage", resourceCulture);
             }
         }
         
@@ -2805,11 +2823,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This template is a asset. To change its name need rewrite asset file. Continue?.
+        ///   Ищет локализованную строку, похожую на This template is a asset. To change its name and values need rewrite asset file. Continue?.
         /// </summary>
         public static string TemplateEditor_RewriteMessage {
             get {
                 return ResourceManager.GetString("TemplateEditor_RewriteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save changes.
+        /// </summary>
+        public static string TemplateEditor_SaveChanges {
+            get {
+                return ResourceManager.GetString("TemplateEditor_SaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to save template values changes?.
+        /// </summary>
+        public static string TemplateEditor_SaveChangesMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_SaveChangesMessage", resourceCulture);
             }
         }
         
