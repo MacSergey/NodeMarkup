@@ -300,7 +300,7 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
     <value>Name</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Vorlagen</value>
+    <value>Stilvorlagen</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>Neue Vorlage</value>
