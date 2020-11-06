@@ -168,10 +168,12 @@ namespace NodeMarkup.UI.Editors
 
         private void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
+            dropdown.triggerButton.isInteractive = false;
+
             Popup = popup;
 
             Popup.component.size += new Vector2(31, 31);
-            Popup.component.relativePosition -= new Vector3(31, 0);
+            Popup.component.relativePosition -= new Vector3(dropdown.width + 31, Math.Max(Popup.component.absolutePosition.y - dropdown.absolutePosition.y, 0));
 
             if (Popup.component is UIPanel panel)
             {
@@ -188,6 +190,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void ColorPickerClose(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
+            dropdown.triggerButton.isInteractive = true;
+
             Popup = null;
             Opacity = null;
         }

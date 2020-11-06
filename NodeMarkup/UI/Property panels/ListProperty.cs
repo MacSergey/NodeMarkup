@@ -19,7 +19,6 @@ namespace NodeMarkup.UI.Editors
         protected virtual float DropDownWidth => 230;
         protected virtual bool AllowNull => true;
         public string NullText { get; set; } = string.Empty;
-        public bool IsOpen { get; private set; } = false;
 
         public Type SelectedObject
         {
@@ -48,17 +47,18 @@ namespace NodeMarkup.UI.Editors
         private void SelectorSizeChanged(UIComponent component, Vector2 value) => RefreshContent();
 
         private void DropDownValueChanged(Type value) => OnSelectObjectChanged?.Invoke(value);
-        private void DropDownClose(UIDropDown dropdown, UIListBox popup, ref bool overridden)
-        {
-            IsOpen = false;
-            OnDropDownStateChange?.Invoke(false);
-        }
 
         private void DropDownOpen(UIDropDown dropdown, UIListBox popup, ref bool overridden)
         {
-            IsOpen = true;
+            dropdown.triggerButton.isInteractive = false;
             OnDropDownStateChange?.Invoke(true);
         }
+        private void DropDownClose(UIDropDown dropdown, UIListBox popup, ref bool overridden)
+        {
+            dropdown.triggerButton.isInteractive = true;
+            OnDropDownStateChange?.Invoke(false);
+        }
+
 
         public override void Init()
         {
