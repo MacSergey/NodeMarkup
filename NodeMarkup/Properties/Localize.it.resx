@@ -1039,9 +1039,7 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Solido in centro</value>
   </data>
-  <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
-  </data>
+  
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Si</value>
   </data>
@@ -1130,6 +1128,12 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>Strade:</value>
   </data>
+  
+  
+  
+  
+  
+  
   
   
   
