@@ -558,6 +558,8 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Používáte BETA verzi {0}. Slouží k testování nových funkcí a může obsahovat chyby které mohou poškodit nebo smazat vaše značení. Pokud nemáte zájem být součástí BETA programu, přepněte na stabilní verzi.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Jazyk hry</value>

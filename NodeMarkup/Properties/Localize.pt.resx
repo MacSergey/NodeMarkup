@@ -568,6 +568,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Está a usar a versão BETA da {0}. Serve para testar novas funcionalidades e pode conter erros que façam você perder todas as marcações. Se subscreveu por engano troque para a versão estável.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Língua do jogo</value>

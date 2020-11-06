@@ -559,6 +559,8 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Käytät beta-versiota {0}:sta. Se on tarkoitettu uusien ominaisuuksien testaamiseen ja siinä voi olla virheitä, jotka rikkovat tai poistavat merkintöjäsi. Jos tilasit sen vahingossa, vaihda vakaaseen versioon.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Pelin kieli</value>
@@ -1074,6 +1076,22 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   
   
   
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Suojatiet:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Sulkualueet:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Viivat:</value>
+  </data>
+  
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Tien #{0} pisteet:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Tiet:</value>
+  </data>
   
   
   
@@ -1098,24 +1116,38 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   
   
   
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Muokkaa</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Tallenna muutokset</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Hylkää muutokset</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Peruuta</value>
+  </data>
   
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Tallenna muutokset</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Haluatko tallentaa mallineen arvojen muutokset?</value>
+  </data>
   
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Voit poistaa sen vain pelin sisällönhallinnasta.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Voit poistaa sen vain pelin sisällönhallinnasta.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
+  </data>
   
 </root>

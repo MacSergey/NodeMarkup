@@ -558,6 +558,8 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>你在使用 {0} BETA版。此版本为测试新功能用，且可能含有会使标记破损或消失的BUG。如果是不小心订阅到了此版本，请订阅回稳定版。</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>游戏语言</value>
@@ -568,7 +570,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>德语</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>美式英语</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>西班牙语</value>
   </data>
@@ -1172,7 +1176,7 @@ Shift x10，Ctrl x0.1</value>
     <value>从人行横道后生成标线</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>英语-英国</value>
+    <value>英式英语</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>重写预设资产</value>
@@ -1224,10 +1228,22 @@ Shift x10，Ctrl x0.1</value>
     <value>模板名称 "{0}" 已被其它预设占用。
 确定要多个预设使用这个命名吗？</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>你可以从主界面内容管理器删除</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>你无法进行编辑，仅可以从内容管理器删除或在工坊上取消订阅</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>此预设为资产</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>你可以从主界面内容管理器删除</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>你无法进行编辑，仅可以从内容管理器删除或在工坊上取消订阅</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>此模板为资产</value>
+  </data>
 </root>
