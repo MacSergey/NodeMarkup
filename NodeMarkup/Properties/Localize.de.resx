@@ -294,7 +294,7 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
     <value>Zeige Tooltips</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Vorlage</value>
+    <value>Stilvorlage</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Name</value>
@@ -486,8 +486,8 @@ Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
 Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Vorlagen ist leer.
-Um eine Vorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
+    <value>Die Liste mit Stilvorlagen ist leer.
+Um eine Stilvorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivierungscode eingeben</value>
@@ -593,7 +593,9 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Deutsch</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Amerikanisch-Englisch</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanisch</value>
   </data>
@@ -668,7 +670,7 @@ Zum Erstellen einer Fußgängerüberweg-Markierung Shift gedrückt halten.</valu
     <value>Linien gruppieren</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Vorlagen gruppieren</value>
+    <value>Stilvorlagen gruppieren</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Klicken um eine Fußgängerüberweg-Markierung zu erstellen</value>
@@ -748,7 +750,7 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Leiter</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>Keine Vorlagen</value>
+    <value>Keine Stilvorlagen</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Vollständig gefüllt</value>
@@ -769,7 +771,7 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Punkt</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Vorlage</value>
+    <value>Stilvorlage</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
@@ -941,14 +943,14 @@ Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
     <value>Rechts</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>Unbenannte Vorlage</value>
+    <value>Unbenannte Stilvorlage</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
-    <value>Name wird bereits verwendet</value>
+    <value>Der Name wird bereits verwendet</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Der Name "{0}" wird bereits für eine andere Vorlage verwendet.
-Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
+    <value>Der Name "{0}" wird bereits für eine andere Stilvorlage verwendet.
+Bist du dir sicher, dass du mehrere Stilvorlage mit dem gleichen Namen haben willst?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
     <value>Markierungsdaten sichern</value>
@@ -957,35 +959,35 @@ Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst
     <value>Sicherungsvorlagen</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>Alle Vorlagen löschen</value>
+    <value>Alle Stilvorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>Alle Vorlagen löschen</value>
+    <value>Alle Stilvorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Willst du wirklich alle Vorlagen entfernen?</value>
+    <value>Willst du wirklich alle Stilvorlagen entfernen?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Vorlagen in einer Datei speichern</value>
+    <value>Stilvorlagen in einer Datei speichern</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>Vorlagen speichern</value>
+    <value>Stilvorlagen speichern</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Vorlagen aus Datei wiederherstellen</value>
+    <value>Stilvorlagen aus Datei wiederherstellen</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>Vorlagen wiederherstellen</value>
+    <value>Stilvorlagen wiederherstellen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>Möchtest du wirklich die Vorlagen wiederherstellen?
-Die wiederhergestellten Vorlagen werden alle vorhandenen Vorlagen ersetzen.</value>
+    <value>Möchtest du wirklich die Stilvorlagen wiederherstellen?
+Die wiederhergestellten Stilvorlagen werden alle vorhandenen Stilvorlagen ersetzen.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>Wiederherstellen der Vorlagen fehlgeschlagen</value>
+    <value>Wiederherstellen der Stilvorlagen fehlgeschlagen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>Vorlagen erfolgreich wiederhergestellt</value>
+    <value>Stilvorlagen erfolgreich wiederhergestellt</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
     <value>Anwenden</value>
@@ -1102,32 +1104,32 @@ Möchtest du die Markierungen manuell zuordnen?</value>
 von {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Voreinstellungen ist leer.
-Um eine Voreinstellung zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
+    <value>Die Liste mit Kreuzungsvorlagen ist leer.
+Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>Voreinstellungen</value>
+    <value>Kreuzungsvorlagen</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>Als Voreinstellung speichern</value>
+    <value>Als Kreuzungsvorlage speichern</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>Als Voreinstellung speichern</value>
+    <value>Als Kreuzungsvorlage speichern</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>Keine Voreinstellungen</value>
+    <value>Keine Kreuzungsvorlagen</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
-    <value>Voreinstellung übernehmen</value>
+    <value>Kreuzungsvorlage übernehmen</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
-    <value>Neue Voreinstellung</value>
+    <value>Neue Kreuzungsvorlage</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Modus zum Übernehmen von Voreinstellungen verlassen</value>
+    <value>Modus zum Übernehmen von Kreuzungsvorlagen verlassen</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Möchtest du die Voreinstellung anwenden?</value>
+    <value>Möchtest du die Kreuzungsvorlage anwenden?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Ersteller</value>
@@ -1153,7 +1155,7 @@ Starte das Spiel neu.</value>
     <value>Linien:</value>
   </data>
   <data name="PresetInfo_NoScreenshot" xml:space="preserve">
-    <value>Kein Screenshot vorhanden</value>
+    <value>Kein Bildschirmfoto vorhanden</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
     <value>Straße #{0} Punkte:</value>
@@ -1168,38 +1170,38 @@ Starte das Spiel neu.</value>
     <value>Linien an diesem Fußgängerüberweg beenden</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>Voreinstellungen sichern</value>
+    <value>Kreuzungsvorlagen sichern</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
-    <value>Alle Voreinstellungen löschen</value>
+    <value>Alle Kreuzungsvorlagen löschen</value>
   </data>
   <data name="Settings_DeletePresetsCaption" xml:space="preserve">
-    <value>Alle Voreinstellungen löschen</value>
+    <value>Alle Kreuzungsvorlagen löschen</value>
   </data>
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
     <value>Willst du wirklich alle Voreinstellungen entfernen?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Voreinstellungen in Datei sichern</value>
+    <value>Kreuzungsvorlagen in Datei sichern</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>Voreinstellungen sichern</value>
+    <value>Kreuzungsvorlagen sichern</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>Voreinstellungen aus Datei wiederherstellen</value>
+    <value>Kreuzungsvorlagen aus Datei wiederherstellen</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>Voreinstellung wieder herstellen</value>
+    <value>Kreuzungsvorlagen wieder herstellen</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>Möchtest du die Voreinstellungen wirklich wiederherstellen?
-Die wieder hergestellten Voreinstellungen werden alle vorhandenen Voreinstellungen ersetzen.</value>
+    <value>Möchtest du die Kreuzungsvorlagen wirklich wiederherstellen?
+Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorlagen ersetzen.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>Wiederherstellen der Voreinstellungen fehlgeschlagen</value>
+    <value>Wiederherstellen der Kreuzungsvorlagen fehlgeschlagen</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>Voreinstellungen erfolgreich wiederhergestellt</value>
+    <value>Kreuzungsvorlagen erfolgreich wiederhergestellt</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
     <value>Linien an allen Fußgängerüberwegen beenden</value>
@@ -1208,19 +1210,19 @@ Die wieder hergestellten Voreinstellungen werden alle vorhandenen Voreinstellung
     <value>Linien an allen Fußgängerüberwegen beenden</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Englisch UK</value>
+    <value>Britisch-Englisch</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Voreinstellungs-Asset überarbeiten</value>
+    <value>Kreuzungsvorlage-Objekt überschreiben</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Diese Voreinstellung ist ein Asset. Um den Namen zu ändern muss die Voreinstellungs-Datei neu geschrieben werden. Fortfahren?</value>
+    <value>Um den Namen zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Vorlagen-Asset überarbeiten</value>
+    <value>Stilvorlagen-Spiel-Objekt überschreiben</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Diese Vorlage ist ein Asset. Um den Namen zu ändern muss die Asset-Datei neu geschrieben werden. Fortfahren?</value>
+    <value>Um den Namen und die Werte zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
   </data>
   <data name="Editor_ColorSampleTooltip" xml:space="preserve">
     <value>Shift+Doppelklick zum Kopieren der Farbe
@@ -1248,16 +1250,34 @@ Doppelklick zum Einfügen der Farbe</value>
     <value>Abbrechen</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Möchtest du die Namensänderung der Voreinstellungen speichern?</value>
+    <value>Möchtest du die Namensänderung der Kreuzungsvorlage speichern?</value>
   </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
     <value>Änderungen speichern</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Möchtest du die Änderungen der Vorlagen-Werte speichern?</value>
+    <value>Möchtest du die Änderungen der Stilvorlagen-Werte speichern?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>Der Name "{0}" wird bereits für eine andere Voreinstellung verwendet.
-Bist du dir sicher, dass du mehrere Voreinstellungen mit dem gleichen Namen haben willst?</value>
+    <value>Der Name "{0}" wird bereits für eine andere Kreuzungsvorlage verwendet.
+Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen haben willst?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Du kannst sie nicht bearbeiten und ein Löschen ist nur über die Inhaltsverwaltung des Spiels möglich oder du kannst sie im Workshop deabonnieren.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Diese Kreuzungsvorlage ist ein Spiel-Objekt.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Du kannst sie nicht bearbeiten und ein Löschen ist nur über die Inhaltsverwaltung des Spiels möglich oder du kannst sie im Workshop deabonnieren.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Diese Stilvorlage ist ein Spiel-Objekt.</value>
   </data>
 </root>

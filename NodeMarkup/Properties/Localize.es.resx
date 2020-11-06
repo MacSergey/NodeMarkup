@@ -1013,9 +1013,7 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Continua en el centro</value>
   </data>
-  <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
-  </data>
+  
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Sí</value>
   </data>
@@ -1056,6 +1054,12 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
   </data>
+  
+  
+  
+  
+  
+  
   
   
   

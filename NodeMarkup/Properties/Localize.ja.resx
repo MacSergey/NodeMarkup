@@ -573,7 +573,9 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>ドイツ語</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>英語 - US</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>スペイン語</value>
   </data>
@@ -1019,12 +1021,8 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>実線を中心</value>
   </data>
-  <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="StyleOption_Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
+  
+  
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
     <value>Shift押下で横断歩道の作成</value>
   </data>
@@ -1233,4 +1231,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>{0} という名前は、他のプリセットで使用されています。
 重複したプリセットを保存しても良いですか？</value>
   </data>
+  
+  
+  
+  
+  
+  
 </root>

@@ -1300,4 +1300,22 @@ Shift X10, Ctrl X0.1</value>
     <value>Имя "{0}" уже используется другим трафаретом.
 Вы уверены, что хотите иметь несколько трафаретов с одинаковым именем?</value>
   </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Вы можете удалить его только из диспетчера содержимого игры.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Вы не можете редактировать его и удалить можете только из диспетчера содержимого игры или отписавшись в Мастерской Steam.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Этот трафарет является игровым ресурсом.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Вы можете удалить его только из диспетчера содержимого игры.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Вы не можете редактировать его и удалить можете только из диспетчера содержимого игры или отписавшись в Мастерской Steam.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Этот шаблон является игровым ресурсом.</value>
+  </data>
 </root>
