@@ -21,62 +21,36 @@ namespace NodeMarkup.UI
             var ret = UIUtils.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
             return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
         }
-
-        public override void Start()
+        public NodeMarkupButton()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Start)}");
-
-            base.Start();
-            name = nameof(NodeMarkupButton);
-            playAudioEvents = true;
-
-            if(!(UIUtils.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None) is UITabstrip builtinTabstrip))
-                return;
-
             atlas = TextureUtil.Atlas;
 
-            Deactivate();
+            normalBgSprite = TextureUtil.ButtonNormal;
             hoveredBgSprite = TextureUtil.ButtonHover;
+            pressedBgSprite = TextureUtil.ButtonHover;
+            focusedBgSprite = TextureUtil.ButtonActive;
+
+            normalFgSprite = TextureUtil.Icon;
             hoveredFgSprite = TextureUtil.IconHover;
+            pressedFgSprite = TextureUtil.Icon;
+            focusedFgSprite = TextureUtil.Icon;
 
             relativePosition = ButtonPosition;
             size = new Vector2(ButtonSize, ButtonSize);
-            Show();
-            Unfocus();
-            Invalidate();
         }
-
-        public void Activate()
+        public override void Update()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Activate)}");
-
-            focusedBgSprite = TextureUtil.ButtonActive;
-            normalBgSprite = TextureUtil.ButtonActive;
-            pressedBgSprite = TextureUtil.ButtonActive;
-            disabledBgSprite = TextureUtil.ButtonActive;
-            normalFgSprite = TextureUtil.IconActive;
-            focusedFgSprite = TextureUtil.IconActive;
-            Invalidate();
+            base.Update();
+            if (NodeMarkupTool.Instance.enabled && state == (ButtonState.Normal | ButtonState.Hovered))
+                state = ButtonState.Focused;
+            else if (!NodeMarkupTool.Instance.enabled && state == ButtonState.Focused)
+                state = ButtonState.Normal;
         }
-        public void Deactivate()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Deactivate)}");
-
-            focusedBgSprite = TextureUtil.ButtonNormal;
-            normalBgSprite = TextureUtil.ButtonNormal;
-            pressedBgSprite = TextureUtil.ButtonNormal;
-            disabledBgSprite = TextureUtil.ButtonNormal;
-            normalFgSprite = TextureUtil.Icon;
-            focusedFgSprite = TextureUtil.Icon;
-            Invalidate();
-        }
-
-        public static NodeMarkupButton CreateButton()
+        public static void CreateButton()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
             Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
             Logger.LogDebug($"Button created");
-            return Instance;
         }
         public static void RemoveButton()
         {

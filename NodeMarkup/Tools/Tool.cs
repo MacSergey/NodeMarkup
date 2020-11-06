@@ -147,7 +147,6 @@ namespace NodeMarkup.Tools
         protected override void OnEnable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
-            Button?.Activate();
             Reset();
 
             PrevTool = m_toolController.CurrentTool;
@@ -159,7 +158,6 @@ namespace NodeMarkup.Tools
         protected override void OnDisable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
-            Button?.Deactivate();
             Reset();
 
             if (m_toolController?.NextTool == null && PrevTool != null)
