@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,17 @@ namespace NodeMarkup.UI.Editors
         protected bool EditMode { get; private set; }
         protected bool HasChanges { get; set; }
 
-        protected StringPropertyPanel NameProperty { get; set; }
         protected HeaderPanelType HeaderPanel { get; set; }
+        private WarningTextProperty Warning { get; set; }
+        protected StringPropertyPanel NameProperty { get; set; }
+
+        protected abstract string IsAssetMessage { get; }
         protected abstract string RewriteCaption { get; }
         protected abstract string RewriteMessage { get; }
         protected abstract string SaveChangesMessage { get; }
         protected abstract string NameExistMessage { get; }
+        protected abstract string IsAssetWarningMessage { get; }
+        protected abstract string IsWorkshopWarningMessage { get; }
 
         private EditorItem[] Aditional { get; set; }
 
@@ -60,6 +66,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectSelect()
         {
             AddHeader();
+            AddWarning();
             AddAuthor();
             AddTemplateName();
 
@@ -82,8 +89,9 @@ namespace NodeMarkup.UI.Editors
         protected virtual void AddAdditional() { }
         protected override void OnClear()
         {
-            NameProperty = null;
             HeaderPanel = null;
+            Warning = null;
+            NameProperty = null;
             Aditional = null;
         }
         protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
@@ -98,6 +106,12 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.OnEdit += StartEditTemplate;
             HeaderPanel.OnSave += SaveChanges;
             HeaderPanel.OnNotSave += NotSaveChanges;
+        }
+        private void AddWarning()
+        {
+            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
+            Warning.Text = $"{IsAssetMessage} {(EditObject.IsAsset && !EditObject.Asset.IsWorkshop ? IsAssetWarningMessage : IsWorkshopWarningMessage)}";
+            Warning.Init();
         }
 
         private void AddAuthor()
@@ -127,6 +141,7 @@ namespace NodeMarkup.UI.Editors
         {
             Panel.Available = AvailableItems = !EditMode;
             HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
+            Warning.isVisible = EditObject.IsAsset && !EditMode;
 
             foreach (var aditional in Aditional)
                 aditional.EnableControl = EditMode;
@@ -179,7 +194,7 @@ namespace NodeMarkup.UI.Editors
                 {
                     messageBox ??= MessageBoxBase.ShowModal<YesNoMessageBox>();
                     messageBox.CaprionText = RewriteCaption;
-                    messageBox.MessageText = RewriteMessage;
+                    messageBox.MessageText = $"{IsAssetMessage} {RewriteMessage}";
                     messageBox.OnButton1Click = Save;
                     return false;
                 }

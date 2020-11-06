@@ -13,14 +13,15 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
+        protected override string IsAssetMessage => NodeMarkup.Localize.PresetEditor_PresetIsAsset;
         protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;
         protected override string SaveChangesMessage => NodeMarkup.Localize.PresetEditor_SaveChangesMessage;
         protected override string NameExistMessage => NodeMarkup.Localize.PresetEditor_NameExistMessage;
+        protected override string IsAssetWarningMessage => NodeMarkup.Localize.PresetEditor_IsAssetWarningMessage;
+        protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.PresetEditor_IsWorkshopWarningMessage;
 
         protected override bool GroupingEnabled => false;
-
-        private ButtonPanel ApplyButton { get; set; }
 
         protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates;
         protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
@@ -28,29 +29,20 @@ namespace NodeMarkup.UI.Editors
 
         protected override void ClearSettings()
         {
-            ApplyButton = null;
-
             RemovePreview();
             base.ClearSettings();
         }
-
-        protected override void AddAdditional()
+        protected override void AddHeader()
         {
-            AddScreenshot();
-            AddApplyButton();
+            base.AddHeader();
+            HeaderPanel.OnApply += OnApply;
         }
+        protected override void AddAdditional() => AddScreenshot();
         private void AddScreenshot()
         {
             var group = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             var info = ComponentPool.Get<PresetInfoProperty>(group);
             info.Init(EditObject);
-        }
-        private void AddApplyButton()
-        {
-            ApplyButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
-            ApplyButton.Text = NodeMarkup.Localize.PresetEditor_ApplyPreset;
-            ApplyButton.Init();
-            ApplyButton.OnButtonClick += OnApply;
         }
         private void OnApply() => Tool.ApplyPreset(EditObject);
         protected override void OnObjectDelete(IntersectionTemplate template)
@@ -95,11 +87,6 @@ namespace NodeMarkup.UI.Editors
             ContentPanel.opacity = 1f;
             ComponentPool.Free(Preview);
             Preview = null;
-        }
-        protected override void SetEditable()
-        {
-            base.SetEditable();
-            ApplyButton.SetAvailable(!EditMode);
         }
     }
 

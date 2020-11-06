@@ -15,10 +15,13 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
+        protected override string IsAssetMessage => NodeMarkup.Localize.TemplateEditor_TemplateIsAsset;
         protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;
         protected override string SaveChangesMessage => NodeMarkup.Localize.TemplateEditor_SaveChangesMessage;
         protected override string NameExistMessage => NodeMarkup.Localize.TemplateEditor_NameExistMessage;
+        protected override string IsAssetWarningMessage => NodeMarkup.Localize.TemplateEditor_IsAssetWarningMessage;
+        protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.TemplateEditor_IsWorkshopWarningMessage;
 
         protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 

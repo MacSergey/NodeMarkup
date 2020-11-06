@@ -207,8 +207,8 @@ namespace NodeMarkup.UI.Editors
         {
             Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
             SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
-            Save = Content.AddButton(TextureUtil.Apply, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
-            NotSave = Content.AddButton(TextureUtil.NotApply, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
+            Save = Content.AddButton(TextureUtil.Save, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
+            NotSave = Content.AddButton(TextureUtil.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
         }
 
         public virtual void Init(TemplateType template)
@@ -276,5 +276,30 @@ namespace NodeMarkup.UI.Editors
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
         private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
     }
-    public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate> { }
+    public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate> 
+    {
+        public event Action OnApply;
+
+        HeaderButton Apply { get; set; }
+        public override bool EditMode
+        {
+            set
+            {
+                base.EditMode = value;
+                Apply.isVisible = !value;
+            }
+        }
+
+        protected override void AddButtons()
+        {
+            Apply = Content.AddButton(TextureUtil.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, onClick: ApplyClick);
+            base.AddButtons();
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnApply = null;
+        }
+        private void ApplyClick(UIComponent component, UIMouseEventParameter eventParam) => OnApply?.Invoke();
+    }
 }

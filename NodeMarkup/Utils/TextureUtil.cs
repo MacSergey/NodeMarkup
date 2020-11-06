@@ -86,7 +86,7 @@ namespace NodeMarkup.Utils
         static void Styles(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
 
         static void HeaderButtons(int texWidth, int texHeight, Rect rect)
-            => AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Package, Clear, Edit, Apply, NotApply, Offset, EdgeLines, Additionally, Cut);
+            => AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
 
         static void ListItem(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
 
@@ -101,10 +101,10 @@ namespace NodeMarkup.Utils
         static void Resize(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, ResizeSprite);
 
         static void TextFieldPanel(int texWidth, int texHeight, Rect rect)
-            => AddSpritesRows(texWidth, texHeight, rect, 32, 32, new RectOffset(4, 4, 4, 4), 2, 4, 
-                FieldNormal, FieldHovered, FieldFocused, FieldDisabled, 
-                FieldNormalLeft, FieldHoveredLeft, FieldFocusedLeft, FieldDisabledLeft, 
-                FieldNormalRight, FieldHoveredRight, FieldFocusedRight, FieldDisabledRight, 
+            => AddSpritesRows(texWidth, texHeight, rect, 32, 32, new RectOffset(4, 4, 4, 4), 2, 4,
+                FieldNormal, FieldHovered, FieldFocused, FieldDisabled,
+                FieldNormalLeft, FieldHoveredLeft, FieldFocusedLeft, FieldDisabledLeft,
+                FieldNormalRight, FieldHoveredRight, FieldFocusedRight, FieldDisabledRight,
                 FieldNormalMiddle, FieldHoveredMiddle, FieldFocusedMiddle, FieldDisabledMiddle);
 
         static void OpacitySlider(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, 18, 200, new RectOffset(), 2, OpacitySliderBoard, OpacitySliderColor);
@@ -218,11 +218,12 @@ namespace NodeMarkup.Utils
         public static string Duplicate => nameof(Duplicate);
         public static string SetDefault => nameof(SetDefault);
         public static string UnsetDefault => nameof(UnsetDefault);
+        public static string Apply => nameof(Apply);
         public static string Package => nameof(Package);
         public static string Clear => nameof(Clear);
         public static string Edit => nameof(Edit);
-        public static string Apply => nameof(Apply);
-        public static string NotApply => nameof(NotApply);
+        public static string Save => nameof(Save);
+        public static string NotSave => nameof(NotSave);
         public static string Offset => nameof(Offset);
         public static string EdgeLines => nameof(EdgeLines);
         public static string Additionally => nameof(Additionally);

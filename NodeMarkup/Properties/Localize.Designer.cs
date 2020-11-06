@@ -1161,7 +1161,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на English.
+        ///   Ищет локализованную строку, похожую на English US.
         /// </summary>
         public static string Mod_Locale_en {
             get {
@@ -1549,12 +1549,39 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на You can delete it only from game content manager..
+        /// </summary>
+        public static string PresetEditor_IsAssetWarningMessage {
+            get {
+                return ResourceManager.GetString("PresetEditor_IsAssetWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You can&apos;t edit it and can delete it only from game content manager or unsubscribe on Steam Workshop..
+        /// </summary>
+        public static string PresetEditor_IsWorkshopWarningMessage {
+            get {
+                return ResourceManager.GetString("PresetEditor_IsWorkshopWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на The name &quot;{0}&quot; is already used by another preset.
         ///Are you sure you want to have multiple presets with the same name?.
         /// </summary>
         public static string PresetEditor_NameExistMessage {
             get {
                 return ResourceManager.GetString("PresetEditor_NameExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This preset is a asset..
+        /// </summary>
+        public static string PresetEditor_PresetIsAsset {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetIsAsset", resourceCulture);
             }
         }
         
@@ -1577,7 +1604,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This preset is a asset. To change its name need rewrite asset file. Continue?.
+        ///   Ищет локализованную строку, похожую на To change its name need rewrite asset file. Continue?.
         /// </summary>
         public static string PresetEditor_RewriteMessage {
             get {
@@ -2796,6 +2823,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на You can delete it only from game content manager..
+        /// </summary>
+        public static string TemplateEditor_IsAssetWarningMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_IsAssetWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You can&apos;t edit it and can delete it only from game content manager or unsubscribe on Steam Workshop..
+        /// </summary>
+        public static string TemplateEditor_IsWorkshopWarningMessage {
+            get {
+                return ResourceManager.GetString("TemplateEditor_IsWorkshopWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Name.
         /// </summary>
         public static string TemplateEditor_Name {
@@ -2833,7 +2878,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This template is a asset. To change its name and values need rewrite asset file. Continue?.
+        ///   Ищет локализованную строку, похожую на To change its name and values need rewrite asset file. Continue?.
         /// </summary>
         public static string TemplateEditor_RewriteMessage {
             get {
@@ -2866,6 +2911,15 @@ namespace NodeMarkup {
         public static string TemplateEditor_TemplateByAuthor {
             get {
                 return ResourceManager.GetString("TemplateEditor_TemplateByAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This template is a asset..
+        /// </summary>
+        public static string TemplateEditor_TemplateIsAsset {
+            get {
+                return ResourceManager.GetString("TemplateEditor_TemplateIsAsset", resourceCulture);
             }
         }
         
