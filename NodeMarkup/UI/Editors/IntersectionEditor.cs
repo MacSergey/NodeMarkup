@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,7 +99,7 @@ namespace NodeMarkup.UI.Editors
         protected override void SetEditable()
         {
             base.SetEditable();
-            ApplyButton.isVisible = !EditMode;
+            ApplyButton.SetAvailable(!EditMode);
         }
     }
 
