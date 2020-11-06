@@ -63,11 +63,13 @@ namespace NodeMarkup.UI.Editors
             AddAuthor();
             AddTemplateName();
 
-            ReloadAdditional();
+            ReloadAdditionalProperties();
+
+            AddAdditional();
 
             SetEditable();
         }
-        private void ReloadAdditional()
+        private void ReloadAdditionalProperties()
         {
             if (Aditional != null)
             {
@@ -75,15 +77,16 @@ namespace NodeMarkup.UI.Editors
                     ComponentPool.Free(aditional);
             }
 
-            Aditional = AddAditional().ToArray();
+            Aditional = AddAditionalProperties().ToArray();
         }
+        protected virtual void AddAdditional() { }
         protected override void OnClear()
         {
             NameProperty = null;
             HeaderPanel = null;
             Aditional = null;
         }
-        protected virtual IEnumerable<EditorItem> AddAditional() { yield break; }
+        protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
 
         protected override void OnObjectDelete(TemplateType template) => (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
 
@@ -151,6 +154,7 @@ namespace NodeMarkup.UI.Editors
             EditMode = false;
             HasChanges = false;
             SetEditable();
+            Tool.SetDefaultMode();
         }
 
         private void SaveChanges()
@@ -203,7 +207,7 @@ namespace NodeMarkup.UI.Editors
         private void NotSaveChanges()
         {
             OnNotApplyChanges();
-            ReloadAdditional();
+            ReloadAdditionalProperties();
             EndEditTemplate();
         }
         protected virtual void OnNotApplyChanges() => NameProperty.Value = EditObject.Name;
@@ -227,13 +231,11 @@ namespace NodeMarkup.UI.Editors
             bool OnSave()
             {
                 SaveChanges();
-                Tool.SetDefaultMode();
                 return true;
             }
             bool OnNotSave()
             {
                 NotSaveChanges();
-                Tool.SetDefaultMode();
                 return true;
             }
         }

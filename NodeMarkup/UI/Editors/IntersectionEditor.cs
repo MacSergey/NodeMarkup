@@ -33,10 +33,8 @@ namespace NodeMarkup.UI.Editors
             base.ClearSettings();
         }
 
-        protected override void OnObjectSelect()
+        protected override void AddAdditional()
         {
-            base.OnObjectSelect();
-
             AddScreenshot();
             AddApplyButton();
         }
@@ -97,9 +95,9 @@ namespace NodeMarkup.UI.Editors
             ComponentPool.Free(Preview);
             Preview = null;
         }
-        protected override void StartEditTemplate()
+        protected override void SetEditable()
         {
-            base.StartEditTemplate();
+            base.SetEditable();
             ApplyButton.isVisible = !EditMode;
         }
     }

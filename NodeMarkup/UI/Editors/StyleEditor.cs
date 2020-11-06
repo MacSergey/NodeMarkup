@@ -41,7 +41,7 @@ namespace NodeMarkup.UI.Editors
             EditStyle = EditObject.Style.Copy();
             EditStyle.OnStyleChanged = OnChanged;
         }
-        protected override IEnumerable<EditorItem> AddAditional()
+        protected override IEnumerable<EditorItem> AddAditionalProperties()
         {
             AddStyleProperties();
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
