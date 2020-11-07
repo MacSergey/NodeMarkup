@@ -451,10 +451,8 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CreateEdgeLines)}");
 
-            foreach (var enter in Markup.Enters)
-                Markup.AddConnection(new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint), Style.StyleType.EmptyLine);
-
-            Panel.UpdatePanel();
+            var lines = Markup.Enters.Select(e => Markup.AddConnection(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
+            Panel.EditLine(lines.Last());
         }
         private void SaveAsPreset()
         {
