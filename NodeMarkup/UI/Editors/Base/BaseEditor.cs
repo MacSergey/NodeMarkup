@@ -234,10 +234,8 @@ namespace NodeMarkup.UI.Editors
 
         protected void DeleteItem(EditableItem<EditableObject, ItemIcon> deleteItem)
         {
-            if (!(deleteItem is EditableItemType item))
-                return;
-
-            Tool.DeleteItem(item.Object, () => OnDeleteItem(item));
+            if (deleteItem is EditableItemType item)
+                Tool.DeleteItem(item.Object, () => OnDeleteItem(item));
         }
         protected virtual void OnDeleteItem(EditableItemType item)
         {
