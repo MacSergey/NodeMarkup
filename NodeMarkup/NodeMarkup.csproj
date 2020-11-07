@@ -266,6 +266,35 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Empty.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewBackground.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkChessBoard.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkDoubleZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkLadder.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkParallelDashedLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkParallelSolidLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerChevron.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerGrid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerStripe.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineSolidAndDashed.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
     <PostBuildEvent>
@@ -309,7 +338,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

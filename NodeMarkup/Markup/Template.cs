@@ -31,8 +31,12 @@ namespace NodeMarkup.Manager
         public string Name { get; set; }
         public bool HasName => !string.IsNullOrEmpty(Name);
 
-        public Texture2D Screenshot { get; set; }
-        public bool HasScreenshot => Screenshot != null;
+        public virtual Texture2D Preview { get; set; }
+        public virtual bool HasPreview => Preview != null;
+        public virtual Texture2D SteamPreview { get; set; }
+        public virtual bool HasSteamPreview => Preview != null;
+        public virtual bool SeparatePreview => true;
+        public virtual bool NeedLoadPreview => true;
 
         public abstract string DeleteCaptionDescription { get; }
         public abstract string DeleteMessageDescription { get; }
@@ -100,6 +104,41 @@ namespace NodeMarkup.Manager
         public override TemplateType Type => TemplateType.Style;
         public override TemplateManager Manager => TemplateManager.StyleManager;
 
+        public override bool HasPreview => true;
+        public override Texture2D Preview => GetTexture("StylesPreviewBackground");
+        public override bool HasSteamPreview => true;
+        public override Texture2D SteamPreview => GetTexture("StylesSteamBackground");
+        public override bool NeedLoadPreview => false;
+
+        private Texture2D GetTexture(string name)
+        {
+            var background = TextureUtil.LoadTextureFromAssembly(name);
+            var logo = TextureUtil.LoadTextureFromAssembly(Style.Type.ToString());
+
+            var widthShift = (background.width - logo.width) / 2;
+            var heightShift = (background.height - logo.height) / 2;
+
+            var sc = (Color)Style.Color.GetStyleIconColor();
+
+            for (var i = 0; i < logo.width; i += 1)
+            {
+                for (var j = 0; j < logo.height; j += 1)
+                {
+                    var lc = logo.GetPixel(i, j);
+                    var bc = background.GetPixel(i + widthShift, j + heightShift);
+                    if (lc.a != 0)
+                    {
+                        var color = new Color(Blend(bc.r, sc.r, lc.a), Blend(bc.g, sc.g, lc.a), Blend(bc.b, sc.b, lc.a), 1);
+                        background.SetPixel(i + widthShift, j + heightShift, color);
+                    }
+                }
+            }
+
+            static float Blend(float background, float color, float opacity) => background * (1 - opacity) + color * opacity;
+
+            return background;
+        }
+
         public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
         public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
         public override string Description => Style.Type.ToString();
@@ -150,6 +189,19 @@ namespace NodeMarkup.Manager
         public int Lines { get; private set; }
         public int Crosswalks { get; private set; }
         public int Fillers { get; private set; }
+
+        private Texture2D Screenshot { get; set; }
+        public override Texture2D Preview
+        {
+            get => Screenshot;
+            set => Screenshot = value;
+        }
+        public override Texture2D SteamPreview
+        {
+            get => Screenshot;
+            set => Screenshot = value;
+        }
+        public override bool SeparatePreview => false;
 
         private IntersectionTemplate() : base() { }
 
@@ -211,9 +263,28 @@ namespace NodeMarkup.Manager
         public bool HasAuthor => !string.IsNullOrEmpty(Author);
         public bool IsWorkshop { get; set; }
         public string FileName { get; set; }
-        public Image Image => Template.HasScreenshot ? new Image(Template.Screenshot.width, Template.Screenshot.height, TextureFormat.RGB24, Template.Screenshot.GetPixels32()) : null;
+
+        public Image Preview => Template.HasPreview ? GetPreview(Template.Preview) : null;
+        public Image SteamPreview => Template.HasSteamPreview ? GetPreview(Template.SteamPreview) : null;
+        public bool SeparatePreview => Template.SeparatePreview;
+        public bool NeedLoadPreview => Template.NeedLoadPreview;
+
+        private Image GetPreview(Texture2D texture)
+        {
+            try
+            {
+                return new Image(texture.width, texture.height, TextureFormat.RGB24, texture.GetPixels32());
+            }
+            catch (Exception error)
+            {
+                Logger.LogError("Could not get template screenshot", error);
+                return null;
+            }
+        }
+
         public string MetaData => $"{Template.Name}_Data";
-        public string MetaScreenshot => $"{Template.Name}_Preview";
+        public string MetaPreview => $"{Template.Name}_Preview";
+        public string MetaSteamPreview => $"{Template.Name}_SteamPreview";
 
         public override string ToString() => $"{Template.Type}:{Template.Name} - {Template.Id}";
 

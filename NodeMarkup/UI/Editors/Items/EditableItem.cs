@@ -205,15 +205,9 @@ namespace NodeMarkup.UI.Editors
     }
     public class StyleIcon : ColorIcon
     {
-        protected static Color32 GetStyleColor(Color32 color)
-        {
-            var ratio = 255 / (float)Math.Max(Math.Max(color.r, color.g), color.b);
-            var styleColor = new Color32((byte)(color.r * ratio), (byte)(color.g * ratio), (byte)(color.b * ratio), 255);
-            return styleColor == Color.black ? (Color32)Color.white : styleColor;
-        }
         protected UIButton Thumbnail { get; set; }
 
-        public Color32 StyleColor { set => Thumbnail.color = Thumbnail.disabledColor = GetStyleColor(value); }
+        public Color32 StyleColor { set => Thumbnail.color = Thumbnail.disabledColor = value.GetStyleIconColor(); }
         public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = value.ToString(); }
 
         public StyleIcon()

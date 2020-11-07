@@ -214,24 +214,8 @@ namespace NodeMarkup.Utils
         }
         public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
         public static float AbsoluteAngle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
-        public static Vector3 Direction(this float absoluteAngle) => Vector3.right.TurnRad(absoluteAngle, false).normalized;
-        public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2)/* c.a == 0 ? 0 : ColorChange(c.a) * 0.985f + 0.015f*/);
-        static float ColorChange(float c) => Mathf.Pow(c, 4);
-
         public static float DeltaAngle(this Bezier3 bezier) => 180 - Vector3.Angle(bezier.b - bezier.a, bezier.c - bezier.d);
-
-        public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
-        public static Color32 ToColor(this int colorData, int version)
-        {
-            var color = colorData.ToColor();
-            return version != 1 ? VersionMigration.CorrectColor01(color) : color;
-        }
-        public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
-
-        public static Style.StyleType ToGeneral(this RegularLineStyle.RegularLineType style) => (Style.StyleType)(object)style;
-        public static Style.StyleType ToGeneral(this StopLineStyle.StopLineType style) => (Style.StyleType)(object)style;
-        public static Style.StyleType ToGeneral(this CrosswalkStyle.CrosswalkType style) => (Style.StyleType)(object)style;
-        public static Style.StyleType ToGeneral(this FillerStyle.FillerType style) => (Style.StyleType)(object)style;
+        public static Vector3 Direction(this float absoluteAngle) => Vector3.right.TurnRad(absoluteAngle, false).normalized;
 
         public static Bezier3 GetBezier(this Line3 line)
         {

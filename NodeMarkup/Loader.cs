@@ -266,11 +266,10 @@ namespace NodeMarkup
                 var templateConfig = Parse(markingInfo.data);
                 if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
                 {
-                    if (asset.package.Find($"{templateAsset.Template.Name}_Preview") is Package.Asset assetScreenshot && assetScreenshot.Instantiate<Texture>() is Texture2D screenshot)
-                        templateAsset.Template.Screenshot = screenshot;
+                    if (templateAsset.NeedLoadPreview && asset.package.Find(templateAsset.MetaPreview) is Package.Asset assetPreview && assetPreview.Instantiate<Texture>() is Texture2D preview)
+                        templateAsset.Template.Preview = preview;
 
                     TemplateManager.AddAssetTemplate(templateAsset);
-
                 }
                 Logger.LogDebug($"Asset loaded: {templateAsset}");
             }
@@ -304,8 +303,13 @@ namespace NodeMarkup
                 markingInfo.data = GetString(templateAsset.Template.ToXml());
                 meta.assetRef = package.AddAsset(templateAsset.MetaData, markingInfo.gameObject);
 
-                if (templateAsset.Image is Image image)
-                    meta.steamPreviewRef = meta.imageRef = package.AddAsset(templateAsset.MetaScreenshot, image, false, Image.BufferFileFormat.PNG, false, false);
+                if (templateAsset.Preview is Image image)
+                    meta.imageRef = package.AddAsset(templateAsset.MetaPreview, image, false, Image.BufferFileFormat.PNG, false, false);
+
+                if (templateAsset.SeparatePreview && templateAsset.SteamPreview is Image steamImage)
+                    meta.steamPreviewRef = package.AddAsset(templateAsset.MetaSteamPreview, steamImage, false, Image.BufferFileFormat.PNG, false, false);
+                else
+                    meta.steamPreviewRef = meta.imageRef;
 
                 package.AddAsset(meta.name, meta, UserAssetType.CustomAssetMetaData);
 

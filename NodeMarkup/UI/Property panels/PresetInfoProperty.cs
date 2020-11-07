@@ -39,8 +39,8 @@ namespace NodeMarkup.UI
         }
         public void Init(IntersectionTemplate template)
         {
-            Screenshot.texture = template.HasScreenshot ? template.Screenshot : Empty;
-            NoScreenshot.isVisible = !template.HasScreenshot;
+            Screenshot.texture = template.HasPreview ? template.Preview : Empty;
+            NoScreenshot.isVisible = !template.HasPreview;
 
             Roads.text = template.Roads.ToString();
             Lines.text = template.Lines.ToString();

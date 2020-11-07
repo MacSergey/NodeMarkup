@@ -337,7 +337,7 @@ namespace NodeMarkup.Manager
             if (AddTemplate(GetNewName(), markup, out template))
             {
                 if (Loader.SaveScreenshot(image, template.Id))
-                    template.Screenshot = image.CreateTexture();
+                    template.Preview = image.CreateTexture();
                 return true;
             }
             else
@@ -350,7 +350,7 @@ namespace NodeMarkup.Manager
             foreach (var template in Templates.Where(t => !t.IsAsset))
             {
                 if (Loader.LoadScreenshot(template.Id, out Image image))
-                    template.Screenshot = image.CreateTexture();
+                    template.Preview = image.CreateTexture();
             }
         }
     }
