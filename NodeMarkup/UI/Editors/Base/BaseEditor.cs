@@ -83,8 +83,8 @@ namespace NodeMarkup.UI.Editors
             foreach (var item in ItemsPanel.components)
                 item.width = ItemsPanel.width;
         }
-        private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value) 
-            =>ItemsPanel.width = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
+        private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
+            => ItemsPanel.width = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
 
         private void AddSettingPanel()
         {
@@ -229,27 +229,28 @@ namespace NodeMarkup.UI.Editors
             item.eventClick += ItemClick;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
-            item.OnDelete += ItemDelete;
+            item.OnDelete += DeleteItem;
         }
 
-        protected void ItemDelete(EditableItem<EditableObject, ItemIcon> deleteItem)
+        protected void DeleteItem(EditableItem<EditableObject, ItemIcon> deleteItem)
         {
             if (!(deleteItem is EditableItemType item))
                 return;
 
-            Tool.DeleteItem(item.Object, Delete);
+            Tool.DeleteItem(item.Object, () => OnDeleteItem(item));
+        }
+        protected virtual void OnDeleteItem(EditableItemType item)
+        {
+            OnObjectDelete(item.Object);
+            var isSelect = item == SelectItem;
+            var index = Math.Min(item.parent.components.IndexOf(item), item.parent.components.Count - 2);
+            DeleteItem(item);
 
-            void Delete()
-            {
-                OnObjectDelete(item.Object);
-                var isSelect = item == SelectItem;
-                DeleteItem(item);
-                if (isSelect)
-                {
-                    ClearSettings();
-                    Select(0);
-                }
-            }
+            if (!isSelect)
+                return;
+
+            ClearSettings();
+            Select(index);
         }
 
         protected override void ClearItems() => ClearItems(ItemsPanel);
@@ -274,7 +275,7 @@ namespace NodeMarkup.UI.Editors
             item.eventClick -= ItemClick;
             item.eventMouseEnter -= ItemHover;
             item.eventMouseLeave -= ItemLeave;
-            item.OnDelete -= ItemDelete;
+            item.OnDelete -= DeleteItem;
             ComponentPool.Free(item);
 
             SwitchEmpty();
@@ -368,9 +369,10 @@ namespace NodeMarkup.UI.Editors
         protected virtual void OnClear() { }
         protected virtual void OnObjectDelete(EditableObject editableObject) { }
         protected virtual void OnObjectUpdate() { }
-        public override void Select(int index)
+        public override void Select(int index) => Select(ItemsPanel, index);
+        protected void Select(UIComponent parent, int index)
         {
-            if (ItemsPanel.components.Count > index && ItemsPanel.components[index] is EditableItemType item)
+            if (index >= 0 && parent.components.Count > index && parent.components[index] is EditableItemType item)
                 Select(item);
         }
         public virtual void Select(EditableItemType item)

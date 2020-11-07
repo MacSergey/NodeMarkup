@@ -41,8 +41,26 @@ namespace NodeMarkup.UI.Editors
 
             base.DeleteItem(item);
 
-            if(group?.IsEmpty == true)
+            if (group?.IsEmpty == true)
                 DeleteGroup(group);
+        }
+        protected override void OnDeleteItem(EditableItemType item)
+        {
+            OnObjectDelete(item.Object);
+            var isSelect = item == SelectItem;
+            var index = Math.Min(item.parent.components.IndexOf(item), item.parent.components.Count - 2);
+            var group = SelectGroup(item.Object);
+            DeleteItem(item);
+
+            if (!isSelect)
+                return;
+
+            ClearSettings();
+
+            if (GroupingEnabled)
+                Select(group, index);
+            else
+                Select(index);
         }
         private void DeleteGroup(EditableGroupType group)
         {
@@ -122,6 +140,11 @@ namespace NodeMarkup.UI.Editors
             if (selectObject != null && GetItem(selectObject) is EditableItemType item)
                 ScrollTo(item);
         }
+        private void Select(GroupType groupType, int index)
+        {
+            if (Groups.TryGetValue(groupType, out EditableGroupType group))
+                Select(group, index);
+        }
         public override void Select(EditableItemType item)
         {
             var groupKey = SelectGroup(item.Object);
@@ -130,6 +153,7 @@ namespace NodeMarkup.UI.Editors
 
             base.Select(item);
         }
+
         public override void ScrollTo(EditableItemType item)
         {
             ItemsPanel.ScrollToBottom();
