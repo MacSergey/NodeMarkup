@@ -55,15 +55,14 @@ namespace NodeMarkup.UI.Editors
         private float Padding => 10f;
         private float Height => 20f;
 
-        private bool _enableControl;
         public override bool EnableControl 
-        { 
-            get => _enableControl; 
+        {
+            get => base.EnableControl;
             set
             {
-                _enableControl = value;
+                base.EnableControl = value;
                 foreach (var button in Buttons)
-                    button.isEnabled = _enableControl;
+                    button.isEnabled = value;
             }
         }
 
@@ -74,8 +73,6 @@ namespace NodeMarkup.UI.Editors
         }
         public override void DeInit()
         {
-            base.DeInit();
-
             foreach(var button in Buttons)
             {
                 button.parent.RemoveUIComponent(button);
@@ -84,6 +81,8 @@ namespace NodeMarkup.UI.Editors
 
             OnButtonClick = null;
             Buttons.Clear();
+
+            base.DeInit();
         }
 
         public int AddButton(string text)
@@ -93,7 +92,7 @@ namespace NodeMarkup.UI.Editors
             button.text = text;
             button.textScale = 0.8f;
             button.textPadding = new RectOffset(0, 0, 3, 0);
-            button.isEnabled = _enableControl;
+            button.isEnabled = EnableControl;
             button.eventClick += ButtonClick;
 
             Buttons.Add(button);

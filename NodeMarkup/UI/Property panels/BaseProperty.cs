@@ -15,7 +15,7 @@ namespace NodeMarkup.UI
     {
         protected virtual float DefaultHeight => 30;
 
-        public virtual bool EnableControl { get; set; }
+        public virtual bool EnableControl { get; set; } = true;
 
         public virtual void Init() => Init(null);
         public virtual void DeInit() 
