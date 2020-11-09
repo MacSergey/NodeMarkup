@@ -121,7 +121,7 @@
     <value>Lösche {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Willst du {0} {1} wirklich löschen?</value>
+    <value>Willst du {0} "{1}" wirklich löschen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Mausrad scrollen zum ändern
@@ -1281,5 +1281,11 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>Diese Stilvorlage ist ein Spiel-Objekt.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>Kreuzungsvorlagen</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>Kreuzungsvorlagen</value>
   </data>
 </root>

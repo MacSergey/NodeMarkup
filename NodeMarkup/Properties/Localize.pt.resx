@@ -121,7 +121,7 @@
     <value>Apagar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar {0} {1}?</value>
+    <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -1046,6 +1046,8 @@ Quer aplicar as marcações manualmente?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
   </data>
+  
+  
   
   
   

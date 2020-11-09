@@ -121,7 +121,7 @@
     <value>Poista {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa {0} {1}?</value>
+    <value>Haluatko varmasti poistaa {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Vieritä hiiren rullalla vaihtaaksesi
@@ -1149,5 +1149,7 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
   </data>
+  
+  
   
 </root>

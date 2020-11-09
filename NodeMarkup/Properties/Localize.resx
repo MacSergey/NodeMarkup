@@ -121,7 +121,7 @@
     <value>Delete {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Do you really want to delete {0} {1}?</value>
+    <value>Do you really want to delete {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll the wheel to change

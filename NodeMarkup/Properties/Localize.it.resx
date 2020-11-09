@@ -121,7 +121,7 @@
     <value>Cancella {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Vuoi veramente cancellare {0} {1}?</value>
+    <value>Vuoi veramente cancellare {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scorri con la rotella per cambiare
@@ -1130,6 +1130,8 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>Strade:</value>
   </data>
+  
+  
   
   
   
