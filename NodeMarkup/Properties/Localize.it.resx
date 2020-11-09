@@ -1093,15 +1093,35 @@ Vuoi applicare l'incrocio manualmente?</value>
 - Il colore della sovrapposizione al passaggio del mouse è cambiato da bianco ad azzurro per evitare la fusione con il markup.
 - La linea dell'attraversamento pedonale non crea più incroci non necessari. Potrebbe essere necessario impostare i bordi delle strisce pedonali per quelle già esistenti.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Salva come risorsa</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+da {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>La lista dei preimpostati è vuota.
+Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Preimpostati</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Salva come preimpostato</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Salva come preimpostato</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>No preimpostati</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Applica preimpostato</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nuovo preimpostato</value>
+  </data>
   
   
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1110,7 +1130,9 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
     <value>Applica dopo il riavvio del gioco</value>
   </data>
-  
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Carica risorse di marcatura</value>
+  </data>
   
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Attraversamento pedonale:</value>
@@ -1132,11 +1154,18 @@ Vuoi applicare l'incrocio manualmente?</value>
   </data>
   
   
-  
-  
-  
-  
-  
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup preimpostati</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Cancella tutti i preimpostati</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Cancella tutti i preimpostati</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Vuoi veramente rimuovere tutti i preimpostati?</value>
+  </data>
   
   
   

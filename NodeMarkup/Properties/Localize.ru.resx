@@ -1264,10 +1264,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>Этот шаблон является игровым ресурсом. Для изменения его имени необходимо перезаписать файл ресурса. Продолжить?</value>
   </data>
-  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
-    <value>Двойное нажатие + Shift для копирования цвета
-Двойное нажатие для вставки цвета</value>
-  </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Для того что бы иметь возможность задать границы перехода, вы должны иметь линии начинающиеся из тех же точек что и переход</value>
   </data>

@@ -1193,10 +1193,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
   </data>
-  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
-    <value>ダブルクリック+Shiftで、色のコピー
-ダブルクリックで、色の貼り付け</value>
-  </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>基準線の設定方法
 横断歩道を設定した、同じポイントから始まるラインが必要です。</value>
