@@ -153,17 +153,6 @@ namespace NodeMarkup.UI.Editors
             ColorSample.eventSelectedColorChanged += SelectedColorChanged;
             ColorSample.eventColorPickerOpen += ColorPickerOpen;
             ColorSample.eventColorPickerClose += ColorPickerClose;
-            ColorSample.eventDoubleClick += ColorSampleDoubleClick;
-
-            ColorSample.tooltip = NodeMarkup.Localize.Editor_ColorSampleTooltip;
-        }
-
-        private void ColorSampleDoubleClick(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            if (NodeMarkupTool.OnlyShiftIsPressed)
-                Copy();
-            else
-                Paste();
         }
 
         private void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)

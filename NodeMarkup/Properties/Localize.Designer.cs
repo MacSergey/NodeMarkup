@@ -487,16 +487,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Double click with Shift to copy color
-        ///Double click to paste color.
-        /// </summary>
-        public static string Editor_ColorSampleTooltip {
-            get {
-                return ResourceManager.GetString("Editor_ColorSampleTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Style.
         /// </summary>
         public static string Editor_Style {
@@ -807,7 +797,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на This rule is overlapped by another rule.
-        ///Check other rule&apos;s &quot;From&quot; and &quot;To&quot; points..
+        ///Check the other rule&apos;s &quot;From&quot; and &quot;To&quot; points..
         /// </summary>
         public static string LineEditor_RuleOverlappedWarning {
             get {
@@ -816,7 +806,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на To be able to change rule&apos;s &quot;From&quot; and &quot;To&quot; points and create additional rules, you must have lines that intersect with this line.
+        ///   Ищет локализованную строку, похожую на You must have lines that intersect with this line to be able to change the rule&apos;s &quot;From&quot; and &quot;To&quot; points and create additional rules..
         /// </summary>
         public static string LineEditor_RulesWarning {
             get {
@@ -1095,7 +1085,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You are using the BETA version of {0}. It is for testing new features and may contain errors that will break or delete your markings. If you subscribed to it by mistake, then switch to the stable version..
+        ///   Ищет локализованную строку, похожую на You are using the BETA version of {0}. It is for testing new features and may contain errors that could break or delete your markings. If you subscribed to it by mistake, then switch to the stable version..
         /// </summary>
         public static string Mod_BetaWarningMessage {
             get {
@@ -1133,7 +1123,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Mod loaded with errors.
-        ///It is not recommended to use the mod in this state, it can lead to unpredictable behavior.
+        ///It is not recommended to use the mod in this state as it can lead to unpredictable behavior.
         ///Restart the game..
         /// </summary>
         public static string Mod_LoaledWithErrors {
@@ -1413,7 +1403,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Clear marking.
+        ///   Ищет локализованную строку, похожую на Clear markings.
         /// </summary>
         public static string Panel_ClearMarking {
             get {
@@ -1422,7 +1412,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy marking.
+        ///   Ищет локализованную строку, похожую на Copy markings.
         /// </summary>
         public static string Panel_CopyMarking {
             get {
@@ -1458,7 +1448,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste marking.
+        ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Panel_PasteMarking {
             get {
@@ -1595,7 +1585,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This preset is a asset..
+        ///   Ищет локализованную строку, похожую на This preset is an asset..
         /// </summary>
         public static string PresetEditor_PresetIsAsset {
             get {
@@ -1712,7 +1702,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Backup marking.
+        ///   Ищет локализованную строку, похожую на Backup markings.
         /// </summary>
         public static string Settings_BackupMarking {
             get {
@@ -2090,7 +2080,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking under tracks.
+        ///   Ищет локализованную строку, похожую на Markings under tracks.
         /// </summary>
         public static string Settings_RailUnderMarking {
             get {
@@ -2099,7 +2089,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Warning: This option change game objects render order.
+        ///   Ищет локализованную строку, похожую на Warning: This option changes game objects render order.
         /// </summary>
         public static string Settings_RailUnderMarkingWarning {
             get {
@@ -2135,7 +2125,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Restore marking data from file.
+        ///   Ищет локализованную строку, похожую на Restore markings data from file.
         /// </summary>
         public static string Settings_RestoreMarkingButton {
             get {
@@ -2144,7 +2134,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Restore marking data.
+        ///   Ищет локализованную строку, похожую на Restore markings data.
         /// </summary>
         public static string Settings_RestoreMarkingCaption {
             get {
@@ -2154,7 +2144,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Do you really want to restore data?
-        ///The restored data will replace all existing marking..
+        ///The restored data will replace all existing markings..
         /// </summary>
         public static string Settings_RestoreMarkingMessage {
             get {
@@ -2163,7 +2153,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data restore failed.
+        ///   Ищет локализованную строку, похожую на Markings data restore failed.
         /// </summary>
         public static string Settings_RestoreMarkingMessageFailed {
             get {
@@ -2172,7 +2162,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking data successfully restored.
+        ///   Ищет локализованную строку, похожую на Markings data successfully restored.
         /// </summary>
         public static string Settings_RestoreMarkingMessageSuccess {
             get {
@@ -2300,7 +2290,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Copy marking.
+        ///   Ищет локализованную строку, похожую на Copy markings.
         /// </summary>
         public static string Settings_ShortcutCopyMarking {
             get {
@@ -2345,7 +2335,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste marking.
+        ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Settings_ShortcutPasteMarking {
             get {
@@ -2933,7 +2923,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This template is a asset..
+        ///   Ищет локализованную строку, похожую на This template is an asset..
         /// </summary>
         public static string TemplateEditor_TemplateIsAsset {
             get {
@@ -3059,7 +3049,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} {1}?.
+        ///   Ищет локализованную строку, похожую на Do you really want to delete {0} &quot;{1}&quot;?.
         /// </summary>
         public static string Tool_DeleteMessage {
             get {
@@ -3095,7 +3085,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you want to exit edit mode and apply a changes?.
+        ///   Ищет локализованную строку, похожую на Do you want to exit edit mode and apply changes?.
         /// </summary>
         public static string Tool_EndEditOrderMessage {
             get {
@@ -3113,7 +3103,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you want to exit paste mode and apply a changes?.
+        ///   Ищет локализованную строку, похожую на Do you want to exit paste mode and apply changes?.
         /// </summary>
         public static string Tool_EndPasteOrderMessage {
             get {
@@ -3423,7 +3413,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste marking.
+        ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Tool_PasteMarkingsCaption {
             get {
@@ -3432,8 +3422,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to paste marking?
-        ///It will replace the existing marking..
+        ///   Ищет локализованную строку, похожую на Do you really want to paste markings?
+        ///It will replace the existing markings..
         /// </summary>
         public static string Tool_PasteMarkingsMessage {
             get {
@@ -3469,8 +3459,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на The roads at this intersection have changed, therefore the existing marking cannot be applied automatically.
-        ///Do you want to apply the marking manually?.
+        ///   Ищет локализованную строку, похожую на The roads at this intersection have changed, therefore the existing markings cannot be applied automatically.
+        ///Do you want to apply the markings manually?.
         /// </summary>
         public static string Tool_RoadsWasChangedMessage {
             get {
