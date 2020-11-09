@@ -141,7 +141,7 @@ namespace NodeMarkup.UI.Editors
         {
             Panel.Available = AvailableItems = !EditMode;
             HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
-            Warning.isVisible = EditObject.IsAsset && !EditMode;
+            Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && !EditMode;
 
             foreach (var aditional in Aditional)
                 aditional.EnableControl = EditMode;

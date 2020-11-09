@@ -202,7 +202,7 @@ namespace NodeMarkup.Manager
             var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidth, Position.Value + CornerDir * RoadHalfWidth).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
         }
-        public override string ToString() => Id.ToString();
+        public override string ToString() => $"{Id}-{(int)(AbsoluteAngle * Mathf.Rad2Deg)}";
     }
     public class DriveLane
     {

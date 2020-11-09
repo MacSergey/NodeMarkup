@@ -45,7 +45,7 @@ namespace NodeMarkup.Tools
         }
         private void TurnLeftClick()
         {
-            Transform((t) => t.NextIndex(Targets.Length));
+            Transform((t) => t.PrevIndex(Targets.Length));
             SetAvailableTargets();
             SetBaskets();
             Paste();
@@ -64,7 +64,7 @@ namespace NodeMarkup.Tools
         }
         private void TurnRightClick()
         {
-            Transform((t) => t.PrevIndex(Targets.Length));
+            Transform((t) => t.NextIndex(Targets.Length));
             SetAvailableTargets();
             SetBaskets();
             Paste();

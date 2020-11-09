@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -287,6 +288,15 @@ namespace NodeMarkup.Manager
         public string MetaSteamPreview => $"{Template.Name}_SteamPreview";
 
         public override string ToString() => $"{Template.Type}:{Template.Name} - {Template.Id}";
+        private static Regex Replacer { get; } = new Regex(@$"[{string.Join(string.Empty, GetInvalidChars().ToArray())}]+");
+        private static IEnumerable<string> GetInvalidChars()
+        {
+            foreach (var c in Path.GetInvalidFileNameChars())
+                yield return c.ToString();
+
+            yield return ".";
+            yield return "_";
+        }
 
         public TemplateAsset(Template template, Package.Asset asset = null)
         {
@@ -303,7 +313,7 @@ namespace NodeMarkup.Manager
             {
                 AuthorId = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
                 IsWorkshop = false;
-                FileName = $"IMT_{Template.Description}_{Template.Name.Replace(' ', '_').Replace('.', '_')}_{Template.Id.ToString().Substring(0, 8)}";
+                FileName = $"IMT_{Template.Description}_{Replacer.Replace(Template.Name, "_")}_{Template.Id.ToString().Take(8)}";
             }
         }
 

@@ -313,7 +313,7 @@ namespace NodeMarkup
 
                 package.AddAsset(meta.name, meta, UserAssetType.CustomAssetMetaData);
 
-                var path = GetSavePathName(templateAsset.FileName);
+                var path = Path.Combine(DataLocation.assetsPath, PathUtils.AddExtension(PathEscaper.Escape(templateAsset.FileName), PackageManager.packageExtension));
                 package.Save(path);
 
                 Logger.LogDebug($"Asset {templateAsset} saved to {path}");
@@ -326,12 +326,6 @@ namespace NodeMarkup
                 return false;
             }
         }
-        public static string GetSavePathName(string saveName)
-        {
-            string path = PathUtils.AddExtension(PathEscaper.Escape(saveName), PackageManager.packageExtension);
-            return Path.Combine(DataLocation.assetsPath, path);
-        }
-
         public static bool SaveScreenshot(Image image, Guid id)
         {
             try

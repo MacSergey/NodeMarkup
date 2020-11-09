@@ -70,6 +70,7 @@ namespace NodeMarkup.Tools
                 size -= 0.43f;
             }
         }
+        public override string ToString() => $"{base.ToString()} - {Target}";
     }
     public class SourceEnter : Source<SourceEnter>
     {
@@ -178,6 +179,8 @@ namespace NodeMarkup.Tools
         }
 
         public override Vector3 GetSourcePosition(SourceEnter source) => Position;
+
+        public override string ToString() => $"{base.ToString()} ({Enter})";
     }
     public class TargetPoint : Target<SourcePoint>
     {
@@ -196,18 +199,20 @@ namespace NodeMarkup.Tools
     public abstract class AvalibleBorders<SourceType>
         where SourceType : Source<SourceType>
     {
-        public Target<SourceType> Left { get; }
-        public Target<SourceType> Right { get; }
+        public Target<SourceType> From { get; }
+        public Target<SourceType> To { get; }
         public AvalibleBorders(BaseOrderToolMode<SourceType> toolMode, SourceType source)
         {
             var sourcesLenght = toolMode.Sources.Length;
 
-            var prev = GetAvailableBorder(toolMode.Sources, source, s => s.PrevIndex(sourcesLenght)) ?? toolMode.Targets.First();
-            var next = GetAvailableBorder(toolMode.Sources, source, s => s.NextIndex(sourcesLenght)) ?? toolMode.Targets.Last();
+            var prev = GetAvailableBorder(toolMode.Sources, source, s => s.PrevIndex(sourcesLenght)) ?? GetDefaultPrev(toolMode);
+            var next = GetAvailableBorder(toolMode.Sources, source, s => s.NextIndex(sourcesLenght)) ?? GetDefaultNext(toolMode);
 
-            Left = !toolMode.IsMirror ? prev : next;
-            Right = !toolMode.IsMirror ? next : prev;
+            From = !toolMode.IsMirror ? prev : next;
+            To = !toolMode.IsMirror ? next : prev;
         }
+        protected virtual Target<SourceType> GetDefaultPrev(BaseOrderToolMode<SourceType> toolMode) => toolMode.Targets.First();
+        protected virtual Target<SourceType> GetDefaultNext(BaseOrderToolMode<SourceType> toolMode) => toolMode.Targets.Last();
         protected abstract Target<SourceType> GetAvailableBorder(SourceType[] sources, SourceType source, Func<int, int> func);
 
         public abstract IEnumerable<Target<SourceType>> GetTargets(BaseOrderToolMode<SourceType> toolMode, Target<SourceType>[] targets);
@@ -218,7 +223,7 @@ namespace NodeMarkup.Tools
         public EntersBorders(BaseOrderToolMode<SourceEnter> toolMode, SourceEnter source) : base(toolMode, source) { }
         public class Comp : IEqualityComparer<EntersBorders>
         {
-            public bool Equals(EntersBorders x, EntersBorders y) => x.Left == y.Left && x.Right == y.Right;
+            public bool Equals(EntersBorders x, EntersBorders y) => x.From == y.From && x.To == y.To;
             public int GetHashCode(EntersBorders obj) => obj.GetHashCode();
         }
         protected override Target<SourceEnter> GetAvailableBorder(SourceEnter[] sources, SourceEnter source, Func<int, int> func)
@@ -230,14 +235,15 @@ namespace NodeMarkup.Tools
         }
         public override IEnumerable<Target<SourceEnter>> GetTargets(BaseOrderToolMode<SourceEnter> toolMode, Target<SourceEnter>[] targets)
         {
-            if (Left != Right)
-                yield return Left;
+            yield return From;
 
-            for (var target = targets[Left.Num.NextIndex(targets.Length)]; target != Right; target = targets[target.Num.NextIndex(targets.Length)])
+            for (var target = Next(From); target != To; target = Next(target))
                 yield return target;
 
-            if (Right != Left)
-                yield return Right;
+            if (To != From)
+                yield return To;
+
+            Target<SourceEnter> Next(Target<SourceEnter> target) => targets[target.Num.NextIndex(targets.Length)];
         }
     }
     public class PointsBorders : AvalibleBorders<SourcePoint>
@@ -246,9 +252,11 @@ namespace NodeMarkup.Tools
         public PointsBorders(BaseOrderToolMode<SourcePoint> toolMode, SourcePoint source) : base(toolMode, source) { }
         public class Comp : IEqualityComparer<PointsBorders>
         {
-            public bool Equals(PointsBorders x, PointsBorders y) => x.Left == y.Left && x.Right == y.Right;
+            public bool Equals(PointsBorders x, PointsBorders y) => x.From == y.From && x.To == y.To;
             public int GetHashCode(PointsBorders obj) => obj.GetHashCode();
         }
+        protected override Target<SourcePoint> GetDefaultPrev(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.IsMirror ? toolMode.Targets.First() : toolMode.Targets.Last();
+        protected override Target<SourcePoint> GetDefaultNext(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.IsMirror ? toolMode.Targets.Last() : toolMode.Targets.First();
         protected override Target<SourcePoint> GetAvailableBorder(SourcePoint[] sources, SourcePoint source, Func<int, int> func)
         {
             var i = source.Num;
@@ -266,12 +274,16 @@ namespace NodeMarkup.Tools
         }
         public override IEnumerable<Target<SourcePoint>> GetTargets(BaseOrderToolMode<SourcePoint> toolMode, Target<SourcePoint>[] targets)
         {
-            for (var target = Left; target != Right; target = targets[Func(target.Num)])
+            for (var target = From; target != To; target = targets[target.Num.NextIndex(targets.Length)])
+            {
                 yield return target;
+                //if ((!toolMode.IsMirror && target.Num == targets.Length - 1) || (toolMode.IsMirror && target.Num == 0))
+                //    yield break;
+            }
 
-            yield return Right;
+            yield return To;
 
-            int Func(int i) => !toolMode.IsMirror ? i.NextIndex(targets.Length) : i.PrevIndex(targets.Length);
+            //int Func(int i) => !toolMode.IsMirror ? i.NextIndex(targets.Length) : i.PrevIndex(targets.Length);
         }
     }
 
@@ -299,21 +311,21 @@ namespace NodeMarkup.Tools
     }
     public class EntersBasket : Basket<SourceEnter>
     {
-        float LeftAngle { get; }
-        float RigthAngle { get; }
+        float FromAngle { get; }
+        float ToAngle { get; }
         Vector3 Centre { get; }
         float Radius { get; }
         float HalfWidthAngle { get; }
-        float MiddleAngle => (LeftAngle + RigthAngle) / 2;
-        float DeltaAngle => RigthAngle - LeftAngle;
+        float MiddleAngle => (FromAngle + ToAngle) / 2;
+        float DeltaAngle => FromAngle - ToAngle;
         public EntersBasket(BaseEntersOrderToolMode toolMode, EntersBorders borders, IEnumerable<SourceEnter> items) : base(items)
         {
             Centre = toolMode.Centre;
             Radius = toolMode.Radius + 2 * TargetEnter.Size;
-            LeftAngle = (borders.Left.Position - Centre).AbsoluteAngle();
-            RigthAngle = (borders.Right.Position - Centre).AbsoluteAngle();
-            if (RigthAngle <= LeftAngle)
-                RigthAngle += Mathf.PI * 2;
+            FromAngle = (borders.From.Position - Centre).AbsoluteAngle();
+            ToAngle = (borders.To.Position - Centre).AbsoluteAngle();
+            if (FromAngle <= ToAngle)
+                FromAngle += Mathf.PI * 2;
 
             var length = TargetEnter.Size * (Count - 1);
             HalfWidthAngle = GetAngle(length) / 2;
@@ -322,15 +334,15 @@ namespace NodeMarkup.Tools
         public override void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourceEnter> toolMode)
         {
             var n = Mathf.CeilToInt(DeltaAngle / (Mathf.PI / 2));
-            var deltaAngle = (RigthAngle - LeftAngle) / n;
+            var deltaAngle = (FromAngle - ToAngle) / n;
 
             for (var i = 0; i < n; i += 1)
-                NodeMarkupTool.RenderBezier(cameraInfo, GetBezier(LeftAngle + deltaAngle * i, LeftAngle + deltaAngle * (i + 1)), Color, cut: true);
+                NodeMarkupTool.RenderBezier(cameraInfo, GetBezier(ToAngle + deltaAngle * i, ToAngle + deltaAngle * (i + 1)), Color, cut: true);
 
-            var leftDir = LeftAngle.Direction();
-            new StraightTrajectory(Centre + toolMode.Radius * leftDir, Centre + Radius * leftDir).Render(cameraInfo, Color);
-            var rightDir = RigthAngle.Direction();
-            new StraightTrajectory(Centre + toolMode.Radius * rightDir, Centre + Radius * rightDir).Render(cameraInfo, Color);
+            var fromDir = FromAngle.Direction();
+            new StraightTrajectory(Centre + toolMode.Radius * fromDir, Centre + Radius * fromDir).Render(cameraInfo, Color);
+            var toDir = ToAngle.Direction();
+            new StraightTrajectory(Centre + toolMode.Radius * toDir, Centre + Radius * toDir).Render(cameraInfo, Color);
 
             if (Count <= 1)
                 NodeMarkupTool.RenderCircle(cameraInfo, Centre + MiddleAngle.Direction() * Radius, width: TargetEnter.Size, alphaBlend: false);
@@ -381,12 +393,12 @@ namespace NodeMarkup.Tools
         public PointsBasket(PointsOrderToolMode toolMode, PointsBorders borders, IEnumerable<SourcePoint> items) : base(items)
         {
             Direction = toolMode.TargetEnter.Enter.Angle.Direction().Turn90(false);
-            var middlePos = (borders.Left.Position + borders.Right.Position) / 2;
+            var middlePos = (borders.From.Position + borders.To.Position) / 2;
             Position = middlePos + Direction * Shift;
             var length = TargetPoint.Size * (Count - 1);
             Line = new StraightTrajectory(Position, Position + Direction * length);
             Connect = new StraightTrajectory(middlePos, middlePos + Direction * Shift);
-            Width = (borders.Left.Position - borders.Right.Position).magnitude;
+            Width = (borders.From.Position - borders.To.Position).magnitude;
         }
         public override void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourcePoint> toolMode)
         {
