@@ -571,7 +571,9 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Saksa</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Englanti US</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanja</value>
   </data>
@@ -1063,19 +1065,44 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   
   
   
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>Esiasetuslista on tyhjä.
+Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Esiasetukset</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Tallenna esiasetuksena</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Tallenna esiasetuksena</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Ei esiasetuksia</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Aseta esiasetus</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Uusi esiasetus</value>
+  </data>
   
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Haluatko asettaa esiasetuksen?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Tekijä</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Aseta uudelleenkäynnistyksen jälkeen</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Modi latautui virheellisesti.
+Ei ole suositeltavaa käyttää modia tässä tilassa, koska se voi johtaa ennalta-arvaamattomaan käyttäytymiseen.
+Käynnistä peli uudelleen.</value>
+  </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Suojatiet:</value>
   </data>
@@ -1092,29 +1119,52 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>Tiet:</value>
   </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Lopeta uudet viivat suojateihin</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Lopeta viivat tähän suojatiehen</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Varmuuskopio esiasetukset</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Poista kaikki esiasetukset</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Poista kaikki esiasetukset</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Haluatko varmasti poistaa kaikki esiasetukset?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Vie esiasetukset tiedostoon</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Vie esiasetukset</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Palauta esiasetukset tiedostosta</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Palauta esiasetukset</value>
+  </data>
   
   
   
   
   
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Englanti UK</value>
+  </data>
   
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Sinulla täytyy olla viivoja, jotka risteävät tämän viivan kanssa, jotta voit muuttaa alku- ja loppupisteitä ja luoda uusia sääntöjä.</value>
+  </data>
   
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Muokkaa</value>
@@ -1128,14 +1178,19 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="MessageBox_Cancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
-  
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Haluatko tallentaa esiasetuksen nimen muutoksen?</value>
+  </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
     <value>Tallenna muutokset</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
     <value>Haluatko tallentaa mallineen arvojen muutokset?</value>
   </data>
-  
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Nimi "{0}" on jo käytössä toisella esiasetuksella.
+Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</value>
+  </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
     <value>Voit poistaa sen vain pelin sisällönhallinnasta.</value>
   </data>
@@ -1150,6 +1205,10 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
   </data>
   
-  
-  
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>esiasetus</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>esiasetuksen</value>
+  </data>
 </root>

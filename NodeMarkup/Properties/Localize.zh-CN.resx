@@ -1190,10 +1190,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>本模板是资产。需要覆写资产文件才能更改名称。要继续吗？</value>
   </data>
-  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
-    <value>按住Shift双击鼠标左键来复制颜色
-双击鼠标左键以粘贴</value>
-  </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>若要建立人行道边界，请在人行横道端点处划线</value>
   </data>

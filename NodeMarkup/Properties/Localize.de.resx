@@ -1226,10 +1226,6 @@ Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorl
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>Um den Namen und die Werte zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
   </data>
-  <data name="Editor_ColorSampleTooltip" xml:space="preserve">
-    <value>Shift+Doppelklick zum Kopieren der Farbe
-Doppelklick zum Einfügen der Farbe</value>
-  </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Um Fußgängerüberwege-Ränder festzusetzen, müssen Linien vorhanden sein, die von dem selben Punkt starten wie die Fußgängerüberweg-Markierung</value>
   </data>
