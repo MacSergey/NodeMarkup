@@ -584,6 +584,8 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Вы используете BETA версию {0}. Она предназначена для тестирования новых функций и может содержать ошибки которые приведут к поломке или удалению вашей разметки. Если вы подписались по ошибки, то перейдите на стабильную версию.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Язык игры</value>

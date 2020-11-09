@@ -125,8 +125,8 @@
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>ホイールのスクロールで増減
-+Shift ｘ10
-+Ctrl ｘ0.1</value>
++Shift ｘ 10倍
++Ctrl ｘ 0.1倍</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -330,8 +330,7 @@
 垂直線は道路の後方へ移動</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>ポイントを選択して
-ラインを作成・削除する</value>
+    <value>ポイントを選択して、ラインを作成・削除する</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -362,7 +361,7 @@
     <value>クリックして停止線を削除</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>クリックして停止線の追加</value>
+    <value>クリックして停止線を追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>塗り潰し</value>
@@ -446,7 +445,7 @@
     <value>貼り付け</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>V字</value>
+    <value>V字型</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>V字の角度</value>
@@ -563,6 +562,8 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>現在、 {0} のβ版を使用しています。
 新機能をテストするMODで、エラーやマーキングの破損・消える可能性があります。
 間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>ゲームの既定言語</value>
@@ -610,7 +611,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線の追加</value>
+    <value>クリックして垂直線を追加</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
@@ -720,8 +721,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>終点側のポイントを選択</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>ポイントを選択して
-横断歩道の作成・削除する</value>
+    <value>ポイントを選択して、横断歩道の作成・削除する</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
     <value>2本の破線</value>
@@ -1021,16 +1021,20 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>実線を中心</value>
   </data>
-  
-  
+  <data name="StyleOption_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="StyleOption_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Shift押下で横断歩道の作成</value>
+    <value>Shift押下で、横断歩道の作成</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Alt押下で塗り潰しを開始</value>
+    <value>Alt押下で、塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Ctrl+ドラッグで、ポイントを移動</value>
+    <value>Ctrl + ドラッグで、ポイントを移動</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1181,15 +1185,13 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>プリセット（カスタムアセット）を上書きしますか？</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>このプリセットはカスタムアセットです。
-名前の変更は、カスタムアセットのファイルを上書きします。</value>
+    <value>名前の変更は、カスタムアセットのファイルを上書きします。</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
     <value>テンプレート（カスタムアセット）を上書きしますか？</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>このテンプレートはカスタムアセットです。
-名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
+    <value>名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
   </data>
   <data name="Editor_ColorSampleTooltip" xml:space="preserve">
     <value>ダブルクリック+Shiftで、色のコピー
@@ -1219,7 +1221,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>キャンセル</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
-    <value>プリセットの名前を変更しますか？</value>
+    <value>プリセット名を変更して保存しますか？</value>
   </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
     <value>変更内容を保存</value>
@@ -1231,10 +1233,24 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>{0} という名前は、他のプリセットで使用されています。
 重複したプリセットを保存しても良いですか？</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>削除方法はコンテンツマネージャーから行います。</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>編集不可になり、削除はコンテンツマネージャーから行います。
+もしくは、Steamのワークショップでサブスクライブを停止・解除します。</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>このプリセットはカスタムアセットです。</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>削除方法はコンテンツマネージャーから行います。</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>編集不可になり、削除はコンテンツマネージャーから行います。
+もしくは、Steamのワークショップでサブスクライブを停止・解除します。</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>このテンプレートはカスタムアセットです。</value>
+  </data>
 </root>
