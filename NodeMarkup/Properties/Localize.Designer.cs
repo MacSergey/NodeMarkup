@@ -1539,6 +1539,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на preset.
+        /// </summary>
+        public static string PresetEditor_DeleteCaptionDescription {
+            get {
+                return ResourceManager.GetString("PresetEditor_DeleteCaptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на preset.
+        /// </summary>
+        public static string PresetEditor_DeleteMessageDescription {
+            get {
+                return ResourceManager.GetString("PresetEditor_DeleteMessageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на The list of presets is empty.
         ///To create a preset, click «{0}» at the panel header..
         /// </summary>

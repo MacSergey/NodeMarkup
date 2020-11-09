@@ -177,8 +177,8 @@ namespace NodeMarkup.Manager
         public override TemplateType Type => TemplateType.Intersection;
         public override TemplateManager Manager => TemplateManager.IntersectionManager;
 
-        public override string DeleteCaptionDescription => Localize.TemplateEditor_DeleteCaptionDescription;
-        public override string DeleteMessageDescription => Localize.TemplateEditor_DeleteMessageDescription;
+        public override string DeleteCaptionDescription => Localize.PresetEditor_DeleteCaptionDescription;
+        public override string DeleteMessageDescription => Localize.PresetEditor_DeleteMessageDescription;
         public override string Description => "Intersection";
 
         public XElement Data { get; private set; }
