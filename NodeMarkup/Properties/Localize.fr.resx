@@ -121,7 +121,7 @@
     <value>Supprimer {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} {1} ?</value>
+    <value>Voulez-vous vraiment supprimer {0} "{1}" ?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Utilisez la molette pour changer
@@ -1062,6 +1062,8 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>
   </data>
+  
+  
   
   
   

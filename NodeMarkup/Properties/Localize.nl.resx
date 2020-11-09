@@ -121,7 +121,7 @@
     <value>Verwijder {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Wil je {0} {1} echt verwijderen?</value>
+    <value>Wil je {0} "{1}" echt verwijderen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll het wiel om te veranderen
@@ -1059,6 +1059,8 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>
   </data>
+  
+  
   
   
   

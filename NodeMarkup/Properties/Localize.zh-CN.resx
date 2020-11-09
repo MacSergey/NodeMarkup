@@ -121,7 +121,7 @@
     <value>删除{0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>确定要删除 {0} {1} 吗?</value>
+    <value>确定要删除 {0} "{1}" 吗?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>使用滚轮改变参数
@@ -1245,5 +1245,11 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>此模板为资产</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>预设​​​​</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>预设​​​​</value>
   </data>
 </root>
