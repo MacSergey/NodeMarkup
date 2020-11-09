@@ -13,6 +13,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
+    public interface IEditor<ItemType>
+    {
+        void UpdateEditor(ItemType item);
+    }
     public abstract class Editor : UIPanel
     {
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
@@ -151,7 +155,7 @@ namespace NodeMarkup.UI.Editors
         public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
         public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
     }
-    public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor
+    public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor, IEditor<EditableObject>
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
         where EditableObject : class, IDeletable

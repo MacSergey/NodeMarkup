@@ -225,48 +225,26 @@ namespace NodeMarkup.UI.Panel
             return Editors[editorIndex] as EditorType;
         }
 
-        public void EditPoint(MarkupPoint point)
+        private EditorType Edit<EditorType, ItemType>(ItemType item)
+            where EditorType : Editor, IEditor<ItemType>
         {
             Reset();
-            var editor = SelectEditor<PointsEditor>();
-            editor?.UpdateEditor(point);
+            var editor = SelectEditor<EditorType>();
+            editor?.UpdateEditor(item);
+            return editor;
         }
-        public void EditLine(MarkupLine line)
-        {
-            Reset();
-            var editor = SelectEditor<LinesEditor>();
-            editor?.UpdateEditor(line);
-        }
+        public void EditPoint(MarkupPoint point) => Edit<PointsEditor, MarkupPoint>(point);
+        public void EditLine(MarkupLine line) => Edit<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
-            Reset();
-            var editor = SelectEditor<CrosswalksEditor>();
-            if (editor != null)
-            {
-                editor.UpdateEditor(crosswalk);
-                editor.BorderSetup();
-            }
+            var editor = Edit<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+            editor?.BorderSetup();
         }
-        public void EditFiller(MarkupFiller filler)
-        {
-            Reset();
-            var editor = SelectEditor<FillerEditor>();
-            editor?.UpdateEditor(filler);
-        }
-        public void EditStyleTemplate(StyleTemplate template)
-        {
-            Reset();
-            var editor = SelectEditor<StyleTemplateEditor>();
-            editor?.UpdateEditor(template);
-        }
-        public void EditIntersectionTemplate(IntersectionTemplate template)
-        {
-            Reset();
-            var editor = SelectEditor<IntersectionTemplateEditor>();
-            editor?.UpdateEditor(template);
-        }
+        public void EditFiller(MarkupFiller filler) => Edit<FillerEditor, MarkupFiller>(filler);
+        public void EditStyleTemplate(StyleTemplate template) => Edit<StyleTemplateEditor, StyleTemplate>(template);
+        public void EditIntersectionTemplate(IntersectionTemplate template) => Edit<IntersectionTemplateEditor, IntersectionTemplate>(template);
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
-    } 
+    }
 }
