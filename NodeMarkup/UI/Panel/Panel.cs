@@ -196,7 +196,6 @@ namespace NodeMarkup.UI.Panel
                 SelectEditor<LinesEditor>();
             }
         }
-        private int GetEditor(Type editorType) => Editors.FindIndex((e) => e.GetType() == editorType);
         private void OnSelectedTabChanged(int index)
         {
             CurrentEditor = SelectEditor(index);
@@ -220,7 +219,7 @@ namespace NodeMarkup.UI.Panel
         }
         private EditorType SelectEditor<EditorType>() where EditorType : Editor
         {
-            var editorIndex = GetEditor(typeof(EditorType));
+            var editorIndex = Editors.FindIndex((e) => e.GetType() == typeof(EditorType));
             TabStrip.SelectedTab = editorIndex;
             return Editors[editorIndex] as EditorType;
         }
@@ -230,7 +229,7 @@ namespace NodeMarkup.UI.Panel
         {
             Reset();
             var editor = SelectEditor<EditorType>();
-            editor?.UpdateEditor(item);
+            editor?.Edit(item);
             return editor;
         }
         public void EditPoint(MarkupPoint point) => Edit<PointsEditor, MarkupPoint>(point);

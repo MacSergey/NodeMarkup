@@ -15,7 +15,7 @@ namespace NodeMarkup.UI.Editors
 {
     public interface IEditor<ItemType>
     {
-        void UpdateEditor(ItemType item);
+        void Edit(ItemType item);
     }
     public abstract class Editor : UIPanel
     {
@@ -288,7 +288,7 @@ namespace NodeMarkup.UI.Editors
             Destroy(component);
         }
         protected virtual EditableItemType GetItem(EditableObject editObject) => ItemsPanel.components.OfType<EditableItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
-        public virtual void UpdateEditor(EditableObject selectObject = null)
+        public virtual void Edit(EditableObject selectObject = null)
         {
             base.UpdateEditor();
 
@@ -321,7 +321,7 @@ namespace NodeMarkup.UI.Editors
 
             SwitchEmpty();
         }
-        public override void UpdateEditor() => UpdateEditor(null);
+        public override void UpdateEditor() => Edit(null);
 
         protected override void ClearSettings()
         {

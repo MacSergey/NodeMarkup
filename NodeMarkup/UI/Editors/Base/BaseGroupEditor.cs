@@ -125,11 +125,11 @@ namespace NodeMarkup.UI.Editors
             else
                 return base.GetItem(editObject);
         }
-        public override void UpdateEditor(EditableObject selectObject = null)
+        public override void Edit(EditableObject selectObject = null)
         {
             var expandedGroups = Groups.Where(i => i.Value.IsExpand).Select(i => i.Key).ToArray();
 
-            base.UpdateEditor(selectObject);
+            base.Edit(selectObject);
 
             foreach (var expandedGroup in expandedGroups)
             {
