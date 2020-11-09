@@ -106,8 +106,8 @@ namespace NodeMarkup
 
         public static string MarkingName => $"{MarkingRecovery}.{GetSaveName()}";
         private static Regex MarkingRegex { get; } = new Regex(@$"{MarkingRecovery}\.(?<name>.+)\.(?<date>\d+)");
-        private static Regex TemplatesRegex { get; } = new Regex(@$"{TemplatesRecovery}\.(?<date>\d+)");
-        private static Regex PresetsRegex { get; } = new Regex(@$"{PresetsRecovery}\.(?<date>\d+)");
+        private static Regex StyleTemplatesRegex { get; } = new Regex(@$"{TemplatesRecovery}\.(?<date>\d+)");
+        private static Regex IntersectionTemplatesRegex { get; } = new Regex(@$"{PresetsRecovery}\.(?<date>\d+)");
         private static string RecoveryDirectory => Path.Combine(Directory.GetCurrentDirectory(), "IntersectionMarkingTool");
         private static string ScreenshotDirectory => Path.Combine(RecoveryDirectory, "TemplateScreenshots");
 
@@ -126,8 +126,8 @@ namespace NodeMarkup
             }
             return result;
         }
-        public static Dictionary<string, string> GetStylesRestoreList() => GetTemplatesRestoreList(TemplatesRecovery, TemplatesRegex);
-        public static Dictionary<string, string> GetIntersectionsRestoreList() => GetTemplatesRestoreList(PresetsRecovery, PresetsRegex);
+        public static Dictionary<string, string> GetStyleTemplatesRestoreList() => GetTemplatesRestoreList(TemplatesRecovery, StyleTemplatesRegex);
+        public static Dictionary<string, string> GetIntersectionTemplatesRestoreList() => GetTemplatesRestoreList(PresetsRecovery, IntersectionTemplatesRegex);
 
         private static Dictionary<string, string> GetTemplatesRestoreList(string name, Regex regex)
         {
@@ -202,14 +202,14 @@ namespace NodeMarkup
             Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpMarkingData)}");
             return DumpData(GetString(MarkupManager.ToXml()), MarkingName, out path);
         }
-        public static bool DumpTemplatesData(out string path)
+        public static bool DumpStyleTemplatesData(out string path)
         {
-            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpTemplatesData)}");
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpStyleTemplatesData)}");
             return DumpData(Settings.Templates, TemplatesRecovery, out path);
         }
-        public static bool DumpPresetsData(out string path)
+        public static bool DumpIntersectionTemplatesData(out string path)
         {
-            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpPresetsData)}");
+            Logger.LogDebug($"{nameof(Loader)}.{nameof(DumpIntersectionTemplatesData)}");
             return DumpData(Settings.Intersections, PresetsRecovery, out path);
         }
 

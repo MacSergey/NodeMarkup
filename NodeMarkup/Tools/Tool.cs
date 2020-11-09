@@ -38,7 +38,7 @@ namespace NodeMarkup.Tools
         public static Shortcut CreateEdgeLinesShortcut { get; } = new Shortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
         public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
-        public static Shortcut SaveAsPresetShortcut { get; } = new Shortcut(nameof(SaveAsPresetShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsPreset());
+        public static Shortcut SaveAsIntersectionTemplateShortcut { get; } = new Shortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
         public static Shortcut CutLinesByCrosswalks { get; } = new Shortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
 
         public static IEnumerable<Shortcut> Shortcuts
@@ -52,7 +52,7 @@ namespace NodeMarkup.Tools
                 yield return PasteMarkingShortcut;
                 yield return EditMarkingShortcut;
                 yield return CreateEdgeLinesShortcut;
-                yield return SaveAsPresetShortcut;
+                yield return SaveAsIntersectionTemplateShortcut;
                 yield return CutLinesByCrosswalks;
             }
         }
@@ -111,7 +111,7 @@ namespace NodeMarkup.Tools
                 { ToolModeType.DragPoint, Instance.CreateToolMode<DragPointToolMode>() },
                 { ToolModeType.PasteEntersOrder, Instance.CreateToolMode<PasteEntersOrderToolMode>()},
                 { ToolModeType.EditEntersOrder, Instance.CreateToolMode<EditEntersOrderToolMode>()},
-                { ToolModeType.ApplyPresetOrder, Instance.CreateToolMode<ApplyPresetOrderToolMode>()},
+                { ToolModeType.ApplyIntersectionTemplateOrder, Instance.CreateToolMode<ApplyIntersectionTemplateOrderToolMode>()},
                 { ToolModeType.PointsOrder, Instance.CreateToolMode<PointsOrderToolMode>()},
             };
 
@@ -428,7 +428,7 @@ namespace NodeMarkup.Tools
 
             bool Paste()
             {
-                BaseOrderToolMode.Preset = MarkupBuffer;
+                BaseOrderToolMode.IntersectionTemplate = MarkupBuffer;
                 SetMode(ToolModeType.PasteEntersOrder);
                 return true;
             }
@@ -437,15 +437,15 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
 
-            BaseOrderToolMode.Preset = new IntersectionTemplate(Markup);
+            BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
         }
-        public void ApplyPreset(IntersectionTemplate preset)
+        public void ApplyIntersectionTemplate(IntersectionTemplate template)
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ApplyPreset)}");
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ApplyIntersectionTemplate)}");
 
-            BaseOrderToolMode.Preset = preset;
-            SetMode(ToolModeType.ApplyPresetOrder);
+            BaseOrderToolMode.IntersectionTemplate = template;
+            SetMode(ToolModeType.ApplyIntersectionTemplateOrder);
         }
         private void CreateEdgeLines()
         {
@@ -454,16 +454,16 @@ namespace NodeMarkup.Tools
             var lines = Markup.Enters.Select(e => Markup.AddConnection(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
             Panel.EditLine(lines.Last());
         }
-        private void SaveAsPreset()
+        private void SaveAsIntersectionTemplate()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsPreset)}");
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsIntersectionTemplate)}");
 
             StartCoroutine(MakeScreenshot(Callback));
 
             void Callback(Image image)
             {
-                if (TemplateManager.IntersectionManager.AddTemplate(Markup, image, out IntersectionTemplate preset))
-                    Panel.EditPreset(preset);
+                if (TemplateManager.IntersectionManager.AddTemplate(Markup, image, out IntersectionTemplate template))
+                    Panel.EditIntersectionTemplate(template);
             }
         }
         private void CutByCrosswalks()

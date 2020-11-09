@@ -66,7 +66,7 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeaderContent()
         {
-            AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsPresetShortcut);
+            AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
 
             AddButton(TextureUtil.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
             AddButton(TextureUtil.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
@@ -119,18 +119,18 @@ namespace NodeMarkup.UI.Panel
         protected override Color32 Background => Color.white;
     }
 
-    public class ApplyPresetHeaderButton : ApplyHeaderButton<IntersectionTemplate, ApplyPresetPopupPanel, PresetPopupItem, PresetIcon, string>
+    public class ApplyIntersectionTemplateHeaderButton : ApplyHeaderButton<IntersectionTemplate, ApplyIntersectionTemplatePopupPanel, IntersectionTemplatePopupItem, IntersectionTemplateIcon, string>
     {
         protected override Func<IntersectionTemplate, bool> Selector => (t) => true;
         protected override Func<IntersectionTemplate, string> Order => (t) => t.Name;
     }
 
-    public class ApplyPresetPopupPanel : ApplyPopupPanel<IntersectionTemplate, PresetPopupItem, PresetIcon>
+    public class ApplyIntersectionTemplatePopupPanel : ApplyPopupPanel<IntersectionTemplate, IntersectionTemplatePopupItem, IntersectionTemplateIcon>
     {
         protected override string EmptyText => NodeMarkup.Localize.HeaderPanel_NoPresets;
         protected override IEnumerable<IntersectionTemplate> GetItems(Func<IntersectionTemplate, bool> selector) => TemplateManager.IntersectionManager.Templates;
     }
-    public class PresetPopupItem : PresetItem
+    public class IntersectionTemplatePopupItem : IntersectionTemplateItem
     {
         public override bool ShowDelete => false;
     }

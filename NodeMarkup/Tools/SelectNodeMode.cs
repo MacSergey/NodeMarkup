@@ -74,7 +74,7 @@ namespace NodeMarkup.Tools
 
                 bool OnYes()
                 {
-                    BaseOrderToolMode.Preset = markup.Backup;
+                    BaseOrderToolMode.IntersectionTemplate = markup.Backup;
                     Tool.SetMode(ToolModeType.EditEntersOrder);
                     markup.NeedSetOrder = false;
                     return true;

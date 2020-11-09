@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class IntersectionTemplateEditor : BaseTemplateEditor<PresetItem, IntersectionTemplate, PresetIcon, PresetGroup, bool, IntersectionTemplateHeaderPanel>
+    public class IntersectionTemplateEditor : BaseTemplateEditor<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon, IntersectionTemplateGroup, bool, IntersectionTemplateHeaderPanel>
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
@@ -41,10 +41,10 @@ namespace NodeMarkup.UI.Editors
         private void AddScreenshot()
         {
             var group = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
-            var info = ComponentPool.Get<PresetInfoProperty>(group);
+            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(group);
             info.Init(EditObject);
         }
-        private void OnApply() => Tool.ApplyPreset(EditObject);
+        private void OnApply() => Tool.ApplyIntersectionTemplate(EditObject);
         protected override void OnObjectDelete(IntersectionTemplate template)
         {
             base.OnObjectDelete(template);
@@ -52,7 +52,7 @@ namespace NodeMarkup.UI.Editors
         }
 
         PropertyGroupPanel Preview { get; set; }
-        protected override void ItemHover(PresetItem editableItem)
+        protected override void ItemHover(IntersectionTemplateItem editableItem)
         {
             base.ItemHover(editableItem);
             AddPreview(editableItem);
@@ -62,7 +62,7 @@ namespace NodeMarkup.UI.Editors
             base.ItemLeave();
             RemovePreview();
         }
-        private void AddPreview(PresetItem editableItem)
+        private void AddPreview(IntersectionTemplateItem editableItem)
         {
             if (HoverItem == SelectItem)
                 return;
@@ -71,7 +71,7 @@ namespace NodeMarkup.UI.Editors
 
             var root = GetRootContainer();
             Preview = ComponentPool.Get<PreviewPanel>(root);
-            var info = ComponentPool.Get<PreviewPresetInfo>(Preview);
+            var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview);
             info.Init(HoverItem.Object);
             Preview.width = 365f;
 
@@ -90,7 +90,7 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class PresetItem : EditableItem<IntersectionTemplate, PresetIcon>
+    public class IntersectionTemplateItem : EditableItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
         public override bool ShowDelete => !Object.IsAsset;
 
@@ -100,11 +100,11 @@ namespace NodeMarkup.UI.Editors
             Icon.Count = Object.Roads;
         }
     }
-    public class PresetIcon : ColorIcon
+    public class IntersectionTemplateIcon : ColorIcon
     {
         protected UILabel CountLabel { get; }
         public int Count { set => CountLabel.text = value.ToString(); }
-        public PresetIcon()
+        public IntersectionTemplateIcon()
         {
             CountLabel = AddUIComponent<UILabel>();
             CountLabel.textColor = Color.white;
@@ -122,7 +122,7 @@ namespace NodeMarkup.UI.Editors
                 CountLabel.size = size;
         }
     }
-    public class PresetGroup : EditableGroup<bool, PresetItem, IntersectionTemplate, PresetIcon> { }
+    public class IntersectionTemplateGroup : EditableGroup<bool, IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon> { }
     public class PreviewPanel : PropertyGroupPanel
     {
         protected override Color32 Color => new Color32(201, 211, 216, 255);
@@ -131,7 +131,7 @@ namespace NodeMarkup.UI.Editors
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
         protected override void OnTooltipLeave(UIMouseEventParameter p) { return; }
     }
-    public class PreviewPresetInfo : PresetInfoProperty
+    public class PreviewIntersectionTemplateInfo : IntersectionTemplateInfoProperty
     {
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

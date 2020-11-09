@@ -80,8 +80,8 @@ namespace NodeMarkup
             var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
             if (SceneManager.GetActiveScene().name is string scene && (scene != "MainMenu" && scene != "IntroScreen"))
                 AddBackupMarking(backupTab);
-            AddBackupTemplates(backupTab);
-            AddBackupPresets(backupTab);
+            AddBackupStyleTemplates(backupTab);
+            AddBackupIntersectionTemplates(backupTab);
 
             var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
             AddSupport(supportTab);
@@ -315,22 +315,22 @@ namespace NodeMarkup
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
             AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{MessageBoxBase.CantUndone}");
         }
-        private static void AddBackupTemplates(UIHelperBase helper)
+        private static void AddBackupStyleTemplates(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{MessageBoxBase.CantUndone}", () => TemplateManager.StyleManager.DeleteAll());
-            AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpTemplatesData);
-            AddRestore<ImportTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{MessageBoxBase.CantUndone}");
+            AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
+            AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{MessageBoxBase.CantUndone}");
         }
 
-        private static void AddBackupPresets(UIHelperBase helper)
+        private static void AddBackupIntersectionTemplates(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{MessageBoxBase.CantUndone}", () => TemplateManager.IntersectionManager.DeleteAll());
-            AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpPresetsData);
-            AddRestore<ImportPresetsMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{MessageBoxBase.CantUndone}");
+            AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
+            AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{MessageBoxBase.CantUndone}");
         }
 
         private static void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)

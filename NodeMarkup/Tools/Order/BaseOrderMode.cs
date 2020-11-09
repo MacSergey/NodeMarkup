@@ -19,7 +19,7 @@ namespace NodeMarkup.Tools
         public Vector3 Centre { get; protected set; }
         public float Radius { get; protected set; }
 
-        public static IntersectionTemplate Preset { get; set; }
+        public static IntersectionTemplate IntersectionTemplate { get; set; }
 
         protected XElement Backup { get; set; }
 
@@ -40,7 +40,7 @@ namespace NodeMarkup.Tools
             {
                 Backup = Markup.ToXml();
                 IsMirror = false;
-                SourceEnters = Preset.Enters.Select((e, i) => new SourceEnter(e, i)).ToArray();
+                SourceEnters = IntersectionTemplate.Enters.Select((e, i) => new SourceEnter(e, i)).ToArray();
                 TargetEnters = Markup.Enters.Select((e, i) => new TargetEnter(e, i)).ToArray();
 
                 var min = Math.Min(TargetEnters.Length, SourceEnters.Length);
@@ -67,7 +67,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            Markup.FromXml(Mod.Version, Preset.Data, map);
+            Markup.FromXml(Mod.Version, IntersectionTemplate.Data, map);
             Panel.UpdatePanel();
         }
     }

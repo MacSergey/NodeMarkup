@@ -222,9 +222,9 @@ namespace NodeMarkup.Tools
         protected override string EndCaption => Localize.Tool_EndEditOrderCaption;
         protected override string EndMessage => Localize.Tool_EndEditOrderMessage;
     }
-    public class ApplyPresetOrderToolMode : BaseEntersOrderToolMode
+    public class ApplyIntersectionTemplateOrderToolMode : BaseEntersOrderToolMode
     {
-        public override ToolModeType Type => ToolModeType.ApplyPresetOrder;
+        public override ToolModeType Type => ToolModeType.ApplyIntersectionTemplateOrder;
         protected override string EndCaption => Localize.Tool_EndApplyPresetOrderCaption;
         protected override string EndMessage => Localize.Tool_EndApplyPresetOrderMessage;
     }

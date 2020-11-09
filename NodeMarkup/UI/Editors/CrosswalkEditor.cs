@@ -151,7 +151,7 @@ namespace NodeMarkup.UI.Editors
         private void SaveTemplate()
         {
             if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
-                Panel.EditTemplate(template);
+                Panel.EditStyleTemplate(template);
         }
         private void ApplyStyle(CrosswalkStyle style)
         {

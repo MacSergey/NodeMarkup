@@ -83,20 +83,20 @@ namespace NodeMarkup.UI
         protected override Dictionary<string, string> GetList() => Loader.GetMarkingRestoreList();
         protected override bool Import(string file) => Loader.ImportMarkingData(file);
     }
-    public class ImportTemplatesMessageBox : ImportMessageBox
+    public class ImportStyleTemplatesMessageBox : ImportMessageBox
     {
         protected override string Caption => NodeMarkup.Localize.Settings_RestoreTemplatesCaption;
         protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageSuccess;
         protected override string FailedMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageFailed;
-        protected override Dictionary<string, string> GetList() => Loader.GetStylesRestoreList();
+        protected override Dictionary<string, string> GetList() => Loader.GetStyleTemplatesRestoreList();
         protected override bool Import(string file) =>  Loader.ImportStylesData(file);
     }
-    public class ImportPresetsMessageBox : ImportMessageBox
+    public class ImportIntersectionTemplatesMessageBox : ImportMessageBox
     {
         protected override string Caption => NodeMarkup.Localize.Settings_RestorePresetsCaption;
         protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestorePresetsMessageSuccess;
         protected override string FailedMessage => NodeMarkup.Localize.Settings_RestorePresetsMessageFailed;
-        protected override Dictionary<string, string> GetList() => Loader.GetIntersectionsRestoreList();
+        protected override Dictionary<string, string> GetList() => Loader.GetIntersectionTemplatesRestoreList();
         protected override bool Import(string file) => Loader.ImportIntersectionsData(file);
 
     }

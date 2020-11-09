@@ -253,17 +253,17 @@ namespace NodeMarkup.UI.Panel
             var editor = SelectEditor<FillerEditor>();
             editor?.UpdateEditor(filler);
         }
-        public void EditTemplate(StyleTemplate template)
+        public void EditStyleTemplate(StyleTemplate template)
         {
             Reset();
             var editor = SelectEditor<StyleTemplateEditor>();
             editor?.UpdateEditor(template);
         }
-        public void EditPreset(IntersectionTemplate preset)
+        public void EditIntersectionTemplate(IntersectionTemplate template)
         {
             Reset();
             var editor = SelectEditor<IntersectionTemplateEditor>();
-            editor?.UpdateEditor(preset);
+            editor?.UpdateEditor(template);
         }
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;

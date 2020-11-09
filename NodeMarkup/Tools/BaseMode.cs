@@ -71,7 +71,7 @@ namespace NodeMarkup.Tools
         PanelAction = 16,
         PasteEntersOrder = 32,
         EditEntersOrder = 64,
-        ApplyPresetOrder = 128,
+        ApplyIntersectionTemplateOrder = 128,
         PointsOrder = 256,
         DragPoint = 512,
 

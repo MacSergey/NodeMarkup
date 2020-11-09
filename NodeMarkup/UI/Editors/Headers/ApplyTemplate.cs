@@ -33,7 +33,7 @@ namespace NodeMarkup.UI.Editors
     }
 
 
-    public class ApplyTemplateHeaderButton : ApplyHeaderButton<StyleTemplate, ApplyTemplatePopupPanel, TemplatePopupItem, TemplateIcon, bool>
+    public class ApplyTemplateHeaderButton : ApplyHeaderButton<StyleTemplate, ApplyTemplatePopupPanel, TemplatePopupItem, StyleTemplateIcon, bool>
     {
         private Style.StyleType StyleGroup { get; set; }
         protected override Func<StyleTemplate, bool> Selector => (t) => (t.Style.Type & StyleGroup & Style.StyleType.GroupMask) != 0;
@@ -83,14 +83,14 @@ namespace NodeMarkup.UI.Editors
                 OnSelectTemplate?.Invoke(item.Object);
         }
     }
-    public class ApplyTemplatePopupPanel : ApplyPopupPanel<StyleTemplate, TemplatePopupItem, TemplateIcon>
+    public class ApplyTemplatePopupPanel : ApplyPopupPanel<StyleTemplate, TemplatePopupItem, StyleTemplateIcon>
     {
         protected override string EmptyText => NodeMarkup.Localize.HeaderPanel_NoTemplates;
         protected override IEnumerable<StyleTemplate> GetItems(Func<StyleTemplate, bool> selector) => TemplateManager.StyleManager.Templates.Where(t => selector(t));
     }
 
 
-    public class TemplatePopupItem : TemplateItem
+    public class TemplatePopupItem : StyleTemplateItem
     {
         public override bool ShowDelete => false;
     }

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class PresetInfoProperty : EditorItem, IReusable
+    public class IntersectionTemplateInfoProperty : EditorItem, IReusable
     {
         private float Size => 200f;
         protected override float DefaultHeight => Size + 10;
@@ -28,7 +28,7 @@ namespace NodeMarkup.UI
         private UILabel Fillers { get; set; }
         private List<UILabel> Temp { get; set; } = new List<UILabel>();
 
-        public PresetInfoProperty()
+        public IntersectionTemplateInfoProperty()
         {
             AddScreenshot();
             AddNoScreenshot();
