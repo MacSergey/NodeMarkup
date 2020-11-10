@@ -272,7 +272,7 @@ namespace NodeMarkup
                     foreach (var additionalInst in additional)
                         yield return additionalInst;
 
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Loader), nameof(Loader.LoadAsset)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Loader), nameof(Loader.LoadTemplateAsset)));
                     break;
                 }
             }

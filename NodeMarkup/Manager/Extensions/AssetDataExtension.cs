@@ -33,21 +33,31 @@ namespace NodeMarkup
             if (!(asset is BuildingInfo prefab) || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
                 return;
 
-            var decompress = Loader.Decompress(data);
-            var config = Loader.Parse(decompress);
-
-            var count = map.Length / 6;
-            var segments = new ushort[count];
-            var nodes = new ushort[count * 2];
-
-            for (var i = 0; i < count; i += 1)
+            Logger.LogDebug($"Start load prefab data \"{prefab.name}\"");
+            try
             {
-                segments[i] = GetUShort(map[i * 6], map[i * 6 + 1]);
-                nodes[i * 2] = GetUShort(map[i * 6 + 2], map[i * 6 + 3]);
-                nodes[i * 2 + 1] = GetUShort(map[i * 6 + 4], map[i * 6 + 5]);
-            }
+                var decompress = Loader.Decompress(data);
+                var config = Loader.Parse(decompress);
 
-            AssetMarkings[prefab] = new AssetMarking(config, segments, nodes);
+                var count = map.Length / 6;
+                var segments = new ushort[count];
+                var nodes = new ushort[count * 2];
+
+                for (var i = 0; i < count; i += 1)
+                {
+                    segments[i] = GetUShort(map[i * 6], map[i * 6 + 1]);
+                    nodes[i * 2] = GetUShort(map[i * 6 + 2], map[i * 6 + 3]);
+                    nodes[i * 2 + 1] = GetUShort(map[i * 6 + 4], map[i * 6 + 5]);
+                }
+
+                AssetMarkings[prefab] = new AssetMarking(config, segments, nodes);
+
+                Logger.LogDebug($"Prefab data was loaded; Size = {data.Length} bytes");
+            }
+            catch(Exception error)
+            {
+                Logger.LogError("Could not load prefab data", error);
+            }
         }
         public override void OnAssetSaved(string name, object asset, out Dictionary<string, byte[]> userData)
         {
@@ -55,32 +65,42 @@ namespace NodeMarkup
             if (!(asset is BuildingInfo prefab) || !prefab.m_paths.Any())
                 return;
 
-            var config = Loader.GetString(MarkupManager.ToXml());
-            var compress = Loader.Compress(config);
-
-            userData[DataId] = compress;
-
-            var instance = Singleton<NetManager>.instance;
-
-            var segmentsId = new List<ushort>();
-            for (ushort i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+            Logger.LogDebug($"Start save prefab data \"{prefab.name}\"");
+            try
             {
-                if ((instance.m_segments.m_buffer[i].m_flags & NetSegment.Flags.Created) == NetSegment.Flags.Created)
-                    segmentsId.Add(i);
+                var config = Loader.GetString(MarkupManager.ToXml());
+                var data = Loader.Compress(config);
+
+                userData[DataId] = data;
+
+                var instance = Singleton<NetManager>.instance;
+
+                var segmentsId = new List<ushort>();
+                for (ushort i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+                {
+                    if ((instance.m_segments.m_buffer[i].m_flags & NetSegment.Flags.Created) == NetSegment.Flags.Created)
+                        segmentsId.Add(i);
+                }
+
+                var map = new byte[sizeof(ushort) * 3 * segmentsId.Count];
+
+                for (var i = 0; i < segmentsId.Count; i += 1)
+                {
+                    var segmentId = segmentsId[i];
+                    var segment = instance.m_segments.m_buffer[segmentId];
+                    GetBytes(segmentId, out map[i * 6], out map[i * 6 + 1]);
+                    GetBytes(segment.m_startNode, out map[i * 6 + 2], out map[i * 6 + 3]);
+                    GetBytes(segment.m_endNode, out map[i * 6 + 4], out map[i * 6 + 5]);
+                }
+
+                userData[MapId] = map;
+
+                Logger.LogDebug($"Prefab data was saved; Size = {data.Length} bytes");
             }
-
-            var map = new byte[sizeof(ushort) * 3 * segmentsId.Count];
-
-            for (var i = 0; i < segmentsId.Count; i += 1)
+            catch (Exception error)
             {
-                var segmentId = segmentsId[i];
-                var segment = instance.m_segments.m_buffer[segmentId];
-                GetBytes(segmentId, out map[i * 6], out map[i * 6 + 1]);
-                GetBytes(segment.m_startNode, out map[i * 6 + 2], out map[i * 6 + 3]);
-                GetBytes(segment.m_endNode, out map[i * 6 + 4], out map[i * 6 + 5]);
+                Logger.LogError("Could not save prefab data", error);
             }
-
-            userData[MapId] = map;
         }
         private void GetBytes(ushort n, out byte b1, out byte b2)
         {

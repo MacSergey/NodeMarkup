@@ -91,7 +91,7 @@ namespace NodeMarkup.Manager
         public void TemplateChanged(TemplateType template)
         {
             if (template.IsAsset)
-                Loader.SaveAsset(template.Asset);
+                Loader.SaveTemplateAsset(template.Asset);
             else
                 Save();
         }
@@ -153,7 +153,7 @@ namespace NodeMarkup.Manager
                 return true;
 
             var asset = new TemplateAsset(template);
-            var saved = Loader.SaveAsset(asset);
+            var saved = Loader.SaveTemplateAsset(asset);
             if (saved)
                 Save();
 

@@ -21,7 +21,7 @@ namespace NodeMarkup.Utils
     {
         public override void OnLoadData()
         {
-            Logger.LogDebug($"{nameof(SerializableDataExtension)}.{nameof(OnLoadData)}");
+            Logger.LogDebug($"Start load map data");
 
             if (serializableDataManager.LoadData(Loader.Id) is byte[] data)
             {
@@ -37,19 +37,19 @@ namespace NodeMarkup.Utils
                     MarkupManager.FromXml(config, new ObjectsMap());
 
                     sw.Stop();
-                    Logger.LogDebug($"Data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
+                    Logger.LogDebug($"Map data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
                 }
                 catch(Exception error)
                 {
-                    Logger.LogError("Could load data", error);
+                    Logger.LogError("Could not load map data", error);
                 }
             }
             else
-                Logger.LogDebug($"Saved data not founded");
+                Logger.LogDebug($"Saved map data not founded");
         }
         public override void OnSaveData()
         {
-            Logger.LogDebug($"{nameof(SerializableDataExtension)}.{nameof(OnSaveData)}");
+            Logger.LogDebug($"Start save map data");
 
             string config = string.Empty;
             try
@@ -63,11 +63,11 @@ namespace NodeMarkup.Utils
                 serializableDataManager.SaveData(Loader.Id, compress);
 
                 sw.Stop();
-                Logger.LogDebug($"Data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
+                Logger.LogDebug($"Map data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
             }
             catch(Exception error)
             {
-                Logger.LogError("Save data failed", error);
+                Logger.LogError("Save map data failed", error);
                 Loader.SaveToFile(Loader.MarkingName, config, out _);
                 throw;
             }

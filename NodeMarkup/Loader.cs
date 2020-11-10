@@ -36,8 +36,6 @@ namespace NodeMarkup
 
         public static XElement Parse(string text, LoadOptions options = LoadOptions.None)
         {
-            Logger.LogDebug($"{nameof(Loader)}.{nameof(Parse)}");
-
             using StringReader input = new StringReader(text);
             XmlReaderSettings xmlReaderSettings = GetXmlReaderSettings(options);
             using XmlReader reader = XmlReader.Create(input, xmlReaderSettings);
@@ -59,8 +57,6 @@ namespace NodeMarkup
 
         public static byte[] Compress(string xml)
         {
-            Logger.LogDebug($"{nameof(Loader)}.{nameof(Compress)}");
-
             var buffer = Encoding.UTF8.GetBytes(xml);
 
             using var outStream = new MemoryStream();
@@ -74,8 +70,6 @@ namespace NodeMarkup
 
         public static string Decompress(byte[] data)
         {
-            Logger.LogDebug($"{nameof(Loader)}.{nameof(Decompress)}");
-
             using var inStream = new MemoryStream(data);
             using var zipStream = new GZipStream(inStream, CompressionMode.Decompress);
             using var outStream = new MemoryStream();
@@ -256,13 +250,15 @@ namespace NodeMarkup
             }
         }
 
-        public static void LoadAsset(GameObject gameObject, Package.Asset asset)
+        public static void LoadTemplateAsset(GameObject gameObject, Package.Asset asset)
         {
+
+            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
+                return;
+
+            Logger.LogDebug($"Start load template asset \"{asset.name}\" from {asset.package.packagePath}");
             try
             {
-                if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
-                    return;
-
                 var templateConfig = Parse(markingInfo.data);
                 if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
                 {
@@ -270,16 +266,19 @@ namespace NodeMarkup
                         templateAsset.Template.Preview = preview;
 
                     TemplateManager.AddAssetTemplate(templateAsset);
+                    Logger.LogDebug($"Template asset loaded: {templateAsset} ({templateAsset.Flags})");
                 }
-                Logger.LogDebug($"Asset loaded: {templateAsset}");
+                else
+                    Logger.LogError($"Could not load template asset");
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could not load asset: {asset.fullName}", error);
+                Logger.LogError($"Could not load template asset", error);
             }
         }
-        public static bool SaveAsset(TemplateAsset templateAsset)
+        public static bool SaveTemplateAsset(TemplateAsset templateAsset)
         {
+            Logger.LogDebug($"Start save template asset {templateAsset}");
             try
             {
                 var meta = new CustomAssetMetaData()
@@ -316,13 +315,13 @@ namespace NodeMarkup
                 var path = Path.Combine(DataLocation.assetsPath, PathUtils.AddExtension(PathEscaper.Escape(templateAsset.FileName), PackageManager.packageExtension));
                 package.Save(path);
 
-                Logger.LogDebug($"Asset {templateAsset} saved to {path}");
+                Logger.LogDebug($"Template asset saved to {path}");
 
                 return true;
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could not save asset {templateAsset}", error);
+                Logger.LogError($"Could not save template asset", error);
                 return false;
             }
         }

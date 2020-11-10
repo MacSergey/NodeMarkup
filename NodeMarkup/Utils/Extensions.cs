@@ -39,7 +39,12 @@ namespace NodeMarkup.Utils
         {
             try
             {
-                return TypeDescriptor.GetConverter(type).ConvertFromString(str);
+                if (type == typeof(string))
+                    return str;
+                else if (string.IsNullOrEmpty(str))
+                    return null;
+                else
+                    return TypeDescriptor.GetConverter(type).ConvertFromString(str);
             }
             catch
             {

@@ -266,6 +266,7 @@ namespace NodeMarkup.Manager
         public bool IsWorkshop { get; set; }
         public bool CanEdit => !IsWorkshop || AuthorIsUser;
         public string FileName { get; set; }
+        public string Flags => $"{(HasAuthor? "A" : string.Empty)}{(AuthorIsUser? "U" : string.Empty)}{(IsWorkshop? "W" : string.Empty)}";
 
         public Image Preview => Template.HasPreview ? GetPreview(Template.Preview) : null;
         public Image SteamPreview => Template.HasSteamPreview ? GetPreview(Template.SteamPreview) : null;
@@ -289,7 +290,7 @@ namespace NodeMarkup.Manager
         public string MetaPreview => $"{Template.Name}_Preview";
         public string MetaSteamPreview => $"{Template.Name}_SteamPreview";
 
-        public override string ToString() => $"{Template.Type}:{Template.Name} - {Template.Id}";
+        public override string ToString() => $"[{Template.Type}] \"{Template.Name}\" - {Template.Id}";
         private static Regex Replacer { get; } = new Regex(@$"[{string.Join(string.Empty, GetInvalidChars().ToArray())}]+");
         private static IEnumerable<string> GetInvalidChars()
         {
