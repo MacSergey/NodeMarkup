@@ -1063,8 +1063,13 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Varoitus: Tämä aswtus muuttaa pelin piirtojärjestyksen</value>
   </data>
   
-  
-  
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Tallenna esineenä</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+Tekijä: {1}</value>
+  </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>Esiasetuslista on tyhjä.
 Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
@@ -1087,7 +1092,9 @@ Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Uusi esiasetus</value>
   </data>
-  
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Lopeta esiasetuksen asettaminen</value>
+  </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
     <value>Haluatko asettaa esiasetuksen?</value>
   </data>
@@ -1097,7 +1104,9 @@ Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
     <value>Aseta uudelleenkäynnistyksen jälkeen</value>
   </data>
-  
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Lataa tiemerkintäesineet</value>
+  </data>
   <data name="Mod_LoaledWithErrors" xml:space="preserve">
     <value>Modi latautui virheellisesti.
 Ei ole suositeltavaa käyttää modia tässä tilassa, koska se voi johtaa ennalta-arvaamattomaan käyttäytymiseen.
@@ -1112,7 +1121,9 @@ Käynnistä peli uudelleen.</value>
   <data name="PresetInfo_Lines" xml:space="preserve">
     <value>Viivat:</value>
   </data>
-  
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Ei kuvakaappausta</value>
+  </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
     <value>Tien #{0} pisteet:</value>
   </data>
@@ -1149,23 +1160,46 @@ Käynnistä peli uudelleen.</value>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
     <value>Palauta esiasetukset</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Haluatko varmasti palauttaa esiasetukset?
+Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Esiasetuksien palautus epäonnistui</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Esiasetukset palautettu onnistuneesti</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Lopeta viivat suojateihin</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Lopeta viivat suojateihin</value>
+  </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>Englanti UK</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Uudelleenkirjoita esiasetusesine</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Vaihtaaksesi sen nimen, esineen tiedosto on uudelleenkirjoitettava. Haluatko jatkaa?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Uudelleenkirjoita malline-esine</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Vaihtaaksesi sen nimen ja arvot, esineen tiedosto on uudelleenkirjoitettava. Haluatko jatkaa?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Voidaksesi asettaa suojatien rajat, viivan täytyy lähteä samasta pisteestä kuin suojatie</value>
+  </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
     <value>Sinulla täytyy olla viivoja, jotka risteävät tämän viivan kanssa, jotta voit muuttaa alku- ja loppupisteitä ja luoda uusia sääntöjä.</value>
   </data>
-  
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Näytä valikon vihjeet</value>
+  </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Muokkaa</value>
   </data>
@@ -1197,18 +1231,23 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
   </data>
-  
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Tämä esiasetus on esine.</value>
+  </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
     <value>Voit poistaa sen vain pelin sisällönhallinnasta.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
   </data>
-  
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Tämä malline on esine.</value>
+  </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>esiasetus</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>esiasetuksen</value>
   </data>
+  
 </root>

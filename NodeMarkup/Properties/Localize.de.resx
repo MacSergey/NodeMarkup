@@ -1284,4 +1284,16 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>Kreuzungsvorlagen</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>- Die Möglichkeit hinzugefügt, alle Markierungen einer Kreuzung als Kreuzungsvorlage zu speichern und später auf jede beliebige andere Andeutung anwenden zu können.
+- Die Möglichkeit hinzugefügt, Stilvorlagen und Kreuzungs-Vorlagen als Objekte zu speichern und über den Workshop  zu teilen.
+- UI aktualisiert und ihre Performance verbessert. Die Verzögerung beim Umschalten der Tabulatoren und dem auswählen würde reduziert.
+- Nun können Vorlagenwerte nur noch im Bearbeitungsmodus geändert werden. So werden versehentliche Änderungen verhindert.
+- Hinweis-Einblendungen hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+- Funktion das neue Linien von Fußgängerüberwegmarkierungen getrennt werden hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+- Funktion zum Ändern von Farben Mithilfe des Mauerrades hinzugefugt.
+- Korrektur für Zug- und Monorail-Straßen (und alle anderen Straßen ohne Punkte
+- Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
+- Britisch-Englische Übersetzung hinzugefügt.</value>
+  </data>
 </root>

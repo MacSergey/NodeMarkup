@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -456,9 +456,16 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Added the ability to save style templates as asset and share over workshop
-- Improved performance of the interface: reduced delay when switching tabs and select items.
-- Fix train and monorail roads (and any else without points).</value>
+    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+- Added the ability to save templates and presets as asset and share it over Workshop.
+- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+- Added panel tips (can be disable in settings).
+- Added the ability to cut new line by crosswalks (can be disable in settings).
+- Added the ability to change color values with mouse wheel.
+- Added English-UK translation.
+- Fix train and monorail roads (and any else without points).
+- Fix and improve points group overlay.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -1323,5 +1330,17 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preset</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+- Added the ability to save templates and presets as asset and share it over Workshop.
+- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+- Added panel tips (can be disable in settings).
+- Added the ability to cut new line by crosswalks (can be disable in settings).
+- Added the ability to change color values with mouse wheel.
+- Fix train and monorail roads (and any else without points).
+- Fix and improve points group overlay.
+- Added English-UK translation.</value>
   </data>
 </root>
