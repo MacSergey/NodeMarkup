@@ -45,7 +45,7 @@ namespace NodeMarkup.UI.Editors
             {
                 base.Active = value;
                 EditMode = false;
-                if (SelectItem is Item)
+                if(value && SelectItem is Item)
                     SetEditable();
             }
         }
@@ -151,7 +151,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
             {
-                SelectItem.Init(EditObject);
+                SelectItem.Refresh();
                 ItemClick(SelectItem);
             }
         }

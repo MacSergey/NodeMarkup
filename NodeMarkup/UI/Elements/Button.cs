@@ -41,6 +41,7 @@ namespace NodeMarkup.UI
         public override void Update()
         {
             base.Update();
+
             if (NodeMarkupTool.Instance.enabled && state == (ButtonState.Normal | ButtonState.Hovered))
                 state = ButtonState.Focused;
             else if (!NodeMarkupTool.Instance.enabled && state == ButtonState.Focused)
