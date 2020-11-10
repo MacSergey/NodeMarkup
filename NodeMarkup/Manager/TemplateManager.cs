@@ -29,7 +29,7 @@ namespace NodeMarkup.Manager
         }
 
         public static ulong UserId { get; } = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
-        private static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
+        protected static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
         public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
 
         public abstract SavedString Saved { get; }
@@ -40,6 +40,7 @@ namespace NodeMarkup.Manager
             IntersectionManager = new IntersectionTemplateManager();
         }
 
+        public abstract void AddTemplate(Template template);
         public abstract void Load();
 
         public static void Reload()
@@ -56,25 +57,6 @@ namespace NodeMarkup.Manager
             StyleManager.Clear(true);
             IntersectionManager.Clear(true);
             Authors.Clear();
-        }
-
-        public static void AddAssetTemplate(TemplateAsset templateAsset)
-        {
-            switch (templateAsset.Template)
-            {
-                case StyleTemplate styleTemplate:
-                    StyleManager.AddTemplate(styleTemplate);
-                    break;
-                case IntersectionTemplate intersectionTemplate:
-                    IntersectionManager.AddTemplate(intersectionTemplate);
-                    break;
-                default:
-                    return;
-            }
-
-            var authorId = templateAsset.AuthorId;
-            if (authorId != 0 && !Authors.ContainsKey(authorId))
-                Authors[authorId] = new Friend(new UserID(authorId)).personaName;
         }
     }
     public abstract class TemplateManager<TemplateType> : TemplateManager
@@ -162,8 +144,26 @@ namespace NodeMarkup.Manager
         #endregion
 
         #region ADD&DELETE
+        public override void AddTemplate(Template template)
+        {
+            if (template is TemplateType templateType)
+                AddTemplate(templateType);
+        }
+        public void AddTemplate(TemplateType template)
+        {
+            if (TemplatesDictionary.TryGetValue(template.Id, out TemplateType existTemplate) && (!template.IsAsset || (existTemplate.IsAsset && (!template.Asset.IsWorkshop || existTemplate.Asset.IsWorkshop))))
+                return;
 
-        public void AddTemplate(TemplateType template) => TemplatesDictionary[template.Id] = template;
+            TemplatesDictionary[template.Id] = template;
+
+            if (template.IsAsset)
+            {
+                var authorId = template.Asset.AuthorId;
+                if (authorId != 0 && !Authors.ContainsKey(authorId))
+                    Authors[authorId] = new Friend(new UserID(authorId)).personaName;
+            }
+        }
+
         public void DeleteTemplate(TemplateType template)
         {
             TemplatesDictionary.Remove(template.Id);
@@ -229,12 +229,12 @@ namespace NodeMarkup.Manager
         public bool AddTemplate(Item item, out TemplateType template) => AddTemplate(GetNewName(), item, out template);
         protected bool AddTemplate(string name, Item item, out TemplateType template)
         {
-            template = GetInstance(name, item);
+            template = CreateInstance(name, item);
             AddTemplate(template);
             Save();
             return true;
         }
-        protected abstract TemplateType GetInstance(string name, Item item);
+        protected abstract TemplateType CreateInstance(string name, Item item);
     }
     public class StyleTemplateManager : TemplateManager<StyleTemplate, Style>
     {
@@ -250,7 +250,7 @@ namespace NodeMarkup.Manager
         private Dictionary<Style.StyleType, Guid> DefaultTemplates { get; } = new Dictionary<Style.StyleType, Guid>();
         public bool IsDefault(StyleTemplate template) => DefaultTemplates.TryGetValue(template.Style.Type, out Guid id) && template.Id == id;
 
-        protected override StyleTemplate GetInstance(string name, Style style) => new StyleTemplate(name, style);
+        protected override StyleTemplate CreateInstance(string name, Style style) => new StyleTemplate(name, style);
 
         public override void Clear(bool clearAssets = false)
         {
@@ -331,7 +331,7 @@ namespace NodeMarkup.Manager
         protected override string DefaultName => Localize.Preset_NewPreset;
         public override SavedString Saved => Settings.Intersections;
 
-        protected override IntersectionTemplate GetInstance(string name, Markup markup) => new IntersectionTemplate(name, markup);
+        protected override IntersectionTemplate CreateInstance(string name, Markup markup) => new IntersectionTemplate(name, markup);
 
         public bool AddTemplate(Markup markup, Image image, out IntersectionTemplate template)
         {

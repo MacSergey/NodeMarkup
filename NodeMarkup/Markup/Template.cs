@@ -259,14 +259,28 @@ namespace NodeMarkup.Manager
     {
         public Template Template { get; private set; }
 
-        public ulong AuthorId { get; set; }
+        public ulong AuthorId { get; private set; } = TemplateManager.UserId;
         public bool AuthorIsUser => AuthorId != 0 && AuthorId == TemplateManager.UserId;
         public string Author => TemplateManager.GetAuthor(AuthorId);
         public bool HasAuthor => !string.IsNullOrEmpty(Author);
-        public bool IsWorkshop { get; set; }
+        public PublishedFileId WorkshopId { get; private set; } = PublishedFileId.invalid;
+        public bool IsWorkshop => WorkshopId != PublishedFileId.invalid;
         public bool CanEdit => !IsWorkshop || AuthorIsUser;
-        public string FileName { get; set; }
-        public string Flags => $"{(HasAuthor? "A" : string.Empty)}{(AuthorIsUser? "U" : string.Empty)}{(IsWorkshop? "W" : string.Empty)}";
+        private string _fileName = null;
+        public string FileName
+        {
+            get
+            {
+                if (_fileName == null)
+                {
+                    var name = Replacer.Replace(Template.Name, "_").Trim('_');
+                    _fileName = $"IMT_{Template.Description}_{name}_{Template.Id.ToString().Substring(0, 8)}";
+                }
+                return _fileName;
+            }
+            private set => _fileName = value;
+        }
+        public string Flags => $"{(HasAuthor ? "A" : string.Empty)}{(AuthorIsUser ? "U" : string.Empty)}{(IsWorkshop ? "W" : string.Empty)}";
 
         public Image Preview => Template.HasPreview ? GetPreview(Template.Preview) : null;
         public Image SteamPreview => Template.HasSteamPreview ? GetPreview(Template.SteamPreview) : null;
@@ -291,14 +305,14 @@ namespace NodeMarkup.Manager
         public string MetaSteamPreview => $"{Template.Name}_SteamPreview";
 
         public override string ToString() => $"[{Template.Type}] \"{Template.Name}\" - {Template.Id}";
-        private static Regex Replacer { get; } = new Regex(@$"[{string.Join(string.Empty, GetInvalidChars().ToArray())}]+");
-        private static IEnumerable<string> GetInvalidChars()
+        private static Regex Replacer { get; } = new Regex(@$"[{new string(GetInvalidChars().ToArray())}]+");
+        private static IEnumerable<char> GetInvalidChars()
         {
             foreach (var c in Path.GetInvalidFileNameChars())
-                yield return c.ToString();
+                yield return c;
 
-            yield return @"\.";
-            yield return @"\ ";
+            yield return '.';
+            yield return ' ';
         }
 
         public TemplateAsset(Template template, Package.Asset asset = null)
@@ -306,19 +320,16 @@ namespace NodeMarkup.Manager
             Template = template;
             Template.Asset = this;
 
-            if (asset != null)
-            {
-                AuthorId = ulong.TryParse(asset.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0;
-                IsWorkshop = asset.isWorkshopAsset;
+            if (asset == null)
+                return;
+
+            AuthorId = ulong.TryParse(asset.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0;
+            WorkshopId = asset.package.GetPublishedFileID();
+            if (!IsWorkshop)
                 FileName = Path.GetFileNameWithoutExtension(asset.package.packagePath);
-            }
-            else
-            {
-                AuthorId = TemplateManager.UserId;
-                IsWorkshop = false;
-                var name = Replacer.Replace(Template.Name, "_").Trim('_');
-                FileName = $"IMT_{Template.Description}_{name}_{Template.Id.ToString().Substring(0, 8)}";
-            }
+
+            if (NeedLoadPreview && asset.package.Find(MetaPreview) is Package.Asset assetPreview && assetPreview.Instantiate<Texture>() is Texture2D preview)
+                Template.Preview = preview;
         }
 
         public static bool FromPackage(XElement config, Package.Asset asset, out TemplateAsset templateAsset)

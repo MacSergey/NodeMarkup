@@ -20,8 +20,19 @@ namespace NodeMarkup.UI
         {
             get
             {
-                try { return (ValueType)TypeDescriptor.GetConverter(typeof(ValueType)).ConvertFromString(text); }
-                catch { return default; }
+                try
+                {
+                    if (typeof(ValueType) == typeof(string))
+                        return (ValueType)(object)text;
+                    else if (string.IsNullOrEmpty(text))
+                        return default;
+                    else
+                        return (ValueType)TypeDescriptor.GetConverter(typeof(ValueType)).ConvertFromString(text);
+                }
+                catch 
+                { 
+                    return default; 
+                }
             }
             set => ValueChanged(value, (v) => text = GetString(v));
         }

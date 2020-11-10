@@ -252,20 +252,16 @@ namespace NodeMarkup
 
         public static void LoadTemplateAsset(GameObject gameObject, Package.Asset asset)
         {
-
             if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
                 return;
 
-            Logger.LogDebug($"Start load template asset \"{asset.name}\" from {asset.package.packagePath}");
+            Logger.LogDebug($"Start load template asset \"{asset.fullName}\" from {asset.package.packagePath}");
             try
             {
                 var templateConfig = Parse(markingInfo.data);
                 if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
                 {
-                    if (templateAsset.NeedLoadPreview && asset.package.Find(templateAsset.MetaPreview) is Package.Asset assetPreview && assetPreview.Instantiate<Texture>() is Texture2D preview)
-                        templateAsset.Template.Preview = preview;
-
-                    TemplateManager.AddAssetTemplate(templateAsset);
+                    templateAsset.Template.Manager.AddTemplate(templateAsset.Template);
                     Logger.LogDebug($"Template asset loaded: {templateAsset} ({templateAsset.Flags})");
                 }
                 else
@@ -291,10 +287,10 @@ namespace NodeMarkup
                     guid = templateAsset.Template.Id.ToString(),
                 };
 
-                var package = new Package(meta.name)
+                var package = new Package(templateAsset.IsWorkshop ? templateAsset.WorkshopId.ToString() : meta.name)
                 {
                     packageMainAsset = meta.name,
-                    packageAuthor = $"steamid:{TemplateManager.UserId}"
+                    packageAuthor = $"steamid:{TemplateManager.UserId}",
                 };
 
                 var gameObject = new GameObject(typeof(MarkingInfo).Name);
