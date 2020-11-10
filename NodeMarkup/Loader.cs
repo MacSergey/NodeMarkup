@@ -295,7 +295,7 @@ namespace NodeMarkup
                 var package = new Package(meta.name)
                 {
                     packageMainAsset = meta.name,
-                    packageAuthor = $"steamid:{templateAsset.AuthorId}"
+                    packageAuthor = $"steamid:{TemplateManager.UserId}"
                 };
 
                 var gameObject = new GameObject(typeof(MarkingInfo).Name);

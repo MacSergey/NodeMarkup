@@ -110,7 +110,7 @@ namespace NodeMarkup.UI.Editors
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
-            Warning.Text = $"{IsAssetMessage} {(EditObject.IsAsset && !EditObject.Asset.IsWorkshop ? IsAssetWarningMessage : IsWorkshopWarningMessage)}";
+            Warning.Text = $"{IsAssetMessage} {(EditObject.IsAsset && EditObject.Asset.CanEdit ? IsAssetWarningMessage : IsWorkshopWarningMessage)}";
             Warning.Init();
         }
 

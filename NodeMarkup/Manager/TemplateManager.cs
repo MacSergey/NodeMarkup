@@ -28,6 +28,7 @@ namespace NodeMarkup.Manager
             set => IntersectionTemplateManager.Instance = value;
         }
 
+        public static ulong UserId { get; } = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
         private static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
         public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
 

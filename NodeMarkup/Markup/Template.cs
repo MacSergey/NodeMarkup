@@ -260,9 +260,11 @@ namespace NodeMarkup.Manager
         public Template Template { get; private set; }
 
         public ulong AuthorId { get; set; }
+        public bool AuthorIsUser => AuthorId != 0 && AuthorId == TemplateManager.UserId;
         public string Author => TemplateManager.GetAuthor(AuthorId);
         public bool HasAuthor => !string.IsNullOrEmpty(Author);
         public bool IsWorkshop { get; set; }
+        public bool CanEdit => !IsWorkshop || AuthorIsUser;
         public string FileName { get; set; }
 
         public Image Preview => Template.HasPreview ? GetPreview(Template.Preview) : null;
@@ -294,8 +296,8 @@ namespace NodeMarkup.Manager
             foreach (var c in Path.GetInvalidFileNameChars())
                 yield return c.ToString();
 
-            yield return ".";
-            yield return "_";
+            yield return @"\.";
+            yield return @"\ ";
         }
 
         public TemplateAsset(Template template, Package.Asset asset = null)
@@ -311,9 +313,10 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                AuthorId = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
+                AuthorId = TemplateManager.UserId;
                 IsWorkshop = false;
-                FileName = $"IMT_{Template.Description}_{Replacer.Replace(Template.Name, "_")}_{Template.Id.ToString().Take(8)}";
+                var name = Replacer.Replace(Template.Name, "_").Trim('_');
+                FileName = $"IMT_{Template.Description}_{name}_{Template.Id.ToString().Substring(0, 8)}";
             }
         }
 

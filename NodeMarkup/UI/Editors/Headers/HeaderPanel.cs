@@ -187,22 +187,19 @@ namespace NodeMarkup.UI.Editors
         HeaderButton NotSave { get; set; }
 
         private bool IsAsset { get; set; }
-        private bool IsWorkshop { get; set; }
+        private bool CanEdit { get; set; }
 
         public virtual bool EditMode
         {
             set
             {
                 SaveAsAsset.isVisible = !IsAsset && !value;
-                Edit.isVisible = (!IsAsset || !IsWorkshop) && !value;
+                Edit.isVisible = (!IsAsset || CanEdit) && !value;
                 Save.isVisible = NotSave.isVisible = value;
             }
         }
 
-        public TemplateHeaderPanel()
-        {
-            AddButtons();
-        }
+        public TemplateHeaderPanel() => AddButtons();
         protected virtual void AddButtons()
         {
             Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
@@ -216,7 +213,7 @@ namespace NodeMarkup.UI.Editors
             base.Init(isDeletable: false);
 
             IsAsset = template.IsAsset;
-            IsWorkshop = !IsAsset || template.Asset.IsWorkshop;
+            CanEdit = !IsAsset || template.Asset.CanEdit;
 
             EditMode = false;
         }
