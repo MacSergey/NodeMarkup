@@ -44,6 +44,7 @@ namespace NodeMarkup.UI.Editors
         {
             AddLable();
 
+            clipChildren = true;
             atlas = TextureUtil.Atlas;
             normalBgSprite = TextureUtil.ListItemSprite;
             height = 25;

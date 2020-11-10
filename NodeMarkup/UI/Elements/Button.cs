@@ -21,7 +21,7 @@ namespace NodeMarkup.UI
             var ret = UIUtils.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
             return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
         }
-        public NodeMarkupButton()
+        public override void Start()
         {
             atlas = TextureUtil.Atlas;
 
