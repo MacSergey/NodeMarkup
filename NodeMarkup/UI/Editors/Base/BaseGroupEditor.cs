@@ -55,6 +55,7 @@ namespace NodeMarkup.UI.Editors
             if (!isSelect)
                 return;
 
+            SelectItem = null;
             ClearSettings();
 
             if (GroupingEnabled)

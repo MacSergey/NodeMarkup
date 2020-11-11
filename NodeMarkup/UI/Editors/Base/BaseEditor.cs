@@ -171,7 +171,7 @@ namespace NodeMarkup.UI.Editors
         protected EditableItemType SelectItem
         {
             get => _selectItem;
-            private set
+            set
             {
                 if (_selectItem != null)
                     _selectItem.IsSelect = false;
@@ -252,6 +252,7 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             ClearSettings();
+            SelectItem = null;
             Select(index);
         }
 
