@@ -42,9 +42,11 @@ namespace NodeMarkup.UI
         {
             base.Update();
 
-            if (NodeMarkupTool.Instance.enabled && state == (ButtonState.Normal | ButtonState.Hovered))
+            var enable = NodeMarkupTool.Instance?.enabled == true;
+
+            if (enable && state == (ButtonState.Normal | ButtonState.Hovered))
                 state = ButtonState.Focused;
-            else if (!NodeMarkupTool.Instance.enabled && state == ButtonState.Focused)
+            else if (!enable && state == ButtonState.Focused)
                 state = ButtonState.Normal;
         }
         public static void CreateButton()
