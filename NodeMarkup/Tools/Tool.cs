@@ -489,11 +489,14 @@ namespace NodeMarkup.Tools
             var backupRotation = cameraController.m_currentAngle;
             var backupSize = cameraController.m_currentSize;
 
-            GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
-            SetCameraPosition(new Vector3(centre.x, Markup.Height, centre.z), new Vector2(GetCameraAngle(), 90f), radius * 2 * 1.1f);
+            var angle = GetCameraAngle();
+            GetCameraPorition(angle, out Vector3 position, out float size);
+            SetCameraPosition(position, new Vector2(0f, 90f), size);
 
             yield return new WaitForEndOfFrame();
 
+            camera.transform.position = position + new Vector3(0, Math.Max(size * 1.1f, size + 5f) / 2 / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2), 0);
+            camera.transform.rotation = Quaternion.Euler(90, (2 * Mathf.PI - angle - Vector3.forward.AbsoluteAngle()) * Mathf.Rad2Deg, 0);
             camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
             camera.rect = new Rect(0f, 0f, 1f, 1f);
 
@@ -534,13 +537,12 @@ namespace NodeMarkup.Tools
         }
         private float GetCameraAngle()
         {
-            var zero = Vector3.forward.AbsoluteAngle();
             var enters = Markup.Enters.ToArray();
 
             switch (enters.Length)
             {
-                case 0: return zero * Mathf.Rad2Deg;
-                case 1: return -(enters[0].NormalAngle + zero) * Mathf.Rad2Deg;
+                case 0: return 0;
+                case 1: return enters[0].NormalAngle;
                 default:
                     var sortEnters = enters.OrderBy(e => e.RoadHalfWidth).Reverse().ToArray();
                     var selectWidth = sortEnters[1].RoadHalfWidth * 0.9f;
@@ -566,7 +568,46 @@ namespace NodeMarkup.Tools
                         }
                     }
 
-                    return -((selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) / 2 + zero) * Mathf.Rad2Deg;
+                    return (selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) / 2;
+            }
+        }
+        private void GetCameraPorition(float angle, out Vector3 position, out float size)
+        {
+            var points = Markup.Enters.SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
+
+            if (!points.Any())
+            {
+                position = Markup.Position;
+                size = 10f;
+                return;
+            }
+
+            var dir = angle.Direction();
+            var normal = dir.Turn90(false);
+
+            var rect = new Rect();
+            foreach (var point in points)
+            {
+                Line2.Intersect(Markup.Position.XZ(), (Markup.Position + dir).XZ(), point.XZ(), (point + normal).XZ(), out float x, out _);
+                Line2.Intersect(Markup.Position.XZ(), (Markup.Position + normal).XZ(), point.XZ(), (point + dir).XZ(), out float y, out _);
+
+                Set(ref rect, x, y);
+            }
+
+            position = Markup.Position + dir * rect.center.x + normal * rect.center.y;
+            size = Mathf.Max(rect.width, rect.height);
+
+            static void Set(ref Rect rect, float x, float y)
+            {
+                if (x < rect.xMin)
+                    rect.xMin = x;
+                else if (x > rect.xMax)
+                    rect.xMax = x;
+
+                if (y < rect.yMin)
+                    rect.yMin = y;
+                else if (y > rect.yMax)
+                    rect.yMax = y;
             }
         }
         private void SetCameraPosition(Vector3 position, Vector2 rotation, float size)
