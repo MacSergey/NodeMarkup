@@ -479,31 +479,23 @@ namespace NodeMarkup.Tools
             if (callback == null)
                 yield break;
 
-            yield return new WaitForEndOfFrame();
-
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(MakeScreenshot)}");
 
+            var cameraController = ToolsModifierControl.cameraController;
             var camera = Camera.main;
             var backupMask = camera.cullingMask;
             var backupRect = camera.rect;
-            var backupPosition = camera.transform.position;
-            var backupRotation = camera.transform.rotation;
-            camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
-            camera.rect = new Rect(0f, 0f, 1f, 1f);
+            var backupPosition = cameraController.m_currentPosition;
+            var backupRotation = cameraController.m_currentAngle;
+            var backupSize = cameraController.m_currentSize;
 
             GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
+            SetCameraPosition(new Vector3(centre.x, Markup.Height, centre.z), new Vector2(0f, 90f), radius * 2 * 1.1f);
 
-            var deltaHeight = radius / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2);
-            camera.transform.position = new Vector3(centre.x, Markup.Height + deltaHeight, centre.z);
-            camera.transform.rotation = Quaternion.Euler(90, 0, 0);
-            camera.clearFlags = CameraClearFlags.Nothing;
-            camera.backgroundColor = Color.white;
+            yield return new WaitForEndOfFrame();
 
-            var scale = ScreenshotSize * 4;
-
-            var render = new RenderTexture(scale, scale, 24);
-            camera.targetTexture = render;
-            var screenShot = new Texture2D(scale, scale, TextureFormat.RGB24, false);
+            camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
+            camera.rect = new Rect(0f, 0f, 1f, 1f);
 
             bool smaaEnabled = false;
             var smaa = camera.GetComponent<SMAA>();
@@ -513,28 +505,42 @@ namespace NodeMarkup.Tools
                 smaa.enabled = true;
             }
 
+            var scale = ScreenshotSize * 4;
+
+            camera.targetTexture = new RenderTexture(scale, scale, 24);
+            var screenShot = new Texture2D(scale, scale, TextureFormat.RGB24, false);
+
             Singleton<RenderManager>.instance.UpdateCameraInfo();
             camera.Render();
 
             if (smaa != null)
                 smaa.enabled = smaaEnabled;
 
-            RenderTexture.active = render;
+            RenderTexture.active = camera.targetTexture;
             screenShot.ReadPixels(new Rect(0, 0, scale, scale), 0, 0);
+            RenderTexture.active = null;
+            Destroy(camera.targetTexture);
+
+            SetCameraPosition(backupPosition, backupRotation, backupSize);
             camera.targetTexture = null;
             camera.cullingMask = backupMask;
             camera.rect = backupRect;
-            camera.transform.position = backupPosition;
-            camera.transform.rotation = backupRotation;
-            camera.clearFlags = CameraClearFlags.Skybox;
-            RenderTexture.active = null;
-            Destroy(render);
 
             var data = screenShot.GetPixels32();
             var image = new Image(scale, scale, TextureFormat.RGB24, data);
             image.Resize(ScreenshotSize, ScreenshotSize);
 
             callback(image);
+        }
+
+        private void SetCameraPosition(Vector3 position, Vector2 rotation, float size)
+        {
+            var cameraController = ToolsModifierControl.cameraController;
+            cameraController.ClearTarget();
+            cameraController.SetOverrideModeOff();
+            cameraController.m_targetPosition = cameraController.m_currentPosition = position;
+            cameraController.m_targetAngle = cameraController.m_currentAngle = rotation;
+            cameraController.m_targetSize = cameraController.m_currentSize = size;
         }
 
         #endregion
