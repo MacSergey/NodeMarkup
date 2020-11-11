@@ -151,7 +151,7 @@ namespace NodeMarkup.Manager
         }
         public void AddTemplate(TemplateType template)
         {
-            if (TemplatesDictionary.TryGetValue(template.Id, out TemplateType existTemplate) && (!template.IsAsset || (existTemplate.IsAsset && (!template.Asset.IsWorkshop || existTemplate.Asset.IsWorkshop))))
+            if (!NeedAdd(template))
                 return;
 
             TemplatesDictionary[template.Id] = template;
@@ -162,6 +162,31 @@ namespace NodeMarkup.Manager
                 if (authorId != 0 && !Authors.ContainsKey(authorId))
                     Authors[authorId] = new Friend(new UserID(authorId)).personaName;
             }
+        }
+        private bool NeedAdd(TemplateType template)
+        {
+            if (TemplatesDictionary.TryGetValue(template.Id, out TemplateType existTemplate))
+            {
+                if (!template.IsAsset)
+                    return false;
+
+                if (existTemplate.IsAsset)
+                {
+                    if (!template.Asset.IsWorkshop)
+                        return false;
+
+                    if (existTemplate.Asset.IsWorkshop)
+                    {
+                        if (!template.Asset.IsLocalFolder)
+                            return false;
+
+                        if (existTemplate.Asset.IsLocalFolder)
+                            return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         public void DeleteTemplate(TemplateType template)

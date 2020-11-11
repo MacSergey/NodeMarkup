@@ -257,6 +257,7 @@ namespace NodeMarkup.Manager
 
     public class TemplateAsset
     {
+        private static string LocalFolder { get; } = DataLocation.assetsPath;
         public Template Template { get; private set; }
 
         public ulong AuthorId { get; private set; } = TemplateManager.UserId;
@@ -265,22 +266,24 @@ namespace NodeMarkup.Manager
         public bool HasAuthor => !string.IsNullOrEmpty(Author);
         public PublishedFileId WorkshopId { get; private set; } = PublishedFileId.invalid;
         public bool IsWorkshop => WorkshopId != PublishedFileId.invalid;
+        public bool IsLocalFolder { get; private set; }
         public bool CanEdit => !IsWorkshop || AuthorIsUser;
-        private string _fileName = null;
+
+        private string DefineFileName { get; set; }
         public string FileName
         {
             get
             {
-                if (_fileName == null)
+                if (DefineFileName is string fileName)
+                    return fileName;
+                else
                 {
                     var name = Replacer.Replace(Template.Name, "_").Trim('_');
-                    _fileName = $"IMT_{Template.Description}_{name}_{Template.Id.ToString().Substring(0, 8)}";
+                    return $"IMT_{Template.Description}_{name}_{Template.Id.Unique()}";
                 }
-                return _fileName;
             }
-            private set => _fileName = value;
         }
-        public string Flags => $"{(HasAuthor ? "A" : string.Empty)}{(AuthorIsUser ? "U" : string.Empty)}{(IsWorkshop ? "W" : string.Empty)}";
+        public string Flags => $"{(HasAuthor ? "A" : string.Empty)}{(AuthorIsUser ? "U" : string.Empty)}{(IsWorkshop ? "W" : string.Empty)}{(IsLocalFolder ? "L" : string.Empty)}";
 
         public Image Preview => Template.HasPreview ? GetPreview(Template.Preview) : null;
         public Image SteamPreview => Template.HasSteamPreview ? GetPreview(Template.SteamPreview) : null;
@@ -300,7 +303,6 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public string MetaData => $"{Template.Name}_Data";
         public string MetaPreview => $"{Template.Name}_Preview";
         public string MetaSteamPreview => $"{Template.Name}_SteamPreview";
 
@@ -325,8 +327,9 @@ namespace NodeMarkup.Manager
 
             AuthorId = ulong.TryParse(asset.package.packageAuthor.Substring("steamid:".Length), out ulong steamId) ? steamId : 0;
             WorkshopId = asset.package.GetPublishedFileID();
-            if (!IsWorkshop)
-                FileName = Path.GetFileNameWithoutExtension(asset.package.packagePath);
+            IsLocalFolder = asset.package.packagePath.StartsWith(LocalFolder);
+            if (IsLocalFolder)
+                DefineFileName = Path.GetFileNameWithoutExtension(asset.package.packagePath);
 
             if (NeedLoadPreview && asset.package.Find(MetaPreview) is Package.Asset assetPreview && assetPreview.Instantiate<Texture>() is Texture2D preview)
                 Template.Preview = preview;

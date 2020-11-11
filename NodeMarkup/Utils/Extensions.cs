@@ -286,6 +286,7 @@ namespace NodeMarkup.Utils
             component.isEnabled = value;
             component.opacity = value ? 1f : 0.15f;
         }
+        public static string Unique(this Guid guid) => guid.ToString().Substring(0, 8);
     }
 
     public struct BezierPoint

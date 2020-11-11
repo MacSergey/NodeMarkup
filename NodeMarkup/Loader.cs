@@ -279,7 +279,7 @@ namespace NodeMarkup
             {
                 var meta = new CustomAssetMetaData()
                 {
-                    name = templateAsset.Template.Name,
+                    name = $"{templateAsset.Template.Name}_{Guid.NewGuid().Unique()}",
                     timeStamp = DateTime.Now,
                     type = CustomAssetMetaData.Type.Unknown,
                     dlcMask = SteamHelper.DLC_BitMask.None,
@@ -296,7 +296,7 @@ namespace NodeMarkup
                 var gameObject = new GameObject(typeof(MarkingInfo).Name);
                 var markingInfo = gameObject.AddComponent<MarkingInfo>();
                 markingInfo.data = GetString(templateAsset.Template.ToXml());
-                meta.assetRef = package.AddAsset(templateAsset.MetaData, markingInfo.gameObject);
+                meta.assetRef = package.AddAsset($"{meta.name}_Data", markingInfo.gameObject);
 
                 if (templateAsset.Preview is Image image)
                     meta.imageRef = package.AddAsset(templateAsset.MetaPreview, image, false, Image.BufferFileFormat.PNG, false, false);
