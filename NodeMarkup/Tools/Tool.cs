@@ -490,7 +490,7 @@ namespace NodeMarkup.Tools
             var backupSize = cameraController.m_currentSize;
 
             GetCentreAndRadius(Markup, out Vector3 centre, out float radius);
-            SetCameraPosition(new Vector3(centre.x, Markup.Height, centre.z), new Vector2(0f, 90f), radius * 2 * 1.1f);
+            SetCameraPosition(new Vector3(centre.x, Markup.Height, centre.z), new Vector2(GetCameraAngle(), 90f), radius * 2 * 1.1f);
 
             yield return new WaitForEndOfFrame();
 
@@ -532,7 +532,43 @@ namespace NodeMarkup.Tools
 
             callback(image);
         }
+        private float GetCameraAngle()
+        {
+            var zero = Vector3.forward.AbsoluteAngle();
+            var enters = Markup.Enters.ToArray();
 
+            switch (enters.Length)
+            {
+                case 0: return zero * Mathf.Rad2Deg;
+                case 1: return -(enters[0].NormalAngle + zero) * Mathf.Rad2Deg;
+                default:
+                    var sortEnters = enters.OrderBy(e => e.RoadHalfWidth).Reverse().ToArray();
+                    var selectWidth = sortEnters[1].RoadHalfWidth * 0.9f;
+                    var selectEnters = sortEnters.Where(e => e.RoadHalfWidth > selectWidth).ToArray();
+
+                    var first = 0;
+                    var second = 1;
+                    var maxDelta = 0f;
+
+                    for (var i = 0; i < selectEnters.Length; i += 1)
+                    {
+                        for (var j = i + 1; j < selectEnters.Length; j += 1)
+                        {
+                            var delte = Mathf.Abs(selectEnters[i].NormalAngle - selectEnters[j].NormalAngle);
+                            if (delte > Mathf.PI)
+                                delte = 2 * Mathf.PI - delte;
+                            if (delte > maxDelta)
+                            {
+                                maxDelta = delte;
+                                first = i;
+                                second = j;
+                            }
+                        }
+                    }
+
+                    return -((selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) / 2 + zero) * Mathf.Rad2Deg;
+            }
+        }
         private void SetCameraPosition(Vector3 position, Vector2 rotation, float size)
         {
             var cameraController = ToolsModifierControl.cameraController;

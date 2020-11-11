@@ -19,7 +19,8 @@ namespace NodeMarkup.Manager
         public ushort Id { get; }
         public bool IsStartSide { get; private set; }
         public bool IsLaneInvert { get; private set; }
-        public float RoadHalfWidth { get; private set; }
+        public float RoadHalfWidth{ get; private set; }
+        public float RoadHalfWidthTransform { get; private set; }
         public Vector3? Position { get; private set; } = null;
         public Vector3 FirstPointSide { get; private set; }
         public Vector3 LastPointSide { get; private set; }
@@ -33,10 +34,12 @@ namespace NodeMarkup.Manager
 
         public byte PointNum => ++_pointNum;
 
-        public float AbsoluteAngle { get; private set; }
-        public float CornerAndNormalAngle { get; private set; }
         public Vector3 CornerDir { get; private set; }
         public Vector3 NormalDir { get; private set; }
+
+        public float CornerAngle { get; private set; }
+        public float NormalAngle { get; private set; }
+        public float CornerAndNormalAngle { get; private set; }
 
         public Enter Next => Markup.GetNextEnter(this);
         public Enter Prev => Markup.GetPrevEnter(this);
@@ -148,13 +151,11 @@ namespace NodeMarkup.Manager
             var cornerAngle = (IsStartSide ? segment.m_cornerAngleStart : segment.m_cornerAngleEnd) / 255f * 360f;
             if (IsLaneInvert)
                 cornerAngle = cornerAngle >= 180 ? cornerAngle - 180 : cornerAngle + 180;
-            AbsoluteAngle = cornerAngle * Mathf.Deg2Rad;
+            CornerAngle = cornerAngle * Mathf.Deg2Rad;
+            CornerDir = DriveLanes.Length <= 1 ? CornerAngle.Direction() : (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
+            NormalDir = (DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero) * (IsStartSide ? -1 : 1);
+            NormalAngle = NormalDir.AbsoluteAngle();
 
-            CornerDir = DriveLanes.Length <= 1 ?
-                AbsoluteAngle.Direction() :
-                (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
-            NormalDir = DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero;
-            NormalDir = IsStartSide ? -NormalDir : NormalDir;
             var angle = Vector3.Angle(NormalDir, CornerDir);
             CornerAndNormalAngle = (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad;
         }
@@ -165,11 +166,12 @@ namespace NodeMarkup.Manager
                 var position = driveLane.NetLane.CalculatePosition(T);
                 var coef = Mathf.Sin(CornerAndNormalAngle);
 
-                RoadHalfWidth = (segment.Info.m_halfWidth - segment.Info.m_pavementWidth) / coef;
+                RoadHalfWidth = segment.Info.m_halfWidth - segment.Info.m_pavementWidth;
+                RoadHalfWidthTransform = RoadHalfWidth / coef;
 
                 Position = position + (IsLaneInvert ? -CornerDir : CornerDir) * driveLane.Position / coef;
-                FirstPointSide = Position.Value - RoadHalfWidth * CornerDir;
-                LastPointSide = Position.Value + RoadHalfWidth * CornerDir;
+                FirstPointSide = Position.Value - RoadHalfWidthTransform * CornerDir;
+                LastPointSide = Position.Value + RoadHalfWidthTransform * CornerDir;
                 Line = new StraightTrajectory(FirstPointSide, LastPointSide);
             }
             else
@@ -199,10 +201,10 @@ namespace NodeMarkup.Manager
             if (Position == null)
                 return;
 
-            var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidth, Position.Value + CornerDir * RoadHalfWidth).GetBezier();
+            var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidthTransform, Position.Value + CornerDir * RoadHalfWidthTransform).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
         }
-        public override string ToString() => $"{Id}-{(int)(AbsoluteAngle * Mathf.Rad2Deg)}";
+        public override string ToString() => $"{Id}-{(int)(NormalAngle * Mathf.Rad2Deg)}";
     }
     public class DriveLane
     {
@@ -320,7 +322,7 @@ namespace NodeMarkup.Manager
         {
             Id = enter.Id;
             Points = enter.PointCount;
-            Angle = enter.AbsoluteAngle;
+            Angle = enter.NormalAngle;
         }
         public static EnterData FromXml(XElement config)
         {
