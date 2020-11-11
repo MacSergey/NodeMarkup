@@ -456,9 +456,16 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Added the ability to save style templates as asset and share over workshop
-- Improved performance of the interface: reduced delay when switching tabs and select items.
-- Fix train and monorail roads (and any else without points).</value>
+    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+- Added the ability to save templates and presets as asset and share it over Workshop.
+- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+- Added panel tips (can be disable in settings).
+- Added the ability to cut new line by crosswalks (can be disable in settings).
+- Added the ability to change color values with mouse wheel.
+- Added English-UK translation.
+- Fix train and monorail roads (and any else without points).
+- Fix and improve points group overlay.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -1323,5 +1330,17 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preset</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+- Added the ability to save templates and presets as asset and share it over Workshop.
+- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+- Added panel tips (can be disable in settings).
+- Added the ability to cut new line by crosswalks (can be disable in settings).
+- Added the ability to change color values with mouse wheel.
+- Added English-UK translation.
+- Fix train and monorail roads (and any else without points).
+- Fix and improve points group overlay.</value>
   </data>
 </root>

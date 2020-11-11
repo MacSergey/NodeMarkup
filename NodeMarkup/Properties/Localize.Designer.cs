@@ -1365,9 +1365,26 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save style templates as asset and share over workshop
-        ///- Improved performance of the interface: reduced delay when switching tabs and select items.
-        ///- Fix train and monorail roads (and any else without points)..
+        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+        ///- Added the ability to save templates and presets as asset and share it over Workshop.
+        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+        ///- Added panel tips (can be disable in settings).
+        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_5 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+        ///- Added the ability to save templates and presets as asset and share it over Workshop.
+        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+        ///- Added panel tips (can be disable in settings).
+        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
