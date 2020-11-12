@@ -1242,7 +1242,7 @@ Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorl
     <value>Änderungen speichern</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
-    <value>Änderungen nicht übernehmen</value>
+    <value>Änderungen nicht speichern</value>
   </data>
   <data name="MessageBox_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -1264,7 +1264,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Du kannst sie nicht bearbeiten und ein Löschen ist nur über die Inhaltsverwaltung des Spiels möglich oder du kannst sie im Workshop deabonnieren.</value>
+    <value>Du kannst diese Kreuzungsvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
     <value>Diese Kreuzungsvorlage ist ein Spiel-Objekt.</value>
@@ -1273,7 +1273,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Du kannst sie nicht bearbeiten und ein Löschen ist nur über die Inhaltsverwaltung des Spiels möglich oder du kannst sie im Workshop deabonnieren.</value>
+    <value>Du kannst diese Stilvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>Diese Stilvorlage ist ein Spiel-Objekt.</value>
@@ -1299,4 +1299,5 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Dieser Linientyp unterstützt keine Regeln</value>
   </data>
+  
 </root>
