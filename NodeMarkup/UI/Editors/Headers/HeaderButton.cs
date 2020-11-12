@@ -15,7 +15,7 @@ namespace NodeMarkup.UI.Editors
         public static int IconSize => 25;
         public static int IconPadding => 2;
         public UIButton Icon { get; }
-        protected virtual Color32 HoveredColor => Color.black;
+        protected virtual Color32 HoveredColor => new Color32(32, 32, 32, 255);
         protected virtual Color32 PressedColor => Color.black;
 
         protected virtual Color32 IconColor => Color.white;
