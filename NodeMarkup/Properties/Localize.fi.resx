@@ -1060,7 +1060,7 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Merkinnät raiteiden alla</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Varoitus: Tämä aswtus muuttaa pelin piirtojärjestyksen</value>
+    <value>Varoitus: Tämä asetus muuttaa pelin piirtojärjestyksen</value>
   </data>
   
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
@@ -1250,6 +1250,10 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
     <value>esiasetuksen</value>
   </data>
   
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Tällainen viiva ei tue sääntöjä</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Älä leikkaa viivaa suojatiehen, jos se on suojatien reuna</value>
+  </data>
 </root>

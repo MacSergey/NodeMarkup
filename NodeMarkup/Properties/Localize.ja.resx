@@ -1230,7 +1230,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
 重複したプリセットを保存しても良いですか？</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>削除方法はコンテンツマネージャーから行います。</value>
+    <value>削除方法はコンテンツマネージャーから行います</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>編集不可になり、削除はコンテンツマネージャーから行います。
@@ -1240,7 +1240,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>このプリセットはカスタムアセットです。</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>削除方法はコンテンツマネージャーから行います。</value>
+    <value>削除方法はコンテンツマネージャーから行います</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>編集不可になり、削除はコンテンツマネージャーから行います。
@@ -1256,6 +1256,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>プリセット</value>
   </data>
   
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>このタイプは追加ルールをサポートしません</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>横断歩道の基準線の場合はラインを除去しない</value>
+  </data>
 </root>

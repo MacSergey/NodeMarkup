@@ -1072,7 +1072,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Зажмите Alt для создания заполнителя</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Потащите с Ctrl для перемещения точки</value>
+    <value>Зажмите Ctrl чтобы перетащить точку</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>ПРЕДУПРЕЖДЕНИЕ: Настройки шаблонов по умолчанию будут сброшены.
@@ -1268,7 +1268,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Для того что бы иметь возможность задать границы перехода, вы должны иметь линии начинающиеся из тех же точек что и переход</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>Для того что бы иметь возможность изменить у правила "От" и "До", а так же создать новые правила, вы должны иметь линии пересекающиеся с этой линией.</value>
+    <value>Для того что бы иметь возможность изменить у правила "От" и "До", а так же создать дополнительные правила, вы должны иметь линии пересекающиеся с этой линией.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
     <value>Показывать подсказки на панели</value>
