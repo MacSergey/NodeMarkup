@@ -40,6 +40,7 @@ namespace NodeMarkup
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool QuickBorderSetup { get; } = new SavedBool(nameof(QuickBorderSetup), SettingsFile, true, true);
         public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
+        //public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
@@ -221,6 +222,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
             AddCheckBox(group, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
             AddCheckBox(group, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
+            //AddCheckBox(group, "Don't cut line by crosswalk if it is a crosswalk's border", NotCutBordersByCrosswalk);
         }
         private static void AddGrouping(UIHelperBase helper)
         {
