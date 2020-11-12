@@ -1,0 +1,98 @@
+[HR][/HR] 
+[url=https://github.com/MacSergey/NodeMarkup/wiki][img]https://i.imgur.com/XuIb0H7.png[/img][/url] 
+[code][h1]Overview[/h1]
+[list][h2]This mod allows you to quickly create road markings at intersections.[/h2][/list]
+[/code]
+
+[*] This is for detailing and aesthetics [b][i] ONLY [/i][/b] and [b][i] WILL NOT [/i][/b] tell your traffic where to go. If you want to control traffic, please see [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1637663252]Traffic Manager: President Edition[/url].
+
+[*] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2040656402]Harmony 2.0[/url] is required for the mod to work.
+
+[*] You can move and adjust the intersection with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1619685021]Move It![/url] and will not need to redraw your lines.  They automatically redraw themselves.
+
+[*] There is no impact to Game Limits since the markings are not considered objects by the game.
+
+[*] There is little to no performance impact which can vary based on each user's system.
+
+[*] This tool can be disabled or unsubscribed at any time without breaking save games.
+[/list] 
+
+[HR][/HR] 
+[h1]What’s Included[/h1]
+[list] 
+[*] A variety of [url=https://github.com/MacSergey/NodeMarkup/wiki/Supported-Languages]supported languages[/url].
+[/list] 
+[list]
+[*][b] ALL MARKING OPTIONS [/b] can be colored with either a color palette or RGBA color numbers and sliders.
+
+[*] Create customized [url=https://github.com/MacSergey/NodeMarkup/wiki/Templates]Templates[/url] and set and change the default you wish to use for each style in each category.
+
+[*] 4 categories for different road marking scenarios each with a variety of styles to choose from.
+
+[*] Template and Line grouping options
+[/list]
+[list]
+[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][b]Lines[/b][/url][/h2]
+[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/HoxL3DG.png?1[/img][/url]
+
+[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][b]Stop Lines[/b][/url][/h2]
+[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/8ia1lEx.png?1[/img][/url]
+
+[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Fillers][b]Fillers[/b][/url][/h2]
+[url=https://github.com/MacSergey/NodeMarkup/wiki/Fillers][img]https://i.imgur.com/jLFH1wu.png?1[/img][/url]
+
+[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Crosswalks][b]Crosswalks[/b][/url][/h2]
+[url=https://github.com/MacSergey/NodeMarkup/wiki/Crosswalks][img]https://i.imgur.com/ZQvNHfs.png?1[/img][/url]
+[/list]
+
+[HR][/HR]
+[h1]Any questions?[/h1]
+[list]
+[*] [url=https://github.com/MacSergey/NodeMarkup/wiki/Basic-Operation-and-Information]Basic Operation and Information[/url]
+
+[*] [url=https://github.com/MacSergey/NodeMarkup/wiki/FAQ]FAQ[/url]
+
+[*] [url=https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting]Troubleshooting[/url]
+
+[*] [url=https://github.com/MacSergey/NodeMarkup/issues/new?assignees=&labels=Player+Requested+Features&template=feature_request.md]Player Feature Requests and Suggestions[/url]
+
+[*] [url=https://github.com/MacSergey/NodeMarkup/wiki/Info-On-Released-Updates]Information on Released Updates[/url] 
+[/list] 
+
+[h3]Join to discord for discussion and support[/h3]
+[url=https://discord.gg/QRYq8m2][img]https://i.imgur.com/bnDNN2x.png[/img][/url]
+
+[HR][/HR] 
+[h1]If you like Intersection Marking Tool, you can support me[/h1]
+
+[url=https://www.paypal.me/macsergey][img]https://i.imgur.com/vtwKnVr.png[/img][/url][url=https://www.patreon.com/MacSergey][img]https://i.imgur.com/aMLNy32.png[/img][/url]
+
+[HR][/HR]
+[h1]Source code[/h1]
+[url=https://github.com/MacSergey/NodeMarkup][img]https://i.imgur.com/DczUXYq.png[/img][/url]
+
+[HR][/HR]
+[h1]Thank you for your help in development, testing and translation:[/h1]
+[list]
+[*]algernon
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2015611172]Allystrya[/url] (workshop and wiki description)
+[*][url=https://steamcommunity.com/profiles/76561198855893485]Almi[/url] (workshop and wiki description)
+[*]boformer
+[*]BlazerKnight171 (Italian translation)
+[*][url=https://steamcommunity.com/id/chameleonlifede/]Chamëleon[/url] (Logodesign)
+[*]Claude_Speed (Chinese translation)
+[*][url=https://steamcommunity.com/id/Dogg_One]Dogg1[/url] (Finnish translation)
+[*]Egi
+[*][url=https://steamcommunity.com/id/gocaspro13/]GOCAS[/url] (Portugal translation)
+[*][url=https://steamcommunity.com/id/jurrijnp]JurrijnP[/url] (Dutch translation)
+[*]kian.zarrin
+[*][url=https://steamcommunity.com/profiles/76561198141193559]krzychu124[/url]
+[*]milanbarath (Czech translation)
+[*] [url=https://steamcommunity.com/id/mrlojnat/]MrLojnat[/url] (French translation)
+[*]RaeTheGit 
+[*]raistlin46 (Italian translation)
+[*] [url=https://steamcommunity.com/id/shg166yh/]shg166[/url] (Japanese translation)
+[*]Silchuki14 (French translation)
+[*][url=https://steamcommunity.com/id/quboid/myworkshopfiles/?appid=255710]Quboid[/url] 
+[*]ΣʋιʅѺɱҽɠα (French translation)
+[/list]
