@@ -34,7 +34,7 @@ namespace NodeMarkup.UI.Editors
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkupRegularLine;
-        public bool CanDivide => SupportRules && SupportPoints.Count > 2;
+        public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private MarkupLineSelectPropertyPanel HoverPartEdgePanel { get; set; }

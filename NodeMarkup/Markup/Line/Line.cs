@@ -29,6 +29,7 @@ namespace NodeMarkup.Manager
         public MarkupPointPair PointPair { get; }
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
+        public virtual bool IsSupportRules => false;
         public bool IsEnterLine => PointPair.IsSomeEnter;
         public bool IsNormal => PointPair.IsNormal;
         public bool IsStopLine => PointPair.IsStopLine;
@@ -232,6 +233,7 @@ namespace NodeMarkup.Manager
     {
         public override LineType Type => LineType.Regular;
 
+        public override bool IsSupportRules => true;
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
