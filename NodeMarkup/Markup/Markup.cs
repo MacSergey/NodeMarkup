@@ -544,6 +544,9 @@ namespace NodeMarkup.Manager
 
             foreach (var line in lines)
             {
+                if (crosswalk.IsBorder(line))
+                    continue;
+
                 var intersect = GetIntersect(line, crosswalk.Line);
                 if (!intersect.IsIntersect)
                     continue;
