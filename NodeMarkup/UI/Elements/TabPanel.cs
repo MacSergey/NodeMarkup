@@ -134,6 +134,7 @@ namespace NodeMarkup.UI
             for (var i = 0; i < tabRows.Count; i += 1)
             {
                 var tabRow = tabRows[i];
+
                 var rowWidth = tabRow.Sum(t => t.width);
                 var rowHeight = tabRow.Max(t => t.height);
                 if (i < tabRows.Count - 1)
@@ -142,9 +143,11 @@ namespace NodeMarkup.UI
                 var space = (width - rowWidth) / tabRow.Count;
                 var totalRowWidth = 0f;
 
-                foreach (var tab in tabRows[i])
+                for(var j = 0; j < tabRow.Count; j += 1)
                 {
-                    tab.width += space;
+                    var tab = tabRow[j];
+
+                    tab.width = j < tabRow.Count - 1 ? Mathf.Floor(tab.width + space) : width - totalRowWidth;
                     tab.height = rowHeight;
                     tab.relativePosition = new Vector2(totalRowWidth, totalHeight);
                     totalRowWidth += tab.width;

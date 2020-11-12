@@ -85,7 +85,7 @@ namespace NodeMarkup.UI.Editors
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(this);
-            Warning.Text = NodeMarkup.Localize.LineEditor_RulesWarning;
+            Warning.Text = Editor.SupportRules ? NodeMarkup.Localize.LineEditor_RulesWarning : NodeMarkup.Localize.LineEditor_NotSupportRules;
             Warning.Init();
         }
 
@@ -118,7 +118,7 @@ namespace NodeMarkup.UI.Editors
             panel.AddRange(Editor.SupportPoints);
             panel.SelectedObject = value;
 
-            if (Settings.ShowPanelTip)
+            if (Settings.ShowPanelTip && Editor.SupportRules)
             {
                 panel.isVisible = true;
                 panel.EnableControl = Editor.CanDivide;

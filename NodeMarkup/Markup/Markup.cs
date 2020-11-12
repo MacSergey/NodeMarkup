@@ -372,6 +372,8 @@ namespace NodeMarkup.Manager
         }
         private void RemoveLine(MarkupLine line)
         {
+            LinesDictionary.Remove(line.PointPair.Hash);
+
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
                 if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
@@ -389,8 +391,6 @@ namespace NodeMarkup.Manager
                 foreach (var crosswalk in GetLinesIsBorder(line))
                     crosswalk.RemoveBorder(line);
             }
-
-            LinesDictionary.Remove(line.PointPair.Hash);
         }
         public Dependences GetLineDependences(MarkupLine line)
         {

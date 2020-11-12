@@ -796,6 +796,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на This line type not support rules.
+        /// </summary>
+        public static string LineEditor_NotSupportRules {
+            get {
+                return ResourceManager.GetString("LineEditor_NotSupportRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на This rule is overlapped by another rule.
         ///Check the other rule&apos;s &quot;From&quot; and &quot;To&quot; points..
         /// </summary>

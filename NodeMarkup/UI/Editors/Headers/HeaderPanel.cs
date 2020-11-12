@@ -26,7 +26,8 @@ namespace NodeMarkup.UI.Editors
         public virtual void Init(float? height = null, bool isDeletable = true)
         {
             base.Init(height);
-            DeleteButton.enabled = isDeletable;
+            DeleteButton.isVisible = isDeletable;
+            SetSize();
         }
         public override void DeInit()
         {
@@ -36,8 +37,11 @@ namespace NodeMarkup.UI.Editors
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
-            Content.size = new Vector2(DeleteButton.enabled ? width - DeleteButton.width - 10 : width, height);
+            SetSize();
+        }
+        private void SetSize()
+        {
+            Content.size = new Vector2(DeleteButton.isVisible ? width - DeleteButton.width - 10 : width, height);
             DeleteButton.relativePosition = new Vector2(width - DeleteButton.width - 5, (height - DeleteButton.height) / 2);
         }
 
