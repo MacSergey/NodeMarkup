@@ -1137,7 +1137,7 @@ Shift X10, Ctrl X0.1</value>
 - Линии переходов больше не создают ненужных пересечений. Возможно потребуется задания границ переходов для уже существующих переходов.</value>
   </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
-    <value>Сохранить как ресурс</value>
+    <value>Сохранить как игровой ресурс</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
     <value>{0}
@@ -1178,7 +1178,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Изменения вступят в силу после перезагрузки игры</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>Загружать игровые ресурсы маркировки</value>
+    <value>Загружать маркировку из игровых ресурсов</value>
   </data>
   <data name="Mod_LoaledWithErrors" xml:space="preserve">
     <value>Мод загрузился с ошибками.
@@ -1204,7 +1204,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Дорог:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>Обрезать новые линии у переходов</value>
+    <value>Обрезать новые линии до переходов</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>Обрезать линии до этого перехода</value>
@@ -1244,34 +1244,34 @@ Shift X10, Ctrl X0.1</value>
     <value>Трафареты успешно восстановлены</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>Обрезать линии по всем переходам</value>
+    <value>Обрезать линии до всех переходов</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Обрезать линии по всем переходам</value>
+    <value>Обрезать линии до всех переходов</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>Английский Великобритания</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Перезапись ресурса трафарета</value>
+    <value>Перезапись игрового ресурса трафарета</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
     <value>Этот трафарет является игровым ресурсом. Для изменения его имени необходимо перезаписать файл ресурса. Продолжить?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Перезапись ресурса шаблона</value>
+    <value>Перезапись игрового ресурса шаблона</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Этот шаблон является игровым ресурсом. Для изменения его имени необходимо перезаписать файл ресурса. Продолжить?</value>
+    <value>Этот шаблон является игровым ресурсом. Для изменения его имени и значений необходимо перезаписать файл ресурса. Продолжить?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Для того что бы иметь возможность задать границы перехода, вы должны иметь линии начинающиеся из тех же точек что и переход</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>Для того что бы иметь возможность изменить у правила "От" и "До", а так же создать новые правила, вы должны иметь линии пересекающиеся с этой линией</value>
+    <value>Для того что бы иметь возможность изменить у правила "От" и "До", а так же создать новые правила, вы должны иметь линии пересекающиеся с этой линией.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
-    <value>Показывать подсказки панели</value>
+    <value>Показывать подсказки на панели</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Редактировать</value>
@@ -1302,7 +1302,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Вы можете удалить его только из диспетчера содержимого игры.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Вы не можете редактировать его и удалить можете только из диспетчера содержимого игры или отписавшись в Мастерской Steam.</value>
+    <value>Вы не можете редактировать его и удалить возможно только из диспетчера содержимого игры или отписавшись в Мастерской Steam.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
     <value>Этот трафарет является игровым ресурсом.</value>
@@ -1311,7 +1311,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Вы можете удалить его только из диспетчера содержимого игры.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Вы не можете редактировать его и удалить можете только из диспетчера содержимого игры или отписавшись в Мастерской Steam.</value>
+    <value>Вы не можете редактировать его и удалить возможно только из диспетчера содержимого игры или отписавшись в Мастерской Steam.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>Этот шаблон является игровым ресурсом.</value>
@@ -1336,5 +1336,8 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Этот тип линии не поддерживает правила</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Не обрезать линию до перехода, если она является его границей</value>
   </data>
 </root>
