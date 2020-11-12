@@ -1249,6 +1249,10 @@ Shift x10，Ctrl x0.1</value>
     <value>预设​​​​</value>
   </data>
   
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>此类标线不支持规则</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>不要在人行道后创建线，如果人行道是标线边线</value>
+  </data>
 </root>
