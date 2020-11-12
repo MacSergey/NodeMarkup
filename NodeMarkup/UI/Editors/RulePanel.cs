@@ -17,6 +17,7 @@ namespace NodeMarkup.UI.Editors
 
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
+        private MarkupLine Line => Editor.EditObject;
         public MarkupLineRawRule Rule { get; private set; }
 
         private StyleHeaderPanel Header { get; set; }
@@ -69,7 +70,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             Header = ComponentPool.Get<StyleHeaderPanel>(this);
-            Header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
+            Header.Init(Rule.Style.Type, OnSelectTemplate, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
@@ -85,7 +86,7 @@ namespace NodeMarkup.UI.Editors
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(this);
-            Warning.Text = NodeMarkup.Localize.LineEditor_RulesWarning;
+            Warning.Text = Line.IsSupportRules ? NodeMarkup.Localize.LineEditor_RulesWarning : NodeMarkup.Localize.LineEditor_NotSupportRules;
             Warning.Init();
         }
 
@@ -118,7 +119,7 @@ namespace NodeMarkup.UI.Editors
             panel.AddRange(Editor.SupportPoints);
             panel.SelectedObject = value;
 
-            if (Settings.ShowPanelTip)
+            if (Settings.ShowPanelTip && Line.IsSupportRules)
             {
                 panel.isVisible = true;
                 panel.EnableControl = Editor.CanDivide;
@@ -133,7 +134,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            switch (Editor.EditObject)
+            switch (Line)
             {
                 case MarkupRegularLine regularLine:
                     Style = ComponentPool.Get<RegularStylePropertyPanel>(this);
