@@ -11,31 +11,45 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class HeaderButton : UIButton
     {
-        public UIPanel Panel { get; }
+        public UIButton Icon { get; }
         protected virtual Color32 HoveredColor => Color.black;
-        protected virtual Color32 PressedColor => new Color32(160, 160, 160, 255);
+        protected virtual Color32 PressedColor => Color.black;
+
+        protected virtual Color32 IconColor => Color.white;
+        protected virtual Color32 HoverIconColor => Color.white;
+        protected virtual Color32 PressedIconColor => new Color32(224, 224, 224, 255);
 
         public HeaderButton()
         {
-            hoveredBgSprite = TextureUtil.HeaderHovered;
-            pressedBgSprite = TextureUtil.HeaderHovered;
+            hoveredBgSprite = pressedBgSprite = focusedBgSprite = TextureUtil.HeaderHovered;
             size = new Vector2(25, 25);
             atlas = TextureUtil.Atlas;
             hoveredColor = HoveredColor;
-            pressedColor = PressedColor;
+            pressedColor = focusedColor = PressedColor;
             clipChildren = true;
             textPadding = new RectOffset(30, 5, 5, 0);
             textScale = 0.8f;
             textHorizontalAlignment = UIHorizontalAlignment.Left;
             minimumSize = size;
 
-            Panel = AddUIComponent<UIPanel>();
-            Panel.size = size;
-            Panel.atlas = atlas;
-            Panel.relativePosition = Vector2.zero;
+            Icon = AddUIComponent<UIButton>();
+            Icon.size = size;
+            Icon.atlas = atlas;
+            Icon.relativePosition = Vector2.zero;
+
+            Icon.color = IconColor;
+            Icon.hoveredColor = HoverIconColor;
+            Icon.pressedColor = PressedIconColor;
+            Icon.focusedColor = PressedIconColor;
         }
 
-        public void SetSprite(string sprite) => Panel.backgroundSprite = sprite;
+        public void SetIconSprite(string sprite)
+        {
+            Icon.normalBgSprite = sprite;
+            Icon.hoveredBgSprite = sprite;
+            Icon.pressedBgSprite = sprite;
+            Icon.focusedBgSprite = sprite;
+        }
     }
     public class SimpleHeaderButton : HeaderButton { }
 

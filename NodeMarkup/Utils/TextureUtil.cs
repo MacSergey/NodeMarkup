@@ -86,7 +86,7 @@ namespace NodeMarkup.Utils
         static void Styles(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
 
         static void HeaderButtons(int texWidth, int texHeight, Rect rect)
-            => AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
+            => AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4,4,4,4), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
 
         static void ListItem(int texWidth, int texHeight, Rect rect) => AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
 

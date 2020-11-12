@@ -86,7 +86,7 @@ namespace NodeMarkup.UI.Editors
                 button.text = text ?? string.Empty;
             else
                 button.tooltip = text;
-            button.SetSprite(sprite);
+            button.SetIconSprite(sprite);
 
             if (onClick != null)
                 button.eventClick += onClick;
@@ -263,7 +263,7 @@ namespace NodeMarkup.UI.Editors
         {
             base.Init(template);
 
-            SetAsDefaultButton.SetSprite(template.IsDefault ? TextureUtil.UnsetDefault : TextureUtil.SetDefault);
+            SetAsDefaultButton.SetIconSprite(template.IsDefault ? TextureUtil.UnsetDefault : TextureUtil.SetDefault);
             SetAsDefaultButton.tooltip = template.IsDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
         public override void DeInit()

@@ -78,7 +78,7 @@ namespace NodeMarkup.UI.Panel
 
         private void OnAdditionallyPopup(AdditionallyPopup popup)
         {
-            var buttons = new List<SimpleHeaderButton>
+            var buttons = new List<PanelHeaderButton>
             {
                 AddButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
                 AddButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
@@ -94,10 +94,11 @@ namespace NodeMarkup.UI.Panel
 
             popup.Width = buttons.Max(b => b.width);
         }
-        private SimpleHeaderButton AddButton(string sprite, string text, Shortcut shortcut) => AddButton(sprite, GetText(text, shortcut), onClick: (UIComponent _, UIMouseEventParameter __) => shortcut.Press());
-        private SimpleHeaderButton AddButton(UIComponent parent, string sprite, string text, Shortcut shortcut)
+        private PanelHeaderButton AddButton(string sprite, string text, Shortcut shortcut) 
+            => AddButton<PanelHeaderButton>(sprite, GetText(text, shortcut), onClick: (UIComponent _, UIMouseEventParameter __) => shortcut.Press());
+        private PanelHeaderButton AddButton(UIComponent parent, string sprite, string text, Shortcut shortcut)
         {
-            return AddButton(parent, sprite, GetText(text, shortcut), true, action);
+            return AddButton<PanelHeaderButton>(parent, sprite, GetText(text, shortcut), true, action);
 
             void action(UIComponent component, UIMouseEventParameter eventParam)
             {
@@ -109,14 +110,24 @@ namespace NodeMarkup.UI.Panel
 
         private string GetText(string text, Shortcut shortcut) => $"{text} ({shortcut})";
     }
+    public class PanelHeaderButton : SimpleHeaderButton
+    {
+        protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
+        protected override Color32 PressedColor => new Color32(144, 144, 144, 255);
+        protected override Color32 PressedIconColor => Color.white;
+    }
     public class AdditionallyHeaderButton : HeaderPopupButton<AdditionallyPopup>
     {
+        protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
+        protected override Color32 PressedColor => new Color32(144, 144, 144, 255);
+        protected override Color32 PressedIconColor => Color.white;
+
         public event Action<AdditionallyPopup> OpenPopupEvent;
         protected override void OnOpenPopup() => OpenPopupEvent?.Invoke(Popup);
     }
     public class AdditionallyPopup : PopupPanel
     {
-        protected override Color32 Background => Color.white;
+        protected override Color32 Background => new Color32(64,64,64,255);
     }
 
     public class ApplyIntersectionTemplateHeaderButton : ApplyHeaderButton<IntersectionTemplate, ApplyIntersectionTemplatePopupPanel, IntersectionTemplatePopupItem, IntersectionTemplateIcon, string>
