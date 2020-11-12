@@ -419,7 +419,9 @@ create or delete a pedestrian crossing</value>
   
   
   
-  
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Turn anti-clockwise</value>
+  </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>Centre</value>
   </data>
@@ -530,6 +532,7 @@ crossings:</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Cut lines by all pedestrian crossings</value>
   </data>
+  
   
   
   
