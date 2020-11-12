@@ -642,7 +642,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Not save changes.
+        ///   Ищет локализованную строку, похожую на Don&apos;t save changes.
         /// </summary>
         public static string HeaderPanel_NotSave {
             get {
@@ -796,7 +796,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This line type not support rules.
+        ///   Ищет локализованную строку, похожую на This line type doesn&apos;t support rules.
         /// </summary>
         public static string LineEditor_NotSupportRules {
             get {
@@ -1583,7 +1583,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You can delete it only from game content manager..
+        ///   Ищет локализованную строку, похожую на It can only be deleted from the game content manager..
         /// </summary>
         public static string PresetEditor_IsAssetWarningMessage {
             get {
@@ -1592,7 +1592,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You can&apos;t edit it and can delete it only from game content manager or unsubscribe on Steam Workshop..
+        ///   Ищет локализованную строку, похожую на This preset can&apos;t be modified. It can only be deleted from the game content manager or unsubscribed from on the Steam Workshop..
         /// </summary>
         public static string PresetEditor_IsWorkshopWarningMessage {
             get {
@@ -1638,7 +1638,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на To change its name need rewrite asset file. Continue?.
+        ///   Ищет локализованную строку, похожую на To change its name requires rewriting the asset file. Continue?.
         /// </summary>
         public static string PresetEditor_RewriteMessage {
             get {
@@ -1890,6 +1890,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Don&apos;t cut line by crosswalk if it is their border.
+        /// </summary>
+        public static string Settings_DontCutBorderByCrosswalk {
+            get {
+                return ResourceManager.GetString("Settings_DontCutBorderByCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Dump marking data to file.
         /// </summary>
         public static string Settings_DumpMarkingButton {
@@ -2070,7 +2079,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Load marking assets.
+        ///   Ищет локализованную строку, похожую на Load markings assets.
         /// </summary>
         public static string Settings_LoadMarkingAssets {
             get {
@@ -2857,7 +2866,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You can delete it only from game content manager..
+        ///   Ищет локализованную строку, похожую на It can only be deleted from the game content manager..
         /// </summary>
         public static string TemplateEditor_IsAssetWarningMessage {
             get {
@@ -2866,7 +2875,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на You can&apos;t edit it and can delete it only from game content manager or unsubscribe on Steam Workshop..
+        ///   Ищет локализованную строку, похожую на This template can&apos;t be modified. It can only be deleted from the game content manager or unsubscribed from on the Steam Workshop..
         /// </summary>
         public static string TemplateEditor_IsWorkshopWarningMessage {
             get {
@@ -2912,7 +2921,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на To change its name and values need rewrite asset file. Continue?.
+        ///   Ищет локализованную строку, похожую на To change its name and values requires rewriting the asset file. Continue?.
         /// </summary>
         public static string TemplateEditor_RewriteMessage {
             get {

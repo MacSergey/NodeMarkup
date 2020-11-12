@@ -412,6 +412,70 @@ namespace NodeMarkup.Manager
 
         #endregion
 
+        #region FILLERS
+
+        public void AddFiller(MarkupFiller filler)
+        {
+            FillersList.Add(filler);
+            filler.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
+        }
+        public void RemoveFiller(MarkupFiller filler)
+        {
+            FillersList.Remove(filler);
+            NeedRecalculateDrawData = true;
+        }
+
+        #endregion
+
+        #region CROSSWALK
+
+        public void AddCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            CrosswalksDictionary[crosswalk.Line] = crosswalk;
+            crosswalk.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
+        }
+        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
+        public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
+        {
+            var dependences = GetLineDependences(crosswalk.Line);
+            dependences.Crosswalks = 0;
+            dependences.Lines = 1;
+            return dependences;
+        }
+        public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            var enter = crosswalk.Line.Start.Enter;
+            var lines = Lines.Where(l => l.Type == MarkupLine.LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
+
+            foreach (var line in lines)
+            {
+                if (Settings.NotCutBordersByCrosswalk && crosswalk.IsBorder(line))
+                    continue;
+
+                var intersect = GetIntersect(line, crosswalk.Line);
+                if (!intersect.IsIntersect)
+                    continue;
+
+                foreach (var rule in line.Rules)
+                {
+                    if (!rule.GetFromT(out float fromT) || !rule.GetToT(out float toT))
+                        continue;
+
+                    if (!(fromT < intersect.FirstT && intersect.FirstT < toT) && !(toT < intersect.FirstT && intersect.FirstT < fromT))
+                        continue;
+
+                    if ((line.End.Type == MarkupPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
+                        rule.From = new LinesIntersectEdge(intersect.Pair);
+                    else
+                        rule.To = new LinesIntersectEdge(intersect.Pair);
+                }
+            }
+        }
+
+        #endregion
+
         #region GET & CONTAINS
 
         public bool TryGetLine(MarkupPointPair pointPair, out MarkupLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
@@ -502,70 +566,6 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
         public bool HaveLines(Enter enter) => Lines.Any(l => l.ContainsEnter(enter));
-
-        #endregion
-
-        #region FILLERS
-
-        public void AddFiller(MarkupFiller filler)
-        {
-            FillersList.Add(filler);
-            filler.RecalculateStyleData();
-            NeedRecalculateDrawData = true;
-        }
-        public void RemoveFiller(MarkupFiller filler)
-        {
-            FillersList.Remove(filler);
-            NeedRecalculateDrawData = true;
-        }
-
-        #endregion
-
-        #region CROSSWALK
-
-        public void AddCrosswalk(MarkupCrosswalk crosswalk)
-        {
-            CrosswalksDictionary[crosswalk.Line] = crosswalk;
-            crosswalk.RecalculateStyleData();
-            NeedRecalculateDrawData = true;
-        }
-        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
-        public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
-        {
-            var dependences = GetLineDependences(crosswalk.Line);
-            dependences.Crosswalks = 0;
-            dependences.Lines = 1;
-            return dependences;
-        }
-        public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
-        {
-            var enter = crosswalk.Line.Start.Enter;
-            var lines = Lines.Where(l => l.Type == MarkupLine.LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
-
-            foreach (var line in lines)
-            {
-                if (/*Settings.NotCutBordersByCrosswalk && */crosswalk.IsBorder(line))
-                    continue;
-
-                var intersect = GetIntersect(line, crosswalk.Line);
-                if (!intersect.IsIntersect)
-                    continue;
-
-                foreach (var rule in line.Rules)
-                {
-                    if (!rule.GetFromT(out float fromT) || !rule.GetToT(out float toT))
-                        continue;
-
-                    if (!(fromT < intersect.FirstT && intersect.FirstT < toT) && !(toT < intersect.FirstT && intersect.FirstT < fromT))
-                        continue;
-
-                    if ((line.End.Type == MarkupPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
-                        rule.From = new LinesIntersectEdge(intersect.Pair);
-                    else
-                        rule.To = new LinesIntersectEdge(intersect.Pair);
-                }
-            }
-        }
 
         #endregion
 
