@@ -287,7 +287,7 @@ namespace NodeMarkup.Manager
             if (!intersects.Any(i => i.IsIntersect))
                 return new EnterPointEdge(point);
 
-            var intersect = intersects.Aggregate((i, j) => point == End ^ (i.FirstT > i.SecondT) ? i : j);
+            var intersect = intersects.Where(i => i.IsIntersect).Aggregate((i, j) => point == End ^ (i.FirstT > i.SecondT) ? i : j);
             return new LinesIntersectEdge(intersect.Pair);
         }
 
