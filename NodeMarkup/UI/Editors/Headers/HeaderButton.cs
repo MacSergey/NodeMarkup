@@ -11,6 +11,9 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class HeaderButton : UIButton
     {
+        public static int Size => IconSize + 2 * IconPadding;
+        public static int IconSize => 25;
+        public static int IconPadding => 2;
         public UIButton Icon { get; }
         protected virtual Color32 HoveredColor => Color.black;
         protected virtual Color32 PressedColor => Color.black;
@@ -22,20 +25,20 @@ namespace NodeMarkup.UI.Editors
         public HeaderButton()
         {
             hoveredBgSprite = pressedBgSprite = focusedBgSprite = TextureUtil.HeaderHovered;
-            size = new Vector2(25, 25);
+            size = new Vector2(Size, Size);
             atlas = TextureUtil.Atlas;
             hoveredColor = HoveredColor;
             pressedColor = focusedColor = PressedColor;
             clipChildren = true;
-            textPadding = new RectOffset(30, 5, 5, 0);
+            textPadding = new RectOffset(IconSize + 5, 5, 5, 0);
             textScale = 0.8f;
             textHorizontalAlignment = UIHorizontalAlignment.Left;
             minimumSize = size;
 
             Icon = AddUIComponent<UIButton>();
-            Icon.size = size;
+            Icon.size = new Vector2(IconSize, IconSize);
             Icon.atlas = atlas;
-            Icon.relativePosition = Vector2.zero;
+            Icon.relativePosition = new Vector2(IconPadding, IconPadding);
 
             Icon.color = IconColor;
             Icon.hoveredColor = HoverIconColor;

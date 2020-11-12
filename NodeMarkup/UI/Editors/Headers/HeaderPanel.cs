@@ -12,7 +12,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class HeaderPanel : EditorItem, IReusable
     {
         public event Action OnDelete;
-        protected override float DefaultHeight => 35;
+        protected override float DefaultHeight => HeaderButton.Size + 10;
 
         protected HeaderContent Content { get; set; }
         protected UIButton DeleteButton { get; set; }
@@ -69,7 +69,7 @@ namespace NodeMarkup.UI.Editors
         public HeaderContent()
         {
             autoLayoutDirection = LayoutDirection.Horizontal;
-            autoLayoutPadding = new RectOffset(0, 5, 0, 0);
+            autoLayoutPadding = new RectOffset(0, Math.Max(5 - 2 * HeaderButton.IconPadding, 0), 0, 0);
         }
         public SimpleHeaderButton AddButton(string sprite, string text, bool showText = false, MouseEventHandler onClick = null)
             => AddButton<SimpleHeaderButton>(this, sprite, text, showText, onClick);
