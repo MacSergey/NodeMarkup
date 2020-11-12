@@ -1140,7 +1140,7 @@ Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
     <value>Nach Neustart des Spiels anwenden</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>Lade Markierungs-Assets</value>
+    <value>Lade Markierungs-Objekte</value>
   </data>
   <data name="Mod_LoaledWithErrors" xml:space="preserve">
     <value>Mod fehlerhaft geladen.
@@ -1296,5 +1296,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
 - Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
 - Britisch-Englische Übersetzung hinzugefügt.</value>
   </data>
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Dieser Linientyp unterstützt keine Regeln</value>
+  </data>
 </root>
