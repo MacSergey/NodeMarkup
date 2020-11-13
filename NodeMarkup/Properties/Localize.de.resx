@@ -239,7 +239,7 @@ Shift x10, Strg x0.1</value>
     <value>Alle Linien an Nodes löschen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Markierung von allen Kreuzungen löschen</value>
+    <value>Markierungen von allen Kreuzungen löschen</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Alle Markierungen löschen</value>
@@ -251,7 +251,7 @@ Shift x10, Strg x0.1</value>
     <value>Markierungsdaten in Datei speichern</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Pfad in die Zwischenablage kopieren</value>
+    <value>Dateipfad in die Zwischenablage kopieren</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Markierungsdaten speichern</value>
@@ -319,10 +319,10 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Node #{0}
-Klicken um Markierung zu bearbeiten</value>
+Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Node zum Ändern der Markierung auswählen</value>
+    <value>Node zum Ändern der Markierungen auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen
@@ -1299,5 +1299,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Dieser Linientyp unterstützt keine Regeln</value>
   </data>
-  
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Linie nicht am Fußgängerüberweg beenden, wenn diese dessen Rand bildet</value>
+  </data>
 </root>

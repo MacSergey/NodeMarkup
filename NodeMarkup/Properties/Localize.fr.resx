@@ -572,7 +572,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
     <value>Allemand</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais (États-Unis)</value>
+    <value>Anglais États-Unis</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espagnol</value>
@@ -1178,7 +1178,7 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Couper les lignes au niveau de tout les passages piétons</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Anglais (Royaume-Uni)</value>
+    <value>Anglais Royaume-Uni</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Réécriture de la ressource du préréglage</value>

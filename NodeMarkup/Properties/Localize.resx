@@ -251,7 +251,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Dump markings data to file</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Copy file path to clipboard</value>
+    <value>Copy path to clipboard</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Dump markings data</value>

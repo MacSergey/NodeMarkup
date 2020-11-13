@@ -319,7 +319,7 @@ Los datos restaurados reemplazarán todas las marcas existentes.</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Nodo #{0}
-Haga clic para editar marcas</value>
+Haga clic para editar las marcas</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Seleccione un nodo para editar las marcas</value>

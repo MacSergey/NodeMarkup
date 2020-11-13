@@ -252,7 +252,7 @@
     <value>マーキングデータをファイルに保存</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>クリップボードにコピー</value>
+    <value>ファイルのパスをクリップボードにコピー</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>マーキングデータのダンプ出力</value>
@@ -1260,6 +1260,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>このタイプは追加ルールをサポートしません</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
-    <value>横断歩道の基準線の場合はラインを除去しない</value>
+    <value>横断歩道の基準線に指定したラインは除去しない</value>
   </data>
 </root>
