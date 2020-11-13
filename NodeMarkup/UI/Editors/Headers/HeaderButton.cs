@@ -43,7 +43,6 @@ namespace NodeMarkup.UI.Editors
             Icon.color = IconColor;
             Icon.hoveredColor = HoverIconColor;
             Icon.pressedColor = PressedIconColor;
-            Icon.focusedColor = PressedIconColor;
         }
 
         public void SetIconSprite(string sprite)
@@ -51,7 +50,12 @@ namespace NodeMarkup.UI.Editors
             Icon.normalBgSprite = sprite;
             Icon.hoveredBgSprite = sprite;
             Icon.pressedBgSprite = sprite;
-            Icon.focusedBgSprite = sprite;
+        }
+        public override void Update()
+        {
+            base.Update();
+            if (state == ButtonState.Focused)
+                state = ButtonState.Normal;
         }
     }
     public class SimpleHeaderButton : HeaderButton { }
