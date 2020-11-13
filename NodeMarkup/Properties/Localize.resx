@@ -215,7 +215,7 @@ Shift X10, Ctrl X0.1</value>
     <value>This is a BETA version, errors may occur and stability is not guaranteed!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Edit node #{0} marking</value>
+    <value>Edit node #{0} markings</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>point</value>
@@ -239,7 +239,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Delete all node lines</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Delete marking from all intersections</value>
+    <value>Delete markings from all intersections</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Delete all markings</value>
@@ -248,19 +248,19 @@ Shift X10, Ctrl X0.1</value>
     <value>Do you really want to remove all markings?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Dump marking data to file</value>
+    <value>Dump markings data to file</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Copy path to clipboard</value>
+    <value>Copy file path to clipboard</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Dump marking data</value>
+    <value>Dump markings data</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Dump failed</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Dump success saved</value>
+    <value>Dump successfully saved to file</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
     <value>Restore markings data from file</value>
@@ -269,8 +269,8 @@ Shift X10, Ctrl X0.1</value>
     <value>Restore markings data</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
-    <value>Do you really want to restore data?
-The restored data will replace all existing markings.</value>
+    <value>Do you really want to restore markings?
+The restored markings will replace all existing markings.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>Markings data restore failed</value>
@@ -319,10 +319,10 @@ The restored data will replace all existing markings.</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Node #{0}
-Click to edit marking</value>
+Click to edit markings</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select a node to change marking</value>
+    <value>Select a node to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint for regular or stop line
@@ -406,7 +406,7 @@ Drag behind point for perpendicular line</value>
     <value>Click to select the next point in the contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Select a point to start creating the filler</value>
+    <value>Select a point to start creating a filler</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Select the next point in the contour</value>
@@ -881,7 +881,7 @@ It will replace the existing markings.</value>
     <value>Dependent items will also be removed:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
-    <value>Crosswalk Borders - {0}</value>
+    <value>Crosswalk borders - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
     <value>Crosswalks - {0}</value>
@@ -1040,10 +1040,10 @@ The restored templates will replace all existing templates.</value>
     <value>Reset</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>Edit marking order</value>
+    <value>Edit markings order</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
-    <value>Change marking order</value>
+    <value>Change markings order</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
     <value>Roads have changed</value>
@@ -1131,7 +1131,7 @@ Do you want to apply the markings manually?</value>
     <value>Markings under tracks</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Warning: This option changes game objects render order</value>
+    <value>Warning: this option changes game objects render order</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
     <value>- Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
@@ -1184,7 +1184,7 @@ To create a preset, click «{0}» at the panel header.</value>
     <value>Author</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>Apply after game restart</value>
+    <value>Applies after game restart</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Load markings assets</value>

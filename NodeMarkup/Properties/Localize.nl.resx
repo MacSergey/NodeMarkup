@@ -215,7 +215,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Bewerk markering punt #{0}</value>
+    <value>Bewerk markering van punt #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punt</value>
@@ -239,7 +239,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Verwijder markering van alle knooppunten</value>
+    <value>Verwijder alle markeringen van knooppunten</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Verwijder alle markeringen</value>
@@ -318,7 +318,8 @@ De herstelde data zal alle bestaande markeringen vervangen.</value>
     <value>Klik om de lijn te verwijderen</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Punt #{0}</value>
+    <value>Punt #{0}
+Klik om de markering te wijzigen</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>

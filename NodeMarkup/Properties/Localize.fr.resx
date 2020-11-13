@@ -572,7 +572,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
     <value>Allemand</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais US</value>
+    <value>Anglais (États-Unis)</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espagnol</value>
@@ -1072,114 +1072,116 @@ Voulez-vous changer le marquage manuellement ?</value>
     <value>{0} par {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
-    <value>La liste des pré-réglages est vide.
-Pour créer un pré-réglages, cliquez sur {0} sur le haut de la fenêtre.</value>
+    <value>La liste des préréglages est vide.
+Pour créer un préréglages, cliquez sur {0} sur le haut de la fenêtre.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>Pré-réglages</value>
+    <value>Préréglages</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>Sauvegarder comme pré-réglage</value>
+    <value>Sauvegarder comme préréglage</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>Sauvegarder comme pré-réglage</value>
+    <value>Sauvegarder comme préréglage</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>Aucun pré-réglage</value>
+    <value>Aucun préréglage</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
-    <value>Appliquer le pré-réglage</value>
+    <value>Appliquer le préréglage</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nouveau préréglage</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Quitter le mode d'application des pré-réglages</value>
+    <value>Quitter le mode d'application des préréglages</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Souhaitez vous appliquer un pré-réglage ?</value>
+    <value>Souhaitez vous appliquer un préréglage ?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Auteur</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>S'applique après le démarrage</value>
+    <value>S'applique après le redémarrage</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Charger les ressources de marquages</value>
   </data>
   <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Le mod a chargé avec des erreurs. Il n'est pas conseiller d'utiliser le mod dans cet état car il peut avoir un comportement instable. Rechargez le jeu.</value>
+    <value>Le mod a chargé avec des erreurs. 
+Il n'est pas conseillé d'utiliser le mod dans cet état car il peut avoir un comportement instable. 
+Rechargez le jeu.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
-    <value>Passages piétons:</value>
+    <value>Passages piétons :</value>
   </data>
   <data name="PresetInfo_Fillers" xml:space="preserve">
-    <value>Remplisseurs:</value>
+    <value>Remplisseurs :</value>
   </data>
   <data name="PresetInfo_Lines" xml:space="preserve">
-    <value>Lignes:</value>
+    <value>Lignes :</value>
   </data>
   <data name="PresetInfo_NoScreenshot" xml:space="preserve">
-    <value>Aucune capture d'écran~</value>
+    <value>Aucune capture d'écran</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
-    <value>Route #{0} points:</value>
+    <value>Route #{0} points :</value>
   </data>
   <data name="PresetInfo_Roads" xml:space="preserve">
-    <value>Routes:</value>
+    <value>Routes :</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
     <value>Les passages piétons coupent les nouvelles lignes</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
-    <value>Couper les lignes au niveau des passages piétons</value>
+    <value>Couper les lignes au niveau de ce passage piéton</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>Backup pré-réglages</value>
+    <value>Sauvegarder les préréglages</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
-    <value>Supprimer tous les pré-réglages</value>
+    <value>Supprimer tous les préréglages</value>
   </data>
   <data name="Settings_DeletePresetsCaption" xml:space="preserve">
-    <value>Supprimer tous les pré-réglages</value>
+    <value>Supprimer tous les préréglages</value>
   </data>
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer tous les pré-réglages ?</value>
+    <value>Voulez-vous vraiment supprimer tous les préréglages ?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Sauvegarder tous les pré-réglages dans un fichier</value>
+    <value>Sauvegarder tous les préréglages dans un fichier</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>Sauvegarder les pré-réglages</value>
+    <value>Sauvegarder les préréglages</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>Restaurer les pré-réglages à partir du fichier</value>
+    <value>Restaurer les préréglages à partir du fichier</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>Restaurer les pré-réglages</value>
+    <value>Restaurer les préréglages</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment restaurer les pré-réglages ?
-Les pré-réglages restaurés vont remplacer tout les pré-réglages existants.</value>
+    <value>Voulez-vous vraiment restaurer les préréglages ?
+Les préréglages restaurés vont remplacer tout les préréglages existants.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>La restauration des pré-réglages a échoué</value>
+    <value>La restauration des préréglages a échoué</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>Pré-réglages restaurés avec succès</value>
+    <value>Préréglages restaurés avec succès</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>Couper les lignes au niveau des passages piétons</value>
+    <value>Couper les lignes au niveau de tout les passages piétons</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Couper les lignes au niveau des passages piétons</value>
+    <value>Couper les lignes au niveau de tout les passages piétons</value>
   </data>
   <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Anglais UK</value>
+    <value>Anglais (Royaume-Uni)</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Réécriture de la ressource du pré-réglage</value>
+    <value>Réécriture de la ressource du préréglage</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
     <value>Pour la renommer, il faut refaire la ressource. Continuer ?</value>
@@ -1188,7 +1190,7 @@ Les pré-réglages restaurés vont remplacer tout les pré-réglages existants.<
     <value>Réécriture de la ressource du modèle</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Pour le renommer, il faut refaire l'asset. Continuer ?</value>
+    <value>Pour la renommer, il faut refaire la ressource. Continuer ?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Pour mettre les bordures du passage piéton, il faut une ligne qui commence au même points que le passage piéton</value>
@@ -1221,34 +1223,38 @@ Les pré-réglages restaurés vont remplacer tout les pré-réglages existants.<
     <value>Voulez-vous enregistrer les modifications des valeurs ?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>Le nom «{0}» est déjà utilisé pour un autre pré-réglage.
-Êtes-vous sûr de vouloir avoir plusieurs pré-réglages avec le même nom ?</value>
+    <value>Le nom «{0}» est déjà utilisé pour un autre préréglage.
+Êtes-vous sûr de vouloir avoir plusieurs préréglages avec le même nom ?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
     <value>Vous pouvez le supprimer depuis le gestionnaire de contenu.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Vous ne pouvez pas le modifier et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
+    <value>Vous ne pouvez pas modifier le préréglage et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
-    <value>Ce pré-réglage est une ressource.</value>
+    <value>Ce préréglage est une ressource.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
     <value>Vous pouvez le supprimer uniquement depuis le gestionnaire de contenu.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Vous ne pouvez pas le modifier et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
+    <value>Vous ne pouvez pas modifier le modèle et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>Ce pré-réglage est un asset.</value>
+    <value>Ce préréglage est une ressource.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>pré-réglage</value>
+    <value>préréglage</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>pré-réglage</value>
+    <value>préréglage</value>
   </data>
   
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Ce type de ligne ne prend pas en charge les règles</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Ne pas couper les lignes de passages piétons si c'est leur bordure</value>
+  </data>
 </root>
