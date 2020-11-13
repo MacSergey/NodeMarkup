@@ -314,7 +314,8 @@ namespace NodeMarkup.Manager
     {
         public ushort Id { get; private set; }
         public int Points { get; private set; }
-        public float Angle { get; private set; }
+        public float NormalAngle { get; private set; }
+        public float CornerAngle { get; private set; }
 
         public string XmlSection => Enter.XmlName;
 
@@ -323,7 +324,8 @@ namespace NodeMarkup.Manager
         {
             Id = enter.Id;
             Points = enter.PointCount;
-            Angle = enter.NormalAngle;
+            NormalAngle = enter.NormalAngle;
+            CornerAngle = enter.CornerAngle;
         }
         public static EnterData FromXml(XElement config)
         {
@@ -331,7 +333,7 @@ namespace NodeMarkup.Manager
             {
                 Id = config.GetAttrValue<ushort>(nameof(Id)),
                 Points = config.GetAttrValue<int>("P"),
-                Angle = config.GetAttrValue<float>("A")
+                NormalAngle = config.GetAttrValue<float>("A")
             };
             return data;
         }
@@ -341,7 +343,7 @@ namespace NodeMarkup.Manager
             var config = new XElement(XmlSection);
             config.Add(new XAttribute(nameof(Id), Id));
             config.Add(new XAttribute("P", Points));
-            config.Add(new XAttribute("A", Angle));
+            config.Add(new XAttribute("A", NormalAngle));
             return config;
         }
     }

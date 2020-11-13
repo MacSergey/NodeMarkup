@@ -392,7 +392,7 @@ namespace NodeMarkup.Tools
         float Width { get; }
         public PointsBasket(PointsOrderToolMode toolMode, PointsBorders borders, IEnumerable<SourcePoint> items) : base(items)
         {
-            Direction = toolMode.TargetEnter.Enter.Angle.Direction().Turn90(false);
+            Direction = toolMode.TargetEnter.Enter.CornerAngle.Direction().Turn90(false);
             var middlePos = (borders.From.Position + borders.To.Position) / 2;
             Position = middlePos + Direction * Shift;
             var length = TargetPoint.Size * (Count - 1);
