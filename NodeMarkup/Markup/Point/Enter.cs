@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class Enter : IRender
+    public class Enter : IRender, IComparable<Enter>
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -204,6 +204,7 @@ namespace NodeMarkup.Manager
             var bezier = new Line3(Position.Value - CornerDir * RoadHalfWidthTransform, Position.Value + CornerDir * RoadHalfWidthTransform).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
         }
+        public int CompareTo(Enter other) => other.NormalAngle.CompareTo(NormalAngle);
         public override string ToString() => Id.ToString();
     }
     public class DriveLane

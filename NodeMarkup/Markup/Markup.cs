@@ -151,7 +151,7 @@ namespace NodeMarkup.Manager
             newEnters.AddRange(add.Select(id => new Enter(this, id)));
             foreach (var enter in newEnters)
                 enter.Update();
-            newEnters.Sort((e1, e2) => e2.NormalAngle.CompareTo(e1.NormalAngle));
+            newEnters.Sort((e1, e2) => e1.CompareTo(e2));
 
             UpdateBackup(delete, add, oldEnters, newEnters);
 

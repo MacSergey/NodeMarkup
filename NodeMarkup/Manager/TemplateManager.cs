@@ -274,6 +274,7 @@ namespace NodeMarkup.Manager
 
         private Dictionary<Style.StyleType, Guid> DefaultTemplates { get; } = new Dictionary<Style.StyleType, Guid>();
         public bool IsDefault(StyleTemplate template) => DefaultTemplates.TryGetValue(template.Style.Type, out Guid id) && template.Id == id;
+        public IEnumerable<StyleTemplate> GetTemplates(Style.StyleType group) => Templates.Where(t => (t.Style.Type & group & Style.StyleType.GroupMask) != 0);
 
         protected override StyleTemplate CreateInstance(string name, Style style) => new StyleTemplate(name, style);
 

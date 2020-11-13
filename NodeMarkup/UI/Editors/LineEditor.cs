@@ -56,7 +56,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var line in Markup.Lines)
+            var sortLines = Markup.Lines.OrderBy(l => l.Start.Enter).ThenBy(l => l.Start.Num).ThenBy(l => l.End.Enter).ThenBy(l => l.End.Num).ToArray();
+            foreach (var line in sortLines)
                 AddItem(line);
         }
         protected override void OnClear() => HoverRulePanel = null;

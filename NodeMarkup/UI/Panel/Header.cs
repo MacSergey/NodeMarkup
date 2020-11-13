@@ -129,20 +129,4 @@ namespace NodeMarkup.UI.Panel
     {
         protected override Color32 Background => new Color32(64,64,64,255);
     }
-
-    public class ApplyIntersectionTemplateHeaderButton : ApplyHeaderButton<IntersectionTemplate, ApplyIntersectionTemplatePopupPanel, IntersectionTemplatePopupItem, IntersectionTemplateIcon, string>
-    {
-        protected override Func<IntersectionTemplate, bool> Selector => (t) => true;
-        protected override Func<IntersectionTemplate, string> Order => (t) => t.Name;
-    }
-
-    public class ApplyIntersectionTemplatePopupPanel : ApplyPopupPanel<IntersectionTemplate, IntersectionTemplatePopupItem, IntersectionTemplateIcon>
-    {
-        protected override string EmptyText => NodeMarkup.Localize.HeaderPanel_NoPresets;
-        protected override IEnumerable<IntersectionTemplate> GetItems(Func<IntersectionTemplate, bool> selector) => TemplateManager.IntersectionManager.Templates;
-    }
-    public class IntersectionTemplatePopupItem : IntersectionTemplateItem
-    {
-        public override bool ShowDelete => false;
-    }
 }

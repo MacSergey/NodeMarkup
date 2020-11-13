@@ -23,7 +23,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override bool GroupingEnabled => false;
 
-        protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates;
+        protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates.OrderBy(t => t.Roads).ThenBy(t => t.Name);
         protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         protected override string GroupName(bool group) => throw new NotSupportedException();
 

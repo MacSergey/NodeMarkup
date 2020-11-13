@@ -60,8 +60,9 @@ namespace NodeMarkup.UI.Editors
         protected abstract IEnumerable<TemplateType> GetTemplates();
         protected override void FillItems()
         {
-            foreach (var templates in GetTemplates())
-                AddItem(templates);
+            var templates = GetTemplates().ToArray();
+            foreach (var template in templates)
+                AddItem(template);
         }
         protected override void OnObjectSelect()
         {
