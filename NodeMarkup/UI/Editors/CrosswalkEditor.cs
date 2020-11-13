@@ -38,7 +38,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var crosswalk in Markup.Crosswalks)
+            var crosswalks = Markup.Crosswalks.OrderBy(c => c.Line.Start.Enter).ThenBy(c => c.Line.Start.Num).ToArray();
+            foreach (var crosswalk in crosswalks)
                 AddItem(crosswalk);
         }
         protected override void OnObjectSelect()
