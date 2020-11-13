@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Globalization;
+using ColossalFramework.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -9,7 +10,8 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class TabStrip : UIPanel
+    public abstract class TabStrip<TabType> : UIPanel
+        where TabType : Tab
     {
         public Action<int> SelectedTabChanged;
         int _selectedTab;
@@ -28,7 +30,7 @@ namespace NodeMarkup.UI
                 }
             }
         }
-        private List<UIButton> Tabs { get; } = new List<UIButton>();
+        protected List<TabType> Tabs { get; } = new List<TabType>();
 
         public TabStrip()
         {
@@ -41,9 +43,10 @@ namespace NodeMarkup.UI
             if (SelectedTab >= 0 && SelectedTab < Tabs.Count)
                 Tabs[SelectedTab].state = UIButton.ButtonState.Focused;
         }
-        public void AddTab(string name, float textScale = 0.85f)
+        public void AddTab(string name, float textScale = 0.85f) => AddTabImpl(name, textScale);
+        protected TabType AddTabImpl(string name, float textScale = 0.85f)
         {
-            var tabButton = AddUIComponent<UIButton>();
+            var tabButton = AddUIComponent<TabType>();
             tabButton.text = name;
             tabButton.textPadding = new RectOffset(5, 5, 2, 2);
             tabButton.textScale = textScale;
@@ -54,10 +57,12 @@ namespace NodeMarkup.UI
             SetStyle(tabButton);
 
             ArrangeTabs();
+
+            return tabButton;
         }
 
         private bool ArrangeInProgress { get; set; }
-        private void ArrangeTabs()
+        protected void ArrangeTabs()
         {
             if (Tabs.Count == 0 || ArrangeInProgress)
                 return;
@@ -79,17 +84,17 @@ namespace NodeMarkup.UI
 
             ArrangeInProgress = false;
         }
-        private List<List<UIButton>> FillTabRows()
+        private List<List<TabType>> FillTabRows()
         {
             var totalWidth = Tabs.Sum(t => t.width);
             var rows = (int)(totalWidth / width) + 1;
             var tabInRow = Tabs.Count / rows;
             var extraRows = Tabs.Count - (tabInRow * rows);
 
-            var tabRows = new List<List<UIButton>>();
+            var tabRows = new List<List<TabType>>();
             for (var i = 0; i < rows; i += 1)
             {
-                var tabRow = new List<UIButton>();
+                var tabRow = new List<TabType>();
                 tabRows.Add(tabRow);
 
                 var from = i * tabInRow + Math.Min(i, extraRows);
@@ -99,7 +104,7 @@ namespace NodeMarkup.UI
             }
             return tabRows;
         }
-        private void ArrangeTabRows(List<List<UIButton>> tabRows)
+        private void ArrangeTabRows(List<List<TabType>> tabRows)
         {
             for (var i = 0; i < tabRows.Count; i += 1)
             {
@@ -114,7 +119,7 @@ namespace NodeMarkup.UI
                         if(toMove.Any())
                         {
                             if (i == tabRows.Count - 1)
-                                tabRows.Add(new List<UIButton>());
+                                tabRows.Add(new List<TabType>());
 
                             tabRows[i + 1].InsertRange(0, toMove);
                             foreach (var tab in toMove)
@@ -128,7 +133,7 @@ namespace NodeMarkup.UI
                 }
             }
         }
-        private void PlaceTabRows(List<List<UIButton>> tabRows)
+        private void PlaceTabRows(List<List<TabType>> tabRows)
         {
             var totalHeight = 0f;
             for (var i = 0; i < tabRows.Count; i += 1)
@@ -161,7 +166,7 @@ namespace NodeMarkup.UI
         {
             base.OnComponentAdded(child);
 
-            if (child is UIButton tabButton)
+            if (child is TabType tabButton)
             {
                 tabButton.eventClick += TabClick;
                 tabButton.eventIsEnabledChanged += TabButtonIsEnabledChanged;
@@ -172,7 +177,7 @@ namespace NodeMarkup.UI
         {
             base.OnComponentRemoved(child);
 
-            if (child is UIButton tabButton)
+            if (child is TabType tabButton)
             {
                 tabButton.eventClick -= TabClick;
                 tabButton.eventIsEnabledChanged -= TabButtonIsEnabledChanged;
@@ -182,13 +187,12 @@ namespace NodeMarkup.UI
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
             ArrangeTabs();
         }
 
         private void TabClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (component is UIButton tabButton)
+            if (component is TabType tabButton)
                 SelectedTab = Tabs.IndexOf(tabButton);
         }
 
@@ -196,11 +200,12 @@ namespace NodeMarkup.UI
         {
             if (!component.isEnabled)
             {
-                var button = component as UIButton;
+                var button = component as TabType;
                 button.disabledColor = button.state == UIButton.ButtonState.Focused ? button.focusedColor : button.color;
             }
         }
-        protected virtual void SetStyle(UIButton tabButton)
+
+        protected virtual void SetStyle(TabType tabButton)
         {
             tabButton.atlas = TextureUtil.Atlas;
 
@@ -209,14 +214,27 @@ namespace NodeMarkup.UI
             tabButton.hoveredBgSprite = TextureUtil.TabHover;
         }
     }
+    public class Tab : UIButton { }
 
-    public class PanelTabStrip : TabStrip
+    public class TabStrip : TabStrip<Tab> { }
+
+    public class PanelTabStrip : TabStrip<PanelTabStrip.PanelTab>
     {
         private static Color32 NormalColor { get; } = new Color32(107, 113, 115, 255);
         private static Color32 HoverColor { get; } = new Color32(143, 149, 150, 255);
         private static Color32 FocusColor { get; } = new Color32(177, 195, 94, 255);
 
-        protected override void SetStyle(UIButton tabButton)
+        public PanelTabStrip() => isLocalized = true;
+
+        protected override void OnLocalize()
+        {
+            foreach (var tab in Tabs)
+                tab.text = tab.Editor.Name;
+
+            ArrangeTabs();
+        }
+
+        protected override void SetStyle(PanelTab tabButton)
         {
             tabButton.atlas = TextureUtil.Atlas;
 
@@ -230,5 +248,17 @@ namespace NodeMarkup.UI
             tabButton.pressedColor = FocusColor;
             tabButton.focusedColor = FocusColor;
         }
+
+        public void AddTab(Editor editor) 
+        {
+            var tab = AddTabImpl(editor.Name);
+            tab.Editor = editor;
+        }
+        public class PanelTab : Tab
+        {
+            public Editor Editor { get; set; }
+        }
+
+        
     }
 }

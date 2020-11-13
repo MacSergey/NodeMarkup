@@ -165,7 +165,7 @@ namespace NodeMarkup.UI.Panel
             var editor = AddUIComponent<EditorType>();
             editor.Active = false;
             editor.Init(this);
-            TabStrip.AddTab(editor.Name);
+            TabStrip.AddTab(editor);
 
             Editors.Add(editor);
         }

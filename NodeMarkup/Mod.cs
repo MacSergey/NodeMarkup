@@ -95,9 +95,8 @@ namespace NodeMarkup
             Settings.OnSettingsUI(helper);
         }
 
-        private void LocaleChanged()
+        public static void LocaleChanged()
         {
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(LocaleChanged)}");
             Localize.Culture = Culture;
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }

@@ -183,6 +183,7 @@ namespace NodeMarkup
             {
                 var locale = dropDown.SelectedObject;
                 Locale.value = locale;
+                Mod.LocaleChanged();
                 LocaleManager.ForceReload();
             }
         }
