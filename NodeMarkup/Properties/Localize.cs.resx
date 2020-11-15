@@ -570,7 +570,9 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Němčina</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Anglicky US</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Španělština</value>
   </data>
@@ -1060,67 +1062,197 @@ Chcete nastavit předchozí značení manuálně?</value>
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
   </data>
   
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Uložit jako asset</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+vytvořil {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>Nejsou vytvořeny žádné předvolby.
+Pro vytvoření předvolby, vyberte «{0}» v hlavičce panelu.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Předvolby</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Uložit jako předvolbu</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Uložit jako předvolbu</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Žádné předvolby</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Použít předvolbu</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nová předvolba</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Opustit režim aplikování předvolby</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Opravdu chcete aplikovat předvolbu?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Projeví se po restartu hry</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Načítat assety se značením</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Načitání modu neproběhlo v pořádku.
+Spouštění modu v tomto stavu není doporučené a může vést k neočekávanému chování.
+Restartujte hru.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Přechody:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Výplňe:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Čáry:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Žádný snímek obrazovky</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Silnice #{0} body:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Silnice:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Přerušovat nové čáry u přechodů</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Přerušit čáry u tohoto přechodu</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Zálohovat předvolby</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Odstranit všechny předvolby</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Odstranit všechny předvolby</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Opravdu chcete odstranit všechny předvolby?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Exportovat předvolby</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Exportovat předvolby</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Obnovit předvolby</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Obnovit předvolby</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Opravdu si přejete obnovit předvolby?
+Původní data připíší všechny existující předvolby.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Obnovení předvoleb se nezdařilo</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Předvolby úspěšně obnoveny</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Přerušit čáry u všech přechodů</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Přerušit čáry u všech přechodů</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Anglicky UK</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Přejmenovat asset</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Tato předvolba je součástí assetu, přejmenování přepíše jeho soubor. Pokračovat?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Přejmenovat asset</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Tato šablona je součástí assetu, přejmenování nebo změna hodnot přepíše jeho soubor. Pokračovat?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Pro úpravu okrajů přechodu musíte mi čáry ze stejných bodů, jak přechod</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Pro úpravů bodů "Z" a "Do" musíte mít vytvořeny čáry, které se s touto protínají.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Zobrazovat nápovědy</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Uložit změny</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Neukládat změny</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Chcete uložit změnu názvu předvolby?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Uložit změny</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Chcet uložit změny v šabloně?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Jméno "{0}" je již využíváno jinou předvolbou.
+Opravdu chcete mít více předvoleb se stejným jménem?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Odstranit lze pouze ze správce obsahu hry.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Tuto předvolbu nelze upravit. Může být odstraněna ve správci obsahu hry nebo zrušit odebírání na Steam Workshopu.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Tato předvolba je asset.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Odstranit lze pouze ze správce obsahu hry.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Tuto šablonu nelze upravit. Může být odstraněna ve správci obsahu hry nebo zrušit odebírání na Steam Workshopu.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Tato předvolba je asset.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>předvolba</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>předvolba</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Tento typ čáry nepodporuje pravidla</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Nepřerušovat čáry u přechodů, pokud jsou jejich okrajem</value>
+  </data>
 </root>

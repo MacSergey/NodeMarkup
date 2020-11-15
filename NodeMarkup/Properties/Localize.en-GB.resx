@@ -537,6 +537,9 @@ crossings:</value>
   
   
   
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>To be able to set the pedestrian crossing borders, you must have lines started from the same points as the crossing</value>
+  </data>
   
   
   
@@ -557,6 +560,7 @@ crossings:</value>
   
   
   
-  
-  
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Don't cut line by pedestrian crossing if it is their border</value>
+  </data>
 </root>
