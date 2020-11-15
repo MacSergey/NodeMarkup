@@ -20,16 +20,16 @@ namespace NodeMarkup.Tools
             else
                 return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
         }
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
-            base.OnUpdate();
+            base.OnToolUpdate();
 
             if (IsSelectPoint)
                 return;
             else if (NodeMarkupTool.OnlyAltIsPressed)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
-                if (Tool.Mode is MakeFillerToolMode fillerToolMode)
+                if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
             else if (NodeMarkupTool.OnlyShiftIsPressed)
@@ -53,7 +53,11 @@ namespace NodeMarkup.Tools
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
-                    Tool.DeleteItem(line, () => Tool.Markup.RemoveConnect(line));
+                    Tool.DeleteItem(line, () =>
+                    {
+                        Tool.Markup.RemoveConnect(line);
+                        Panel.UpdatePanel();
+                    });
                 else
                 {
                     var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);

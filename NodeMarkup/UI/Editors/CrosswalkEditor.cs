@@ -13,12 +13,17 @@ namespace NodeMarkup.UI.Editors
 {
     public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
+        protected override bool UseGroupPanel => true;
+
         private static CrosswalkStyle Buffer { get; set; }
+
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => NodeMarkup.Localize.CrosswalkEditor_EmptyMessage;
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
         private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }
         private MarkupCrosswalkSelectPropertyPanel LeftBorder { get; set; }
+        private WarningTextProperty Warning { get; set; }
         private StylePropertyPanel Style { get; set; }
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
 
@@ -27,45 +32,67 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalksEditor()
         {
-            CrosswalkBorderToolMode = new CrosswalkBorderToolMode(this);
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
+            CrosswalkBorderToolMode = Tool.CreateToolMode<CrosswalkBorderToolMode>();
+            CrosswalkBorderToolMode.Init(this);
         }
 
         protected override void FillItems()
         {
-            foreach (var crosswalk in Markup.Crosswalks)
+            var crosswalks = Markup.Crosswalks.OrderBy(c => c.Line.Start.Enter).ThenBy(c => c.Line.Start.Num).ToArray();
+            foreach (var crosswalk in crosswalks)
                 AddItem(crosswalk);
         }
         protected override void OnObjectSelect()
         {
             AddHeader();
+            AddWarning();
+
             AddBordersProperties();
             AddStyleTypeProperty();
             AddStyleProperties();
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
+        protected override void OnClear()
+        {
+            RightBorder = null;
+            LeftBorder = null;
+            Warning = null;
+            Style = null;
+
+            StyleProperties.Clear();
+        }
 
         #region PROPERTIES PANELS
 
         private void AddHeader()
         {
-            var header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
+            var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel);
             header.Init(EditObject.Style.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
+            header.OnCut += CutLines;
+        }
+        private void AddWarning()
+        {
+            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
+            Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
+            Warning.Init();
         }
         private void AddBordersProperties()
         {
-            AddLeftBorderProperty();
-            AddRightBorderProperty();
+            LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
+            RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
+
             FillBorders();
         }
         private void FillBorders()
         {
             FillBorder(LeftBorder, LeftBorgerChanged, GetBorderLines(BorderPosition.Left), EditObject.LeftBorder);
             FillBorder(RightBorder, RightBorgerChanged, GetBorderLines(BorderPosition.Right), EditObject.RightBorder);
+
+            Warning.isVisible = Settings.ShowPanelTip && (!LeftBorder.EnableControl || !RightBorder.EnableControl);
         }
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {
@@ -81,48 +108,51 @@ namespace NodeMarkup.UI.Editors
             panel.Clear();
             panel.AddRange(lines);
             panel.SelectedObject = value;
-            panel.isVisible = lines.Any();
+
+            if (Settings.ShowPanelTip)
+            {
+                panel.isVisible = true;
+                panel.EnableControl = lines.Any();
+            }
+            else
+            {
+                panel.EnableControl = true;
+                panel.isVisible = lines.Any();
+            }
+
             panel.OnSelectChanged += action;
         }
-        private void AddRightBorderProperty()
+        private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
         {
-            RightBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
-            RightBorder.Text = NodeMarkup.Localize.CrosswalkEditor_RightBorder;
-            RightBorder.Position = BorderPosition.Right;
-            RightBorder.Init();
-            RightBorder.OnSelect += (panel) => SelectBorder(panel);
-            RightBorder.OnHover += HoverBorder;
-            RightBorder.OnLeave += LeaveBorder;
+            var border = ComponentPool.Get<MarkupCrosswalkSelectPropertyPanel>(PropertiesPanel);
+            border.Text = text;
+            border.Position = position;
+            border.Init();
+            border.OnSelect += (panel) => SelectBorder(panel);
+            border.OnHover += HoverBorder;
+            border.OnLeave += LeaveBorder;
+            return border;
         }
-        private void AddLeftBorderProperty()
-        {
-            LeftBorder = SettingsPanel.AddUIComponent<MarkupCrosswalkSelectPropertyPanel>();
-            LeftBorder.Text = NodeMarkup.Localize.CrosswalkEditor_LeftBorder;
-            LeftBorder.Position = BorderPosition.Left;
-            LeftBorder.Init();
-            LeftBorder.OnSelect += (panel) => SelectBorder(panel);
-            LeftBorder.OnHover += HoverBorder;
-            LeftBorder.OnLeave += LeaveBorder;
-        }
+
         private void RightBorgerChanged(MarkupRegularLine line) => EditObject.RightBorder = line;
         private void LeftBorgerChanged(MarkupRegularLine line) => EditObject.LeftBorder = line;
 
         private void AddStyleTypeProperty()
         {
-            Style = SettingsPanel.AddUIComponent<CrosswalkPropertyPanel>();
+            Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel, isTemplate: false);
+        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel, isTemplate: false);
 
         #endregion
 
         private void SaveTemplate()
         {
-            if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
-                NodeMarkupPanel.EditTemplate(template);
+            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+                Panel.EditStyleTemplate(template);
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
@@ -138,7 +168,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() =>  Buffer = EditObject.Style.CopyCrosswalkStyle();
+        private void CopyStyle() => Buffer = EditObject.Style.CopyCrosswalkStyle();
         private void PasteStyle()
         {
             if (Buffer is CrosswalkStyle style)
@@ -150,7 +180,7 @@ namespace NodeMarkup.UI.Editors
             if (style == EditObject.Style.Type)
                 return;
 
-            var newStyle = TemplateManager.GetDefault<CrosswalkStyle>(style);
+            var newStyle = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(style);
             EditObject.Style.CopyTo(newStyle);
 
             EditObject.Style = newStyle;
@@ -162,11 +192,11 @@ namespace NodeMarkup.UI.Editors
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)
-            {
-                RemoveUIComponent(property);
-                Destroy(property);
-            }
+                ComponentPool.Free(property);
+
+            StyleProperties.Clear();
         }
+        private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);
         protected override void OnObjectDelete(MarkupCrosswalk crosswalk) => Markup.RemoveCrosswalk(crosswalk);
         protected override void OnObjectUpdate() => FillBorders();
         public void RefreshItem() => SelectItem.Refresh();
@@ -225,13 +255,11 @@ namespace NodeMarkup.UI.Editors
 
         private MarkupLineBound[] BorderLines { get; set; }
         private MarkupLineBound HoverLine { get; set; }
-        private bool IsHoverLine =>  HoverLine != null;
-
-        public CrosswalkBorderToolMode(CrosswalksEditor editor) : base(editor) { }
+        private bool IsHoverLine => HoverLine != null;
 
         protected override void OnSetPanel() => BorderLines = SelectPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray();
 
-        public override void OnUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
+        public override void OnToolUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
         public override string GetToolInfo()
         {
             return SelectPanel.Position switch
@@ -253,16 +281,10 @@ namespace NodeMarkup.UI.Editors
 
     public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>
     {
-        public override void Init() => Init(true, true);
-
-        protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {
             base.Refresh();
-            SetIcon();
-        }
-        private void SetIcon()
-        {
+
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style.Color;
         }

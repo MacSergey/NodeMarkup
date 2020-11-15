@@ -16,6 +16,11 @@ using ColossalFramework.PlatformServices;
 using System.Xml.Linq;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.UI.Panel;
+using System.Diagnostics;
+using ColossalFramework.Packaging;
+using ColossalFramework.IO;
+using System.IO;
+using ColossalFramework.Importers;
 
 namespace NodeMarkup.Tools
 {
@@ -33,6 +38,8 @@ namespace NodeMarkup.Tools
         public static Shortcut CreateEdgeLinesShortcut { get; } = new Shortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
         public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
+        public static Shortcut SaveAsIntersectionTemplateShortcut { get; } = new Shortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
+        public static Shortcut CutLinesByCrosswalks { get; } = new Shortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
 
         public static IEnumerable<Shortcut> Shortcuts
         {
@@ -45,6 +52,8 @@ namespace NodeMarkup.Tools
                 yield return PasteMarkingShortcut;
                 yield return EditMarkingShortcut;
                 yield return CreateEdgeLinesShortcut;
+                yield return SaveAsIntersectionTemplateShortcut;
+                yield return CutLinesByCrosswalks;
             }
         }
 
@@ -68,6 +77,7 @@ namespace NodeMarkup.Tools
         #endregion
 
         public BaseToolMode Mode { get; private set; }
+        public BaseToolMode NextMode { get; private set; }
         public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
         private Dictionary<ToolModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, BaseToolMode>();
         public Markup Markup { get; private set; }
@@ -78,7 +88,7 @@ namespace NodeMarkup.Tools
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
-        public MarkupBuffer MarkupBuffer { get; private set; } = new MarkupBuffer();
+        public IntersectionTemplate MarkupBuffer { get; private set; }
 
         #endregion
 
@@ -89,30 +99,32 @@ namespace NodeMarkup.Tools
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
             base.Awake();
 
+            Instance = this;
+            Logger.LogDebug($"Tool Created");
+
             ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
-                { ToolModeType.SelectNode, new SelectNodeToolMode() },
-                { ToolModeType.MakeLine, new MakeLineToolMode() },
-                { ToolModeType.MakeCrosswalk, new MakeCrosswalkToolMode() },
-                { ToolModeType.MakeFiller, new MakeFillerToolMode() },
-                { ToolModeType.DragPoint, new DragPointToolMode() },
-                { ToolModeType.PasteEntersOrder, new PasteEntersOrderToolMode()},
-                { ToolModeType.EditEntersOrder, new EditEntersOrderToolMode()},
-                { ToolModeType.PointsOrder, new PointsOrderToolMode()},
+                { ToolModeType.SelectNode, Instance.CreateToolMode<SelectNodeToolMode>() },
+                { ToolModeType.MakeLine, Instance.CreateToolMode<MakeLineToolMode>() },
+                { ToolModeType.MakeCrosswalk, Instance.CreateToolMode<MakeCrosswalkToolMode>() },
+                { ToolModeType.MakeFiller, Instance.CreateToolMode<MakeFillerToolMode>() },
+                { ToolModeType.DragPoint, Instance.CreateToolMode<DragPointToolMode>() },
+                { ToolModeType.PasteEntersOrder, Instance.CreateToolMode<PasteEntersOrderToolMode>()},
+                { ToolModeType.EditEntersOrder, Instance.CreateToolMode<EditEntersOrderToolMode>()},
+                { ToolModeType.ApplyIntersectionTemplateOrder, Instance.CreateToolMode<ApplyIntersectionTemplateOrderToolMode>()},
+                { ToolModeType.PointsOrder, Instance.CreateToolMode<PointsOrderToolMode>()},
             };
 
             NodeMarkupButton.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
-            Disable();
+            enabled = false;
         }
-        public static NodeMarkupTool Create()
+        public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
+        public static void Create()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
-            GameObject nodeMarkupControl = ToolsModifierControl.toolController.gameObject;
-            Instance = nodeMarkupControl.AddComponent<NodeMarkupTool>();
-            Logger.LogDebug($"Tool Created");
-            return Instance;
+            ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
         }
         public static void Remove()
         {
@@ -129,12 +141,12 @@ namespace NodeMarkup.Tools
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
             NodeMarkupButton.RemoveButton();
             NodeMarkupPanel.RemovePanel();
+            ComponentPool.Clear();
             base.OnDestroy();
         }
         protected override void OnEnable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
-            Button?.Activate();
             Reset();
 
             PrevTool = m_toolController.CurrentTool;
@@ -146,7 +158,6 @@ namespace NodeMarkup.Tools
         protected override void OnDisable()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
-            Button?.Deactivate();
             Reset();
 
             if (m_toolController?.NextTool == null && PrevTool != null)
@@ -158,8 +169,7 @@ namespace NodeMarkup.Tools
         }
         private void Reset()
         {
-            Panel.Hide();
-            SetMode(ToolModeType.SelectNode);
+            SetModeNow(ToolModeType.SelectNode);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
         }
@@ -175,16 +185,20 @@ namespace NodeMarkup.Tools
         public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
         public void SetMode(BaseToolMode mode)
         {
-            Mode?.End();
+            if (Mode != mode)
+                NextMode = mode;
+        }
+        private void SetModeNow(ToolModeType mode) => SetModeNow(ToolModes[mode]);
+        private void SetModeNow(BaseToolMode mode)
+        {
+            Mode?.Deactivate();
             var prevMode = Mode;
             Mode = mode;
-            Mode?.Start(prevMode);
+            Mode?.Activate(prevMode);
 
-            if (Mode?.ShowPanel == true)
-                Panel.Show();
-            else
-                Panel.Hide();
+            Panel.Active = Mode?.ShowPanel == true;
         }
+
         public void SetMarkup(Markup markup)
         {
             Markup = markup;
@@ -193,9 +207,14 @@ namespace NodeMarkup.Tools
         #endregion
 
         #region UPDATE
-
         protected override void OnToolUpdate()
         {
+            if (NextMode != null)
+            {
+                SetModeNow(NextMode);
+                NextMode = null;
+            }
+
             if (PauseMenu?.isVisible == true)
             {
                 PrevTool = null;
@@ -217,9 +236,11 @@ namespace NodeMarkup.Tools
             RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
             RayCast(input, out RaycastOutput output);
             MouseWorldPosition = output.m_hitPos;
-            CameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
+            var cameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
+            cameraDirection.y = 0;
+            CameraDirection = cameraDirection.normalized;
 
-            Mode.OnUpdate();
+            Mode.OnToolUpdate();
             Info();
 
             base.OnToolUpdate();
@@ -278,7 +299,7 @@ namespace NodeMarkup.Tools
         private bool IsMouseMove { get; set; }
         protected override void OnToolGUI(Event e)
         {
-            Mode.OnGUI(e);
+            Mode.OnToolGUI(e);
 
             if (Shortcuts.Any(s => s.IsPressed(e)) || Panel?.OnShortcut(e) == true)
                 return;
@@ -309,7 +330,7 @@ namespace NodeMarkup.Tools
         private void StartCreateFiller()
         {
             SetMode(ToolModeType.MakeFiller);
-            if (Mode is MakeFillerToolMode fillerToolMode)
+            if (NextMode is MakeFillerToolMode fillerToolMode)
                 fillerToolMode.DisableByAlt = false;
         }
         private void DeleteAllMarking()
@@ -318,7 +339,7 @@ namespace NodeMarkup.Tools
 
             var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
             messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
-            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{Localize.MessageBox_CantUndone}", Markup.Id);
+            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{MessageBoxBase.CantUndone}", Markup.Id);
             messageBox.OnButton1Click = Delete;
 
             bool Delete()
@@ -336,7 +357,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_ResetOffsetsCaption;
-                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{Localize.MessageBox_CantUndone}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{MessageBoxBase.CantUndone}";
                 messageBox.OnButton1Click = Reset;
             }
             else
@@ -372,7 +393,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
-                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{Localize.MessageBox_CantUndone}\n\n{additional}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{MessageBoxBase.CantUndone}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
                     {
                         onDelete();
@@ -389,9 +410,8 @@ namespace NodeMarkup.Tools
         private void CopyMarkup()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
-            MarkupBuffer = new MarkupBuffer(Markup);
+            MarkupBuffer = new IntersectionTemplate(Markup);
         }
-        public void CopyMarkupBackup() => MarkupBuffer = Markup.Backup;
         private void PasteMarkup()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(PasteMarkup)}");
@@ -400,7 +420,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_PasteMarkingsCaption;
-                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{Localize.MessageBox_CantUndone}";
+                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{MessageBoxBase.CantUndone}";
                 messageBox.OnButton1Click = Paste;
             }
             else
@@ -408,6 +428,7 @@ namespace NodeMarkup.Tools
 
             bool Paste()
             {
+                BaseOrderToolMode.IntersectionTemplate = MarkupBuffer;
                 SetMode(ToolModeType.PasteEntersOrder);
                 return true;
             }
@@ -416,17 +437,187 @@ namespace NodeMarkup.Tools
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
 
-            CopyMarkup();
+            BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
+        }
+        public void ApplyIntersectionTemplate(IntersectionTemplate template)
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ApplyIntersectionTemplate)}");
+
+            BaseOrderToolMode.IntersectionTemplate = template;
+            SetMode(ToolModeType.ApplyIntersectionTemplateOrder);
         }
         private void CreateEdgeLines()
         {
             Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CreateEdgeLines)}");
 
-            foreach (var enter in Markup.Enters)
-                Markup.AddConnection(new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint), Style.StyleType.EmptyLine);
+            var lines = Markup.Enters.Select(e => Markup.AddConnection(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
+            Panel.EditLine(lines.Last());
+        }
+        private void SaveAsIntersectionTemplate()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsIntersectionTemplate)}");
 
-            Panel.UpdatePanel();
+            StartCoroutine(MakeScreenshot(Callback));
+
+            void Callback(Image image)
+            {
+                if (TemplateManager.IntersectionManager.AddTemplate(Markup, image, out IntersectionTemplate template))
+                    Panel.EditIntersectionTemplate(template);
+            }
+        }
+        private void CutByCrosswalks()
+        {
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CutByCrosswalks)}");
+
+            foreach (var crosswalk in Markup.Crosswalks)
+                Markup.CutLinesByCrosswalk(crosswalk);
+        }
+        private int ScreenshotSize => 400;
+        private IEnumerator MakeScreenshot(Action<Image> callback)
+        {
+            if (callback == null)
+                yield break;
+
+            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(MakeScreenshot)}");
+
+            var cameraController = ToolsModifierControl.cameraController;
+            var camera = Camera.main;
+            var backupMask = camera.cullingMask;
+            var backupRect = camera.rect;
+            var backupPosition = cameraController.m_currentPosition;
+            var backupRotation = cameraController.m_currentAngle;
+            var backupSize = cameraController.m_currentSize;
+
+            var angle = GetCameraAngle();
+            GetCameraPorition(angle, out Vector3 position, out float size);
+            SetCameraPosition(position, new Vector2(0f, 90f), size);
+
+            yield return new WaitForEndOfFrame();
+
+            camera.transform.position = position + new Vector3(0, Math.Max(size * 1.1f, size + 5f) / 2 / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2), 0);
+            camera.transform.rotation = Quaternion.Euler(90, (2 * Mathf.PI - angle - Vector3.forward.AbsoluteAngle()) * Mathf.Rad2Deg, 0);
+            camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
+            camera.rect = new Rect(0f, 0f, 1f, 1f);
+
+            bool smaaEnabled = false;
+            var smaa = camera.GetComponent<SMAA>();
+            if (smaa != null)
+            {
+                smaaEnabled = smaa.enabled;
+                smaa.enabled = true;
+            }
+
+            var scale = ScreenshotSize * 4;
+
+            camera.targetTexture = new RenderTexture(scale, scale, 24);
+            var screenShot = new Texture2D(scale, scale, TextureFormat.RGB24, false);
+
+            Singleton<RenderManager>.instance.UpdateCameraInfo();
+            camera.Render();
+
+            if (smaa != null)
+                smaa.enabled = smaaEnabled;
+
+            RenderTexture.active = camera.targetTexture;
+            screenShot.ReadPixels(new Rect(0, 0, scale, scale), 0, 0);
+            RenderTexture.active = null;
+            Destroy(camera.targetTexture);
+
+            SetCameraPosition(backupPosition, backupRotation, backupSize);
+            camera.targetTexture = null;
+            camera.cullingMask = backupMask;
+            camera.rect = backupRect;
+
+            var data = screenShot.GetPixels32();
+            var image = new Image(scale, scale, TextureFormat.RGB24, data);
+            image.Resize(ScreenshotSize, ScreenshotSize);
+
+            callback(image);
+        }
+        private float GetCameraAngle()
+        {
+            var enters = Markup.Enters.ToArray();
+
+            switch (enters.Length)
+            {
+                case 0: return 0;
+                case 1: return enters[0].NormalAngle;
+                default:
+                    var sortEnters = enters.OrderBy(e => e.RoadHalfWidth).Reverse().ToArray();
+                    var selectWidth = sortEnters[1].RoadHalfWidth * 0.9f;
+                    var selectEnters = sortEnters.Where(e => e.RoadHalfWidth > selectWidth).ToArray();
+
+                    var first = 0;
+                    var second = 1;
+                    var maxDelta = 0f;
+
+                    for (var i = 0; i < selectEnters.Length; i += 1)
+                    {
+                        for (var j = i + 1; j < selectEnters.Length; j += 1)
+                        {
+                            var delte = Mathf.Abs(selectEnters[i].NormalAngle - selectEnters[j].NormalAngle);
+                            if (delte > Mathf.PI)
+                                delte = 2 * Mathf.PI - delte;
+                            if (delte > maxDelta)
+                            {
+                                maxDelta = delte;
+                                first = i;
+                                second = j;
+                            }
+                        }
+                    }
+
+                    return (selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) / 2;
+            }
+        }
+        private void GetCameraPorition(float angle, out Vector3 position, out float size)
+        {
+            var points = Markup.Enters.SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
+
+            if (!points.Any())
+            {
+                position = Markup.Position;
+                size = 10f;
+                return;
+            }
+
+            var dir = angle.Direction();
+            var normal = dir.Turn90(false);
+
+            var rect = new Rect();
+            foreach (var point in points)
+            {
+                Line2.Intersect(Markup.Position.XZ(), (Markup.Position + dir).XZ(), point.XZ(), (point + normal).XZ(), out float x, out _);
+                Line2.Intersect(Markup.Position.XZ(), (Markup.Position + normal).XZ(), point.XZ(), (point + dir).XZ(), out float y, out _);
+
+                Set(ref rect, x, y);
+            }
+
+            position = Markup.Position + dir * rect.center.x + normal * rect.center.y;
+            size = Mathf.Max(rect.width, rect.height);
+
+            static void Set(ref Rect rect, float x, float y)
+            {
+                if (x < rect.xMin)
+                    rect.xMin = x;
+                else if (x > rect.xMax)
+                    rect.xMax = x;
+
+                if (y < rect.yMin)
+                    rect.yMin = y;
+                else if (y > rect.yMax)
+                    rect.yMax = y;
+            }
+        }
+        private void SetCameraPosition(Vector3 position, Vector2 rotation, float size)
+        {
+            var cameraController = ToolsModifierControl.cameraController;
+            cameraController.ClearTarget();
+            cameraController.SetOverrideModeOff();
+            cameraController.m_targetPosition = cameraController.m_currentPosition = position;
+            cameraController.m_targetAngle = cameraController.m_currentAngle = rotation;
+            cameraController.m_targetSize = cameraController.m_currentSize = size;
         }
 
         #endregion
@@ -441,8 +632,12 @@ namespace NodeMarkup.Tools
 
         private static float DefaultWidth => 0.2f;
         private static bool DefaultBlend => true;
-        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Bezier3 bezier, Color? color = null, float? width = null, bool? alphaBlend = null, bool cut = false) =>
-            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color ?? Colors.White, bezier, width ?? DefaultWidth, cut ? (width ?? DefaultWidth) / 2 : 0f, cut ? (width ?? DefaultWidth) / 2 : 0f, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
+        public static void RenderBezier(RenderManager.CameraInfo cameraInfo, Bezier3 bezier, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            var cutValue = cut == true ? (width ?? DefaultWidth) / 2 : 0f;
+            RenderManager.OverlayEffect.DrawBezier(cameraInfo, color ?? Colors.White, bezier, width ?? DefaultWidth, cutValue, cutValue, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
+        }
+
         public static void RenderCircle(RenderManager.CameraInfo cameraInfo, Vector3 position, Color? color = null, float? width = null, bool? alphaBlend = null) =>
             RenderManager.OverlayEffect.DrawCircle(cameraInfo, color ?? Colors.White, position, width ?? DefaultWidth, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
 
@@ -479,23 +674,80 @@ namespace NodeMarkup.Tools
             };
         }
 
-        public static void PressShortcut()
+        public static void GetCentreAndRadius(Markup markup, out Vector3 centre, out float radius)
         {
+            var points = markup.Enters.Where(e => e.Position != null).SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
 
+            if (points.Length == 0)
+            {
+                centre = markup.Position;
+                radius = markup.Radius;
+                return;
+            }
+
+            centre = markup.Position;
+            radius = 1000f;
+
+            for (var i = 0; i < points.Length; i += 1)
+            {
+                for (var j = i + 1; j < points.Length; j += 1)
+                {
+                    GetCircle2Points(points, i, j, ref centre, ref radius);
+
+                    for (var k = j + 1; k < points.Length; k += 1)
+                        GetCircle3Points(points, i, j, k, ref centre, ref radius);
+                }
+            }
+
+            radius += TargetEnter.Size / 2;
         }
-    }
-    public class MarkupBuffer
-    {
-        public XElement Data { get; }
-        public EnterData[] Enters { get; }
-        public ObjectsMap Map { get; }
-        public MarkupBuffer(Markup markup) : this(markup.ToXml(), markup.Enters.Select(e => e.Data).ToArray()) { }
-        public MarkupBuffer() : this(new XElement("Markup"), new EnterData[0]) { }
-        private MarkupBuffer(XElement data, EnterData[] enters)
+        private static void GetCircle2Points(Vector3[] points, int i, int j, ref Vector3 centre, ref float radius)
         {
-            Data = data;
-            Enters = enters;
-            Map = new ObjectsMap();
+            var newCentre = (points[i] + points[j]) / 2;
+            var newRadius = (points[i] - points[j]).magnitude / 2;
+
+            if (newRadius >= radius)
+                return;
+
+            if (AllPointsInCircle(points, newCentre, newRadius, i, j))
+            {
+                centre = newCentre;
+                radius = newRadius;
+            }
+        }
+        private static void GetCircle3Points(Vector3[] points, int i, int j, int k, ref Vector3 centre, ref float radius)
+        {
+            var pos1 = (points[i] + points[j]) / 2;
+            var pos2 = (points[j] + points[k]) / 2;
+
+            var dir1 = (points[i] - points[j]).Turn90(true).normalized;
+            var dir2 = (points[j] - points[k]).Turn90(true).normalized;
+
+            Line2.Intersect(pos1.XZ(), (pos1 + dir1).XZ(), pos2.XZ(), (pos2 + dir2).XZ(), out float p, out _);
+            var newCentre = pos1 + dir1 * p;
+            var newRadius = (newCentre - points[i]).magnitude;
+
+            if (newRadius >= radius)
+                return;
+
+            if (AllPointsInCircle(points, newCentre, newRadius, i, j, k))
+            {
+                centre = newCentre;
+                radius = newRadius;
+            }
+        }
+        private static bool AllPointsInCircle(Vector3[] points, Vector3 centre, float radius, params int[] ignore)
+        {
+            for (var i = 0; i < points.Length; i += 1)
+            {
+                if (ignore.Any(j => j == i))
+                    continue;
+
+                if ((centre - points[i]).magnitude > radius)
+                    return false;
+            }
+
+            return true;
         }
     }
     public class ThreadingExtension : ThreadingExtensionBase

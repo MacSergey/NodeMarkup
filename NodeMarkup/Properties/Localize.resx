@@ -121,7 +121,7 @@
     <value>Delete {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Do you really want to delete {0} {1}?</value>
+    <value>Do you really want to delete {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll the wheel to change
@@ -215,7 +215,7 @@ Shift X10, Ctrl X0.1</value>
     <value>This is a BETA version, errors may occur and stability is not guaranteed!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Edit node #{0} marking</value>
+    <value>Edit node #{0} markings</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>point</value>
@@ -239,7 +239,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Delete all node lines</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Delete marking from all intersections</value>
+    <value>Delete markings from all intersections</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Delete all markings</value>
@@ -248,35 +248,35 @@ Shift X10, Ctrl X0.1</value>
     <value>Do you really want to remove all markings?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Dump marking data to file</value>
+    <value>Dump markings data to file</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copy path to clipboard</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Dump marking data</value>
+    <value>Dump markings data</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Dump failed</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Dump success saved</value>
+    <value>Dump successfully saved to file</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>Restore marking data from file</value>
+    <value>Restore markings data from file</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>Restore marking data</value>
+    <value>Restore markings data</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
-    <value>Do you really want to restore data?
-The restored data will replace all existing marking.</value>
+    <value>Do you really want to restore markings?
+The restored markings will replace all existing markings.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>Marking data restore failed</value>
+    <value>Markings data restore failed</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>Marking data successfully restored</value>
+    <value>Markings data successfully restored</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>Quick rule setup</value>
@@ -319,10 +319,10 @@ The restored data will replace all existing marking.</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Node #{0}
-Click to edit marking</value>
+Click to edit markings</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select a node to change marking</value>
+    <value>Select a node to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint for regular or stop line
@@ -406,7 +406,7 @@ Drag behind point for perpendicular line</value>
     <value>Click to select the next point in the contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Select a point to start creating the filler</value>
+    <value>Select a point to start creating a filler</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Select the next point in the contour</value>
@@ -456,7 +456,16 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Version 1.4 Released</value>
+    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+- Added the ability to save templates and presets as asset and share it over Workshop.
+- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+- Added panel tips (can be disable in settings).
+- Added the ability to cut new line by crosswalks (can be disable in settings).
+- Added the ability to change color values with mouse wheel.
+- Added English-UK translation.
+- Fix train and monorail roads (and any else without points).
+- Fix and improve points group overlay.</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -584,7 +593,9 @@ By registering early access, you will support the ability to develop this mod at
     <value>Get stable version</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>You are using the BETA version of {0}. It is for testing new features and may contain errors that will break or delete your markings. If you subscribed to it by mistake, then switch to the stable version.</value>
+    <value>You are using the BETA version of {0}. It is for testing new features and may contain errors that could break or delete your markings. If you subscribed to it by mistake, then switch to the stable version.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Game Language</value>
@@ -596,7 +607,7 @@ By registering early access, you will support the ability to develop this mod at
     <value>German</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>English</value>
+    <value>English US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanish</value>
@@ -726,8 +737,8 @@ To create a crosswalk hold Shift.</value>
     <value>Arrange in a line</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
-    <value>The rule is overlapped by another rule.
-Check other rule's "From" and "To" points.</value>
+    <value>This rule is overlapped by another rule.
+Check the other rule's "From" and "To" points.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>Crosswalk's left border</value>
@@ -827,20 +838,20 @@ Failed to load markings for {0} intersections.</value>
     <value>Solid and dashed</value>
   </data>
   <data name="Panel_ClearMarking" xml:space="preserve">
-    <value>Clear marking</value>
+    <value>Clear markings</value>
   </data>
   <data name="Panel_CopyMarking" xml:space="preserve">
-    <value>Copy marking</value>
+    <value>Copy markings</value>
   </data>
   <data name="Panel_PasteMarking" xml:space="preserve">
-    <value>Paste marking</value>
+    <value>Paste markings</value>
   </data>
   <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
-    <value>Paste marking</value>
+    <value>Paste markings</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Do you really want to paste marking?
-It will replace the existing marking.</value>
+    <value>Do you really want to paste markings?
+It will replace the existing markings.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Crosswalks modifier</value>
@@ -870,7 +881,7 @@ It will replace the existing marking.</value>
     <value>Dependent items will also be removed:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
-    <value>Crosswalk Borders - {0}</value>
+    <value>Crosswalk borders - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
     <value>Crosswalks - {0}</value>
@@ -934,10 +945,10 @@ Click circle to edit road points order</value>
     <value>Drop circle inside/outside target to set/unset roads order</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
-    <value>Copy marking</value>
+    <value>Copy markings</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
-    <value>Paste marking</value>
+    <value>Paste markings</value>
   </data>
   <data name="Tool_InfoInverseOrder" xml:space="preserve">
     <value>Inverse order</value>
@@ -968,7 +979,7 @@ Click circle to edit road points order</value>
 Are you sure you want to have multiple templates with the same name?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
-    <value>Backup marking</value>
+    <value>Backup markings</value>
   </data>
   <data name="Settings_BackupTemplates" xml:space="preserve">
     <value>Backup templates</value>
@@ -1014,7 +1025,7 @@ The restored templates will replace all existing templates.</value>
     <value>Exit paste mode</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Do you want to exit paste mode and apply a changes?</value>
+    <value>Do you want to exit paste mode and apply changes?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Don't apply</value>
@@ -1029,23 +1040,23 @@ The restored templates will replace all existing templates.</value>
     <value>Reset</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>Edit marking order</value>
+    <value>Edit markings order</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
-    <value>Change marking order</value>
+    <value>Change markings order</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
     <value>Roads have changed</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
-    <value>The roads at this intersection have changed, therefore the existing marking cannot be applied automatically.
-Do you want to apply the marking manually?</value>
+    <value>The roads at this intersection have changed, therefore the existing markings cannot be applied automatically.
+Do you want to apply the markings manually?</value>
   </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
     <value>Exit edit order mode</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>Do you want to exit edit mode and apply a changes?</value>
+    <value>Do you want to exit edit mode and apply changes?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
     <value>Drag and drop circle to set points order</value>
@@ -1117,10 +1128,10 @@ Do you want to apply the marking manually?</value>
     <value>Quick crosswalk borders setup</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marking under tracks (Apply after reload)</value>
+    <value>Markings under tracks</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Warning: This option change game objects render order</value>
+    <value>Warning: this option changes game objects render order</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
     <value>- Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
@@ -1133,5 +1144,209 @@ Do you want to apply the marking manually?</value>
 - Fix panel out of screen.
 - Hover overlay color changed from white to light blue to avoid merging with the markup.
 - Crosswalk line no longer creates unnecessary intersections. You may need to set crosswalk borders for already created crosswalks.</value>
+  </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Save as asset</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+by {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>The list of presets is empty.
+To create a preset, click «{0}» at the panel header.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Presets</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Save as preset</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>No presets</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Apply preset</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>New preset</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Exit applying preset mode</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Do you want to apply a preset?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Applies after game restart</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Load markings assets</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod loaded with errors.
+It is not recommended to use the mod in this state as it can lead to unpredictable behavior.
+Restart the game.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Crosswalks:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Fillers:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Lines:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>No screenshot</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Road #{0} points:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Roads:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Cut new line by crosswalks</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Cut lines by this crosswalk</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup presets</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Delete all presets</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Delete all presets</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Do you really want to remove all presets?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Dump presets to file</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Dump presets</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Restore presets from file</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Restore presets</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Do you really want to restore presets?
+The restored presets will replace all existing presets.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Presets restore failed</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Presets successfully restored</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Cut lines by all crosswalks</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Cut lines by all crosswalks</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>English UK</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Rewrite preset asset</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>To change its name requires rewriting the asset file. Continue?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Rewrite template asset</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>To change its name and values requires rewriting the asset file. Continue?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>To be able to set the crosswalk borders, you must have lines started from the same points as the crosswalk</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>You must have lines that intersect with this line to be able to change the rule's "From" and "To" points and create additional rules.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Show hints on panel</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Don't save changes</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Do you want to save preset name change?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Do you want to save template values changes?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>The name "{0}" is already used by another preset.
+Are you sure you want to have multiple presets with the same name?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>It can only be deleted from the game content manager.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>This preset can't be modified. It can only be deleted from the game content manager or unsubscribed from on the Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>This preset is an asset.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>It can only be deleted from the game content manager.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>This template can't be modified. It can only be deleted from the game content manager or unsubscribed from on the Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>This template is an asset.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>preset</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>preset</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+- Added the ability to save templates and presets as asset and share it over Workshop.
+- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+- Added panel tips (can be disable in settings).
+- Added the ability to cut new line by crosswalks (can be disable in settings).
+- Added the ability to change color values with mouse wheel.
+- Fix train and monorail roads (and any else without points).
+- Fix and improve points group overlay.
+- Added English-UK translation.</value>
+  </data>
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>This line type doesn't support rules</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Don't cut line by crosswalk if it is their border</value>
   </data>
 </root>

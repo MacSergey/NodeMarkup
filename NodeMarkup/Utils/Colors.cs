@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColossalFramework.Math;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace NodeMarkup.Utils
         public static Color32 Orange { get; } = new Color32(255, 136, 0, 255);
         public static Color32 Gray { get; } = new Color32(192, 192, 192, 255);
         public static Color32 Purple { get; } = new Color32(122, 71, 209, 255);
-        public static Color32 Hover { get; } = new Color32(204, 243, 255, 255);
+        public static Color32 Hover { get; } = new Color32(217, 251, 255, 255);
 
         public static Color32[] OverlayColors { get; } = new Color32[]
         {
@@ -40,5 +41,23 @@ namespace NodeMarkup.Utils
             return new Color32(SetHue(color.r, hue), SetHue(color.g, hue), SetHue(color.b, hue), alpha);
         }
         private static byte SetHue(byte value, byte hue) => (byte)(byte.MaxValue - ((byte.MaxValue - value) / 255f * hue));
+
+        public static Color32 GetStyleIconColor(this Color32 color)
+        {
+            var ratio = 255 / (float)Math.Max(Math.Max(color.r, color.g), color.b);
+            var styleColor = new Color32((byte)(color.r * ratio), (byte)(color.g * ratio), (byte)(color.b * ratio), 255);
+            return styleColor == Color.black ? (Color32)Color.white : styleColor;
+        }
+
+        public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2)/* c.a == 0 ? 0 : ColorChange(c.a) * 0.985f + 0.015f*/);
+        static float ColorChange(float c) => Mathf.Pow(c, 4);
+
+        public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
+        public static Color32 ToColor(this int colorData, int version)
+        {
+            var color = colorData.ToColor();
+            return version != 1 ? VersionMigration.CorrectColor01(color) : color;
+        }
+        public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
     }
 }

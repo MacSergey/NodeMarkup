@@ -1,7 +1,10 @@
 ﻿using ColossalFramework.UI;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -10,27 +13,17 @@ namespace NodeMarkup.UI
 {
     public abstract class EditorItem : UIPanel
     {
-        protected const float defaultHeight = 30f;
+        protected virtual float DefaultHeight => 30;
 
-        public static UITextureAtlas EditorItemAtlas { get; } = GetAtlas();
-        private static UITextureAtlas GetAtlas()
+        public virtual bool EnableControl { get; set; } = true;
+
+        public virtual void Init() => Init(null);
+        public virtual void DeInit() 
         {
-            var spriteNames = new string[]
-            {
-                "TextFieldPanel",
-                "TextFieldPanelHovered",
-                "TextFieldPanelFocus",
-                "EmptySprite"
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(EditorItemAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("TextFieldPanel.png", nameof(EditorItemAtlas), 32, 32, spriteNames, new RectOffset(4, 4, 4, 4), 2);
-
-            return atlas;
+            isEnabled = true;
+            EnableControl = true;
         }
-        public virtual void Init() => Init(defaultHeight);
-        public void Init(float height)
+        public void Init(float? height = null)
         {
             if (parent is UIScrollablePanel scrollablePanel)
                 width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
@@ -39,7 +32,7 @@ namespace NodeMarkup.UI
             else
                 width = parent.width;
 
-            this.height = height;
+            this.height = height ?? DefaultHeight;
         }
 
         protected UIButton AddButton(UIComponent parent)
@@ -59,27 +52,41 @@ namespace NodeMarkup.UI
             get => Label.text;
             set => Label.text = value;
         }
+        public override bool EnableControl
+        {
+            get => Control.isEnabled;
+            set => Control.isEnabled = value;
+        }
 
         public EditorPropertyPanel()
         {
             Label = AddUIComponent<UILabel>();
             Label.textScale = 0.8f;
+            Label.disabledTextColor = new Color32(160, 160, 160, 255);
 
             Control = AddUIComponent<UIPanel>();
-            //Control.autoLayout = true;
             Control.autoLayoutDirection = LayoutDirection.Horizontal;
             Control.autoLayoutStart = LayoutStart.TopRight;
             Control.autoLayoutPadding = new RectOffset(5, 0, 0, 0);
 
             Control.eventSizeChanged += ControlSizeChanged;
         }
-
+        public override void Init()
+        {
+            base.Init();
+            RefreshContent();
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            Text = string.Empty;
+        }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
             Label.relativePosition = new Vector2(0, (height - Label.height) / 2);
-            Control.size = size;           
+            Control.size = size;
         }
 
         private void ControlSizeChanged(UIComponent component, Vector2 value) => RefreshContent();
@@ -90,6 +97,34 @@ namespace NodeMarkup.UI
 
             foreach (var item in Control.components)
                 item.relativePosition = new Vector2(item.relativePosition.x, (Control.size.y - item.size.y) / 2);
+        }
+
+        protected FieldType AddTextField<ValueType, FieldType>(UIComponent parent)
+            where FieldType : UITextField<ValueType>
+        {
+            var field = parent.AddUIComponent<FieldType>();
+
+            field.atlas = TextureUtil.Atlas;
+            field.normalBgSprite = TextureUtil.FieldNormal;
+            field.hoveredBgSprite = TextureUtil.FieldHovered;
+            field.focusedBgSprite = TextureUtil.FieldNormal;
+            field.disabledBgSprite = TextureUtil.FieldDisabled;
+            field.selectionSprite = TextureUtil.EmptySprite;
+
+            field.allowFloats = true;
+            field.isInteractive = true;
+            field.enabled = true;
+            field.readOnly = false;
+            field.builtinKeyNavigation = true;
+            field.cursorWidth = 1;
+            field.cursorBlinkTime = 0.45f;
+            field.selectOnFocus = true;
+
+            field.textScale = 0.7f;
+            field.verticalAlignment = UIVerticalAlignment.Middle;
+            field.padding = new RectOffset(0, 0, 6, 0);
+
+            return field;
         }
     }
 }

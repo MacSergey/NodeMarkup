@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework;
+using ColossalFramework.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -9,93 +10,104 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class RulePanel : UIPanel
+    public class RulePanel : PropertyGroupPanel
     {
-        private static Color32 NormalColor { get; } = new Color32(90, 123, 135, 255);
-        private static Color32 ErrorColor { get; } = new Color32(246, 85, 85, 255);
+        public event Action<RulePanel, UIMouseEventParameter> OnHover;
+        public event Action<RulePanel, UIMouseEventParameter> OnEnter;
 
         private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
+        private MarkupLine Line => Editor.EditObject;
         public MarkupLineRawRule Rule { get; private set; }
 
+        private StyleHeaderPanel Header { get; set; }
+        private ErrorTextProperty Error { get; set; }
+        private WarningTextProperty Warning { get; set; }
         public MarkupLineSelectPropertyPanel From { get; private set; }
         public MarkupLineSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
-        public RulePanel()
-        {
-            atlas = TextureUtil.InGameAtlas;
-            backgroundSprite = "ButtonWhite";
-            autoLayout = true;
-            autoFitChildrenVertically = true;
-            autoLayoutDirection = LayoutDirection.Vertical;
-            autoLayoutPadding = new RectOffset(5, 5, 0, 0);
-        }
+        public RulePanel() { }
         public void Init(LinesEditor editor, MarkupLineRawRule rule)
         {
             Editor = editor;
             Rule = rule;
-            Refresh();
-
-            SetSize();
 
             AddHeader();
-            AddEdgeProperties();
+            AddError();
+            AddWarning();
+
+            From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
+            To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
+
+            Refresh();
+
             AddStyleTypeProperty();
             AddStyleProperties();
-        }
 
-        private void SetSize()
+            base.Init();
+        }
+        public override void DeInit()
         {
-            if (parent is UIScrollablePanel scrollablePanel)
-                width = scrollablePanel.width - scrollablePanel.autoLayoutPadding.horizontal;
-            else if (parent is UIPanel panel)
-                width = panel.width - panel.autoLayoutPadding.horizontal;
-            else
-                width = parent.width;
+            base.DeInit();
+
+            Header = null;
+            Error = null;
+            Warning = null;
+            From = null;
+            To = null;
+            Style = null;
+            StyleProperties.Clear();
+
+            Editor = null;
+            Rule = null;
+
+            OnHover = null;
+            OnEnter = null;
         }
         private void AddHeader()
         {
-            var header = AddUIComponent<StyleHeaderPanel>();
-            header.Init(Rule.Style.Type, OnSelectTemplate, Editor.SupportRules);
-            header.OnDelete += () => Editor.DeleteRule(this);
-            header.OnSaveTemplate += OnSaveTemplate;
-            header.OnCopy += CopyStyle;
-            header.OnPaste += PasteStyle;
-        }
-        private void AddEdgeProperties()
-        {
-            AddFromProperty();
-            AddToProperty();
-            FillEdges();
-        }
-        private void AddFromProperty()
-        {
-            From = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            From.Text = NodeMarkup.Localize.LineRule_From;
-            From.Position = EdgePosition.Start;
-            From.Init();
-            From.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
-            From.OnHover += Editor.HoverRuleEdge;
-            From.OnLeave += Editor.LeaveRuleEdge;
+            Header = ComponentPool.Get<StyleHeaderPanel>(this);
+            Header.Init(Rule.Style.Type, OnSelectTemplate, Line.IsSupportRules);
+            Header.OnDelete += () => Editor.DeleteRule(this);
+            Header.OnSaveTemplate += OnSaveTemplate;
+            Header.OnCopy += CopyStyle;
+            Header.OnPaste += PasteStyle;
         }
 
-        private void AddToProperty()
+        private void AddError()
         {
-            To = AddUIComponent<MarkupLineSelectPropertyPanel>();
-            To.Text = NodeMarkup.Localize.LineRule_To;
-            To.Position = EdgePosition.End;
-            To.Init();
-            To.OnSelect += (panel) => Editor.SelectRuleEdge(panel);
-            To.OnHover += Editor.HoverRuleEdge;
-            To.OnLeave += Editor.LeaveRuleEdge;
+            Error = ComponentPool.Get<ErrorTextProperty>(this);
+            Error.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Error.Init();
         }
+        private void AddWarning()
+        {
+            Warning = ComponentPool.Get<WarningTextProperty>(this);
+            Warning.Text = Line.IsSupportRules ? NodeMarkup.Localize.LineEditor_RulesWarning : NodeMarkup.Localize.LineEditor_NotSupportRules;
+            Warning.Init();
+        }
+
+        private MarkupLineSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
+        {
+            var edgeProperty = ComponentPool.Get<MarkupLineSelectPropertyPanel>(this);
+            edgeProperty.Text = text;
+            edgeProperty.Position = position;
+            edgeProperty.Init();
+            edgeProperty.OnSelect += OnSelectPanel;
+            edgeProperty.OnHover += Editor.HoverRuleEdge;
+            edgeProperty.OnLeave += Editor.LeaveRuleEdge;
+            return edgeProperty;
+        }
+        private void OnSelectPanel(MarkupLineSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
+
         private void FillEdges()
         {
             FillEdge(From, FromChanged, Rule.From);
             FillEdge(To, ToChanged, Rule.To);
+            Warning.isVisible = Settings.ShowPanelTip && !Editor.CanDivide;
         }
         private void FillEdge(MarkupLineSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
         {
@@ -106,18 +118,29 @@ namespace NodeMarkup.UI.Editors
             panel.Clear();
             panel.AddRange(Editor.SupportPoints);
             panel.SelectedObject = value;
-            panel.isVisible = Editor.CanDivide;
+
+            if (Settings.ShowPanelTip && Line.IsSupportRules)
+            {
+                panel.isVisible = true;
+                panel.EnableControl = Editor.CanDivide;
+            }
+            else
+            {
+                panel.EnableControl = true;
+                panel.isVisible = Editor.CanDivide;
+            }
+
             panel.OnSelectChanged += action;
         }
         private void AddStyleTypeProperty()
         {
-            switch (Editor.EditObject)
+            switch (Line)
             {
                 case MarkupRegularLine regularLine:
-                    Style = AddUIComponent<RegularStylePropertyPanel>();
+                    Style = ComponentPool.Get<RegularStylePropertyPanel>(this);
                     break;
                 case MarkupStopLine stopLine:
-                    Style = AddUIComponent<StopStylePropertyPanel>();
+                    Style = ComponentPool.Get<StopStylePropertyPanel>(this);
                     break;
                 default:
                     return;
@@ -138,16 +161,15 @@ namespace NodeMarkup.UI.Editors
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)
-            {
-                RemoveUIComponent(property);
-                Destroy(property);
-            }
+                ComponentPool.Free(property);
+
+            StyleProperties.Clear();
         }
 
         private void OnSaveTemplate()
         {
-            if (TemplateManager.AddTemplate(Rule.Style, out StyleTemplate template))
-                Editor.NodeMarkupPanel.EditTemplate(template);
+            if (TemplateManager.StyleManager.AddTemplate(Rule.Style, out StyleTemplate template))
+                Editor.Panel.EditStyleTemplate(template);
         }
         private void ApplyStyle(LineStyle style)
         {
@@ -179,7 +201,7 @@ namespace NodeMarkup.UI.Editors
             if (style == Rule.Style.Type)
                 return;
 
-            var newStyle = TemplateManager.GetDefault<LineStyle>(style);
+            var newStyle = TemplateManager.StyleManager.GetDefault<LineStyle>(style);
             Rule.Style.CopyTo(newStyle);
 
             Rule.Style = newStyle;
@@ -190,28 +212,18 @@ namespace NodeMarkup.UI.Editors
         }
         public void Refresh()
         {
-            if (Rule.IsOverlapped)
-            {
-                color = ErrorColor;
-                tooltip = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
-            }
-            else
-            {
-                color = NormalColor;
-                tooltip = string.Empty;
-            }
-
+            Error.isVisible = Rule.IsOverlapped;
             FillEdges();
         }
-
-        protected override void OnSizeChanged()
+        protected override void OnMouseEnter(UIMouseEventParameter p)
         {
-            base.OnSizeChanged();
-
-            foreach (var item in components)
-            {
-                item.width = width - autoLayoutPadding.horizontal;
-            }
+            base.OnMouseEnter(p);
+            OnHover?.Invoke(this, p);
+        }
+        protected override void OnMouseLeave(UIMouseEventParameter p)
+        {
+            base.OnMouseLeave(p);
+            OnEnter?.Invoke(this, p);
         }
     }
 }

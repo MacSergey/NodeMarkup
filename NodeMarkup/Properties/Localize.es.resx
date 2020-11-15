@@ -121,7 +121,7 @@
     <value>Eliminar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar {0} {1}?</value>
+    <value>¿De verdad quieres eliminar {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Desplazar la rueda para cambiar
@@ -558,6 +558,8 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Está utilizando la versión BETA de {0}. Es para probar nuevas funciones y puede contener errores que romperán o eliminarán sus marcas. Si se suscribió por error, cambie a la versión estable.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Idioma del Juego</value>
@@ -569,7 +571,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Alemán</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglés</value>
+    <value>Inglés EEUU</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Español</value>
@@ -1053,10 +1055,93 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Configuración rápida de bordes del paso de peatones</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Las marcas debajo del carril (Se aplica después del reinicio)</value>
+    <value>Las marcas debajo del carril</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
   </data>
+  
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Guardar como recurso</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+de {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>La lista de preajustes está vacía.
+Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Preajustes</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Guardar como preajuste</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Guardar como preajuste</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>No hay preajustes</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Aplicar preajuste</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nuevo preajuste</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>

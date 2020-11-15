@@ -121,7 +121,7 @@
     <value>Lösche {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Willst du {0} {1} wirklich löschen?</value>
+    <value>Willst du {0} "{1}" wirklich löschen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Mausrad scrollen zum ändern
@@ -239,7 +239,7 @@ Shift x10, Strg x0.1</value>
     <value>Alle Linien an Nodes löschen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Markierung von allen Kreuzungen löschen</value>
+    <value>Markierungen von allen Kreuzungen löschen</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Alle Markierungen löschen</value>
@@ -251,7 +251,7 @@ Shift x10, Strg x0.1</value>
     <value>Markierungsdaten in Datei speichern</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Pfad in die Zwischenablage kopieren</value>
+    <value>Dateipfad in die Zwischenablage kopieren</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Markierungsdaten speichern</value>
@@ -294,13 +294,13 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
     <value>Zeige Tooltips</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Vorlage</value>
+    <value>Stilvorlage</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Vorlagen</value>
+    <value>Stilvorlagen</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>Neue Vorlage</value>
@@ -319,10 +319,10 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Node #{0}
-Klicken um Markierung zu bearbeiten</value>
+Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Node zum Ändern der Markierung auswählen</value>
+    <value>Node zum Ändern der Markierungen auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen
@@ -455,17 +455,7 @@ Hinter den Punkt zurückziehen um eine orthogonale Linie zu erstellen</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Flächenfüllung in Winkel-Form hinzugefügt.
-- Die Regel für eine nicht überschneidende Linie kann gelöscht werden um sie unsichtbar zu machen.
-- Kopieren/Einfügen von Linien und Füllungs-Stilen.
-- Haltelinien verbessert.
-- Weiterführende (or­tho­go­nale) Linien hinzugefügt.
-- Verlinkung von Patreon-Accounts für Vorabzugriff.
-- Möglichkeit hinzugefügt, die Mod-Sprache unabhängig von der Spielsprache zu ändern.
-- Fußgängerüberweg-Markierungen hinzugefügt.
-- Gruppieren von Linien und Vorlagen hinzugefügt.</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelt durchgezogen</value>
   </data>
@@ -496,8 +486,8 @@ Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
 Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Vorlagen ist leer.
-Um eine Vorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
+    <value>Die Liste mit Stilvorlagen ist leer.
+Um eine Stilvorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivierungscode eingeben</value>
@@ -593,6 +583,8 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Du verwendest die BETA Version von {0}. Diese ist zum Testen neuer Funktionen gedacht und kann Fehler beinhalten, die deine erstellten Markierungen verändern oder löschen könnten. Wenn du diese Version ungewollt abonniert haben solltest, wechsele zur stabilen Version.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Spiel-Sprache</value>
@@ -604,7 +596,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
     <value>Deutsch</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englisch</value>
+    <value>Amerikanisch-Englisch</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spanisch</value>
@@ -680,7 +672,7 @@ Zum Erstellen einer Fußgängerüberweg-Markierung Shift gedrückt halten.</valu
     <value>Linien gruppieren</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Vorlagen gruppieren</value>
+    <value>Stilvorlagen gruppieren</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Klicken um eine Fußgängerüberweg-Markierung zu erstellen</value>
@@ -760,7 +752,7 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Leiter</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>Keine Vorlagen</value>
+    <value>Keine Stilvorlagen</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Vollständig gefüllt</value>
@@ -781,7 +773,7 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Punkt</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Vorlage</value>
+    <value>Stilvorlage</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
@@ -953,14 +945,14 @@ Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
     <value>Rechts</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>Unbenannte Vorlage</value>
+    <value>Unbenannte Stilvorlage</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
-    <value>Name wird bereits verwendet</value>
+    <value>Der Name wird bereits verwendet</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Der Name "{0}" wird bereits für eine anderen Vorlage verwendet.
-Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
+    <value>Der Name "{0}" wird bereits für eine andere Stilvorlage verwendet.
+Bist du dir sicher, dass du mehrere Stilvorlage mit dem gleichen Namen haben willst?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
     <value>Markierungsdaten sichern</value>
@@ -969,35 +961,35 @@ Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst
     <value>Sicherungsvorlagen</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>Alle Vorlagen löschen</value>
+    <value>Alle Stilvorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>Alle Vorlagen löschen</value>
+    <value>Alle Stilvorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Willst du wirklich alle Vorlagen entfernen?</value>
+    <value>Willst du wirklich alle Stilvorlagen entfernen?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Vorlagen in einer Datei speichern</value>
+    <value>Stilvorlagen in einer Datei speichern</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>Vorlagen speichern</value>
+    <value>Stilvorlagen speichern</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Vorlagen aus Datei wiederherstellen</value>
+    <value>Stilvorlagen aus Datei wiederherstellen</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>Vorlagen wiederherstellen</value>
+    <value>Stilvorlagen wiederherstellen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>Möchtest du wirklich die Vorlagen wiederherstellen?
-Die wiederhergestellten Vorlagen werden alle vorhandenen Vorlagen ersetzen.</value>
+    <value>Möchtest du wirklich die Stilvorlagen wiederherstellen?
+Die wiederhergestellten Stilvorlagen werden alle vorhandenen Stilvorlagen ersetzen.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>Wiederherstellen der Vorlagen fehlgeschlagen</value>
+    <value>Wiederherstellen der Stilvorlagen fehlgeschlagen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>Vorlagen erfolgreich wiederhergestellt</value>
+    <value>Stilvorlagen erfolgreich wiederhergestellt</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
     <value>Anwenden</value>
@@ -1089,10 +1081,225 @@ Möchtest du die Markierungen manuell zuordnen?</value>
     <value>Schnellerstellung Fußgängerüberwegeränder</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Markierung unter Gleisen (Aktiv nach erneutem Laden)</value>
+    <value>Markierung unter Gleisen</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>- Möglichkeit hinzugefügt, Markierungen unter Gleisen verlaufen zu lassen. Dies kann in den Optionen deaktiviert werden. WARNUNG: Diese Funktion ändert die Reihenfolge, in der Spiel-Objekte gerendert werden.
+- Funktion hinzugefügt um unsichtbare Linien zu erstellen (ohne Regeln).
+- Funktion hinzugefügt alle Randlinien gleichzeitig zu erstellen (Linie vom, letzten Punkt der Straße zum ersten Punkt der nächsten Straße).
+- Linien überlagern nicht mehr den Bürgersteig. Funktioniert nur für Linien vom ersten oder letzten Punkt einer Straße.
+- "Schnell-Erstellung für Fußgängerüberwegsmarkierungen" hinzugefügt - öffnet automatisch den Ränder-Auswahl sowie es bei der "Schnell-Regel-Erstellung" der Fall ist. Kann in den Einstellungen deaktiviert werden.
+- Menü für "Zusätzliche Funktionen" hinzugefügt.
+- Linken Maus-Klick aus einen Node repariert.
+- Oberfläche außerhalb des Bildschirms repariert.
+- Overlay-Farbe beim hinüberfahren mit der Maus von weiß in ein schwaches blau geändert, damit es sich besser von den Markierungen abhebt.
+- Fußgängerüberwegemarkierungen erstellen keine unnötigen Überschneidungen mehr. Möglicherweise musst du für bereits erstellte Fußgängerüberwegemarkierungen nun Ränder festlegen.</value>
+  </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Als Asset speichern</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+von {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>Die Liste mit Kreuzungsvorlagen ist leer.
+Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Kreuzungsvorlagen</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Als Kreuzungsvorlage speichern</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Als Kreuzungsvorlage speichern</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Keine Kreuzungsvorlagen</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Kreuzungsvorlage übernehmen</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Neue Kreuzungsvorlage</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Modus zum Übernehmen von Kreuzungsvorlagen verlassen</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Möchtest du die Kreuzungsvorlage anwenden?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Ersteller</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Nach Neustart des Spiels anwenden</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Lade Markierungs-Objekte</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod fehlerhaft geladen.
+Es wird nicht empfohlen, den Mod in diesem Status zu nutzen, da es zu unvorhersehbarem Verhalten kommen kann.
+Starte das Spiel neu.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Fußgängerüberwege:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Füllungen:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Linien:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Kein Bildschirmfoto vorhanden</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Straße #{0} Punkte:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Straßen:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Neue Linien am Fußgängerüberweg beenden</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Linien an diesem Fußgängerüberweg beenden</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Kreuzungsvorlagen sichern</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Alle Kreuzungsvorlagen löschen</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Alle Kreuzungsvorlagen löschen</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Willst du wirklich alle Voreinstellungen entfernen?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Kreuzungsvorlagen in Datei sichern</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Kreuzungsvorlagen sichern</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Kreuzungsvorlagen aus Datei wiederherstellen</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Kreuzungsvorlagen wieder herstellen</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Möchtest du die Kreuzungsvorlagen wirklich wiederherstellen?
+Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorlagen ersetzen.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Wiederherstellen der Kreuzungsvorlagen fehlgeschlagen</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Kreuzungsvorlagen erfolgreich wiederhergestellt</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Linien an allen Fußgängerüberwegen beenden</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Linien an allen Fußgängerüberwegen beenden</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Britisch-Englisch</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Kreuzungsvorlage-Objekt überschreiben</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Um den Namen zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Stilvorlagen-Spiel-Objekt überschreiben</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Um den Namen und die Werte zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Um Fußgängerüberwege-Ränder festzusetzen, müssen Linien vorhanden sein, die von dem selben Punkt starten wie die Fußgängerüberweg-Markierung</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Um Regeln von "Von" und "Zu" Punkten verändern zu können und zusätzliche Regeln zu erstellen, müssen Linien vorhanden sein, die sich mit dieser Linie überschneiden</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Tipps in der Oberfläche anzeigen</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Änderungen speichern</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Änderungen nicht speichern</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Möchtest du die Namensänderung der Kreuzungsvorlage speichern?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Änderungen speichern</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Möchtest du die Änderungen der Stilvorlagen-Werte speichern?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Der Name "{0}" wird bereits für eine andere Kreuzungsvorlage verwendet.
+Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen haben willst?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Du kannst diese Kreuzungsvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Diese Kreuzungsvorlage ist ein Spiel-Objekt.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Du kannst diese Stilvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Diese Stilvorlage ist ein Spiel-Objekt.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>Kreuzungsvorlagen</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>Kreuzungsvorlagen</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>- Die Möglichkeit hinzugefügt, alle Markierungen einer Kreuzung als Kreuzungsvorlage zu speichern und später auf jede beliebige andere Andeutung anwenden zu können.
+- Die Möglichkeit hinzugefügt, Stilvorlagen und Kreuzungs-Vorlagen als Objekte zu speichern und über den Workshop  zu teilen.
+- UI aktualisiert und ihre Performance verbessert. Die Verzögerung beim Umschalten der Tabulatoren und dem auswählen würde reduziert.
+- Nun können Vorlagenwerte nur noch im Bearbeitungsmodus geändert werden. So werden versehentliche Änderungen verhindert.
+- Hinweis-Einblendungen hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+- Funktion das neue Linien von Fußgängerüberwegmarkierungen getrennt werden hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+- Funktion zum Ändern von Farben Mithilfe des Mauerrades hinzugefugt.
+- Korrektur für Zug- und Monorail-Straßen (und alle anderen Straßen ohne Punkte
+- Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
+- Britisch-Englische Übersetzung hinzugefügt.</value>
+  </data>
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Dieser Linientyp unterstützt keine Regeln</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Linie nicht am Fußgängerüberweg beenden, wenn diese dessen Rand bildet</value>
+  </data>
 </root>

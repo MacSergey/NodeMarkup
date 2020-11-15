@@ -5,6 +5,7 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,12 @@ namespace NodeMarkup.Utils
         {
             try
             {
-                return TypeDescriptor.GetConverter(type).ConvertFromString(str);
+                if (type == typeof(string))
+                    return str;
+                else if (string.IsNullOrEmpty(str))
+                    return null;
+                else
+                    return TypeDescriptor.GetConverter(type).ConvertFromString(str);
             }
             catch
             {
@@ -213,19 +219,8 @@ namespace NodeMarkup.Utils
         }
         public static Vector2 XZ(this Vector3 vector) => VectorUtils.XZ(vector);
         public static float AbsoluteAngle(this Vector3 vector) => Mathf.Atan2(vector.z, vector.x);
-        public static Vector3 Direction(this float absoluteAngle) => Vector3.right.TurnRad(absoluteAngle, false).normalized;
-        public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2));
-        static float ColorChange(float c) => Mathf.Pow(c, 4);
-
         public static float DeltaAngle(this Bezier3 bezier) => 180 - Vector3.Angle(bezier.b - bezier.a, bezier.c - bezier.d);
-
-        public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
-        public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
-
-        public static Style.StyleType ToGeneral(this RegularLineStyle.RegularLineType style) => (Style.StyleType)(object)style;
-        public static Style.StyleType ToGeneral(this StopLineStyle.StopLineType style) => (Style.StyleType)(object)style;
-        public static Style.StyleType ToGeneral(this CrosswalkStyle.CrosswalkType style) => (Style.StyleType)(object)style;
-        public static Style.StyleType ToGeneral(this FillerStyle.FillerType style) => (Style.StyleType)(object)style;
+        public static Vector3 Direction(this float absoluteAngle) => Vector3.right.TurnRad(absoluteAngle, false).normalized;
 
         public static Bezier3 GetBezier(this Line3 line)
         {
@@ -281,6 +276,17 @@ namespace NodeMarkup.Utils
         public static int PrevIndex(this int i, int count, int shift = 1) => shift > i ? i + count - (shift % count) : i - shift;
 
         public static LineStyle.StyleAlignment Invert(this LineStyle.StyleAlignment alignment) => (LineStyle.StyleAlignment)(1 - ((int)alignment - 1));
+
+        public static float Magnitude(this Bounds bounds) => bounds.size.magnitude / Mathf.Sqrt(3);
+        public static void Render(this Bounds bounds, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+            => NodeMarkupTool.RenderCircle(cameraInfo, bounds.center, color, width ?? bounds.Magnitude(), alphaBlend);
+
+        public static void SetAvailable(this UIComponent component, bool value)
+        {
+            component.isEnabled = value;
+            component.opacity = value ? 1f : 0.15f;
+        }
+        public static string Unique(this Guid guid) => guid.ToString().Substring(0, 8);
     }
 
     public struct BezierPoint

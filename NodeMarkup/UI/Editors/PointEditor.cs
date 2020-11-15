@@ -13,15 +13,12 @@ namespace NodeMarkup.UI.Editors
 {
     public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
+        protected override bool UseGroupPanel => true;
+
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
 
         private FloatPropertyPanel Offset { get; set; }
-
-        public PointsEditor()
-        {
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-        }
         protected override void FillItems()
         {
             foreach (var enter in Markup.Enters)
@@ -32,13 +29,17 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectSelect()
         {
-            Offset = SettingsPanel.AddUIComponent<FloatPropertyPanel>();
+            Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
             Offset.Init();
             Offset.Value = EditObject.Offset;
             Offset.OnValueChanged += OffsetChanged;
+        }
+        protected override void OnClear()
+        {
+            Offset = null;
         }
         protected override void OnObjectUpdate()
         {
@@ -56,7 +57,11 @@ namespace NodeMarkup.UI.Editors
     }
     public class PointItem : EditableItem<MarkupPoint, ColorIcon>
     {
-        public override void Init() => Init(true, false);
-        protected override void OnObjectSet() => Icon.InnerColor = Object.Color;
+        public override bool ShowDelete => false;
+        public override void Init(MarkupPoint editableObject)
+        {
+            base.Init(editableObject);
+            Icon.InnerColor = Object.Color;
+        }
     }
 }

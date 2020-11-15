@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -14,13 +15,14 @@ namespace NodeMarkup.UI.Panel
     public class PanelHeader : UIDragHandle
     {
         private UILabel Caption { get; set; }
-        public PanelHeaderContent Header { get; private set; }
+        public PanelHeaderContent Buttons { get; private set; }
 
         public string Text
         {
             get => Caption.text;
             set => Caption.text = value;
         }
+        public bool Available { set => Buttons.SetAvailable(value); }
 
         public PanelHeader()
         {
@@ -38,24 +40,24 @@ namespace NodeMarkup.UI.Panel
         }
         private void CreateButtonsPanel()
         {
-            Header = AddUIComponent<PanelHeaderContent>();
+            Buttons = AddUIComponent<PanelHeaderContent>();
         }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
 
-            Header.autoLayout = true;
-            Header.autoLayout = false;
-            Header.FitChildrenHorizontally();
-            Header.height = height;
+            Buttons.autoLayout = true;
+            Buttons.autoLayout = false;
+            Buttons.FitChildrenHorizontally();
+            Buttons.height = height;
 
-            foreach (var item in Header.components)
-                item.relativePosition = new Vector2(item.relativePosition.x, (Header.height - item.height) / 2);
+            foreach (var item in Buttons.components)
+                item.relativePosition = new Vector2(item.relativePosition.x, (Buttons.height - item.height) / 2);
 
-            Caption.width = width - Header.width;
-            Caption.relativePosition = new Vector2(0, (height - Caption.height) / 2);
+            Caption.width = width - Buttons.width - 20;
+            Caption.relativePosition = new Vector2(10, (height - Caption.height) / 2);
 
-            Header.relativePosition = new Vector2(Caption.width - 5, (height - Header.height) / 2);
+            Buttons.relativePosition = new Vector2(Caption.width - 5 + 20, (height - Buttons.height) / 2);
         }
     }
     public class PanelHeaderContent : HeaderContent
@@ -64,23 +66,27 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeaderContent()
         {
-            AddButton(HeaderButton.Copy, GetText(NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut), onClick: (UIComponent _, UIMouseEventParameter __) => NodeMarkupTool.CopyMarkingShortcut.Press());
-            AddButton(HeaderButton.Paste, GetText(NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut), onClick: (UIComponent _, UIMouseEventParameter __) => NodeMarkupTool.PasteMarkingShortcut.Press());
-            AddButton(HeaderButton.Clear, GetText(NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut), onClick: (UIComponent _, UIMouseEventParameter __) => NodeMarkupTool.DeleteAllShortcut.Press());
-            Additionally = AddButton<AdditionallyHeaderButton>(HeaderButton.Additionally, NodeMarkup.Localize.Panel_Additional);
+            AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
+
+            AddButton(TextureUtil.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
+            AddButton(TextureUtil.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            AddButton(TextureUtil.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
+
+            Additionally = AddButton<AdditionallyHeaderButton>(TextureUtil.Additionally, NodeMarkup.Localize.Panel_Additional);
             Additionally.OpenPopupEvent += OnAdditionallyPopup;
         }
 
         private void OnAdditionallyPopup(AdditionallyPopup popup)
         {
-            var buttons = new List<SimpleHeaderButton>
+            var buttons = new List<PanelHeaderButton>
             {
-                AddButton(popup.Content, HeaderButton.Edit, GetText(NodeMarkup.Localize.Panel_EditMarking,NodeMarkupTool.EditMarkingShortcut), true, GetOnAdditionallyClick(() => NodeMarkupTool.EditMarkingShortcut.Press())),
-                AddButton(popup.Content, HeaderButton.Offset, GetText(NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut), true, GetOnAdditionallyClick(() => NodeMarkupTool.ResetOffsetsShortcut.Press())),
-                AddButton(popup.Content, HeaderButton.EdgeLines, GetText(NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut), true, GetOnAdditionallyClick(() => NodeMarkupTool.CreateEdgeLinesShortcut.Press())),
+                AddButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
+                AddButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
+                AddButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
+                AddButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
             };
 
-            foreach(var button in buttons)
+            foreach (var button in buttons)
             {
                 button.autoSize = true;
                 button.autoSize = false;
@@ -88,24 +94,39 @@ namespace NodeMarkup.UI.Panel
 
             popup.Width = buttons.Max(b => b.width);
         }
-
-        MouseEventHandler GetOnAdditionallyClick(Action onClick)
+        private PanelHeaderButton AddButton(string sprite, string text, Shortcut shortcut) 
+            => AddButton<PanelHeaderButton>(sprite, GetText(text, shortcut), onClick: (UIComponent _, UIMouseEventParameter __) => shortcut.Press());
+        private PanelHeaderButton AddButton(UIComponent parent, string sprite, string text, Shortcut shortcut)
         {
-            return (UIComponent component, UIMouseEventParameter eventParam) =>
+            return AddButton<PanelHeaderButton>(parent, sprite, GetText(text, shortcut), true, action);
+
+            void action(UIComponent component, UIMouseEventParameter eventParam)
             {
                 Additionally.ClosePopup();
-                onClick?.Invoke();
-            };
+                shortcut.Press();
+            }
         }
-        string GetText(string text, Shortcut shortcut) => $"{text} ({shortcut})";
+
+
+        private string GetText(string text, Shortcut shortcut) => $"{text} ({shortcut})";
+    }
+    public class PanelHeaderButton : SimpleHeaderButton
+    {
+        protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
+        protected override Color32 PressedColor => new Color32(144, 144, 144, 255);
+        protected override Color32 PressedIconColor => Color.white;
     }
     public class AdditionallyHeaderButton : HeaderPopupButton<AdditionallyPopup>
     {
+        protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
+        protected override Color32 PressedColor => new Color32(144, 144, 144, 255);
+        protected override Color32 PressedIconColor => Color.white;
+
         public event Action<AdditionallyPopup> OpenPopupEvent;
         protected override void OnOpenPopup() => OpenPopupEvent?.Invoke(Popup);
     }
-    public class AdditionallyPopup : PopupPanel 
+    public class AdditionallyPopup : PopupPanel
     {
-        protected override Color32 Background => Color.white;
+        protected override Color32 Background => new Color32(64,64,64,255);
     }
 }

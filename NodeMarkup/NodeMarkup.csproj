@@ -80,12 +80,6 @@
       <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Poly2Tri, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Poly2Tri.1.0.1.0\lib\net35-Client\Poly2Tri.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -102,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markup\Template.cs" />
     <Compile Include="Tools\BaseMode.cs" />
     <Compile Include="Tools\DragPointMode.cs" />
     <Compile Include="Tools\MakeItem\MakeCrosswalk.cs" />
@@ -113,40 +108,45 @@
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
+    <Compile Include="UI\Property panels\GroupPanel.cs" />
+    <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
+    <Compile Include="UI\Editors\IntersectionTemplateEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
-    <Compile Include="Utils\DataExtensions\AssetData.cs" />
-    <Compile Include="Utils\DataExtensions\Loading.cs" />
+    <Compile Include="UI\ComponentPool.cs" />
+    <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
+    <Compile Include="Manager\Extensions\LoadingExtension.cs" />
     <Compile Include="EarlyAccess.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Manager\Crosswalk\Crosswalk.cs" />
-    <Compile Include="Manager\Crosswalk\CrosswalkStyleBase.cs" />
-    <Compile Include="Manager\Filler\Filler.cs" />
-    <Compile Include="Manager\Filler\FillerContour.cs" />
-    <Compile Include="Manager\Filler\FillerStyle.cs" />
-    <Compile Include="Manager\Filler\FillerStyleBase.cs" />
-    <Compile Include="Manager\Filler\FillerVertex.cs" />
-    <Compile Include="Manager\Line\Line.cs" />
-    <Compile Include="Manager\Line\LinePart.cs" />
-    <Compile Include="Manager\Line\LineRule.cs" />
-    <Compile Include="Manager\Crosswalk\CrosswalkStyle.cs" />
-    <Compile Include="Manager\Line\Style\StopLineStyle.cs" />
-    <Compile Include="Manager\Line\Style\RegularLineStyles.cs" />
-    <Compile Include="Manager\Line\Trajectory.cs" />
-    <Compile Include="Manager\Markup.cs" />
-    <Compile Include="Manager\Line\LinePartEdge.cs" />
-    <Compile Include="Manager\Point\Point.cs" />
-    <Compile Include="Manager\Point\Enter.cs" />
-    <Compile Include="Manager\Point\SupportPoint.cs" />
-    <Compile Include="Manager\Line\Style\LineStyleBase.cs" />
-    <Compile Include="Manager\Style.cs" />
-    <Compile Include="Manager\StyleHelper.cs" />
-    <Compile Include="Manager\Templates.cs" />
+    <Compile Include="Markup\Crosswalk\Crosswalk.cs" />
+    <Compile Include="Markup\Crosswalk\CrosswalkStyleBase.cs" />
+    <Compile Include="Markup\Filler\Filler.cs" />
+    <Compile Include="Markup\Filler\FillerContour.cs" />
+    <Compile Include="Markup\Filler\FillerStyle.cs" />
+    <Compile Include="Markup\Filler\FillerStyleBase.cs" />
+    <Compile Include="Markup\Filler\FillerVertex.cs" />
+    <Compile Include="Markup\Line\Line.cs" />
+    <Compile Include="Markup\Line\LinePart.cs" />
+    <Compile Include="Markup\Line\LineRule.cs" />
+    <Compile Include="Markup\Crosswalk\CrosswalkStyle.cs" />
+    <Compile Include="Markup\Line\Style\StopLineStyle.cs" />
+    <Compile Include="Markup\Line\Style\RegularLineStyles.cs" />
+    <Compile Include="Markup\Line\Trajectory.cs" />
+    <Compile Include="Markup\Markup.cs" />
+    <Compile Include="Markup\Line\LinePartEdge.cs" />
+    <Compile Include="Markup\Point\Point.cs" />
+    <Compile Include="Markup\Point\Enter.cs" />
+    <Compile Include="Markup\Point\SupportPoint.cs" />
+    <Compile Include="Markup\Line\Style\LineStyleBase.cs" />
+    <Compile Include="Markup\Style.cs" />
+    <Compile Include="Markup\StyleHelper.cs" />
+    <Compile Include="Manager\TemplateManager.cs" />
     <Compile Include="Mod.cs" />
-    <Compile Include="Manager\Manager.cs" />
+    <Compile Include="Manager\MarkupManager.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Localize.Designer.cs">
@@ -155,13 +155,13 @@
       <DependentUpon>Localize.resx</DependentUpon>
     </Compile>
     <Compile Include="Tools\Tool.cs" />
-    <Compile Include="Tools\BaseOrderMode.cs" />
+    <Compile Include="Tools\Order\BaseOrderMode.cs" />
     <Compile Include="UI\Elements\DropDown.cs" />
-    <Compile Include="UI\Editors\BaseEditor.cs" />
-    <Compile Include="UI\Editors\BaseGroupEditor.cs" />
+    <Compile Include="UI\Editors\Base\BaseEditor.cs" />
+    <Compile Include="UI\Editors\Base\BaseGroupEditor.cs" />
     <Compile Include="UI\Editors\CrosswalkEditor.cs" />
-    <Compile Include="UI\Editors\EditableGroup.cs" />
-    <Compile Include="UI\Editors\EditableItem.cs" />
+    <Compile Include="UI\Editors\Items\EditableGroup.cs" />
+    <Compile Include="UI\Editors\Items\EditableItem.cs" />
     <Compile Include="UI\Editors\FillerEditor.cs" />
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
@@ -173,7 +173,7 @@
     <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
     <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
     <Compile Include="UI\Editors\RulePanel.cs" />
-    <Compile Include="UI\Editors\TemplateEditor.cs" />
+    <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
     <Compile Include="UI\Elements\Keymapping.cs" />
     <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
@@ -190,8 +190,9 @@
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Elements\TabPanel.cs" />
+    <Compile Include="UI\Property panels\TextProperty.cs" />
+    <Compile Include="UI\Property panels\ValueField.cs" />
     <Compile Include="UI\UIUtils.cs" />
-    <Compile Include="Utils\BezierBounds.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -200,7 +201,7 @@
     <Compile Include="Utils\ObjectId.cs" />
     <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
-    <Compile Include="Utils\DataExtensions\SerializableData.cs" />
+    <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
     <Compile Include="Utils\Shortcut.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
     <Compile Include="Utils\VersionMigration.cs" />
@@ -210,6 +211,7 @@
     <EmbeddedResource Include="Properties\Localize.de.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.en-GB.resx" />
     <EmbeddedResource Include="Properties\Localize.es.resx" />
     <EmbeddedResource Include="Properties\Localize.fi.resx" />
     <EmbeddedResource Include="Properties\Localize.fr.resx" />
@@ -228,33 +230,70 @@
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Localize.zh-cn.resx" />
-    <EmbeddedResource Include="Resources\sprites.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\TextFieldPanel.tga" />
+    <EmbeddedResource Include="Resources\ColorPicker.tga" />
+    <EmbeddedResource Include="Resources\Arrows.tga" />
+    <EmbeddedResource Include="Resources\OpacitySlider.tga" />
+    <EmbeddedResource Include="Resources\TabButton.tga" />
+    <EmbeddedResource Include="Resources\DefaultTabButtons.tga" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\slider.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Buttons.png" />
     <EmbeddedResource Include="Resources\Styles.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ListItem.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\TextFieldPanel.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\SharkTooth.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\PasteButtons.png" />
+    <EmbeddedResource Include="Resources\Resize.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\resize.png" />
+    <EmbeddedResource Include="Resources\Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HeaderButtons.png" />
+    <EmbeddedResource Include="Resources\OrderButtons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CloseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewBackground.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkChessBoard.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkDoubleZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkLadder.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkParallelDashedLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkParallelSolidLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerChevron.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerGrid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\FillerStripe.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\LineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StopLineSolidAndDashed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
@@ -299,7 +338,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

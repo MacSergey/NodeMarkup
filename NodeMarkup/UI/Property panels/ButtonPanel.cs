@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class ButtonPanel : EditorItem
+    public class ButtonPanel : EditorItem, IReusable
     {
         protected UIButton Button { get; set; }
 
@@ -17,6 +17,11 @@ namespace NodeMarkup.UI.Editors
             get => Button.text;
             set => Button.text = value;
         }
+        public override bool EnableControl
+        {
+            get => Button.isEnabled;
+            set => Button.isEnabled = value;
+        }
 
         public event Action OnButtonClick;
 
@@ -24,6 +29,13 @@ namespace NodeMarkup.UI.Editors
         {
             Button = AddButton(this);
             Button.eventClick += ButtonClick;
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            Text = string.Empty;
+            OnButtonClick = null;
         }
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnButtonClick?.Invoke();
@@ -35,13 +47,43 @@ namespace NodeMarkup.UI.Editors
             Button.size = size;
         }
     }
-    public class ButtonsPanel : EditorItem
+    public class ButtonsPanel : EditorItem, IReusable
     {
         public event Action<int> OnButtonClick;
         protected List<UIButton> Buttons { get; } = new List<UIButton>();
         public int Count => Buttons.Count;
         private float Padding => 10f;
         private float Height => 20f;
+
+        public override bool EnableControl 
+        {
+            get => base.EnableControl;
+            set
+            {
+                base.EnableControl = value;
+                foreach (var button in Buttons)
+                    button.isEnabled = value;
+            }
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            SetSize();
+        }
+        public override void DeInit()
+        {
+            foreach(var button in Buttons)
+            {
+                button.parent.RemoveUIComponent(button);
+                Destroy(button);
+            }
+
+            OnButtonClick = null;
+            Buttons.Clear();
+
+            base.DeInit();
+        }
 
         public int AddButton(string text)
         {
@@ -50,6 +92,7 @@ namespace NodeMarkup.UI.Editors
             button.text = text;
             button.textScale = 0.8f;
             button.textPadding = new RectOffset(0, 0, 3, 0);
+            button.isEnabled = EnableControl;
             button.eventClick += ButtonClick;
 
             Buttons.Add(button);
@@ -70,9 +113,12 @@ namespace NodeMarkup.UI.Editors
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
+            SetSize();
+        }
+        private void SetSize()
+        {
             var buttonWidth = (width - Padding * (Count - 1)) / Count;
-            for(var i = 0; i < Count; i +=1)
+            for (var i = 0; i < Count; i += 1)
             {
                 Buttons[i].size = new Vector2(buttonWidth, Height);
                 Buttons[i].relativePosition = new Vector2((buttonWidth + Padding) * i, (height - Height) / 2);

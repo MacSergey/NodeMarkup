@@ -11,7 +11,7 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class PopupPanel : UIPanel
     {
-        protected virtual Color32 Background => new Color32(58, 88, 104, 255);
+        protected virtual Color32 Background => Color.black;
         public UIScrollablePanel Content { get; private set; }
         private float Padding => 2f;
 
@@ -37,8 +37,8 @@ namespace NodeMarkup.UI.Editors
             canFocus = true;
             isInteractive = true;
             color = Background;
-            atlas = TextureUtil.InGameAtlas;
-            backgroundSprite = "OptionsDropboxListbox";
+            atlas = TextureUtil.Atlas;
+            backgroundSprite = TextureUtil.FieldHovered;
 
             AddPanel();
         }

@@ -121,7 +121,7 @@
     <value>Verwijder {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Wil je {0} {1} echt verwijderen?</value>
+    <value>Wil je {0} "{1}" echt verwijderen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll het wiel om te veranderen
@@ -215,7 +215,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
   <data name="Panel_Caption" xml:space="preserve">
-    <value>Bewerk markering punt #{0}</value>
+    <value>Bewerk markering van punt #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punt</value>
@@ -239,7 +239,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Verwijder markering van alle knooppunten</value>
+    <value>Verwijder alle markeringen van knooppunten</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Verwijder alle markeringen</value>
@@ -318,7 +318,8 @@ De herstelde data zal alle bestaande markeringen vervangen.</value>
     <value>Klik om de lijn te verwijderen</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Punt #{0}</value>
+    <value>Punt #{0}
+Klik om de markering te wijzigen</value>
   </data>
   <data name="Tool_InfoNode" xml:space="preserve">
     <value>Selecteer punt om markering te wijzigen</value>
@@ -558,6 +559,8 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Je gebruikt de bèta versie van {0}. Deze wordt gebruikt voor het testen van nieuwe functies en kan fouten bevatten die je huidige markeringen kunnen verwijderen of veranderen. Als je per ongeluk geabonneerd bent op de bèta, kan je naar de stabiele versie overstappen.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Gebruik zelfde taal als spel</value>
@@ -569,7 +572,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Duits</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Engels</value>
+    <value>Engels VS</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spaans</value>
@@ -1050,8 +1053,207 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Panel_Additional" xml:space="preserve">
     <value>Extra</value>
   </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Snelle zebrapad randen setup</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Markeringen onder spoor</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>
+  </data>
   
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Opslaan als asset</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+door {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>De lijst met presets is leeg.
+Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Presets</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Opslaan als preset</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Opslaan als preset</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Geen presets</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Preset toepassen</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nieuwe preset</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Preset toepas modus verlaten</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Wil je een preset toepassen?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Auteur</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Toepassen na game herstart</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Markerings assets laden</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod is geladen met errors.
+Het is niet aanbevolen om de mod te gebruiken in de huidige staat omdat het tot onvoorspelbaar gedrag kan leiden.
+Herstart het spel.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Zebrapaden:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Opvullingen:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Lijnen:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Geen screenshot</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Weg #{0} punten:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Wegen:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Nieuwe lijn snijden op basis van zebrapad</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Lijnen bij dit zebrapad afsnijden</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup presets</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Verwijder alle presets</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Verwijder alle presets</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Weet je zeker dat je alle presets wil verwijderen?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Exporteer presets als bestand</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Exporteer presets</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Herstel presets uit bestand</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Herstel presets</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Weet je zeker dat je presets wil herstellen?
+De herstelde presets zullen alle bestaande presets vervangen.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Herstellen presets mislukt</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Presets zijn succesvol hersteld</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Lijnen bij alle zebrapaden afsnijden</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Lijnen bij alle zebrapaden afsnijden</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Engels VK</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Preset asset overschrijven</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Om de naam te hernoemen moet de asset overschreven worden. Doorgaan?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Sjabloon asset overschrijven</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Om de naam te hernoemen en de waardes te veranderen moet de asset overschreven worden. Doorgaan?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Om zebrapad randen in te stellen moeten er lijnen zijn die starten vanaf dezelfde punten als het zebrapad</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Er moeten lijnen zijn die deze lijn snijden om de "Van" en "Naar" punten te wijzigen of om extra regels te maken.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Laat hints in UI zien</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Wijzigen</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Wijzigingen opslaan</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Wijzigingen niet opslaan</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Wil je de preset naamsverandering opslaan?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Wijzigingen opslaan</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Wil je de sjabloon wijzigingen opslaan?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>De naam "{0}" is al in gebruik door een andere preset.
+Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Het kan alleen verwijderd worden vanuit de content manager.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Deze preset kan niet aangepast worden. Het kan alleen verwijderd worden vanuit de content manager of door deze af te melden in de Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Deze preset is een asset.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Het kan alleen verwijderd worden vanuit de content manager.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Dit sjabloon kan niet aangepast worden. Het kan alleen verwijderd worden vanuit de content manager of door deze af te melden in de Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Dit sjabloon is een asset.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>preset</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>preset</value>
+  </data>
   
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Dit lijntype heeft geen ondersteuning voor regels</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Lijnen bij een zebrapad niet afsnijden als het de rand is</value>
+  </data>
 </root>

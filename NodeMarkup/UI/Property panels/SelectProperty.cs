@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class SelectPropertyPanel<Type> : EditorPropertyPanel
+    public abstract class SelectPropertyPanel<Type> : EditorPropertyPanel, IReusable
     {
         public event Action<Type> OnSelectChanged;
         public event Action OnSelect;
@@ -20,7 +20,7 @@ namespace NodeMarkup.UI.Editors
 
         UIButton Selector { get; set; }
         UIButton Button { get; set; }
-        protected abstract float Width {get;}
+        protected abstract float Width { get; }
 
         int SelectIndex
         {
@@ -43,6 +43,12 @@ namespace NodeMarkup.UI.Editors
             set => SelectIndex = ObjectsList.FindIndex(o => IsEqual(value, o));
         }
 
+        public bool Selected
+        {
+            get => Selector.state == UIButton.ButtonState.Focused;
+            set => Selector.state = value ? UIButton.ButtonState.Focused : UIButton.ButtonState.Normal;
+        }
+
         public SelectPropertyPanel()
         {
             AddSelector();
@@ -51,9 +57,11 @@ namespace NodeMarkup.UI.Editors
         {
             Selector = Control.AddUIComponent<UIButton>();
             Selector.text = NodeMarkup.Localize.SelectPanel_NotSet;
-            Selector.atlas = EditorItemAtlas;
-            Selector.normalBgSprite = "TextFieldPanel";
-            Selector.hoveredBgSprite = "TextFieldPanelHovered";
+            Selector.atlas = TextureUtil.Atlas;
+            Selector.normalBgSprite = TextureUtil.FieldNormal;
+            Selector.hoveredBgSprite = TextureUtil.FieldHovered;
+            Selector.disabledBgSprite = TextureUtil.FieldDisabled;
+            Selector.focusedBgSprite = TextureUtil.FieldFocused;
             Selector.isInteractive = true;
             Selector.enabled = true;
             Selector.autoSize = false;
@@ -75,7 +83,6 @@ namespace NodeMarkup.UI.Editors
             Button.hoveredFgSprite = "IconDownArrowHovered";
             Button.pressedFgSprite = "IconDownArrowPressed";
             Button.focusedFgSprite = "IconDownArrow";
-            Button.disabledFgSprite = "IconDownArrowDisabled";
             Button.foregroundSpriteMode = UIForegroundSpriteMode.Scale;
             Button.horizontalAlignment = UIHorizontalAlignment.Right;
             Button.verticalAlignment = UIVerticalAlignment.Middle;
@@ -84,7 +91,10 @@ namespace NodeMarkup.UI.Editors
             Button.eventClick += ButtonClick;
             Button.eventMouseEnter += ButtonMouseEnter;
             Button.eventMouseLeave += ButtonMouseLeave;
+            Button.eventIsEnabledChanged += ButtonIsEnabledChanged;
         }
+
+        private void ButtonIsEnabledChanged(UIComponent component, bool value) => Button.normalFgSprite = value ? "IconDownArrow" : "Empty";
 
         protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke();
         protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke();
@@ -117,6 +127,15 @@ namespace NodeMarkup.UI.Editors
         public EdgePosition Position { get; set; }
         protected override float Width => 230f;
 
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            OnSelect = null;
+            OnHover = null;
+            OnLeave = null;
+        }
+
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);
         protected override void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(this);
@@ -136,6 +155,15 @@ namespace NodeMarkup.UI.Editors
         {
             AddReset();
         }
+        public override void DeInit()
+        {
+            base.DeInit();
+
+            OnSelect = null;
+            OnHover = null;
+            OnLeave = null;
+        }
+
         private void AddReset()
         {
             var button = AddButton(Control);

@@ -11,7 +11,7 @@ using System.Threading;
 using System.Reflection;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
 using System.Globalization;
@@ -31,15 +31,20 @@ namespace NodeMarkup
 
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor().ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
+        public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
+        public static SavedBool ShowPanelTip { get; } = new SavedBool(nameof(ShowPanelTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
         public static SavedInt DeleteWarningsType { get; } = new SavedInt(nameof(DeleteWarningsType), SettingsFile, 0, true);
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool QuickBorderSetup { get; } = new SavedBool(nameof(QuickBorderSetup), SettingsFile, true, true);
+        public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
+        public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
         public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
         public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
+        public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
         public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
@@ -48,7 +53,7 @@ namespace NodeMarkup
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedInt GroupPointsType { get; } = new SavedInt(nameof(GroupPointsType), SettingsFile, 0, true);
 
-        private static CustomUITabstrip TabStrip { get; set; }
+        private static TabStrip TabStrip { get; set; }
         private static List<UIPanel> TabPanels { get; set; }
 
         static Settings()
@@ -76,26 +81,37 @@ namespace NodeMarkup
             var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
             if (SceneManager.GetActiveScene().name is string scene && (scene != "MainMenu" && scene != "IntroScreen"))
                 AddBackupMarking(backupTab);
-            AddBackupTemplates(backupTab);
+            AddBackupStyleTemplates(backupTab);
+            AddBackupIntersectionTemplates(backupTab);
 
             var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
             AddSupport(supportTab);
-            //AddAccess(supportTab);
+
+            TabStrip.SelectedTab = 0;
         }
         private static void CreateTabStrip(UIScrollablePanel mainPanel)
         {
             TabPanels = new List<UIPanel>();
 
-            TabStrip = mainPanel.AddUIComponent<CustomUITabstrip>();
-            TabStrip.eventSelectedIndexChanged += TabStripSelectedIndexChanged;
-            TabStrip.selectedIndex = -1;
+            TabStrip = mainPanel.AddUIComponent<TabStrip>();
+            TabStrip.SelectedTabChanged += OnSelectedTabChanged;
+            TabStrip.SelectedTab = -1;
+            TabStrip.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal - mainPanel.scrollPadding.horizontal;
+            TabStrip.eventSizeChanged += (UIComponent component, Vector2 value) => TabStripSizeChanged(mainPanel);
         }
+
+        private static void TabStripSizeChanged(UIScrollablePanel mainPanel)
+        {
+            foreach (var tab in TabPanels)
+                SetTabSize(tab, mainPanel);
+        }
+
         private static UIHelper CreateTab(UIScrollablePanel mainPanel, string name)
         {
             TabStrip.AddTab(name, 1.25f);
 
             var tabPanel = mainPanel.AddUIComponent<UIPanel>();
-            tabPanel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
+            SetTabSize(tabPanel, mainPanel);
             tabPanel.isVisible = false;
             TabPanels.Add(tabPanel);
 
@@ -117,8 +133,12 @@ namespace NodeMarkup
                 panel.width = tabPanel.width - (panel.verticalScrollbar.isVisible ? panel.verticalScrollbar.width : 0);
             }
         }
+        private  static void SetTabSize(UIPanel panel, UIScrollablePanel mainPanel)
+        {
+            panel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
+        }
 
-        private static void TabStripSelectedIndexChanged(UIComponent component, int index)
+        private static void OnSelectedTabChanged(int index)
         {
             if (index >= 0 && TabPanels.Count > index)
             {
@@ -163,6 +183,7 @@ namespace NodeMarkup
             {
                 var locale = dropDown.SelectedObject;
                 Locale.value = locale;
+                Mod.LocaleChanged();
                 LocaleManager.ForceReload();
             }
         }
@@ -191,12 +212,18 @@ namespace NodeMarkup
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
+            AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
+            group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
-            group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 1f, Color.red, 25);
+            group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
+            group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
+            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
             AddCheckBox(group, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
+            AddCheckBox(group, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
+            AddCheckBox(group, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
         }
         private static void AddGrouping(UIHelperBase helper)
         {
@@ -287,17 +314,26 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{Localize.MessageBox_CantUndone}", () => MarkupManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{MessageBoxBase.CantUndone}", () => MarkupManager.Clear());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
-            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{Localize.MessageBox_CantUndone}");
+            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{MessageBoxBase.CantUndone}");
         }
-        private static void AddBackupTemplates(UIHelperBase helper)
+        private static void AddBackupStyleTemplates(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{Localize.MessageBox_CantUndone}", () => TemplateManager.DeleteAll());
-            AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpTemplatesData);
-            AddRestore<ImportTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{Localize.MessageBox_CantUndone}");
+            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{MessageBoxBase.CantUndone}", () => TemplateManager.StyleManager.DeleteAll());
+            AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
+            AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{MessageBoxBase.CantUndone}");
+        }
+
+        private static void AddBackupIntersectionTemplates(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
+
+            AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{MessageBoxBase.CantUndone}", () => TemplateManager.IntersectionManager.DeleteAll());
+            AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
+            AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{MessageBoxBase.CantUndone}");
         }
 
         private static void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
@@ -333,8 +369,9 @@ namespace NodeMarkup
                     messageBox.CaprionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
-                    messageBox.Button2Text = Localize.MessageBox_OK;
+                    messageBox.Button2Text = MessageBoxBase.Ok;
                     messageBox.OnButton1Click = CopyToClipboard;
+                    messageBox.SetButtonsRatio(2, 1);
 
                     bool CopyToClipboard()
                     {

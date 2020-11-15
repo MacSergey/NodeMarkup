@@ -10,25 +10,20 @@ namespace NodeMarkup.UI.Editors
 {
     public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
+        protected override bool UseGroupPanel => true;
+
         private static FillerStyle Buffer { get; set; }
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
 
         public StylePropertyPanel Style { get; private set; }
-        private StyleHeaderPanel Header { get; set; }
-        private List<UIComponent> StyleProperties { get; set; } = new List<UIComponent>();
+        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
-        public FillerEditor()
-        {
-            SettingsPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-        }
         protected override void FillItems()
         {
             foreach (var filler in Markup.Fillers)
-            {
                 AddItem(filler);
-            }
         }
         protected override void OnObjectSelect()
         {
@@ -36,18 +31,23 @@ namespace NodeMarkup.UI.Editors
             AddStyleTypeProperty();
             AddStyleProperties();
         }
+        protected override void OnClear()
+        {
+            Style = null;
+            StyleProperties.Clear();
+        }
 
         private void AddHeader()
         {
-            Header = SettingsPanel.AddUIComponent<StyleHeaderPanel>();
-            Header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
-            Header.OnSaveTemplate += OnSaveTemplate;
-            Header.OnCopy += CopyStyle;
-            Header.OnPaste += PasteStyle;
+            var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
+            header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
+            header.OnSaveTemplate += OnSaveTemplate;
+            header.OnCopy += CopyStyle;
+            header.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
-            Style = SettingsPanel.AddUIComponent<FillerStylePropertyPanel>();
+            Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties()
         {
-            StyleProperties = EditObject.Style.GetUIComponents(EditObject, SettingsPanel);
+            StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
             if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
@@ -64,7 +64,7 @@ namespace NodeMarkup.UI.Editors
             if (style == EditObject.Style.Type)
                 return;
 
-            var newStyle = TemplateManager.GetDefault<FillerStyle>(style);
+            var newStyle = TemplateManager.StyleManager.GetDefault<FillerStyle>(style);
             EditObject.Style.CopyTo(newStyle);
 
             EditObject.Style = newStyle;
@@ -76,8 +76,8 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if (TemplateManager.AddTemplate(EditObject.Style, out StyleTemplate template))
-                NodeMarkupPanel.EditTemplate(template);
+            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+                Panel.EditStyleTemplate(template);
         }
         private void ApplyStyle(FillerStyle style)
         {
@@ -110,10 +110,9 @@ namespace NodeMarkup.UI.Editors
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)
-            {
-                SettingsPanel.RemoveUIComponent(property);
-                Destroy(property);
-            }
+                ComponentPool.Free(property);
+
+            StyleProperties.Clear();
         }
 
 
@@ -127,16 +126,10 @@ namespace NodeMarkup.UI.Editors
     }
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
-        public override void Init() => Init(true, true);
-
-        protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {
             base.Refresh();
-            SetIcon();
-        }
-        private void SetIcon()
-        {
+
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style.Color;
         }

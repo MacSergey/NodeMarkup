@@ -6,6 +6,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace NodeMarkup.UI.Editors
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkupRegularLine;
-        public bool CanDivide => SupportRules && SupportPoints.Count > 2;
+        public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private MarkupLineSelectPropertyPanel HoverPartEdgePanel { get; set; }
@@ -43,9 +44,11 @@ namespace NodeMarkup.UI.Editors
 
         private PartEdgeToolMode PartEdgeToolMode { get; }
 
-        public LinesEditor() 
+        public LinesEditor()
         {
-            PartEdgeToolMode = new PartEdgeToolMode(this);
+            ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            PartEdgeToolMode = Tool.CreateToolMode<PartEdgeToolMode>();
+            PartEdgeToolMode.Init(this);
         }
 
         protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
@@ -53,9 +56,11 @@ namespace NodeMarkup.UI.Editors
 
         protected override void FillItems()
         {
-            foreach (var line in Markup.Lines)
+            var sortLines = Markup.Lines.OrderBy(l => l.Start.Enter).ThenBy(l => l.Start.Num).ThenBy(l => l.End.Enter).ThenBy(l => l.End.Num).ToArray();
+            foreach (var line in sortLines)
                 AddItem(line);
         }
+        protected override void OnClear() => HoverRulePanel = null;
         protected override void OnObjectSelect()
         {
             GetRuleEdges();
@@ -72,25 +77,27 @@ namespace NodeMarkup.UI.Editors
             foreach (var rule in EditObject.Rules)
                 AddRulePanel(rule);
         }
+
         private RulePanel AddRulePanel(MarkupLineRawRule rule)
         {
-            var rulePanel = SettingsPanel.AddUIComponent<RulePanel>();
+            var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel);
             rulePanel.Init(this, rule);
-            rulePanel.eventMouseEnter += RuleMouseHover;
-            rulePanel.eventMouseLeave += RuleMouseLeave;
+            rulePanel.OnHover += RuleMouseHover;
+            rulePanel.OnEnter += RuleMouseLeave;
             return rulePanel;
         }
         private void RemoveRulePanel(RulePanel rulePanel)
         {
-            SettingsPanel.RemoveUIComponent(rulePanel);
-            Destroy(rulePanel);
-        }
+            if (HoverRulePanel == rulePanel)
+                HoverRulePanel = null;
 
+            ComponentPool.Free(rulePanel);
+        }
         private void AddAddButton()
         {
             if (AddRuleAvailable)
             {
-                AddButton = SettingsPanel.AddUIComponent<ButtonPanel>();
+                AddButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
                 AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
                 AddButton.Init();
                 AddButton.OnButtonClick += AddRule;
@@ -98,12 +105,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void DeleteAddButton()
         {
-            if (AddButton != null)
-            {
-                AddButton.OnButtonClick -= AddRule;
-                SettingsPanel.RemoveUIComponent(AddButton);
-                Destroy(AddButton);
-            }
+            ComponentPool.Free(AddButton);
+            AddButton = null;
         }
 
         private void AddRule()
@@ -116,7 +119,7 @@ namespace NodeMarkup.UI.Editors
             var rulePanel = AddRulePanel(newRule);
             AddAddButton();
 
-            SettingsPanel.ScrollToBottom();
+            ContentPanel.ScrollToBottom();
 
             if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
@@ -128,7 +131,7 @@ namespace NodeMarkup.UI.Editors
         {
             var style = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
             rulePanel.Style.SelectedObject = style != Style.StyleType.EmptyLine ? style : (Style.StyleType)(int)RegularLineStyle.RegularLineType.Dashed;
-            SettingsPanel.ScrollToBottom();
+            ContentPanel.ScrollToBottom();
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)
@@ -140,7 +143,7 @@ namespace NodeMarkup.UI.Editors
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkup.Localize.MessageBox_CantUndone}";
+                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{MessageBoxBase.CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else
@@ -175,19 +178,16 @@ namespace NodeMarkup.UI.Editors
         }
         public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
         public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
-        private void RuleMouseHover(UIComponent component, UIMouseEventParameter eventParam) => HoverRulePanel = component as RulePanel;
-        private void RuleMouseLeave(UIComponent component, UIMouseEventParameter eventParam)
+        private void RuleMouseHover(RulePanel rulePanel, UIMouseEventParameter eventParam) => HoverRulePanel = rulePanel;
+        private void RuleMouseLeave(RulePanel rulePanel, UIMouseEventParameter eventParam)
         {
-            var uiView = component.GetUIView();
+            var uiView = rulePanel.GetUIView();
             var mouse = uiView.ScreenPointToGUI((eventParam.position + eventParam.moveDelta) / uiView.inputScale);
-            var ruleRect = new Rect(SettingsPanel.absolutePosition + component.relativePosition, component.size);
-            var settingsRect = new Rect(SettingsPanel.absolutePosition, SettingsPanel.size);
+            var ruleRect = new Rect(ContentPanel.absolutePosition + rulePanel.relativePosition, rulePanel.size);
+            var settingsRect = new Rect(ContentPanel.absolutePosition, ContentPanel.size);
 
-            if (eventParam.source == component || !ruleRect.Contains(mouse) || !settingsRect.Contains(mouse))
-            {
+            if (eventParam.source == rulePanel || !ruleRect.Contains(mouse) || !settingsRect.Contains(mouse))
                 HoverRulePanel = null;
-                return;
-            }
         }
         public override bool OnShortcut(Event e)
         {
@@ -226,16 +226,16 @@ namespace NodeMarkup.UI.Editors
         public void RefreshItem() => SelectItem.Refresh();
         private void RefreshRulePanels()
         {
-            var rulePanels = SettingsPanel.components.OfType<RulePanel>().ToArray();
+            var rulePanels = ContentPanel.components.OfType<RulePanel>().ToArray();
 
-            foreach(var rulePanel in rulePanels)
+            foreach (var rulePanel in rulePanels)
             {
                 if (EditObject.ContainsRule(rulePanel.Rule))
                     rulePanel.Refresh();
                 else
                     RemoveRulePanel(rulePanel);
             }
-            foreach(var rule in EditObject.Rules)
+            foreach (var rule in EditObject.Rules)
             {
                 if (!rulePanels.Any(r => r.Rule == rule))
                     AddRulePanel(rule);
@@ -247,22 +247,25 @@ namespace NodeMarkup.UI.Editors
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-
-        public PartEdgeToolMode(LinesEditor editor) : base(editor) { }
-
-        protected override void OnSetPanel() 
+        protected override void OnSetPanel()
             => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
 
-        public override void End() => Editor.Refresh();
-        public override void OnUpdate() => PointsSelector?.OnUpdate();
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            Editor.Refresh();
+        }
+        public override void OnToolUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()
         {
-            return SelectPanel.Position switch
+            var info = SelectPanel?.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
                 EdgePosition.End => Localize.LineEditor_InfoSelectTo,
-                _ => null,
+                _ => string.Empty,
             };
+
+            return info;
         }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }
@@ -274,17 +277,14 @@ namespace NodeMarkup.UI.Editors
         public override Color32 HoveredColor => HasOverlapped ? new Color32(247, 100, 100, 255) : base.HoveredColor;
         public override Color32 PressedColor => HasOverlapped ? new Color32(248, 114, 114, 255) : base.PressedColor;
         public override Color32 FocusColor => HasOverlapped ? new Color32(249, 127, 127, 255) : base.FocusColor;
-
-        public override void Init() => Init(true, true);
-
-        protected override void OnObjectSet() => SetIcon();
         public override void Refresh()
         {
             base.Refresh();
+
             SetIcon();
 
             HasOverlapped = Object.HasOverlapped;
-            OnSelectChanged();
+            SetColors();
         }
         private void SetIcon()
         {

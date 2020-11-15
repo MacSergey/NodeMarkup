@@ -13,6 +13,7 @@ using ColossalFramework.UI;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using NodeMarkup.Tools;
+using UnityEngine.SceneManagement;
 
 namespace NodeMarkup
 {
@@ -55,6 +56,7 @@ namespace NodeMarkup
         public string Description => Localize.Mod_Description;
 #endif
 
+        public static bool InGame => SceneManager.GetActiveScene().name is string scene && scene != "MainMenu" && scene != "IntroScreen";
         static CultureInfo Culture
         {
             get
@@ -66,15 +68,16 @@ namespace NodeMarkup
                 return new CultureInfo(locale);
             }
         }
-
         public void OnEnabled()
         {
+            LoadingManager.instance.m_introLoaded += LoadedError;
+            Logger.LogDebug($"Version {Version}");
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
-            //EarlyAccess.CheckAccess();
         }
         public void OnDisabled()
         {
+            LoadingManager.instance.m_introLoaded -= LoadedError;
             Logger.LogDebug($"{nameof(Mod)}.{nameof(OnDisabled)}");
             Patcher.Unpatch();
             NodeMarkupTool.Remove();
@@ -92,9 +95,8 @@ namespace NodeMarkup
             Settings.OnSettingsUI(helper);
         }
 
-        private void LocaleChanged()
+        public static void LocaleChanged()
         {
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(LocaleChanged)}");
             Localize.Culture = Culture;
             Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }
@@ -103,6 +105,20 @@ namespace NodeMarkup
         {
             Utilities.OpenUrl(TroubleshootingUrl);
             return true;
-        }       
+        }
+        public static bool GetStable()
+        {
+            Utilities.OpenUrl(StableURL);
+            return true;
+        }
+
+        public static void LoadedError()
+        {
+            if (!Patcher.Success)
+            {
+                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+                messageBox.MessageText = Localize.Mod_LoaledWithErrors;
+            }
+        }
     }
 }

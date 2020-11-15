@@ -21,6 +21,12 @@ namespace NodeMarkup.UI
         protected static float Padding { get; } = 16;
         private static float MaxContentHeight { get; } = 500;
 
+        public static string Yes => NodeMarkup.Localize.MessageBox_Yes;
+        public static string No => NodeMarkup.Localize.MessageBox_No;
+        public static string Ok => NodeMarkup.Localize.MessageBox_OK;
+        public static string Cancel => NodeMarkup.Localize.MessageBox_Cancel;
+        public static string CantUndone => NodeMarkup.Localize.MessageBox_CantUndone;
+
         public static T ShowModal<T>()
         where T : MessageBoxBase
         {
@@ -133,7 +139,7 @@ namespace NodeMarkup.UI
             cancel.pressedBgSprite = "buttonclosepressed";
             cancel.size = new Vector2(32, 32);
             cancel.relativePosition = new Vector2(527, 4);
-            cancel.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Cancel();
+            cancel.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Close();
         }
         private void AddPanel()
         {
@@ -219,7 +225,7 @@ namespace NodeMarkup.UI
             button.size = new Vector2(width * (widthRatio ?? 1f / from), ButtonHeight);
             button.relativePosition = new Vector2(Space * (0.5f + i / 2f) + width * (positionRatio ?? 1f / from * (i - 1)), 0);
         }
-        public void SetButtonsRatio(int[] ratio)
+        public void SetButtonsRatio(params int[] ratio)
         {
             var buttons = ButtonPanel.components.OfType<UIButton>().ToArray();
             if (buttons.Length == 0)
@@ -245,7 +251,7 @@ namespace NodeMarkup.UI
                 if (p.keycode == KeyCode.Escape)
                 {
                     p.Use();
-                    Cancel();
+                    Close();
                 }
                 else if (p.keycode == KeyCode.Return)
                 {
@@ -256,6 +262,6 @@ namespace NodeMarkup.UI
             }
         }
 
-        protected virtual void Cancel() => HideModal(this);
+        protected virtual void Close() => HideModal(this);
     }
 }

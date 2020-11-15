@@ -8,34 +8,35 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class ApplyTemplateHeaderButton : HeaderPopupButton<TemplatePopupPanel>
+    public class ApplyTemplateHeaderButton : HeaderPopupButton<ApplyTemplatePopupPanel>
     {
+        protected Action<StyleTemplate> OnSelect { get; set; }
+
         private Style.StyleType StyleGroup { get; set; }
-        private Action<StyleTemplate> OnSelectTemplate { get; set; }
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate)
         {
             StyleGroup = styleGroup & Style.StyleType.GroupMask;
-            OnSelectTemplate = onSelectTemplate;
+            OnSelect = onSelectTemplate;
         }
+        public void DeInit() => OnSelect = null;
         protected override void OnOpenPopup()
         {
             Popup.Fill(StyleGroup);
             Popup.OnSelectTemplate += PopupOnSelectTemplate;
         }
-
         private void PopupOnSelectTemplate(StyleTemplate template)
         {
             ClosePopup();
-            OnSelectTemplate?.Invoke(template);
+            OnSelect?.Invoke(template);
         }
     }
-
-    public class TemplatePopupPanel : PopupPanel
+    public class ApplyTemplatePopupPanel : PopupPanel
     {
         public event Action<StyleTemplate> OnSelectTemplate;
-        public void Fill(Style.StyleType styleGroup)
+
+        public void Fill(Style.StyleType group)
         {
-            var templates = TemplateManager.GetTemplates(styleGroup).ToArray();
+            var templates = TemplateManager.StyleManager.GetTemplates(group).OrderByDescending(t => t.IsDefault).ThenBy(t => t.Style.Type).ThenBy(t => t.Name).ToArray();
             if (!templates.Any())
             {
                 var emptyLabel = Content.AddUIComponent<UILabel>();
@@ -51,18 +52,21 @@ namespace NodeMarkup.UI.Editors
 
             foreach (var template in templates)
             {
-                var item = Content.AddUIComponent<TemplateItem>();
-                item.Init(true, false);
-                item.name = template.ToString();
-                item.Object = template;
+                var item = Content.AddUIComponent<TemplatePopupItem>();
+                item.Init(template);
                 item.eventClick += ItemClick;
             }
         }
-
         private void ItemClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (component is TemplateItem item)
+            if (component is TemplatePopupItem item)
                 OnSelectTemplate?.Invoke(item.Object);
         }
+    }
+
+
+    public class TemplatePopupItem : StyleTemplateItem
+    {
+        public override bool ShowDelete => false;
     }
 }

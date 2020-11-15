@@ -180,8 +180,9 @@ namespace NodeMarkup.UI
             button.color = ButtonNormal;
             button.hoveredColor = ButtonHovered;
             button.pressedColor = ButtonPressed;
-            button.textColor = button.hoveredTextColor = button.focusedTextColor = Color.black;
-            button.pressedTextColor = Color.white;
+            button.disabledColor = ButtonFocused;
+            button.textColor = button.hoveredTextColor = button.focusedTextColor  = Color.black;
+            button.pressedTextColor = button.disabledTextColor = Color.white;
         }
     }
 }

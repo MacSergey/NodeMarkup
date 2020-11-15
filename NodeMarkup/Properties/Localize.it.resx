@@ -121,7 +121,7 @@
     <value>Cancella {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Vuoi veramente cancellare {0} {1}?</value>
+    <value>Vuoi veramente cancellare {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scorri con la rotella per cambiare
@@ -455,9 +455,7 @@ Trascina dietro il punto per una linea perpendicolare</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>È stata rilasciata la versione 1.4</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia continua</value>
   </data>
@@ -585,6 +583,8 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Stai utilizzando la versione BETA di {0}. Serve per testare nuove funzionalità e potrebbe contenere errori che interromperanno o cancelleranno i contrassegni. Se ti sei iscritto per errore, passa alla versione stabile.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Lingua del gioco</value>
@@ -595,9 +595,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Tedesco</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglese</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spagnolo</value>
   </data>
@@ -1043,9 +1041,7 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Solido in centro</value>
   </data>
-  <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
-  </data>
+  
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Si</value>
   </data>
@@ -1080,6 +1076,129 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Impostazione rapida bordi attraversamento pedonale</value>
   </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Marcatura sotto le tracce</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Attenzione: Questa opzione cambia l'ordine di render degli oggetti</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>- Aggiunta l'abilità di disegnare le marcature sotto al tracciato. Queste possono esser disabilitate dalle opzioni. ATTENZIONE: Questa opzione cambia l'ordine di render degli oggetti di gioco.
+- Aggiunto modificatore per creare una linea vuota (senza regole).
+- Aggiunta la possibilità di creare i bordi a tutte le linee in una volta (da un capo all'altro della strada)
+- Aggiunta "Configurazione rapida dell'opzione attraversamento pedonale" - apre automaticamente l'interfaccia di selezione del bordo dopo aver creato il passaggio pedonale simile a "Configurazione rapida delle regole". Questo può essere disabilitato nelle opzioni.
+- Aggiunto menù opzioni addizionali.
+- Fixato il click sinistro del mouse nella selezione del nodo.
+- Fixato il pannello fuori dallo schermo.
+- Il colore della sovrapposizione al passaggio del mouse è cambiato da bianco ad azzurro per evitare la fusione con il markup.
+- La linea dell'attraversamento pedonale non crea più incroci non necessari. Potrebbe essere necessario impostare i bordi delle strisce pedonali per quelle già esistenti.</value>
+  </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Salva come risorsa</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+da {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>La lista dei preimpostati è vuota.
+Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Preimpostati</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Salva come preimpostato</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Salva come preimpostato</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>No preimpostati</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Applica preimpostato</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nuovo preimpostato</value>
+  </data>
+  
+  
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Autore</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Applica dopo il riavvio del gioco</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Carica risorse di marcatura</value>
+  </data>
+  
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Attraversamento pedonale:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Riempimenti:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Linee:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Nessun screenshot</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Punto #{0} della strada:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Strade:</value>
+  </data>
+  
+  
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup preimpostati</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Cancella tutti i preimpostati</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Cancella tutti i preimpostati</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Vuoi veramente rimuovere tutti i preimpostati?</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

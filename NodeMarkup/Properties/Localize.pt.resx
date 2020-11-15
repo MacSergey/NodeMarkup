@@ -121,7 +121,7 @@
     <value>Apagar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar {0} {1}?</value>
+    <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -568,6 +568,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Está a usar a versão BETA da {0}. Serve para testar novas funcionalidades e pode conter erros que façam você perder todas as marcações. Se subscreveu por engano troque para a versão estável.</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Língua do jogo</value>
@@ -578,9 +580,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Alemão</value>
   </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglês</value>
-  </data>
+  
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanhol</value>
   </data>
@@ -1046,6 +1046,69 @@ Quer aplicar as marcações manualmente?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

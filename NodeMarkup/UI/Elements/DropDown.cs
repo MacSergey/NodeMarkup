@@ -44,6 +44,7 @@ namespace NodeMarkup.UI
         }
         public void Clear()
         {
+            selectedIndex = -1;
             Objects.Clear();
             items = new string[0];
         }
@@ -51,14 +52,14 @@ namespace NodeMarkup.UI
 
         public void SetDefaultStyle(Vector2? size = null)
         {
-            atlas = EditorItem.EditorItemAtlas;
+            atlas = TextureUtil.Atlas;
             this.size = size ?? new Vector2(230, 20);
-            listBackground = "TextFieldPanelHovered";
+            listBackground = TextureUtil.FieldHovered;
             itemHeight = 20;
-            itemHover = "TextFieldPanel";
-            itemHighlight = "TextFieldPanelFocus";
-            normalBgSprite = "TextFieldPanel";
-            hoveredBgSprite = "TextFieldPanelHovered";
+            itemHover = TextureUtil.FieldNormal;
+            itemHighlight = TextureUtil.FieldFocused;
+            normalBgSprite = TextureUtil.FieldNormal;
+            hoveredBgSprite = TextureUtil.FieldHovered;
             listWidth = (int)width;
             listHeight = 700;
             listPosition = PopupListPosition.Below;

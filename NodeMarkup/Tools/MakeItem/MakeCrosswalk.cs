@@ -21,9 +21,9 @@ namespace NodeMarkup.Tools
                 return Localize.Tool_InfoSelectCrosswalkStartPoint;
         }
 
-        public override void OnUpdate()
+        public override void OnToolUpdate()
         {
-            base.OnUpdate();
+            base.OnToolUpdate();
 
             if (!IsSelectPoint && !NodeMarkupTool.ShiftIsPressed)
                 Tool.SetDefaultMode();
@@ -40,7 +40,11 @@ namespace NodeMarkup.Tools
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
-                    Tool.DeleteItem(line, () => Tool.Markup.RemoveConnect(line));
+                    Tool.DeleteItem(line, () =>
+                    {
+                        Tool.Markup.RemoveConnect(line);
+                        Panel.UpdatePanel();
+                    });
                 else
                 {
                     var newCrosswalkLine = Tool.Markup.AddConnection(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;

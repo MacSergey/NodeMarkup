@@ -12,15 +12,8 @@ namespace NodeMarkup.UI
     public class NodeMarkupButton : UIButton
     {
         const string CONTAINING_PANEL_NAME = "RoadsOptionPanel";
-        const string ButtonBg = "NodeMarkupButtonBg";
-        const string ButtonBgActive = "NodeMarkupButtonBgActive";
-        const string ButtonBgHovered = "NodeMarkupButtonBgHovered";
-        const string Icon = "NodeMarkupIcon";
-        const string IconActive = "NodeMarkupIconActived";
-        const string IconHovered = "NodeMarkupIconHovered";
-        const int buttonSize = 31;
-        readonly static Vector2 buttonPosition = new Vector3(64, 38);
-        public static string AtlasName = nameof(NodeMarkupButton);
+        private static int ButtonSize => 31;
+        private static Vector2 ButtonPosition => new Vector3(64, 38);
         public static NodeMarkupButton Instance { get; private set; }
 
         static UIComponent GetContainingPanel()
@@ -28,74 +21,39 @@ namespace NodeMarkup.UI
             var ret = UIUtils.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
             return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
         }
-
         public override void Start()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Start)}");
+            atlas = TextureUtil.Atlas;
 
-            base.Start();
-            name = nameof(NodeMarkupButton);
-            playAudioEvents = true;
+            normalBgSprite = TextureUtil.ButtonNormal;
+            hoveredBgSprite = TextureUtil.ButtonHover;
+            pressedBgSprite = TextureUtil.ButtonHover;
+            focusedBgSprite = TextureUtil.ButtonActive;
 
-            if(!(UIUtils.FindComponent<UITabstrip>("ToolMode", GetContainingPanel(), UIUtils.FindOptions.None) is UITabstrip builtinTabstrip))
-                return;
+            normalFgSprite = TextureUtil.Icon;
+            hoveredFgSprite = TextureUtil.IconHover;
+            pressedFgSprite = TextureUtil.Icon;
+            focusedFgSprite = TextureUtil.Icon;
 
-            string[] spriteNames = new string[]
-            {
-                ButtonBg,
-                ButtonBgActive,
-                ButtonBgHovered,
-                Icon,
-                IconActive,
-                IconHovered
-            };
-
-            atlas = TextureUtil.GetAtlas(AtlasName);
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("sprites.png", AtlasName, buttonSize, buttonSize, spriteNames);
-
-            Deactivate();
-            hoveredBgSprite = ButtonBgHovered;
-            hoveredFgSprite = IconHovered;
-
-            relativePosition = buttonPosition;
-            size = new Vector2(buttonSize, buttonSize);
-            Show();
-            Unfocus();
-            Invalidate();
+            relativePosition = ButtonPosition;
+            size = new Vector2(ButtonSize, ButtonSize);
         }
-
-        public void Activate()
+        public override void Update()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Activate)}");
+            base.Update();
 
-            focusedBgSprite = ButtonBgActive;
-            normalBgSprite = ButtonBgActive;
-            pressedBgSprite = ButtonBgActive;
-            disabledBgSprite = ButtonBgActive;
-            normalFgSprite = IconActive;
-            focusedFgSprite = IconActive;
-            Invalidate();
+            var enable = NodeMarkupTool.Instance?.enabled == true;
+
+            if (enable && state == (ButtonState.Normal | ButtonState.Hovered))
+                state = ButtonState.Focused;
+            else if (!enable && state == ButtonState.Focused)
+                state = ButtonState.Normal;
         }
-        public void Deactivate()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(Deactivate)}");
-
-            focusedBgSprite = ButtonBg;
-            normalBgSprite = ButtonBg;
-            pressedBgSprite = ButtonBg;
-            disabledBgSprite = ButtonBg;
-            normalFgSprite = Icon;
-            focusedFgSprite = Icon;
-            Invalidate();
-        }
-
-        public static NodeMarkupButton CreateButton()
+        public static void CreateButton()
         {
             Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
             Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
             Logger.LogDebug($"Button created");
-            return Instance;
         }
         public static void RemoveButton()
         {

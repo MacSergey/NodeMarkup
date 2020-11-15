@@ -11,73 +11,52 @@ namespace NodeMarkup.UI.Editors
 {
     public abstract class HeaderButton : UIButton
     {
-        public static string Hovered => nameof(Hovered);
-        public static string AddTemplate => nameof(AddTemplate);
-        public static string ApplyTemplate => nameof(ApplyTemplate);
-        public static string Copy => nameof(Copy);
-        public static string Paste => nameof(Paste);
-        public static string Duplicate => nameof(Duplicate);
-        public static string SetDefault => nameof(SetDefault);
-        public static string UnsetDefault => nameof(UnsetDefault);
-        public static string Clear => nameof(Clear);
-        public static string Edit => nameof(Edit);
-        public static string Offset => nameof(Offset);
-        public static string EdgeLines => nameof(EdgeLines);
-        public static string Additionally => nameof(Additionally);
+        public static int Size => IconSize + 2 * IconPadding;
+        public static int IconSize => 25;
+        public static int IconPadding => 2;
+        public UIButton Icon { get; }
+        protected virtual Color32 HoveredColor => new Color32(32, 32, 32, 255);
+        protected virtual Color32 PressedColor => Color.black;
 
-        public static UITextureAtlas ButtonAtlas { get; } = GetButtonsIcons();
-        private static UITextureAtlas GetButtonsIcons()
-        {
-            var spriteNames = new string[]
-            {
-                Hovered,
-                "_",
-                AddTemplate,
-                ApplyTemplate,
-                Copy,
-                Paste,
-                Duplicate,
-                SetDefault,
-                UnsetDefault,
-                Clear,
-                Edit,
-                Offset,
-                EdgeLines,
-                Additionally,
-            };
-
-            var atlas = TextureUtil.GetAtlas(nameof(ButtonAtlas));
-            if (atlas == UIView.GetAView().defaultAtlas)
-                atlas = TextureUtil.CreateTextureAtlas("Buttons.png", nameof(ButtonAtlas), 25, 25, spriteNames, new RectOffset(2, 2, 2, 2));
-
-            return atlas;
-        }
-
-        public UIPanel Panel { get; }
-        protected virtual Color32 HoveredColor => Color.black;
-        protected virtual Color32 PressedColor => new Color32(160, 160, 160, 255);
+        protected virtual Color32 IconColor => Color.white;
+        protected virtual Color32 HoverIconColor => Color.white;
+        protected virtual Color32 PressedIconColor => new Color32(224, 224, 224, 255);
 
         public HeaderButton()
         {
-            hoveredBgSprite = Hovered;
-            pressedBgSprite = Hovered;
-            size = new Vector2(25, 25);
-            atlas = ButtonAtlas;
+            hoveredBgSprite = pressedBgSprite = focusedBgSprite = TextureUtil.HeaderHovered;
+            size = new Vector2(Size, Size);
+            atlas = TextureUtil.Atlas;
             hoveredColor = HoveredColor;
-            pressedColor = PressedColor;
+            pressedColor = focusedColor = PressedColor;
             clipChildren = true;
-            textPadding = new RectOffset(30, 5, 5, 0);
+            textPadding = new RectOffset(IconSize + 5, 5, 5, 0);
             textScale = 0.8f;
             textHorizontalAlignment = UIHorizontalAlignment.Left;
             minimumSize = size;
 
-            Panel = AddUIComponent<UIPanel>();
-            Panel.size = size;
-            Panel.atlas = atlas;
-            Panel.relativePosition = Vector2.zero;
+            Icon = AddUIComponent<UIButton>();
+            Icon.size = new Vector2(IconSize, IconSize);
+            Icon.atlas = atlas;
+            Icon.relativePosition = new Vector2(IconPadding, IconPadding);
+
+            Icon.color = IconColor;
+            Icon.hoveredColor = HoverIconColor;
+            Icon.pressedColor = PressedIconColor;
         }
 
-        public void SetSprite(string sprite) => Panel.backgroundSprite = sprite;
+        public void SetIconSprite(string sprite)
+        {
+            Icon.normalBgSprite = sprite;
+            Icon.hoveredBgSprite = sprite;
+            Icon.pressedBgSprite = sprite;
+        }
+        public override void Update()
+        {
+            base.Update();
+            if (state == ButtonState.Focused)
+                state = ButtonState.Normal;
+        }
     }
     public class SimpleHeaderButton : HeaderButton { }
 

@@ -48,7 +48,7 @@ namespace NodeMarkup.UI
         protected virtual void ButtonClick()
         {
             if (OnButtonClick?.Invoke() != false)
-                Cancel();
+                Close();
         }
     }
     public class TwoButtonMessageBox : SimpleMessageBox
@@ -67,12 +67,12 @@ namespace NodeMarkup.UI
         protected virtual void Button1Click()
         {
             if (OnButton1Click?.Invoke() != false)
-                Cancel();
+                Close();
         }
         protected virtual void Button2Click()
         {
             if (OnButton2Click?.Invoke() != false)
-                Cancel();
+                Close();
         }
     }
     public class ThreeButtonMessageBox : SimpleMessageBox
@@ -95,17 +95,17 @@ namespace NodeMarkup.UI
         protected virtual void Button1Click()
         {
             if (OnButton1Click?.Invoke() != false)
-                Cancel();
+                Close();
         }
         protected virtual void Button2Click()
         {
             if (OnButton2Click?.Invoke() != false)
-                Cancel();
+                Close();
         }
         protected virtual void Button3Click()
         {
             if (OnButton3Click?.Invoke() != false)
-                Cancel();
+                Close();
         }
     }
 
@@ -113,15 +113,26 @@ namespace NodeMarkup.UI
     {
         public OkMessageBox()
         {
-            ButtonText = NodeMarkup.Localize.MessageBox_OK;
+            ButtonText = Ok;
         }
     }
     public class YesNoMessageBox : TwoButtonMessageBox
     {
         public YesNoMessageBox()
         {
-            Button1Text = NodeMarkup.Localize.MessageBox_Yes;
-            Button2Text = NodeMarkup.Localize.MessageBox_No;
+            Button1Text = Yes;
+            Button2Text = No;
+        }
+    }
+
+    public class ErrorLoadedMessageBox : TwoButtonMessageBox
+    {
+        public ErrorLoadedMessageBox()
+        {
+            CaprionText = Mod.StaticName;
+            Button1Text = Ok;
+            Button2Text = NodeMarkup.Localize.Mod_Support;
+            OnButton2Click = Mod.OpenTroubleshooting;
         }
     }
 }

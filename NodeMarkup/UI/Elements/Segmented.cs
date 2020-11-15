@@ -58,8 +58,7 @@ namespace NodeMarkup.UI
 
             var button = AddUIComponent<UIButton>();
 
-            button.atlas = EditorItem.EditorItemAtlas;
-            SetSprite(button, false);
+            button.atlas = TextureUtil.Atlas;
             button.text = label ?? item.ToString();
             button.textScale = 0.8f;
             button.textPadding = new RectOffset(8, 8, 4, 0);
@@ -68,36 +67,54 @@ namespace NodeMarkup.UI
             button.height = 20;
             button.eventClick += ButtonClick;
 
+            var last = Buttons.LastOrDefault();
             Buttons.Add(button);
+
+            SetSprite(button, false);
+            if (last != null)
+                SetSprite(last, SelectedIndex == Buttons.Count - 2);
         }
         private void SetSprite(UIButton button, bool isSelect)
         {
-            if(isSelect)
+            var index = Buttons.IndexOf(button);
+            var suffix = Suffix(index);
+
+            if (isSelect)
             {
-                button.normalBgSprite = "TextFieldPanelFocus";
-                button.hoveredBgSprite = "TextFieldPanelFocus";
-                button.pressedBgSprite = "TextFieldPanelFocus";
+                button.normalBgSprite = button.hoveredBgSprite = button.pressedBgSprite = button.disabledBgSprite = $"{TextureUtil.FieldFocused}{suffix}";
+                button.disabledColor = new Color32(192, 192, 192, 255);
             }
             else
             {
-                button.normalBgSprite = "TextFieldPanel";
-                button.hoveredBgSprite = "TextFieldPanelHovered";
-                button.pressedBgSprite = "TextFieldPanelHovered";
+                button.normalBgSprite = $"{TextureUtil.FieldNormal}{suffix}";
+                button.hoveredBgSprite = button.pressedBgSprite = $"{TextureUtil.FieldHovered}{suffix}";
+                button.disabledBgSprite = $"{TextureUtil.FieldDisabled}{suffix}";
+                button.disabledColor = Color.white;
             }
+        }
+
+        private string Suffix(int index)
+        {
+            if (index == 0)
+                return Buttons.Count == 1 ? string.Empty : "Left";
+            else
+                return index == Buttons.Count - 1 ? "Right" : "Middle";
         }
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => SelectedIndex = Buttons.FindIndex(b => b == component);
 
         public void Clear()
         {
+            _selectedIndex = -1;
             Objects.Clear();
 
-            var components = this.components.ToArray();
-            foreach(var component in components)
+            foreach (var button in Buttons)
             {
-                RemoveUIComponent(component);
-                Destroy(component);
+                RemoveUIComponent(button);
+                Destroy(button);
             }
+
+            Buttons.Clear();
         }
 
         public void SetDefaultStyle(Vector2? size = null) { }

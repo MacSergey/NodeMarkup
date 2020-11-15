@@ -121,12 +121,12 @@
     <value>{0} を削除しますか？</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>{0} - {1} を削除してもよろしいですか?</value>
+    <value>{0} - "{1}" を削除してもよろしいですか?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>ホイールのスクロールで増減
-+Shift ｘ10
-+Ctrl ｘ0.1</value>
++Shift ｘ 10倍
++Ctrl ｘ 0.1倍</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
@@ -168,7 +168,7 @@
     <value>ライン</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>ラインの一覧</value>
+    <value>ライン</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
     <value>オフセット</value>
@@ -225,7 +225,7 @@
     <value>オフセット</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>ポイントの一覧</value>
+    <value>ポイント</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未設定</value>
@@ -252,7 +252,7 @@
     <value>マーキングデータをファイルに保存</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>クリップボードにコピー</value>
+    <value>ファイルのパスをクリップボードにコピー</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>マーキングデータのダンプ出力</value>
@@ -280,7 +280,7 @@
     <value>マーキングデータの復元に成功しました</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>ルールのクイックセットアップ</value>
+    <value>追加ルールのクイックセットアップ</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>マーキングの描画距離（m）</value>
@@ -301,7 +301,7 @@
     <value>名前</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>テンプレートの一覧</value>
+    <value>テンプレート</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
     <value>新規テンプレート</value>
@@ -330,8 +330,7 @@
 垂直線は道路の後方へ移動</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>ポイントを選択して
-ラインを作成・削除する</value>
+    <value>ポイントを選択して、ラインを作成・削除する</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -362,10 +361,10 @@
     <value>クリックして停止線を削除</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>クリックして停止線の追加</value>
+    <value>クリックして停止線を追加</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗り潰しの一覧</value>
+    <value>塗り潰し</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>塗り潰し</value>
@@ -410,7 +409,7 @@
     <value>コピー</value>
   </data>
   <data name="Editor_ColorPaste" xml:space="preserve">
-    <value>ペースト</value>
+    <value>貼り付け</value>
   </data>
   <data name="Editor_ColorDefault" xml:space="preserve">
     <value>既定色</value>
@@ -443,10 +442,10 @@
     <value>コピー</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
-    <value>ペースト</value>
+    <value>貼り付け</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>V字</value>
+    <value>V字型</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>V字の角度</value>
@@ -561,8 +560,10 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>現在、 {0} のβ版を使用しています。
-これは新機能をテストするMODで、マーキングの破損や消えるエラーが含まれている可能性があります。
+新機能をテストするMODで、エラーやマーキングの破損・消える可能性があります。
 間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
+    <comment>Mod_BetaWarningMessage
+</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>ゲームの既定言語</value>
@@ -574,7 +575,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>ドイツ語</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>英語</value>
+    <value>英語 - US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>スペイン語</value>
@@ -610,7 +611,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線の追加</value>
+    <value>クリックして垂直線を追加</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
@@ -625,7 +626,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>横断歩道の始点</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
-    <value>横断歩道の一覧</value>
+    <value>横断歩道</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>交差点（ノード）に、横断歩道の設定がありません。
@@ -720,8 +721,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>終点側のポイントを選択</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>ポイントを選択して
-横断歩道の作成・削除する</value>
+    <value>ポイントを選択して、横断歩道の作成・削除する</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
     <value>2本の破線</value>
@@ -1028,13 +1028,13 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>Yes</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Shift押下で横断歩道の作成</value>
+    <value>Shift押下で、横断歩道の作成</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Alt押下で塗り潰しを開始</value>
+    <value>Alt押下で、塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Ctrl+ドラッグで、ポイントを移動</value>
+    <value>Ctrl + ドラッグで、ポイントを移動</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1059,10 +1059,207 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>横断歩道の基準線を一緒に設定</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>軌道の下部でマーキングを描画（再起動後に有効）</value>
+    <value>軌道の下部でマーキングを描画</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
   </data>
   
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>カスタムアセットで保存</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+作成者: {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>プリセットの一覧は空です。
+保存するにはパネルのヘッダー部分から、 {0} をクリックします。</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>プリセット</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>プリセットの保存</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>プリセットの保存</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>プリセットがありません</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>プリセットを適用</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>名無しのプリセット</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>プリセットの編集モードを終了しますか？</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>プリセットを適用しますか？</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>作成者</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>再起動後に有効</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>マーキングのカスタムアセットを読み込む</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>MODのロード中に、エラーが発生しました。
+この状態で、MODの使用はお勧め出来ません。
+ゲームを再起動してください。</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>横断歩道の数:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>塗り潰しの数:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>ラインの数:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>画像なし</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>道路 #{0} のポイント数:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>接続道路の数:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>横断歩道と重なる新たなラインは自動的に除去</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>横断歩道と重なるラインを除去</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>プリセットのバックアップ</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>プリセットを全て削除</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>プリセットを全て削除</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>本当に全てのプリセットを削除しますか？</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>プリセットをファイルに保存</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>プリセットのダンプ出力</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>プリセットをファイルから復元</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>プリセットの復元</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>本当にテンプレートを復元しますか？
+復元すると、既存のプリセットを全て置き換えます。</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>プリセットの復元に失敗しました</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>プリセットの復元に成功しました</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>全ての横断歩道で重なるラインを除去</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>全ての横断歩道で重なるラインを除去</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>英語 - UK</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>プリセット（カスタムアセット）を上書きしますか？</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>名前の変更は、カスタムアセットのファイルを上書きします。</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>テンプレート（カスタムアセット）を上書きしますか？</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>基準線の設定方法
+横断歩道を設定した、同じポイントから始まるラインが必要です。</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>追加ルールの作成方法
+ラインの始点と終点を変更したい場合は、他のラインと交差する必要があります。</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>パネル内にTipsを表示</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>内容を編集</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>変更を保存する</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>変更を保存しない</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>プリセット名を変更して保存しますか？</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>変更内容を保存</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>テンプレートの内容を変更しますか？</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>{0} という名前は、他のプリセットで使用されています。
+重複したプリセットを保存しても良いですか？</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>削除方法はコンテンツマネージャーから行います</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>編集不可になり、削除はコンテンツマネージャーから行います。
+もしくは、Steamのワークショップでサブスクライブを停止・解除します。</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>このプリセットはカスタムアセットです。</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>削除方法はコンテンツマネージャーから行います</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>編集不可になり、削除はコンテンツマネージャーから行います。
+もしくは、Steamのワークショップでサブスクライブを停止・解除します。</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>このテンプレートはカスタムアセットです。</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>プリセット</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>プリセット</value>
+  </data>
+  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>このタイプは追加ルールをサポートしません</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>横断歩道の基準線に指定したラインは除去しない</value>
+  </data>
 </root>
