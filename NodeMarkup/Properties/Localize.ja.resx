@@ -121,7 +121,7 @@
     <value>{0} を削除しますか？</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>{0} - "{1}" を削除してもよろしいですか?</value>
+    <value>{0} - {1} を削除してもよろしいですか?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>ホイールのスクロールで増減
@@ -252,7 +252,7 @@
     <value>マーキングデータをファイルに保存</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>ファイルのパスをクリップボードにコピー</value>
+    <value>クリップボードにコピー</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>マーキングデータのダンプ出力</value>
@@ -326,11 +326,16 @@
     <value>マーキングを編集するノードを選択します</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>ライン・停止線の終点を選択
-垂直線は道路の後方へ移動</value>
+    <value>終点側のポイントを選択
++Shift - 実線
++Ctrl - 2重線</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>ポイントを選択して、ラインを作成・削除する</value>
+    <value>ポイントを選択して
+ラインを作成・削除する
++Ctrlでポイントを移動
+Alt押下で塗り潰しを開始
+Shift押下で横断歩道の作成</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} の更新内容</value>
@@ -463,7 +468,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>テンプレートの一覧は空です。
-作成するにはライン・横断歩道・塗り潰しのスタイルから、 {0} をクリックします。</value>
+作成するには各スタイルで、 {0} をクリックします。</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>アクセスIDで有効化する</value>
@@ -611,7 +616,9 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線を追加</value>
+    <value>クリックして垂直線の追加
++Shift - 実線
++Ctrl - 2重線</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>クリックして垂直線を削除</value>
@@ -1059,7 +1066,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>横断歩道の基準線を一緒に設定</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>軌道の下部でマーキングを描画</value>
+    <value>軌道の下部でマーキングを描画（再起動後に有効）</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
@@ -1262,5 +1269,9 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>横断歩道の基準線に指定したラインは除去しない</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>不明な作成者</value>
+  </data>
+  
   
 </root>

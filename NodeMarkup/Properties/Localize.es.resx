@@ -121,7 +121,7 @@
     <value>Eliminar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar {0} "{1}"?</value>
+    <value>¿De verdad quieres eliminar {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Desplazar la rueda para cambiar
@@ -325,11 +325,16 @@ Haga clic para editar las marcas</value>
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar punto final para línea normal o transversal
-Arrastre detrás del punto para línea perpendicular</value>
+    <value>Seleccione el punto final
++Mayús - Continua
++Ctrl - Doble</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione el punto para crear o eliminar la línea</value>
+    <value>Seleccione el punto para
+crear o eliminar la línea
++Ctrl para mover el punto
+Mantenga Alt para crear un relleno
+Mantenga Mayús para crear un paso de peatones</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
@@ -462,7 +467,7 @@ Para crear un relleno, mantenga Alt o presione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista de plantillas está vacía.
-Para crear una plantilla, haga clic en «{0}» en el estilo de línea, paso de peatones o relleno.</value>
+Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar con clave</value>
@@ -571,7 +576,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Alemán</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglés EEUU</value>
+    <value>Inglés</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Español</value>
@@ -607,7 +612,9 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Idioma</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Haga clic para crear una línea perpendicular</value>
+    <value>Haga clic para crear una línea perpendicular
++Mayús - Continua
++Ctrl - Doble</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Haga clic para eliminar la línea perpendicular</value>
@@ -1055,7 +1062,7 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Configuración rápida de bordes del paso de peatones</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Las marcas debajo del carril</value>
+    <value>Las marcas debajo del carril (Se aplica después del reinicio)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
@@ -1090,32 +1097,93 @@ Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nuevo preajuste</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Salir del modo de aplicación de preajustes</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>¿Quiere aplicar un preajuste?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Se aplica después del reinicio del juego</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Cargar recursos de marcas</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod cargado con errores.
+No se recomienda utilizar el mod en este estado, ya que puede provocar un comportamiento impredecible.
+Reinicia el juego.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Pasos de peatones:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Rellenos:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Líneas:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>No hay captura de pantalla</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Puntos de carretera #{0}:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Carreteras:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Cortar nueva línea por los pasos de peatones</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Cortar líneas por este paso de peatones</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Copia de seguridad de preajustes</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Borrar todos los preajustes</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Borrar todos los preajustes</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>¿De verdad quieres borrar todos los preajustes?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Exportar los preajustes al archivo</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Exportar los preajustes</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Recuperar preajustes desde archivo</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Recuperar los preajustes</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>¿De verdad deseas recuperar los preajustes?
+Los preajustes restaurados reemplazarán todos los preajustes existentes.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Recuperación fallida</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Los preajustes se han recuperado con éxito</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Cortar líneas por todos pasos de peatones</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Cortar líneas por todos pasos de peatones</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Inglés Reino Unido</value>
+  </data>
   
   
   

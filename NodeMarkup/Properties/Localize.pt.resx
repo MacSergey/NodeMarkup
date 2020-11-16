@@ -121,7 +121,7 @@
     <value>Apagar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
+    <value>Tem a certeza que quer mesmo apagar {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -325,11 +325,16 @@ Clique para editar marcações</value>
     <value>Seleccione um nó para editar marcações</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selecione um ponto próprio para uma linha normal ou de paragem
-Arraste para trás do ponto para uma linha perpendicular</value>
+    <value>Seleccionar ponto final
++Shift - Sólida
++Ctrl - Dupla</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Selecione um ponto para criar ou remover a uma linha</value>
+    <value>Seleccione um ponto para
+criar ou remover a uma linha
++Ctrl para mover o ponto
+Prima Alt para criar um preenchimento
+Prima Shift para criar uma passadeira</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
@@ -472,7 +477,7 @@ Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>A lista de modelos está vazia.
-Para criar um modelo, clique «{0}» no estilo da linha, da passadeira ou do preenchimento.</value>
+Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar com chave</value>
@@ -580,7 +585,9 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Alemão</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglês</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanhol</value>
   </data>
@@ -616,8 +623,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clique para criar uma linha perpendicular
-+ Shift - Solida
-+ Ctrl - Dupla</value>
++ Shift - Solid
++ Ctrl - Double</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
@@ -1046,77 +1053,225 @@ Quer aplicar as marcações manualmente?</value>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Vazio</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Criar linhas nas bordas</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Criar linhas nas bordas</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Repor o deslocamento de todos os pontos</value>
+  </data>
+  <data name="Panel_Additional" xml:space="preserve">
+    <value>Adicional</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Definição rápida de bordas das passadeiras</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Marcações debaixo de carris</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Atenção: esta opção modifica a ordem de renderização de objetos do jogo</value>
+  </data>
+  
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Guardar asset</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0} por {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>A lista de predefinições está vazia.
+Para criar uma predefinição, clique «{0}» no cabeçalho.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Predefinições</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Guardar como Predefinição</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Guardar como Predefinição</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Sem predefinições</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Aplicar predefinição</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nova predefinição</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Sair do modo de aplicar predefinições</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Quer aplicar a predefinição?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Aplica apos o reinicio do jogo</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Carregar assets de marcações</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>O mod carregou com erros.
+Não é recomendado usar o mod neste estado pois pode levar a comportamento imprevisível.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Passadeiras:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Preenchimentos:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Linhas:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Sem capturas de ecrã</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Pontos da estrada #{0}:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Estradas:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Cortar as linhas novas por passadeiras</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Cortar as linhas novas por esta passadeira</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Copia de segurança das predefinição</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Eliminar todas as predefinições</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Eliminar todas as predefinições</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Quer mesmo remover todas as predefinições?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Descarregar as predefinições para um ficheiro</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Descarregar as predefinições</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Recuperar predefinições de um ficheiro</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Recuperar predefinições</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Tem a certeza que quer recuperar as predefinições?
+As predefinições recuperadas vão substituir todas as predefinições existentes.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Recuperação das predefinições falhou</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Predefinições recuperadas com sucesso</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Cortar linhas por todas as passadeiras</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Cortar linhas por todas as passadeiras</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Inglês RU</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Sobrepor predefinição asset</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Para modificar o nome requer sobrepor o asset. Continuar?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Sobrepor predefinição asset</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Para modificar o nome e valores requer sobrepor o asset. Continuar?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Para ser capaz de definir bordas na passadeira, precisa de ter linhas que comecem nos mesmos pontos da passadeira</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Precisa de ter linhas que se cruzem com esta linha para poder modificar regras "De" e "Para" e criar regras adicionais.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Mostrar dicas no painel</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Guardar alterações</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Descartar alterações</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Quer guardar as alterações da predefinição?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Guardar alterações</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Quer guardar as alterações do modelo?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>O nome "{0}" já é utilizado por outra predefinição.
+Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Só pode ser removido através do gestor de conteúdo do jogo.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Esta predefinição não pode ser modificado. Só pode ser removido através do gestor de conteúdo do jogo ou cancelar a subscrição no Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Esta predefinição é um asset.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Só pode ser removido através do gestor de conteúdo do jogo.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Este modelo não pode ser modificado. Só pode ser removido através do gestor de conteúdo do jogo ou cancelar a subscrição no Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Esta predefinição é um asset.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>predefinição</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>predefinição</value>
+  </data>
+  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Este tipo de linha não suporta regras</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Não cortar a linha pela passadeira se for a sua borda</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Autor desconhecido</value>
+  </data>
   
   
 </root>

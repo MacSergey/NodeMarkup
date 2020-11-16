@@ -121,7 +121,7 @@
     <value>Supprimer {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} "{1}" ?</value>
+    <value>Voulez-vous vraiment supprimer {0} {1} ?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Utilisez la molette pour changer
@@ -325,12 +325,16 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un nœud pour changer le marquage</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop
-Glissez derrière le point pour une ligne perpendiculaire</value>
+    <value>Sélectionnez un point de fin
++Maj - Solide
++Ctrl - Double</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
-créer ou supprimer une ligne</value>
+créer ou supprimer une ligne
++Ctrl pour bouger le point
+Maintenir Alt pour créer un remplisseur
+Maintenez Maj pour créer un passage piéton</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
@@ -397,7 +401,7 @@ créer ou supprimer une ligne</value>
     <value>Sélectionnez le prochain point du contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Selectionnez un point pour commencer le remplissseur</value>
+    <value>Sélectionnez un point pour commencer le filler</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Sélectionnez le prochain point pour le contour</value>
@@ -463,7 +467,7 @@ Pour créer un remplisseur, maintenez Alt ou appuyez sur {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La liste des modèles est vide.
-Pour créer un modèle, cliquez {0} sur une ligne, passage piéton ou remplisseur.</value>
+Pour créer un modèle, cliquez sur {0} sur le style de ligne.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activer avec la clé</value>
@@ -572,7 +576,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
     <value>Allemand</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais États-Unis</value>
+    <value>Anglais</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espagnol</value>
@@ -1059,7 +1063,7 @@ Voulez-vous changer le marquage manuellement ?</value>
     <value>Bordures de passage piétons rapide</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marquage en dessous des rails</value>
+    <value>Marquage en dessous des rails (nécessite un redémarrage)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>
@@ -1190,7 +1194,7 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Réécriture de la ressource du modèle</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Pour la renommer, il faut refaire la ressource. Continuer ?</value>
+    <value>Pour le renommer, il faut refaire l'asset. Continuer ?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Pour mettre les bordures du passage piéton, il faut une ligne qui commence au même points que le passage piéton</value>
@@ -1257,5 +1261,9 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Ne pas couper les lignes de passages piétons si c'est leur bordure</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Auteur inconnu</value>
+  </data>
+  
   
 </root>
