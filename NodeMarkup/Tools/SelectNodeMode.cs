@@ -17,8 +17,9 @@ namespace NodeMarkup.Tools
         public override bool ShowPanel => false;
         ushort HoverNodeId { get; set; } = 0;
         bool IsHoverNode => HoverNodeId != 0;
+        int ClickCount { get; set; } = 0;
 
-        bool JustFun => false;
+        bool JustFun { get; set; } = true;
         ushort HoverSegmentId { get; set; } = 0;
         bool IsHoverSegment => HoverSegmentId != 0;
 
@@ -51,7 +52,7 @@ namespace NodeMarkup.Tools
             HoverNodeId = 0;
             HoverSegmentId = 0;
         }
-        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : ( IsHoverSegment ? $"Segment #{HoverSegmentId}\nClick to edit marking" : Localize.Tool_InfoNode);
+        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : (IsHoverSegment ? $"Segment #{HoverSegmentId}\nClick to edit marking" : Localize.Tool_InfoNode);
 
         public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
@@ -86,6 +87,39 @@ namespace NodeMarkup.Tools
                     return true;
                 }
             }
+            else if (IsHoverSegment)
+            {
+                ClickCount += 1;
+
+                var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
+                messageBox.CaprionText = "You missed";
+
+                if (ClickCount < 30)
+                {
+                    if (ClickCount % 10 != 0)
+                        messageBox.MessageText = "You missed by segment, try again";
+                    else
+                        messageBox.MessageText = $"You missed by segment, I didn't think that you couldn't do it {ClickCount} times in a row, try again";
+                }
+                else if (ClickCount == 30)
+                {
+                    messageBox.MessageText = "You missed by segment, To motivate you to aim better, after another 10 misses, I'll start removing one node marking at a time, try again";
+                }
+                else if (30 < ClickCount && ClickCount <= 40)
+                {
+                    messageBox.MessageText = $"You missed by segment. {40 - ClickCount} misses before the start removing node marking, try again";
+                }
+                else if (40 < ClickCount && ClickCount <= 50)
+                {
+                    messageBox.MessageText = $"You missed by segment. {ClickCount - 40} node markings removed, try again";
+                }
+                else
+                {
+                    messageBox.CaprionText = "It was joke";
+                    messageBox.MessageText = $"It was joke, segment marking planing to implement in next version";
+                    JustFun = false;
+                }
+            }
         }
         public override void OnSecondaryMouseClicked() => Tool.Disable();
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
@@ -95,7 +129,7 @@ namespace NodeMarkup.Tools
                 var node = Utilities.GetNode(HoverNodeId);
                 NodeMarkupTool.RenderCircle(cameraInfo, node.m_position, Colors.Orange, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
-            if(IsHoverSegment)
+            if (IsHoverSegment)
             {
                 var segment = Utilities.GetSegment(HoverSegmentId);
                 var bezier = new Bezier3()
