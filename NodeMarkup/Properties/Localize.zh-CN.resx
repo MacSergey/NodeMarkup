@@ -1255,5 +1255,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>不要在人行道后创建线，如果人行道是标线边线</value>
   </data>
-  
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>未知作者</value>
+  </data>
 </root>
