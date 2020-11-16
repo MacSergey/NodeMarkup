@@ -1420,7 +1420,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Edit node #{0} marking.
+        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
         /// </summary>
         public static string Panel_Caption {
             get {
@@ -1465,7 +1465,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Edit marking order.
+        ///   Ищет локализованную строку, похожую на Edit markings order.
         /// </summary>
         public static string Panel_EditMarking {
             get {
@@ -1719,7 +1719,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Apply after game restart.
+        ///   Ищет локализованную строку, похожую на Applies after game restart.
         /// </summary>
         public static string Settings_ApplyAfterRestart {
             get {
@@ -1800,7 +1800,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete marking from all intersections.
+        ///   Ищет локализованную строку, похожую на Delete markings from all intersections.
         /// </summary>
         public static string Settings_DeleteMarkingButton {
             get {
@@ -1899,7 +1899,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dump marking data to file.
+        ///   Ищет локализованную строку, похожую на Dump markings data to file.
         /// </summary>
         public static string Settings_DumpMarkingButton {
             get {
@@ -1908,7 +1908,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dump marking data.
+        ///   Ищет локализованную строку, похожую на Dump markings data.
         /// </summary>
         public static string Settings_DumpMarkingCaption {
             get {
@@ -1926,7 +1926,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Dump success saved.
+        ///   Ищет локализованную строку, похожую на Dump successfully saved to file.
         /// </summary>
         public static string Settings_DumpMessageSuccess {
             get {
@@ -2124,7 +2124,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Warning: This option changes game objects render order.
+        ///   Ищет локализованную строку, похожую на Warning: this option changes game objects render order.
         /// </summary>
         public static string Settings_RailUnderMarkingWarning {
             get {
@@ -2178,8 +2178,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to restore data?
-        ///The restored data will replace all existing markings..
+        ///   Ищет локализованную строку, похожую на Do you really want to restore markings?
+        ///The restored markings will replace all existing markings..
         /// </summary>
         public static string Settings_RestoreMarkingMessage {
             get {
@@ -2361,7 +2361,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Change marking order.
+        ///   Ищет локализованную строку, похожую на Change markings order.
         /// </summary>
         public static string Settings_ShortcutEditMarking {
             get {
@@ -2451,7 +2451,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Show panel tips.
+        ///   Ищет локализованную строку, похожую на Show hints on panel.
         /// </summary>
         public static string Settings_ShowPaneltips {
             get {
@@ -2829,6 +2829,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Unknown author.
+        /// </summary>
+        public static string Template_UnknownAuthor {
+            get {
+                return ResourceManager.GetString("Template_UnknownAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Author.
         /// </summary>
         public static string TemplateEditor_Author {
@@ -3039,7 +3048,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Crosswalk Borders - {0}.
+        ///   Ищет локализованную строку, похожую на Crosswalk borders - {0}.
         /// </summary>
         public static string Tool_DeleteDependenceCrosswalkBorders {
             get {
@@ -3255,7 +3264,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a point to start creating the filler.
+        ///   Ищет локализованную строку, похожую на Select a point to start creating a filler.
         /// </summary>
         public static string Tool_InfoFillerSelectStart {
             get {
@@ -3265,7 +3274,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Node #{0}
-        ///Click to edit marking.
+        ///Click to edit markings.
         /// </summary>
         public static string Tool_InfoHoverNode {
             get {
@@ -3283,7 +3292,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a node to change marking.
+        ///   Ищет локализованную строку, похожую на Select a node to change markings.
         /// </summary>
         public static string Tool_InfoNode {
             get {

@@ -55,7 +55,7 @@ namespace NodeMarkup.UI
             }
         }
 
-        protected virtual string GetString(ValueType value) => value.ToString();
+        protected virtual string GetString(ValueType value) => value?.ToString() ?? string.Empty;
 
         protected abstract ValueType Increment(ValueType value, ValueType step, WheelMode mode);
         protected abstract ValueType Decrement(ValueType value, ValueType step, WheelMode mode);

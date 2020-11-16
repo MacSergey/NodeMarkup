@@ -30,7 +30,26 @@ namespace NodeMarkup.Manager
 
         public static ulong UserId { get; } = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
         protected static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
-        public static string GetAuthor(ulong steamId) => Authors.TryGetValue(steamId, out string author) ? author : null;
+        public static string GetAuthor(ulong steamId)
+        {
+            if (PlatformService.active)
+            {
+                try
+                {
+                    if (!Authors.TryGetValue(steamId, out string author))
+                    {
+                        author = new Friend(new UserID(steamId)).personaName;
+                        Authors[steamId] = author;
+                    }
+                    return author;
+                }
+                catch (Exception error)
+                {
+                    Logger.LogError("Could not get author name", error);
+                }
+            }
+            return Localize.Template_UnknownAuthor;
+        }
 
         public abstract SavedString Saved { get; }
 
@@ -151,17 +170,8 @@ namespace NodeMarkup.Manager
         }
         public void AddTemplate(TemplateType template)
         {
-            if (!NeedAdd(template))
-                return;
-
-            TemplatesDictionary[template.Id] = template;
-
-            if (template.IsAsset)
-            {
-                var authorId = template.Asset.AuthorId;
-                if (authorId != 0 && !Authors.ContainsKey(authorId))
-                    Authors[authorId] = new Friend(new UserID(authorId)).personaName;
-            }
+            if (NeedAdd(template))
+                TemplatesDictionary[template.Id] = template;
         }
         private bool NeedAdd(TemplateType template)
         {
