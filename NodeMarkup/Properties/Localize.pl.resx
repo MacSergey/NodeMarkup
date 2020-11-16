@@ -1250,6 +1250,10 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
     <value>preset</value>
   </data>
   
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Ten typ linii nie obsługuje reguł</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Nie przecinaj linii przez przejście dla pieszych jeżeli jest to jego obrys</value>
+  </data>
 </root>
