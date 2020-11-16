@@ -1255,4 +1255,7 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Nepřerušovat čáry u přechodů, pokud jsou jejich okrajem</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Neznámý autor</value>
+  </data>
 </root>

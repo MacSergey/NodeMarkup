@@ -1256,4 +1256,7 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Älä leikkaa viivaa suojatiehen, jos se on suojatien reuna</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Tuntematon tekijä</value>
+  </data>
 </root>

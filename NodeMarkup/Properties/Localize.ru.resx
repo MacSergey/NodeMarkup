@@ -1340,4 +1340,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Не обрезать линию до перехода, если она является его границей</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Неизвестный автор</value>
+  </data>
 </root>

@@ -563,4 +563,5 @@ crossings:</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Don't cut line by pedestrian crossing if it is their border</value>
   </data>
+  
 </root>

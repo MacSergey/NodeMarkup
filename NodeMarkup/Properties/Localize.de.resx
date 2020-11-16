@@ -1302,4 +1302,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Linie nicht am Fußgängerüberweg beenden, wenn diese dessen Rand bildet</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Unbekannter Autor</value>
+  </data>
 </root>

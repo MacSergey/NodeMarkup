@@ -1256,4 +1256,7 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Lijnen bij een zebrapad niet afsnijden als het de rand is</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Onbekende auteur</value>
+  </data>
 </root>

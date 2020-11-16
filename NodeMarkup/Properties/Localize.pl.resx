@@ -1256,4 +1256,7 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Nie przecinaj linii przez przejście dla pieszych jeżeli jest to jego obrys</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Nieznany autor</value>
+  </data>
 </root>
