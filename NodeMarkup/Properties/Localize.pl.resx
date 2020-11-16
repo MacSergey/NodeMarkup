@@ -214,7 +214,7 @@ Shift x10, Ctrl x0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Wersja BETA, mogą pojawić się błędy oraz może działać niestabilnie!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia skrzyżowania #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1258,4 +1258,7 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Nieznany autor</value>
   </data>
+  
+  
+  
 </root>

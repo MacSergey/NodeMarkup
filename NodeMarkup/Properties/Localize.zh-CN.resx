@@ -214,7 +214,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>这是BETA测试版，可能会出现功能性错误。无法担保工作稳定！</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>编辑节点 #{0} 的地标线</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1257,5 +1257,14 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>未知作者</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>编辑段落 #{0} 的地标线</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>草地</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>路肩</value>
   </data>
 </root>

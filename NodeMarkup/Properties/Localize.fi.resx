@@ -214,7 +214,7 @@ Shift X10, Ctrl X0,1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Muokkaa risteyksen #{0} merkintöjä</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1257,5 +1257,14 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Tuntematon tekijä</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Muokkaa jaokkeen #{0} merkintöjä</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Ruoho</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Päällyste</value>
   </data>
 </root>

@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Это BETA версия, стабильная работа и отсутствие ошибок не гарантировано!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Редактирование перекрестка #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1342,5 +1342,14 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Неизвестный автор</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Редактирование сегмента #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Трава</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Тратуар</value>
   </data>
 </root>

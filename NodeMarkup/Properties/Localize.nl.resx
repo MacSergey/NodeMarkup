@@ -214,8 +214,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
-    <value>Bewerk markering van punt #{0}</value>
+  <data name="Panel_NodeCaption" xml:space="preserve">
+    <value>Bewerk markering punt #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punt</value>
@@ -1259,4 +1259,7 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Onbekende auteur</value>
   </data>
+  
+  
+  
 </root>

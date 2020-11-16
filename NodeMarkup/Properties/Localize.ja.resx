@@ -215,7 +215,7 @@
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>これはβ版で、エラーが発生する可能性があります。安定性は保証されていません！</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>#{0} のノードを編集中</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1262,5 +1262,16 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>横断歩道の基準線に指定したラインは除去しない</value>
   </data>
-  
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>不明な作成者</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>#{0} のセグメントを編集中</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>芝生</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>舗装</value>
+  </data>
 </root>

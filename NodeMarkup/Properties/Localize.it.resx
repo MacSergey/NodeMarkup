@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Questa è una versione BETA, potrebbero verificarsi errori e la stabilità non è garantita!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifica il marcatore del nodo #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1166,6 +1166,9 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
     <value>Vuoi veramente rimuovere tutti i preimpostati?</value>
   </data>
+  
+  
+  
   
   
   

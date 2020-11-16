@@ -214,7 +214,7 @@ Mayús x10, Ctrl x0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>¡Esta es una versión BETA, pueden ocurrir errores y no se garantiza la estabilidad!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Editar las marcas del node #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1090,31 +1090,93 @@ Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nuevo preajuste</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Salir del modo de aplicación de preajustes</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>¿Quiere aplicar un preajuste?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Se aplica después del reinicio del juego</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Cargar recursos de marcas</value>
+  </data>
+  <data name="Mod_LoaledWithErrors" xml:space="preserve">
+    <value>Mod cargado con errores.
+No se recomienda utilizar el mod en este estado, ya que puede provocar un comportamiento impredecible.
+Reinicia el juego.</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Pasos de peatones:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Rellenos:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Líneas:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>No hay captura de pantalla</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Puntos de carretera #{0}:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Carreteras:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Cortar nueva línea por los pasos de peatones</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Cortar líneas por este paso de peatones</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Copia de seguridad de preajustes</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Borrar todos los preajustes</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Borrar todos los preajustes</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>¿De verdad quieres borrar todos los preajustes?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Exportar los preajustes al archivo</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Exportar los preajustes</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Recuperar preajustes desde archivo</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Recuperar los preajustes</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>¿De verdad deseas recuperar los preajustes?
+Los preajustes restaurados reemplazarán todos los preajustes existentes.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Recuperación fallida</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Los preajustes se han recuperado con éxito</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Cortar líneas por todos pasos de peatones</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Cortar líneas por todos pasos de peatones</value>
+  </data>
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Inglés Reino Unido</value>
+  </data>
   
   
   

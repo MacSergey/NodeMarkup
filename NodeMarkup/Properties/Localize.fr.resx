@@ -214,7 +214,7 @@ Maj X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Ceci est une version BETA, des erreurs peuvent se produire et la stabilité n'est pas garantie!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifier le marquage du nœud #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1190,7 +1190,7 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Réécriture de la ressource du modèle</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Pour la renommer, il faut refaire la ressource. Continuer ?</value>
+    <value>Pour le renommer, il faut refaire l'asset. Continuer ?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Pour mettre les bordures du passage piéton, il faut une ligne qui commence au même points que le passage piéton</value>
@@ -1257,5 +1257,10 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Ne pas couper les lignes de passages piétons si c'est leur bordure</value>
   </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Auteur inconnu</value>
+  </data>
+  
+  
   
 </root>

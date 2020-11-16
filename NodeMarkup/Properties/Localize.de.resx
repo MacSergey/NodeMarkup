@@ -214,7 +214,7 @@ Shift x10, Strg x0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Dies ist eine BETA Version. Stabilität und Fehlerfreiheit sind nicht garantiert!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Markierungen von Node #{0} bearbeiten</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1304,5 +1304,14 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Unbekannter Autor</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Markierungen von Segment #{0} bearbeiten</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Bürgersteig</value>
   </data>
 </root>

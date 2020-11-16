@@ -214,7 +214,7 @@ Shift ×10, Ctrl ×0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Toto je BETA verze, mohou se zde vyskytovat chyby a stabilita není zaručena!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Upravit značení křižovatky #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1258,4 +1258,7 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Neznámý autor</value>
   </data>
+  
+  
+  
 </root>
