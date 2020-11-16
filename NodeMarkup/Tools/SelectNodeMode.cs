@@ -94,12 +94,13 @@ namespace NodeMarkup.Tools
                 var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
                 messageBox.CaprionText = "You missed";
 
-                if (ClickCount < 30)
+                if (ClickCount < 10)
                 {
-                    if (ClickCount % 10 != 0)
-                        messageBox.MessageText = "You missed by segment, try again";
-                    else
-                        messageBox.MessageText = $"You missed by segment, I didn't think that you couldn't do it {ClickCount} times in a row, try again";
+                    messageBox.MessageText = "You missed by segment, try again";
+                }
+                else if (ClickCount < 30)
+                {
+                    messageBox.MessageText = $"You missed by segment, I didn't think that you couldn't do it {ClickCount} times in a row, try again";
                 }
                 else if (ClickCount == 30)
                 {
@@ -129,7 +130,7 @@ namespace NodeMarkup.Tools
                 var node = Utilities.GetNode(HoverNodeId);
                 NodeMarkupTool.RenderCircle(cameraInfo, node.m_position, Colors.Orange, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
-            if (IsHoverSegment)
+            else if (IsHoverSegment)
             {
                 var segment = Utilities.GetSegment(HoverSegmentId);
                 var bezier = new Bezier3()
