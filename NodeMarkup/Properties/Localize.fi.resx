@@ -309,8 +309,7 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
     <value>Poista risteyksen merkinnät</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa kaikki risteyksen #{0} tiemerkinnät?
-Tätä toimintoa ei voi kumota.</value>
+    <value>Haluatko varmasti poistaa kaikki risteyksen #{0} tiemerkinnät?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Napauta luodaksesi viivan</value>

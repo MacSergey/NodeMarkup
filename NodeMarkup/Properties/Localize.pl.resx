@@ -245,8 +245,7 @@ Shift x10, Ctrl x0.1</value>
     <value>Usuwanie oznaczeń</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia? 
-Tej akcji nie można cofnąć.</value>
+    <value>Czy na pewno chcesz usunąć wszystkie oznaczenia?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>Eksportuj oznaczenia do pliku</value>
