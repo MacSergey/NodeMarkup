@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class IntersectionTemplateEditor : BaseTemplateEditor<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon, IntersectionTemplateGroup, bool, IntersectionTemplateHeaderPanel>
+    public class IntersectionTemplateEditor : BaseTemplateEditor<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon, IntersectionTemplateGroup, bool, IntersectionTemplateHeaderPanel, EditIntersectionTemplateMode>
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
@@ -123,6 +123,7 @@ namespace NodeMarkup.UI.Editors
         }
     }
     public class IntersectionTemplateGroup : EditableGroup<bool, IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon> { }
+    public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {
         protected override Color32 Color => new Color32(201, 211, 216, 255);

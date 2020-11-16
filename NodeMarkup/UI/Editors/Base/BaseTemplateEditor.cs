@@ -9,16 +9,19 @@ using System.Text;
 
 namespace NodeMarkup.UI.Editors
 {
-    public interface ITemplateEditor
+    public interface ITemplateEditor<ItemType> : IEditor<ItemType>
+        where ItemType : Template
     {
         void Cancel();
+        void EditName();
     }
-    public abstract class BaseTemplateEditor<Item, TemplateType, Icon, Group, GroupType, HeaderPanelType> : GroupedEditor<Item, TemplateType, Icon, Group, GroupType>, ITemplateEditor
+    public abstract class BaseTemplateEditor<Item, TemplateType, Icon, Group, GroupType, HeaderPanelType, EditToolMode> : GroupedEditor<Item, TemplateType, Icon, Group, GroupType>, ITemplateEditor<TemplateType>
         where Item : EditableItem<TemplateType, Icon>
         where Icon : UIComponent
         where TemplateType : Template<TemplateType>
         where Group : EditableGroup<GroupType, Item, TemplateType, Icon>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
+        where EditToolMode : EditTemplateMode<TemplateType>
     {
         protected override bool UseGroupPanel => true;
 
@@ -49,11 +52,11 @@ namespace NodeMarkup.UI.Editors
                     SetEditable();
             }
         }
-        private EditTemplateMode ToolMode { get; }
+        private EditToolMode ToolMode { get; }
 
         public BaseTemplateEditor()
         {
-            ToolMode = Tool.CreateToolMode<EditTemplateMode>();
+            ToolMode = Tool.CreateToolMode<EditToolMode>();
             ToolMode.Init(this);
         }
 
@@ -157,15 +160,21 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        protected virtual void StartEditTemplate()
+        private void StartEditTemplate()
         {
             EditMode = true;
             HasChanges = false;
             SetEditable();
             Tool.SetMode(ToolMode);
         }
+        public void EditName()
+        {
+            StartEditTemplate();
+            NameProperty.Edit();
+        }
+
         protected void OnChanged() => HasChanges = true;
-        protected virtual void EndEditTemplate()
+        private void EndEditTemplate()
         {
             EditMode = false;
             HasChanges = false;
@@ -257,13 +266,14 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class EditTemplateMode : BaseToolMode
+    public abstract class EditTemplateMode<TemplateType> : BaseToolMode
+        where TemplateType : Template
     {
         public override ToolModeType Type => ToolModeType.PanelAction;
 
-        private ITemplateEditor Editor { get; set; }
+        private ITemplateEditor<TemplateType> Editor { get; set; }
 
-        public void Init(ITemplateEditor editor) => Editor = editor;
+        public void Init(ITemplateEditor<TemplateType> editor) => Editor = editor;
         public override void OnSecondaryMouseClicked() => Editor?.Cancel();
     }
 }

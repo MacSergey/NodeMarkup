@@ -240,8 +240,20 @@ namespace NodeMarkup.UI.Panel
             editor?.BorderSetup();
         }
         public void EditFiller(MarkupFiller filler) => Edit<FillerEditor, MarkupFiller>(filler);
-        public void EditStyleTemplate(StyleTemplate template) => Edit<StyleTemplateEditor, StyleTemplate>(template);
-        public void EditIntersectionTemplate(IntersectionTemplate template) => Edit<IntersectionTemplateEditor, IntersectionTemplate>(template);
+
+        private void EditTemplate<EditorType, TemplateType>(TemplateType template, bool editName)
+            where EditorType : Editor, ITemplateEditor<TemplateType>
+            where TemplateType : Template
+        {
+            var editor = Edit<EditorType, TemplateType>(template);
+            if(editName && editor != null)
+            {
+                editor.EditName();
+            }
+        }
+
+        public void EditStyleTemplate(StyleTemplate template, bool editName = true) => EditTemplate<StyleTemplateEditor, StyleTemplate>(template, editName);
+        public void EditIntersectionTemplate(IntersectionTemplate template, bool editName = true) => EditTemplate<IntersectionTemplateEditor, IntersectionTemplate>(template, editName);
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);

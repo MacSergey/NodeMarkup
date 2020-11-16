@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItem, StyleTemplate, StyleTemplateIcon, StyleTemplateGroup, Style.StyleType, StyleTemplateHeaderPanel>
+    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItem, StyleTemplate, StyleTemplateIcon, StyleTemplateGroup, Style.StyleType, StyleTemplateHeaderPanel, EditStyleTemplateMode>
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
@@ -75,7 +75,7 @@ namespace NodeMarkup.UI.Editors
         private void Duplicate()
         {
             if (TemplateManager.StyleManager.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
-                Panel.EditStyleTemplate(duplicate);
+                Panel.EditStyleTemplate(duplicate, false);
         }
         protected override void OnApplyChanges()
         {
@@ -113,4 +113,5 @@ namespace NodeMarkup.UI.Editors
         public bool IsDefault { set => BorderColor = value ? new Color32(255, 215, 0, 255) : (Color32)Color.white; }
     }
     public class StyleTemplateGroup : EditableGroup<Style.StyleType, StyleTemplateItem, StyleTemplate, StyleTemplateIcon> { }
+    public class EditStyleTemplateMode : EditTemplateMode<StyleTemplate> { }
 }
