@@ -33,7 +33,7 @@ namespace NodeMarkup
             if (!(asset is BuildingInfo prefab) || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
                 return;
 
-            Logger.LogDebug($"Start load prefab data \"{prefab.name}\"");
+            Mod.Logger.Debug($"Start load prefab data \"{prefab.name}\"");
             try
             {
                 var decompress = Loader.Decompress(data);
@@ -52,11 +52,11 @@ namespace NodeMarkup
 
                 AssetMarkings[prefab] = new AssetMarking(config, segments, nodes);
 
-                Logger.LogDebug($"Prefab data was loaded; Size = {data.Length} bytes");
+                Mod.Logger.Debug($"Prefab data was loaded; Size = {data.Length} bytes");
             }
             catch(Exception error)
             {
-                Logger.LogError("Could not load prefab data", error);
+                Mod.Logger.Error("Could not load prefab data", error);
             }
         }
         public override void OnAssetSaved(string name, object asset, out Dictionary<string, byte[]> userData)
@@ -65,7 +65,7 @@ namespace NodeMarkup
             if (!(asset is BuildingInfo prefab) || !prefab.m_paths.Any())
                 return;
 
-            Logger.LogDebug($"Start save prefab data \"{prefab.name}\"");
+            Mod.Logger.Debug($"Start save prefab data \"{prefab.name}\"");
             try
             {
                 var config = Loader.GetString(MarkupManager.ToXml());
@@ -95,11 +95,11 @@ namespace NodeMarkup
 
                 userData[MapId] = map;
 
-                Logger.LogDebug($"Prefab data was saved; Size = {data.Length} bytes");
+                Mod.Logger.Debug($"Prefab data was saved; Size = {data.Length} bytes");
             }
             catch (Exception error)
             {
-                Logger.LogError("Could not save prefab data", error);
+                Mod.Logger.Error("Could not save prefab data", error);
             }
         }
         private void GetBytes(ushort n, out byte b1, out byte b2)

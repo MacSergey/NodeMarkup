@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -26,19 +27,19 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint)
                 return;
-            else if (NodeMarkupTool.OnlyAltIsPressed)
+            else if (InputExtension.OnlyAltIsPressed)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
                 if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
-            else if (NodeMarkupTool.OnlyShiftIsPressed)
+            else if (InputExtension.OnlyShiftIsPressed)
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
         }
 
         public override void OnMouseDown(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && NodeMarkupTool.CtrlIsPressed)
+            if (!IsSelectPoint && IsHoverPoint && InputExtension.CtrlIsPressed)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)

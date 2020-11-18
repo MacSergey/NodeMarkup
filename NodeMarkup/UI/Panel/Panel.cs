@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
@@ -52,9 +53,9 @@ namespace NodeMarkup.UI.Panel
 
         public static void CreatePanel()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
             UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
-            Logger.LogDebug($"Panel created");
+            Mod.Logger.Debug($"Panel created");
         }
         public override void Awake()
         {
@@ -62,7 +63,7 @@ namespace NodeMarkup.UI.Panel
 
             Instance = this;
 
-            atlas = TextureUtil.InGameAtlas;
+            atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
 
@@ -83,13 +84,13 @@ namespace NodeMarkup.UI.Panel
         }
         public static void RemovePanel()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
             if (Instance != null)
             {
                 Instance.Hide();
                 Destroy(Instance);
                 Instance = null;
-                Logger.LogDebug($"Panel removed");
+                Mod.Logger.Debug($"Panel removed");
             }
         }
         private void CreateHeader()
@@ -176,7 +177,7 @@ namespace NodeMarkup.UI.Panel
         }
         private void SetPosition()
         {
-            Logger.LogDebug($"Set default panel position");
+            Mod.Logger.Debug($"Set default panel position");
             absolutePosition = DefaultPosition;
         }
 

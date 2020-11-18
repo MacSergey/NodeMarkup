@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,7 @@ namespace NodeMarkup.UI.Editors
 
         public PropertyGroupPanel()
         {
-            atlas = TextureUtil.InGameAtlas;
+            atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "ButtonWhite";
             color = Color;
 

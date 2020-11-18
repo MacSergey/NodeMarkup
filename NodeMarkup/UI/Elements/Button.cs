@@ -18,7 +18,7 @@ namespace NodeMarkup.UI
 
         static UIComponent GetContainingPanel()
         {
-            var ret = UIUtils.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
+            var ret = ModsCommon.UI.UIHelper.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, ModsCommon.UI.UIHelper.FindOptions.NameContains);
             return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
         }
         public override void Start()
@@ -51,26 +51,26 @@ namespace NodeMarkup.UI
         }
         public static void CreateButton()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
             Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
-            Logger.LogDebug($"Button created");
+            Mod.Logger.Debug($"Button created");
         }
         public static void RemoveButton()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(RemoveButton)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupButton)}.{nameof(RemoveButton)}");
 
             if (Instance != null)
             {
                 GetContainingPanel().RemoveUIComponent(Instance);
                 Destroy(Instance);
                 Instance = null;
-                Logger.LogDebug($"Button removed");
+                Mod.Logger.Debug($"Button removed");
             }
         }
 
         protected override void OnClick(UIMouseEventParameter p)
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(OnClick)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupButton)}.{nameof(OnClick)}");
 
             base.OnClick(p);
             NodeMarkupTool.Instance.ToggleTool();

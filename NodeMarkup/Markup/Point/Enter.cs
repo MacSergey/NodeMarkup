@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
@@ -76,13 +77,13 @@ namespace NodeMarkup.Manager
         }
         private void Init()
         {
-            var segment = Utilities.GetSegment(Id);
+            var segment = Id.GetSegment();
             IsStartSide = segment.m_startNode == Markup.Id;
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
 
             var info = segment.Info;
             var lanes = segment.GetLanesId().ToArray();
-            var driveLanesIdxs = info.m_sortedLanes.Where(s => Utilities.IsDriveLane(info.m_lanes[s]));
+            var driveLanesIdxs = info.m_sortedLanes.Where(s => info.m_lanes[s].IsDriveLane());
             if (!IsLaneInvert)
                 driveLanesIdxs = driveLanesIdxs.Reverse();
 
@@ -132,7 +133,7 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            var segment = Utilities.GetSegment(Id);
+            var segment = Id.GetSegment();
 
             CalculateCorner(segment);
             CalculatePosition(segment);
@@ -213,7 +214,7 @@ namespace NodeMarkup.Manager
 
         public uint LaneId { get; }
         public NetInfo.Lane Info { get; }
-        public NetLane NetLane => Utilities.GetLane(LaneId);
+        public NetLane NetLane => LaneId.GetLane();
         public float Position => Info.m_position;
         public float HalfWidth => Mathf.Abs(Info.m_width) / 2;
         public float LeftSidePos => Position + (Enter.IsLaneInvert ? -HalfWidth : HalfWidth);

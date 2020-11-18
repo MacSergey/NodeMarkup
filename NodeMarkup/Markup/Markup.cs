@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
@@ -136,7 +137,7 @@ namespace NodeMarkup.Manager
 
         private void UpdateEnters()
         {
-            var node = Utilities.GetNode(Id);
+            var node = Id.GetNode();
             Position = node.m_position;
 
             var oldEnters = RowEntersList;
@@ -605,7 +606,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could not load node #{nodeId} markup", error);
+                Mod.Logger.Error($"Could not load node #{nodeId} markup", error);
                 markup = null;
                 MarkupManager.LoadErrors += 1;
                 return false;

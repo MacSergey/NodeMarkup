@@ -1,4 +1,6 @@
 ﻿using ICities;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
@@ -14,7 +16,7 @@ namespace NodeMarkup
     {
         public override void OnLevelLoaded(LoadMode mode)
         {
-            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnLevelLoaded)}");
+            Mod.Logger.Debug($"{nameof(LoadingExtension)}.{nameof(OnLevelLoaded)}");
             switch (mode)
             {
                 case LoadMode.NewGame:
@@ -36,13 +38,13 @@ namespace NodeMarkup
 
         public override void OnLevelUnloading()
         {
-            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnLevelUnloading)}");
+            Mod.Logger.Debug($"{nameof(LoadingExtension)}.{nameof(OnLevelUnloading)}");
             NodeMarkupTool.Remove();
         }
 
         public override void OnCreated(ILoading loading)
         {
-            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnCreated)}");
+            Mod.Logger.Debug($"{nameof(LoadingExtension)}.{nameof(OnCreated)}");
             base.OnCreated(loading);
 
             MarkupManager.Clear();

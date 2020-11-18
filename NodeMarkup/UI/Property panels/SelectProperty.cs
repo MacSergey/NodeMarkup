@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -57,11 +59,11 @@ namespace NodeMarkup.UI.Editors
         {
             Selector = Control.AddUIComponent<UIButton>();
             Selector.text = NodeMarkup.Localize.SelectPanel_NotSet;
-            Selector.atlas = TextureUtil.Atlas;
-            Selector.normalBgSprite = TextureUtil.FieldNormal;
-            Selector.hoveredBgSprite = TextureUtil.FieldHovered;
-            Selector.disabledBgSprite = TextureUtil.FieldDisabled;
-            Selector.focusedBgSprite = TextureUtil.FieldFocused;
+            Selector.atlas = TextureHelper.CommonAtlas;
+            Selector.normalBgSprite = TextureHelper.FieldNormal;
+            Selector.hoveredBgSprite = TextureHelper.FieldHovered;
+            Selector.disabledBgSprite = TextureHelper.FieldDisabled;
+            Selector.focusedBgSprite = TextureHelper.FieldFocused;
             Selector.isInteractive = true;
             Selector.enabled = true;
             Selector.autoSize = false;
@@ -73,7 +75,7 @@ namespace NodeMarkup.UI.Editors
             Selector.textPadding = new RectOffset(8, 0, 4, 0);
 
             Button = Selector.AddUIComponent<UIButton>();
-            Button.atlas = TextureUtil.InGameAtlas;
+            Button.atlas = TextureHelper.InGameAtlas;
             Button.text = string.Empty;
             Button.size = Selector.size;
             Button.relativePosition = new Vector3(0f, 0f);

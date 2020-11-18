@@ -14,6 +14,9 @@ using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using NodeMarkup.Tools;
 using UnityEngine.SceneManagement;
+using ModsCommon;
+using ModsCommon.Utilities;
+using ModsCommon.UI;
 
 namespace NodeMarkup
 {
@@ -26,15 +29,16 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
+        public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
+        public static Version VersionBuild => Version.Build();
+
+        public static Logger Logger { get; } = new Logger(nameof(NodeMarkup));
         public static string StaticName { get; } = "Intersection Marking Tool";
 #if DEBUG
         public static string StaticFullName => $"{StaticName} {Version.GetString()} [BETA]";
 #else
         public static string StaticFullName => $"{StaticName} {Version.GetString()}";
 #endif
-
-        public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
-        public static Version VersionBuild => Version.Build();
 
         public static List<Version> Versions { get; } = new List<Version>
         {
@@ -54,11 +58,10 @@ namespace NodeMarkup
         public string Description => Localize.Mod_DescriptionBeta;
 #else
         public static bool IsBeta => false;
-        public string Description => Localize.Mod_Description;
+        public override string Description => Localize.Mod_Description;
 #endif
 
-        public static bool InGame => SceneManager.GetActiveScene().name is string scene && scene != "MainMenu" && scene != "IntroScreen";
-        static CultureInfo Culture
+        protected static CultureInfo Culture
         {
             get
             {
@@ -69,22 +72,23 @@ namespace NodeMarkup
                 return new CultureInfo(locale);
             }
         }
+
         public void OnEnabled()
         {
             LoadingManager.instance.m_introLoaded += LoadedError;
-            Logger.LogDebug($"Version {Version}");
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
+            Logger.Debug($"Version {Version}");
+            Logger.Debug($"{nameof(Mod)}.{nameof(OnEnabled)}");
             Patcher.Patch();
         }
         public void OnDisabled()
         {
             LoadingManager.instance.m_introLoaded -= LoadedError;
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnDisabled)}");
+            Logger.Debug($"{nameof(Mod)}.{nameof(OnDisabled)}");
             Patcher.Unpatch();
             NodeMarkupTool.Remove();
 
             LocaleManager.eventLocaleChanged -= LocaleChanged;
-        }     
+        }
 
         public void OnSettingsUI(UIHelperBase helper)
         {
@@ -92,14 +96,14 @@ namespace NodeMarkup
             LocaleChanged();
             LocaleManager.eventLocaleChanged += LocaleChanged;
 
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
+            Logger.Debug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
             Settings.OnSettingsUI(helper);
         }
 
         public static void LocaleChanged()
         {
             Localize.Culture = Culture;
-            Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
+            Logger.Debug($"current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
         public static bool OpenTroubleshooting()

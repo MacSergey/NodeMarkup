@@ -1,6 +1,8 @@
 ﻿using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -181,13 +183,13 @@ namespace NodeMarkup.UI.Editors
         public Color32 BorderColor { set => color = value; }
         public ColorIcon()
         {
-            atlas = TextureUtil.InGameAtlas;
+            atlas = TextureHelper.InGameAtlas;
             normalBgSprite = disabledBgSprite = "PieChartWhiteBg";
             isInteractive = false;
             color = Color.white;
 
             InnerCircule = AddUIComponent<UIButton>();
-            InnerCircule.atlas = TextureUtil.InGameAtlas;
+            InnerCircule.atlas = TextureHelper.InGameAtlas;
             InnerCircule.normalBgSprite = InnerCircule.normalFgSprite = "PieChartWhiteBg";
             InnerCircule.disabledBgSprite = InnerCircule.disabledFgSprite = "PieChartWhiteBg";
             InnerCircule.isInteractive = false;

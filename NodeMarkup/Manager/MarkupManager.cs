@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using ModsCommon.Utilities;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace NodeMarkup.Manager
         public static void NetManagerUpdateNodePostfix(ushort node, ushort fromSegment, int level) => AddToUpdate(node);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
         {
-            var segment = Utilities.GetSegment(segmentID);
+            var segment = segmentID.GetSegment();
             AddToUpdate(segment.m_startNode);
             AddToUpdate(segment.m_endNode);
         }
@@ -99,7 +100,7 @@ namespace NodeMarkup.Manager
         }
         public static void Clear()
         {
-            Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(Clear)}");
+            Mod.Logger.Debug($"{nameof(MarkupManager)}.{nameof(Clear)}");
             NeedUpdate.Clear();
             NodesMarkup.Clear();
         }

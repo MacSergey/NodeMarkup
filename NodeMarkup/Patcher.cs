@@ -4,6 +4,7 @@ using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using HarmonyLib;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using System;
@@ -22,24 +23,24 @@ namespace NodeMarkup
 
         public static void Patch()
         {
-            Logger.LogDebug($"{nameof(Patcher)}.{nameof(Patch)}");
+            Mod.Logger.Debug($"{nameof(Patcher)}.{nameof(Patch)}");
             HarmonyHelper.DoOnHarmonyReady(() => Begin());
         }
         public static void Unpatch()
         {
-            Logger.LogDebug($"{nameof(Patcher)}.{nameof(Unpatch)}");
+            Mod.Logger.Debug($"{nameof(Patcher)}.{nameof(Unpatch)}");
 
-            Logger.LogDebug($"Unpatch all");
+            Mod.Logger.Debug($"Unpatch all");
 
             var harmony = new Harmony(HarmonyId);
             harmony.UnpatchAll(HarmonyId);
 
-            Logger.LogDebug($"Unpatched");
+            Mod.Logger.Debug($"Unpatched");
         }
 
         private static void Begin()
         {
-            Logger.LogDebug($"{nameof(Patcher)}.{nameof(Begin)}");
+            Mod.Logger.Debug($"{nameof(Patcher)}.{nameof(Begin)}");
 
             Success = true;
 
@@ -61,7 +62,7 @@ namespace NodeMarkup
                 Success &= PatchLoadingScreenModLoadImpl(harmony);
             }
 
-            if (!Mod.InGame)
+            if (!ItemsExtension.InGame)
                 Mod.LoadedError();
         }
         private static bool AddPrefix(Harmony harmony, MethodInfo prefix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
@@ -78,17 +79,17 @@ namespace NodeMarkup
             var methodName = $"{type.Name}.{method}()";
             try
             {
-                Logger.LogDebug($"Patch {methodName}");
+                Mod.Logger.Debug($"Patch {methodName}");
 
                 var original = originalGetter?.Invoke(type, method) ?? AccessTools.Method(type, method);
                 patch(original);
 
-                Logger.LogDebug($"Patched {methodName}");
+                Mod.Logger.Debug($"Patched {methodName}");
                 return true;
             }
             catch (Exception error)
             {
-                Logger.LogError($"Failed Patch {methodName}", error);
+                Mod.Logger.Error($"Failed Patch {methodName}", error);
                 return false;
             }
         }
@@ -217,7 +218,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Logger.LogError($"LSM not founded", error);
+                Mod.Logger.Error($"LSM not founded", error);
                 return true;
             }
         }

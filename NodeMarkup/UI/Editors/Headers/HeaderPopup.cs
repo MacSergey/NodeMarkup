@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -37,8 +39,8 @@ namespace NodeMarkup.UI.Editors
             canFocus = true;
             isInteractive = true;
             color = Background;
-            atlas = TextureUtil.Atlas;
-            backgroundSprite = TextureUtil.FieldHovered;
+            atlas = TextureHelper.CommonAtlas;
+            backgroundSprite = TextureHelper.FieldHovered;
 
             AddPanel();
         }

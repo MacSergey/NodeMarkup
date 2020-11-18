@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
@@ -166,8 +168,8 @@ namespace NodeMarkup.UI.Editors
 
             if (Popup.component is UIPanel panel)
             {
-                panel.atlas = TextureUtil.Atlas;
-                panel.backgroundSprite = TextureUtil.FieldNormal;
+                panel.atlas = TextureHelper.CommonAtlas;
+                panel.backgroundSprite = TextureHelper.FieldNormal;
             }
 
             Opacity = AddOpacitySlider(popup.component);
@@ -188,7 +190,7 @@ namespace NodeMarkup.UI.Editors
         {
             var opacitySlider = parent.AddUIComponent<UISlider>();
 
-            opacitySlider.atlas = TextureUtil.InGameAtlas;
+            opacitySlider.atlas = TextureHelper.InGameAtlas;
             opacitySlider.size = new Vector2(18, 200);
             opacitySlider.relativePosition = new Vector3(254, 12);
             opacitySlider.orientation = UIOrientation.Vertical;

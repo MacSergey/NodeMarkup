@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
@@ -143,7 +144,7 @@ namespace NodeMarkup.UI.Editors
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{MessageBoxBase.CantUndone}";
+                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else

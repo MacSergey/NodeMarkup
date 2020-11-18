@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
@@ -104,12 +106,12 @@ namespace NodeMarkup.UI
         {
             var field = parent.AddUIComponent<FieldType>();
 
-            field.atlas = TextureUtil.Atlas;
-            field.normalBgSprite = TextureUtil.FieldNormal;
-            field.hoveredBgSprite = TextureUtil.FieldHovered;
-            field.focusedBgSprite = TextureUtil.FieldNormal;
-            field.disabledBgSprite = TextureUtil.FieldDisabled;
-            field.selectionSprite = TextureUtil.EmptySprite;
+            field.atlas = TextureHelper.CommonAtlas;
+            field.normalBgSprite = TextureHelper.FieldNormal;
+            field.hoveredBgSprite = TextureHelper.FieldHovered;
+            field.focusedBgSprite = TextureHelper.FieldNormal;
+            field.disabledBgSprite = TextureHelper.FieldDisabled;
+            field.selectionSprite = TextureHelper.EmptySprite;
 
             field.allowFloats = true;
             field.isInteractive = true;

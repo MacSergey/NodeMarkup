@@ -108,6 +108,7 @@
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="UI\Panel\TabStrip.cs" />
     <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
     <Compile Include="UI\Property panels\GroupPanel.cs" />
     <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
@@ -116,12 +117,9 @@
     <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
     <Compile Include="UI\Editors\IntersectionTemplateEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
-    <Compile Include="UI\ComponentPool.cs" />
     <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
     <Compile Include="Manager\Extensions\LoadingExtension.cs" />
-    <Compile Include="EarlyAccess.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="Markup\Crosswalk\Crosswalk.cs" />
     <Compile Include="Markup\Crosswalk\CrosswalkStyleBase.cs" />
     <Compile Include="Markup\Filler\Filler.cs" />
@@ -156,7 +154,6 @@
     </Compile>
     <Compile Include="Tools\Tool.cs" />
     <Compile Include="Tools\Order\BaseOrderMode.cs" />
-    <Compile Include="UI\Elements\DropDown.cs" />
     <Compile Include="UI\Editors\Base\BaseEditor.cs" />
     <Compile Include="UI\Editors\Base\BaseGroupEditor.cs" />
     <Compile Include="UI\Editors\CrosswalkEditor.cs" />
@@ -166,16 +163,12 @@
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Elements\Button.cs" />
-    <Compile Include="UI\Elements\Segmented.cs" />
     <Compile Include="UI\GUI\Button.cs" />
-    <Compile Include="UI\Message boxes\EarlyAccessMessageBox.cs" />
     <Compile Include="UI\Message boxes\ImportMessageBox.cs" />
     <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
     <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
     <Compile Include="UI\Editors\RulePanel.cs" />
     <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
-    <Compile Include="UI\Elements\Keymapping.cs" />
-    <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
     <Compile Include="UI\PointsSelector.cs" />
     <Compile Include="UI\Property panels\BaseProperty.cs" />
@@ -189,17 +182,13 @@
     <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
-    <Compile Include="UI\Elements\TabPanel.cs" />
     <Compile Include="UI\Property panels\TextProperty.cs" />
-    <Compile Include="UI\Property panels\ValueField.cs" />
-    <Compile Include="UI\UIUtils.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\MoveItIntegration.cs" />
     <Compile Include="Utils\ObjectId.cs" />
-    <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
     <Compile Include="Utils\Shortcut.cs" />
@@ -234,12 +223,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
-    <EmbeddedResource Include="Resources\TextFieldPanel.tga" />
     <EmbeddedResource Include="Resources\ColorPicker.tga" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
     <EmbeddedResource Include="Resources\OpacitySlider.tga" />
-    <EmbeddedResource Include="Resources\TabButton.tga" />
-    <EmbeddedResource Include="Resources\DefaultTabButtons.tga" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Styles.png" />
@@ -262,9 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\CloseButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Empty.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
@@ -294,6 +277,12 @@
     <EmbeddedResource Include="Resources\StylesPreview\StopLineSharkTeeth.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StopLineSolid.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StopLineSolidAndDashed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ModsCommon\ModsCommon\ModsCommon.csproj">
+      <Project>{a2e46a42-e7e1-4c9f-99fa-01ca7283ac3b}</Project>
+      <Name>ModsCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
@@ -338,7 +327,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

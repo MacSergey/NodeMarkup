@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.Utils;
@@ -127,16 +129,16 @@ namespace NodeMarkup.Tools
         {
             if (IsHoverNode)
             {
-                var node = Utilities.GetNode(HoverNodeId);
+                var node = HoverNodeId.GetNode();
                 NodeMarkupTool.RenderCircle(cameraInfo, node.m_position, Colors.Orange, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
             }
             else if (IsHoverSegment)
             {
-                var segment = Utilities.GetSegment(HoverSegmentId);
+                var segment = HoverSegmentId.GetSegment();
                 var bezier = new Bezier3()
                 {
-                    a = Utilities.GetNode(segment.m_startNode).m_position,
-                    d = Utilities.GetNode(segment.m_endNode).m_position,
+                    a = segment.m_startNode.GetNode().m_position,
+                    d = segment.m_endNode.GetNode().m_position,
                 };
                 NetSegment.CalculateMiddlePoints(bezier.a, segment.m_startDirection, bezier.d, segment.m_endDirection, true, true, out bezier.b, out bezier.c);
                 NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Orange, segment.Info.m_halfWidth * 2);

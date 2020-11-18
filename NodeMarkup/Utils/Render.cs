@@ -1,9 +1,11 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -15,12 +17,13 @@ namespace NodeMarkup.Utils
         public static Dictionary<MaterialType, Material> MaterialLib { get; private set; } = Init();
         private static Dictionary<MaterialType, Material> Init()
         {
+            var assembly = Assembly.GetExecutingAssembly();
             return new Dictionary<MaterialType, Material>()
             {
-                { MaterialType.RectangleLines, CreateDecalMaterial(CreateTexture(1,1,Color.white))},
-                { MaterialType.RectangleFillers, CreateDecalMaterial(CreateTexture(1,1,Color.white), renderQueue: 2459)},
-                { MaterialType.Triangle, CreateDecalMaterial(CreateTexture(64,64,Color.white), TextureUtil.LoadTextureFromAssembly("SharkTooth"))},
-                { MaterialType.Pavement, CreateRoadMaterial(CreateTexture(64,64,Color.white), CreateTexture(64,64,new Color32(0,0,0,255))) },
+                { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
+                { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
+                { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
+                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(64,64,Color.white), TextureHelper.CreateTexture(64,64,new Color32(0,0,0,255))) },
             };
         }
 
@@ -85,8 +88,6 @@ namespace NodeMarkup.Utils
 
             return mesh;
         }
-
-
         private static void CreateTemp(float length, float height, float width, out Vector3[] vertices, out int[] triangles)
         {
             Vector3[] c = new Vector3[8];
@@ -154,7 +155,6 @@ namespace NodeMarkup.Utils
 
             return material;
         }
-
         public static Texture2D CreateChessBoardTexture()
         {
             var height = 256;
@@ -174,17 +174,6 @@ namespace NodeMarkup.Utils
                 texture.SetPixel(row, column, new Color(color, color, color, 1));
             }
 
-            texture.Apply();
-            return texture;
-        }
-        public static Texture2D CreateTexture(int height, int width, Color color)
-        {
-            var texture = new Texture2D(height, width) { name = "Markup" };
-            for (var i = 0; i < width; i += 1)
-            {
-                for (var j = 0; j < height; j += 1)
-                    texture.SetPixel(i, j, color);
-            }
             texture.Apply();
             return texture;
         }
@@ -287,7 +276,7 @@ namespace NodeMarkup.Utils
         }
         public void Draw()
         {
-            var instance = Utilities.NetManager;
+            var instance = ItemsExtension.NetManager;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
 
@@ -376,7 +365,7 @@ namespace NodeMarkup.Utils
 
         public void Draw()
         {
-            var instance = Utilities.PropManager;
+            var instance = ItemsExtension.PropManager;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
 

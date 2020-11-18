@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utils;
@@ -50,7 +51,7 @@ namespace NodeMarkup.Tools
         protected IEnumerable<string> GetStylesModifier<StyleType>()
             where StyleType : Enum
         {
-            foreach (var style in Utilities.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
             {
                 var general = (Style.StyleType)(object)style;
                 var modifier = (StyleModifier)NodeMarkupTool.StylesModifier[general].value;

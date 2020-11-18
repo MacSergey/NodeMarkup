@@ -21,6 +21,8 @@ using ColossalFramework.Packaging;
 using ColossalFramework.IO;
 using System.IO;
 using ColossalFramework.Importers;
+using ModsCommon.Utilities;
+using ModsCommon.UI;
 
 namespace NodeMarkup.Tools
 {
@@ -29,19 +31,19 @@ namespace NodeMarkup.Tools
         #region PROPERTIES
 
         #region STATIC
-        public static Shortcut DeleteAllShortcut { get; } = new Shortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
-        public static Shortcut ResetOffsetsShortcut { get; } = new Shortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
-        public static Shortcut AddFillerShortcut { get; } = new Shortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => Instance.StartCreateFiller());
-        public static Shortcut CopyMarkingShortcut { get; } = new Shortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => Instance.CopyMarkup());
-        public static Shortcut PasteMarkingShortcut { get; } = new Shortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => Instance.PasteMarkup());
-        public static Shortcut EditMarkingShortcut { get; } = new Shortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => Instance.EditMarkup());
-        public static Shortcut CreateEdgeLinesShortcut { get; } = new Shortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
-        public static Shortcut ActivationShortcut { get; } = new Shortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
-        public static Shortcut AddRuleShortcut { get; } = new Shortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
-        public static Shortcut SaveAsIntersectionTemplateShortcut { get; } = new Shortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
-        public static Shortcut CutLinesByCrosswalks { get; } = new Shortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
+        public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
+        public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
+        public static NodeMarkupShortcut AddFillerShortcut { get; } = new NodeMarkupShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => Instance.StartCreateFiller());
+        public static NodeMarkupShortcut CopyMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => Instance.CopyMarkup());
+        public static NodeMarkupShortcut PasteMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => Instance.PasteMarkup());
+        public static NodeMarkupShortcut EditMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => Instance.EditMarkup());
+        public static NodeMarkupShortcut CreateEdgeLinesShortcut { get; } = new NodeMarkupShortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
+        public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
+        public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
+        public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
+        public static NodeMarkupShortcut CutLinesByCrosswalks { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
 
-        public static IEnumerable<Shortcut> Shortcuts
+        public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
             get
             {
@@ -57,15 +59,7 @@ namespace NodeMarkup.Tools
             }
         }
 
-        public static bool AltIsPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
-        public static bool ShiftIsPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        public static bool CtrlIsPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-        public static bool OnlyAltIsPressed => AltIsPressed && !ShiftIsPressed && !CtrlIsPressed;
-        public static bool OnlyShiftIsPressed => ShiftIsPressed && !AltIsPressed && !CtrlIsPressed;
-        public static bool OnlyCtrlIsPressed => CtrlIsPressed && !AltIsPressed && !ShiftIsPressed;
-
-        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } =
-            Utilities.GetEnumValues<Style.StyleType>().ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{(int)(object)i}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
+        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>().ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{(int)(object)i}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -96,11 +90,11 @@ namespace NodeMarkup.Tools
         public static NodeMarkupTool Instance { get; set; }
         protected override void Awake()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
             base.Awake();
 
             Instance = this;
-            Logger.LogDebug($"Tool Created");
+            Mod.Logger.Debug($"Tool Created");
 
             ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
@@ -123,22 +117,22 @@ namespace NodeMarkup.Tools
         public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
         public static void Create()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
             ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
         }
         public static void Remove()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(Remove)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(Remove)}");
             if (Instance != null)
             {
                 Destroy(Instance);
                 Instance = null;
-                Logger.LogDebug($"Tool removed");
+                Mod.Logger.Debug($"Tool removed");
             }
         }
         protected override void OnDestroy()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
             NodeMarkupButton.RemoveButton();
             NodeMarkupPanel.RemovePanel();
             ComponentPool.Clear();
@@ -146,7 +140,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnEnable()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
             Reset();
 
             PrevTool = m_toolController.CurrentTool;
@@ -157,7 +151,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnDisable()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
             Reset();
 
             if (m_toolController?.NextTool == null && PrevTool != null)
@@ -176,7 +170,7 @@ namespace NodeMarkup.Tools
 
         public void ToggleTool()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}: {(!enabled ? "enable" : "disable")}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}: {(!enabled ? "enable" : "disable")}");
             enabled = !enabled;
         }
         public void Disable() => enabled = false;
@@ -335,11 +329,11 @@ namespace NodeMarkup.Tools
         }
         private void DeleteAllMarking()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllMarking)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllMarking)}");
 
             var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
             messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
-            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{MessageBoxBase.CantUndone}", Markup.Id);
+            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}", Markup.Id);
             messageBox.OnButton1Click = Delete;
 
             bool Delete()
@@ -351,13 +345,13 @@ namespace NodeMarkup.Tools
         }
         private void ResetAllOffsets()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ResetAllOffsets)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(ResetAllOffsets)}");
 
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_ResetOffsetsCaption;
-                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{MessageBoxBase.CantUndone}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Reset;
             }
             else
@@ -393,7 +387,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
-                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{MessageBoxBase.CantUndone}\n\n{additional}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{NodeMarkupMessageBox.CantUndone}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
                     {
                         onDelete();
@@ -409,18 +403,18 @@ namespace NodeMarkup.Tools
 
         private void CopyMarkup()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
             MarkupBuffer = new IntersectionTemplate(Markup);
         }
         private void PasteMarkup()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(PasteMarkup)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(PasteMarkup)}");
 
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_PasteMarkingsCaption;
-                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{MessageBoxBase.CantUndone}";
+                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Paste;
             }
             else
@@ -435,28 +429,28 @@ namespace NodeMarkup.Tools
         }
         private void EditMarkup()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
 
             BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
         }
         public void ApplyIntersectionTemplate(IntersectionTemplate template)
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(ApplyIntersectionTemplate)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(ApplyIntersectionTemplate)}");
 
             BaseOrderToolMode.IntersectionTemplate = template;
             SetMode(ToolModeType.ApplyIntersectionTemplateOrder);
         }
         private void CreateEdgeLines()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CreateEdgeLines)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(CreateEdgeLines)}");
 
             var lines = Markup.Enters.Select(e => Markup.AddConnection(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
             Panel.EditLine(lines.Last());
         }
         private void SaveAsIntersectionTemplate()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsIntersectionTemplate)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsIntersectionTemplate)}");
 
             StartCoroutine(MakeScreenshot(Callback));
 
@@ -468,7 +462,7 @@ namespace NodeMarkup.Tools
         }
         private void CutByCrosswalks()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(CutByCrosswalks)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(CutByCrosswalks)}");
 
             foreach (var crosswalk in Markup.Crosswalks)
                 Markup.CutLinesByCrosswalk(crosswalk);
@@ -479,7 +473,7 @@ namespace NodeMarkup.Tools
             if (callback == null)
                 yield break;
 
-            Logger.LogDebug($"{nameof(NodeMarkupTool)}.{nameof(MakeScreenshot)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(MakeScreenshot)}");
 
             var cameraController = ToolsModifierControl.cameraController;
             var camera = Camera.main;
@@ -648,10 +642,9 @@ namespace NodeMarkup.Tools
         public static Style.StyleType GetStyle<StyleType>(StyleType defaultStyle)
            where StyleType : Enum
         {
-            var modifier = Utilities.GetEnumValues<StyleModifier>()
-                .FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.Control == CtrlIsPressed && ik.Shift == ShiftIsPressed && ik.Alt == AltIsPressed);
+            var modifier = EnumExtension.GetEnumValues<StyleModifier>().FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.Control == InputExtension.CtrlIsPressed && ik.Shift == InputExtension.ShiftIsPressed && ik.Alt == InputExtension.AltIsPressed);
 
-            foreach (var style in Utilities.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
             {
                 var general = (Style.StyleType)(object)style;
                 if (StylesModifier.TryGetValue(general, out SavedInt saved) && (StyleModifier)saved.value == modifier)

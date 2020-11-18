@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -25,7 +26,7 @@ namespace NodeMarkup.Tools
         {
             base.OnToolUpdate();
 
-            if (!IsSelectPoint && !NodeMarkupTool.ShiftIsPressed)
+            if (!IsSelectPoint && !InputExtension.ShiftIsPressed)
                 Tool.SetDefaultMode();
         }
         public override void OnPrimaryMouseClicked(Event e)

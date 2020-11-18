@@ -2,12 +2,14 @@
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -113,8 +115,9 @@ namespace NodeMarkup.Manager
 
         private Texture2D GetTexture(string name)
         {
-            var background = TextureUtil.LoadTextureFromAssembly(name);
-            var logo = TextureUtil.LoadTextureFromAssembly(Style.Type.ToString());
+            var assembly = Assembly.GetExecutingAssembly();
+            var background = assembly.LoadTextureFromAssembly(name);
+            var logo = assembly.LoadTextureFromAssembly(Style.Type.ToString());
 
             var widthShift = (background.width - logo.width) / 2;
             var heightShift = (background.height - logo.height) / 2;
@@ -298,7 +301,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError("Could not get template screenshot", error);
+                Mod.Logger.Error("Could not get template screenshot", error);
                 return null;
             }
         }

@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -21,7 +23,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void FillItems()
         {
-            foreach (var value in Utilities.GetEnumValues<EnumType>())
+            foreach (var value in EnumExtension.GetEnumValues<EnumType>())
                 Selector.AddItem(value, value.Description());
         }
     }
