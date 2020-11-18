@@ -24,9 +24,6 @@ namespace NodeMarkup.Utils
             {nameof(HeaderButtons), HeaderButtons},
             {nameof(ListItem), ListItem},
             {nameof(Button), Button},
-            {nameof(Resize), Resize},
-            {nameof(OpacitySlider), OpacitySlider},
-            {nameof(ColorPicker), ColorPicker},
             {nameof(CloseButton), CloseButton},
             {nameof(Arrows), Arrows},
         };
@@ -54,13 +51,6 @@ namespace NodeMarkup.Utils
 
         static void Button(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
-
-        static void Resize(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, ResizeSprite);
-
-        static void OpacitySlider(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, 18, 200, new RectOffset(), 2, OpacitySliderBoard, OpacitySliderColor);
-
-        static void ColorPicker(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 43, 49, ColorPickerNormal, ColorPickerHover, ColorPickerDisable, ColorPickerColor, ColorPickerBoard);
 
         static void CloseButton(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
@@ -133,17 +123,6 @@ namespace NodeMarkup.Utils
         public static string Icon => nameof(Icon);
         public static string IconActive => nameof(IconActive);
         public static string IconHover => nameof(IconHover);
-
-        public static string ResizeSprite { get; } = nameof(ResizeSprite);
-
-        public static string OpacitySliderBoard { get; } = nameof(OpacitySliderBoard);
-        public static string OpacitySliderColor { get; } = nameof(OpacitySliderColor);
-
-        public static string ColorPickerNormal { get; } = nameof(ColorPickerNormal);
-        public static string ColorPickerHover { get; } = nameof(ColorPickerHover);
-        public static string ColorPickerDisable { get; } = nameof(ColorPickerDisable);
-        public static string ColorPickerColor { get; } = nameof(ColorPickerColor);
-        public static string ColorPickerBoard { get; } = nameof(ColorPickerBoard);
 
         public static string DeleteNormal { get; } = nameof(DeleteNormal);
         public static string DeleteHover { get; } = nameof(DeleteHover);

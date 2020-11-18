@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperties()
         {
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
         private void StyleChanged(Style.StyleType style)

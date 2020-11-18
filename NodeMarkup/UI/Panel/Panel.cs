@@ -122,8 +122,8 @@ namespace NodeMarkup.UI.Panel
         {
             SizeChanger = AddUIComponent<UIPanel>();
             SizeChanger.size = new Vector2(9, 9);
-            SizeChanger.atlas = TextureUtil.Atlas;
-            SizeChanger.backgroundSprite = TextureUtil.ResizeSprite;
+            SizeChanger.atlas = TextureHelper.CommonAtlas;
+            SizeChanger.backgroundSprite = TextureHelper.ResizeSprite;
             SizeChanger.color = new Color32(255, 255, 255, 160);
             SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
 

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -47,7 +48,7 @@ namespace NodeMarkup.UI.Editors
         protected override IEnumerable<EditorItem> AddAditionalProperties()
         {
             AddStyleProperties();
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
 
             return StyleProperties;

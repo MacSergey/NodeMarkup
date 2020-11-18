@@ -147,9 +147,9 @@ namespace NodeMarkup.Manager
 
             return components;
         }
-        protected ColorPropertyPanel AddColorProperty(UIComponent parent)
+        protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
         {
-            var colorProperty = ComponentPool.Get<ColorPropertyPanel>(parent);
+            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent);
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.Init();
             colorProperty.Value = Color;

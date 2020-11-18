@@ -109,8 +109,9 @@
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectNodeMode.cs" />
     <Compile Include="UI\Panel\TabStrip.cs" />
+    <Compile Include="UI\Property panels\ColorAdvancedProperty.cs" />
+    <Compile Include="UI\Property panels\EnumProperty.cs" />
     <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
-    <Compile Include="UI\Property panels\GroupPanel.cs" />
     <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
     <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
@@ -171,18 +172,10 @@
     <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
     <Compile Include="UI\PointsSelector.cs" />
-    <Compile Include="UI\Property panels\BaseProperty.cs" />
-    <Compile Include="UI\Property panels\BoolProperty.cs" />
-    <Compile Include="UI\Property panels\ButtonPanel.cs" />
-    <Compile Include="UI\Property panels\ColorProperty.cs" />
-    <Compile Include="UI\Property panels\EnumProperty.cs" />
-    <Compile Include="UI\Property panels\FieldProperty.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
-    <Compile Include="UI\Property panels\ListProperty.cs" />
-    <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
-    <Compile Include="UI\Property panels\TextProperty.cs" />
+    <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -223,9 +216,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
-    <EmbeddedResource Include="Resources\ColorPicker.tga" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
-    <EmbeddedResource Include="Resources\OpacitySlider.tga" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Styles.png" />
@@ -235,9 +226,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SharkTooth.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Resize.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Button.png" />
