@@ -114,8 +114,6 @@
     <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
     <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
-    <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
-    <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
     <Compile Include="UI\Editors\IntersectionTemplateEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
@@ -233,9 +231,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\HeaderButtons.png" />
     <EmbeddedResource Include="Resources\OrderButtons.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\CloseButton.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />

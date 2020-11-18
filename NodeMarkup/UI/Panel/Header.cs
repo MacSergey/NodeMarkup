@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
@@ -111,6 +112,10 @@ namespace NodeMarkup.UI.Panel
 
         private string GetText(string text, NodeMarkupShortcut shortcut) => $"{text} ({shortcut})";
     }
+    public class SimpleHeaderButton : HeaderButton 
+    {
+        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+    }
     public class PanelHeaderButton : SimpleHeaderButton
     {
         protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
@@ -119,6 +124,8 @@ namespace NodeMarkup.UI.Panel
     }
     public class AdditionallyHeaderButton : HeaderPopupButton<AdditionallyPopup>
     {
+        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+
         protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
         protected override Color32 PressedColor => new Color32(144, 144, 144, 255);
         protected override Color32 PressedIconColor => Color.white;

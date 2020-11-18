@@ -24,7 +24,6 @@ namespace NodeMarkup.Utils
             {nameof(HeaderButtons), HeaderButtons},
             {nameof(ListItem), ListItem},
             {nameof(Button), Button},
-            {nameof(CloseButton), CloseButton},
             {nameof(Arrows), Arrows},
         };
 
@@ -45,15 +44,13 @@ namespace NodeMarkup.Utils
         static void Styles(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
 
         static void HeaderButtons(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4,4,4,4), 2, HeaderHovered, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
+            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4,4,4,4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
 
         static void ListItem(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
 
         static void Button(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
 
-        static void CloseButton(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 32, 32, DeleteNormal, DeleteHover, DeletePressed);
 
         static void Arrows(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight);
@@ -96,7 +93,6 @@ namespace NodeMarkup.Utils
                 nameof(Style.StyleType.CrosswalkChessBoard),
             };
 
-        public static string HeaderHovered => nameof(HeaderHovered);
         public static string AddTemplate => nameof(AddTemplate);
         public static string ApplyTemplate => nameof(ApplyTemplate);
         public static string Copy => nameof(Copy);
@@ -123,10 +119,6 @@ namespace NodeMarkup.Utils
         public static string Icon => nameof(Icon);
         public static string IconActive => nameof(IconActive);
         public static string IconHover => nameof(IconHover);
-
-        public static string DeleteNormal { get; } = nameof(DeleteNormal);
-        public static string DeleteHover { get; } = nameof(DeleteHover);
-        public static string DeletePressed { get; } = nameof(DeletePressed);
 
         public static string ArrowDown { get; } = nameof(ArrowDown);
         public static string ArrowRight { get; } = nameof(ArrowRight);

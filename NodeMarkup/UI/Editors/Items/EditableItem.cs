@@ -134,10 +134,10 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = TextureUtil.Atlas;
-            DeleteButton.normalBgSprite = TextureUtil.DeleteNormal;
-            DeleteButton.hoveredBgSprite = TextureUtil.DeleteHover;
-            DeleteButton.pressedBgSprite = TextureUtil.DeletePressed;
+            DeleteButton.atlas = TextureHelper.CommonAtlas;
+            DeleteButton.normalBgSprite = TextureHelper.DeleteNormal;
+            DeleteButton.hoveredBgSprite = TextureHelper.DeleteHover;
+            DeleteButton.pressedBgSprite = TextureHelper.DeletePressed;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }

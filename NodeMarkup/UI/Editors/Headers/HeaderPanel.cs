@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.UI.Panel;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,122 +11,6 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class HeaderPanel : EditorItem, IReusable
-    {
-        public event Action OnDelete;
-        protected override float DefaultHeight => HeaderButton.Size + 10;
-
-        protected HeaderContent Content { get; set; }
-        protected UIButton DeleteButton { get; set; }
-
-        public HeaderPanel()
-        {
-            AddDeleteButton();
-            AddContent();
-        }
-
-        public virtual void Init(float? height = null, bool isDeletable = true)
-        {
-            base.Init(height);
-            DeleteButton.isVisible = isDeletable;
-            SetSize();
-        }
-        public override void DeInit()
-        {
-            base.DeInit();
-            OnDelete = null;
-        }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-            SetSize();
-        }
-        private void SetSize()
-        {
-            Content.size = new Vector2(DeleteButton.isVisible ? width - DeleteButton.width - 10 : width, height);
-            DeleteButton.relativePosition = new Vector2(width - DeleteButton.width - 5, (height - DeleteButton.height) / 2);
-        }
-
-        private void AddContent()
-        {
-            Content = AddUIComponent<HeaderContent>();
-            Content.relativePosition = new Vector2(0, 0);
-        }
-
-        private void AddDeleteButton()
-        {
-            DeleteButton = AddUIComponent<UIButton>();
-            DeleteButton.atlas = TextureUtil.Atlas;
-            DeleteButton.normalBgSprite = TextureUtil.DeleteNormal;
-            DeleteButton.hoveredBgSprite = TextureUtil.DeleteHover;
-            DeleteButton.pressedBgSprite = TextureUtil.DeletePressed;
-            DeleteButton.size = new Vector2(20, 20);
-            DeleteButton.eventClick += DeleteClick;
-        }
-        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
-
-    }
-    public class HeaderContent : UIPanel
-    {
-        public HeaderContent()
-        {
-            autoLayoutDirection = LayoutDirection.Horizontal;
-            autoLayoutPadding = new RectOffset(0, Math.Max(5 - 2 * HeaderButton.IconPadding, 0), 0, 0);
-        }
-        public SimpleHeaderButton AddButton(string sprite, string text, bool showText = false, MouseEventHandler onClick = null)
-            => AddButton<SimpleHeaderButton>(this, sprite, text, showText, onClick);
-        public SimpleHeaderButton AddButton(UIComponent parent, string sprite, string text, bool showText = false, MouseEventHandler onClick = null)
-            => AddButton<SimpleHeaderButton>(parent, sprite, text, showText, onClick);
-
-        public ButtonType AddButton<ButtonType>(string sprite, string text, bool showText = false, MouseEventHandler onClick = null) where ButtonType : HeaderButton
-            => AddButton<ButtonType>(this, sprite, text, showText, onClick);
-        public ButtonType AddButton<ButtonType>(UIComponent parent, string sprite, string text, bool showText = false, MouseEventHandler onClick = null)
-            where ButtonType : HeaderButton
-        {
-            var button = parent.AddUIComponent<ButtonType>();
-            if(showText)
-                button.text = text ?? string.Empty;
-            else
-                button.tooltip = text;
-            button.SetIconSprite(sprite);
-
-            if (onClick != null)
-                button.eventClick += onClick;
-            return button;
-        }
-
-        protected override void OnComponentAdded(UIComponent child)
-        {
-            base.OnComponentAdded(child);
-            child.eventVisibilityChanged += ChildVisibilityChanged;
-            child.eventSizeChanged += ChildSizeChanged;
-        }
-        protected override void OnComponentRemoved(UIComponent child)
-        {
-            base.OnComponentRemoved(child);
-            child.eventVisibilityChanged -= ChildVisibilityChanged;
-            child.eventSizeChanged -= ChildSizeChanged;
-        }
-
-        private void ChildVisibilityChanged(UIComponent component, bool value) => PlaceChildren();
-        private void ChildSizeChanged(UIComponent component, Vector2 value) => PlaceChildren();
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-            PlaceChildren();
-        }
-
-        public void PlaceChildren()
-        {
-            autoLayout = true;
-            autoLayout = false;
-
-            foreach (var item in components)
-                item.relativePosition = new Vector2(item.relativePosition.x, (height - item.height) / 2);
-        }
-    }
-
     public class StyleHeaderPanel : HeaderPanel
     {
         public event Action OnSaveTemplate;
@@ -136,10 +21,10 @@ namespace NodeMarkup.UI.Editors
 
         public StyleHeaderPanel()
         {
-            Content.AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
             ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(TextureUtil.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            Content.AddButton(TextureUtil.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
-            Content.AddButton(TextureUtil.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
@@ -167,7 +52,7 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalkHeaderPanel()
         {
-            Content.AddButton(TextureUtil.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
         }
         public override void DeInit()
         {
@@ -207,10 +92,10 @@ namespace NodeMarkup.UI.Editors
         public TemplateHeaderPanel() => AddButtons();
         protected virtual void AddButtons()
         {
-            Edit = Content.AddButton(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
-            SaveAsAsset = Content.AddButton(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
-            Save = Content.AddButton(TextureUtil.Save, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
-            NotSave = Content.AddButton(TextureUtil.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
+            Edit = Content.AddButton<SimpleHeaderButton>(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
+            SaveAsAsset = Content.AddButton<SimpleHeaderButton>(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+            Save = Content.AddButton<SimpleHeaderButton>(TextureUtil.Save, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
+            NotSave = Content.AddButton<SimpleHeaderButton>(TextureUtil.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
         }
 
         public virtual void Init(TemplateType template)
@@ -255,8 +140,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            SetAsDefaultButton = Content.AddButton(string.Empty, null, onClick: SetAsDefaultClick);
-            Duplicate = Content.AddButton(TextureUtil.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            SetAsDefaultButton = Content.AddButton<SimpleHeaderButton>(string.Empty, null, onClick: SetAsDefaultClick);
+            Duplicate = Content.AddButton<SimpleHeaderButton>(TextureUtil.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
 
             base.AddButtons();
         }
@@ -294,7 +179,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            Apply = Content.AddButton(TextureUtil.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, onClick: ApplyClick);
+            Apply = Content.AddButton<SimpleHeaderButton>(TextureUtil.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, onClick: ApplyClick);
             base.AddButtons();
         }
         public override void DeInit()
