@@ -20,12 +20,15 @@ namespace NodeMarkup.Manager
 {
     public interface IPeriodicFiller : IFillerStyle, IWidthStyle, IColorStyle
     {
-        float Step { get; set; }
-        float Offset { get; set; }
+        PropertyValue<float> Step { get; }
+    }
+    public interface IOffsetFiller : IFillerStyle, IWidthStyle, IColorStyle
+    {
+        PropertyValue<float> Offset { get; }
     }
     public interface IRotateFiller : IFillerStyle, IWidthStyle, IColorStyle
     {
-        float Angle { get; set; }
+        PropertyValue<float> Angle { get; }
     }
 
     public abstract class Filler2DStyle : FillerStyle
@@ -40,59 +43,31 @@ namespace NodeMarkup.Manager
         public Filler3DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
     }
 
-    public abstract class SimpleFillerStyle : Filler2DStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public abstract class SimpleFillerStyle : Filler2DStyle, IPeriodicFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
-        float _angle;
-        float _step;
-        float _offset;
-
-        public float Angle
-        {
-            get => _angle;
-            set
-            {
-                _angle = value;
-                StyleChanged();
-            }
-        }
-        public float Step
-        {
-            get => _step;
-            set
-            {
-                _step = value;
-                StyleChanged();
-            }
-        }
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
+        public PropertyValue<float> Angle { get; }
+        public PropertyValue<float> Step { get; }
+        public PropertyValue<float> Offset { get; }
 
         public SimpleFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, medianOffset)
         {
-            Angle = angle;
-            Step = step;
-            Offset = offset;
+            Angle = GetAngleProperty(angle);
+            Step = GetStepProperty(step);
+            Offset = GetOffsetProperty(offset);
         }
 
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
+
             if (target is IRotateFiller rotateTarget)
-            {
-                rotateTarget.Angle = Angle;
-            }
+                rotateTarget.Angle.Value = Angle;
+
             if (target is IPeriodicFiller periodicTarget)
-            {
-                periodicTarget.Step = Step;
-                periodicTarget.Offset = Offset;
-            }
+                periodicTarget.Step.Value = Step;
+
+            if (target is IOffsetFiller offsetTarget)
+                offsetTarget.Offset.Value = Offset;
         }
 
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -107,17 +82,17 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("A", Angle));
-            config.Add(new XAttribute("S", Step));
-            config.Add(new XAttribute("O", Offset));
+            config.Add(Angle.ToXml());
+            config.Add(Step.ToXml());
+            config.Add(Offset.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Angle = config.GetAttrValue("A", DefaultAngle);
-            Step = config.GetAttrValue("S", DefaultStepGrid);
-            Offset = config.GetAttrValue("O", DefaultOffset);
+            Angle.FromXml(config, DefaultAngle);
+            Step.FromXml(config, DefaultStepGrid);
+            Offset.FromXml(config, DefaultOffset);
         }
     }
 
@@ -174,65 +149,19 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.FillerChevron;
 
-        float _angleBetween;
-        float _step;
-        bool _invert;
-        int _output;
-        From _startingFrom;
-
-        public float AngleBetween
-        {
-            get => _angleBetween;
-            set
-            {
-                _angleBetween = value;
-                StyleChanged();
-            }
-        }
-        public float Step
-        {
-            get => _step;
-            set
-            {
-                _step = value;
-                StyleChanged();
-            }
-        }
-        public float Offset { get; set; }
-        public bool Invert
-        {
-            get => _invert;
-            set
-            {
-                _invert = value;
-                StyleChanged();
-            }
-        }
-        public int Output
-        {
-            get => _output;
-            set
-            {
-                _output = value;
-                StyleChanged();
-            }
-        }
-        public From StartingFrom
-        {
-            get => _startingFrom;
-            set
-            {
-                _startingFrom = value;
-                StyleChanged();
-            }
-        }
+        public PropertyValue<float> AngleBetween { get; }
+        public PropertyValue<float> Step { get; }
+        public PropertyBoolValue Invert { get; }
+        public PropertyValue<int> Output { get; }
+        public PropertyEnumValue<From> StartingFrom { get; }
 
         public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, medianOffset)
         {
-            AngleBetween = angleBetween;
-            Step = step;
-            Output = output;
-            Invert = invert;
+            AngleBetween = GetAngleBetweenProperty(angleBetween);
+            Step = GetStepProperty(step);
+            Output = GetOutputProperty(output);
+            Invert = GetInvertProperty(invert);
+            StartingFrom = GetStartingFromProperty(From.Vertex);
         }
 
         public override FillerStyle CopyFillerStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
@@ -241,10 +170,10 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is ChevronFillerStyle chevronTarget)
             {
-                chevronTarget.AngleBetween = AngleBetween;
-                chevronTarget.Step = Step;
-                chevronTarget.Invert = Invert;
-                chevronTarget.Output = Output;
+                chevronTarget.AngleBetween.Value = AngleBetween;
+                chevronTarget.Step.Value = Step;
+                chevronTarget.Invert.Value = Invert;
+                chevronTarget.Output.Value = Output;
             }
         }
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -272,7 +201,7 @@ namespace NodeMarkup.Manager
             angleProperty.MaxValue = 150;
             angleProperty.Init();
             angleProperty.Value = chevronStyle.AngleBetween;
-            angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween = value;
+            angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween.Value = value;
             AddOnHoverLeave(angleProperty, onHover, onLeave);
             return angleProperty;
         }
@@ -282,7 +211,7 @@ namespace NodeMarkup.Manager
             fromProperty.Text = Localize.StyleOption_StartingFrom;
             fromProperty.Init();
             fromProperty.SelectedObject = chevronStyle.StartingFrom;
-            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom = value;
+            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom.Value = value;
             return fromProperty;
         }
         protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
@@ -296,9 +225,9 @@ namespace NodeMarkup.Manager
             void OnButtonClick(int index)
             {
                 if (index == invertIndex)
-                    chevronStyle.Invert = !chevronStyle.Invert;
+                    chevronStyle.Invert.Value = !chevronStyle.Invert;
                 else if (index == turnIndex)
-                    chevronStyle.Output += 1;
+                    chevronStyle.Output.Value += 1;
             }
 
             return buttonsPanel;
@@ -331,7 +260,7 @@ namespace NodeMarkup.Manager
                         var start = pos + dir * intersects[j - 1].FirstT;
                         var end = pos + dir * intersects[j].FirstT;
 
-                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color, MaterialType.RectangleFillers);
+                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color.Value, MaterialType.RectangleFillers);
                     }
                 }
             }
@@ -526,21 +455,21 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("A", AngleBetween));
-            config.Add(new XAttribute("S", Step));
-            config.Add(new XAttribute("I", Invert ? 1 : 0));
-            config.Add(new XAttribute("O", Output));
-            config.Add(new XAttribute("SF", (int)StartingFrom));
+            config.Add(AngleBetween.ToXml());
+            config.Add(Step.ToXml());
+            config.Add(Output.ToXml());
+            config.Add(Invert.ToXml());
+            config.Add(StartingFrom.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            AngleBetween = config.GetAttrValue("A", DefaultAngle);
-            Step = config.GetAttrValue("S", DefaultStepGrid);
-            Invert = config.GetAttrValue("I", 0) == 1;
-            Output = config.GetAttrValue("O", 0);
-            StartingFrom = (From)config.GetAttrValue("SF", (int)From.Vertex);
+            AngleBetween.FromXml(config, DefaultAngle);
+            Step.FromXml(config, DefaultStepGrid);
+            Invert.FromXml(config, false);
+            Output.FromXml(config, 0);
+            StartingFrom.FromXml(config, From.Vertex);
         }
 
         public enum From

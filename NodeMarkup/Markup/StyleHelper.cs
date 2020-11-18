@@ -132,7 +132,7 @@ namespace NodeMarkup.Manager
 
             return dashesT;
         }
-        public static bool CalculateDashedDash(LineBorders borders, ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color, out MarkupStyleDash dash)
+        public static bool CalculateDashedDash(LineBorders borders, ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkupStyleDash dash)
         {
             dash = CalculateDashedDash(trajectory, startT, endT, dashLength, offset, width, color);
 
@@ -143,7 +143,7 @@ namespace NodeMarkup.Manager
             return !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
 
         }
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color color)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
         {
             if (offset == 0)
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
@@ -154,7 +154,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedDash(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color color, float? angle = null)
+        public static MarkupStyleDash CalculateDashedDash(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color32 color, float? angle = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -167,7 +167,7 @@ namespace NodeMarkup.Manager
             return new MarkupStyleDash(startPosition, endPosition, dir, dashLength, width, color);
         }
 
-        public static bool CalculateSolidDash(LineBorders borders, ILineTrajectory trajectory, float offset, float width, Color color, out MarkupStyleDash dash)
+        public static bool CalculateSolidDash(LineBorders borders, ILineTrajectory trajectory, float offset, float width, Color32 color, out MarkupStyleDash dash)
         {
             dash = CalculateSolidDash(trajectory, offset, width, color);
 
@@ -211,7 +211,7 @@ namespace NodeMarkup.Manager
             }
             return true;
         }
-        public static MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, float offset, float width, Color color)
+        public static MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, float offset, float width, Color32 color)
         {
             if (offset == 0)
                 return CalculateSolidDash(trajectory, Vector3.zero, Vector3.zero, width, color);
@@ -222,7 +222,7 @@ namespace NodeMarkup.Manager
                 return CalculateSolidDash(trajectory, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color color)
+        public static MarkupStyleDash CalculateSolidDash(ILineTrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color32 color)
         {
             var startPosition = trajectory.StartPosition + startOffset;
             var endPosition = trajectory.EndPosition + endOffset;

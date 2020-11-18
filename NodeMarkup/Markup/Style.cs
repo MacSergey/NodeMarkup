@@ -18,11 +18,11 @@ namespace NodeMarkup.Manager
     public interface IStyle { }
     public interface IColorStyle : IStyle
     {
-        Color32 Color { get; set; }
+        PropertyColorValue Color { get; }
     }
     public interface IWidthStyle : IStyle
     {
-        float Width { get; set; }
+        PropertyValue<float> Width { get; }
     }
     public abstract class Style : IToXml
     {
@@ -84,56 +84,36 @@ namespace NodeMarkup.Manager
 
         protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
 
-        Color32 _color;
-        float _width;
-
-        public Color32 Color
-        {
-            get => _color;
-            set
-            {
-                _color = value;
-                StyleChanged();
-            }
-        }
-        public float Width
-        {
-            get => _width;
-            set
-            {
-                _width = value;
-                StyleChanged();
-            }
-        }
+        public PropertyColorValue Color { get; }
+        public PropertyValue<float> Width { get; }
         public Style(Color32 color, float width)
         {
-            Color = color;
-            Width = width;
+            Color = GetColorProperty(color);
+            Width = GetWidthProperty(width);
         }
         protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
         public virtual XElement ToXml()
         {
             var config = BaseToXml();
-            config.Add(new XAttribute("C", Color.ToInt()));
+            config.Add(Color.ToXml());
             config.Add(new XAttribute("CV", ColorVersion));
-            config.Add(new XAttribute("W", Width));
+            config.Add(Width.ToXml());
             return config;
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            var colorInt = config.GetAttrValue<int>("C");
-            var colorVersion = config.GetAttrValue<int>("CV");
-            Color = colorInt != 0 ? colorInt.ToColor(/*colorVersion*/) : DefaultColor;
-            Width = config.GetAttrValue("W", DefaultWidth);
+            //var colorVersion = config.GetAttrValue<int>("CV");
+            Color.FromXml(config, DefaultColor);
+            Width.FromXml(config, DefaultWidth);
         }
 
         public abstract Style Copy();
         public virtual void CopyTo(Style target)
         {
             if (this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
-                widthTarget.Width = widthSource.Width;
+                widthTarget.Width.Value = widthSource.Width;
             if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
-                colorTarget.Color = colorSource.Color;
+                colorTarget.Color.Value = colorSource.Color;
         }
 
         public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -153,7 +133,7 @@ namespace NodeMarkup.Manager
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.Init();
             colorProperty.Value = Color;
-            colorProperty.OnValueChanged += (Color32 color) => Color = color;
+            colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
             return colorProperty;
         }
         protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
@@ -166,7 +146,7 @@ namespace NodeMarkup.Manager
             widthProperty.MinValue = WidthMinValue;
             widthProperty.Init();
             widthProperty.Value = Width;
-            widthProperty.OnValueChanged += (float value) => Width = value;
+            widthProperty.OnValueChanged += (float value) => Width.Value = value;
             AddOnHoverLeave(widthProperty, onHover, onLeave);
 
             return widthProperty;
@@ -181,7 +161,7 @@ namespace NodeMarkup.Manager
             dashLengthProperty.MinValue = 0.1f;
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
-            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength = value;
+            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
             AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
             return dashLengthProperty;
         }
@@ -195,7 +175,7 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.MinValue = 0.1f;
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
-            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength = value;
+            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
             AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
             return spaceLengthProperty;
         }
@@ -209,7 +189,7 @@ namespace NodeMarkup.Manager
             void OnButtonClick(int index)
             {
                 if (index == invertIndex)
-                    asymStyle.Invert = !asymStyle.Invert;
+                    asymStyle.Invert.Value = !asymStyle.Invert;
             }
 
             return buttonsPanel;
@@ -223,6 +203,30 @@ namespace NodeMarkup.Manager
                 fieldPanel.OnLeave += onLeave;
         }
 
+        protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetWidthProperty(float defaultValue) => new PropertyValue<float>("W", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetOffsetProperty(float defaultValue) => new PropertyValue<float>("O", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyValue<float>("MO", StyleChanged, defaultValue);
+        protected string AlignmentLabel => "A";
+        protected PropertyEnumValue<LineStyle.StyleAlignment> GetAlignmentProperty(LineStyle.StyleAlignment defaultValue) => new PropertyEnumValue<LineStyle.StyleAlignment>(AlignmentLabel, StyleChanged, defaultValue);
+        protected PropertyValue<float> GetDashLengthProperty(float defaultValue) => new PropertyValue<float>("DL", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetSpaceLengthProperty(float defaultValue) => new PropertyValue<float>("SL", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetInvertProperty(bool defaultValue) => new PropertyBoolValue("I", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetCenterSolidProperty(bool defaultValue) => new PropertyBoolValue("CS", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetBaseProperty(float defaultValue) => new PropertyValue<float>("B", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetHeightProperty(float defaultValue) => new PropertyValue<float>("H", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetSpaceProperty(float defaultValue) => new PropertyValue<float>("S", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetOffsetBeforeProperty(float defaultValue) => new PropertyValue<float>("OB", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetOffsetAfterProperty(float defaultValue) => new PropertyValue<float>("OA", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetLineWidthProperty(float defaultValue) => new PropertyValue<float>("LW", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetParallelProperty(bool defaultValue) => new PropertyBoolValue("P", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetSquareSideProperty(float defaultValue) => new PropertyValue<float>("SS", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetLineCountProperty(int defaultValue) => new PropertyValue<int>("LC", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetAngleProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetStepProperty(float defaultValue) => new PropertyValue<float>("S", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetOutputProperty(int defaultValue) => new PropertyValue<int>("O", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
+        protected PropertyEnumValue<ChevronFillerStyle.From> GetStartingFromProperty(ChevronFillerStyle.From defaultValue) => new PropertyEnumValue<ChevronFillerStyle.From>("SF", StyleChanged, defaultValue);
 
         public enum StyleType
         {

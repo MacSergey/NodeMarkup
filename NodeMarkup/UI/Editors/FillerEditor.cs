@@ -84,11 +84,9 @@ namespace NodeMarkup.UI.Editors
         {
             var newStyle = style.CopyFillerStyle();
 
-            newStyle.MedianOffset = EditObject.Style.MedianOffset;
+            newStyle.MedianOffset.Value = EditObject.Style.MedianOffset;
             if (newStyle is IRotateFiller newSimple && EditObject.Style is IRotateFiller oldSimple)
-            {
-                newSimple.Angle = oldSimple.Angle;
-            }
+                newSimple.Angle.Value = oldSimple.Angle;
 
             EditObject.Style = newStyle;
             Style.SelectedObject = EditObject.Style.Type;

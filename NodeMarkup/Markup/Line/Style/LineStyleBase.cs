@@ -21,43 +21,43 @@ namespace NodeMarkup.Manager
     public interface ICrosswalkStyle : ILineStyle { }
     public interface IDashedLine
     {
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
+        PropertyValue<float> DashLength { get; }
+        PropertyValue<float> SpaceLength { get; }
     }
     public interface IDoubleLine
     {
-        float Offset { get; set; }
+        PropertyValue<float> Offset { get; }
     }
     public interface IDoubleAlignmentLine : IDoubleLine
     {
-        LineStyle.StyleAlignment Alignment { get; set; }
+        PropertyEnumValue<LineStyle.StyleAlignment> Alignment { get; }
     }
     public interface IAsymLine
     {
-        bool Invert { get; set; }
+        PropertyBoolValue Invert { get; }
     }
-    public interface ISharkLIne
+    public interface ISharkLine
     {
-        float Base { get; set; }
-        float Height { get; set; }
-        float Space { get; set; }
+        PropertyValue<float> Base { get; }
+        PropertyValue<float> Height { get; }
+        PropertyValue<float> Space { get; }
     }
     public interface IParallel
     {
-        bool Parallel { get; set; }
+        PropertyBoolValue Parallel { get; }
     }
     public interface IDoubleCrosswalk
     {
-        float Offset { get; set; }
+        PropertyValue<float> Offset { get; }
     }
     public interface ILinedCrosswalk
     {
-        float LineWidth { get; set; }
+        PropertyValue<float> LineWidth { get; }
     }
     public interface IDashedCrosswalk
     {
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
+        PropertyValue<float> DashLength { get; }
+        PropertyValue<float> SpaceLength { get; }
     }
 
     public abstract class LineStyle : Style
@@ -86,11 +86,11 @@ namespace NodeMarkup.Manager
             offsetProperty.MinValue = 0.05f;
             offsetProperty.Init();
             offsetProperty.Value = doubleStyle.Offset;
-            offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset = value;
+            offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset.Value = value;
             AddOnHoverLeave(offsetProperty, onHover, onLeave);
             return offsetProperty;
         }
-        protected static FloatPropertyPanel AddBaseProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
@@ -100,11 +100,11 @@ namespace NodeMarkup.Manager
             baseProperty.MinValue = 0.3f;
             baseProperty.Init();
             baseProperty.Value = sharkTeethStyle.Base;
-            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
+            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base.Value = value;
             AddOnHoverLeave(baseProperty, onHover, onLeave);
             return baseProperty;
         }
-        protected static FloatPropertyPanel AddHeightProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
@@ -114,11 +114,11 @@ namespace NodeMarkup.Manager
             heightProperty.MinValue = 0.3f;
             heightProperty.Init();
             heightProperty.Value = sharkTeethStyle.Height;
-            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
+            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height.Value = value;
             AddOnHoverLeave(heightProperty, onHover, onLeave);
             return heightProperty;
         }
-        protected static FloatPropertyPanel AddSpaceProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
@@ -128,7 +128,7 @@ namespace NodeMarkup.Manager
             spaceProperty.MinValue = 0.1f;
             spaceProperty.Init();
             spaceProperty.Value = sharkTeethStyle.Space;
-            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
+            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space.Value = value;
             AddOnHoverLeave(spaceProperty, onHover, onLeave);
             return spaceProperty;
         }
@@ -138,7 +138,7 @@ namespace NodeMarkup.Manager
             alignmentProperty.Text = Localize.StyleOption_Alignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;
-            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment = value;
+            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
             return alignmentProperty;
         }
         public enum StyleAlignment

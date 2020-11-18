@@ -122,7 +122,7 @@ namespace NodeMarkup.Manager
             var widthShift = (background.width - logo.width) / 2;
             var heightShift = (background.height - logo.height) / 2;
 
-            var sc = (Color)Style.Color.GetStyleIconColor();
+            var sc = (Color)Style.Color.Value.GetStyleIconColor();
 
             for (var i = 0; i < logo.width; i += 1)
             {
