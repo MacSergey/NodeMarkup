@@ -53,15 +53,9 @@ namespace NodeMarkup
 #else
         protected override bool IsBeta => false;
 #endif
-        public override void OnEnabled()
-        {
-            base.OnEnabled();
-            Patcher.Patch();
-        }
         public override void OnDisabled()
         {
             base.OnDisabled();
-            Patcher.Unpatch();
             NodeMarkupTool.Remove();
         }
         protected override Patcher CreatePatcher() => new Patcher();
