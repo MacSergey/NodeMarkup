@@ -46,6 +46,7 @@ namespace NodeMarkup
         protected override string ModName => "Intersection Marking Tool";
         protected override string ModDescription => !ModIsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
         public override string WorkshopUrl => StableURL;
+        protected override string ModLocale => Settings.Locale.value;
         private NodeMarkupPatcher Patcher { get; set; }
 
 #if DEBUG
