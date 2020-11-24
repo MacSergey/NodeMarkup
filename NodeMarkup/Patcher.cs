@@ -17,7 +17,7 @@ using System.Text;
 
 namespace NodeMarkup
 {
-    public class NodeMarkupPatcher : Patcher<Mod>
+    public class Patcher : Patcher<Mod>
     {
         protected override bool PatchProcess()
         {
@@ -85,7 +85,7 @@ namespace NodeMarkup
         }
         private bool PatchBuildingDecorationLoadPaths()
         {
-            var transpiler = AccessTools.Method(typeof(NodeMarkupPatcher), nameof(NodeMarkupPatcher.BuildingDecorationLoadPathsTranspiler));
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler));
 
             return AddTranspiler(transpiler, typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
         }
@@ -141,7 +141,7 @@ namespace NodeMarkup
         private bool PatchLoadingManagerLoadCustomContent()
         {
             var nestedType = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
-            var transpiler = AccessTools.Method(typeof(NodeMarkupPatcher), nameof(NodeMarkupPatcher.LoadingManagerLoadCustomContentTranspiler));
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingManagerLoadCustomContentTranspiler));
 
             return AddTranspiler(transpiler, nestedType, "MoveNext");
         }
@@ -165,7 +165,7 @@ namespace NodeMarkup
             try
             {
                 var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader");
-                var transpiler = AccessTools.Method(typeof(NodeMarkupPatcher), nameof(NodeMarkupPatcher.LoadingScreenModLoadImplTranspiler));
+                var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler));
                 return AddTranspiler(transpiler, type, "LoadImpl");
             }
             catch (Exception error)

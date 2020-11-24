@@ -20,7 +20,7 @@ using ModsCommon.UI;
 
 namespace NodeMarkup
 {
-    public class Mod : BaseMod<Mod>
+    public class Mod : BasePatcherMod<Mod, Patcher>
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
@@ -47,7 +47,6 @@ namespace NodeMarkup
         protected override string ModDescription => !ModIsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
         public override string WorkshopUrl => StableURL;
         protected override string ModLocale => Settings.Locale.value;
-        private NodeMarkupPatcher Patcher { get; set; }
 
 #if DEBUG
         protected override bool ModIsBeta => true;
@@ -57,7 +56,6 @@ namespace NodeMarkup
         public override void OnEnabled()
         {
             base.OnEnabled();
-            Patcher = new NodeMarkupPatcher();
             Patcher.Patch();
         }
         public override void OnDisabled()
@@ -66,6 +64,7 @@ namespace NodeMarkup
             Patcher.Unpatch();
             NodeMarkupTool.Remove();
         }
+        protected override Patcher CreatePatcher() => new Patcher();
 
         protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
 
