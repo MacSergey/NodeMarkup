@@ -22,7 +22,7 @@ namespace NodeMarkup.Utils
     {
         public override string ID => "CS.macsergey.NodeMarkup";
 
-        public override string Name => Mod.StaticName;
+        public override string Name => Mod.ShortName;
 
         public override string Description => Localize.Mod_Description;
 

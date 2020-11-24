@@ -20,7 +20,7 @@ using ModsCommon.UI;
 
 namespace NodeMarkup
 {
-    public class Mod : IUserMod
+    public class Mod : BaseMod<Mod>
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
@@ -29,18 +29,9 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
-        public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
-        public static Version VersionBuild => Version.Build();
-
-        public static Logger Logger { get; } = new Logger(nameof(NodeMarkup));
-        public static string StaticName { get; } = "Intersection Marking Tool";
-#if DEBUG
-        public static string StaticFullName => $"{StaticName} {Version.GetString()} [BETA]";
-#else
-        public static string StaticFullName => $"{StaticName} {Version.GetString()}";
-#endif
-
-        public static List<Version> Versions { get; } = new List<Version>
+        protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
+        public override string Id => nameof(NodeMarkup);
+        protected override List<Version> ModVersions { get; } = new List<Version>
         {
             new Version("1.5"),
             new Version("1.4.1"),
@@ -52,55 +43,32 @@ namespace NodeMarkup
             new Version("1.0")
         };
 
-        public string Name => StaticFullName;
+        protected override string ModName => "Intersection Marking Tool";
+        protected override string ModDescription => !ModIsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
+        public override string WorkshopUrl => StableURL;
+        private NodeMarkupPatcher Patcher { get; set; }
+
 #if DEBUG
-        public static bool IsBeta => true;
-        public string Description => Localize.Mod_DescriptionBeta;
+        protected override bool ModIsBeta => true;
 #else
-        public static bool IsBeta => false;
-        public override string Description => Localize.Mod_Description;
+        protected override bool IsBeta => false;
 #endif
-
-        protected static CultureInfo Culture
+        public override void OnEnabled()
         {
-            get
-            {
-                var locale = string.IsNullOrEmpty(Settings.Locale.value) ? SingletonLite<LocaleManager>.instance.language : Settings.Locale.value;
-                if (locale == "zh")
-                    locale = "zh-cn";
-
-                return new CultureInfo(locale);
-            }
-        }
-
-        public void OnEnabled()
-        {
-            LoadingManager.instance.m_introLoaded += LoadedError;
-            Logger.Debug($"Version {Version}");
-            Logger.Debug($"{nameof(Mod)}.{nameof(OnEnabled)}");
+            base.OnEnabled();
+            Patcher = new NodeMarkupPatcher();
             Patcher.Patch();
         }
-        public void OnDisabled()
+        public override void OnDisabled()
         {
-            LoadingManager.instance.m_introLoaded -= LoadedError;
-            Logger.Debug($"{nameof(Mod)}.{nameof(OnDisabled)}");
+            base.OnDisabled();
             Patcher.Unpatch();
             NodeMarkupTool.Remove();
-
-            LocaleManager.eventLocaleChanged -= LocaleChanged;
         }
 
-        public void OnSettingsUI(UIHelperBase helper)
-        {
-            LocaleManager.eventLocaleChanged -= LocaleChanged;
-            LocaleChanged();
-            LocaleManager.eventLocaleChanged += LocaleChanged;
+        protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
 
-            Logger.Debug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
-            Settings.OnSettingsUI(helper);
-        }
-
-        public static void LocaleChanged()
+        public override void LocaleChanged()
         {
             Localize.Culture = Culture;
             Logger.Debug($"current cultute - {Localize.Culture?.Name ?? "null"}");
@@ -117,7 +85,7 @@ namespace NodeMarkup
             return true;
         }
 
-        public static void LoadedError()
+        public override void LoadedError()
         {
             if (!Patcher.Success)
             {

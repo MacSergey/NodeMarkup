@@ -71,7 +71,7 @@ namespace NodeMarkup
             CreateTabStrip(mainPanel);
 
             var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
-            generalTab.AddGroup(Mod.StaticFullName);
+            generalTab.AddGroup(Mod.Instance.Name);
             AddLanguage(generalTab);
             AddGeneral(generalTab);
             AddGrouping(generalTab);
@@ -185,7 +185,7 @@ namespace NodeMarkup
             {
                 var locale = dropDown.SelectedObject;
                 Locale.value = locale;
-                Mod.LocaleChanged();
+                Mod.Instance.LocaleChanged();
                 LocaleManager.ForceReload();
             }
         }

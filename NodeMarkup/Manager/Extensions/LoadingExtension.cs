@@ -66,7 +66,7 @@ namespace NodeMarkup
             {
                 var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                 messageBox.CaprionText = Localize.Mod_BetaWarningCaption;
-                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, Mod.StaticName);
+                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, Mod.ShortName);
                 messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
                 messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
                 messageBox.OnButton1Click = AgreeClick;
@@ -91,7 +91,7 @@ namespace NodeMarkup
                 return;
 
             var messageBox = !Mod.IsBeta ? MessageBoxBase.ShowModal<WhatsNewMessageBox>() : MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
-            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.StaticName);
+            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.ShortName);
             messageBox.OnButtonClick = Confirm;
             messageBox.Init(messages);
 

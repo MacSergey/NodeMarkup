@@ -77,7 +77,7 @@ namespace NodeMarkup.UI
         }
         protected override void OnTooltipEnter(UIMouseEventParameter p)
         {
-            tooltip = $"{Mod.StaticName} ({NodeMarkupTool.ActivationShortcut})";
+            tooltip = $"{Mod.ShortName} ({NodeMarkupTool.ActivationShortcut})";
             base.OnTooltipEnter(p);
         }
     }

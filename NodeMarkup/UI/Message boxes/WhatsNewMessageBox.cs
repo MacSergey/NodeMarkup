@@ -119,7 +119,7 @@ namespace NodeMarkup.UI
             betaMessage.wordWrap = true;
             betaMessage.autoHeight = true;
             betaMessage.textColor = Color.red;
-            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.StaticName);
+            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.ShortName);
 
             base.Init(messages);
         }
