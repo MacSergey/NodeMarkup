@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public class NodeEnter : Enter<NodeMarkup>
     {
         public override MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.All;
 
-        Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; } = new Dictionary<byte, MarkupCrosswalkPoint>();
-        Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; } = new Dictionary<byte, MarkupNormalPoint>();
+        Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; set; } = new Dictionary<byte, MarkupCrosswalkPoint>();
+        Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; set; } = new Dictionary<byte, MarkupNormalPoint>();
 
         public int CrosswalkCount => CrosswalkPointsDic.Count;
         public int NormalCount => NormalPointsDic.Count;
@@ -21,12 +21,14 @@ namespace IMT.Manager
 
         public override int SideSign => IsStartSide ? -1 : 1;
 
-        public NodeEnter(NodeMarkup markup, ushort segmentId) : base(markup, segmentId) 
+        public NodeEnter(NodeMarkup markup, ushort segmentId) : base(markup, segmentId) { }
+        protected override void Init()
         {
+            base.Init();
+
             CrosswalkPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Num, p => new MarkupCrosswalkPoint(p));
             NormalPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Num, p => new MarkupNormalPoint(p));
         }
-
         public override void UpdatePoints()
         {
             base.UpdatePoints();

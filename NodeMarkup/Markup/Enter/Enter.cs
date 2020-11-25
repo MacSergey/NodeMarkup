@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using IMT.Tools;
-using IMT.Utils;
+using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
 
     public abstract class Enter : IRender, IComparable<Enter>
@@ -29,10 +29,11 @@ namespace IMT.Manager
         public Vector3 FirstPointSide { get; private set; }
         public Vector3 LastPointSide { get; private set; }
         public StraightTrajectory Line { get; private set; }
+        public bool LanesChanged => Id.GetSegment().m_lanes != DriveLanes[0].LaneId;
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
-        protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; } = new Dictionary<byte, MarkupEnterPoint>();
+        protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkupEnterPoint>();
 
         public byte PointNum => ++_pointNum;
 
@@ -64,13 +65,11 @@ namespace IMT.Manager
 
             Init();
             Update();
-            UpdatePoints();
-
-            var points = Lines.SelectMany(l => l.GetMarkupPoints()).ToArray();
-            EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
         }
-        private void Init()
+        protected virtual void Init()
         {
+            _pointNum = 0;
+
             var segment = GetSegment();
             IsStartSide = GetIsStartSide();
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
@@ -94,6 +93,9 @@ namespace IMT.Manager
                 var markupLine = new SegmentMarkupLine(this, left, right);
                 Lines[i] = markupLine;
             }
+
+            var points = Lines.SelectMany(l => l.GetMarkupPoints()).ToArray();
+            EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
         }
         protected abstract NetSegment GetSegment();
         protected abstract bool GetIsStartSide();
@@ -160,19 +162,6 @@ namespace IMT.Manager
             foreach (var point in Points)
                 point.Offset = 0;
         }
-        //public bool GetBorder(MarkupEnterPoint point, out ILineTrajectory line)
-        //{
-        //    if (point.IsFirst && Markup.GetBordersLine(this, Prev, out line))
-        //        return true;
-        //    else if (point.IsLast && Markup.GetBordersLine(this, Next, out line))
-        //        return true;
-        //    else
-        //    {
-        //        line = null;
-        //        return false;
-        //    }
-        //}
-
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             if (Position == null)
