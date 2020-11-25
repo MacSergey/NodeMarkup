@@ -1,15 +1,15 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : PropertyGroupPanel
     {
@@ -40,8 +40,8 @@ namespace IMT.UI.Editors
             AddError();
             AddWarning();
 
-            From = AddEdgeProperty(EdgePosition.Start, IMT.Localize.LineRule_From);
-            To = AddEdgeProperty(EdgePosition.End, IMT.Localize.LineRule_To);
+            From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
+            To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
 
             Refresh();
 
@@ -81,13 +81,13 @@ namespace IMT.UI.Editors
         private void AddError()
         {
             Error = ComponentPool.Get<ErrorTextProperty>(this);
-            Error.Text = IMT.Localize.LineEditor_RuleOverlappedWarning;
+            Error.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
             Error.Init();
         }
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(this);
-            Warning.Text = Line.IsSupportRules ? IMT.Localize.LineEditor_RulesWarning : IMT.Localize.LineEditor_NotSupportRules;
+            Warning.Text = Line.IsSupportRules ? NodeMarkup.Localize.LineEditor_RulesWarning : NodeMarkup.Localize.LineEditor_NotSupportRules;
             Warning.Init();
         }
 
@@ -147,7 +147,7 @@ namespace IMT.UI.Editors
                     return;
             }
 
-            Style.Text = IMT.Localize.Editor_Style;
+            Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = Rule.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;

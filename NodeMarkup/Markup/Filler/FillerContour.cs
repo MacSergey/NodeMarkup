@@ -1,12 +1,12 @@
-﻿using IMT.Tools;
-using IMT.Utils;
+﻿using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public class FillerContour : IRender
     {

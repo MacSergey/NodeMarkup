@@ -2,9 +2,9 @@
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
-using IMT.Tools;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +14,7 @@ using System.Text;
 using UnityEngine;
 using static ToolBase;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : GroupedEditor<LineItem, MarkupLine, LineIcon, LineGroup, MarkupLine.LineType>
     {
@@ -27,8 +27,8 @@ namespace IMT.UI.Editors
                 return color;
             }
         }
-        public override string Name => IMT.Localize.LineEditor_Lines;
-        public override string EmptyMessage => IMT.Localize.LineEditor_EmptyMessage;
+        public override string Name => NodeMarkup.Localize.LineEditor_Lines;
+        public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
         public override Type SupportType { get; } = typeof(ISupportLines);
         protected override bool GroupingEnabled => Settings.GroupLines.value;
 
@@ -100,7 +100,7 @@ namespace IMT.UI.Editors
             if (AddRuleAvailable)
             {
                 AddButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
-                AddButton.Text = IMT.Localize.LineEditor_AddRuleButton;
+                AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
                 AddButton.Init();
                 AddButton.OnButtonClick += AddRule;
             }
@@ -144,8 +144,8 @@ namespace IMT.UI.Editors
             if (Settings.DeleteWarnings && Settings.DeleteWarningsType == 0)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = IMT.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = $"{IMT.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
+                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else

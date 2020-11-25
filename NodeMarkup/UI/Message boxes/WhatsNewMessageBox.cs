@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI
+namespace NodeMarkup.UI
 {
     public class WhatsNewMessageBox : MessageBoxBase
     {
@@ -85,7 +85,7 @@ namespace IMT.UI
 
             public void Init(Version version, string message)
             {
-                Label = string.Format(IMT.Localize.Mod_WhatsNewVersion, Mod.IsBeta && version == Mod.Version ? $"{version} [BETA]" : version.ToString());
+                Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, Mod.IsBeta && version == Mod.Version ? $"{version} [BETA]" : version.ToString());
                 Message.text = message;
                 IsMinimize = true;
 
@@ -108,7 +108,7 @@ namespace IMT.UI
         public BetaWhatsNewMessageBox()
         {
             var getStableButton = AddButton(1, 1, OnGetStable);
-            getStableButton.text = IMT.Localize.Mod_BetaWarningGetStable;
+            getStableButton.text = NodeMarkup.Localize.Mod_BetaWarningGetStable;
             SetButtonsRatio(1, 2);
         }
         private void OnGetStable() => Mod.GetStable();
@@ -119,7 +119,7 @@ namespace IMT.UI
             betaMessage.wordWrap = true;
             betaMessage.autoHeight = true;
             betaMessage.textColor = Color.red;
-            betaMessage.text = string.Format(IMT.Localize.Mod_BetaWarningMessage, Mod.ShortName);
+            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.ShortName);
 
             base.Init(messages);
         }

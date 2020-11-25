@@ -1,8 +1,8 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.UI;
-using IMT.UI.Editors;
-using IMT.Utils;
+using NodeMarkup.UI;
+using NodeMarkup.UI.Editors;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public abstract class CrosswalkStyle : Style
     {

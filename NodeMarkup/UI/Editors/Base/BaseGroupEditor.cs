@@ -1,12 +1,12 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public abstract class GroupedEditor<EditableItemType, EditableObject, ItemIcon, EditableGroupType, GroupType> : Editor<EditableItemType, EditableObject, ItemIcon>
         where EditableItemType : EditableItem<EditableObject, ItemIcon>

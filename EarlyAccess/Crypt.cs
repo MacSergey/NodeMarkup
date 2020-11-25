@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace IMT
+namespace NodeMarkup
 {
     public class Crypt
     {

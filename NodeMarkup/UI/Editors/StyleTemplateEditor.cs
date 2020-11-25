@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,20 +10,20 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItem, StyleTemplate, StyleTemplateIcon, StyleTemplateGroup, Style.StyleType, StyleTemplateHeaderPanel, EditStyleTemplateMode>
     {
-        public override string Name => IMT.Localize.TemplateEditor_Templates;
-        public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
+        public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
+        public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
         public override Type SupportType { get; } = typeof(ISupportStyleTemplate);
-        protected override string IsAssetMessage => IMT.Localize.TemplateEditor_TemplateIsAsset;
-        protected override string RewriteCaption => IMT.Localize.TemplateEditor_RewriteCaption;
-        protected override string RewriteMessage => IMT.Localize.TemplateEditor_RewriteMessage;
-        protected override string SaveChangesMessage => IMT.Localize.TemplateEditor_SaveChangesMessage;
-        protected override string NameExistMessage => IMT.Localize.TemplateEditor_NameExistMessage;
-        protected override string IsAssetWarningMessage => IMT.Localize.TemplateEditor_IsAssetWarningMessage;
-        protected override string IsWorkshopWarningMessage => IMT.Localize.TemplateEditor_IsWorkshopWarningMessage;
+        protected override string IsAssetMessage => NodeMarkup.Localize.TemplateEditor_TemplateIsAsset;
+        protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
+        protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;
+        protected override string SaveChangesMessage => NodeMarkup.Localize.TemplateEditor_SaveChangesMessage;
+        protected override string NameExistMessage => NodeMarkup.Localize.TemplateEditor_NameExistMessage;
+        protected override string IsAssetWarningMessage => NodeMarkup.Localize.TemplateEditor_IsAssetWarningMessage;
+        protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.TemplateEditor_IsWorkshopWarningMessage;
 
         protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 

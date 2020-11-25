@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
-using IMT.Tools;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public interface ITemplateEditor<ItemType> : IEditor<ItemType>
         where ItemType : Template
@@ -124,7 +124,7 @@ namespace IMT.UI.Editors
             if (EditObject.IsAsset)
             {
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
-                authorProperty.Text = IMT.Localize.TemplateEditor_Author;
+                authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.EnableControl = false;
                 authorProperty.Init();
@@ -134,7 +134,7 @@ namespace IMT.UI.Editors
         private void AddTemplateName()
         {
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
-            NameProperty.Text = IMT.Localize.TemplateEditor_Name;
+            NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.SubmitOnFocusLost = true;
             NameProperty.Init();
@@ -190,7 +190,7 @@ namespace IMT.UI.Editors
             if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
                 messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = IMT.Localize.TemplateEditor_NameExistCaption;
+                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
                 messageBox.MessageText = string.Format(NameExistMessage, name);
                 messageBox.OnButton1Click = AgreeExistName;
                 messageBox.OnButton2Click = EditName;
@@ -243,7 +243,7 @@ namespace IMT.UI.Editors
             if (HasChanges)
             {
                 var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
-                messageBox.CaprionText = IMT.Localize.TemplateEditor_SaveChanges;
+                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
                 messageBox.MessageText = SaveChangesMessage;
                 messageBox.Button1Text = NodeMarkupMessageBox.Yes;
                 messageBox.Button2Text = NodeMarkupMessageBox.No;

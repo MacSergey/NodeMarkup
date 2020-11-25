@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace IMT.Utils
+namespace NodeMarkup.Utils
 {
     public class Dependences
     {

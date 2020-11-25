@@ -2,7 +2,7 @@
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ModsCommon.Utilities;
-using IMT.Manager;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace IMT.Utils
+namespace NodeMarkup.Utils
 {
     public static class TextureUtil
     {
@@ -31,7 +31,7 @@ namespace IMT.Utils
         {
             var assembly = Assembly.GetExecutingAssembly();
             var textures = Files.Select(f => assembly.LoadTextureFromAssembly(f.Key)).ToArray();
-            Atlas = TextureHelper.CreateAtlas(textures, nameof(IMT), out Rect[] rects);
+            Atlas = TextureHelper.CreateAtlas(textures, nameof(NodeMarkup), out Rect[] rects);
             var actions = Files.Values.ToArray();
 
             for (var i = 0; i < actions.Length; i += 1)

@@ -1,13 +1,13 @@
 ﻿using ModsCommon.Utilities;
-using IMT.Manager;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.Tools
+namespace NodeMarkup.Tools
 {
     public abstract class BaseMakeItemToolMode : BaseToolMode
     {

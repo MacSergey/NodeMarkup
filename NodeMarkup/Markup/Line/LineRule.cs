@@ -1,4 +1,4 @@
-﻿using IMT.Utils;
+﻿using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public abstract class MarkupLineRawRule : MarkupLinePart
     {

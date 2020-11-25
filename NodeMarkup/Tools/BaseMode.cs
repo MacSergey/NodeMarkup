@@ -1,15 +1,15 @@
 ﻿using ModsCommon.Utilities;
-using IMT.Manager;
-using IMT.UI;
-using IMT.UI.Panel;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.UI;
+using NodeMarkup.UI.Panel;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.Tools
+namespace NodeMarkup.Tools
 {
     public abstract class BaseToolMode : MonoBehaviour
     {
@@ -22,7 +22,7 @@ namespace IMT.Tools
 
         public BaseToolMode()
         {
-            Deactivate();
+            Disable();
         }
 
         public virtual void Activate(BaseToolMode prevMode)
@@ -30,7 +30,8 @@ namespace IMT.Tools
             enabled = true;
             Reset(prevMode);
         }
-        public virtual void Deactivate() => enabled = false;
+        public virtual void Deactivate() => Disable();
+        private void Disable() => enabled = false;
 
         protected virtual void Reset(BaseToolMode prevMode) { }
 

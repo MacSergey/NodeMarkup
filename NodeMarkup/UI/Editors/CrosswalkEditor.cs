@@ -1,16 +1,16 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
-using IMT.Tools;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
@@ -18,8 +18,8 @@ namespace IMT.UI.Editors
 
         private static CrosswalkStyle Buffer { get; set; }
 
-        public override string Name => IMT.Localize.CrosswalkEditor_Crosswalks;
-        public override string EmptyMessage => IMT.Localize.CrosswalkEditor_EmptyMessage;
+        public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
+        public override string EmptyMessage => NodeMarkup.Localize.CrosswalkEditor_EmptyMessage;
         public override Type SupportType { get; } = typeof(ISupportCrosswalks);
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -79,13 +79,13 @@ namespace IMT.UI.Editors
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
-            Warning.Text = IMT.Localize.CrosswalkEditor_BordersWarning;
+            Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
             Warning.Init();
         }
         private void AddBordersProperties()
         {
-            LeftBorder = AddBorderProperty(BorderPosition.Left, IMT.Localize.CrosswalkEditor_LeftBorder);
-            RightBorder = AddBorderProperty(BorderPosition.Right, IMT.Localize.CrosswalkEditor_RightBorder);
+            LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
+            RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
 
             FillBorders();
         }
@@ -142,7 +142,7 @@ namespace IMT.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel);
-            Style.Text = IMT.Localize.Editor_Style;
+            Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;

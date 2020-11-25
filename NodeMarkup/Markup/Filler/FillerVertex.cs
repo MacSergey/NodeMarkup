@@ -1,5 +1,5 @@
 ﻿using ModsCommon.Utilities;
-using IMT.Utils;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public interface IFillerVertex : ISupportPoint
     {

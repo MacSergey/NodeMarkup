@@ -2,7 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
-using IMT.Utils;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using static NetInfo;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public static class MarkupManager
     {

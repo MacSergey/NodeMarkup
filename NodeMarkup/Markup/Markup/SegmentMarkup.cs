@@ -1,4 +1,4 @@
-﻿using IMT.Utils;
+﻿using NodeMarkup.Utils;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public class SegmentMarkup : Markup<NodeEnter>
     {
@@ -22,6 +22,10 @@ namespace IMT.Manager
         protected override IEnumerable<ushort> GetEnters() => Id.GetSegment().NodesID();
         protected override Enter NewEnter(ushort id) => new SegmentEnter(this, id);
 
+        protected override void UpdateBackup(ushort[] delete, ushort[] add, List<Enter> oldEnters, List<Enter> newEnters)
+        {
+
+        }
 
         public static bool FromXml(Version version, XElement config, ObjectsMap map, out SegmentMarkup markup)
         {

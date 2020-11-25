@@ -1,8 +1,8 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
-using IMT.UI;
-using IMT.Utils;
+using NodeMarkup.UI;
+using NodeMarkup.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
-using IMT.Manager;
+using NodeMarkup.Manager;
 using ICities;
 using ColossalFramework.PlatformServices;
 using System.Xml.Linq;
-using IMT.UI.Editors;
-using IMT.UI.Panel;
+using NodeMarkup.UI.Editors;
+using NodeMarkup.UI.Panel;
 using System.Diagnostics;
 using ColossalFramework.Packaging;
 using ColossalFramework.IO;
@@ -24,7 +24,7 @@ using ColossalFramework.Importers;
 using ModsCommon.Utilities;
 using ModsCommon.UI;
 
-namespace IMT.Tools
+namespace NodeMarkup.Tools
 {
     public class NodeMarkupTool : ToolBase
     {

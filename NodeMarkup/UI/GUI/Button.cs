@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI
+namespace NodeMarkup.UI
 {
     public class GUIButton
     {

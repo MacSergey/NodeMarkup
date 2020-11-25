@@ -1,13 +1,13 @@
 ﻿using ColossalFramework.UI;
-using IMT.Manager;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public class EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon> : UIPanel
         where EditableItemType : EditableItem<EditableObject, ItemIcon>

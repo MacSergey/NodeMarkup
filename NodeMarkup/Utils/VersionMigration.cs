@@ -1,15 +1,15 @@
-﻿using IMT.Manager;
+﻿using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.Utils
+namespace NodeMarkup.Utils
 {
     public static class VersionMigration
     {
-        public static ObjectsMap Befor1_2(NodeMarkup markup, ObjectsMap map)
+        public static ObjectsMap Befor1_2(Manager.NodeMarkup markup, ObjectsMap map)
         {
             if (map == null)
                 map = new ObjectsMap();

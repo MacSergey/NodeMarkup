@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
-using IMT.Tools;
-using IMT.UI.Editors;
-using IMT.Utils;
+using NodeMarkup.Tools;
+using NodeMarkup.UI.Editors;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public abstract class MarkupPoint : IItem, IToXml
     {

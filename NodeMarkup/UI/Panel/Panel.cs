@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.Utilities;
-using IMT.Manager;
-using IMT.Tools;
-using IMT.UI.Editors;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Tools;
+using NodeMarkup.UI.Editors;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +12,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI.Panel
+namespace NodeMarkup.UI.Panel
 {
     public class NodeMarkupPanel : UIPanel
     {

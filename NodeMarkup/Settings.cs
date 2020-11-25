@@ -1,8 +1,8 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
 using ICities;
-using IMT.Manager;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
@@ -15,21 +15,21 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using System.Globalization;
-using IMT.UI.Editors;
+using NodeMarkup.UI.Editors;
 using UnityEngine.SocialPlatforms;
 using static ColossalFramework.UI.UIDropDown;
 using ColossalFramework.Globalization;
 using ColossalFramework.PlatformServices;
-using IMT.Tools;
-using IMT.UI;
+using NodeMarkup.Tools;
+using NodeMarkup.UI;
 using ModsCommon.Utilities;
 using ModsCommon.UI;
 
-namespace IMT
+namespace NodeMarkup
 {
     public static class Settings
     {
-        public static string SettingsFile => $"{nameof(IMT)}{nameof(SettingsFile)}";
+        public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor(Mod.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);

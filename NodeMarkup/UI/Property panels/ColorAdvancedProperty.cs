@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI
+namespace NodeMarkup.UI
 {
     public class ColorAdvancedPropertyPanel : ColorPropertyPanel
     {
@@ -35,18 +35,18 @@ namespace IMT.UI
 
         private void AddCopyButton()
         {
-            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorCopy, 1, 3);
+            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorCopy, 1, 3);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy();
         }
         private void AddPasteButton()
         {
-            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorPaste, 2, 3);
+            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorPaste, 2, 3);
             button.isEnabled = Buffer.HasValue;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste();
         }
         private void AddSetDefaultButton()
         {
-            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorDefault, 3, 3);
+            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorDefault, 3, 3);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => SetDefault();
         }
 

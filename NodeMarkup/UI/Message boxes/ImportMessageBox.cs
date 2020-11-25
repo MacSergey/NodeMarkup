@@ -1,6 +1,6 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.UI.Editors;
+using NodeMarkup.UI.Editors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace IMT.UI
+namespace NodeMarkup.UI
 {
     public abstract class ImportMessageBox : SimpleMessageBox
     {
@@ -22,10 +22,10 @@ namespace IMT.UI
         public ImportMessageBox()
         {
             ImportButton = AddButton(1, 2, ImportClick);
-            ImportButton.text = IMT.Localize.Settings_Restore;
+            ImportButton.text = NodeMarkup.Localize.Settings_Restore;
             ImportButton.Disable();
             CancelButton = AddButton(2, 2, CancelClick);
-            CancelButton.text = IMT.Localize.Settings_Cancel;
+            CancelButton.text = NodeMarkup.Localize.Settings_Cancel;
 
             AddFileList();
         }
@@ -77,25 +77,25 @@ namespace IMT.UI
     }
     public class ImportMarkingMessageBox : ImportMessageBox
     {
-        protected override string Caption => IMT.Localize.Settings_RestoreMarkingCaption;
-        protected override string SuccessMessage => IMT.Localize.Settings_RestoreMarkingMessageSuccess;
-        protected override string FailedMessage => IMT.Localize.Settings_RestoreMarkingMessageFailed;
+        protected override string Caption => NodeMarkup.Localize.Settings_RestoreMarkingCaption;
+        protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestoreMarkingMessageSuccess;
+        protected override string FailedMessage => NodeMarkup.Localize.Settings_RestoreMarkingMessageFailed;
         protected override Dictionary<string, string> GetList() => Loader.GetMarkingRestoreList();
         protected override bool Import(string file) => Loader.ImportMarkingData(file);
     }
     public class ImportStyleTemplatesMessageBox : ImportMessageBox
     {
-        protected override string Caption => IMT.Localize.Settings_RestoreTemplatesCaption;
-        protected override string SuccessMessage => IMT.Localize.Settings_RestoreTemplatesMessageSuccess;
-        protected override string FailedMessage => IMT.Localize.Settings_RestoreTemplatesMessageFailed;
+        protected override string Caption => NodeMarkup.Localize.Settings_RestoreTemplatesCaption;
+        protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageSuccess;
+        protected override string FailedMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageFailed;
         protected override Dictionary<string, string> GetList() => Loader.GetStyleTemplatesRestoreList();
         protected override bool Import(string file) =>  Loader.ImportStylesData(file);
     }
     public class ImportIntersectionTemplatesMessageBox : ImportMessageBox
     {
-        protected override string Caption => IMT.Localize.Settings_RestorePresetsCaption;
-        protected override string SuccessMessage => IMT.Localize.Settings_RestorePresetsMessageSuccess;
-        protected override string FailedMessage => IMT.Localize.Settings_RestorePresetsMessageFailed;
+        protected override string Caption => NodeMarkup.Localize.Settings_RestorePresetsCaption;
+        protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestorePresetsMessageSuccess;
+        protected override string FailedMessage => NodeMarkup.Localize.Settings_RestorePresetsMessageFailed;
         protected override Dictionary<string, string> GetList() => Loader.GetIntersectionTemplatesRestoreList();
         protected override bool Import(string file) => Loader.ImportIntersectionsData(file);
 

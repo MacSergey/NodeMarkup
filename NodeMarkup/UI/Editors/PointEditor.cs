@@ -1,8 +1,8 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.Manager;
-using IMT.Tools;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Tools;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,13 +10,13 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.UI.Editors
+namespace NodeMarkup.UI.Editors
 {
     public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
         protected override bool UseGroupPanel => true;
 
-        public override string Name => IMT.Localize.PointEditor_Points;
+        public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
         public override Type SupportType { get; } = typeof(ISupportPoints);
 
@@ -32,7 +32,7 @@ namespace IMT.UI.Editors
         protected override void OnObjectSelect()
         {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
-            Offset.Text = IMT.Localize.PointEditor_Offset;
+            Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
             Offset.Init();

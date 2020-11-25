@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using IMT.UI;
-using IMT.UI.Editors;
+using NodeMarkup.UI;
+using NodeMarkup.UI.Editors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace IMT.Tools
+namespace NodeMarkup.Tools
 {
     public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : BaseToolMode
         where EditorType : Editor

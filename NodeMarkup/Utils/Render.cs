@@ -1,6 +1,6 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.Utilities;
-using IMT.Manager;
+using NodeMarkup.Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-namespace IMT.Utils
+namespace NodeMarkup.Utils
 {
     public static class RenderHelper
     {

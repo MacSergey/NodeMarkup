@@ -1,13 +1,13 @@
 ﻿using MoveItIntegration;
 using System;
 using System.Collections.Generic;
-using IMT.Manager;
+using NodeMarkup.Manager;
 using System.Xml.Linq;
 using System.Xml;
 using System.IO;
 using System.Linq;
 
-namespace IMT.Utils
+namespace NodeMarkup.Utils
 {
     public class MoveItIntegrationFactory : IMoveItIntegrationFactory
     {
@@ -30,7 +30,7 @@ namespace IMT.Utils
 
         public override object Copy(InstanceID sourceInstanceID) => sourceInstanceID.Type switch
         {
-            InstanceType.NetNode when MarkupManager.NodeManager.TryGetMarkup(sourceInstanceID.NetNode, out NodeMarkup nodeMarkup) => nodeMarkup.ToXml(),
+            InstanceType.NetNode when MarkupManager.NodeManager.TryGetMarkup(sourceInstanceID.NetNode, out Manager.NodeMarkup nodeMarkup) => nodeMarkup.ToXml(),
             InstanceType.NetSegment when MarkupManager.SegmentManager.TryGetMarkup(sourceInstanceID.NetSegment, out SegmentMarkup segmentMarkup) => segmentMarkup.ToXml(),
             _ => null,
         };

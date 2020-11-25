@@ -3,8 +3,8 @@ using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
-using IMT.Manager;
-using IMT.Utils;
+using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace NodeMarkup.Manager
 {
     public abstract class Template : IDeletable, ISupport, IToXml
     {
