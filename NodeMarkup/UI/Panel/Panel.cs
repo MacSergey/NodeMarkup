@@ -16,6 +16,8 @@ namespace IMT.UI.Panel
 {
     public class NodeMarkupPanel : UIPanel
     {
+        #region PROPERTIES
+
         public static NodeMarkupPanel Instance { get; private set; }
         private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
 
@@ -32,6 +34,7 @@ namespace IMT.UI.Panel
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
+        private bool NeedUpdateOnVisible { get; set; }
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
@@ -50,6 +53,10 @@ namespace IMT.UI.Panel
                 TabStrip.SetAvailable(value);
             }
         }
+
+        #endregion
+
+        #region BASIC
 
         public static void CreatePanel()
         {
@@ -82,6 +89,13 @@ namespace IMT.UI.Panel
             base.Start();
             SetPosition();
         }
+        public override void OnEnable()
+        {
+            base.OnEnable();
+
+            CheckPosition();
+            UpdatePanel();
+        }
         public static void RemovePanel()
         {
             Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
@@ -93,6 +107,42 @@ namespace IMT.UI.Panel
                 Mod.Logger.Debug($"Panel removed");
             }
         }
+        private void CheckPosition()
+        {
+            if (absolutePosition.x < 0 || absolutePosition.y < 0)
+                SetPosition();
+        }
+        private void SetPosition()
+        {
+            Mod.Logger.Debug($"Set default panel position");
+            absolutePosition = DefaultPosition;
+        }
+        private new void Reset() => Available = true;
+
+        #endregion
+
+        #region UPDATE
+
+        public void UpdatePanel()
+        {
+            Reset();
+            CurrentEditor?.UpdateEditor();
+        }
+        private void UpdateOnVisible()
+        {
+            NeedUpdateOnVisible = false;
+
+            Header.Text = Markup.PanelCaption;
+            TabStrip.SetVisible(Markup);
+            TabStrip.ArrangeTabs();
+            TabStrip.SelectedTab = -1;
+            SelectEditor<LinesEditor>();
+        }
+
+        #endregion
+
+        #region COMPONENTS
+
         private void CreateHeader()
         {
             Header = AddUIComponent<PanelHeader>();
@@ -107,7 +157,6 @@ namespace IMT.UI.Panel
             TabStrip.SelectedTabChanged += OnSelectedTabChanged;
             TabStrip.SelectedTab = -1;
         }
-
         private void CreateEditors()
         {
             CreateEditor<PointsEditor>();
@@ -117,7 +166,15 @@ namespace IMT.UI.Panel
             CreateEditor<StyleTemplateEditor>();
             CreateEditor<IntersectionTemplateEditor>();
         }
+        private void CreateEditor<EditorType>() where EditorType : Editor
+        {
+            var editor = AddUIComponent<EditorType>();
+            editor.Active = false;
+            editor.Init(this);
+            TabStrip.AddTab(editor);
 
+            Editors.Add(editor);
+        }
         private void CreateSizeChanger()
         {
             SizeChanger = AddUIComponent<UIPanel>();
@@ -133,17 +190,14 @@ namespace IMT.UI.Panel
             handle.target = SizeChanger;
         }
 
+        #endregion
+
+        #region ONEVENTS
+
         private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
         {
             size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
             SizeChanger.relativePosition = size - SizeChanger.size;
-        }
-        public override void OnEnable()
-        {
-            base.OnEnable();
-
-            CheckPosition();
-            UpdatePanel();
         }
         protected override void OnSizeChanged()
         {
@@ -160,51 +214,13 @@ namespace IMT.UI.Panel
             }
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
-        }
-        private void CreateEditor<EditorType>() where EditorType : Editor
-        {
-            var editor = AddUIComponent<EditorType>();
-            editor.Active = false;
-            editor.Init(this);
-            TabStrip.AddTab(editor);
-
-            Editors.Add(editor);
-        }
-        private void CheckPosition()
-        {
-            if (absolutePosition.x < 0 || absolutePosition.y < 0)
-                SetPosition();
-        }
-        private void SetPosition()
-        {
-            Mod.Logger.Debug($"Set default panel position");
-            absolutePosition = DefaultPosition;
-        }
-
-        private void Reset() => Available = true;
+        }   
         protected override void OnVisibilityChanged()
         {
             base.OnVisibilityChanged();
-            if (isVisible)
-                UpdatePanel();
-        }
-        public void UpdatePanel()
-        {
-            Reset();
-            CurrentEditor?.UpdateEditor();
-        }
-        public void SetMarkup(Markup markup)
-        {
-            Markup = markup;
-            if (Markup != null)
-            {
-                Header.Text = Markup.PanelCaption;
-                TabStrip.SetVisible(Markup);
-                TabStrip.ArrangeTabs();
-                TabStrip.SelectedTab = -1;
-                SelectEditor<LinesEditor>();
-            }
-        }
+            if (isVisible && NeedUpdateOnVisible)
+                UpdateOnVisible();
+        }           
         private void OnSelectedTabChanged(int index)
         {
             CurrentEditor = SelectEditor(index);
@@ -231,6 +247,22 @@ namespace IMT.UI.Panel
             var editorIndex = Editors.FindIndex((e) => e.GetType() == typeof(EditorType));
             TabStrip.SelectedTab = editorIndex;
             return Editors[editorIndex] as EditorType;
+        }
+
+        #endregion
+
+        #region EDIT
+
+        public void SetMarkup(Markup markup)
+        {
+            Markup = markup;
+            if (Markup != null)
+            {
+                if (isVisible)
+                    UpdateOnVisible();
+                else
+                    NeedUpdateOnVisible = true;
+            }
         }
 
         private EditorType Edit<EditorType, ItemType>(ItemType item)
@@ -270,5 +302,7 @@ namespace IMT.UI.Panel
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
+
+        #endregion
     }
 }

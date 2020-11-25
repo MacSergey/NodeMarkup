@@ -44,7 +44,7 @@ namespace IMT.UI.Panel
         {
             var type = markup.GetType();
             foreach (var tab in Tabs)
-                tab.isEnabled = tab.Editor.SupportType.IsAssignableFrom(type);
+                tab.isVisible = tab.Editor.SupportType.IsAssignableFrom(type);
         }
 
         public void AddTab(Editor editor)
