@@ -178,7 +178,7 @@ namespace IMT.Manager
 
         public override void FromXml(XElement config, ObjectsMap map, Version version)
         {
-            foreach (var markupConfig in config.Elements(NodeMarkup.XmlName))
+            foreach (var markupConfig in config.Elements(SegmentMarkup.XmlName))
             {
                 if (SegmentMarkup.FromXml(version, markupConfig, map, out SegmentMarkup markup))
                     NeedUpdate.Add(markup.Id);

@@ -192,7 +192,7 @@ namespace IMT.UI.Panel
             Markup = markup;
             if (Markup != null)
             {
-                Header.Text = string.Format(IMT.Localize.Panel_Caption, Markup.Id);
+                Header.Text = Markup.PanelCaption;
                 TabStrip.SelectedTab = -1;
                 SelectEditor<LinesEditor>();
 

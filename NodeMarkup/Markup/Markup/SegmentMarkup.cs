@@ -14,6 +14,7 @@ namespace IMT.Manager
         public static string XmlName { get; } = "S";
 
         public override string XmlSection => XmlName;
+        public override string PanelCaption => string.Format(Localize.Panel_SegmentCaption, Id);
 
         public SegmentMarkup(ushort nodeId) : base(nodeId) { }
 

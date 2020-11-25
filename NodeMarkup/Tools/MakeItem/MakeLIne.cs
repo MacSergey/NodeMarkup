@@ -76,6 +76,9 @@ namespace IMT.Tools
 
             if (ignore != null && ignore.Enter == enter)
             {
+                if ((Markup.SupportLines & MarkupLine.LineType.Stop) == 0)
+                    yield break;
+
                 var ignoreIdx = ignore.Num - 1;
                 var leftIdx = ignoreIdx;
                 var rightIdx = ignoreIdx;

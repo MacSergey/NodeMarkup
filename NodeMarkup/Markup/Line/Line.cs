@@ -146,6 +146,9 @@ namespace IMT.Manager
             if (!makrup.TryGetLine(pointPair, out line))
             {
                 var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
+                if ((type & makrup.SupportLines) == 0)
+                    return false;
+
                 switch (type)
                 {
                     case LineType.Regular:
@@ -169,13 +172,17 @@ namespace IMT.Manager
         public enum LineType
         {
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-            Regular = NodeMarkup.Item.RegularLine,
+            Regular = Markup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-            Stop = NodeMarkup.Item.StopLine,
+            Stop = Markup.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
-            Crosswalk = NodeMarkup.Item.Crosswalk,
+            Crosswalk = Markup.Item.Crosswalk,
+
+
+            [NotVisible]
+            All = Regular | Stop | Crosswalk,
         }
         public override string ToString() => PointPair.ToString();
     }

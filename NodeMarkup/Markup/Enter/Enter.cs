@@ -17,6 +17,7 @@ namespace IMT.Manager
         byte _pointNum;
         public static string XmlName { get; } = "E";
 
+        public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;
         public Markup Markup { get; private set; }
         public ushort Id { get; }
         public bool IsStartSide { get; private set; }
@@ -31,9 +32,7 @@ namespace IMT.Manager
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
-        Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; } = new Dictionary<byte, MarkupEnterPoint>();
-        Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; } = new Dictionary<byte, MarkupCrosswalkPoint>();
-        Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; } = new Dictionary<byte, MarkupNormalPoint>();
+        protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; } = new Dictionary<byte, MarkupEnterPoint>();
 
         public byte PointNum => ++_pointNum;
 
@@ -50,12 +49,7 @@ namespace IMT.Manager
         public MarkupPoint LastPoint => EnterPointsDic[(byte)PointCount];
 
         public int PointCount => EnterPointsDic.Count;
-        public int CrosswalkCount => CrosswalkPointsDic.Count;
-        public int NormalCount => NormalPointsDic.Count;
-
         public IEnumerable<MarkupEnterPoint> Points => EnterPointsDic.Values;
-        public IEnumerable<MarkupCrosswalkPoint> Crosswalks => CrosswalkPointsDic.Values;
-        public IEnumerable<MarkupNormalPoint> Normals => NormalPointsDic.Values;
 
         public float T => IsStartSide ? 0f : 1f;
         public string XmlSection => XmlName;
@@ -74,8 +68,6 @@ namespace IMT.Manager
 
             var points = Lines.SelectMany(l => l.GetMarkupPoints()).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
-            CrosswalkPointsDic = points.ToDictionary(p => p.Num, p => new MarkupCrosswalkPoint(p));
-            NormalPointsDic = points.ToDictionary(p => p.Num, p => new MarkupNormalPoint(p));
         }
         private void Init()
         {
@@ -105,34 +97,18 @@ namespace IMT.Manager
         }
         protected abstract NetSegment GetSegment();
         protected abstract bool GetIsStartSide();
-        public bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
+        public virtual bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
         {
-            switch (type)
+            if(type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
             {
-                case MarkupPoint.PointType.Enter:
-                    if (EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
-                    {
-                        point = enterPoint;
-                        return true;
-                    }
-                    break;
-                case MarkupPoint.PointType.Crosswalk:
-                    if (CrosswalkPointsDic.TryGetValue(pointNum, out MarkupCrosswalkPoint crosswalkPoint))
-                    {
-                        point = crosswalkPoint;
-                        return true;
-                    }
-                    break;
-                case MarkupPoint.PointType.Normal:
-                    if (NormalPointsDic.TryGetValue(pointNum, out MarkupNormalPoint normalPoint))
-                    {
-                        point = normalPoint;
-                        return true;
-                    }
-                    break;
+                point = enterPoint;
+                return true;
             }
-            point = null;
-            return false;
+            else
+            {
+                point = null;
+                return false;
+            }
         }
 
         public void Update()
@@ -142,13 +118,9 @@ namespace IMT.Manager
             CalculateCorner(segment);
             CalculatePosition(segment);
         }
-        public void UpdatePoints()
+        public virtual void UpdatePoints()
         {
             foreach (var point in EnterPointsDic.Values)
-                point.Update();
-            foreach (var point in CrosswalkPointsDic.Values)
-                point.Update();
-            foreach (var point in NormalPointsDic.Values)
                 point.Update();
         }
         private void CalculateCorner(NetSegment segment)
@@ -188,18 +160,18 @@ namespace IMT.Manager
             foreach (var point in Points)
                 point.Offset = 0;
         }
-        public bool GetBorder(MarkupEnterPoint point, out ILineTrajectory line)
-        {
-            if (point.IsFirst && Markup.GetBordersLine(this, Prev, out line))
-                return true;
-            else if (point.IsLast && Markup.GetBordersLine(this, Next, out line))
-                return true;
-            else
-            {
-                line = null;
-                return false;
-            }
-        }
+        //public bool GetBorder(MarkupEnterPoint point, out ILineTrajectory line)
+        //{
+        //    if (point.IsFirst && Markup.GetBordersLine(this, Prev, out line))
+        //        return true;
+        //    else if (point.IsLast && Markup.GetBordersLine(this, Next, out line))
+        //        return true;
+        //    else
+        //    {
+        //        line = null;
+        //        return false;
+        //    }
+        //}
 
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {

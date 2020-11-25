@@ -61,9 +61,10 @@ namespace IMT.Tools
             if (ignore != null && ignore.Enter != enter)
                 yield break;
 
-            var allow = enter.Crosswalks.Select(i => 1).ToArray();
+            var nodeEnter = (NodeEnter)enter;
+            var allow = nodeEnter.Crosswalks.Select(i => 1).ToArray();
             var bridge = new Dictionary<MarkupPoint, int>();
-            foreach (var crosswalk in enter.Crosswalks)
+            foreach (var crosswalk in nodeEnter.Crosswalks)
                 bridge.Add(crosswalk, bridge.Count);
 
             var isIgnore = ignore?.Enter == enter;

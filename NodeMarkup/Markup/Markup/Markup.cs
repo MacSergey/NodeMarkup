@@ -53,11 +53,14 @@ namespace IMT.Manager
     public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportPoints, ISupportLines, ISupportStyleTemplate, IToXml
     {
         #region PROPERTIES
+        public virtual MarkupLine.LineType SupportLines => MarkupLine.LineType.Regular;
+
         public ushort Id { get; }
         public Vector3 Position { get; private set; }
         public float Radius { get; private set; }
         public float Height => Position.y;
         public abstract string XmlSection { get; }
+        public abstract string PanelCaption { get; }
 
         protected List<Enter> RowEntersList { get; set; } = new List<Enter>();
         protected List<Enter> EntersList { get; set; } = new List<Enter>();
@@ -65,7 +68,6 @@ namespace IMT.Manager
         protected Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
         protected List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
         protected Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
-        protected Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
 
         public bool IsEmpty => !LinesDictionary.Any() && !FillersList.Any();
 
@@ -79,16 +81,6 @@ namespace IMT.Manager
         public int CrosswalksCount => CrosswalksDictionary.Count;
         public int FillersCount => FillersList.Count;
 
-        public IEnumerable<ILineTrajectory> Contour
-        {
-            get
-            {
-                foreach (var enter in Enters)
-                    yield return enter.Line;
-                foreach (var line in BetweenEnters.Values)
-                    yield return line;
-            }
-        }
 
         public bool NeedRecalculateDrawData { get; set; }
         public List<IDrawData> DrawData { get; private set; } = new List<IDrawData>();
@@ -135,8 +127,10 @@ namespace IMT.Manager
 
             UpdateProgress = false;
         }
-        protected virtual void UpdateEnters()
+        protected void UpdateEnters()
         {
+            Position = GetPosition();
+
             var oldEnters = RowEntersList;
             var exists = oldEnters.Select(e => e.Id).ToList();
             var update = GetEnters().ToList();
@@ -156,12 +150,14 @@ namespace IMT.Manager
             RowEntersList = newEnters;
             EntersList = RowEntersList.Where(e => e.PointCount != 0).ToList();
 
-            UpdateСontour();
+
             UpdateRadius();
+            ProcessUpdate();
 
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
         }
+        protected virtual void ProcessUpdate() { }
         protected abstract Vector3 GetPosition();
 
         protected abstract IEnumerable<ushort> GetEnters();
@@ -203,26 +199,6 @@ namespace IMT.Manager
             FromXml(Mod.Version, currentData, map);
         }
 
-        private void UpdateСontour()
-        {
-            BetweenEnters.Clear();
-
-            for (var i = 0; i < EntersList.Count; i += 1)
-            {
-                var j = i.NextIndex(EntersList.Count);
-                var prev = EntersList[i];
-                var next = EntersList[j];
-
-                var betweenBezier = new Bezier3()
-                {
-                    a = prev.LastPointSide,
-                    d = next.FirstPointSide
-                };
-                NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
-
-                BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)] = new BezierTrajectory(betweenBezier);
-            }
-        }
         private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
         private void UpdateLines()
@@ -554,13 +530,6 @@ namespace IMT.Manager
         public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
         public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
         public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
-
-        public bool GetBordersLine(Enter first, Enter second, out ILineTrajectory line)
-        {
-            var i = EntersList.IndexOf(first);
-            var j = EntersList.IndexOf(second);
-            return BetweenEnters.TryGetValue(Math.Max(i, j) * 10 + Math.Min(i, j), out line);
-        }
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));

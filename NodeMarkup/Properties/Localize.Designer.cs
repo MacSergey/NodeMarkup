@@ -1415,15 +1415,6 @@ namespace IMT {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
-        /// </summary>
-        public static string Panel_Caption {
-            get {
-                return ResourceManager.GetString("Panel_Caption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Clear markings.
         /// </summary>
         public static string Panel_ClearMarking {
@@ -1469,6 +1460,15 @@ namespace IMT {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
+        /// </summary>
+        public static string Panel_NodeCaption {
+            get {
+                return ResourceManager.GetString("Panel_NodeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Panel_PasteMarking {
@@ -1492,6 +1492,15 @@ namespace IMT {
         public static string Panel_SaveAsPreset {
             get {
                 return ResourceManager.GetString("Panel_SaveAsPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit segment #{0} markings.
+        /// </summary>
+        public static string Panel_SegmentCaption {
+            get {
+                return ResourceManager.GetString("Panel_SegmentCaption", resourceCulture);
             }
         }
         

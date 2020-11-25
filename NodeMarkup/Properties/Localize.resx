@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>This is a BETA version, errors may occur and stability is not guaranteed!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Edit node #{0} markings</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -1342,5 +1342,8 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Unknown author</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Edit segment #{0} markings</value>
   </data>
 </root>

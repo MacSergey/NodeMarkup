@@ -138,6 +138,8 @@ namespace IMT.Manager
             Enter = 1,
             Crosswalk = 2,
             Normal = 4,
+            
+            All = Enter | Crosswalk | Normal,
         }
         public enum LocationType
         {
@@ -171,7 +173,16 @@ namespace IMT.Manager
                 return position;
             }
         }
-        public override bool GetBorder(out ILineTrajectory line) => Enter.GetBorder(this, out line);
+        public override bool GetBorder(out ILineTrajectory line)
+        {
+            if(Enter is NodeEnter nodeEnter)
+                return nodeEnter.GetBorder(this, out line);
+            else
+            {
+                line = null;
+                return false;
+            }
+        }
     }
     public class MarkupCrosswalkPoint : MarkupPoint
     {
@@ -207,6 +218,7 @@ namespace IMT.Manager
     public class MarkupNormalPoint : MarkupPoint
     {
         public override PointType Type => PointType.Normal;
+        public new NodeMarkup Markup => (NodeMarkup)base.Markup;
         public MarkupEnterPoint SourcePoint { get; }
         public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
         {
