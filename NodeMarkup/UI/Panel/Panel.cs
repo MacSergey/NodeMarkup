@@ -187,7 +187,7 @@ namespace IMT.UI.Panel
             Reset();
             CurrentEditor?.UpdateEditor();
         }
-        public void SetNode(Markup markup)
+        public void SetMarkup(Markup markup)
         {
             Markup = markup;
             if (Markup != null)
@@ -195,6 +195,9 @@ namespace IMT.UI.Panel
                 Header.Text = string.Format(IMT.Localize.Panel_Caption, Markup.Id);
                 TabStrip.SelectedTab = -1;
                 SelectEditor<LinesEditor>();
+
+                TabStrip.SetVisible(Markup);
+                TabStrip.ArrangeTabs();
             }
         }
         private void OnSelectedTabChanged(int index)
@@ -227,7 +230,11 @@ namespace IMT.UI.Panel
 
         private EditorType Edit<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
+            where ItemType : ISupport
         {
+            if (!(Markup is ISupport<ItemType>))
+                return null;
+
             Reset();
             var editor = SelectEditor<EditorType>();
             editor?.Edit(item);

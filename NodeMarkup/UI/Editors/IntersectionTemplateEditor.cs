@@ -14,6 +14,7 @@ namespace IMT.UI.Editors
     {
         public override string Name => IMT.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(IMT.Localize.PresetEditor_EmptyMessage, IMT.Localize.Panel_SaveAsPreset);
+        public override Type SupportType { get; } = typeof(ISupportIntersectionTemplate);
         protected override string IsAssetMessage => IMT.Localize.PresetEditor_PresetIsAsset;
         protected override string RewriteCaption => IMT.Localize.PresetEditor_RewriteCaption;
         protected override string RewriteMessage => IMT.Localize.PresetEditor_RewriteMessage;

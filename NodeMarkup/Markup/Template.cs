@@ -17,7 +17,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public abstract class Template : IDeletable, IToXml
+    public abstract class Template : IDeletable, ISupport, IToXml
     {
         public static string XmlName { get; } = "T";
 

@@ -196,7 +196,7 @@ namespace IMT.Tools
         public void SetMarkup(Markup markup)
         {
             Markup = markup;
-            Panel.SetNode(Markup);
+            Panel.SetMarkup(Markup);
         }
         #endregion
 
@@ -323,9 +323,12 @@ namespace IMT.Tools
         }
         private void StartCreateFiller()
         {
-            SetMode(ToolModeType.MakeFiller);
-            if (NextMode is MakeFillerToolMode fillerToolMode)
-                fillerToolMode.DisableByAlt = false;
+            if (Markup is ISupportFillers)
+            {
+                SetMode(ToolModeType.MakeFiller);
+                if (NextMode is MakeFillerToolMode fillerToolMode)
+                    fillerToolMode.DisableByAlt = false;
+            }
         }
         private void DeleteAllMarking()
         {

@@ -18,6 +18,7 @@ namespace IMT.UI.Editors
 
         public override string Name => IMT.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
+        public override Type SupportType { get; } = typeof(ISupportPoints);
 
         private FloatPropertyPanel Offset { get; set; }
         protected override void FillItems()

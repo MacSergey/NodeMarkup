@@ -8,6 +8,7 @@ namespace IMT.Manager
 {
     public class NodeEnter : Enter<NodeMarkup>
     {
+        public override int SideSign => IsStartSide ? -1 : 1;
         public NodeEnter(NodeMarkup markup, ushort segmentId) : base(markup, segmentId) { }
         protected override NetSegment GetSegment() => Id.GetSegment();
         protected override bool GetIsStartSide() => GetSegment().m_startNode == Markup.Id;

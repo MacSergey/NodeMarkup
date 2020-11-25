@@ -29,6 +29,7 @@ namespace IMT.UI.Editors
         }
         public override string Name => IMT.Localize.LineEditor_Lines;
         public override string EmptyMessage => IMT.Localize.LineEditor_EmptyMessage;
+        public override Type SupportType { get; } = typeof(ISupportLines);
         protected override bool GroupingEnabled => Settings.GroupLines.value;
 
         private ButtonPanel AddButton { get; set; }

@@ -21,7 +21,16 @@ namespace IMT.Manager
         string DeleteMessageDescription { get; }
         Dependences GetDependences();
     }
-    public interface IUpdate
+    public interface ISupport { }
+    public interface ISupport<Type> where Type : ISupport { }
+    public interface ISupportPoints : ISupport<MarkupPoint> { }
+    public interface ISupportLines : ISupport<MarkupLine> { }
+    public interface ISupportFillers : ISupport<MarkupFiller> { }
+    public interface ISupportCrosswalks : ISupport<MarkupCrosswalk> { }
+    public interface ISupportStyleTemplate : ISupport<StyleTemplate> { }
+    public interface ISupportIntersectionTemplate : ISupport<IntersectionTemplate> { }
+
+    public interface IUpdate : ISupport
     {
         void Update(bool onlySelfUpdate = false);
     }
@@ -30,10 +39,10 @@ namespace IMT.Manager
     {
         void Update(Type item, bool recalculate = false);
     }
-    public interface ISupportPoints : IUpdate<MarkupPoint> { }
-    public interface ISupportLines : IUpdate<MarkupLine> { }
-    public interface ISupportFillers : IUpdate<MarkupFiller> { }
-    public interface ISupportCrosswalks : IUpdate<MarkupCrosswalk> { }
+    public interface IUpdatePoints : IUpdate<MarkupPoint> { }
+    public interface IUpdateLines : IUpdate<MarkupLine> { }
+    public interface IUpdateFillers : IUpdate<MarkupFiller> { }
+    public interface IUpdateCrosswalks : IUpdate<MarkupCrosswalk> { }
 
     public interface IItem : IUpdate, IDeletable, IRender { }
 
@@ -41,7 +50,7 @@ namespace IMT.Manager
     {
         IEnumerable<IDrawData> GetDrawData();
     }
-    public abstract class Markup : ISupportPoints, ISupportLines, IToXml
+    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportPoints, ISupportLines, ISupportStyleTemplate, IToXml
     {
         #region PROPERTIES
         public ushort Id { get; }

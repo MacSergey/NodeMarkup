@@ -20,6 +20,7 @@ namespace IMT.UI.Editors
 
         public override string Name => IMT.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => IMT.Localize.CrosswalkEditor_EmptyMessage;
+        public override Type SupportType { get; } = typeof(ISupportCrosswalks);
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
         private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }

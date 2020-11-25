@@ -32,10 +32,15 @@ namespace IMT.Manager
         }
 
         public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => NodeManager.Render(cameraInfo, nodeID, ref data);
+
+        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SegmentManager.Render(cameraInfo, segmentID, ref data);
+
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => NodeManager.Remove(node);
-        public static void NetManagerUpdateNodePostfix(ushort node, ushort fromSegment, int level) => NodeManager.AddToUpdate(node);
+        public static void NetManagerUpdateNodePostfix(ushort node) => NodeManager.AddToUpdate(node);
+        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SegmentManager.AddToUpdate(segment);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
         {
+            SegmentManager.AddToUpdate(segmentID);
             var segment = segmentID.GetSegment();
             NodeManager.AddToUpdate(segment.m_startNode);
             NodeManager.AddToUpdate(segment.m_endNode);

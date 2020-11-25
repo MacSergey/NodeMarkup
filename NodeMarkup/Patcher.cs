@@ -24,8 +24,10 @@ namespace IMT
             var success = true;
 
             success &= PatchNetNodeRenderInstance();
+            success &= PatchNetSegmentRenderInstance();
             success &= PatchNetManagerReleaseNodeImplementation();
             success &= PatchNetManagerUpdateNode();
+            success &= PatchNetManagerUpdateSegment();
             success &= PatchNetSegmentUpdateLanes();
             success &= PatchNetManagerSimulationStepImpl();
             success &= PatchBuildingDecorationLoadPaths();
@@ -51,7 +53,15 @@ namespace IMT
             static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix));
 
-            return AddPostfix(postfix, typeof(NetNode), "RenderInstance", OriginalGetter);
+            return AddPostfix(postfix, typeof(NetNode), nameof(NetNode.RenderInstance), OriginalGetter);
+        }
+
+        private bool PatchNetSegmentRenderInstance()
+        {
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(int), typeof(NetInfo), typeof(RenderManager.Instance).MakeByRefType() });
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentRenderInstancePostfix));
+
+            return AddPostfix(postfix, typeof(NetSegment), nameof(NetSegment.RenderInstance), OriginalGetter);
         }
 
         private bool PatchNetManagerUpdateNode()
@@ -60,6 +70,14 @@ namespace IMT
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix));
 
             return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateNode), OriginalGetter);
+        }
+
+        private bool PatchNetManagerUpdateSegment()
+        {
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateSegmentPostfix));
+
+            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateSegment), OriginalGetter);
         }
 
         private bool PatchNetManagerReleaseNodeImplementation()

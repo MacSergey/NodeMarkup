@@ -20,6 +20,7 @@ namespace IMT.Manager
         public Markup Markup { get; private set; }
         public ushort Id { get; }
         public bool IsStartSide { get; private set; }
+        public abstract int SideSign { get; } 
         public bool IsLaneInvert { get; private set; }
         public float RoadHalfWidth{ get; private set; }
         public float RoadHalfWidthTransform { get; private set; }
@@ -157,7 +158,7 @@ namespace IMT.Manager
                 cornerAngle = cornerAngle >= 180 ? cornerAngle - 180 : cornerAngle + 180;
             CornerAngle = cornerAngle * Mathf.Deg2Rad;
             CornerDir = DriveLanes.Length <= 1 ? CornerAngle.Direction() : (DriveLanes.Last().NetLane.CalculatePosition(T) - DriveLanes.First().NetLane.CalculatePosition(T)).normalized;
-            NormalDir = (DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero) * (IsStartSide ? -1 : 1);
+            NormalDir = (DriveLanes.Any() ? DriveLanes.Aggregate(Vector3.zero, (v, l) => v + l.NetLane.CalculateDirection(T)).normalized : Vector3.zero) * SideSign;
             NormalAngle = NormalDir.AbsoluteAngle();
 
             var angle = Vector3.Angle(NormalDir, CornerDir);
@@ -293,7 +294,7 @@ namespace IMT.Manager
             RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 rightPos, out Vector3 rightDir);
             LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 leftPos, out Vector3 leftDir);
 
-            direction = ((rightDir + leftDir) / (Enter.IsStartSide ? -2 : 2)).normalized;
+            direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
 
             var part = (RightLane.HalfWidth + HalfSideDelta) / CenterDelte;
             position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Mathf.Sin(Enter.CornerAndNormalAngle));
@@ -314,7 +315,7 @@ namespace IMT.Manager
                 default:
                     throw new Exception();
             }
-            direction = (Enter.IsStartSide ? -direction : direction).normalized;
+            direction = (direction * Enter.SideSign).normalized;
 
             var shift = (lineShift + offset) / Mathf.Sin(Enter.CornerAndNormalAngle);
 

@@ -16,6 +16,7 @@ namespace IMT.UI.Editors
     {
         public override string Name => IMT.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
+        public override Type SupportType { get; } = typeof(ISupportStyleTemplate);
         protected override string IsAssetMessage => IMT.Localize.TemplateEditor_TemplateIsAsset;
         protected override string RewriteCaption => IMT.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => IMT.Localize.TemplateEditor_RewriteMessage;

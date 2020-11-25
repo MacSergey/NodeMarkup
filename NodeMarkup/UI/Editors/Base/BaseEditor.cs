@@ -24,6 +24,7 @@ namespace IMT.UI.Editors
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public NodeMarkupPanel Panel { get; private set; }
         protected Markup Markup => Panel.Markup;
+        public abstract Type SupportType { get; }
 
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollablePanel ContentPanel { get; set; }

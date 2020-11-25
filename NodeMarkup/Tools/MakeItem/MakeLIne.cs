@@ -27,13 +27,13 @@ namespace IMT.Tools
 
             if (IsSelectPoint)
                 return;
-            else if (InputExtension.OnlyAltIsPressed)
+            else if (InputExtension.OnlyAltIsPressed && Markup is ISupportFillers)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
                 if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
-            else if (InputExtension.OnlyShiftIsPressed)
+            else if (InputExtension.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
         }
 

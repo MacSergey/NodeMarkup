@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using IMT.Manager;
 
 namespace IMT.UI.Panel
 {
@@ -38,6 +39,12 @@ namespace IMT.UI.Panel
             tabButton.hoveredColor = HoverColor;
             tabButton.pressedColor = FocusColor;
             tabButton.focusedColor = FocusColor;
+        }
+        public void SetVisible(Markup markup)
+        {
+            var type = markup.GetType();
+            foreach (var tab in Tabs)
+                tab.isVisible = tab.Editor.SupportType.IsAssignableFrom(type);
         }
 
         public void AddTab(Editor editor)

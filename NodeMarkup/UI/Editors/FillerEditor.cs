@@ -6,6 +6,7 @@ using IMT.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 namespace IMT.UI.Editors
 {
@@ -17,6 +18,7 @@ namespace IMT.UI.Editors
 
         public override string Name => IMT.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(IMT.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
+        public override Type SupportType { get; } = typeof(ISupportFillers);
 
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
