@@ -27,6 +27,7 @@ namespace IMT.Tools
         protected override void Reset(BaseToolMode prevMode)
         {
             HoverNodeId = 0;
+            HoverSegmentId = 0;
         }
 
         public override void OnToolUpdate()
@@ -36,7 +37,7 @@ namespace IMT.Tools
                 RaycastInput input = new RaycastInput(NodeMarkupTool.MouseRay, Camera.main.farClipPlane)
                 {
                     m_ignoreTerrain = true,
-                    m_ignoreNodeFlags = NetNode.Flags.None,
+                    m_ignoreNodeFlags = InputExtension.OnlyShiftIsPressed ? NetNode.Flags.All : NetNode.Flags.None,
                     m_ignoreSegmentFlags = NetSegment.Flags.None,
                 };
                 input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);

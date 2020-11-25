@@ -29,7 +29,6 @@ namespace IMT.Tools
                 if (_selectPanel != null)
                 {
                     _selectPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    //_selectPanel.eventLostFocus -= SelectPanelLeaveFocus;
                     _selectPanel.Selected = false;
                 }
 
@@ -39,7 +38,6 @@ namespace IMT.Tools
                 {
                     OnSetPanel();
                     _selectPanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    //_selectPanel.eventLostFocus += SelectPanelLeaveFocus;
                     _selectPanel.Selected = true;
                 }
             }

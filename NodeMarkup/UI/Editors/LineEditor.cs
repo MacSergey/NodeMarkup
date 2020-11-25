@@ -249,8 +249,7 @@ namespace IMT.UI.Editors
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-        protected override void OnSetPanel()
-            => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
+        protected override void OnSetPanel() => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
 
         public override void Deactivate()
         {
