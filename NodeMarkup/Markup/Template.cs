@@ -3,8 +3,8 @@ using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class Template : IDeletable, IToXml
     {
@@ -242,7 +242,7 @@ namespace NodeMarkup.Manager
 
         public override bool FromXml(XElement config)
         {
-            if (base.FromXml(config) && config.Element(Markup.XmlName) is XElement data)
+            if (base.FromXml(config) && config.Element(NodeMarkup.XmlName) is XElement data)
             {
                 Data = data;
                 Enters = config.Elements(Enter.XmlName).Select(c => EnterData.FromXml(c)).ToArray();

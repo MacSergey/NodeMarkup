@@ -1,12 +1,12 @@
 ﻿using ModsCommon.Utilities;
-using NodeMarkup.Utils;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public static class StyleHelper
     {

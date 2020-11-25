@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.UI;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IStyle { }
     public interface IColorStyle : IStyle
@@ -234,7 +234,7 @@ namespace NodeMarkup.Manager
             GroupMask = ~ItemMask,
 
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-            RegularLine = Markup.Item.RegularLine,
+            RegularLine = NodeMarkup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
             LineSolid,
@@ -260,7 +260,7 @@ namespace NodeMarkup.Manager
 
 
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-            StopLine = Markup.Item.StopLine,
+            StopLine = NodeMarkup.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_StopSolid))]
             StopLineSolid,
@@ -282,7 +282,7 @@ namespace NodeMarkup.Manager
 
 
             [Description(nameof(Localize.FillerStyle_Group))]
-            Filler = Markup.Item.Filler,
+            Filler = NodeMarkup.Item.Filler,
 
             [Description(nameof(Localize.FillerStyle_Stripe))]
             FillerStripe,
@@ -304,7 +304,7 @@ namespace NodeMarkup.Manager
 
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
-            Crosswalk = Markup.Item.Crosswalk,
+            Crosswalk = NodeMarkup.Item.Crosswalk,
 
             [Description(nameof(Localize.CrosswalkStyle_Existent))]
             CrosswalkExistent,

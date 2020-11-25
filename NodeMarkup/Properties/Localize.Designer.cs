@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NodeMarkup {
+namespace IMT {
     using System;
     
     

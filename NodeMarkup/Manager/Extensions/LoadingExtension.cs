@@ -1,16 +1,16 @@
 ﻿using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class LoadingExtension : LoadingExtensionBase
     {

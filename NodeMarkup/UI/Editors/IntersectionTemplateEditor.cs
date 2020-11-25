@@ -1,26 +1,26 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class IntersectionTemplateEditor : BaseTemplateEditor<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon, IntersectionTemplateGroup, bool, IntersectionTemplateHeaderPanel, EditIntersectionTemplateMode>
     {
-        public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
-        public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
-        protected override string IsAssetMessage => NodeMarkup.Localize.PresetEditor_PresetIsAsset;
-        protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
-        protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;
-        protected override string SaveChangesMessage => NodeMarkup.Localize.PresetEditor_SaveChangesMessage;
-        protected override string NameExistMessage => NodeMarkup.Localize.PresetEditor_NameExistMessage;
-        protected override string IsAssetWarningMessage => NodeMarkup.Localize.PresetEditor_IsAssetWarningMessage;
-        protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.PresetEditor_IsWorkshopWarningMessage;
+        public override string Name => IMT.Localize.PresetEditor_Presets;
+        public override string EmptyMessage => string.Format(IMT.Localize.PresetEditor_EmptyMessage, IMT.Localize.Panel_SaveAsPreset);
+        protected override string IsAssetMessage => IMT.Localize.PresetEditor_PresetIsAsset;
+        protected override string RewriteCaption => IMT.Localize.PresetEditor_RewriteCaption;
+        protected override string RewriteMessage => IMT.Localize.PresetEditor_RewriteMessage;
+        protected override string SaveChangesMessage => IMT.Localize.PresetEditor_SaveChangesMessage;
+        protected override string NameExistMessage => IMT.Localize.PresetEditor_NameExistMessage;
+        protected override string IsAssetWarningMessage => IMT.Localize.PresetEditor_IsAssetWarningMessage;
+        protected override string IsWorkshopWarningMessage => IMT.Localize.PresetEditor_IsWorkshopWarningMessage;
 
         protected override bool GroupingEnabled => false;
 

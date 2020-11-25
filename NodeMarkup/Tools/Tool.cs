@@ -1,8 +1,8 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
-using NodeMarkup.UI;
-using NodeMarkup.Utils;
+using IMT.UI;
+using IMT.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
-using NodeMarkup.Manager;
+using IMT.Manager;
 using ICities;
 using ColossalFramework.PlatformServices;
 using System.Xml.Linq;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.UI.Panel;
+using IMT.UI.Editors;
+using IMT.UI.Panel;
 using System.Diagnostics;
 using ColossalFramework.Packaging;
 using ColossalFramework.IO;
@@ -24,7 +24,7 @@ using ColossalFramework.Importers;
 using ModsCommon.Utilities;
 using ModsCommon.UI;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class NodeMarkupTool : ToolBase
     {
@@ -98,7 +98,7 @@ namespace NodeMarkup.Tools
 
             ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
-                { ToolModeType.SelectNode, Instance.CreateToolMode<SelectNodeToolMode>() },
+                { ToolModeType.Select, Instance.CreateToolMode<SelectToolMode>() },
                 { ToolModeType.MakeLine, Instance.CreateToolMode<MakeLineToolMode>() },
                 { ToolModeType.MakeCrosswalk, Instance.CreateToolMode<MakeCrosswalkToolMode>() },
                 { ToolModeType.MakeFiller, Instance.CreateToolMode<MakeFillerToolMode>() },
@@ -163,7 +163,7 @@ namespace NodeMarkup.Tools
         }
         private void Reset()
         {
-            SetModeNow(ToolModeType.SelectNode);
+            SetModeNow(ToolModeType.Select);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
         }
@@ -246,7 +246,7 @@ namespace NodeMarkup.Tools
         {
             var position = GetInfoPosition();
 
-            var isToolTipEnable = Settings.ShowToolTip || Mode.Type == ToolModeType.SelectNode;
+            var isToolTipEnable = Settings.ShowToolTip || Mode.Type == ToolModeType.Select;
             var isPanelHover = Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position);
             var isHasText = Mode.GetToolInfo() is string info && !string.IsNullOrEmpty(info);
 

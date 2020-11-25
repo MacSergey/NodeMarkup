@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.UI;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using static ToolBase;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public abstract class BaseOrderToolMode : BaseToolMode
     {

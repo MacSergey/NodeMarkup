@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NodeMarkup.Manager;
+using IMT.Manager;
 using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
@@ -11,11 +11,11 @@ using System.Xml;
 using System.IO.Compression;
 using ColossalFramework.IO;
 using System.Linq.Expressions;
-using NodeMarkup.UI;
+using IMT.UI;
 using HarmonyLib;
 using ColossalFramework.Globalization;
 
-namespace NodeMarkup.Utils
+namespace IMT.Utils
 {
     public class SerializableDataExtension : SerializableDataExtensionBase
     {

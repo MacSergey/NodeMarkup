@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Utils
+namespace IMT.Utils
 {
     public static class Colors
     {

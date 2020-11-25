@@ -1,11 +1,11 @@
-﻿using NodeMarkup.Manager;
+﻿using IMT.Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NodeMarkup.Utils
+namespace IMT.Utils
 {
     public struct ObjectId
     {

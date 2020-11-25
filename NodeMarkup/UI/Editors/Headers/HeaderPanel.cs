@@ -1,15 +1,15 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.UI.Panel;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.UI.Panel;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class StyleHeaderPanel : HeaderPanel
     {
@@ -21,10 +21,10 @@ namespace NodeMarkup.UI.Editors
 
         public StyleHeaderPanel()
         {
-            Content.AddButton<SimpleHeaderButton>(TextureUtil.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
-            ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(TextureUtil.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            Content.AddButton<SimpleHeaderButton>(TextureUtil.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
-            Content.AddButton<SimpleHeaderButton>(TextureUtil.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.AddTemplate, IMT.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
+            ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(TextureUtil.ApplyTemplate, IMT.Localize.HeaderPanel_ApplyTemplate);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.Copy, IMT.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.Paste, IMT.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
@@ -52,7 +52,7 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalkHeaderPanel()
         {
-            Content.AddButton<SimpleHeaderButton>(TextureUtil.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
+            Content.AddButton<SimpleHeaderButton>(TextureUtil.Cut, IMT.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
         }
         public override void DeInit()
         {
@@ -92,10 +92,10 @@ namespace NodeMarkup.UI.Editors
         public TemplateHeaderPanel() => AddButtons();
         protected virtual void AddButtons()
         {
-            Edit = Content.AddButton<SimpleHeaderButton>(TextureUtil.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
-            SaveAsAsset = Content.AddButton<SimpleHeaderButton>(TextureUtil.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
-            Save = Content.AddButton<SimpleHeaderButton>(TextureUtil.Save, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
-            NotSave = Content.AddButton<SimpleHeaderButton>(TextureUtil.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
+            Edit = Content.AddButton<SimpleHeaderButton>(TextureUtil.Edit, IMT.Localize.HeaderPanel_Edit, onClick: EditClick);
+            SaveAsAsset = Content.AddButton<SimpleHeaderButton>(TextureUtil.Package, IMT.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
+            Save = Content.AddButton<SimpleHeaderButton>(TextureUtil.Save, IMT.Localize.HeaderPanel_Save, onClick: SaveClick);
+            NotSave = Content.AddButton<SimpleHeaderButton>(TextureUtil.NotSave, IMT.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
         }
 
         public virtual void Init(TemplateType template)
@@ -141,7 +141,7 @@ namespace NodeMarkup.UI.Editors
         protected override void AddButtons()
         {
             SetAsDefaultButton = Content.AddButton<SimpleHeaderButton>(string.Empty, null, onClick: SetAsDefaultClick);
-            Duplicate = Content.AddButton<SimpleHeaderButton>(TextureUtil.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            Duplicate = Content.AddButton<SimpleHeaderButton>(TextureUtil.Duplicate, IMT.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
 
             base.AddButtons();
         }
@@ -150,7 +150,7 @@ namespace NodeMarkup.UI.Editors
             base.Init(template);
 
             SetAsDefaultButton.SetIconSprite(template.IsDefault ? TextureUtil.UnsetDefault : TextureUtil.SetDefault);
-            SetAsDefaultButton.tooltip = template.IsDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
+            SetAsDefaultButton.tooltip = template.IsDefault ? IMT.Localize.HeaderPanel_UnsetAsDefault : IMT.Localize.HeaderPanel_SetAsDefault;
         }
         public override void DeInit()
         {
@@ -179,7 +179,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            Apply = Content.AddButton<SimpleHeaderButton>(TextureUtil.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, onClick: ApplyClick);
+            Apply = Content.AddButton<SimpleHeaderButton>(TextureUtil.Apply, IMT.Localize.PresetEditor_ApplyPreset, onClick: ApplyClick);
             base.AddButtons();
         }
         public override void DeInit()

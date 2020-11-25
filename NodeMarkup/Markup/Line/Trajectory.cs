@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.Utils;
+using IMT.Tools;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public enum TrajectoryType
     {

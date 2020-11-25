@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.Math;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.Tools;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class MarkupFiller : IItem, IToXml
     {

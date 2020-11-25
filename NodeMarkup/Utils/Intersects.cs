@@ -2,14 +2,14 @@
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
+using IMT.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Utils
+namespace IMT.Utils
 {
     public class MarkupIntersect
     {

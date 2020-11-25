@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public static class NodeMarkupMessageBox
     {
@@ -38,7 +38,7 @@ namespace NodeMarkup.UI
         {
             CaprionText = Mod.ShortName;
             Button1Text = NodeMarkupMessageBox.Ok;
-            Button2Text = NodeMarkup.Localize.Mod_Support;
+            Button2Text = IMT.Localize.Mod_Support;
             OnButton2Click = Mod.OpenTroubleshooting;
         }
     }

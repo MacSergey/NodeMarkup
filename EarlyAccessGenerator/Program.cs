@@ -2,7 +2,7 @@
 using System;
 using System.Net;
 
-namespace NodeMarkup
+namespace IMT
 {
     class Program
     {

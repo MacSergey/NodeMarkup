@@ -3,10 +3,10 @@ using ColossalFramework.Globalization;
 using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class StyleModifierPanel<StyleType> : UICustomControl
         where StyleType : Enum

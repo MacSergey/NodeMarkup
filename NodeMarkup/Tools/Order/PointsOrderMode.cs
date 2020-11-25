@@ -1,10 +1,10 @@
-﻿using NodeMarkup.Utils;
+﻿using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class PointsOrderToolMode : BaseOrderToolMode<SourcePoint>
     {

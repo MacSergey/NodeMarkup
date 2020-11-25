@@ -3,9 +3,9 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.UI;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using UnityEngine;
 //using Poly2Tri;
 //using Poly2Tri.Triangulation.Polygon;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IPeriodicFiller : IFillerStyle, IWidthStyle, IColorStyle
     {

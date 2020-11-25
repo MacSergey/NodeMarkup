@@ -6,8 +6,8 @@ using ColossalFramework.UI;
 using HarmonyLib;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
+using IMT.Manager;
+using IMT.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class Patcher : Patcher<Mod>
     {

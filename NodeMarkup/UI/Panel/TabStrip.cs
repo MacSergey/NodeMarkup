@@ -1,13 +1,13 @@
 ﻿using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI.Editors;
+using IMT.UI.Editors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Panel
+namespace IMT.UI.Panel
 {
     public class PanelTabStrip : TabStrip<PanelTabStrip.PanelTab>
     {

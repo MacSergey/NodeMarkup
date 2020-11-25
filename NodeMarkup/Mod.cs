@@ -1,24 +1,24 @@
 ﻿using ICities;
-using NodeMarkup.Manager;
+using IMT.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using NodeMarkup.UI;
+using IMT.UI;
 using System.Globalization;
 using ColossalFramework.Globalization;
 using ColossalFramework;
 using ColossalFramework.UI;
 using ColossalFramework.PlatformServices;
-using NodeMarkup.Utils;
-using NodeMarkup.Tools;
+using IMT.Utils;
+using IMT.Tools;
 using UnityEngine.SceneManagement;
 using ModsCommon;
 using ModsCommon.Utilities;
 using ModsCommon.UI;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class Mod : BasePatcherMod<Mod, Patcher>
     {
@@ -30,7 +30,7 @@ namespace NodeMarkup
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
         protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
-        public override string Id => nameof(NodeMarkup);
+        public override string Id => nameof(IMT);
         protected override List<Version> ModVersions { get; } = new List<Version>
         {
             new Version("1.5"),

@@ -1,11 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +9,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IRender
     {
@@ -34,36 +30,33 @@ namespace NodeMarkup.Manager
     {
         void Update(Type item, bool recalculate = false);
     }
+    public interface ISupportPoints : IUpdate<MarkupPoint> { }
+    public interface ISupportLines : IUpdate<MarkupLine> { }
+    public interface ISupportFillers : IUpdate<MarkupFiller> { }
+    public interface ISupportCrosswalks : IUpdate<MarkupCrosswalk> { }
+
     public interface IItem : IUpdate, IDeletable, IRender { }
 
     public interface IStyleData
     {
         IEnumerable<IDrawData> GetDrawData();
     }
-
-    public class Markup : IUpdate<MarkupPoint>, IUpdate<MarkupLine>, IUpdate<MarkupFiller>, IUpdate<MarkupCrosswalk>, IToXml
+    public abstract class Markup : ISupportPoints, ISupportLines, IToXml
     {
-        #region STATIC
-
-        public static string XmlName { get; } = "M";
-
-        #endregion
-
         #region PROPERTIES
-
-        public string XmlSection => XmlName;
         public ushort Id { get; }
         public Vector3 Position { get; private set; }
         public float Radius { get; private set; }
         public float Height => Position.y;
+        public abstract string XmlSection { get; }
 
-        List<Enter> RowEntersList { get; set; } = new List<Enter>();
-        List<Enter> EntersList { get; set; } = new List<Enter>();
-        Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
-        List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
-        Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
-        Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
+        protected List<Enter> RowEntersList { get; set; } = new List<Enter>();
+        protected List<Enter> EntersList { get; set; } = new List<Enter>();
+        protected Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
+        protected Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
+        protected List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
+        protected Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
+        protected Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
 
         public bool IsEmpty => !LinesDictionary.Any() && !FillersList.Any();
 
@@ -81,7 +74,7 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                foreach (var enter in EntersList)
+                foreach (var enter in Enters)
                     yield return enter.Line;
                 foreach (var line in BetweenEnters.Values)
                     yield return line;
@@ -109,10 +102,9 @@ namespace NodeMarkup.Manager
 
         #endregion
 
-        public Markup(ushort nodeId)
+        public Markup(ushort id)
         {
-            Id = nodeId;
-            Update();
+            Id = id;
         }
 
         #region UPDATE
@@ -134,22 +126,18 @@ namespace NodeMarkup.Manager
 
             UpdateProgress = false;
         }
-
-        private void UpdateEnters()
+        protected virtual void UpdateEnters()
         {
-            var node = Id.GetNode();
-            Position = node.m_position;
-
             var oldEnters = RowEntersList;
             var exists = oldEnters.Select(e => e.Id).ToList();
-            var update = node.SegmentsId().ToList();
+            var update = GetEnters().ToList();
 
             var still = exists.Intersect(update).ToArray();
             var delete = exists.Except(still).ToArray();
             var add = update.Except(still).ToArray();
 
             var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
-            newEnters.AddRange(add.Select(id => new Enter(this, id)));
+            newEnters.AddRange(add.Select(id => NewEnter(id)));
             foreach (var enter in newEnters)
                 enter.Update();
             newEnters.Sort((e1, e2) => e1.CompareTo(e2));
@@ -159,12 +147,17 @@ namespace NodeMarkup.Manager
             RowEntersList = newEnters;
             EntersList = RowEntersList.Where(e => e.PointCount != 0).ToList();
 
-            UpdateNodeСontour();
+            UpdateСontour();
             UpdateRadius();
 
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
         }
+        protected abstract Vector3 GetPosition();
+
+        protected abstract IEnumerable<ushort> GetEnters();
+        protected abstract Enter NewEnter(ushort id);
+
         private void UpdateBackup(ushort[] delete, ushort[] add, List<Enter> oldEnters, List<Enter> newEnters)
         {
             if (delete.Length != 1 || add.Length != 1)
@@ -201,7 +194,7 @@ namespace NodeMarkup.Manager
             FromXml(Mod.Version, currentData, map);
         }
 
-        private void UpdateNodeСontour()
+        private void UpdateСontour()
         {
             BetweenEnters.Clear();
 
@@ -303,7 +296,7 @@ namespace NodeMarkup.Manager
         }
         public void ResetOffsets()
         {
-            foreach (var enter in EntersList)
+            foreach (var enter in Enters)
                 enter.ResetOffsets();
         }
 
@@ -592,31 +585,9 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(Version version, XElement config, ObjectsMap map, out Markup markup)
-        {
-            var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            while (map.TryGetValue(new ObjectId() { Node = nodeId }, out ObjectId targetNode))
-                nodeId = targetNode.Node;
 
-            try
-            {
-                markup = MarkupManager.Get(nodeId);
-                markup.FromXml(version, config, map);
-                return true;
-            }
-            catch (Exception error)
-            {
-                Mod.Logger.Error($"Could not load node #{nodeId} markup", error);
-                markup = null;
-                MarkupManager.LoadErrors += 1;
-                return false;
-            }
-        }
-        public void FromXml(Version version, XElement config, ObjectsMap map)
+        public virtual void FromXml(Version version, XElement config, ObjectsMap map)
         {
-            if (version < new Version("1.2"))
-                map = VersionMigration.Befor1_2(this, map);
-
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
                 MarkupPoint.FromXml(pointConfig, this, map);
 
@@ -636,21 +607,28 @@ namespace NodeMarkup.Manager
             foreach (var pair in toInitLines)
                 pair.Key.FromXml(pair.Value, map, invertLines.Contains(pair.Key));
 
-            foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
+            if (this is ISupportFillers)
             {
-                if (MarkupFiller.FromXml(fillerConfig, this, map, out MarkupFiller filler))
-                    FillersList.Add(filler);
+                foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
+                {
+                    if (MarkupFiller.FromXml(fillerConfig, this, map, out MarkupFiller filler))
+                        FillersList.Add(filler);
+                }
             }
-            foreach (var crosswalkConfig in config.Elements(MarkupCrosswalk.XmlName))
+
+            if (this is ISupportCrosswalks)
             {
-                if (MarkupCrosswalk.FromXml(crosswalkConfig, this, map, out MarkupCrosswalk crosswalk))
-                    CrosswalksDictionary[crosswalk.Line] = crosswalk;
+                foreach (var crosswalkConfig in config.Elements(MarkupCrosswalk.XmlName))
+                {
+                    if (MarkupCrosswalk.FromXml(crosswalkConfig, this, map, out MarkupCrosswalk crosswalk))
+                        CrosswalksDictionary[crosswalk.Line] = crosswalk;
+                }
             }
 
             Update();
         }
 
-        #endregion XML
+        #endregion
 
         public enum Item
         {
@@ -665,6 +643,16 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = 0x800,
+        }
+    }
+    public abstract class Markup<EnterType> : Markup
+        where EnterType : Enter
+    {
+        public new IEnumerable<EnterType> Enters => EntersList.Cast<EnterType>();
+
+        public Markup(ushort id) : base(id)
+        {
+            Update();
         }
     }
 }

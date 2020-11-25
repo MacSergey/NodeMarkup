@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class ApplyTemplateHeaderButton : HeaderPopupButton<ApplyTemplatePopupPanel>
     {
@@ -44,7 +44,7 @@ namespace NodeMarkup.UI.Editors
             if (!templates.Any())
             {
                 var emptyLabel = Content.AddUIComponent<UILabel>();
-                emptyLabel.text = NodeMarkup.Localize.HeaderPanel_NoTemplates;
+                emptyLabel.text = IMT.Localize.HeaderPanel_NoTemplates;
                 emptyLabel.textScale = 0.8f;
                 emptyLabel.autoSize = false;
                 emptyLabel.width = Content.width;

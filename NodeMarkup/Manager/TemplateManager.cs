@@ -4,7 +4,7 @@ using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
-using NodeMarkup.Utils;
+using IMT.Utils;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class TemplateManager
     {

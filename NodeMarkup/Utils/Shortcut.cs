@@ -1,13 +1,13 @@
 ﻿using ColossalFramework;
 using ModsCommon.Utils;
-using NodeMarkup.Tools;
+using IMT.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Utils
+namespace IMT.Utils
 {
     public class NodeMarkupShortcut : Shortcut
     {

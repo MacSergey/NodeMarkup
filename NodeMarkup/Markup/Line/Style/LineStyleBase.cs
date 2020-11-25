@@ -2,9 +2,9 @@
 using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.UI;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface ILineStyle : IWidthStyle, IColorStyle { }
     public interface IRegularLine : ILineStyle { }

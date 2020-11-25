@@ -1,5 +1,5 @@
-﻿using NodeMarkup.Tools;
-using NodeMarkup.Utils;
+﻿using IMT.Tools;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>, IRender
     {

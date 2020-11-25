@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.Utils;
+using IMT.Tools;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,10 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
-    public class Enter : IRender, IComparable<Enter>
+
+    public abstract class Enter : IRender, IComparable<Enter>
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -77,8 +78,8 @@ namespace NodeMarkup.Manager
         }
         private void Init()
         {
-            var segment = Id.GetSegment();
-            IsStartSide = segment.m_startNode == Markup.Id;
+            var segment = GetSegment();
+            IsStartSide = GetIsStartSide();
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
 
             var info = segment.Info;
@@ -101,6 +102,8 @@ namespace NodeMarkup.Manager
                 Lines[i] = markupLine;
             }
         }
+        protected abstract NetSegment GetSegment();
+        protected abstract bool GetIsStartSide();
         public bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
         {
             switch (type)
@@ -133,7 +136,7 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            var segment = Id.GetSegment();
+            var segment = GetSegment();
 
             CalculateCorner(segment);
             CalculatePosition(segment);
@@ -207,6 +210,13 @@ namespace NodeMarkup.Manager
         }
         public int CompareTo(Enter other) => other.NormalAngle.CompareTo(NormalAngle);
         public override string ToString() => Id.ToString();
+    }
+    public abstract class Enter<MarkupType> : Enter
+        where MarkupType : Markup
+    {
+        public new MarkupType Markup => (MarkupType)base.Markup;
+
+        public Enter(MarkupType markup, ushort segmentId) : base(markup, segmentId) { }
     }
     public class DriveLane
     {

@@ -1,10 +1,10 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Panel;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI.Panel;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public interface IEditor<ItemType>
     {

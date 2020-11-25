@@ -5,9 +5,9 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ICities;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Utils
+namespace IMT.Utils
 {
     public static class Utilities
     {

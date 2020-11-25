@@ -1,15 +1,15 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class IntersectionTemplateInfoProperty : EditorItem, IReusable
     {
@@ -51,7 +51,7 @@ namespace NodeMarkup.UI
 
             for(var i = 0; i < template.Enters.Length; i += 1)
             {
-                Temp.Add(AddTitleData(string.Format(NodeMarkup.Localize.PresetInfo_RoadPoints, i + 1)));
+                Temp.Add(AddTitleData(string.Format(IMT.Localize.PresetInfo_RoadPoints, i + 1)));
                 Temp.Add(AddValueData( template.Enters[i].Points.ToString()));
             }
 
@@ -92,7 +92,7 @@ namespace NodeMarkup.UI
             NoScreenshot.wordWrap = true;
 
             NoScreenshot.textScale = 1.2f;
-            NoScreenshot.text = NodeMarkup.Localize.PresetInfo_NoScreenshot;
+            NoScreenshot.text = IMT.Localize.PresetInfo_NoScreenshot;
 
             NoScreenshot.textAlignment = UIHorizontalAlignment.Center;
             NoScreenshot.verticalAlignment = UIVerticalAlignment.Middle;
@@ -114,10 +114,10 @@ namespace NodeMarkup.UI
         }
         private void AddTitleDatas()
         {
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Roads);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Lines);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Crosswalks);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Fillers);
+            AddTitleData(IMT.Localize.PresetInfo_Roads);
+            AddTitleData(IMT.Localize.PresetInfo_Lines);
+            AddTitleData(IMT.Localize.PresetInfo_Crosswalks);
+            AddTitleData(IMT.Localize.PresetInfo_Fillers);
         }
         private void AddValueDatas()
         {

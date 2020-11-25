@@ -1,13 +1,13 @@
 ﻿using ColossalFramework.UI;
-using NodeMarkup.Tools;
-using NodeMarkup.Utils;
+using IMT.Tools;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class NodeMarkupButton : UIButton
     {

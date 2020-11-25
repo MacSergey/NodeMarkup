@@ -96,6 +96,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markup\Enter\SegmentEnter.cs" />
+    <Compile Include="Markup\Enter\NodeEnter.cs" />
+    <Compile Include="Markup\Markup\Markup.cs" />
+    <Compile Include="Markup\Markup\SegmentMarkup.cs" />
     <Compile Include="Markup\Template.cs" />
     <Compile Include="Tools\BaseMode.cs" />
     <Compile Include="Tools\DragPointMode.cs" />
@@ -107,7 +111,7 @@
     <Compile Include="Tools\Order\EntersOrderMode.cs" />
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
-    <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="Tools\SelectMode.cs" />
     <Compile Include="UI\Panel\TabStrip.cs" />
     <Compile Include="UI\Property panels\ColorAdvancedProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />
@@ -133,10 +137,10 @@
     <Compile Include="Markup\Line\Style\StopLineStyle.cs" />
     <Compile Include="Markup\Line\Style\RegularLineStyles.cs" />
     <Compile Include="Markup\Line\Trajectory.cs" />
-    <Compile Include="Markup\Markup.cs" />
+    <Compile Include="Markup\Markup\NodeMarkup.cs" />
     <Compile Include="Markup\Line\LinePartEdge.cs" />
     <Compile Include="Markup\Point\Point.cs" />
-    <Compile Include="Markup\Point\Enter.cs" />
+    <Compile Include="Markup\Enter\Enter.cs" />
     <Compile Include="Markup\Point\SupportPoint.cs" />
     <Compile Include="Markup\Line\Style\LineStyleBase.cs" />
     <Compile Include="Markup\Style.cs" />

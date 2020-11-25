@@ -1,8 +1,8 @@
 ﻿using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.Tools;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class MarkupLine : IItem, IToXml
     {
@@ -57,7 +57,7 @@ namespace NodeMarkup.Manager
             if (update)
                 Update(true);
         }
-        protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
+        protected MarkupLine(NodeMarkup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
         protected virtual void RuleChanged() => Markup.Update(this, true);
 
         public void Update(bool onlySelfUpdate = false)
@@ -169,13 +169,13 @@ namespace NodeMarkup.Manager
         public enum LineType
         {
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-            Regular = Markup.Item.RegularLine,
+            Regular = NodeMarkup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-            Stop = Markup.Item.StopLine,
+            Stop = NodeMarkup.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
-            Crosswalk = Markup.Item.Crosswalk,
+            Crosswalk = NodeMarkup.Item.Crosswalk,
         }
         public override string ToString() => PointPair.ToString();
     }

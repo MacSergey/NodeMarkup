@@ -2,8 +2,8 @@
 using ColossalFramework.UI;
 using HarmonyLib;
 using ICities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class AssetDataExtension : AssetDataExtensionBase
     {

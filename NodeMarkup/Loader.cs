@@ -4,8 +4,8 @@ using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using HarmonyLib;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +17,7 @@ using System.Xml;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup
+namespace IMT
 {
     public interface IXml
     {
@@ -33,7 +33,7 @@ namespace NodeMarkup
     }
     public static class Loader
     {
-        public static string Id { get; } = nameof(NodeMarkup);
+        public static string Id { get; } = nameof(IMT);
 
         public static XElement Parse(string text, LoadOptions options = LoadOptions.None)
         {

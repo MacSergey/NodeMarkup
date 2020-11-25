@@ -1,13 +1,13 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
@@ -15,8 +15,8 @@ namespace NodeMarkup.UI.Editors
 
         private static FillerStyle Buffer { get; set; }
 
-        public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
-        public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
+        public override string Name => IMT.Localize.FillerEditor_Fillers;
+        public override string EmptyMessage => string.Format(IMT.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
 
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -49,7 +49,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel);
-            Style.Text = NodeMarkup.Localize.Editor_Style;
+            Style.Text = IMT.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;

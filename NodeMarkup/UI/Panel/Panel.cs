@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI.Editors;
+using IMT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +12,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Panel
+namespace IMT.UI.Panel
 {
     public class NodeMarkupPanel : UIPanel
     {
@@ -192,7 +192,7 @@ namespace NodeMarkup.UI.Panel
             Markup = markup;
             if (Markup != null)
             {
-                Header.Text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
+                Header.Text = string.Format(IMT.Localize.Panel_Caption, Markup.Id);
                 TabStrip.SelectedTab = -1;
                 SelectEditor<LinesEditor>();
             }
