@@ -19,7 +19,19 @@ namespace IMT.Tools
             if (IsSelectPoint)
                 return IsHoverPoint ? base.GetToolInfo() : Localize.Tool_InfoSelectLineEndPoint;
             else
-                return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
+            {
+                var tips = new List<string>()
+                {
+                    Localize.Tool_InfoSelectLineStartPoint,
+                    Localize.Tool_InfoStartDragPointMode
+                };
+                if (Markup is ISupportFillers)
+                    tips.Add(Localize.Tool_InfoStartCreateFiller);
+                if (Markup is ISupportCrosswalks)
+                    tips.Add(Localize.Tool_InfoStartCreateCrosswalk);
+
+                return string.Join("\n", tips.ToArray());
+            }
         }
         public override void OnToolUpdate()
         {

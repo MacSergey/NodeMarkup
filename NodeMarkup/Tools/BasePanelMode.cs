@@ -29,7 +29,7 @@ namespace IMT.Tools
                 if (_selectPanel != null)
                 {
                     _selectPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    _selectPanel.eventLostFocus -= SelectPanelLeaveFocus;
+                    //_selectPanel.eventLostFocus -= SelectPanelLeaveFocus;
                     _selectPanel.Selected = false;
                 }
 
@@ -39,7 +39,7 @@ namespace IMT.Tools
                 {
                     OnSetPanel();
                     _selectPanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    _selectPanel.eventLostFocus += SelectPanelLeaveFocus;
+                    //_selectPanel.eventLostFocus += SelectPanelLeaveFocus;
                     _selectPanel.Selected = true;
                 }
             }
@@ -58,11 +58,7 @@ namespace IMT.Tools
         public override void Deactivate()
         {
             base.Deactivate();
-            if (SelectPanel is PanelType panel)
-            {
-                panel.Selected = true;
-                SelectPanel = null;
-            }
+            SelectPanel = null;
         }
         protected virtual void OnSetPanel() { }
 

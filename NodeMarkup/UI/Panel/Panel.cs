@@ -182,6 +182,12 @@ namespace IMT.UI.Panel
         }
 
         private void Reset() => Available = true;
+        protected override void OnVisibilityChanged()
+        {
+            base.OnVisibilityChanged();
+            if (isVisible)
+                UpdatePanel();
+        }
         public void UpdatePanel()
         {
             Reset();
@@ -193,11 +199,10 @@ namespace IMT.UI.Panel
             if (Markup != null)
             {
                 Header.Text = Markup.PanelCaption;
-                TabStrip.SelectedTab = -1;
-                SelectEditor<LinesEditor>();
-
                 TabStrip.SetVisible(Markup);
                 TabStrip.ArrangeTabs();
+                TabStrip.SelectedTab = -1;
+                SelectEditor<LinesEditor>();
             }
         }
         private void OnSelectedTabChanged(int index)
@@ -254,7 +259,7 @@ namespace IMT.UI.Panel
             where TemplateType : Template
         {
             var editor = Edit<EditorType, TemplateType>(template);
-            if(editName && editor != null)
+            if (editName && editor != null)
             {
                 editor.EditName();
             }

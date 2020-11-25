@@ -50,7 +50,7 @@ namespace IMT.Manager
     {
         IEnumerable<IDrawData> GetDrawData();
     }
-    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportPoints, ISupportLines, ISupportStyleTemplate, IToXml
+    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, IToXml
     {
         #region PROPERTIES
         public virtual MarkupLine.LineType SupportLines => MarkupLine.LineType.Regular;

@@ -20,6 +20,11 @@ namespace IMT.Tools
         public Markup Markup => Tool.Markup;
         protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
 
+        public BaseToolMode()
+        {
+            Deactivate();
+        }
+
         public virtual void Activate(BaseToolMode prevMode)
         {
             enabled = true;
