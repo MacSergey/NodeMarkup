@@ -24,7 +24,7 @@ namespace NodeMarkup.Utils
                 { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
                 { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
                 { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
-                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(64,64,Color.white), TextureHelper.CreateTexture(64,64,new Color32(0,255,255,255))) },
+                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(64,64,Color.white), TextureHelper.CreateTexture(64,64,new Color32(0,0,0,255))) },
             };
         }
 
@@ -141,18 +141,21 @@ namespace NodeMarkup.Utils
         }
         public static Material CreateRoadMaterial(Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
         {
-            var material = new Material(Shader.Find("Custom/Net/Road"))
+            var material = new Material(Shader.Find("Custom/Net/RoadBridge"))
             {
                 mainTexture = texture,
                 name = "NodeMarkupRoad",
                 color = new Color(0.5f, 0.5f, 0.5f, 0f),
+                doubleSidedGI = false,
+                enableInstancing = false,
+                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
                 renderQueue = renderQueue,
             };
             if (apr != null)
                 material.SetTexture("_APRMap", apr);
 
-            material.EnableKeyword("TERRAIN_SURFACE_ON");
-            material.EnableKeyword("NET_SEGMENT");
+            //material.EnableKeyword("TERRAIN_SURFACE_ON");
+            //material.EnableKeyword("NET_SEGMENT");
 
             return material;
         }
@@ -261,11 +264,12 @@ namespace NodeMarkup.Utils
             var yRatio = (2 * HalfLength) / minMax.height;
             Vertices = vertices.Select(v => new Vector3((v.x - minMax.center.x) * xRatio, v.y - Position.y + 0.3f, (v.z - minMax.center.y) * yRatio)).ToArray();
             UV = Vertices.Select(v => new Vector2((1f - (v.x / HalfWidth)) / 2f, (1f - (v.z / HalfLength)) / 2f)).ToArray();
+
         }
         private void CalculateTriangles(int[] triangles)
         {
             Triangles = new int[triangles.Length];
-            for(var i = 0; i < triangles.Length; i +=3)
+            for (var i = 0; i < triangles.Length; i += 3)
             {
                 Triangles[i] = triangles[i + 2];
                 Triangles[i + 1] = triangles[i + 1];
@@ -304,11 +308,11 @@ namespace NodeMarkup.Utils
                     vertices = Vertices,
                     triangles = Triangles,
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
-                    uv = UV
+                    uv = UV,
                 };
 
                 Mesh.RecalculateNormals();
-                //Mesh.RecalculateTangents();
+                Mesh.RecalculateTangents();
             }
             yield return this;
         }
@@ -321,8 +325,6 @@ namespace NodeMarkup.Utils
             materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             materialBlock.SetVector(instance.ID_MeshScale, Scale);
-            materialBlock.SetVector(instance.ID_ObjectIndex, objectIndex);
-            materialBlock.SetColor(instance.ID_Color, Color);
 
             Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 9, null, 0, materialBlock);
         }
