@@ -148,12 +148,12 @@ namespace NodeMarkup.Utils
                 mainTexture = texture,
                 name = "NodeMarkupRoad",
                 color = new Color(0.5f, 0.5f, 0.5f, 0f),
-                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack & MaterialGlobalIlluminationFlags.RealtimeEmissive,
                 renderQueue = renderQueue,
             };
             if (apr != null)
                 material.SetTexture("_APRMap", apr);
 
+            material.EnableKeyword("TERRAIN_SURFACE_ON");
             material.EnableKeyword("NET_SEGMENT");
 
             return material;

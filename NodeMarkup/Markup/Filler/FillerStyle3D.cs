@@ -44,7 +44,9 @@ namespace NodeMarkup.Manager
 
         protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect _, float height)
         {
-            var points = trajectories.SelectMany(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr))).ToList();
+            var pointsGroups = trajectories.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr)).ToArray()).ToArray();
+
+            var points = pointsGroups.SelectMany(g => g).ToList();
             var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
             P2T.Triangulate(polygon);
             var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToList();
@@ -70,34 +72,42 @@ namespace NodeMarkup.Manager
 
             var clockWise = Vector3.Cross(trajectories[0].EndDirection, trajectories[1].StartDirection).y < 0;
 
+            //var edgePoints = new List<Vector3>();
+            //var edgeUV = new List<Vector2>();
+            //var edgeTriangles = new List<int>();
             var count = points.Count;
-            for (var i = 0; i < count; i += 1)
+            var index = 0;
+            for(var i = 0; i < pointsGroups.Length; i += 1)
             {
-                var point1 = points[clockWise ? i : (i + 1) % count];
-                var point2 = points[clockWise ? (i + 1) % count : i];
+                var group = pointsGroups[clockWise ? i : pointsGroups.Length - 1 - i];
 
-                points.Add(point1);
-                points.Add(point1 - new Vector3(0f, 0.3f, 0f));
-                uv.Add(new Vector2(0.55f, 0.05f));
-                uv.Add(new Vector2(0.55f, 0.95f));
+                for (var j = 0; j <= group.Length; j += 1)
+                {
+                    var point = points[clockWise ? index % count : (count - index) % count];
 
-                points.Add(point2);
-                points.Add(point2 - new Vector3(0f, 0.3f, 0f));
-                uv.Add(new Vector2(0.95f, 0.05f));
-                uv.Add(new Vector2(0.85f, 0.95f));
+                    points.Add(point);
+                    points.Add(point - new Vector3(0f, 0.3f, 0f));
+                    uv.Add(new Vector2(0.75f, 0.5f));
+                    uv.Add(new Vector2(0.75f, 0.5f));
 
-                triangles.Add(points.Count - 4);
-                triangles.Add(points.Count - 1);
-                triangles.Add(points.Count - 2);
+                    if (j != 0)
+                    {
+                        triangles.Add(points.Count - 4);
+                        triangles.Add(points.Count - 1);
+                        triangles.Add(points.Count - 2);
 
-                triangles.Add(points.Count - 1);
-                triangles.Add(points.Count - 4);
-                triangles.Add(points.Count - 3);
+                        triangles.Add(points.Count - 1);
+                        triangles.Add(points.Count - 4);
+                        triangles.Add(points.Count - 3);
+                    }
+                    index += 1;
+                }
+                index -= 1;
             }
 
             return new MarkupStyleMesh(position, points.ToArray(), triangles.ToArray(), uv.ToArray(), minMax, MaterialType);
 
-            Vector2 GetUV(Vector3 point) => new Vector2((point.x / halfWidth + 1f) * 0.225f, (point.z / halfHeight + 1f) * 0.5f);
+            Vector2 GetUV(Vector3 point) => new Vector2((point.x / halfWidth + 1f) * 0.2f, (point.z / halfHeight + 1f) * 0.5f);
         }
         static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
         {
