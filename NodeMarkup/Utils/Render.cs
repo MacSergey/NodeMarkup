@@ -25,7 +25,8 @@ namespace NodeMarkup.Utils
                 { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
                 { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
                 { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
-                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(512,512,Color.white), CreateTextTexture(512,512)) },
+                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(1,1,Color.white), TextureHelper.CreateTexture(1,1,Color.black)) },
+                { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), CreateTextTexture(128,128)) },
             };
         }
 
@@ -160,33 +161,9 @@ namespace NodeMarkup.Utils
         public static Texture2D CreateTextTexture(int height, int width)
         {
             var texture = new Texture2D(height, width) { name = "Markup" };
-            //var count = 8f;
             for (var i = 0; i < width; i += 1)
             {
-                Color color;
-
-                if (i < width / 2)
-                    color = Color.black;
-                else
-                    color = new Color(1f, 1f, 0f, 1f);
-
-                //if(i<width / count * 1)
-                //    color = new Color32(255, 0, 0, 255);
-                //else if (i < width / count * 2)
-                //    color = new Color32(0, 255, 0, 255);
-                //else if (i < width / count * 3)
-                //    color = new Color32(0, 0, 255, 255);
-                //else if (i < width / count * 4)
-                //    color = new Color32(255, 255, 0, 255);
-                //else if (i < width / count * 5)
-                //    color = new Color32(255, 0, 255, 255);
-                //else if (i < width / count * 6)
-                //    color = new Color32(0, 255, 255, 255);
-                //else if (i < width / count * 7)
-                //    color = new Color32(255, 255, 255, 255);
-                //else
-                //    color = new Color32(0, 0, 0, 255);
-
+                var color = i < width / 2 ? new Color(1f, 1f, 0f, 1f) : Color.black;
                 for (var j = 0; j < height; j += 1)
                     texture.SetPixel(i, j, color);
             }
@@ -267,8 +244,8 @@ namespace NodeMarkup.Utils
     }
     public class MarkupStyleMesh : IStyleData, IDrawData
     {
-        private static float HalfWidth => 10f;
-        private static float HalfLength => 10f;
+        public static float HalfWidth => 10f;
+        public static float HalfLength => 10f;
         private static Vector4 Scale { get; } = new Vector4(0.5f / HalfWidth, 0.5f / HalfLength, 1f, 1f);
 
         private Vector3 Position;
@@ -284,39 +261,23 @@ namespace NodeMarkup.Utils
 
         private Mesh Mesh { get; set; }
 
-        public MarkupStyleMesh(float height, Vector3[] vertices, int[] triangles, MaterialType materialType)
+        public MarkupStyleMesh(Vector3 position, Vector3[] vertices, int[] triangles, Vector2[] uv, Rect minMax, MaterialType materialType)
         {
-            var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
-
-            Position = new Vector3(minMax.center.x, height + 0.3f, minMax.center.y);
+            Position = position;
             MaterialType = materialType;
+            Triangles = triangles;
+            UV = uv;
+
+            var xRatio = (2f * HalfWidth) / minMax.width;
+            var yRatio = (2f * HalfLength) / minMax.height;
+            Vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray();
 
             ItemsExtension.TerrainManager.GetSurfaceMapping(Position, out var surfaceTexA, out var surfaceTexB, out var surfaceMapping);
             SurfaceTexA = surfaceTexA;
             SurfaceTexB = surfaceTexB;
             SurfaceMapping = surfaceMapping;
 
-            CalculateVertices(vertices, minMax);
-            CalculateTriangles(triangles);
             CalculateMatrix(minMax);
-        }
-        private void CalculateVertices(Vector3[] vertices, Rect minMax)
-        {
-            var xRatio = (2 * HalfWidth) / minMax.width;
-            var yRatio = (2 * HalfLength) / minMax.height;
-            Vertices = vertices.Select(v => new Vector3((v.x - minMax.center.x) * xRatio, v.y - Position.y + 0.3f, (v.z - minMax.center.y) * yRatio)).ToArray();
-            UV = Vertices.Select(v => new Vector2((1f - (v.x / HalfWidth)) / 2f, (1f - (v.z / HalfLength)) / 2f)).ToArray();
-
-        }
-        private void CalculateTriangles(int[] triangles)
-        {
-            Triangles = new int[triangles.Length];
-            for (var i = 0; i < triangles.Length; i += 3)
-            {
-                Triangles[i] = triangles[i + 2];
-                Triangles[i + 1] = triangles[i + 1];
-                Triangles[i + 2] = triangles[i];
-            }
         }
         private void CalculateMatrix(Rect minMax)
         {
@@ -367,7 +328,6 @@ namespace NodeMarkup.Utils
             materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             materialBlock.SetVector(instance.ID_MeshScale, Scale);
-            //materialBlock.SetVector(instance.ID_Color, Color);
 
             materialBlock.SetTexture(instance.ID_SurfaceTexA, SurfaceTexA);
             materialBlock.SetTexture(instance.ID_SurfaceTexB, SurfaceTexB);

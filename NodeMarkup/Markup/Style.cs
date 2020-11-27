@@ -302,6 +302,9 @@ namespace NodeMarkup.Manager
             [Description("Pavement")]
             FillerPavement,
 
+            [Description("Grass")]
+            FillerGrass,
+
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = NodeMarkup.Item.Crosswalk,

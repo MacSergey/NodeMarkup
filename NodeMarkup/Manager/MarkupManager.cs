@@ -192,5 +192,6 @@ namespace NodeMarkup.Manager
         RectangleFillers,
         Triangle,
         Pavement,
+        Grass,
     }
 }

@@ -35,7 +35,8 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Pavement, new TriangulationFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
+            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
@@ -339,6 +340,9 @@ namespace NodeMarkup.Manager
 
             [Description("Pavement")]
             Pavement = StyleType.FillerPavement,
+
+            [Description("Grass")]
+            Grass = StyleType.FillerGrass,
         }
     }
 }

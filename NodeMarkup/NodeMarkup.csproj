@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Markup\Enter\SegmentEnter.cs" />
     <Compile Include="Markup\Enter\NodeEnter.cs" />
+    <Compile Include="Markup\Filler\FillerStyle3D.cs" />
     <Compile Include="Markup\Markup\Markup.cs" />
     <Compile Include="Markup\Markup\SegmentMarkup.cs" />
     <Compile Include="Markup\Template.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Markup\Crosswalk\CrosswalkStyleBase.cs" />
     <Compile Include="Markup\Filler\Filler.cs" />
     <Compile Include="Markup\Filler\FillerContour.cs" />
-    <Compile Include="Markup\Filler\FillerStyle.cs" />
+    <Compile Include="Markup\Filler\FillerStyle2D.cs" />
     <Compile Include="Markup\Filler\FillerStyleBase.cs" />
     <Compile Include="Markup\Filler\FillerVertex.cs" />
     <Compile Include="Markup\Line\Line.cs" />
