@@ -489,12 +489,29 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> MinAngle { get; }
         public PropertyValue<float> MinLength { get; }
         public PropertyValue<float> MaxLength { get; }
-        
+        //public PropertyValue<float> IndexX { get; }
+        //public PropertyValue<float> IndexY { get; }
+        //public PropertyValue<float> IndexZ { get; }
+        //public PropertyValue<float> IndexW { get; }
+        //public PropertyColorValue MeshColor { get; }
+        //public PropertyValue<float> DX { get; }
+        //public PropertyValue<float> DY { get; }
+        //public PropertyValue<float> DZ { get; }
+
         public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float minAngle, float minLength, float maxLength) : base(color, width, medianOffset)
         {
             MinAngle = new PropertyValue<float>(StyleChanged, minAngle);
             MinLength = new PropertyValue<float>(StyleChanged, minLength);
             MaxLength = new PropertyValue<float>(StyleChanged, maxLength);
+
+            //IndexX = new PropertyValue<float>("IndexX", StyleChanged, 0f);
+            //IndexY = new PropertyValue<float>("IndexY", StyleChanged, 0f);
+            //IndexZ = new PropertyValue<float>("IndexZ", StyleChanged, 0f);
+            //IndexW = new PropertyValue<float>("IndexW", StyleChanged, 0f);
+            //MeshColor = GetColorProperty(new Color(0.5f, 0.5f, 0.5f, 0f));
+            //DX = new PropertyValue<float>("dX", StyleChanged, 0f);
+            //DY = new PropertyValue<float>("dY", StyleChanged, 0f);
+            //DZ = new PropertyValue<float>("dZ", StyleChanged, 0f);
         }
 
         public override void CopyTo(Style target)
@@ -515,7 +532,7 @@ namespace NodeMarkup.Manager
             P2T.Triangulate(polygon);
             var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToList();
 
-            return new MarkupStyleMesh(height, points.ToArray(), triangles.ToArray(), MaterialType.Pavement);
+            return new MarkupStyleMesh(height, points.ToArray(), triangles.ToArray(), MaterialType.Pavement/*, MeshColor.Value, new Vector4(IndexX, IndexY, IndexZ, IndexW), new Vector3(DX, DY, DZ)*/);
         }
         static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
         {
@@ -528,6 +545,14 @@ namespace NodeMarkup.Manager
             components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
             components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
+            //components.Add(AddMeshColorProperty(parent));
+            //components.Add(AddIndexProperty(parent, IndexX));
+            //components.Add(AddIndexProperty(parent, IndexY));
+            //components.Add(AddIndexProperty(parent, IndexZ));
+            //components.Add(AddIndexProperty(parent, IndexW));
+            //components.Add(AddIndexProperty(parent, DX));
+            //components.Add(AddIndexProperty(parent, DY));
+            //components.Add(AddIndexProperty(parent, DZ));
             return components;
         }
         private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
@@ -574,6 +599,27 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(minAngleProperty, onHover, onLeave);
             return minAngleProperty;
         }
+
+        //protected ColorAdvancedPropertyPanel AddMeshColorProperty(UIComponent parent)
+        //{
+        //    var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent);
+        //    colorProperty.Text = Localize.StyleOption_Color;
+        //    colorProperty.Init();
+        //    colorProperty.Value = MeshColor;
+        //    colorProperty.OnValueChanged += (Color32 color) => MeshColor.Value = color;
+        //    return colorProperty;
+        //}
+        //private FloatPropertyPanel AddIndexProperty(UIComponent parent, PropertyValue<float> property)
+        //{
+        //    var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+        //    minAngleProperty.Text = property.Label;
+        //    minAngleProperty.UseWheel = true;
+        //    minAngleProperty.WheelStep = 0.1f;
+        //    minAngleProperty.Init();
+        //    minAngleProperty.Value = property;
+        //    minAngleProperty.OnValueChanged += (float value) => property.Value = value;
+        //    return minAngleProperty;
+        //}
 
         public override FillerStyle CopyFillerStyle() => new TriangulationFillerStyle(Color, Width, MedianOffset, MinAngle, MinLength, MaxLength);
     }

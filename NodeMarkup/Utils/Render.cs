@@ -1,4 +1,5 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework;
+using ColossalFramework.Math;
 using ColossalFramework.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
@@ -24,7 +25,7 @@ namespace NodeMarkup.Utils
                 { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
                 { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
                 { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
-                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(64,64,Color.white), TextureHelper.CreateTexture(64,64,new Color32(0,0,0,255))) },
+                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(512,512,Color.white), CreateTextTexture(512,512)) },
             };
         }
 
@@ -141,24 +142,58 @@ namespace NodeMarkup.Utils
         }
         public static Material CreateRoadMaterial(Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
         {
-            var material = new Material(Shader.Find("Custom/Net/RoadBridge"))
+            var material = new Material(Shader.Find("Custom/Net/Road"))
             {
                 mainTexture = texture,
                 name = "NodeMarkupRoad",
                 color = new Color(0.5f, 0.5f, 0.5f, 0f),
-                doubleSidedGI = false,
-                enableInstancing = false,
-                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
+                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack & MaterialGlobalIlluminationFlags.RealtimeEmissive,
                 renderQueue = renderQueue,
             };
             if (apr != null)
                 material.SetTexture("_APRMap", apr);
 
-            //material.EnableKeyword("TERRAIN_SURFACE_ON");
-            //material.EnableKeyword("NET_SEGMENT");
+            material.EnableKeyword("NET_SEGMENT");
 
             return material;
         }
+        public static Texture2D CreateTextTexture(int height, int width)
+        {
+            var texture = new Texture2D(height, width) { name = "Markup" };
+            //var count = 8f;
+            for (var i = 0; i < width; i += 1)
+            {
+                Color color;
+
+                if (i < width / 2)
+                    color = Color.black;
+                else
+                    color = new Color(1f, 1f, 0f, 1f);
+
+                //if(i<width / count * 1)
+                //    color = new Color32(255, 0, 0, 255);
+                //else if (i < width / count * 2)
+                //    color = new Color32(0, 255, 0, 255);
+                //else if (i < width / count * 3)
+                //    color = new Color32(0, 0, 255, 255);
+                //else if (i < width / count * 4)
+                //    color = new Color32(255, 255, 0, 255);
+                //else if (i < width / count * 5)
+                //    color = new Color32(255, 0, 255, 255);
+                //else if (i < width / count * 6)
+                //    color = new Color32(0, 255, 255, 255);
+                //else if (i < width / count * 7)
+                //    color = new Color32(255, 255, 255, 255);
+                //else
+                //    color = new Color32(0, 0, 0, 255);
+
+                for (var j = 0; j < height; j += 1)
+                    texture.SetPixel(i, j, color);
+            }
+            texture.Apply();
+            return texture;
+        }
+
         public static Texture2D CreateChessBoardTexture()
         {
             var height = 256;
@@ -185,7 +220,7 @@ namespace NodeMarkup.Utils
 
     public interface IDrawData
     {
-        public void Draw(Vector4 objectIndex);
+        public void Draw();
     }
 
     public class MarkupStyleDash
@@ -235,7 +270,6 @@ namespace NodeMarkup.Utils
         private static float HalfWidth => 10f;
         private static float HalfLength => 10f;
         private static Vector4 Scale { get; } = new Vector4(0.5f / HalfWidth, 0.5f / HalfLength, 1f, 1f);
-        private static Color Color { get; } = new Color(0.5f, 0.5f, 0.5f, 0f);
 
         private Vector3 Position;
         private Vector3[] Vertices { get; set; }
@@ -244,6 +278,9 @@ namespace NodeMarkup.Utils
         public MaterialType MaterialType { get; }
         public Matrix4x4 Left { get; private set; }
         public Matrix4x4 Right { get; private set; }
+        private Texture SurfaceTexA { get; }
+        private Texture SurfaceTexB { get; }
+        private Vector4 SurfaceMapping { get; }
 
         private Mesh Mesh { get; set; }
 
@@ -253,6 +290,11 @@ namespace NodeMarkup.Utils
 
             Position = new Vector3(minMax.center.x, height + 0.3f, minMax.center.y);
             MaterialType = materialType;
+
+            ItemsExtension.TerrainManager.GetSurfaceMapping(Position, out var surfaceTexA, out var surfaceTexB, out var surfaceMapping);
+            SurfaceTexA = surfaceTexA;
+            SurfaceTexB = surfaceTexB;
+            SurfaceMapping = surfaceMapping;
 
             CalculateVertices(vertices, minMax);
             CalculateTriangles(triangles);
@@ -316,7 +358,7 @@ namespace NodeMarkup.Utils
             }
             yield return this;
         }
-        public void Draw(Vector4 objectIndex)
+        public void Draw()
         {
             var instance = ItemsExtension.NetManager;
             var materialBlock = instance.m_materialBlock;
@@ -325,6 +367,11 @@ namespace NodeMarkup.Utils
             materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             materialBlock.SetVector(instance.ID_MeshScale, Scale);
+            //materialBlock.SetVector(instance.ID_Color, Color);
+
+            materialBlock.SetTexture(instance.ID_SurfaceTexA, SurfaceTexA);
+            materialBlock.SetTexture(instance.ID_SurfaceTexB, SurfaceTexB);
+            materialBlock.SetVector(instance.ID_SurfaceMapping, SurfaceMapping);
 
             Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 9, null, 0, materialBlock);
         }
@@ -405,7 +452,7 @@ namespace NodeMarkup.Utils
 
         public override string ToString() => $"{Count}: {Size}";
 
-        public void Draw(Vector4 objectIndex)
+        public void Draw()
         {
             var instance = ItemsExtension.PropManager;
             var materialBlock = instance.m_materialBlock;

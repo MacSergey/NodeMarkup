@@ -141,7 +141,7 @@ namespace NodeMarkup.Manager
             }
 
             foreach (var item in markup.DrawData)
-                item.Draw(data.m_dataVector3);
+                item.Draw();
         }
 
         public void AddToUpdate(ushort id)
