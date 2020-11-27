@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
@@ -23,7 +24,7 @@ namespace NodeMarkup.Utils
                 { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
                 { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
                 { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
-                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(64,64,Color.white), TextureHelper.CreateTexture(64,64,new Color32(0,0,0,255))) },
+                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(64,64,Color.white), TextureHelper.CreateTexture(64,64,new Color32(0,255,255,255))) },
             };
         }
 
@@ -140,18 +141,18 @@ namespace NodeMarkup.Utils
         }
         public static Material CreateRoadMaterial(Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
         {
-            var material = new Material(Shader.Find("Custom/Net/RoadBridge"))
+            var material = new Material(Shader.Find("Custom/Net/Road"))
             {
                 mainTexture = texture,
                 name = "NodeMarkupRoad",
                 color = new Color(0.5f, 0.5f, 0.5f, 0f),
-                doubleSidedGI = false,
-                enableInstancing = false,
-                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
                 renderQueue = renderQueue,
             };
             if (apr != null)
                 material.SetTexture("_APRMap", apr);
+
+            material.EnableKeyword("TERRAIN_SURFACE_ON");
+            material.EnableKeyword("NET_SEGMENT");
 
             return material;
         }
@@ -181,7 +182,7 @@ namespace NodeMarkup.Utils
 
     public interface IDrawData
     {
-        public void Draw();
+        public void Draw(Vector4 objectIndex);
     }
 
     public class MarkupStyleDash
@@ -228,63 +229,102 @@ namespace NodeMarkup.Utils
     }
     public class MarkupStyleMesh : IStyleData, IDrawData
     {
+        private static float HalfWidth => 10f;
+        private static float HalfLength => 10f;
+        private static Vector4 Scale { get; } = new Vector4(0.5f / HalfWidth, 0.5f / HalfLength, 1f, 1f);
+        private static Color Color { get; } = new Color(0.5f, 0.5f, 0.5f, 0f);
+
         private Vector3 Position;
-        private Vector3[] Vertices { get; }
-        private int[] Triangles { get; }
-        private Vector2[] UV { get; }
+        private Vector3[] Vertices { get; set; }
+        private int[] Triangles { get; set; }
+        private Vector2[] UV { get; set; }
         public MaterialType MaterialType { get; }
-        public float ScaleX { get; }
-        public float ScaleY { get; }
-        public Rect Rect { get; }
+        public Matrix4x4 Left { get; private set; }
+        public Matrix4x4 Right { get; private set; }
 
         private Mesh Mesh { get; set; }
 
-        public MarkupStyleMesh(Rect rect, float height, Vector3[] vertices, int[] triangles, MaterialType materialType, float scaleX, float scaleY)
+        public MarkupStyleMesh(float height, Vector3[] vertices, int[] triangles, MaterialType materialType)
         {
-            Position = new Vector3(rect.center.x, height + 0.3f, rect.center.y);
+            var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
+
+            Position = new Vector3(minMax.center.x, height + 0.3f, minMax.center.y);
             MaterialType = materialType;
-            Vertices = vertices;
-            Triangles = triangles;
-            UV = GetUV(rect).ToArray();
-            ScaleX = scaleX;
-            ScaleY = scaleY;
+
+            CalculateVertices(vertices, minMax);
+            CalculateTriangles(triangles);
+            CalculateMatrix(minMax);
         }
-        private IEnumerable<Vector2> GetUV(Rect rect)
+        private void CalculateVertices(Vector3[] vertices, Rect minMax)
         {
-            foreach (var vertex in Vertices)
-                yield return new Vector2((vertex.x - rect.x) / rect.width, (vertex.z - rect.y) / rect.height);
+            var xRatio = (2 * HalfWidth) / minMax.width;
+            var yRatio = (2 * HalfLength) / minMax.height;
+            Vertices = vertices.Select(v => new Vector3((v.x - minMax.center.x) * xRatio, v.y - Position.y + 0.3f, (v.z - minMax.center.y) * yRatio)).ToArray();
+            UV = Vertices.Select(v => new Vector2((1f - (v.x / HalfWidth)) / 2f, (1f - (v.z / HalfLength)) / 2f)).ToArray();
+        }
+        private void CalculateTriangles(int[] triangles)
+        {
+            Triangles = new int[triangles.Length];
+            for(var i = 0; i < triangles.Length; i +=3)
+            {
+                Triangles[i] = triangles[i + 2];
+                Triangles[i + 1] = triangles[i + 1];
+                Triangles[i + 2] = triangles[i];
+            }
+        }
+        private void CalculateMatrix(Rect minMax)
+        {
+            var left = new Bezier3()
+            {
+                a = new Vector3(-minMax.width / 2, 0f, -minMax.height / 2),
+                d = new Vector3(-minMax.width / 2, 0f, minMax.height / 2)
+            };
+            var right = new Bezier3()
+            {
+                a = new Vector3(minMax.width / 2, 0f, -minMax.height / 2),
+                d = new Vector3(minMax.width / 2, 0f, minMax.height / 2)
+            };
+
+            var leftDir = (left.d - left.a).normalized;
+            var rightDir = (right.d - right.a).normalized;
+
+            NetSegment.CalculateMiddlePoints(left.a, leftDir, left.d, -leftDir, true, true, out left.b, out left.c);
+            NetSegment.CalculateMiddlePoints(right.a, rightDir, right.d, -rightDir, true, true, out right.b, out right.c);
+
+            Left = NetSegment.CalculateControlMatrix(left.a, left.b, left.c, left.d, right.a, right.b, right.c, right.d, Vector3.zero, 0.05f);
+            Right = NetSegment.CalculateControlMatrix(right.a, right.b, right.c, right.d, left.a, left.b, left.c, left.d, Vector3.zero, 0.05f);
         }
 
         public IEnumerable<IDrawData> GetDrawData()
         {
             if (Mesh == null)
             {
-                Mesh = new Mesh();
+                Mesh = new Mesh
+                {
+                    vertices = Vertices,
+                    triangles = Triangles,
+                    bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
+                    uv = UV
+                };
 
-                Bounds bounds = default;
-                bounds.SetMinMax(new Vector3(-100000f, -100000f, -100000f), new Vector3(100000f, 100000f, 100000f));
-
-                Mesh.vertices = Vertices;
-                Mesh.triangles = Triangles;
-                Mesh.normals = Vertices.Select(v => new Vector3(0f, 1f, 0f)).ToArray();
-                Mesh.tangents = Vertices.Select(v => new Vector4(-1f, 0f, 0f, -1f)).ToArray();
-                Mesh.bounds = bounds;
-                Mesh.colors = Vertices.Select(v => new Color(1f, 0f, 1f)).ToArray();
-                Mesh.uv = UV;
+                Mesh.RecalculateNormals();
+                //Mesh.RecalculateTangents();
             }
             yield return this;
         }
-        public void Draw()
+        public void Draw(Vector4 objectIndex)
         {
             var instance = ItemsExtension.NetManager;
             var materialBlock = instance.m_materialBlock;
+
             materialBlock.Clear();
+            materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
+            materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
+            materialBlock.SetVector(instance.ID_MeshScale, Scale);
+            materialBlock.SetVector(instance.ID_ObjectIndex, objectIndex);
+            materialBlock.SetColor(instance.ID_Color, Color);
 
-            //materialBlock.SetVector(instance.ID_MeshScale, new Vector4(ScaleX, ScaleY, 1f, 0f));
-
-            var material = RenderHelper.MaterialLib[MaterialType];
-
-            Graphics.DrawMesh(Mesh, Position, Quaternion.identity, material, 10, null, 0, materialBlock);
+            Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 9, null, 0, materialBlock);
         }
     }
 
@@ -363,7 +403,7 @@ namespace NodeMarkup.Utils
 
         public override string ToString() => $"{Count}: {Size}";
 
-        public void Draw()
+        public void Draw(Vector4 objectIndex)
         {
             var instance = ItemsExtension.PropManager;
             var materialBlock = instance.m_materialBlock;
