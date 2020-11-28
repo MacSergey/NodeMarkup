@@ -72,12 +72,9 @@ namespace NodeMarkup.Manager
 
             var clockWise = Vector3.Cross(trajectories[0].EndDirection, trajectories[1].StartDirection).y < 0;
 
-            //var edgePoints = new List<Vector3>();
-            //var edgeUV = new List<Vector2>();
-            //var edgeTriangles = new List<int>();
             var count = points.Count;
             var index = 0;
-            for(var i = 0; i < pointsGroups.Length; i += 1)
+            for (var i = 0; i < pointsGroups.Length; i += 1)
             {
                 var group = pointsGroups[clockWise ? i : pointsGroups.Length - 1 - i];
 
@@ -107,21 +104,22 @@ namespace NodeMarkup.Manager
 
             return new MarkupStyleMesh(position, points.ToArray(), triangles.ToArray(), uv.ToArray(), minMax, MaterialType);
 
-            Vector2 GetUV(Vector3 point) => new Vector2((point.x / halfWidth + 1f) * 0.2f, (point.z / halfHeight + 1f) * 0.5f);
+            Vector2 GetUV(Vector3 point) => new Vector2((point.x / halfWidth + 1f) * 0.2f + 0.05f, (point.z / halfHeight + 1f) * 0.5f);
         }
+
         static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
         {
             yield return trajectory.StartPosition;
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-        {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
-            components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
-            return components;
-        }
+        //public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        //{
+        //    var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+        //    components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
+        //    components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
+        //    components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
+        //    return components;
+        //}
         private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
@@ -167,7 +165,6 @@ namespace NodeMarkup.Manager
             return minAngleProperty;
         }
     }
-
     public class PavementFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerPavement;

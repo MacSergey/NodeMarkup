@@ -26,7 +26,7 @@ namespace NodeMarkup.Utils
                 { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
                 { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
                 { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(1,1,Color.white), TextureHelper.CreateTexture(1,1,Color.black)) },
-                { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), CreateTextTexture(128,128)) },
+                { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), CreateSplitUVTexture(128,128)) },
             };
         }
 
@@ -149,16 +149,17 @@ namespace NodeMarkup.Utils
                 name = "NodeMarkupRoad",
                 color = new Color(0.5f, 0.5f, 0.5f, 0f),
                 renderQueue = renderQueue,
+                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack
             };
             if (apr != null)
                 material.SetTexture("_APRMap", apr);
 
-            material.EnableKeyword("TERRAIN_SURFACE_ON");
+            //material.EnableKeyword("TERRAIN_SURFACE_ON");
             material.EnableKeyword("NET_SEGMENT");
 
             return material;
         }
-        public static Texture2D CreateTextTexture(int height, int width)
+        public static Texture2D CreateSplitUVTexture(int height, int width)
         {
             var texture = new Texture2D(height, width) { name = "Markup" };
             for (var i = 0; i < width; i += 1)
@@ -244,8 +245,8 @@ namespace NodeMarkup.Utils
     }
     public class MarkupStyleMesh : IStyleData, IDrawData
     {
-        public static float HalfWidth => 10f;
-        public static float HalfLength => 10f;
+        public static float HalfWidth => 20f;
+        public static float HalfLength => 20f;
         private static Vector4 Scale { get; } = new Vector4(0.5f / HalfWidth, 0.5f / HalfLength, 1f, 1f);
 
         private Vector3 Position;
@@ -268,8 +269,8 @@ namespace NodeMarkup.Utils
             Triangles = triangles;
             UV = uv;
 
-            var xRatio = (2f * HalfWidth) / minMax.width;
-            var yRatio = (2f * HalfLength) / minMax.height;
+            var xRatio = HalfWidth / minMax.width;
+            var yRatio = HalfLength / minMax.height;
             Vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray();
 
             ItemsExtension.TerrainManager.GetSurfaceMapping(Position, out var surfaceTexA, out var surfaceTexB, out var surfaceMapping);
@@ -283,20 +284,18 @@ namespace NodeMarkup.Utils
         {
             var left = new Bezier3()
             {
-                a = new Vector3(-minMax.width / 2, 0f, -minMax.height / 2),
-                d = new Vector3(-minMax.width / 2, 0f, minMax.height / 2)
+                a = new Vector3(-minMax.width, 0f, -minMax.height),
+                b = new Vector3(-minMax.width, 0f, -minMax.height /3),
+                c = new Vector3(-minMax.width, 0f, minMax.height / 3),
+                d = new Vector3(-minMax.width, 0f, minMax.height),
             };
             var right = new Bezier3()
             {
-                a = new Vector3(minMax.width / 2, 0f, -minMax.height / 2),
-                d = new Vector3(minMax.width / 2, 0f, minMax.height / 2)
+                a = new Vector3(minMax.width, 0f, -minMax.height),
+                b = new Vector3(minMax.width, 0f, -minMax.height / 3),
+                c = new Vector3(minMax.width, 0f, minMax.height / 3),
+                d = new Vector3(minMax.width, 0f, minMax.height),
             };
-
-            var leftDir = (left.d - left.a).normalized;
-            var rightDir = (right.d - right.a).normalized;
-
-            NetSegment.CalculateMiddlePoints(left.a, leftDir, left.d, -leftDir, true, true, out left.b, out left.c);
-            NetSegment.CalculateMiddlePoints(right.a, rightDir, right.d, -rightDir, true, true, out right.b, out right.c);
 
             Left = NetSegment.CalculateControlMatrix(left.a, left.b, left.c, left.d, right.a, right.b, right.c, right.d, Vector3.zero, 0.05f);
             Right = NetSegment.CalculateControlMatrix(right.a, right.b, right.c, right.d, left.a, left.b, left.c, left.d, Vector3.zero, 0.05f);
@@ -328,6 +327,7 @@ namespace NodeMarkup.Utils
             materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             materialBlock.SetVector(instance.ID_MeshScale, Scale);
+            //materialBlock.SetVector(instance.ID_Color, new Vector4(0.5f, 0.5f, 0.5f, 0f));
 
             materialBlock.SetTexture(instance.ID_SurfaceTexA, SurfaceTexA);
             materialBlock.SetTexture(instance.ID_SurfaceTexB, SurfaceTexB);

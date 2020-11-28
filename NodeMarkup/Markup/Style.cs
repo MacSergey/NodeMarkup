@@ -299,10 +299,10 @@ namespace NodeMarkup.Manager
 
             Filler3D = Filler | 0x80,
 
-            [Description("Pavement")]
+            [Description(nameof(Localize.FillerStyle_Pavement))]
             FillerPavement,
 
-            [Description("Grass")]
+            [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
 
 

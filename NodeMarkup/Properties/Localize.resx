@@ -1346,4 +1346,10 @@ Are you sure you want to have multiple presets with the same name?</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Edit segment #{0} markings</value>
   </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Grass</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
 </root>

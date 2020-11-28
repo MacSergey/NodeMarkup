@@ -338,10 +338,10 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Chevron))]
             Chevron = StyleType.FillerChevron,
 
-            [Description("Pavement")]
+            [Description(nameof(Localize.FillerStyle_Pavement))]
             Pavement = StyleType.FillerPavement,
 
-            [Description("Grass")]
+            [Description(nameof(Localize.FillerStyle_Grass))]
             Grass = StyleType.FillerGrass,
         }
     }
