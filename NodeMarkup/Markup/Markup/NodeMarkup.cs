@@ -58,7 +58,7 @@ namespace NodeMarkup.Manager
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
 
-                BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)] = new BezierTrajectory(betweenBezier);
+                BetweenEnters[i * 10 + j] = new BezierTrajectory(betweenBezier);
             }
         }
         public bool GetBordersLine(Enter first, Enter second, out ILineTrajectory line)
