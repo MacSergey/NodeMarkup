@@ -20,6 +20,7 @@ namespace NodeMarkup.Manager
         public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;
         public Markup Markup { get; private set; }
         public ushort Id { get; }
+        private uint FirstLane { get; set; }
         public bool IsStartSide { get; private set; }
         public abstract int SideSign { get; }
         public bool IsLaneInvert { get; private set; }
@@ -29,27 +30,20 @@ namespace NodeMarkup.Manager
         public Vector3 FirstPointSide { get; private set; }
         public Vector3 LastPointSide { get; private set; }
         public StraightTrajectory Line { get; private set; }
-        public bool LanesChanged
+        public bool LanesChanged => GetSegment().m_lanes != FirstLane;
+
+        public IEnumerable<DriveLane> DriveLanes
         {
             get
             {
                 var segment = GetSegment();
                 var info = segment.Info;
-                for (var i = 0; i < info.m_sortedLanes.Length; i += 1)
-                {
-                    var index = info.m_sortedLanes[i];
-                    if (info.m_lanes[index].IsDriveLane())
-                    {
-                        var laneId = segment.GetLanesId().Skip(index).FirstOrDefault();
-                        return laneId != DriveLanes[IsLaneInvert ? 0 : DriveLanes.Length - 1].LaneId;
-                    }
-                }
+                var lanes = segment.GetLanesId().ToArray();
 
-                return DriveLanes.Any();
+                foreach (var index in (IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse()).Where(s => info.m_lanes[s].IsDriveLane()))
+                    yield return new DriveLane(this, lanes[index], info.m_lanes[index]);
             }
         }
-
-        DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkupEnterPoint>();
 
         public byte PointNum => ++_pointNum;
@@ -90,22 +84,17 @@ namespace NodeMarkup.Manager
             var segment = GetSegment();
             IsStartSide = GetIsStartSide();
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
+            FirstLane = segment.m_lanes;
 
-            var info = segment.Info;
-            var lanes = segment.GetLanesId().ToArray();
-            var driveLanesIdxs = info.m_sortedLanes.Where(s => info.m_lanes[s].IsDriveLane());
-            if (!IsLaneInvert)
-                driveLanesIdxs = driveLanesIdxs.Reverse();
-
-            DriveLanes = driveLanesIdxs.Select(d => new DriveLane(this, lanes[d], info.m_lanes[d])).ToArray();
-            if (!DriveLanes.Any())
+            var driveLanes = DriveLanes.ToArray();
+            if (!driveLanes.Any())
                 return;
 
             var sources = new List<NetInfoPointSource>();
-            for(var i = 0; i <= DriveLanes.Length; i += 1)
+            for(var i = 0; i <= driveLanes.Length; i += 1)
             {
-                var left = i - 1 >= 0 ? DriveLanes[i - 1] : null;
-                var right = i < DriveLanes.Length ? DriveLanes[i] : null;
+                var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
+                var right = i < driveLanes.Length ? driveLanes[i] : null;
                 sources.AddRange(NetInfoPointSource.GetSource(this, left, right));
             }
 
