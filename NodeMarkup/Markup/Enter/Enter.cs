@@ -91,8 +91,8 @@ namespace NodeMarkup.Manager
 
             if (segment.Info is IMarkingNetInfo info)
             {
-                foreach (var position in info.MarkupPoints)
-                    sources.Add(new RoadGeneratorPointSource(this, position));
+                foreach (var position in IsLaneInvert ? info.MarkupPoints : info.MarkupPoints.Reverse())
+                    sources.Add(new RoadGeneratorPointSource(this, IsLaneInvert ? position : -position));
             }
             else
             {

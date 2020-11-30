@@ -202,7 +202,7 @@ namespace NodeMarkup.Manager
         private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
         public override void UpdateProcess()
         {
-            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Mathf.Sin(Enter.CornerAndNormalAngle));
+            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Enter.TranformCoef);
             Direction = SourcePoint.Direction;
         }
         public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
