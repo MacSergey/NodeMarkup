@@ -21,15 +21,33 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; private set; }
         public ushort Id { get; }
         public bool IsStartSide { get; private set; }
-        public abstract int SideSign { get; } 
+        public abstract int SideSign { get; }
         public bool IsLaneInvert { get; private set; }
-        public float RoadHalfWidth{ get; private set; }
+        public float RoadHalfWidth { get; private set; }
         public float RoadHalfWidthTransform { get; private set; }
         public Vector3? Position { get; private set; } = null;
         public Vector3 FirstPointSide { get; private set; }
         public Vector3 LastPointSide { get; private set; }
         public StraightTrajectory Line { get; private set; }
-        public bool LanesChanged => Id.GetSegment().m_lanes != DriveLanes[0].LaneId;
+        public bool LanesChanged
+        {
+            get
+            {
+                var segment = GetSegment();
+                var info = segment.Info;
+                for (var i = 0; i < info.m_sortedLanes.Length; i += 1)
+                {
+                    var index = info.m_sortedLanes[i];
+                    if (info.m_lanes[index].IsDriveLane())
+                    {
+                        var laneId = segment.GetLanesId().Skip(index).FirstOrDefault();
+                        return laneId != DriveLanes[IsLaneInvert ? 0 : DriveLanes.Length - 1].LaneId;
+                    }
+                }
+
+                return DriveLanes.Any();
+            }
+        }
 
         DriveLane[] DriveLanes { get; set; } = new DriveLane[0];
         SegmentMarkupLine[] Lines { get; set; } = new SegmentMarkupLine[0];
@@ -101,7 +119,7 @@ namespace NodeMarkup.Manager
         protected abstract bool GetIsStartSide();
         public virtual bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
         {
-            if(type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
+            if (type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
             {
                 point = enterPoint;
                 return true;
@@ -198,6 +216,8 @@ namespace NodeMarkup.Manager
             LaneId = laneId;
             Info = info;
         }
+
+        public override string ToString() => LaneId.ToString();
     }
     public class SegmentMarkupLine
     {

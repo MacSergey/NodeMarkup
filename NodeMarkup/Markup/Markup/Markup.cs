@@ -132,37 +132,89 @@ namespace NodeMarkup.Manager
             Position = GetPosition();
 
             var oldEnters = RowEntersList;
-            var exists = oldEnters.Select(e => e.Id).ToList();
-            var update = GetEnters().ToList();
+            var before = oldEnters.Select(e => e.Id).ToList();
+            var after = GetEnters().ToList();
 
-            var still = exists.Intersect(update).ToArray();
-            var delete = exists.Except(still).ToArray();
-            var add = update.Except(still).ToArray();
+            var still = before.Intersect(after).ToArray();
+            var delete = before.Except(still).ToArray();
+            var add = after.Except(still).ToArray();
+            var changed = oldEnters.Where(e => e.LanesChanged).Select(e => e.Id).Except(delete).ToArray();
+            var notChanged = still.Except(changed).ToArray();
 
-            var newEnters = still.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
+            var newEnters = notChanged.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
             newEnters.AddRange(add.Select(id => NewEnter(id)));
+            newEnters.AddRange(changed.Select(id => NewEnter(id)));
+
             foreach (var enter in newEnters)
                 enter.Update();
             newEnters.Sort((e1, e2) => e1.CompareTo(e2));
 
-            UpdateBackup(delete, add, oldEnters, newEnters);
+            UpdateBackup(delete, add, changed, oldEnters, newEnters);
 
             RowEntersList = newEnters;
             EntersList = RowEntersList.Where(e => e.PointCount != 0).ToList();
 
             UpdateRadius();
-            ProcessUpdate();
+            UpdateEntersProcess();
 
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
         }
-        protected virtual void ProcessUpdate() { }
+        protected virtual void UpdateEntersProcess() { }
         protected abstract Vector3 GetPosition();
 
         protected abstract IEnumerable<ushort> GetEnters();
         protected abstract Enter NewEnter(ushort id);
 
-        protected abstract void UpdateBackup(ushort[] delete, ushort[] add, List<Enter> oldEnters, List<Enter> newEnters);
+        private void UpdateBackup(ushort[] delete, ushort[] add, ushort[] changed, List<Enter> oldEnters, List<Enter> newEnters)
+        {
+            if ((delete.Length != 1 || add.Length != 1) && changed.Length == 0)
+                return;
+
+            var auto = false;
+            var map = new ObjectsMap();
+
+            if (delete.Length == 1 && add.Length == 1 && UpdateBackup(delete[0], add[0], oldEnters, newEnters))
+            {
+                map.AddSegment(delete[0], add[0]);
+                auto = true;
+            }
+
+            foreach (var item in changed)
+                auto |= UpdateBackup(item, item, oldEnters, newEnters);
+
+            if (!auto)
+                return;
+
+            var currentData = ToXml();
+            RowEntersList = newEnters;
+            Clear();
+            FromXml(Mod.Version, currentData, map);
+        }
+        private bool UpdateBackup(ushort delete, ushort add, List<Enter> oldEnters, List<Enter> newEnters)
+        {
+            var oldEnter = oldEnters.Find(e => e.Id == delete);
+            var newEnter = newEnters.Find(e => e.Id == add);
+
+            var before = oldEnter.PointCount;
+            var after = newEnter.PointCount;
+
+            if (before != after && !NeedSetOrder && !IsEmpty && HaveLines(oldEnter))
+                NeedSetOrder = true;
+
+            if (NeedSetOrder && delete != add)
+            {
+                if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectType.Segment && p.Value.Segment == delete) is KeyValuePair<ObjectId, ObjectId> pair)
+                {
+                    Backup.Map.Remove(pair.Key);
+                    Backup.Map.AddSegment(pair.Key.Segment, add);
+                }
+                else
+                    Backup.Map.AddSegment(delete, add);
+            }
+
+            return before == after;
+        }
 
         private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
@@ -572,6 +624,8 @@ namespace NodeMarkup.Manager
         }
 
         #endregion
+
+        public override string ToString() => $"{Id}:{RowEntersList.Count}";
 
         public enum Item
         {

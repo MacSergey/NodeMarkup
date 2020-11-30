@@ -36,6 +36,7 @@ namespace NodeMarkup.Manager
         public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SegmentManager.Render(cameraInfo, segmentID, ref data);
 
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => NodeManager.Remove(node);
+        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SegmentManager.Remove(segment);
         public static void NetManagerUpdateNodePostfix(ushort node) => NodeManager.AddToUpdate(node);
         public static void NetManagerUpdateSegmentPostfix(ushort segment) => SegmentManager.AddToUpdate(segment);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)

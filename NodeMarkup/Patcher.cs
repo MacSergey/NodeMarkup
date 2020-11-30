@@ -25,12 +25,18 @@ namespace NodeMarkup
 
             success &= PatchNetNodeRenderInstance();
             success &= PatchNetSegmentRenderInstance();
+
             success &= PatchNetManagerReleaseNodeImplementation();
+            success &= PatchNetManagerReleaseSegmentImplementation();
+
             success &= PatchNetManagerUpdateNode();
             success &= PatchNetManagerUpdateSegment();
             success &= PatchNetSegmentUpdateLanes();
+
             success &= PatchNetManagerSimulationStepImpl();
+
             success &= PatchBuildingDecorationLoadPaths();
+
             success &= PatchLoadAssetPanelOnLoad();
 
             if (Settings.RailUnderMarking)
@@ -86,6 +92,13 @@ namespace NodeMarkup
             var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix));
 
             return AddPrefix(prefix, typeof(NetManager), "ReleaseNodeImplementation", OriginalGetter);
+        }
+        private bool PatchNetManagerReleaseSegmentImplementation()
+        {
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) });
+            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix));
+
+            return AddPrefix(prefix, typeof(NetManager), "ReleaseSegmentImplementation", OriginalGetter);
         }
 
         private bool PatchNetSegmentUpdateLanes()
