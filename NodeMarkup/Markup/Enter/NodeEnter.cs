@@ -20,6 +20,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupNormalPoint> Normals => NormalPointsDic.Values;
 
         public override int SideSign => IsStartSide ? -1 : 1;
+        public override int NormalSign => -1;
 
         public NodeEnter(NodeMarkup markup, ushort segmentId) : base(markup, segmentId) { }
         protected override void Init()

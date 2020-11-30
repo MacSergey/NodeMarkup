@@ -23,9 +23,9 @@ namespace NodeMarkup.Manager
         private uint FirstLane { get; set; }
         public bool IsStartSide { get; private set; }
         public abstract int SideSign { get; }
+        public abstract int NormalSign { get; }
         public bool IsLaneInvert { get; private set; }
         public float RoadHalfWidth { get; private set; }
-        public float RoadHalfWidthTransform { get; private set; }
         public Vector3 Position { get; private set; }
         public Vector3 FirstPointSide { get; private set; }
         public Vector3 LastPointSide { get; private set; }
@@ -54,6 +54,7 @@ namespace NodeMarkup.Manager
         public float CornerAngle { get; private set; }
         public float NormalAngle { get; private set; }
         public float CornerAndNormalAngle { get; private set; }
+        public float TranformCoef { get; private set; }
 
         public Enter Next => Markup.GetNextEnter(this);
         public Enter Prev => Markup.GetPrevEnter(this);
@@ -86,16 +87,23 @@ namespace NodeMarkup.Manager
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
             FirstLane = segment.m_lanes;
 
-            var driveLanes = DriveLanes.ToArray();
-            if (!driveLanes.Any())
-                return;
+            var sources = new List<IPointSource>();
 
-            var sources = new List<NetInfoPointSource>();
-            for(var i = 0; i <= driveLanes.Length; i += 1)
+            if (segment.Info is IMarkingNetInfo info)
             {
-                var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
-                var right = i < driveLanes.Length ? driveLanes[i] : null;
-                sources.AddRange(NetInfoPointSource.GetSource(this, left, right));
+                foreach (var position in info.MarkupPoints)
+                    sources.Add(new RoadGeneratorPointSource(this, position));
+            }
+            else
+            {
+                var driveLanes = DriveLanes.ToArray();
+                for (var i = 0; i <= driveLanes.Length; i += 1)
+                {
+                    var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
+                    var right = i < driveLanes.Length ? driveLanes[i] : null;
+                    foreach (var source in NetInfoPointSource.GetSource(this, left, right))
+                        sources.Add(source);
+                }
             }
 
             var points = sources.Select(s => new MarkupEnterPoint(this, s)).ToArray();
@@ -142,20 +150,18 @@ namespace NodeMarkup.Manager
             CornerDir = (rightPos - leftPos).normalized;
             CornerAngle = CornerDir.AbsoluteAngle();
 
-            NormalDir = (leftDir + rightDir).normalized;
+            NormalDir = NormalSign * (leftDir + rightDir).normalized;
             NormalAngle = NormalDir.AbsoluteAngle();
 
             var angle = Vector3.Angle(NormalDir, CornerDir);
             CornerAndNormalAngle = (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad;
-
-            var coef = Mathf.Sin(CornerAndNormalAngle);
-            RoadHalfWidth = segment.Info.m_halfWidth - segment.Info.m_pavementWidth;
-            RoadHalfWidthTransform = RoadHalfWidth / coef;
+            TranformCoef = Mathf.Sin(CornerAndNormalAngle);
 
             Position = (leftPos + rightPos) / 2f;
 
-            FirstPointSide = Position - RoadHalfWidthTransform * CornerDir;
-            LastPointSide = Position + RoadHalfWidthTransform * CornerDir;
+            RoadHalfWidth = segment.Info.m_halfWidth - segment.Info.m_pavementWidth;
+            FirstPointSide = GetPosition(-RoadHalfWidth);
+            LastPointSide = GetPosition(RoadHalfWidth);
             Line = new StraightTrajectory(FirstPointSide, LastPointSide);
         }
         public virtual void UpdatePoints()
@@ -169,13 +175,20 @@ namespace NodeMarkup.Manager
             foreach (var point in Points)
                 point.Offset = 0;
         }
+        public Vector3 GetPosition(float offset) => Position + offset * TranformCoef * CornerDir;
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             if (Position == null)
                 return;
 
-            var bezier = new Line3(Position - CornerDir * RoadHalfWidthTransform, Position + CornerDir * RoadHalfWidthTransform).GetBezier();
+            var bezier = new Line3(GetPosition(-RoadHalfWidth), GetPosition(RoadHalfWidth)).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
+
+            var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
+            NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);
+
+            var cornerBezier = new Line3(Position, Position + CornerDir * 10f).GetBezier();
+            NodeMarkupTool.RenderBezier(cameraInfo, cornerBezier, Colors.Orange);
         }
         public int CompareTo(Enter other) => other.NormalAngle.CompareTo(NormalAngle);
         public override string ToString() => Id.ToString();

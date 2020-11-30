@@ -98,16 +98,24 @@ namespace NodeMarkup.Manager
     }
 
 
-    //public class RoadGeneratorPointSource : IPointSource
-    //{
-    //    public void GetPositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
-    //    {
+    public class RoadGeneratorPointSource : IPointSource
+    {
+        public Enter Enter { get; }
+        public float Position { get; }
+        public MarkupPoint.LocationType Location => throw new NotImplementedException();
 
-    //    }
-    //}
+        public RoadGeneratorPointSource(Enter enter, float position)
+        {
+            Enter = enter;
+            Position = position;
+        }
 
-
-
+        public void GetPositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
+        {
+            position = Enter.GetPosition(Position + offset);
+            direction = Enter.NormalDir;
+        }
+    }
     public class DriveLane
     {
         private Enter Enter { get; }

@@ -9,6 +9,8 @@ namespace NodeMarkup.Manager
     public class SegmentEnter : Enter<SegmentMarkup>
     {
         public override int SideSign => IsStartSide ? 1 : -1;
+        public override int NormalSign => 1;
+
         public SegmentEnter(SegmentMarkup markup, ushort nodeId) : base(markup, nodeId) { }
 
         protected override ushort GetSegmentId() => Markup.Id;
