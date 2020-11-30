@@ -175,7 +175,7 @@ namespace NodeMarkup.Manager
             foreach (var point in Points)
                 point.Offset = 0;
         }
-        public Vector3 GetPosition(float offset) => Position + offset * TranformCoef * CornerDir;
+        public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             if (Position == null)

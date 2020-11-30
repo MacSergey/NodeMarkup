@@ -102,17 +102,19 @@ namespace NodeMarkup.Manager
     {
         public Enter Enter { get; }
         public float Position { get; }
+        public float Height { get; }
         public MarkupPoint.LocationType Location => throw new NotImplementedException();
 
-        public RoadGeneratorPointSource(Enter enter, float position)
+        public RoadGeneratorPointSource(Enter enter, float position, float height = -0.3f)
         {
             Enter = enter;
             Position = position;
+            Height = height;
         }
 
         public void GetPositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
         {
-            position = Enter.GetPosition(Position + offset);
+            position = Enter.GetPosition(Position + offset) + new Vector3(0f, Height, 0f);
             direction = Enter.NormalDir;
         }
     }
