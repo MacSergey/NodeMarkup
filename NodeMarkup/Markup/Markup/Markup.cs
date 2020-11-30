@@ -216,7 +216,7 @@ namespace NodeMarkup.Manager
             return before == after;
         }
 
-        private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
+        private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position).magnitude));
 
         private void UpdateLines()
         {

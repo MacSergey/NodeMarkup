@@ -64,12 +64,11 @@ namespace NodeMarkup.Manager
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
         public Vector3 Direction { get; protected set; }
-        public LocationType Location { get; private set; }
         public Bounds Bounds { get; protected set; }
         public Bounds SaveBounds { get; private set; }
 
-        public SegmentMarkupLine SegmentLine { get; }
-        public Enter Enter => SegmentLine.Enter;
+        public IPointSource Source { get; }
+        public Enter Enter { get; }
         public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
         public Markup Markup => Enter.Markup;
 
@@ -81,17 +80,18 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
 
 
-        protected MarkupPoint(byte num, SegmentMarkupLine markupLine, LocationType location, bool update = true)
+        protected MarkupPoint(byte num, Enter enter, IPointSource source, bool update = true)
         {
-            SegmentLine = markupLine;
-            Location = location;
+            Enter = enter;
+            Source = source;
+
             Num = num;
             Id = GetId(Enter.Id, Num, Type);
 
             if (update)
                 Update();
         }
-        public MarkupPoint(SegmentMarkupLine segmentLine, LocationType location) : this(segmentLine.Enter.PointNum, segmentLine, location) { }
+        public MarkupPoint(Enter enter, IPointSource source) : this(enter.PointNum, enter, source) { }
 
         public void Update(bool onlySelfUpdate = false)
         {
@@ -156,12 +156,10 @@ namespace NodeMarkup.Manager
     public class MarkupEnterPoint : MarkupPoint
     {
         public override PointType Type => PointType.Enter;
-        public MarkupEnterPoint(SegmentMarkupLine markupLine, LocationType location) : base(markupLine, location)
-        {
-        }
+        public MarkupEnterPoint(Enter enter, IPointSource source) : base(enter, source) { }
         public override void UpdateProcess()
         {
-            SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
+            Source.GetPositionAndDirection(Offset, out Vector3 position, out Vector3 direction);
             Position = position;
             Direction = direction;
         }
@@ -169,7 +167,7 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                SegmentLine.GetPositionAndDirection(Location, 0, out Vector3 position, out _);
+                Source.GetPositionAndDirection(0, out Vector3 position, out _);
                 return position;
             }
         }
@@ -196,7 +194,7 @@ namespace NodeMarkup.Manager
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
 
-        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
+        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.Enter, sourcePoint.Source, false)
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;
@@ -220,7 +218,7 @@ namespace NodeMarkup.Manager
         public override PointType Type => PointType.Normal;
         public new NodeMarkup Markup => (NodeMarkup)base.Markup;
         public MarkupEnterPoint SourcePoint { get; }
-        public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
+        public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.Enter, sourcePoint.Source, false)
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;
