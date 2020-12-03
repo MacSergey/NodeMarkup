@@ -1,10 +1,12 @@
 ﻿using ColossalFramework.Math;
+using HarmonyLib;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
@@ -89,9 +91,9 @@ namespace NodeMarkup.Manager
 
             var sources = new List<IPointSource>();
 
-            if (segment.Info is IMarkingNetInfo info)
+            if (CheckInfo(segment.Info, out IEnumerable<float> markupPoints))
             {
-                foreach (var position in IsLaneInvert ? info.MarkupPoints : info.MarkupPoints.Reverse())
+                foreach (var position in IsLaneInvert ? markupPoints : markupPoints.Reverse())
                     sources.Add(new RoadGeneratorPointSource(this, IsLaneInvert ? position : -position));
             }
             else
@@ -109,6 +111,21 @@ namespace NodeMarkup.Manager
             var points = sources.Select(s => new MarkupEnterPoint(this, s)).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
         }
+        private bool CheckInfo(NetInfo info, out IEnumerable<float> markupPoints)
+        {
+            if (info.GetType().GetInterfaces().FirstOrDefault(i => i.Name == nameof(IMarkingNetInfo)) is Type inter)
+            {
+                if (AccessTools.Method(inter, $"get_{nameof(IMarkingNetInfo.MarkupPoints)}") is MethodInfo method)
+                {
+                    markupPoints = (IEnumerable<float>)method.Invoke(info, new object[0]);
+                    return true;
+                }
+            }
+
+            markupPoints = null;
+            return false;
+        }
+
         protected abstract ushort GetSegmentId();
         protected abstract NetSegment GetSegment();
         protected abstract bool GetIsStartSide();
