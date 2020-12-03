@@ -271,6 +271,10 @@
     <EmbeddedResource Include="Resources\StylesPreview\StopLineSolidAndDashed.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ModsCommon\ModsBridge\ModsBridge.csproj">
+      <Project>{9cc1b2fa-1a1b-4b74-92d8-d20b185c892a}</Project>
+      <Name>ModsBridge</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModsCommon\ModsCommon\ModsCommon.csproj">
       <Project>{a2e46a42-e7e1-4c9f-99fa-01ca7283ac3b}</Project>
       <Name>ModsCommon</Name>
@@ -319,7 +323,7 @@ copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
