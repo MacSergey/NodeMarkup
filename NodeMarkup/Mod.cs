@@ -52,7 +52,7 @@ namespace NodeMarkup
 #if DEBUG
         protected override bool ModIsBeta => true;
 #else
-        protected override bool IsBeta => false;
+        protected override bool ModIsBeta => false;
 #endif
         public override void OnDisabled()
         {
@@ -66,8 +66,7 @@ namespace NodeMarkup
         public override void LocaleChanged()
         {
             Localize.Culture = Culture;
-            Logger.Debug($"current cultute - {Localize.Culture?.Name ?? "null"}");
-            Logger.LogDebug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
+            Logger.Debug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
         public static bool OpenTroubleshooting()
@@ -83,7 +82,7 @@ namespace NodeMarkup
 
         public override void LoadedError()
         {
-            if (!InGame && !LoadedSuccess)
+            if (!ItemsExtension.InGame && !LoadSuccess)
             {
                 var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
                 messageBox.MessageText = Localize.Mod_LoaledWithErrors;

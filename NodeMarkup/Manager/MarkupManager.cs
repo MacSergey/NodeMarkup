@@ -17,7 +17,8 @@ namespace NodeMarkup.Manager
     {
         public static NodeMarkupManager NodeManager { get; }
         public static SegmentMarkupManager SegmentManager { get; }
-        public static ushort LoadErrors { get; set; } = 0;
+        public static int LoadErrors { get; set; } = 0;
+        public static bool HasLoadErrors => LoadErrors != 0;
 
         static MarkupManager()
         {
@@ -82,12 +83,18 @@ namespace NodeMarkup.Manager
         {
             if (clear)
                 Clear();
+
             LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);
 
             NodeManager.FromXml(config, map, version);
             SegmentManager.FromXml(config, map, version);
+        }
+        public static void SetFiled()
+        {
+            Clear();
+            LoadErrors = -1;
         }
     }
     public abstract class MarkupManager<MarkupType>
@@ -170,6 +177,8 @@ namespace NodeMarkup.Manager
             {
                 if (NodeMarkup.FromXml(version, markupConfig, map, out NodeMarkup markup))
                     NeedUpdate.Add(markup.Id);
+                else
+                    MarkupManager.LoadErrors += 1;
             }
         }
     }
@@ -184,13 +193,8 @@ namespace NodeMarkup.Manager
                 if (SegmentMarkup.FromXml(version, markupConfig, map, out SegmentMarkup markup))
                     NeedUpdate.Add(markup.Id);
                 else
-                    LoadErrors += 1;
+                    MarkupManager.LoadErrors += 1;
             }
-        }
-        public static void SetFiled()
-        {
-            Clear();
-            LoadErrors = -1;
         }
     }
 
