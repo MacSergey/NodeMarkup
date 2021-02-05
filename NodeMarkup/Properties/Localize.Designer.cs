@@ -1397,8 +1397,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Improve messages about load data errors
-        ///- Fix and update localizes .
+        ///   Ищет локализованную строку, похожую на - Improve messages about load data errors.
+        ///- Fix and update localizes..
         /// </summary>
         public static string Mod_WhatsNewMessage1_5_1 {
             get {

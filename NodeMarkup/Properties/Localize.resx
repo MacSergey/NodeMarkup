@@ -1353,8 +1353,8 @@ Are you sure you want to have multiple presets with the same name?</value>
     <value>Unknown author</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Improve messages about load data errors
-- Fix and update localizes </value>
+    <value>- Improve messages about load data errors.
+- Fix and update localizes.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>all</value>
