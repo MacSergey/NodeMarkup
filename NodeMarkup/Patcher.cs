@@ -1,19 +1,11 @@
-﻿using CitiesHarmony.API;
-using ColossalFramework;
-using ColossalFramework.Packaging;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
-using HarmonyLib;
+﻿using HarmonyLib;
 using ModsCommon;
-using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 
 namespace NodeMarkup
 {
