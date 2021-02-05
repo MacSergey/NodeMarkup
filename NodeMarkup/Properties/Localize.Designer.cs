@@ -1388,6 +1388,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Improve messages about load data errors
+        ///- Fix and update localizes .
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_5_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_5_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
         ///- Added the ability to save templates and presets as asset and share it over Workshop.
         ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
