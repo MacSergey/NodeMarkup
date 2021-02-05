@@ -1267,8 +1267,6 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autor desconhecido</value>
   </data>
-  
-  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar marcações do segmento #{0}</value>
   </data>
