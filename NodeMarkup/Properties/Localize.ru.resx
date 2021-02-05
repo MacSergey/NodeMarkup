@@ -1343,6 +1343,13 @@ Shift X10, Ctrl X0.1</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Неизвестный автор</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Улучшены сообщения об ошибках загрузки данных разметки.
+- Исправлены и обновлены переводы.</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>всех</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Редактирование сегмента #{0}</value>
   </data>

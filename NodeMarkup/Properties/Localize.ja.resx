@@ -1265,6 +1265,8 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>不明な作成者</value>
   </data>
+  
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} のセグメントを編集中</value>
   </data>
