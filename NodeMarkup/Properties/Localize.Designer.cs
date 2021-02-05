@@ -1131,6 +1131,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на all.
+        /// </summary>
+        public static string Mod_LoadFailedAll {
+            get {
+                return ResourceManager.GetString("Mod_LoadFailedAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Mod loaded with errors.
         ///It is not recommended to use the mod in this state as it can lead to unpredictable behavior.
         ///Restart the game..

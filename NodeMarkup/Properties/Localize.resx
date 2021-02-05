@@ -1356,4 +1356,7 @@ Are you sure you want to have multiple presets with the same name?</value>
     <value>- Improve messages about load data errors
 - Fix and update localizes </value>
   </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>all</value>
+  </data>
 </root>
