@@ -121,7 +121,7 @@
     <value>Apagar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar {0} {1}?</value>
+    <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -325,16 +325,11 @@ Clique para editar marcações</value>
     <value>Seleccione um nó para editar marcações</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar ponto final
-+Shift - Sólida
-+Ctrl - Dupla</value>
+    <value>Selecione um ponto próprio para uma linha normal ou de paragem
+Arraste para trás do ponto para uma linha perpendicular</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione um ponto para
-criar ou remover a uma linha
-+Ctrl para mover o ponto
-Prima Alt para criar um preenchimento
-Prima Shift para criar uma passadeira</value>
+    <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
@@ -477,7 +472,7 @@ Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>A lista de modelos está vazia.
-Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value>
+Para criar um modelo, clique «{0}» no estilo da linha, da passadeira ou do preenchimento.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar com chave</value>
@@ -623,8 +618,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clique para criar uma linha perpendicular
-+ Shift - Solid
-+ Ctrl - Double</value>
++ Shift - Solida
++ Ctrl - Dupla</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
@@ -1272,6 +1267,8 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autor desconhecido</value>
   </data>
+  
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar marcações do segmento #{0}</value>
   </data>
