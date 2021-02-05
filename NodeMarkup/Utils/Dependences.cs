@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace NodeMarkup.Utils
 {
     public class Dependences
     {
-        public Dictionary<Type, int> Total { get; } = Utilities.GetEnumValues<Type>().ToDictionary(i => i, i => 0);
+        public Dictionary<Type, int> Total { get; } = EnumExtension.GetEnumValues<Type>().ToDictionary(i => i, i => 0);
         public bool Exist => Total.Values.Any(i => i != 0);
 
         public int Lines

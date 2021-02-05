@@ -47,6 +47,7 @@ namespace NodeMarkup.Utils
     public class ObjectsMap : IEnumerable<KeyValuePair<ObjectId, ObjectId>>
     {
         public bool IsMirror { get; set; }
+        public bool IsEmpty => !Map.Any();
         private Dictionary<ObjectId, ObjectId> Map { get; } = new Dictionary<ObjectId, ObjectId>();
 
         public ObjectId this[ObjectId key]

@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
@@ -22,6 +24,7 @@ namespace NodeMarkup.UI.Editors
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public NodeMarkupPanel Panel { get; private set; }
         protected Markup Markup => Panel.Markup;
+        public abstract Type SupportType { get; }
 
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollablePanel ContentPanel { get; set; }
@@ -49,7 +52,7 @@ namespace NodeMarkup.UI.Editors
         public Editor()
         {
             clipChildren = true;
-            atlas = TextureUtil.InGameAtlas;
+            atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
@@ -66,7 +69,7 @@ namespace NodeMarkup.UI.Editors
             panel.builtinKeyNavigation = true;
             panel.clipChildren = true;
 
-            panel.atlas = TextureUtil.InGameAtlas;
+            panel.atlas = TextureHelper.InGameAtlas;
             panel.backgroundSprite = background;
 
             this.AddScrollbar(panel);

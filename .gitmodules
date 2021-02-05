@@ -1,0 +1,4 @@
+[submodule "ModsCommon"]
+	path = ModsCommon
+	url = https://github.com/MacSergey/ModsCommon.git
+	branch = NodeMarkup

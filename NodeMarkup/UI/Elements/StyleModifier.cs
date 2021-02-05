@@ -1,6 +1,8 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
@@ -30,7 +32,7 @@ namespace NodeMarkup.UI
         }
         protected virtual void Init()
         {
-            foreach (var style in Utilities.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
                 Add((Style.StyleType)(object)style);
         }
         protected void Add(Style.StyleType style, string label = null)
@@ -74,14 +76,7 @@ namespace NodeMarkup.UI
         }
     }
 
-    public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType>
-    {
-        //protected override void Init()
-        //{
-        //    Add(Style.StyleType.RegularLine, Localize.LineStyle_Empty);
-        //    base.Init();
-        //}
-    }
+    public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }
     public class StopLineModifierPanel : StyleModifierPanel<StopLineStyle.StopLineType> { }
     public class CrosswalkModifierPanel : StyleModifierPanel<CrosswalkStyle.CrosswalkType> { }
     public class FillerModifierPanel : StyleModifierPanel<FillerStyle.FillerType> { }
@@ -94,7 +89,7 @@ namespace NodeMarkup.UI
         {
             SetSettingsStyle(new Vector2(278, 31));
 
-            foreach (var modifier in Utilities.GetEnumValues<StyleModifier>())
+            foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
                 AddItem(modifier, modifier.Description());
 
             SelectedObject = StyleModifier.NotSet;
@@ -121,7 +116,6 @@ namespace NodeMarkup.UI
 
         [InputKey(false, false, true)]
         Alt = 4,
-
 
 
         [InputKey(true, true, false)]

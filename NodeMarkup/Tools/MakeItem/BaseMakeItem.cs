@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter)
+            if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
             {
                 var connectLine = NodeMarkupTool.MouseWorldPosition - SelectPoint.Position;
                 if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(SelectPoint.Direction.XZ(), connectLine.XZ()) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
@@ -80,7 +81,7 @@ namespace NodeMarkup.Tools
             else
             {
                 Tool.SetMarkup(null);
-                Tool.SetMode(ToolModeType.SelectNode);
+                Tool.SetMode(ToolModeType.Select);
             }
         }
 

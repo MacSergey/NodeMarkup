@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
@@ -181,7 +182,7 @@ namespace NodeMarkup.Utils
         protected static void CalcParts(Bezier3 bezier, out int parts, out float[] points, out Vector3[] positons)
         {
             bezier.Divide(out Bezier3 b1, out Bezier3 b2);
-            var length = (b1.d - b1.a).magnitude + (b2.d - b2.a).magnitude;
+            var length = Mathf.Max((b1.d - b1.a).magnitude + (b2.d - b2.a).magnitude, 0f);
             parts = Math.Min((int)Math.Ceiling(length / MinLength), 10);
 
             points = new float[parts + 1];

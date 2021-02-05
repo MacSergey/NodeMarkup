@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -17,7 +19,7 @@ namespace NodeMarkup.UI
         protected virtual Color32 TextColor => Color.white;
 
         private static Material Material { get; } = new Material(Shader.Find("UI/Default UI Shader"));
-        private static Texture2D Empty { get; } = RenderHelper.CreateTexture(400, 400, Color.black);
+        private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
         private UILabel NoScreenshot { get; set; }
         private UIPanel Titles { get; set; }

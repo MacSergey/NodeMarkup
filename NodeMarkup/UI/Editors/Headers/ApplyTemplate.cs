@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class ApplyTemplateHeaderButton : HeaderPopupButton<ApplyTemplatePopupPanel>
     {
+        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+
         protected Action<StyleTemplate> OnSelect { get; set; }
 
         private Style.StyleType StyleGroup { get; set; }

@@ -48,16 +48,14 @@ namespace NodeMarkup.Utils
             var styleColor = new Color32((byte)(color.r * ratio), (byte)(color.g * ratio), (byte)(color.b * ratio), 255);
             return styleColor == Color.black ? (Color32)Color.white : styleColor;
         }
-
+        public static Vector4 ToX3Vector(this Color32 c) => ToX3Vector((Color)c);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2)/* c.a == 0 ? 0 : ColorChange(c.a) * 0.985f + 0.015f*/);
         static float ColorChange(float c) => Mathf.Pow(c, 4);
 
-        public static int ToInt(this Color32 color) => (color.r << 24) + (color.g << 16) + (color.b << 8) + color.a;
-        public static Color32 ToColor(this int colorData, int version)
-        {
-            var color = colorData.ToColor();
-            return version != 1 ? VersionMigration.CorrectColor01(color) : color;
-        }
-        public static Color32 ToColor(this int color) => new Color32((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
+        //public static Color32 ToColor(this int colorData, int version)
+        //{
+        //    var color = colorData.ToColor();
+        //    return version != 1 ? VersionMigration.CorrectColor01(color) : color;
+        //}
     }
 }

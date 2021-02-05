@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utils;
@@ -19,12 +20,18 @@ namespace NodeMarkup.Tools
         public Markup Markup => Tool.Markup;
         protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
 
+        public BaseToolMode()
+        {
+            Disable();
+        }
+
         public virtual void Activate(BaseToolMode prevMode)
         {
             enabled = true;
             Reset(prevMode);
         }
-        public virtual void Deactivate() => enabled = false;
+        public virtual void Deactivate() => Disable();
+        private void Disable() => enabled = false;
 
         protected virtual void Reset(BaseToolMode prevMode) { }
 
@@ -50,7 +57,7 @@ namespace NodeMarkup.Tools
         protected IEnumerable<string> GetStylesModifier<StyleType>()
             where StyleType : Enum
         {
-            foreach (var style in Utilities.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
             {
                 var general = (Style.StyleType)(object)style;
                 var modifier = (StyleModifier)NodeMarkupTool.StylesModifier[general].value;
@@ -64,7 +71,7 @@ namespace NodeMarkup.Tools
     {
         None = 0,
 
-        SelectNode = 1,
+        Select = 1,
         MakeLine = 2,
         MakeCrosswalk = 4,
         MakeFiller = 8,

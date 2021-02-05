@@ -552,6 +552,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Grass.
+        /// </summary>
+        public static string FillerStyle_Grass {
+            get {
+                return ResourceManager.GetString("FillerStyle_Grass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Grid.
         /// </summary>
         public static string FillerStyle_Grid {
@@ -566,6 +575,15 @@ namespace NodeMarkup {
         public static string FillerStyle_Group {
             get {
                 return ResourceManager.GetString("FillerStyle_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string FillerStyle_Pavement {
+            get {
+                return ResourceManager.GetString("FillerStyle_Pavement", resourceCulture);
             }
         }
         
@@ -1388,12 +1406,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-        ///- Added the ability to save templates and presets as asset and share it over Workshop.
-        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-        ///- Added panel tips (can be disable in settings).
-        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на Version 1.5 released.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -1416,15 +1429,6 @@ namespace NodeMarkup {
         public static string Panel_Additional {
             get {
                 return ResourceManager.GetString("Panel_Additional", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
-        /// </summary>
-        public static string Panel_Caption {
-            get {
-                return ResourceManager.GetString("Panel_Caption", resourceCulture);
             }
         }
         
@@ -1474,6 +1478,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
+        /// </summary>
+        public static string Panel_NodeCaption {
+            get {
+                return ResourceManager.GetString("Panel_NodeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Panel_PasteMarking {
@@ -1497,6 +1510,15 @@ namespace NodeMarkup {
         public static string Panel_SaveAsPreset {
             get {
                 return ResourceManager.GetString("Panel_SaveAsPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit segment #{0} markings.
+        /// </summary>
+        public static string Panel_SegmentCaption {
+            get {
+                return ResourceManager.GetString("Panel_SegmentCaption", resourceCulture);
             }
         }
         

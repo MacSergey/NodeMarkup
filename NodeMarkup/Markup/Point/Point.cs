@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -63,12 +64,11 @@ namespace NodeMarkup.Manager
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
         public Vector3 Direction { get; protected set; }
-        public LocationType Location { get; private set; }
         public Bounds Bounds { get; protected set; }
         public Bounds SaveBounds { get; private set; }
 
-        public SegmentMarkupLine SegmentLine { get; }
-        public Enter Enter => SegmentLine.Enter;
+        public IPointSource Source { get; }
+        public Enter Enter { get; }
         public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
         public Markup Markup => Enter.Markup;
 
@@ -80,17 +80,18 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
 
 
-        protected MarkupPoint(byte num, SegmentMarkupLine markupLine, LocationType location, bool update = true)
+        protected MarkupPoint(byte num, Enter enter, IPointSource source, bool update = true)
         {
-            SegmentLine = markupLine;
-            Location = location;
+            Enter = enter;
+            Source = source;
+
             Num = num;
             Id = GetId(Enter.Id, Num, Type);
 
             if (update)
                 Update();
         }
-        public MarkupPoint(SegmentMarkupLine segmentLine, LocationType location) : this(segmentLine.Enter.PointNum, segmentLine, location) { }
+        public MarkupPoint(Enter enter, IPointSource source) : this(enter.PointNum, enter, source) { }
 
         public void Update(bool onlySelfUpdate = false)
         {
@@ -137,6 +138,8 @@ namespace NodeMarkup.Manager
             Enter = 1,
             Crosswalk = 2,
             Normal = 4,
+            
+            All = Enter | Crosswalk | Normal,
         }
         public enum LocationType
         {
@@ -153,12 +156,10 @@ namespace NodeMarkup.Manager
     public class MarkupEnterPoint : MarkupPoint
     {
         public override PointType Type => PointType.Enter;
-        public MarkupEnterPoint(SegmentMarkupLine markupLine, LocationType location) : base(markupLine, location)
-        {
-        }
+        public MarkupEnterPoint(Enter enter, IPointSource source) : base(enter, source) { }
         public override void UpdateProcess()
         {
-            SegmentLine.GetPositionAndDirection(Location, Offset, out Vector3 position, out Vector3 direction);
+            Source.GetPositionAndDirection(Offset, out Vector3 position, out Vector3 direction);
             Position = position;
             Direction = direction;
         }
@@ -166,11 +167,20 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                SegmentLine.GetPositionAndDirection(Location, 0, out Vector3 position, out _);
+                Source.GetPositionAndDirection(0, out Vector3 position, out _);
                 return position;
             }
         }
-        public override bool GetBorder(out ILineTrajectory line) => Enter.GetBorder(this, out line);
+        public override bool GetBorder(out ILineTrajectory line)
+        {
+            if(Enter is NodeEnter nodeEnter)
+                return nodeEnter.GetBorder(this, out line);
+            else
+            {
+                line = null;
+                return false;
+            }
+        }
     }
     public class MarkupCrosswalkPoint : MarkupPoint
     {
@@ -184,7 +194,7 @@ namespace NodeMarkup.Manager
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
 
-        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
+        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.Enter, sourcePoint.Source, false)
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;
@@ -192,7 +202,7 @@ namespace NodeMarkup.Manager
         private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
         public override void UpdateProcess()
         {
-            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Mathf.Sin(Enter.CornerAndNormalAngle));
+            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Enter.TranformCoef);
             Direction = SourcePoint.Direction;
         }
         public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
@@ -206,8 +216,9 @@ namespace NodeMarkup.Manager
     public class MarkupNormalPoint : MarkupPoint
     {
         public override PointType Type => PointType.Normal;
+        public new NodeMarkup Markup => (NodeMarkup)base.Markup;
         public MarkupEnterPoint SourcePoint { get; }
-        public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.SegmentLine, sourcePoint.Location, false)
+        public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.Enter, sourcePoint.Source, false)
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;

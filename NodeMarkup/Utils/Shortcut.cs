@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ModsCommon.Utils;
 using NodeMarkup.Tools;
 using System;
 using System.Collections.Generic;
@@ -8,33 +9,15 @@ using UnityEngine;
 
 namespace NodeMarkup.Utils
 {
-    public class Shortcut
+    public class NodeMarkupShortcut : Shortcut
     {
-        private string LabelKey { get; }
-        public string Label => Localize.ResourceManager.GetString(LabelKey, Localize.Culture);
-        public SavedInputKey InputKey { get; }
+        public override string Label => Localize.ResourceManager.GetString(LabelKey, Localize.Culture);
         public ToolModeType ModeType { get; }
-        private Action Action { get; }
-        public Shortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem)
+        public NodeMarkupShortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem) : base(Settings.SettingsFile, name, labelKey, key, action)
         {
-            LabelKey = labelKey;
-            InputKey = new SavedInputKey(name, Settings.SettingsFile, key, true);
             ModeType = modeType;
-            Action = action;
         }
-
-        public bool IsPressed(Event e)
-        {
-            if (InputKey.IsPressed(e) && (NodeMarkupTool.Instance.ModeType & ModeType) != ToolModeType.None)
-            {
-                Press();
-                return true;
-            }
-            else
-                return false;
-        }
-        public void Press() => Action?.Invoke();
-
+        public override bool IsPressed(Event e) => (NodeMarkupTool.Instance.ModeType & ModeType) != ToolModeType.None ? base.IsPressed(e) : false;
         public override string ToString() => InputKey.ToLocalizedString("KEYNAME");
     }
 }

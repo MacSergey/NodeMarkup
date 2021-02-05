@@ -3,6 +3,7 @@ using ColossalFramework.Importers;
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
+using ModsCommon.Utilities;
 using NodeMarkup.Utils;
 using System;
 using System.CodeDom;
@@ -45,7 +46,7 @@ namespace NodeMarkup.Manager
                 }
                 catch (Exception error)
                 {
-                    Logger.LogError("Could not get author name", error);
+                    Mod.Logger.Error("Could not get author name", error);
                 }
             }
             return Localize.Template_UnknownAuthor;
@@ -64,14 +65,14 @@ namespace NodeMarkup.Manager
 
         public static void Reload()
         {
-            Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(Clear)}");
+            Mod.Logger.Debug($"{nameof(TemplateManager)}.{nameof(Clear)}");
 
             StyleManager.Load();
             IntersectionManager.Load();
         }
         public static void Clear()
         {
-            Logger.LogDebug($"{nameof(TemplateManager)}.{nameof(Clear)}");
+            Mod.Logger.Debug($"{nameof(TemplateManager)}.{nameof(Clear)}");
 
             StyleManager.Clear(true);
             IntersectionManager.Clear(true);
@@ -109,11 +110,11 @@ namespace NodeMarkup.Manager
                     FromXml(config);
                 }
 
-                Logger.LogDebug($"{typeof(TemplateType).Name} was loaded: {TemplatesDictionary.Count} items");
+                Mod.Logger.Debug($"{typeof(TemplateType).Name} was loaded: {TemplatesDictionary.Count} items");
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could not load {typeof(TemplateType).Name}", error);
+                Mod.Logger.Error($"Could not load {typeof(TemplateType).Name}", error);
             }
         }
         protected void Save()
@@ -123,11 +124,11 @@ namespace NodeMarkup.Manager
                 var config = Loader.GetString(ToXml());
                 Saved.value = config;
 
-                Logger.LogDebug($"{typeof(TemplateType).Name} was saved: {TemplatesDictionary.Count} items");
+                Mod.Logger.Debug($"{typeof(TemplateType).Name} was saved: {TemplatesDictionary.Count} items");
             }
             catch (Exception error)
             {
-                Logger.LogError($"Could not save {typeof(TemplateType).Name}", error);
+                Mod.Logger.Error($"Could not save {typeof(TemplateType).Name}", error);
             }
         }
 

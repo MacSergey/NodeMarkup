@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -35,20 +37,11 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.StopLineDoubleSolid;
 
-        float _offset;
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
+        public PropertyValue<float> Offset { get; }
 
-        public DoubleSolidStopLineStyle(Color color, float width, float offset) : base(color, width)
+        public DoubleSolidStopLineStyle(Color32 color, float width, float offset) : base(color, width)
         {
-            Offset = offset;
+            Offset = GetOffsetProperty(offset);
         }
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
@@ -71,7 +64,7 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
             {
-                doubleTarget.Offset = Offset;
+                doubleTarget.Offset.Value = Offset;
             }
         }
 
@@ -84,45 +77,26 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
+            config.Add(Offset.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset = config.GetAttrValue("O", DefaultOffset);
+            Offset.FromXml(config, DefaultOffset);
         }
     }
     public class DashedStopLineStyle : StopLineStyle, IStopLine, IDashedLine
     {
         public override StyleType Type { get; } = StyleType.StopLineDashed;
 
-        float _dashLength;
-        float _spaceLength;
+        public PropertyValue<float> DashLength { get; }
+        public PropertyValue<float> SpaceLength { get; }
 
-        public float DashLength
+        public DashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
         {
-            get => _dashLength;
-            set
-            {
-                _dashLength = value;
-                StyleChanged();
-            }
-        }
-        public float SpaceLength
-        {
-            get => _spaceLength;
-            set
-            {
-                _spaceLength = value;
-                StyleChanged();
-            }
-        }
-
-        public DashedStopLineStyle(Color color, float width, float dashLength, float spaceLength) : base(color, width)
-        {
-            DashLength = dashLength;
-            SpaceLength = spaceLength;
+            DashLength = GetDashLengthProperty(dashLength);
+            SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
@@ -142,8 +116,8 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
             {
-                dashedTarget.DashLength = DashLength;
-                dashedTarget.SpaceLength = SpaceLength;
+                dashedTarget.DashLength.Value = DashLength;
+                dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -157,43 +131,32 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("DL", DashLength));
-            config.Add(new XAttribute("SL", SpaceLength));
+            config.Add(DashLength.ToXml());
+            config.Add(SpaceLength.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            DashLength = config.GetAttrValue("DL", DefaultDashLength);
-            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
+            DashLength.FromXml(config, DefaultDashLength);
+            SpaceLength.FromXml(config, DefaultSpaceLength);
         }
     }
     public class DoubleDashedStopLineStyle : DashedStopLineStyle, IStopLine, IDoubleLine
     {
         public override StyleType Type { get; } = StyleType.StopLineDoubleDashed;
 
-        float _offset;
-        public float Offset
+        public PropertyValue<float> Offset { get; }
+        public DoubleDashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
-        public DoubleDashedStopLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
-        {
-            Offset = offset;
+            Offset = GetOffsetProperty(offset);
         }
         public override StopLineStyle CopyStopLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
-            {
-                doubleTarget.Offset = Offset;
-            }
+                doubleTarget.Offset.Value = Offset;
         }
 
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
@@ -220,55 +183,28 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
+            config.Add(Offset.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset = config.GetAttrValue("O", DefaultOffset);
+            Offset.FromXml(config, DefaultOffset);
         }
     }
     public class SolidAndDashedStopLineStyle : StopLineStyle, IStopLine, IDoubleLine, IDashedLine
     {
         public override StyleType Type => StyleType.StopLineSolidAndDashed;
 
-        float _offset;
-        float _dashLength;
-        float _spaceLength;
-        public float Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                StyleChanged();
-            }
-        }
-        public float DashLength
-        {
-            get => _dashLength;
-            set
-            {
-                _dashLength = value;
-                StyleChanged();
-            }
-        }
-        public float SpaceLength
-        {
-            get => _spaceLength;
-            set
-            {
-                _spaceLength = value;
-                StyleChanged();
-            }
-        }
+        public PropertyValue<float> Offset { get; }
+        public PropertyValue<float> DashLength { get; }
+        public PropertyValue<float> SpaceLength { get; }
 
-        public SolidAndDashedStopLineStyle(Color color, float width, float dashLength, float spaceLength, float offset) : base(color, width)
+        public SolidAndDashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
-            Offset = offset;
-            DashLength = dashLength;
-            SpaceLength = spaceLength;
+            Offset = GetOffsetProperty(offset);
+            DashLength = GetDashLengthProperty(dashLength);
+            SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
 
@@ -301,13 +237,12 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
             {
-                dashedTarget.DashLength = DashLength;
-                dashedTarget.SpaceLength = SpaceLength;
+                dashedTarget.DashLength.Value = DashLength;
+                dashedTarget.SpaceLength.Value = SpaceLength;
             }
+
             if (target is IDoubleLine doubleTarget)
-            {
-                doubleTarget.Offset = Offset;
-            }
+                doubleTarget.Offset.Value = Offset;
         }
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -322,58 +257,31 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("O", Offset));
-            config.Add(new XAttribute("DL", DashLength));
-            config.Add(new XAttribute("SL", SpaceLength));
+            config.Add(Offset.ToXml());
+            config.Add(DashLength.ToXml());
+            config.Add(SpaceLength.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset = config.GetAttrValue("O", DefaultOffset);
-            DashLength = config.GetAttrValue("DL", DefaultDashLength);
-            SpaceLength = config.GetAttrValue("SL", DefaultSpaceLength);
+            Offset.FromXml(config, DefaultOffset);
+            DashLength.FromXml(config, DefaultDashLength);
+            SpaceLength.FromXml(config, DefaultSpaceLength);
         }
     }
-    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLIne
+    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLine
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
 
-        float _base;
-        float _height;
-        float _space;
-        public float Base
+        public PropertyValue<float> Base { get; }
+        public PropertyValue<float> Height { get; }
+        public PropertyValue<float> Space { get; }
+        public SharkTeethStopLineStyle(Color32 color, float baseValue, float height, float space) : base(color, 0)
         {
-            get => _base;
-            set
-            {
-                _base = value;
-                StyleChanged();
-            }
-        }
-        public float Height
-        {
-            get => _height;
-            set
-            {
-                _height = value;
-                StyleChanged();
-            }
-        }
-        public float Space
-        {
-            get => _space;
-            set
-            {
-                _space = value;
-                StyleChanged();
-            }
-        }
-        public SharkTeethStopLineStyle(Color color, float baseValue, float height, float space) : base(color, 0)
-        {
-            Base = baseValue;
-            Height = height;
-            Space = space;
+            Base = GetBaseProperty(baseValue);
+            Height = GetHeightProperty(height);
+            Space = GetSpaceProperty(space);
         }
         protected override IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
         {
@@ -394,9 +302,9 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is SharkTeethStopLineStyle sharkTeethTarget)
             {
-                sharkTeethTarget.Base = Base;
-                sharkTeethTarget.Height = Height;
-                sharkTeethTarget.Space = Space;
+                sharkTeethTarget.Base.Value = Base;
+                sharkTeethTarget.Height.Value = Height;
+                sharkTeethTarget.Space.Value = Space;
             }
         }
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -412,17 +320,17 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("B", Base));
-            config.Add(new XAttribute("H", Height));
-            config.Add(new XAttribute("S", Space));
+            config.Add(Base.ToXml());
+            config.Add(Height.ToXml());
+            config.Add(Space.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Base = config.GetAttrValue("B", DefaultSharkBaseLength);
-            Height = config.GetAttrValue("H", DefaultSharkHeight);
-            Space = config.GetAttrValue("S", DefaultSharkSpaceLength);
+            Base.FromXml(config, DefaultSharkBaseLength);
+            Height.FromXml(config, DefaultSharkHeight);
+            Space.FromXml(config, DefaultSharkSpaceLength);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
@@ -94,9 +96,9 @@ namespace NodeMarkup.UI.Panel
 
             popup.Width = buttons.Max(b => b.width);
         }
-        private PanelHeaderButton AddButton(string sprite, string text, Shortcut shortcut) 
+        private PanelHeaderButton AddButton(string sprite, string text, NodeMarkupShortcut shortcut) 
             => AddButton<PanelHeaderButton>(sprite, GetText(text, shortcut), onClick: (UIComponent _, UIMouseEventParameter __) => shortcut.Press());
-        private PanelHeaderButton AddButton(UIComponent parent, string sprite, string text, Shortcut shortcut)
+        private PanelHeaderButton AddButton(UIComponent parent, string sprite, string text, NodeMarkupShortcut shortcut)
         {
             return AddButton<PanelHeaderButton>(parent, sprite, GetText(text, shortcut), true, action);
 
@@ -108,7 +110,11 @@ namespace NodeMarkup.UI.Panel
         }
 
 
-        private string GetText(string text, Shortcut shortcut) => $"{text} ({shortcut})";
+        private string GetText(string text, NodeMarkupShortcut shortcut) => $"{text} ({shortcut})";
+    }
+    public class SimpleHeaderButton : HeaderButton 
+    {
+        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
     }
     public class PanelHeaderButton : SimpleHeaderButton
     {
@@ -118,6 +124,8 @@ namespace NodeMarkup.UI.Panel
     }
     public class AdditionallyHeaderButton : HeaderPopupButton<AdditionallyPopup>
     {
+        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+
         protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
         protected override Color32 PressedColor => new Color32(144, 144, 144, 255);
         protected override Color32 PressedIconColor => Color.white;

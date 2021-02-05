@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
@@ -15,6 +16,8 @@ namespace NodeMarkup.UI.Panel
 {
     public class NodeMarkupPanel : UIPanel
     {
+        #region PROPERTIES
+
         public static NodeMarkupPanel Instance { get; private set; }
         private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
 
@@ -31,6 +34,7 @@ namespace NodeMarkup.UI.Panel
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
+        private bool NeedUpdateOnVisible { get; set; }
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
@@ -50,11 +54,15 @@ namespace NodeMarkup.UI.Panel
             }
         }
 
+        #endregion
+
+        #region BASIC
+
         public static void CreatePanel()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
             UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
-            Logger.LogDebug($"Panel created");
+            Mod.Logger.Debug($"Panel created");
         }
         public override void Awake()
         {
@@ -62,7 +70,7 @@ namespace NodeMarkup.UI.Panel
 
             Instance = this;
 
-            atlas = TextureUtil.InGameAtlas;
+            atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "MenuPanel2";
             name = "NodeMarkupPanel";
 
@@ -81,17 +89,60 @@ namespace NodeMarkup.UI.Panel
             base.Start();
             SetPosition();
         }
+        public override void OnEnable()
+        {
+            base.OnEnable();
+
+            CheckPosition();
+            UpdatePanel();
+        }
         public static void RemovePanel()
         {
-            Logger.LogDebug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
+            Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
             if (Instance != null)
             {
                 Instance.Hide();
                 Destroy(Instance);
                 Instance = null;
-                Logger.LogDebug($"Panel removed");
+                Mod.Logger.Debug($"Panel removed");
             }
         }
+        private void CheckPosition()
+        {
+            if (absolutePosition.x < 0 || absolutePosition.y < 0)
+                SetPosition();
+        }
+        private void SetPosition()
+        {
+            Mod.Logger.Debug($"Set default panel position");
+            absolutePosition = DefaultPosition;
+        }
+        private new void Reset() => Available = true;
+
+        #endregion
+
+        #region UPDATE
+
+        public void UpdatePanel()
+        {
+            Reset();
+            CurrentEditor?.UpdateEditor();
+        }
+        private void UpdateOnVisible()
+        {
+            NeedUpdateOnVisible = false;
+
+            Header.Text = Markup.PanelCaption;
+            TabStrip.SetVisible(Markup);
+            TabStrip.ArrangeTabs();
+            TabStrip.SelectedTab = -1;
+            SelectEditor<LinesEditor>();
+        }
+
+        #endregion
+
+        #region COMPONENTS
+
         private void CreateHeader()
         {
             Header = AddUIComponent<PanelHeader>();
@@ -106,7 +157,6 @@ namespace NodeMarkup.UI.Panel
             TabStrip.SelectedTabChanged += OnSelectedTabChanged;
             TabStrip.SelectedTab = -1;
         }
-
         private void CreateEditors()
         {
             CreateEditor<PointsEditor>();
@@ -116,13 +166,21 @@ namespace NodeMarkup.UI.Panel
             CreateEditor<StyleTemplateEditor>();
             CreateEditor<IntersectionTemplateEditor>();
         }
+        private void CreateEditor<EditorType>() where EditorType : Editor
+        {
+            var editor = AddUIComponent<EditorType>();
+            editor.Active = false;
+            editor.Init(this);
+            TabStrip.AddTab(editor);
 
+            Editors.Add(editor);
+        }
         private void CreateSizeChanger()
         {
             SizeChanger = AddUIComponent<UIPanel>();
             SizeChanger.size = new Vector2(9, 9);
-            SizeChanger.atlas = TextureUtil.Atlas;
-            SizeChanger.backgroundSprite = TextureUtil.ResizeSprite;
+            SizeChanger.atlas = TextureHelper.CommonAtlas;
+            SizeChanger.backgroundSprite = TextureHelper.ResizeSprite;
             SizeChanger.color = new Color32(255, 255, 255, 160);
             SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
 
@@ -132,17 +190,14 @@ namespace NodeMarkup.UI.Panel
             handle.target = SizeChanger;
         }
 
+        #endregion
+
+        #region ONEVENTS
+
         private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
         {
             size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
             SizeChanger.relativePosition = size - SizeChanger.size;
-        }
-        public override void OnEnable()
-        {
-            base.OnEnable();
-
-            CheckPosition();
-            UpdatePanel();
         }
         protected override void OnSizeChanged()
         {
@@ -159,43 +214,13 @@ namespace NodeMarkup.UI.Panel
             }
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
-        }
-        private void CreateEditor<EditorType>() where EditorType : Editor
+        }   
+        protected override void OnVisibilityChanged()
         {
-            var editor = AddUIComponent<EditorType>();
-            editor.Active = false;
-            editor.Init(this);
-            TabStrip.AddTab(editor);
-
-            Editors.Add(editor);
-        }
-        private void CheckPosition()
-        {
-            if (absolutePosition.x < 0 || absolutePosition.y < 0)
-                SetPosition();
-        }
-        private void SetPosition()
-        {
-            Logger.LogDebug($"Set default panel position");
-            absolutePosition = DefaultPosition;
-        }
-
-        private void Reset() => Available = true;
-        public void UpdatePanel()
-        {
-            Reset();
-            CurrentEditor?.UpdateEditor();
-        }
-        public void SetNode(Markup markup)
-        {
-            Markup = markup;
-            if (Markup != null)
-            {
-                Header.Text = string.Format(NodeMarkup.Localize.Panel_Caption, Markup.Id);
-                TabStrip.SelectedTab = -1;
-                SelectEditor<LinesEditor>();
-            }
-        }
+            base.OnVisibilityChanged();
+            if (isVisible && NeedUpdateOnVisible)
+                UpdateOnVisible();
+        }           
         private void OnSelectedTabChanged(int index)
         {
             CurrentEditor = SelectEditor(index);
@@ -224,9 +249,29 @@ namespace NodeMarkup.UI.Panel
             return Editors[editorIndex] as EditorType;
         }
 
+        #endregion
+
+        #region EDIT
+
+        public void SetMarkup(Markup markup)
+        {
+            Markup = markup;
+            if (Markup != null)
+            {
+                if (isVisible)
+                    UpdateOnVisible();
+                else
+                    NeedUpdateOnVisible = true;
+            }
+        }
+
         private EditorType Edit<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
+            where ItemType : ISupport
         {
+            if (!(Markup is ISupport<ItemType>))
+                return null;
+
             Reset();
             var editor = SelectEditor<EditorType>();
             editor?.Edit(item);
@@ -246,7 +291,7 @@ namespace NodeMarkup.UI.Panel
             where TemplateType : Template
         {
             var editor = Edit<EditorType, TemplateType>(template);
-            if(editName && editor != null)
+            if (editName && editor != null)
             {
                 editor.EditName();
             }
@@ -257,5 +302,7 @@ namespace NodeMarkup.UI.Panel
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
+
+        #endregion
     }
 }

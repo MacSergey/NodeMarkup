@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using System;
@@ -28,7 +29,6 @@ namespace NodeMarkup.Tools
                 if (_selectPanel != null)
                 {
                     _selectPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    _selectPanel.eventLostFocus -= SelectPanelLeaveFocus;
                     _selectPanel.Selected = false;
                 }
 
@@ -38,7 +38,6 @@ namespace NodeMarkup.Tools
                 {
                     OnSetPanel();
                     _selectPanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    _selectPanel.eventLostFocus += SelectPanelLeaveFocus;
                     _selectPanel.Selected = true;
                 }
             }
@@ -57,11 +56,7 @@ namespace NodeMarkup.Tools
         public override void Deactivate()
         {
             base.Deactivate();
-            if (SelectPanel is PanelType panel)
-            {
-                panel.Selected = true;
-                SelectPanel = null;
-            }
+            SelectPanel = null;
         }
         protected virtual void OnSetPanel() { }
 

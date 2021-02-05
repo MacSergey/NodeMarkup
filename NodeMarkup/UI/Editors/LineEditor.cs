@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
@@ -28,6 +29,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
         public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
+        public override Type SupportType { get; } = typeof(ISupportLines);
         protected override bool GroupingEnabled => Settings.GroupLines.value;
 
         private ButtonPanel AddButton { get; set; }
@@ -143,7 +145,7 @@ namespace NodeMarkup.UI.Editors
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{MessageBoxBase.CantUndone}";
+                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else
@@ -247,8 +249,7 @@ namespace NodeMarkup.UI.Editors
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-        protected override void OnSetPanel()
-            => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
+        protected override void OnSetPanel() => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectPanel.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
 
         public override void Deactivate()
         {

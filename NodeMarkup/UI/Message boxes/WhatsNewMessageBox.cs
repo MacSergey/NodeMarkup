@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace NodeMarkup.UI
         public WhatsNewMessageBox()
         {
             var okButton = AddButton(1, 1, OkClick);
-            okButton.text = Ok;
+            okButton.text = NodeMarkupMessageBox.Ok;
         }
         protected virtual void OkClick()
         {
@@ -118,7 +119,7 @@ namespace NodeMarkup.UI
             betaMessage.wordWrap = true;
             betaMessage.autoHeight = true;
             betaMessage.textColor = Color.red;
-            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.StaticName);
+            betaMessage.text = string.Format(NodeMarkup.Localize.Mod_BetaWarningMessage, Mod.ShortName);
 
             base.Init(messages);
         }

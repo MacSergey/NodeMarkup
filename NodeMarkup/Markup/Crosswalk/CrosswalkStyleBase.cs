@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -91,7 +92,7 @@ namespace NodeMarkup.Manager
             dashLengthProperty.MinValue = 0.1f;
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
-            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength = value;
+            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
             AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
             return dashLengthProperty;
         }
@@ -105,7 +106,7 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.MinValue = 0.1f;
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
-            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength = value;
+            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
             AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
             return spaceLengthProperty;
         }

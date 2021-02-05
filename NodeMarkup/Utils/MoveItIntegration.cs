@@ -22,27 +22,19 @@ namespace NodeMarkup.Utils
     {
         public override string ID => "CS.macsergey.NodeMarkup";
 
-        public override string Name => Mod.StaticName;
+        public override string Name => Mod.ShortName;
 
         public override string Description => Localize.Mod_Description;
 
         public override Version DataVersion => new Version(1, 0);
 
-        public override object Copy(InstanceID sourceInstanceID)
+        public override object Copy(InstanceID sourceInstanceID) => sourceInstanceID.Type switch
         {
-            if (sourceInstanceID.Type == InstanceType.NetNode)
-            {
-                ushort nodeID = sourceInstanceID.NetNode;
-                if (MarkupManager.TryGetMarkup(nodeID, out Markup markup))
-                {
-                    var data = markup.ToXml();
-                    return data;
-                }
-                else
-                    return null;
-            }
-            return null;
-        }
+            InstanceType.NetNode when MarkupManager.NodeManager.TryGetMarkup(sourceInstanceID.NetNode, out Manager.NodeMarkup nodeMarkup) => nodeMarkup.ToXml(),
+            InstanceType.NetSegment when MarkupManager.SegmentManager.TryGetMarkup(sourceInstanceID.NetSegment, out SegmentMarkup segmentMarkup) => segmentMarkup.ToXml(),
+            _ => null,
+        };
+
 
         public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
             => Paste(targetInstanceID, record, false, sourceMap, PasteMapFiller);
@@ -70,12 +62,24 @@ namespace NodeMarkup.Utils
 
         private void Paste(InstanceID targetInstanceID, object record, bool isMirror, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, ObjectsMap, Dictionary<InstanceID, InstanceID>> mapFiller)
         {
-            if (targetInstanceID.Type != InstanceType.NetNode || !(record is XElement config))
+            if (!(record is XElement config))
                 return;
 
-            ushort nodeID = targetInstanceID.NetNode;
+            var markup = default(Markup);
+
+            switch (targetInstanceID.Type)
+            {
+                case InstanceType.NetNode:
+                    markup = MarkupManager.NodeManager.Get(targetInstanceID.NetNode);
+                    break;
+                case InstanceType.NetSegment:
+                    markup = MarkupManager.SegmentManager.Get(targetInstanceID.NetNode);
+                    break;
+                default:
+                    return;
+            }
+
             var map = new ObjectsMap(isMirror);
-            var markup = MarkupManager.Get(nodeID);
             mapFiller(markup, map, sourceMap);
             markup.FromXml(Mod.Version, config, map);
         }

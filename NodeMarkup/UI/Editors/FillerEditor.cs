@@ -1,10 +1,12 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -16,6 +18,7 @@ namespace NodeMarkup.UI.Editors
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
+        public override Type SupportType { get; } = typeof(ISupportFillers);
 
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -56,7 +59,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperties()
         {
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
         private void StyleChanged(Style.StyleType style)
@@ -83,11 +86,9 @@ namespace NodeMarkup.UI.Editors
         {
             var newStyle = style.CopyFillerStyle();
 
-            newStyle.MedianOffset = EditObject.Style.MedianOffset;
+            newStyle.MedianOffset.Value = EditObject.Style.MedianOffset;
             if (newStyle is IRotateFiller newSimple && EditObject.Style is IRotateFiller oldSimple)
-            {
-                newSimple.Angle = oldSimple.Angle;
-            }
+                newSimple.Angle.Value = oldSimple.Angle;
 
             EditObject.Style = newStyle;
             Style.SelectedObject = EditObject.Style.Type;

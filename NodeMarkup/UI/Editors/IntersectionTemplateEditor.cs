@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -13,6 +14,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
+        public override Type SupportType { get; } = typeof(ISupportIntersectionTemplate);
         protected override string IsAssetMessage => NodeMarkup.Localize.PresetEditor_PresetIsAsset;
         protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;

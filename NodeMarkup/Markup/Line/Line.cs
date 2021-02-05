@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -56,7 +57,7 @@ namespace NodeMarkup.Manager
             if (update)
                 Update(true);
         }
-        protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
+        protected MarkupLine(NodeMarkup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
         protected virtual void RuleChanged() => Markup.Update(this, true);
 
         public void Update(bool onlySelfUpdate = false)
@@ -145,6 +146,9 @@ namespace NodeMarkup.Manager
             if (!makrup.TryGetLine(pointPair, out line))
             {
                 var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
+                if ((type & makrup.SupportLines) == 0)
+                    return false;
+
                 switch (type)
                 {
                     case LineType.Regular:
@@ -175,6 +179,10 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
             Crosswalk = Markup.Item.Crosswalk,
+
+
+            [NotVisible]
+            All = Regular | Stop | Crosswalk,
         }
         public override string ToString() => PointPair.ToString();
     }

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -18,7 +19,19 @@ namespace NodeMarkup.Tools
             if (IsSelectPoint)
                 return IsHoverPoint ? base.GetToolInfo() : Localize.Tool_InfoSelectLineEndPoint;
             else
-                return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
+            {
+                var tips = new List<string>()
+                {
+                    Localize.Tool_InfoSelectLineStartPoint,
+                    Localize.Tool_InfoStartDragPointMode
+                };
+                if (Markup is ISupportFillers)
+                    tips.Add(Localize.Tool_InfoStartCreateFiller);
+                if (Markup is ISupportCrosswalks)
+                    tips.Add(Localize.Tool_InfoStartCreateCrosswalk);
+
+                return string.Join("\n", tips.ToArray());
+            }
         }
         public override void OnToolUpdate()
         {
@@ -26,19 +39,19 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint)
                 return;
-            else if (NodeMarkupTool.OnlyAltIsPressed)
+            else if (InputExtension.OnlyAltIsPressed && Markup is ISupportFillers)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
                 if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
-            else if (NodeMarkupTool.OnlyShiftIsPressed)
+            else if (InputExtension.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
         }
 
         public override void OnMouseDown(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && NodeMarkupTool.CtrlIsPressed)
+            if (!IsSelectPoint && IsHoverPoint && InputExtension.CtrlIsPressed)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -75,6 +88,9 @@ namespace NodeMarkup.Tools
 
             if (ignore != null && ignore.Enter == enter)
             {
+                if ((Markup.SupportLines & MarkupLine.LineType.Stop) == 0)
+                    yield break;
+
                 var ignoreIdx = ignore.Num - 1;
                 var leftIdx = ignoreIdx;
                 var rightIdx = ignoreIdx;

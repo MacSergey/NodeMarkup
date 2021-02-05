@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -15,6 +16,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
+        public override Type SupportType { get; } = typeof(ISupportStyleTemplate);
         protected override string IsAssetMessage => NodeMarkup.Localize.TemplateEditor_TemplateIsAsset;
         protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;
@@ -47,7 +49,7 @@ namespace NodeMarkup.UI.Editors
         protected override IEnumerable<EditorItem> AddAditionalProperties()
         {
             AddStyleProperties();
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
 
             return StyleProperties;

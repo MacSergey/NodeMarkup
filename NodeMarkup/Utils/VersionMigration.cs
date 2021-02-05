@@ -9,7 +9,7 @@ namespace NodeMarkup.Utils
 {
     public static class VersionMigration
     {
-        public static ObjectsMap Befor1_2(Markup markup, ObjectsMap map)
+        public static ObjectsMap Befor1_2(Manager.NodeMarkup markup, ObjectsMap map)
         {
             if (map == null)
                 map = new ObjectsMap();
@@ -18,7 +18,7 @@ namespace NodeMarkup.Utils
             {
                 foreach (var point in enter.Points.Skip(1).Take(enter.PointCount - 2))
                 {
-                    switch (point.Location)
+                    switch (point.Source.Location)
                     {
                         case MarkupPoint.LocationType.LeftEdge:
                             map.AddPoint(point.Id, point.Id - (1 << 16));

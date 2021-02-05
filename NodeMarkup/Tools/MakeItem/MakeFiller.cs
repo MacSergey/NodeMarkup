@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.Utils;
@@ -30,7 +31,7 @@ namespace NodeMarkup.Tools
 
         public override void OnToolUpdate()
         {
-            if (DisableByAlt && !NodeMarkupTool.AltIsPressed && Contour.IsEmpty)
+            if (DisableByAlt && !InputExtension.AltIsPressed && Contour.IsEmpty)
                 Tool.SetDefaultMode();
             else
                 FillerPointsSelector.OnUpdate();

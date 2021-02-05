@@ -22,6 +22,8 @@ using ColossalFramework.Globalization;
 using ColossalFramework.PlatformServices;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
+using ModsCommon.Utilities;
+using ModsCommon.UI;
 
 namespace NodeMarkup
 {
@@ -29,7 +31,7 @@ namespace NodeMarkup
     {
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
-        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor().ToString(), true);
+        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor(Mod.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
@@ -69,7 +71,7 @@ namespace NodeMarkup
             CreateTabStrip(mainPanel);
 
             var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
-            generalTab.AddGroup(Mod.StaticFullName);
+            generalTab.AddGroup(Mod.Instance.Name);
             AddLanguage(generalTab);
             AddGeneral(generalTab);
             AddGrouping(generalTab);
@@ -183,7 +185,7 @@ namespace NodeMarkup
             {
                 var locale = dropDown.SelectedObject;
                 Locale.value = locale;
-                Mod.LocaleChanged();
+                Mod.Instance.LocaleChanged();
                 LocaleManager.ForceReload();
             }
         }
@@ -314,26 +316,26 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{MessageBoxBase.CantUndone}", () => MarkupManager.Clear());
+            AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}", () => MarkupManager.Clear());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
-            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{MessageBoxBase.CantUndone}");
+            AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
         private static void AddBackupStyleTemplates(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{MessageBoxBase.CantUndone}", () => TemplateManager.StyleManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}", () => TemplateManager.StyleManager.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
-            AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{MessageBoxBase.CantUndone}");
+            AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
 
         private static void AddBackupIntersectionTemplates(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{MessageBoxBase.CantUndone}", () => TemplateManager.IntersectionManager.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}", () => TemplateManager.IntersectionManager.DeleteAll());
             AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
-            AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{MessageBoxBase.CantUndone}");
+            AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
 
         private static void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
@@ -369,7 +371,7 @@ namespace NodeMarkup
                     messageBox.CaprionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
-                    messageBox.Button2Text = MessageBoxBase.Ok;
+                    messageBox.Button2Text = NodeMarkupMessageBox.Ok;
                     messageBox.OnButton1Click = CopyToClipboard;
                     messageBox.SetButtonsRatio(2, 1);
 
@@ -471,6 +473,16 @@ namespace NodeMarkup
             button.width = width;
 
             return button;
+        }
+        public static void AddLabel(this UIHelper helper, string text, float size = 1.125f, Color? color = null, int padding = 0)
+        {
+            var component = helper.self as UIComponent;
+
+            var label = component.AddUIComponent<UILabel>();
+            label.text = text;
+            label.textScale = size;
+            label.textColor = color ?? Color.white;
+            label.padding = new RectOffset(padding, 0, 0, 0);
         }
     }
 

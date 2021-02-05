@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeMarkup", "NodeMarkup\NodeMarkup.csproj", "{94B9B12B-0D2B-4685-BF64-4F0488470569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyAccessGenerator", "EarlyAccessGenerator\EarlyAccessGenerator.csproj", "{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsCommon", "ModsCommon\ModsCommon\ModsCommon.csproj", "{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyAccessLibrary", "EarlyAccess\EarlyAccessLibrary.csproj", "{8FA0A542-B2D4-4E00-ABD6-E7470906351D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EarlyAccess", "EarlyAccess", "{D2DC72D8-B263-4A42-8849-420B582E197A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsBridge", "ModsCommon\ModsBridge\ModsBridge.csproj", "{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,36 +25,32 @@ Global
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.nwRelease|Any CPU.Build.0 = Release noWorkshop|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwDebug|Any CPU.Build.0 = Debug|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.nwRelease|Any CPU.Build.0 = Release|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwDebug|Any CPU.Build.0 = Debug|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.nwRelease|Any CPU.Build.0 = Release|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.nwDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.nwDebug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.nwRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.nwRelease|Any CPU.Build.0 = Release|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.nwDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.nwDebug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.nwRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.nwRelease|Any CPU.Build.0 = Release|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{0FBC48E3-A18F-49CB-88E7-28F157EE07DA} = {D2DC72D8-B263-4A42-8849-420B582E197A}
-		{8FA0A542-B2D4-4E00-ABD6-E7470906351D} = {D2DC72D8-B263-4A42-8849-420B582E197A}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
-		RESX_ExcelExportMode = MultipleSheets
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_RemoveEmptyEntries = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ExcelExportMode = MultipleSheets
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal
