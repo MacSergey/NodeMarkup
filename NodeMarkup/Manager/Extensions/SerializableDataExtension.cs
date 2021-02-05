@@ -41,7 +41,7 @@ namespace NodeMarkup.Utils
                 }
                 catch(Exception error)
                 {
-                    Logger.LogError("Could not load map data", error);
+                    Mod.Logger.Error("Could not load map data", error);
                     MarkupManager.SetFiled();
                 }
             }

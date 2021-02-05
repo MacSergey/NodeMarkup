@@ -84,7 +84,6 @@ namespace NodeMarkup.Manager
             {
                 Mod.Logger.Error($"Could not load node #{nodeId} markup", error);
                 markup = null;
-                MarkupManager.LoadErrors += 1;
                 return false;
             }
         }

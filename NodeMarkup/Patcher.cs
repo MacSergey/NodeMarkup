@@ -46,8 +46,7 @@ namespace NodeMarkup
             {
                 success &= PatchLoadingManagerLoadCustomContent();
                 success &= PatchLoadingScreenModLoadImpl();
-            if (!ItemsExtension.InGame)
-                Mod.Instance.LoadedError();
+            }
 
             return success;
         }
@@ -190,7 +189,7 @@ namespace NodeMarkup
             return LoadingTranspiler(instructions, OpCodes.Ldloc_S, 26, additional);
         }
         private bool PatchLoadingScreenModLoadImpl()
-        {            
+        {
             try
             {
                 var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader");
