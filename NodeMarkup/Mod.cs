@@ -26,6 +26,8 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
+        public static bool LoadedSuccess { get; set; } = true;
+
         public static string StaticName { get; } = "Intersection Marking Tool";
 #if DEBUG
         public static string StaticFullName => $"{StaticName} {Version.GetString()} [BETA]";
@@ -38,6 +40,7 @@ namespace NodeMarkup
 
         public static List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.5.1"),
             new Version("1.5"),
             new Version("1.4.1"),
             new Version("1.4"),
@@ -71,20 +74,44 @@ namespace NodeMarkup
         }
         public void OnEnabled()
         {
-            LoadingManager.instance.m_introLoaded += LoadedError;
+            LoadedSuccess = true;
+
+            LoadingManager.instance.m_introLoaded += CheckLoadError;
             Logger.LogDebug($"Version {Version}");
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnEnabled)}");
-            Patcher.Patch();
+            Logger.LogDebug("Enabled");
+
+            try
+            {
+                Patcher.Patch();
+            }
+            catch (Exception error)
+            {
+                Logger.LogError("Patch failed", error);
+                LoadedSuccess = false;
+            }
+
+            CheckLoadError();
         }
         public void OnDisabled()
         {
-            LoadingManager.instance.m_introLoaded -= LoadedError;
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnDisabled)}");
-            Patcher.Unpatch();
+            LoadingManager.instance.m_introLoaded -= CheckLoadError;
+            Logger.LogDebug("Disabled");
+
+            try
+            {
+                Patcher.Unpatch();
+            }
+            catch (Exception error)
+            {
+                Logger.LogError("Unpatch failed", error);
+            }
+
             NodeMarkupTool.Remove();
 
             LocaleManager.eventLocaleChanged -= LocaleChanged;
-        }     
+
+            LoadedSuccess = true;
+        }
 
         public void OnSettingsUI(UIHelperBase helper)
         {
@@ -92,14 +119,14 @@ namespace NodeMarkup
             LocaleChanged();
             LocaleManager.eventLocaleChanged += LocaleChanged;
 
-            Logger.LogDebug($"{nameof(Mod)}.{nameof(OnSettingsUI)}");
+            Logger.LogDebug("Load SettingsUI");
             Settings.OnSettingsUI(helper);
         }
 
         public static void LocaleChanged()
         {
             Localize.Culture = Culture;
-            Logger.LogDebug($"current cultute - {Localize.Culture?.Name ?? "null"}");
+            Logger.LogDebug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
         public static bool OpenTroubleshooting()
@@ -113,9 +140,9 @@ namespace NodeMarkup
             return true;
         }
 
-        public static void LoadedError()
+        public static void CheckLoadError()
         {
-            if (!Patcher.Success)
+            if (!InGame && !LoadedSuccess)
             {
                 var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
                 messageBox.MessageText = Localize.Mod_LoaledWithErrors;
