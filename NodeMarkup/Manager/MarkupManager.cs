@@ -19,7 +19,8 @@ namespace NodeMarkup.Manager
 
         static PropManager PropManager => Singleton<PropManager>.instance;
         
-        public static ushort LoadErrors { get; set; } = 0;
+        public static int LoadErrors { get; private set; } = 0;
+        public static bool HasLoadErrors => LoadErrors != 0;
 
         public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
 
@@ -118,6 +119,7 @@ namespace NodeMarkup.Manager
         {
             if (clear)
                 Clear();
+
             LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);
@@ -125,7 +127,14 @@ namespace NodeMarkup.Manager
             {
                 if (Markup.FromXml(version, markupConfig, map, out Markup markup))
                     NeedUpdate.Add(markup.Id);
+                else
+                    LoadErrors += 1;
             }
+        }
+        public static void SetFiled()
+        {
+            Clear();
+            LoadErrors = -1;
         }
     }
     public enum MaterialType

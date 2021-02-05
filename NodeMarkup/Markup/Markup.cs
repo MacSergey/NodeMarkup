@@ -607,7 +607,6 @@ namespace NodeMarkup.Manager
             {
                 Logger.LogError($"Could not load node #{nodeId} markup", error);
                 markup = null;
-                MarkupManager.LoadErrors += 1;
                 return false;
             }
         }

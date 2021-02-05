@@ -22,14 +22,12 @@ namespace NodeMarkup
 
         public static void Patch()
         {
-            Logger.LogDebug($"{nameof(Patcher)}.{nameof(Patch)}");
+            Logger.LogDebug("Patch");
             HarmonyHelper.DoOnHarmonyReady(() => Begin());
         }
         public static void Unpatch()
         {
-            Logger.LogDebug($"{nameof(Patcher)}.{nameof(Unpatch)}");
-
-            Logger.LogDebug($"Unpatch all");
+            Logger.LogDebug($"Unpatch");
 
             var harmony = new Harmony(HarmonyId);
             harmony.UnpatchAll(HarmonyId);
@@ -39,7 +37,7 @@ namespace NodeMarkup
 
         private static void Begin()
         {
-            Logger.LogDebug($"{nameof(Patcher)}.{nameof(Begin)}");
+            Logger.LogDebug($"Start patching");
 
             Success = true;
 
@@ -61,8 +59,10 @@ namespace NodeMarkup
                 Success &= PatchLoadingScreenModLoadImpl(harmony);
             }
 
-            if (!Mod.InGame)
-                Mod.LoadedError();
+            Mod.LoadedSuccess &= Success;
+            Mod.CheckLoadError();
+
+            Logger.LogDebug(Success ? "Putching success" : "Putching failed");
         }
         private static bool AddPrefix(Harmony harmony, MethodInfo prefix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
             => AddPatch((original) => harmony.Patch(original, prefix: new HarmonyMethod(prefix)), type, method, originalGetter);
@@ -208,7 +208,7 @@ namespace NodeMarkup
             return LoadingTranspiler(instructions, OpCodes.Ldloc_S, 26, additional);
         }
         private static bool PatchLoadingScreenModLoadImpl(Harmony harmony)
-        {            
+        {
             try
             {
                 var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader");
