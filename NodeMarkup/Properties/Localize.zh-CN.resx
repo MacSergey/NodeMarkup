@@ -1258,8 +1258,13 @@ Shift x10，Ctrl x0.1</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>未知作者</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>-改善了加载错误弹窗信息
+-纠正及更新了翻译文档</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>全部</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>编辑段落 #{0} 的地标线</value>
   </data>
@@ -1267,6 +1272,18 @@ Shift x10，Ctrl x0.1</value>
     <value>草地</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>路肩</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>草地</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
     <value>路肩</value>
   </data>
 </root>

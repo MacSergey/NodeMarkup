@@ -1258,7 +1258,20 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Neznámý autor</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Zlepšení chybových zpráv o načítání dat.
+- Zlepšení lokalizací.</value>
+  </data>
   
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Upravit značení silnice #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Tráva</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Beton</value>
+  </data>
   
   
   

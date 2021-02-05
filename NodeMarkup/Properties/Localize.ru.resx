@@ -1357,6 +1357,18 @@ Shift X10, Ctrl X0.1</value>
     <value>Трава</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Тратуар</value>
+    <value>Тротуар</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Подъем</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Подъем</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Трава</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Тротуар</value>
   </data>
 </root>

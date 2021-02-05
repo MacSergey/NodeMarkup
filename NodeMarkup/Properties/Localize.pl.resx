@@ -1258,7 +1258,20 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Nieznany autor</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Ulepszono komunikaty o błędach ładowania danych.
+- Naprawiono i zaktualizowano tłumaczenia.</value>
+  </data>
   
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Modyfikuj oznaczenia segmentu #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Trawa</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Kostka brukowa</value>
+  </data>
   
   
   

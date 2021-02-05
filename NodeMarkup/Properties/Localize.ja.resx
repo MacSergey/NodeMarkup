@@ -1266,7 +1266,9 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>不明な作成者</value>
   </data>
   
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>すべて</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} のセグメントを編集中</value>
   </data>
@@ -1274,6 +1276,18 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>芝生</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>舗装</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>高さ・厚み</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>高さ・厚み</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>芝生</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
     <value>舗装</value>
   </data>
 </root>

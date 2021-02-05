@@ -1267,8 +1267,13 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autor desconhecido</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Improve mensagens sobre erros no carregamento de dados.
+- Linguagens corrigidas e atualizadas.</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>todos</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar marcações do segmento #{0}</value>
   </data>
@@ -1278,4 +1283,10 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Pavimento</value>
   </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Elevação</value>
+  </data>
+  
+  
+  
 </root>

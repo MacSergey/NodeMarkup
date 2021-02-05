@@ -1305,7 +1305,10 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Unbekannter Autor</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Informationen bei Ladefehlern korrigiert.
+- Lokalisierungen aktualisiert und verbessert.</value>
+  </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>alle</value>
   </data>
@@ -1318,4 +1321,10 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Bürgersteig</value>
   </data>
+  
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
+  
+  
 </root>

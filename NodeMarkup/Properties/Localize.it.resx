@@ -595,7 +595,9 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   <data name="Mod_Locale_de" xml:space="preserve">
     <value>Tedesco</value>
   </data>
-  
+  <data name="Mod_Locale_en" xml:space="preserve">
+    <value>Inglese US</value>
+  </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spagnolo</value>
   </data>
@@ -1041,7 +1043,9 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Solido in centro</value>
   </data>
-  
+  <data name="StyleOption_No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Si</value>
   </data>
@@ -1175,6 +1179,32 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Inglese UK</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Salva le modifiche</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Non salvare le modifiche</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Salva le modifiche</value>
+  </data>
   
   
   
@@ -1186,24 +1216,26 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Questo tipo di linea non supporta le regole</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Non tagliare la linea del marciapiede se è il bordo</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Autore sconosciuto</value>
+  </data>
   
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>tutto</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Erba</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Pavimentazione</value>
+  </data>
   
   
   
