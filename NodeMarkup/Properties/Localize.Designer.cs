@@ -1149,6 +1149,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на all.
+        /// </summary>
+        public static string Mod_LoadFailedAll {
+            get {
+                return ResourceManager.GetString("Mod_LoadFailedAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Mod loaded with errors.
         ///It is not recommended to use the mod in this state as it can lead to unpredictable behavior.
         ///Restart the game..
@@ -1406,7 +1415,22 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Version 1.5 released.
+        ///   Ищет локализованную строку, похожую на - Improve messages about load data errors.
+        ///- Fix and update localizes..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_5_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_5_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+        ///- Added the ability to save templates and presets as asset and share it over Workshop.
+        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+        ///- Added panel tips (can be disable in settings).
+        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

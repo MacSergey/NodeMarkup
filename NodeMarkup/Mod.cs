@@ -33,6 +33,7 @@ namespace NodeMarkup
         public override string Id => nameof(NodeMarkup);
         protected override List<Version> ModVersions { get; } = new List<Version>
         {
+            new Version("1.5.1"),
             new Version("1.5"),
             new Version("1.4.1"),
             new Version("1.4"),
@@ -66,6 +67,7 @@ namespace NodeMarkup
         {
             Localize.Culture = Culture;
             Logger.Debug($"current cultute - {Localize.Culture?.Name ?? "null"}");
+            Logger.LogDebug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
         public static bool OpenTroubleshooting()
@@ -81,7 +83,7 @@ namespace NodeMarkup
 
         public override void LoadedError()
         {
-            if (!Patcher.Success)
+            if (!InGame && !LoadedSuccess)
             {
                 var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
                 messageBox.MessageText = Localize.Mod_LoaledWithErrors;

@@ -121,7 +121,7 @@
     <value>Eliminar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar {0} "{1}"?</value>
+    <value>¿De verdad quieres eliminar {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Desplazar la rueda para cambiar
@@ -325,11 +325,16 @@ Haga clic para editar las marcas</value>
     <value>Seleccione un nodo para editar las marcas</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar punto final para línea normal o transversal
-Arrastre detrás del punto para línea perpendicular</value>
+    <value>Seleccione el punto final
++Mayús - Continua
++Ctrl - Doble</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione el punto para crear o eliminar la línea</value>
+    <value>Seleccione el punto para
+crear o eliminar la línea
++Ctrl para mover el punto
+Mantenga Alt para crear un relleno
+Mantenga Mayús para crear un paso de peatones</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
@@ -462,7 +467,7 @@ Para crear un relleno, mantenga Alt o presione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista de plantillas está vacía.
-Para crear una plantilla, haga clic en «{0}» en el estilo de línea, paso de peatones o relleno.</value>
+Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar con clave</value>
@@ -571,7 +576,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Alemán</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglés EEUU</value>
+    <value>Inglés</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Español</value>
@@ -607,7 +612,9 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Idioma</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Haga clic para crear una línea perpendicular</value>
+    <value>Haga clic para crear una línea perpendicular
++Mayús - Continua
++Ctrl - Doble</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Haga clic para eliminar la línea perpendicular</value>
@@ -1055,7 +1062,7 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Configuración rápida de bordes del paso de peatones</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Las marcas debajo del carril</value>
+    <value>Las marcas debajo del carril (Se aplica después del reinicio)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>

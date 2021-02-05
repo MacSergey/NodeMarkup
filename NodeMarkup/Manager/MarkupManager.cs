@@ -183,7 +183,14 @@ namespace NodeMarkup.Manager
             {
                 if (SegmentMarkup.FromXml(version, markupConfig, map, out SegmentMarkup markup))
                     NeedUpdate.Add(markup.Id);
+                else
+                    LoadErrors += 1;
             }
+        }
+        public static void SetFiled()
+        {
+            Clear();
+            LoadErrors = -1;
         }
     }
 

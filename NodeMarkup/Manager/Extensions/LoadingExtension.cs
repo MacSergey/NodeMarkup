@@ -52,10 +52,10 @@ namespace NodeMarkup
         }
         private void ShowLoadError()
         {
-            if (MarkupManager.LoadErrors != 0)
+            if (MarkupManager.HasLoadErrors)
             {
                 var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors);
+                messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors > 0 ? (object)MarkupManager.LoadErrors : (object)Localize.Mod_LoadFailedAll);
             }
         }
         private void ShowBetaWarning()
