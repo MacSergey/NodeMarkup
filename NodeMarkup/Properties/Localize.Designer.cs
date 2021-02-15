@@ -1407,6 +1407,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Update Harmony dependence: resolving conflicts with others mods that use it.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_5_2 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_5_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
         ///- Added the ability to save templates and presets as asset and share it over Workshop.
         ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.

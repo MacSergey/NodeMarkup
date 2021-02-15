@@ -1359,4 +1359,7 @@ Are you sure you want to have multiple presets with the same name?</value>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>all</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>- Update Harmony dependence: resolving conflicts with others mods that use it</value>
+  </data>
 </root>
