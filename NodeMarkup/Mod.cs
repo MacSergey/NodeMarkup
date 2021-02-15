@@ -59,7 +59,7 @@ namespace NodeMarkup
             base.OnDisabled();
             NodeMarkupTool.Remove();
         }
-        protected override Patcher CreatePatcher() => new Patcher();
+        protected override Patcher CreatePatcher() => new Patcher(this);
 
         protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
 
