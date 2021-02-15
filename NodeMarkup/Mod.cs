@@ -80,13 +80,10 @@ namespace NodeMarkup
             return true;
         }
 
-        public override void LoadedError()
+        public override void OnLoadedError()
         {
-            if (!ItemsExtension.InGame && !LoadSuccess)
-            {
-                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = Localize.Mod_LoaledWithErrors;
-            }
+            var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+            messageBox.MessageText = Localize.Mod_LoaledWithErrors;
         }
     }
 }
