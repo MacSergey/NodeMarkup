@@ -126,7 +126,7 @@ namespace NodeMarkup.Manager
         private static FloatPropertyPanel AddHeightProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            heightProperty.Text = "Height";
+            heightProperty.Text = Localize.FillerStyle_Height;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
             heightProperty.CheckMin = true;

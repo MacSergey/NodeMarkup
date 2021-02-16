@@ -579,6 +579,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Height.
+        /// </summary>
+        public static string FillerStyle_Height {
+            get {
+                return ResourceManager.GetString("FillerStyle_Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Pavement.
         /// </summary>
         public static string FillerStyle_Pavement {
@@ -1425,12 +1434,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-        ///- Added the ability to save templates and presets as asset and share it over Workshop.
-        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-        ///- Added panel tips (can be disable in settings).
-        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на Version 1.5 released.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

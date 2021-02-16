@@ -224,7 +224,6 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
-    <None Include="Properties\BuildEvent.bat" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Styles.png" />
@@ -284,41 +283,40 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
-  
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-	<WorkshopId>2140418403</WorkshopId>
-	<Type>Stable</Type>
+    <WorkshopId>2140418403</WorkshopId>
+    <Type>Stable</Type>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
-	<WorkshopId>2159934925</WorkshopId>
-	<Type>Beta</Type>
+    <WorkshopId>2159934925</WorkshopId>
+    <Type>Beta</Type>
   </PropertyGroup>
   <PropertyGroup>
-  	<LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)$(Type)</LocalDir>
-	<WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+    <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)$(Type)</LocalDir>
+    <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
   </PropertyGroup>
-  
-	<Target Name="AfterBuild">
-		<ItemGroup>
-			<FilesToDelete Include="$(OutDir)*.pdb"/>
-			<FilesToDelete Include="$(OutDir)Assembly-CSharp-firstpass.dll"/>
-			<FilesToDelete Include="$(OutDir)ICSharpCode.SharpZipLib.dll"/>
-			<FilesToDelete Include="$(OutDir)PopsApiWrapper.dll"/>
-		</ItemGroup>
-		<Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high"></Message>
-		<Delete Files="@(FilesToDelete)" />
-		<RemoveDir Directories="$(LocalDir)"/>		
-		<ItemGroup>
-			<FilesToCopy Include="$(OutDir)\**\*.*" />
-		</ItemGroup>
-		<Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(LocalDir)\%(RecursiveDir)%(Filename)%(Extension)')"/>			
-	</Target>
-	<Target Name="AfterBuildRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
-		<RemoveDir Directories="$(WorkshopDir)"/>	
-		<Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')"/>	
-		<Copy SourceFiles="$(ProjectDir)Resources\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png"/>
-	</Target>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <FilesToDelete Include="$(OutDir)*.pdb" />
+      <FilesToDelete Include="$(OutDir)Assembly-CSharp-firstpass.dll" />
+      <FilesToDelete Include="$(OutDir)ICSharpCode.SharpZipLib.dll" />
+      <FilesToDelete Include="$(OutDir)PopsApiWrapper.dll" />
+    </ItemGroup>
+    <Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high">
+    </Message>
+    <Delete Files="@(FilesToDelete)" />
+    <RemoveDir Directories="$(LocalDir)" />
+    <ItemGroup>
+      <FilesToCopy Include="$(OutDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(LocalDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="AfterBuildRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
+    <RemoveDir Directories="$(WorkshopDir)" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(ProjectDir)Resources\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
+  </Target>
 </Project>

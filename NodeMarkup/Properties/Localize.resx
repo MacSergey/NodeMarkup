@@ -1359,4 +1359,7 @@ Are you sure you want to have multiple presets with the same name?</value>
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Pavement</value>
   </data>
+  <data name="FillerStyle_Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
 </root>
