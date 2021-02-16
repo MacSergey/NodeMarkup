@@ -49,7 +49,7 @@ namespace NodeMarkup
         public override string WorkshopUrl => StableURL;
         protected override string ModLocale => Settings.Locale.value;
 
-#if DEBUG
+#if BETA
         protected override bool ModIsBeta => true;
 #else
         protected override bool ModIsBeta => false;
