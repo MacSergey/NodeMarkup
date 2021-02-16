@@ -22,12 +22,13 @@ namespace NodeMarkup.Manager
     }
     public abstract class FillerStyle : Style, IFillerStyle
     {
-        public static float DefaultAngle { get; } = 0f;
-        public static float DefaultStepStripe { get; } = 3f;
-        public static float DefaultStepGrid { get; } = 6f;
-        public static float DefaultOffset { get; } = 0f;
-        public static float StripeDefaultWidth { get; } = 0.5f;
-        public static float DefaultAngleBetween { get; } = 90f;
+        public static float DefaultAngle => 0f;
+        public static float DefaultStepStripe => 3f;
+        public static float DefaultStepGrid => 6f;
+        public static float DefaultOffset => 0f;
+        public static float StripeDefaultWidth => 0.5f;
+        public static float DefaultAngleBetween => 90f;
+        public static float DefaultHeight => 0.3f;
 
         static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
@@ -35,8 +36,8 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
-            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, 10, 2, 10)},
+            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultHeight)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultHeight)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
