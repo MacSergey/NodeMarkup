@@ -254,6 +254,9 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
+            [Description("Pavement")]
+            LinePavement,
+
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
             EmptyLine,

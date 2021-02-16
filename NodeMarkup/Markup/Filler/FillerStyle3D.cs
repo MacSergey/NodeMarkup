@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
                 index -= 1;
             }
 
-            return new MarkupStyleMesh(position, points.ToArray(), triangles.ToArray(), uv.ToArray(), minMax, MaterialType);
+            return new MarkupStylePolygonMesh(position, points.ToArray(), triangles.ToArray(), uv.ToArray(), minMax, MaterialType);
 
             Vector2 GetUV(Vector3 point) => new Vector2((point.x / halfWidth + 1f) * 0.2f + 0.05f, (point.z / halfHeight + 1f) * 0.5f);
         }

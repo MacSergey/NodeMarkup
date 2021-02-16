@@ -68,8 +68,8 @@ namespace NodeMarkup.Manager
         }
         protected abstract ILineTrajectory CalculateTrajectory();
 
-        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(GetDashes());
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes();
+        public void RecalculateStyleData() => StyleData = GetStyleData();
+        protected abstract IStyleData GetStyleData();
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
@@ -216,7 +216,7 @@ namespace NodeMarkup.Manager
 
         protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, LineTrajectory);
+        protected override IStyleData GetStyleData() => new MarkupStyleDashes(Rule.Style.Calculate(this, LineTrajectory));
         private void SetRule(MarkupLineRawRule<Style> rule)
         {
             rule.OnRuleChanged = RuleChanged;
@@ -320,7 +320,8 @@ namespace NodeMarkup.Manager
         public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes()
+        protected override IStyleData GetStyleData() => new MarkupStyleDashes(GetDashes());
+        private IEnumerable<MarkupStyleDash> GetDashes()
         {
             var rules = MarkupLineRawRule<RegularLineStyle>.GetRules(RawRules);
 

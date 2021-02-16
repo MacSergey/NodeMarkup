@@ -62,13 +62,16 @@ namespace NodeMarkup.Manager
 
     public abstract class LineStyle : Style
     {
-        public static float DefaultDashLength { get; } = 1.5f;
-        public static float DefaultSpaceLength { get; } = 1.5f;
-        public static float DefaultOffset { get; } = 0.15f;
+        public static float DefaultDashLength => 1.5f;
+        public static float DefaultSpaceLength => 1.5f;
+        public static float DefaultOffset => 0.15f;
 
-        public static float DefaultSharkBaseLength { get; } = 0.5f;
-        public static float DefaultSharkSpaceLength { get; } = 0.5f;
-        public static float DefaultSharkHeight { get; } = 0.6f;
+        public static float DefaultSharkBaseLength => 0.5f;
+        public static float DefaultSharkSpaceLength => 0.5f;
+        public static float DefaultSharkHeight => 0.6f;
+
+        public static float Default3DWidth => 0.3f;
+        public static float Default3DHeigth => 0.3f;
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -164,6 +167,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
+            {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
         };
         public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyRegularLineStyle() : null;
 
@@ -191,6 +195,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
+
+            [Description("Pavement")]
+            Pavement = StyleType.LinePavement,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

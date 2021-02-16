@@ -437,4 +437,42 @@ namespace NodeMarkup.Manager
             Invert.Value ^= map.IsMirror ^ invert;
         }
     }
+
+    public class PavementLineStyle : RegularLineStyle, IWidthStyle
+    {
+        public override StyleType Type { get; } = StyleType.LinePavement;
+
+        public PropertyValue<float> Height { get; }
+
+        public PavementLineStyle(float width, float height) : base(default, width) 
+        {
+            Height = GetHeightProperty(height);
+        }
+
+        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Height);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is PavementLineStyle pavementTarget)
+                pavementTarget.Height.Value = Height;
+        }
+
+        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override XElement ToXml()
+        {
+            var config = BaseToXml();
+            config.Add(Width.ToXml());
+            config.Add(Height.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            Width.FromXml(config, Default3DWidth);
+            Height.FromXml(config, Default3DHeigth);
+        }
+    }
 }
