@@ -308,10 +308,62 @@ namespace NodeMarkup.Utils
         private Vector2[] UV { get; set; }
 
 
-        public MarkupStylePolygonMesh(Vector3 position, Vector3[] vertices, int[] triangles, Vector2[] uv, Rect minMax, MaterialType materialType) : base(position, materialType)
+        public MarkupStylePolygonMesh(float height, float elevation, bool isClockWise, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType) : this(GetMinMax(points), height, elevation, isClockWise, groups, points, polygons, materialType) { }
+        public MarkupStylePolygonMesh(Rect minMax, float height, float elevation, bool isClockWise, int[] groups, Vector3[] pointsss, int[] polygons, MaterialType materialType) : base(new Vector3(minMax.center.x, height + elevation, minMax.center.y), materialType)
         {
-            Triangles = triangles;
-            UV = uv;
+            var vertices = pointsss.ToList();
+            var triangles = polygons.ToList();
+            var uv = new List<Vector2>();
+
+            var position = new Vector3(minMax.center.x, height + height, minMax.center.y);
+            var halfWidth = minMax.width / 2;
+            var halfHeight = minMax.height / 2;
+
+            for (var i = 0; i < triangles.Count; i += 3)
+            {
+                var temp = triangles[i];
+                triangles[i] = triangles[i + 2];
+                triangles[i + 2] = temp;
+            }
+
+            for (var i = 0; i < vertices.Count; i += 1)
+            {
+                vertices[i] -= new Vector3(minMax.center.x, position.y - height, minMax.center.y);
+                uv.Add(new Vector2((vertices[i].x / halfWidth + 1f) * 0.2f + 0.05f, (vertices[i].z / halfHeight + 1f) * 0.5f));
+            }
+
+            var count = vertices.Count;
+            var index = 0;
+            for (var i = 0; i < groups.Length; i += 1)
+            {
+                var group = groups[isClockWise ? i : groups.Length - 1 - i];
+
+                for (var j = 0; j <= group; j += 1)
+                {
+                    var vertix = vertices[isClockWise ? index % count : (count - index) % count];
+
+                    vertices.Add(vertix);
+                    vertices.Add(vertix - new Vector3(0f, elevation, 0f));
+                    uv.Add(new Vector2(0.75f, 0.5f));
+                    uv.Add(new Vector2(0.75f, 0.5f));
+
+                    if (j != 0)
+                    {
+                        triangles.Add(vertices.Count - 4);
+                        triangles.Add(vertices.Count - 1);
+                        triangles.Add(vertices.Count - 2);
+
+                        triangles.Add(vertices.Count - 1);
+                        triangles.Add(vertices.Count - 4);
+                        triangles.Add(vertices.Count - 3);
+                    }
+                    index += 1;
+                }
+                index -= 1;
+            }
+
+            Triangles = triangles.ToArray();
+            UV = uv.ToArray();
 
             var xRatio = HalfWidth / minMax.width;
             var yRatio = HalfLength / minMax.height;
@@ -319,6 +371,7 @@ namespace NodeMarkup.Utils
 
             CalculateMatrix(minMax);
         }
+        private static Rect GetMinMax(Vector3[] vertices) => Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
         private void CalculateMatrix(Rect minMax)
         {
             var left = new Bezier3()

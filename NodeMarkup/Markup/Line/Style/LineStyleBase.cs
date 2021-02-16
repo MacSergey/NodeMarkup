@@ -75,7 +75,7 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory);
+        public abstract IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
@@ -226,8 +226,8 @@ namespace NodeMarkup.Manager
         public override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDash[0];
-        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDashes();
+        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
 
         public enum StopLineType
         {

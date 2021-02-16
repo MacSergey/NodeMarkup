@@ -325,7 +325,7 @@ namespace NodeMarkup.Manager
             var dashes = new List<MarkupStyleDash>();
             var drawData = new List<IDrawData>();
 
-            Seporate(Lines.Select(l => l.StyleData));
+            Seporate(Lines.SelectMany(l => l.StyleData));
             Seporate(Fillers.Select(l => l.StyleData));
             Seporate(Crosswalks.Select(l => l.StyleData));
 
