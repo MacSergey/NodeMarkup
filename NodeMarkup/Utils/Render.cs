@@ -306,7 +306,7 @@ namespace NodeMarkup.Utils
         protected override float HalfWidth => 20f;
         protected override float HalfLength => 20f;
 
-        public MarkupStylePolygonMesh(float height, float elevation, bool isClockWise, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType)
+        public MarkupStylePolygonMesh(float height, float elevation, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType)
         {
             var vertices = points.ToList();
             var triangles = polygons.ToList();
@@ -314,8 +314,6 @@ namespace NodeMarkup.Utils
 
             var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
             var position = new Vector3(minMax.center.x, height + elevation, minMax.center.y);
-            var halfWidth = minMax.width / 2;
-            var halfHeight = minMax.height / 2;
 
             for (var i = 0; i < triangles.Count; i += 3)
             {
@@ -324,21 +322,20 @@ namespace NodeMarkup.Utils
                 triangles[i + 2] = temp;
             }
 
+            var xRatio = HalfWidth / minMax.width;
+            var yRatio = HalfLength / minMax.height;
             for (var i = 0; i < vertices.Count; i += 1)
             {
-                vertices[i] -= new Vector3(minMax.center.x, position.y - elevation, minMax.center.y);
-                uv.Add(new Vector2((vertices[i].x / halfWidth + 1f) * 0.2f + 0.05f, (vertices[i].z / halfHeight + 1f) * 0.5f));
+                vertices[i] = new Vector3((vertices[i].x - minMax.center.x) * xRatio, vertices[i].y - position.y + elevation, (vertices[i].z - minMax.center.y) * yRatio);
+                uv.Add(new Vector2((vertices[i].x / HalfWidth + 1f) * 0.2f + 0.05f, (vertices[i].z / HalfLength + 1f) * 0.5f));
             }
 
-            var count = vertices.Count;
             var index = 0;
             for (var i = 0; i < groups.Length; i += 1)
             {
-                var group = groups[isClockWise ? i : groups.Length - 1 - i];
-
-                for (var j = 0; j <= group; j += 1)
+                for (var j = 0; j <= groups[i]; j += 1)
                 {
-                    var point = vertices[isClockWise ? index % count : (count - index) % count];
+                    var point = vertices[index % points.Length];
 
                     vertices.Add(point);
                     vertices.Add(point - new Vector3(0f, elevation, 0f));
@@ -360,32 +357,12 @@ namespace NodeMarkup.Utils
                 index -= 1;
             }
 
-            var xRatio = HalfWidth / minMax.width;
-            var yRatio = HalfLength / minMax.height;
-
             var mesh = new Mesh
             {
-                vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray(),
+                vertices = vertices.ToArray(),
                 triangles = triangles.ToArray(),
-                bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
                 uv = uv.ToArray(),
-            };
-
-            CalculateMatrix(minMax, out Matrix4x4 left, out Matrix4x4 right);
-            Init(position, mesh, left, right, materialType);
-        }
-
-        public MarkupStylePolygonMesh(Vector3 position, Vector3[] vertices, int[] triangles, Vector2[] uv, Rect minMax, MaterialType materialType)
-        {
-            var xRatio = HalfWidth / minMax.width;
-            var yRatio = HalfLength / minMax.height;
-
-            var mesh = new Mesh
-            {
-                vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray(),
-                triangles = triangles,
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
-                uv = uv,
             };
 
             CalculateMatrix(minMax, out Matrix4x4 left, out Matrix4x4 right);

@@ -28,7 +28,7 @@ namespace NodeMarkup.Manager
         public static float DefaultOffset => 0f;
         public static float StripeDefaultWidth => 0.5f;
         public static float DefaultAngleBetween => 90f;
-        public static float DefaultHeight => 0.3f;
+        public static float DefaultElevation => 0.3f;
 
         static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
@@ -36,8 +36,8 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultHeight)},
-            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultHeight)},
+            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
         };
 
         public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
@@ -68,8 +68,8 @@ namespace NodeMarkup.Manager
         public virtual IStyleData Calculate(MarkupFiller filler)
         {
             var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
-            var rect = GetRect(trajectories, out float height);
-            return GetStyleData(trajectories, rect, height);
+            var rect = GetRect(trajectories);
+            return GetStyleData(trajectories, rect, filler.Markup.Height);
         }
         public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
         {
@@ -209,13 +209,9 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        protected Rect GetRect(ILineTrajectory[] trajectories, out float height)
+        protected Rect GetRect(ILineTrajectory[] trajectories)
         {
-            height = 0;
-            if (!trajectories.Any())
-                return Rect.zero;
-
-            var firstPos = trajectories[0].StartPosition;
+            var firstPos = trajectories.Any() ? trajectories[0].StartPosition : default;
             var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
 
             foreach (var trajectory in trajectories)
@@ -233,10 +229,8 @@ namespace NodeMarkup.Manager
                         Set(straightTrajectory.Trajectory.b);
                         break;
                 }
-                height += (trajectory.StartPosition.y + trajectory.EndPosition.y) / 2;
             }
 
-            height /= trajectories.Length;
             return rect;
 
             void Set(Vector3 pos)
@@ -251,7 +245,6 @@ namespace NodeMarkup.Manager
                 else if (pos.z > rect.yMax)
                     rect.yMax = pos.z;
             }
-
         }
 
         public override XElement ToXml()

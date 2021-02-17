@@ -29,12 +29,12 @@ namespace NodeMarkup.Manager
         public float MaxLength => 10f;
         public PropertyValue<float> Elevation { get; }
 
-        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float height) : base(color, width, medianOffset)
+        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset)
         {
             //MinAngle = new PropertyValue<float>(StyleChanged, minAngle);
             //MinLength = new PropertyValue<float>(StyleChanged, minLength);
             //MaxLength = new PropertyValue<float>(StyleChanged, maxLength);
-            Elevation = GetElevationProperty(height);
+            Elevation = GetElevationProperty(elevation);
         }
 
         public override void CopyTo(Style target)
@@ -46,20 +46,22 @@ namespace NodeMarkup.Manager
 
         protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect _, float height)
         {
-            var pointsGroups = trajectories.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr)).ToArray()).ToArray();
+            var isClockWise = Vector3.Cross(trajectories[0].EndDirection, trajectories[1].StartDirection).y < 0;
+            if (!isClockWise)
+                trajectories = trajectories.Select(t => t.Invert()).Reverse().ToArray();
 
+            var pointsGroups = trajectories.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr)).ToArray()).ToArray();
             var points = pointsGroups.SelectMany(g => g).ToArray();
             var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
             P2T.Triangulate(polygon);
             var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
-            var isClockWise = Vector3.Cross(trajectories[0].EndDirection, trajectories[1].StartDirection).y < 0;
 
-            return new MarkupStylePolygonMesh(height, Elevation, isClockWise, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
-        }
+            return new MarkupStylePolygonMesh(height, Elevation, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
 
-        static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
-        {
-            yield return trajectory.StartPosition;
+            static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
+            {
+                yield return trajectory.StartPosition;
+            }
         }
 
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -77,10 +79,10 @@ namespace NodeMarkup.Manager
             elevationProperty.Text = Localize.FillerStyle_Elevation;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
-            //elevationProperty.CheckMin = true;
+            elevationProperty.CheckMin = true;
             elevationProperty.MinValue = 0f;
-            //elevationProperty.CheckMax = true;
-            elevationProperty.MaxValue = 1f;
+            elevationProperty.CheckMax = true;
+            elevationProperty.MaxValue = 10f;
             elevationProperty.Init();
             elevationProperty.Value = triangulationStyle.Elevation;
             elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
@@ -140,7 +142,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Elevation.FromXml(config, DefaultHeight);
+            Elevation.FromXml(config, DefaultElevation);
         }
     }
     public class PavementFillerStyle : TriangulationFillerStyle
@@ -148,7 +150,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerPavement;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
-        public PavementFillerStyle(Color32 color, float width, float medianOffset, float height) : base(color, width, medianOffset, height) { }
+        public PavementFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
 
         public override FillerStyle CopyFillerStyle() => new PavementFillerStyle(Color, Width, MedianOffset, Elevation);
     }
@@ -157,7 +159,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerGrass;
         protected override MaterialType MaterialType => MaterialType.Grass;
 
-        public GrassFillerStyle(Color32 color, float width, float medianOffset, float height) : base(color, width, medianOffset, height) { }
+        public GrassFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
 
         public override FillerStyle CopyFillerStyle() => new GrassFillerStyle(Color, Width, MedianOffset, Elevation);
     }
