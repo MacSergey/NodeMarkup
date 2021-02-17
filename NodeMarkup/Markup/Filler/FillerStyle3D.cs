@@ -51,10 +51,10 @@ namespace NodeMarkup.Manager
             var points = pointsGroups.SelectMany(g => g).ToArray();
             var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
             P2T.Triangulate(polygon);
-            var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToList();
-
+            var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
             var isClockWise = Vector3.Cross(trajectories[0].EndDirection, trajectories[1].StartDirection).y < 0;
-            return new MarkupStylePolygonMesh(height, Elevation, isClockWise, pointsGroups.Select(g => g.Length).ToArray(), points.ToArray(), triangles.ToArray(), MaterialType);
+
+            return new MarkupStylePolygonMesh(height, Elevation, isClockWise, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
         }
 
         static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
@@ -65,27 +65,27 @@ namespace NodeMarkup.Manager
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddHeightProperty(this, parent, onHover, onLeave));
+            components.Add(AddElevationProperty(this, parent, onHover, onLeave));
             //components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
             //components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
             //components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
             return components;
         }
-        private static FloatPropertyPanel AddHeightProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {
-            var heightProperty = parent.AddUIComponent<FloatPropertyPanel>();
-            heightProperty.Text = Localize.FillerStyle_Elevation;
-            heightProperty.UseWheel = true;
-            heightProperty.WheelStep = 0.1f;
-            heightProperty.CheckMin = true;
-            heightProperty.MinValue = 0f;
-            heightProperty.CheckMax = true;
-            heightProperty.MaxValue = 1f;
-            heightProperty.Init();
-            heightProperty.Value = triangulationStyle.Elevation;
-            heightProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
-            AddOnHoverLeave(heightProperty, onHover, onLeave);
-            return heightProperty;
+            var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            elevationProperty.Text = Localize.FillerStyle_Elevation;
+            elevationProperty.UseWheel = true;
+            elevationProperty.WheelStep = 0.1f;
+            //elevationProperty.CheckMin = true;
+            elevationProperty.MinValue = 0f;
+            //elevationProperty.CheckMax = true;
+            elevationProperty.MaxValue = 1f;
+            elevationProperty.Init();
+            elevationProperty.Value = triangulationStyle.Elevation;
+            elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
+            AddOnHoverLeave(elevationProperty, onHover, onLeave);
+            return elevationProperty;
         }
         //private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         //{

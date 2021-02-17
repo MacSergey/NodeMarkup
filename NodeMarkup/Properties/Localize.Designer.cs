@@ -941,6 +941,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Elevation.
+        /// </summary>
+        public static string LineStyle_Elevation {
+            get {
+                return ResourceManager.GetString("LineStyle_Elevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Empty.
         /// </summary>
         public static string LineStyle_Empty {

@@ -1362,4 +1362,7 @@ Are you sure you want to have multiple presets with the same name?</value>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Elevation</value>
   </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Elevation</value>
+  </data>
 </root>

@@ -245,30 +245,39 @@ namespace NodeMarkup.Utils
     }
     public abstract class MarkupStyleMesh : IStyleData, IDrawData
     {
-        public static float HalfWidth => 20f;
-        public static float HalfLength => 20f;
-        private static Vector4 Scale => new Vector4(0.5f / HalfWidth, 0.5f / HalfLength, 1f, 1f);
+        protected abstract float HalfWidth { get; }
+        protected abstract float HalfLength { get; }
 
-        private Vector3 Position { get; }
-        protected MaterialType MaterialType { get; }
+        protected Vector3 Position { get; private set; }
 
-        protected Matrix4x4 Left { get; set; }
-        protected Matrix4x4 Right { get; set; }
-        protected Mesh Mesh { get; set; }
+        protected Mesh Mesh { get; private set; }
+        protected Matrix4x4 Left { get; private set; }
+        protected Matrix4x4 Right { get; private set; }
+        protected Vector4 Scale { get;}
+        protected MaterialType MaterialType { get; private set; }
 
         protected Texture SurfaceTexA { get; }
         protected Texture SurfaceTexB { get; }
         protected Vector4 SurfaceMapping { get; }
 
-        public MarkupStyleMesh(Vector3 position, MaterialType materialType)
+        public MarkupStyleMesh()
         {
-            Position = position;
-            MaterialType = materialType;
-
             ItemsExtension.TerrainManager.GetSurfaceMapping(Position, out var surfaceTexA, out var surfaceTexB, out var surfaceMapping);
             SurfaceTexA = surfaceTexA;
             SurfaceTexB = surfaceTexB;
             SurfaceMapping = surfaceMapping;
+            Scale = new Vector4(0.5f / HalfWidth, 0.5f / HalfLength, 1f, 1f);
+        }
+        protected void Init(Vector3 position, Mesh mesh, Matrix4x4 left, Matrix4x4 right, MaterialType materialType)
+        {
+            Position = position;
+            Mesh = mesh;
+            Left = left;
+            Right = right;
+            MaterialType = materialType;
+
+            Mesh.RecalculateNormals();
+            Mesh.RecalculateTangents();
         }
 
         public void Draw()
@@ -280,7 +289,6 @@ namespace NodeMarkup.Utils
             materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             materialBlock.SetVector(instance.ID_MeshScale, Scale);
-            //materialBlock.SetVector(instance.ID_Color, new Vector4(0.5f, 0.5f, 0.5f, 0f));
 
             materialBlock.SetTexture(instance.ID_SurfaceTexA, SurfaceTexA);
             materialBlock.SetTexture(instance.ID_SurfaceTexB, SurfaceTexB);
@@ -290,32 +298,22 @@ namespace NodeMarkup.Utils
         }
         public IEnumerable<IDrawData> GetDrawData()
         {
-            if (Mesh == null)
-            {
-                Mesh = GetMesh();
-                Mesh.RecalculateNormals();
-                Mesh.RecalculateTangents();
-            }
             yield return this;
         }
-
-        protected abstract Mesh GetMesh();
     }
     public class MarkupStylePolygonMesh : MarkupStyleMesh
     {
-        private Vector3[] Vertices { get; set; }
-        private int[] Triangles { get; set; }
-        private Vector2[] UV { get; set; }
+        protected override float HalfWidth => 20f;
+        protected override float HalfLength => 20f;
 
-
-        public MarkupStylePolygonMesh(float height, float elevation, bool isClockWise, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType) : this(GetMinMax(points), height, elevation, isClockWise, groups, points, polygons, materialType) { }
-        public MarkupStylePolygonMesh(Rect minMax, float height, float elevation, bool isClockWise, int[] groups, Vector3[] pointsss, int[] polygons, MaterialType materialType) : base(new Vector3(minMax.center.x, height + elevation, minMax.center.y), materialType)
+        public MarkupStylePolygonMesh(float height, float elevation, bool isClockWise, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType)
         {
-            var vertices = pointsss.ToList();
+            var vertices = points.ToList();
             var triangles = polygons.ToList();
             var uv = new List<Vector2>();
 
-            var position = new Vector3(minMax.center.x, height + height, minMax.center.y);
+            var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
+            var position = new Vector3(minMax.center.x, height + elevation, minMax.center.y);
             var halfWidth = minMax.width / 2;
             var halfHeight = minMax.height / 2;
 
@@ -328,7 +326,7 @@ namespace NodeMarkup.Utils
 
             for (var i = 0; i < vertices.Count; i += 1)
             {
-                vertices[i] -= new Vector3(minMax.center.x, position.y - height, minMax.center.y);
+                vertices[i] -= new Vector3(minMax.center.x, position.y - elevation, minMax.center.y);
                 uv.Add(new Vector2((vertices[i].x / halfWidth + 1f) * 0.2f + 0.05f, (vertices[i].z / halfHeight + 1f) * 0.5f));
             }
 
@@ -340,10 +338,10 @@ namespace NodeMarkup.Utils
 
                 for (var j = 0; j <= group; j += 1)
                 {
-                    var vertix = vertices[isClockWise ? index % count : (count - index) % count];
+                    var point = vertices[isClockWise ? index % count : (count - index) % count];
 
-                    vertices.Add(vertix);
-                    vertices.Add(vertix - new Vector3(0f, elevation, 0f));
+                    vertices.Add(point);
+                    vertices.Add(point - new Vector3(0f, elevation, 0f));
                     uv.Add(new Vector2(0.75f, 0.5f));
                     uv.Add(new Vector2(0.75f, 0.5f));
 
@@ -362,26 +360,47 @@ namespace NodeMarkup.Utils
                 index -= 1;
             }
 
-            Triangles = triangles.ToArray();
-            UV = uv.ToArray();
-
             var xRatio = HalfWidth / minMax.width;
             var yRatio = HalfLength / minMax.height;
-            Vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray();
 
-            CalculateMatrix(minMax);
+            var mesh = new Mesh
+            {
+                vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray(),
+                triangles = triangles.ToArray(),
+                bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
+                uv = uv.ToArray(),
+            };
+
+            CalculateMatrix(minMax, out Matrix4x4 left, out Matrix4x4 right);
+            Init(position, mesh, left, right, materialType);
         }
-        private static Rect GetMinMax(Vector3[] vertices) => Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
-        private void CalculateMatrix(Rect minMax)
+
+        public MarkupStylePolygonMesh(Vector3 position, Vector3[] vertices, int[] triangles, Vector2[] uv, Rect minMax, MaterialType materialType)
         {
-            var left = new Bezier3()
+            var xRatio = HalfWidth / minMax.width;
+            var yRatio = HalfLength / minMax.height;
+
+            var mesh = new Mesh
+            {
+                vertices = vertices.Select(v => new Vector3(v.x * xRatio, v.y, v.z * yRatio)).ToArray(),
+                triangles = triangles,
+                bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
+                uv = uv,
+            };
+
+            CalculateMatrix(minMax, out Matrix4x4 left, out Matrix4x4 right);
+            Init(position, mesh, left, right, materialType);
+        }
+        private void CalculateMatrix(Rect minMax, out Matrix4x4 left, out Matrix4x4 right)
+        {
+            var bezierL = new Bezier3()
             {
                 a = new Vector3(-minMax.width, 0f, -minMax.height),
                 b = new Vector3(-minMax.width, 0f, -minMax.height / 3),
                 c = new Vector3(-minMax.width, 0f, minMax.height / 3),
                 d = new Vector3(-minMax.width, 0f, minMax.height),
             };
-            var right = new Bezier3()
+            var bezierR = new Bezier3()
             {
                 a = new Vector3(minMax.width, 0f, -minMax.height),
                 b = new Vector3(minMax.width, 0f, -minMax.height / 3),
@@ -389,17 +408,9 @@ namespace NodeMarkup.Utils
                 d = new Vector3(minMax.width, 0f, minMax.height),
             };
 
-            Left = NetSegment.CalculateControlMatrix(left.a, left.b, left.c, left.d, right.a, right.b, right.c, right.d, Vector3.zero, 0.05f);
-            Right = NetSegment.CalculateControlMatrix(right.a, right.b, right.c, right.d, left.a, left.b, left.c, left.d, Vector3.zero, 0.05f);
+            left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, Vector3.zero, 0.05f);
+            right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, Vector3.zero, 0.05f);
         }
-
-        protected override Mesh GetMesh() => new Mesh
-        {
-            vertices = Vertices,
-            triangles = Triangles,
-            bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
-            uv = UV,
-        };
     }
     public class MarkupStyleLineMesh : MarkupStyleMesh
     {
@@ -471,11 +482,41 @@ namespace NodeMarkup.Utils
             }
         }
 
-        public MarkupStyleLineMesh(Vector3 position, MaterialType materialType) : base(position, materialType) { }
+        protected override float HalfWidth => 2f;
+        protected override float HalfLength => 64f;
 
-        protected override Mesh GetMesh() => LineMesh;
+        public MarkupStyleLineMesh(ILineTrajectory trajectory, float width, float elevation, MaterialType materialType)
+        {
+            var position = (trajectory.StartPosition + trajectory.EndPosition) / 2;
+            CalculateMatrix(trajectory, width, position, out Matrix4x4 left, out Matrix4x4 right);
+            Init(position, LineMesh, left, right, materialType);
+        }
+        private void CalculateMatrix(ILineTrajectory trajectory, float width, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
+        {
+            var startNormal = trajectory.StartDirection.Turn90(true);
+            startNormal.y = 0f;
+            var endNormal = trajectory.EndDirection.Turn90(false);
+            endNormal.y = 0f;
+            var halfWidth = width / 2;
+
+            var bezierL = new Bezier3()
+            {
+                a = trajectory.StartPosition - startNormal * halfWidth,
+                d = trajectory.EndPosition - endNormal * halfWidth,
+            };
+            var bezierR = new Bezier3()
+            {
+                a = trajectory.StartPosition + startNormal * halfWidth,
+                d = trajectory.EndPosition + endNormal * halfWidth,
+            };
+
+            NetSegment.CalculateMiddlePoints(bezierL.a, trajectory.StartDirection, bezierL.d, trajectory.EndDirection, true, true, out bezierL.b, out bezierL.c);
+            NetSegment.CalculateMiddlePoints(bezierR.a, trajectory.StartDirection, bezierR.d, trajectory.EndDirection, true, true, out bezierR.b, out bezierR.c);
+
+            left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
+            right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);
+        }
     }
-
 
     public class RenderBatch : IDrawData
     {

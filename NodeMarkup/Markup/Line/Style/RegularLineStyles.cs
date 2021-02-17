@@ -442,37 +442,60 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type { get; } = StyleType.LinePavement;
 
-        public PropertyValue<float> Height { get; }
+        public PropertyValue<float> Elevation { get; }
 
         public PavementLineStyle(float width, float height) : base(default, width) 
         {
-            Height = GetHeightProperty(height);
+            Elevation = GetElevationProperty(height);
         }
 
-        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Height);
+        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Elevation);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
             if (target is PavementLineStyle pavementTarget)
-                pavementTarget.Height.Value = Height;
+                pavementTarget.Elevation.Value = Elevation;
         }
 
         public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
-            throw new NotImplementedException();
+            return new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+        }
+
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddElevationProperty(this, parent, onHover, onLeave));
+            return components;
+        }
+        private static FloatPropertyPanel AddElevationProperty(PavementLineStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            elevationProperty.Text = Localize.LineStyle_Elevation;
+            elevationProperty.UseWheel = true;
+            elevationProperty.WheelStep = 0.1f;
+            //elevationProperty.CheckMin = true;
+            elevationProperty.MinValue = 0f;
+            //elevationProperty.CheckMax = true;
+            elevationProperty.MaxValue = 1f;
+            elevationProperty.Init();
+            elevationProperty.Value = triangulationStyle.Elevation;
+            elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
+            AddOnHoverLeave(elevationProperty, onHover, onLeave);
+            return elevationProperty;
         }
 
         public override XElement ToXml()
         {
             var config = BaseToXml();
             config.Add(Width.ToXml());
-            config.Add(Height.ToXml());
+            config.Add(Elevation.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             Width.FromXml(config, Default3DWidth);
-            Height.FromXml(config, Default3DHeigth);
+            Elevation.FromXml(config, Default3DHeigth);
         }
     }
 }
