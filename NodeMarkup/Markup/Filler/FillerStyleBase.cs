@@ -29,10 +29,11 @@ namespace NodeMarkup.Manager
         public static float StripeDefaultWidth => 0.5f;
         public static float DefaultAngleBetween => 90f;
         public static float DefaultElevation => 0.3f;
+        public static bool DefaultFollowLines => true;
 
         static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultOffset, DefaultFollowLines)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
@@ -56,14 +57,20 @@ namespace NodeMarkup.Manager
                 fillerTarget.MedianOffset.Value = MedianOffset;
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            if (!isTemplate && editObject is MarkupFiller filler && filler.IsMedian)
-                components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
+            if (editObject is MarkupFiller filler)
+                GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             return components;
         }
-        public override Style Copy() => CopyFillerStyle();
+        public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            if (!isTemplate && filler.IsMedian)
+                components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
+        }
+
+        public sealed override Style Copy() => CopyFillerStyle();
         public abstract FillerStyle CopyFillerStyle();
         public virtual IStyleData Calculate(MarkupFiller filler)
         {

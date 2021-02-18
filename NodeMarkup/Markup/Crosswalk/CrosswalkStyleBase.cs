@@ -43,8 +43,17 @@ namespace NodeMarkup.Manager
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
-        public override Style Copy() => CopyCrosswalkStyle();
+        public sealed override Style Copy() => CopyCrosswalkStyle();
         public abstract CrosswalkStyle CopyCrosswalkStyle();
+
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            if (editObject is MarkupCrosswalk crosswalk)
+                GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
+            return components;
+        }
+        public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
 
         public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk);
 

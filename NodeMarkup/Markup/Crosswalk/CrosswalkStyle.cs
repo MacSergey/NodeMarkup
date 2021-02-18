@@ -59,12 +59,11 @@ namespace NodeMarkup.Manager
                 customTarget.OffsetAfter.Value = OffsetAfter;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetBeforeProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetAfterProperty(this, parent, onHover, onLeave));
-            return components;
         }
         protected static BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
         {
@@ -173,11 +172,10 @@ namespace NodeMarkup.Manager
             if (target is ILinedCrosswalk linedTarget)
                 linedTarget.LineWidth.Value = LineWidth;
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddLineWidthProperty(this, parent, onHover, onLeave));
-            return components;
         }
         public override XElement ToXml()
         {
@@ -242,16 +240,15 @@ namespace NodeMarkup.Manager
                 => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
-        protected List<EditorItem> GetBaseUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-            => base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+        protected void GetBaseUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+            => base.GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = GetBaseUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            GetBaseUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddParallelProperty(this, parent));
-            return components;
         }
 
         public override XElement ToXml()
@@ -316,14 +313,13 @@ namespace NodeMarkup.Manager
                 => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = GetBaseUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            GetBaseUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddParallelProperty(this, parent));
-            return components;
         }
 
         public override XElement ToXml()
@@ -392,12 +388,11 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            return components;
         }
 
         public override IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk)
@@ -478,12 +473,11 @@ namespace NodeMarkup.Manager
                 => CalculateCroswalkDash(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            return components;
         }
 
         public override XElement ToXml()
@@ -574,14 +568,13 @@ namespace NodeMarkup.Manager
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(SquareSide * LineCount, crosswalk);
         protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddSquareSideProperty(this, parent, onHover, onLeave));
             components.Add(AddLineCountProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
                 components.Add(AddInvertProperty(this, parent));
-            return components;
         }
         protected static FloatPropertyPanel AddSquareSideProperty(ChessBoardCrosswalkStyle chessBoardStyle, UIComponent parent, Action onHover, Action onLeave)
         {

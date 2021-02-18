@@ -64,14 +64,13 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddElevationProperty(this, parent, onHover, onLeave));
             //components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
             //components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
             //components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
-            return components;
         }
         private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {

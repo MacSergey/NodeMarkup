@@ -64,14 +64,13 @@ namespace NodeMarkup.Manager
                 offsetTarget.Offset.Value = Offset;
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             if (!isTemplate)
                 components.Add(AddAngleProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            return components;
         }
         public override XElement ToXml()
         {
@@ -94,10 +93,34 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.FillerStripe;
 
-        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
+        public PropertyValue<bool> FollowLines { get; }
+
+        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines) : base(color, width, angle, step, offset, medianOffset) 
+        {
+            FollowLines = new PropertyValue<bool>("FL", StyleChanged, followLines);
+        }
         protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, Angle, rect, height, Width, Step, Offset);
 
-        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
+        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+
+            if (target is StripeFillerStyle stripeTarget)
+                stripeTarget.FollowLines.Value = FollowLines;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(FollowLines.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            FollowLines.FromXml(config, DefaultFollowLines);
+        }
     }
     public class GridFillerStyle : SimpleFillerStyle
     {
@@ -127,16 +150,6 @@ namespace NodeMarkup.Manager
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
-        }
-
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
-        {
-            var components = new List<EditorItem>();
-            components.Add(AddColorProperty(parent));
-            if (!isTemplate && editObject is MarkupFiller filler && filler.IsMedian)
-                components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
-
-            return components;
         }
     }
     public class ChevronFillerStyle : Filler2DStyle, IPeriodicFiller, IWidthStyle, IColorStyle
@@ -170,9 +183,9 @@ namespace NodeMarkup.Manager
                 chevronTarget.Output.Value = Output;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
@@ -180,8 +193,6 @@ namespace NodeMarkup.Manager
                 components.Add(AddStartingFromProperty(this, parent));
                 components.Add(AddInvertAndTurnProperty(this, parent));
             }
-
-            return components;
         }
         protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent, Action onHover, Action onLeave)
         {
