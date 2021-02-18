@@ -255,12 +255,18 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
-            [Description("Pavement")]
+            [NotVisible]
+            Regular3DLine = Markup.Item.RegularLine + 0x80,
+
+            [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
+
+            [Description(nameof(Localize.LineStyle_Grass))]
+            LineGrass,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
-            EmptyLine,
+            EmptyLine = Markup.Item.StopLine - 1,
 
 
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]

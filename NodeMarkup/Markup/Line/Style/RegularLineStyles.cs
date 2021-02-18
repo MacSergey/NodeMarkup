@@ -438,29 +438,23 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class PavementLineStyle : RegularLineStyle, IWidthStyle
+    public abstract class Line3DStyle : RegularLineStyle, IWidthStyle
     {
-        public override StyleType Type { get; } = StyleType.LinePavement;
-
+        protected abstract MaterialType MaterialType { get; }
         public PropertyValue<float> Elevation { get; }
 
-        public PavementLineStyle(float width, float height) : base(default, width) 
+        public Line3DStyle(float width, float elevation) : base(default, width) 
         {
-            Elevation = GetElevationProperty(height);
+            Elevation = GetElevationProperty(elevation);
         }
-
-        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Elevation);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
-            if (target is PavementLineStyle pavementTarget)
+            if (target is Line3DStyle pavementTarget)
                 pavementTarget.Elevation.Value = Elevation;
         }
 
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
-        {
-            return new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
-        }
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
 
         public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -468,15 +462,15 @@ namespace NodeMarkup.Manager
             components.Add(AddElevationProperty(this, parent, onHover, onLeave));
             return components;
         }
-        private static FloatPropertyPanel AddElevationProperty(PavementLineStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        private static FloatPropertyPanel AddElevationProperty(Line3DStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {
             var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
             elevationProperty.Text = Localize.LineStyle_Elevation;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
-            //elevationProperty.CheckMin = true;
+            elevationProperty.CheckMin = true;
             elevationProperty.MinValue = 0f;
-            //elevationProperty.CheckMax = true;
+            elevationProperty.CheckMax = true;
             elevationProperty.MaxValue = 1f;
             elevationProperty.Init();
             elevationProperty.Value = triangulationStyle.Elevation;
@@ -497,5 +491,24 @@ namespace NodeMarkup.Manager
             Width.FromXml(config, Default3DWidth);
             Elevation.FromXml(config, Default3DHeigth);
         }
+    }
+
+    public class PavementLineStyle : Line3DStyle
+    {
+        public override StyleType Type { get; } = StyleType.LinePavement;
+        protected override MaterialType MaterialType => MaterialType.Pavement;
+
+        public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
+
+        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Elevation);
+    }
+    public class GrassLineStyle : Line3DStyle
+    {
+        public override StyleType Type { get; } = StyleType.LineGrass;
+        protected override MaterialType MaterialType => MaterialType.Grass;
+
+        public GrassLineStyle(float width, float elevation) : base(width, elevation) { }
+
+        public override RegularLineStyle CopyRegularLineStyle() => new GrassLineStyle(Width, Elevation);
     }
 }

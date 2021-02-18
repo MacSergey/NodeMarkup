@@ -959,6 +959,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Grass.
+        /// </summary>
+        public static string LineStyle_Grass {
+            get {
+                return ResourceManager.GetString("LineStyle_Grass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string LineStyle_Pavement {
+            get {
+                return ResourceManager.GetString("LineStyle_Pavement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Regular lines.
         /// </summary>
         public static string LineStyle_RegularLinesGroup {
