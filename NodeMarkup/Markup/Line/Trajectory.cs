@@ -75,7 +75,7 @@ namespace NodeMarkup.Manager
         public TrajectoryType TrajectoryType => TrajectoryType.Line;
         public Line3 Trajectory { get; }
         public bool IsSection { get; }
-        public float Length => Direction.magnitude;
+        public float Length => (Trajectory.b - Trajectory.a).magnitude;
         public float Magnitude => Length;
         public float DeltaAngle => 0f;
         public Vector3 Direction => (Trajectory.b - Trajectory.a).normalized;

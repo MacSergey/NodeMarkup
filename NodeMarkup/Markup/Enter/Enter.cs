@@ -202,11 +202,11 @@ namespace NodeMarkup.Manager
             var bezier = new Line3(GetPosition(-RoadHalfWidth), GetPosition(RoadHalfWidth)).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
 #if DEBUG
-            var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);
+            //var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
+            //NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);
 
-            var cornerBezier = new Line3(Position, Position + CornerDir * 10f).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, cornerBezier, Colors.Orange);
+            //var cornerBezier = new Line3(Position, Position + CornerDir * 10f).GetBezier();
+            //NodeMarkupTool.RenderBezier(cameraInfo, cornerBezier, Colors.Orange);
 #endif
         }
         public int CompareTo(Enter other) => other.NormalAngle.CompareTo(NormalAngle);
