@@ -552,6 +552,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Elevation.
+        /// </summary>
+        public static string FillerStyle_Elevation {
+            get {
+                return ResourceManager.GetString("FillerStyle_Elevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Grass.
         /// </summary>
         public static string FillerStyle_Grass {
@@ -932,11 +941,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Elevation.
+        /// </summary>
+        public static string LineStyle_Elevation {
+            get {
+                return ResourceManager.GetString("LineStyle_Elevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Empty.
         /// </summary>
         public static string LineStyle_Empty {
             get {
                 return ResourceManager.GetString("LineStyle_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Grass.
+        /// </summary>
+        public static string LineStyle_Grass {
+            get {
+                return ResourceManager.GetString("LineStyle_Grass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string LineStyle_Pavement {
+            get {
+                return ResourceManager.GetString("LineStyle_Pavement", resourceCulture);
             }
         }
         
@@ -1425,12 +1461,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-        ///- Added the ability to save templates and presets as asset and share it over Workshop.
-        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-        ///- Added panel tips (can be disable in settings).
-        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на Version 1.5 released.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {

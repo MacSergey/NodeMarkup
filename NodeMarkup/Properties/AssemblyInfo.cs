@@ -32,9 +32,9 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-#if DEBUG
-[assembly: AssemblyVersion("1.6.0.180")]
-[assembly: AssemblyFileVersion("1.6.0.180")]
+#if BETA
+[assembly: AssemblyVersion("1.6.0.203")]
+[assembly: AssemblyFileVersion("1.6.0.203")]
 #else
 [assembly: AssemblyVersion("1.5.1")]
 [assembly: AssemblyFileVersion("1.5.1")] 

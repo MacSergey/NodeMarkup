@@ -49,7 +49,7 @@ namespace NodeMarkup
         public override string WorkshopUrl => StableURL;
         protected override string ModLocale => Settings.Locale.value;
 
-#if DEBUG
+#if BETA
         protected override bool ModIsBeta => true;
 #else
         protected override bool ModIsBeta => false;
@@ -59,7 +59,7 @@ namespace NodeMarkup
             base.OnDisabled();
             NodeMarkupTool.Remove();
         }
-        protected override Patcher CreatePatcher() => new Patcher();
+        protected override Patcher CreatePatcher() => new Patcher(this);
 
         protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
 
@@ -80,13 +80,10 @@ namespace NodeMarkup
             return true;
         }
 
-        public override void LoadedError()
+        public override void OnLoadedError()
         {
-            if (!ItemsExtension.InGame && !LoadSuccess)
-            {
-                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = Localize.Mod_LoaledWithErrors;
-            }
+            var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+            messageBox.MessageText = Localize.Mod_LoaledWithErrors;
         }
     }
 }

@@ -227,6 +227,7 @@ namespace NodeMarkup.Manager
         protected PropertyValue<int> GetOutputProperty(int defaultValue) => new PropertyValue<int>("O", StyleChanged, defaultValue);
         protected PropertyValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
         protected PropertyEnumValue<ChevronFillerStyle.From> GetStartingFromProperty(ChevronFillerStyle.From defaultValue) => new PropertyEnumValue<ChevronFillerStyle.From>("SF", StyleChanged, defaultValue);
+        protected PropertyValue<float> GetElevationProperty(float defaultValue) => new PropertyValue<float>("E", StyleChanged, defaultValue);
 
         public enum StyleType
         {
@@ -254,9 +255,18 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
+            [NotVisible]
+            Regular3DLine = Markup.Item.RegularLine + 0x80,
+
+            [Description(nameof(Localize.LineStyle_Pavement))]
+            LinePavement,
+
+            //[Description(nameof(Localize.LineStyle_Grass))]
+            //LineGrass,
+
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
-            EmptyLine,
+            EmptyLine = Markup.Item.StopLine - 1,
 
 
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]

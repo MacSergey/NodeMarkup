@@ -26,10 +26,10 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
             var borders = line.Borders;
-            return StyleHelper.CalculateSolid(trajectory, GetDashes);
+            return new MarkupStyleDashes(StyleHelper.CalculateSolid(trajectory, GetDashes));
 
             IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory trajectory) => CalculateDashes(trajectory, borders);
         }
@@ -133,10 +133,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
             var borders = line.Borders;
-            return StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes);
+            return new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes));
 
             IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory trajectory, float startT, float endT)
                 => CalculateDashes(trajectory, startT, endT, borders);
@@ -268,17 +268,17 @@ namespace NodeMarkup.Manager
             Invert.Value = value == StyleAlignment.Right;
         }
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
             var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
             var borders = line.Borders;
 
-            foreach (var dash in StyleHelper.CalculateSolid(trajectory, CalculateSolidDash))
-                yield return dash;
+            var dashes = new List<MarkupStyleDash>();
+            dashes.AddRange(StyleHelper.CalculateSolid(trajectory, CalculateSolidDash));
+            dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
 
-            foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash))
-                yield return dash;
+            return new MarkupStyleDashes(dashes);
 
             IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
             {
@@ -380,10 +380,10 @@ namespace NodeMarkup.Manager
             Space = GetSpaceProperty(space);
             Invert = GetInvertProperty(true);
         }
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
         {
             var borders = line.Borders;
-            return StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes);
+            return new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
 
             IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
             {
@@ -437,4 +437,78 @@ namespace NodeMarkup.Manager
             Invert.Value ^= map.IsMirror ^ invert;
         }
     }
+
+    public abstract class Line3DStyle : RegularLineStyle, IWidthStyle
+    {
+        protected abstract MaterialType MaterialType { get; }
+        public PropertyValue<float> Elevation { get; }
+
+        public Line3DStyle(float width, float elevation) : base(default, width) 
+        {
+            Elevation = GetElevationProperty(elevation);
+        }
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+            if (target is Line3DStyle pavementTarget)
+                pavementTarget.Elevation.Value = Elevation;
+        }
+
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+
+        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            components.Add(AddElevationProperty(this, parent, onHover, onLeave));
+            return components;
+        }
+        private static FloatPropertyPanel AddElevationProperty(Line3DStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        {
+            var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            elevationProperty.Text = Localize.LineStyle_Elevation;
+            elevationProperty.UseWheel = true;
+            elevationProperty.WheelStep = 0.1f;
+            elevationProperty.CheckMin = true;
+            elevationProperty.MinValue = 0f;
+            elevationProperty.CheckMax = true;
+            elevationProperty.MaxValue = 1f;
+            elevationProperty.Init();
+            elevationProperty.Value = triangulationStyle.Elevation;
+            elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
+            AddOnHoverLeave(elevationProperty, onHover, onLeave);
+            return elevationProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = BaseToXml();
+            config.Add(Width.ToXml());
+            config.Add(Elevation.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            Width.FromXml(config, Default3DWidth);
+            Elevation.FromXml(config, Default3DHeigth);
+        }
+    }
+
+    public class PavementLineStyle : Line3DStyle
+    {
+        public override StyleType Type { get; } = StyleType.LinePavement;
+        protected override MaterialType MaterialType => MaterialType.Pavement;
+
+        public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
+
+        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Elevation);
+    }
+    //public class GrassLineStyle : Line3DStyle
+    //{
+    //    public override StyleType Type { get; } = StyleType.LineGrass;
+    //    protected override MaterialType MaterialType => MaterialType.Grass;
+
+    //    public GrassLineStyle(float width, float elevation) : base(width, elevation) { }
+
+    //    public override RegularLineStyle CopyRegularLineStyle() => new GrassLineStyle(Width, Elevation);
+    //}
 }

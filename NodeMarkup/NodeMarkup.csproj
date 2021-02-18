@@ -14,57 +14,59 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
+    <OutputPath>bin\Stable Release\</OutputPath>
+    <LangVersion>8.0</LangVersion>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Debug|AnyCPU'">
+    <OutputPath>bin\Stable Debug\</OutputPath>
+    <LangVersion>8.0</LangVersion>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PRERELEASE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>8.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>8.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug noWorkshop|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug noWorkshop\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PRERELEASE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>8.0</LangVersion>
+    <DebugSymbols>true</DebugSymbols>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release noWorkshop|AnyCPU'">
-    <OutputPath>bin\Release noWorkshop\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Release|AnyCPU'">
+    <OutputPath>bin\Beta Release\</OutputPath>
+    <LangVersion>8.0</LangVersion>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>BETA</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Debug|AnyCPU'">
+    <OutputPath>bin\Beta Debug\</OutputPath>
+    <LangVersion>8.0</LangVersion>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>BETA</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.2.0.4\lib\net35\0Harmony.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CitiesHarmony.API, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CitiesHarmony.API.1.0.6\lib\net35\CitiesHarmony.API.dll</HintPath>
+    <Reference Include="CitiesHarmony.API, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CitiesHarmony.API.2.0.0\lib\net35\CitiesHarmony.API.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CitiesHarmony.Harmony, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CitiesHarmony.Harmony.2.0.4\lib\net35\CitiesHarmony.Harmony.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ColossalManaged">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
@@ -279,49 +281,42 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
-    <PostBuildEvent>
-set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\"
-set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403\"
-
-del "$(TargetDir)*.pdb"
-del "$(TargetDir)Assembly-CSharp-firstpass.dll"
-del "$(TargetDir)ICSharpCode.SharpZipLib.dll"
-del "$(TargetDir)PopsApiWrapper.dll"
-del "$(TargetDir)Newtonsoft.Json.xml"
-rmdir /s /q "%ModDir%"
-mkdir "%ModDir%"
-
-xcopy /y /e "$(TargetDir)*"  "%ModDir%"
-xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
-
-copy $(ProjectDir)Resources\PreviewImage.png  "%ModDir%"
-copy $(ProjectDir)Resources\PreviewImage.png  "%WorkshopDir%"
-	</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Debug noWorkshop'">
-    <PostBuildEvent>
-set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta\"
-set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2159934925\"
-
-del "$(TargetDir)*.pdb"
-del "$(TargetDir)Assembly-CSharp-firstpass.dll"
-del "$(TargetDir)ICSharpCode.SharpZipLib.dll"
-del "$(TargetDir)PopsApiWrapper.dll"
-del "$(TargetDir)Newtonsoft.Json.xml"
-rmdir /s /q "%ModDir%"
-mkdir "%ModDir%"
-
-xcopy /y /e "$(TargetDir)*"  "%ModDir%"
-xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
-
-copy $(ProjectDir)Resources\PreviewImageBeta.png  "%ModDir%PreviewImage.png"
-copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
-	</PostBuildEvent>
-  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
+    <WorkshopId>2140418403</WorkshopId>
+    <Type>Stable</Type>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
+    <WorkshopId>2159934925</WorkshopId>
+    <Type>Beta</Type>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)$(Type)</LocalDir>
+    <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+  </PropertyGroup>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <FilesToDelete Include="$(OutDir)*.pdb" />
+      <FilesToDelete Include="$(OutDir)Assembly-CSharp-firstpass.dll" />
+      <FilesToDelete Include="$(OutDir)ICSharpCode.SharpZipLib.dll" />
+      <FilesToDelete Include="$(OutDir)PopsApiWrapper.dll" />
+    </ItemGroup>
+    <Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high">
+    </Message>
+    <Delete Files="@(FilesToDelete)" />
+    <RemoveDir Directories="$(LocalDir)" />
+    <ItemGroup>
+      <FilesToCopy Include="$(OutDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(LocalDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="AfterBuildRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
+    <RemoveDir Directories="$(WorkshopDir)" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(ProjectDir)Resources\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
+  </Target>
 </Project>

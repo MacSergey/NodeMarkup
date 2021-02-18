@@ -30,7 +30,7 @@ namespace NodeMarkup.Utils
                     var sw = Stopwatch.StartNew();
 
                     var decompress = Loader.Decompress(data);
-#if DEBUG
+#if BETA
                     Mod.Logger.Debug(decompress);
 #endif
                     var config = Loader.Parse(decompress);
@@ -57,7 +57,7 @@ namespace NodeMarkup.Utils
             {
                 var sw = Stopwatch.StartNew();
                 config = Loader.GetString(MarkupManager.ToXml());
-#if DEBUG
+#if BETA
                 Mod.Logger.Debug(config);
 #endif
                 var compress = Loader.Compress(config);

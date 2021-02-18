@@ -62,17 +62,20 @@ namespace NodeMarkup.Manager
 
     public abstract class LineStyle : Style
     {
-        public static float DefaultDashLength { get; } = 1.5f;
-        public static float DefaultSpaceLength { get; } = 1.5f;
-        public static float DefaultOffset { get; } = 0.15f;
+        public static float DefaultDashLength => 1.5f;
+        public static float DefaultSpaceLength => 1.5f;
+        public static float DefaultOffset => 0.15f;
 
-        public static float DefaultSharkBaseLength { get; } = 0.5f;
-        public static float DefaultSharkSpaceLength { get; } = 0.5f;
-        public static float DefaultSharkHeight { get; } = 0.6f;
+        public static float DefaultSharkBaseLength => 0.5f;
+        public static float DefaultSharkSpaceLength => 0.5f;
+        public static float DefaultSharkHeight => 0.6f;
+
+        public static float Default3DWidth => 0.3f;
+        public static float Default3DHeigth => 0.3f;
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory);
+        public abstract IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
@@ -164,6 +167,8 @@ namespace NodeMarkup.Manager
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
+            {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
+            //{RegularLineType.Grass, new GrassLineStyle(Default3DWidth, Default3DHeigth) },
         };
         public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyRegularLineStyle() : null;
 
@@ -192,6 +197,12 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
 
+            [Description(nameof(Localize.LineStyle_Pavement))]
+            Pavement = StyleType.LinePavement,
+
+            //[Description(nameof(Localize.LineStyle_Grass))]
+            //Grass = StyleType.LineGrass,
+
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
             Empty = StyleType.EmptyLine
@@ -219,8 +230,8 @@ namespace NodeMarkup.Manager
         public override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDash[0];
-        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDashes();
+        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
 
         public enum StopLineType
         {

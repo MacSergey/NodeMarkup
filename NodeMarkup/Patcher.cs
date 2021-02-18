@@ -11,6 +11,8 @@ namespace NodeMarkup
 {
     public class Patcher : Patcher<Mod>
     {
+        public Patcher(BaseMod<Mod> mod) : base(mod) { }
+
         protected override bool PatchProcess()
         {
             var success = true;

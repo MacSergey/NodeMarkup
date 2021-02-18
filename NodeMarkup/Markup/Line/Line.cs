@@ -43,7 +43,8 @@ namespace NodeMarkup.Manager
 
         protected ILineTrajectory LineTrajectory { get; private set; }
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
-        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
+        public IStyleData[] StyleData { get; private set; } = new IStyleData[0];
+        //public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
 
         public LineBorders Borders => new LineBorders(this);
 
@@ -68,8 +69,8 @@ namespace NodeMarkup.Manager
         }
         protected abstract ILineTrajectory CalculateTrajectory();
 
-        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(GetDashes());
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes();
+        public void RecalculateStyleData() => StyleData = GetStyleData().ToArray();
+        protected abstract IEnumerable<IStyleData> GetStyleData();
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
@@ -216,7 +217,10 @@ namespace NodeMarkup.Manager
 
         protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, LineTrajectory);
+        protected override IEnumerable<IStyleData> GetStyleData()
+        {
+            yield return Rule.Style.Calculate(this, LineTrajectory);
+        }
         private void SetRule(MarkupLineRawRule<Style> rule)
         {
             rule.OnRuleChanged = RuleChanged;
@@ -320,20 +324,15 @@ namespace NodeMarkup.Manager
         public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes()
+        protected override IEnumerable<IStyleData> GetStyleData()
         {
             var rules = MarkupLineRawRule<RegularLineStyle>.GetRules(RawRules);
 
-            var dashes = new List<MarkupStyleDash>();
             foreach (var rule in rules)
             {
                 var trajectoryPart = LineTrajectory.Cut(rule.Start, rule.End);
-                var ruleDashes = rule.LineStyle.Calculate(this, trajectoryPart).ToArray();
-
-                dashes.AddRange(ruleDashes);
+                yield return rule.LineStyle.Calculate(this, trajectoryPart);
             }
-
-            return dashes;
         }
         public override IEnumerable<ILinePartEdge> RulesEdges
         {

@@ -104,7 +104,7 @@ namespace NodeMarkup
         private Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
         {
             var messages = new Dictionary<Version, string>(Mod.Versions.Count);
-#if DEBUG
+#if BETA
             messages[Mod.Version] = Localize.Mod_WhatsNewMessageBeta;
 #endif
             foreach (var version in Mod.Versions)
