@@ -104,6 +104,7 @@
     <Compile Include="Markup\Enter\NodeEnter.cs" />
     <Compile Include="Markup\Enter\Sources.cs" />
     <Compile Include="Markup\Filler\FillerStyle3D.cs" />
+    <Compile Include="Markup\Line\Style\RegularLineStyle3D.cs" />
     <Compile Include="Markup\Markup\Markup.cs" />
     <Compile Include="Markup\Markup\SegmentMarkup.cs" />
     <Compile Include="Markup\Template.cs" />
@@ -141,7 +142,7 @@
     <Compile Include="Markup\Line\LineRule.cs" />
     <Compile Include="Markup\Crosswalk\CrosswalkStyle.cs" />
     <Compile Include="Markup\Line\Style\StopLineStyle.cs" />
-    <Compile Include="Markup\Line\Style\RegularLineStyles.cs" />
+    <Compile Include="Markup\Line\Style\RegularLineStyles2D.cs" />
     <Compile Include="Markup\Line\Trajectory.cs" />
     <Compile Include="Markup\Markup\NodeMarkup.cs" />
     <Compile Include="Markup\Line\LinePartEdge.cs" />
@@ -284,7 +285,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="True" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
