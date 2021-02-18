@@ -261,8 +261,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
 
-            [Description(nameof(Localize.LineStyle_Grass))]
-            LineGrass,
+            //[Description(nameof(Localize.LineStyle_Grass))]
+            //LineGrass,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

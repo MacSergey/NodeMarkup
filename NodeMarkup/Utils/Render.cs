@@ -431,10 +431,10 @@ namespace NodeMarkup.Utils
         }
         private static IEnumerable<Vector3> GetVertices()
         {
-            //yield return new Vector3(-HalfWidth, -Height, -HalfLength);
-            //yield return new Vector3(HalfWidth, -Height, -HalfLength);
-            //yield return new Vector3(-HalfWidth, 0f, -HalfLength);
-            //yield return new Vector3(HalfWidth, 0f, -HalfLength);
+            yield return new Vector3(-HalfWidth, 0f, -HalfLength);
+            yield return new Vector3(HalfWidth, 0f, -HalfLength);
+            yield return new Vector3(-HalfWidth, Height, -HalfLength);
+            yield return new Vector3(HalfWidth, Height, -HalfLength);
 
             for (var i = 0; i <= Split; i += 1)
             {
@@ -455,10 +455,10 @@ namespace NodeMarkup.Utils
                 yield return new Vector3(HalfWidth, 0f, z);
             }
 
-            //yield return new Vector3(HalfWidth, -Height, HalfLength);
-            //yield return new Vector3(-HalfWidth, -Height, HalfLength);
-            //yield return new Vector3(HalfWidth, 0f, HalfLength);
-            //yield return new Vector3(-HalfWidth, 0f, HalfLength);
+            yield return new Vector3(HalfWidth, 0f, HalfLength);
+            yield return new Vector3(-HalfWidth, 0f, HalfLength);
+            yield return new Vector3(HalfWidth, Height, HalfLength);
+            yield return new Vector3(-HalfWidth, Height, HalfLength);
 
             static float GetZ(int i) => (2f / Split * i - 1) * HalfLength;
         }
@@ -466,10 +466,10 @@ namespace NodeMarkup.Utils
         protected static float PavementB => 0.1f;
         private static IEnumerable<Vector2> GetUV()
         {
-            //yield return new Vector2(PavementA, 0f);
-            //yield return new Vector2(PavementB, 0f);
-            //yield return new Vector2(PavementA, 0f);
-            //yield return new Vector2(PavementB, 0f);
+            yield return new Vector2(PavementA, 0f);
+            yield return new Vector2(PavementB, 0f);
+            yield return new Vector2(PavementA, 0f);
+            yield return new Vector2(PavementB, 0f);
 
             for (var i = 0; i <= Split; i += 1)
             {
@@ -490,10 +490,10 @@ namespace NodeMarkup.Utils
                 yield return new Vector2(PavementB, ratio);
             }
 
-            //yield return new Vector2(PavementA, 1f);
-            //yield return new Vector2(PavementB, 1f);
-            //yield return new Vector2(PavementA, 1f);
-            //yield return new Vector2(PavementB, 1f);
+            yield return new Vector2(PavementA, 1f);
+            yield return new Vector2(PavementB, 1f);
+            yield return new Vector2(PavementA, 1f);
+            yield return new Vector2(PavementB, 1f);
 
             static float GetRatio(int i) => 1f / Split * i;
         }
@@ -503,8 +503,8 @@ namespace NodeMarkup.Utils
             var triangles = new List<int>();
 
             var index = 0;
-            //triangles.AddRange(GetRect());
-            //index += 4;
+            triangles.AddRange(GetRect());
+            index += 4;
 
             for (var i = 0; i < 3; i += 1)
             {
@@ -515,7 +515,7 @@ namespace NodeMarkup.Utils
                 }
                 index += 2;
             }
-            //triangles.AddRange(GetRect(index));
+            triangles.AddRange(GetRect(index));
 
             return triangles;
 
@@ -566,10 +566,10 @@ namespace NodeMarkup.Utils
         }
         protected override Mesh GetMesh()
         {
-            //if (LineMesh == null)
-            //    LineMesh = CreateMesh();
-            var mesh = CreateMesh();
-            return mesh;
+            if (LineMesh == null)
+                LineMesh = CreateMesh();
+
+            return LineMesh;
         }
     }
 
