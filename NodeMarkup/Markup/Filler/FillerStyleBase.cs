@@ -62,6 +62,8 @@ namespace NodeMarkup.Manager
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
             if (editObject is MarkupFiller filler)
                 GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+            else if (isTemplate)
+                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
             return components;
         }
         public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)

@@ -68,11 +68,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            return components;
         }
         public override XElement ToXml()
         {
@@ -120,12 +119,11 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            return components;
         }
 
         public override XElement ToXml()
@@ -174,11 +172,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            return components;
         }
         public override XElement ToXml()
         {
@@ -244,14 +241,12 @@ namespace NodeMarkup.Manager
             if (target is IDoubleLine doubleTarget)
                 doubleTarget.Offset.Value = Offset;
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-
-            return components;
         }
 
         public override XElement ToXml()
@@ -307,14 +302,12 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddBaseProperty(this, parent, onHover, onLeave));
             components.Add(AddHeightProperty(this, parent, onHover, onLeave));
             components.Add(AddSpaceProperty(this, parent, onHover, onLeave));
-
-            return components;
         }
 
         public override XElement ToXml()

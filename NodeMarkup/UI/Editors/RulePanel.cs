@@ -154,7 +154,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties()
         {
-            StyleProperties = Rule.Style.GetUIComponents(Rule, this, Editor.StopScroll, Editor.StartScroll);
+            StyleProperties = Rule.Style.GetUIComponents(Rule.Line, this, Editor.StopScroll, Editor.StartScroll);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
         }

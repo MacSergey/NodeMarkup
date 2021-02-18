@@ -174,8 +174,19 @@ namespace NodeMarkup.Manager
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public override LineStyle CopyLineStyle() => CopyRegularLineStyle();
+        public sealed override LineStyle CopyLineStyle() => CopyRegularLineStyle();
         public abstract RegularLineStyle CopyRegularLineStyle();
+
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            if (editObject is MarkupRegularLine line)
+                GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
+            else if(isTemplate)
+                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
+            return components;
+        }
+        public virtual void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
 
         public enum RegularLineType
         {
@@ -227,11 +238,22 @@ namespace NodeMarkup.Manager
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public override LineStyle CopyLineStyle() => CopyStopLineStyle();
+        public sealed override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDashes();
+        public sealed override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDashes();
         protected abstract IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
+
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            if (editObject is MarkupStopLine line)
+                GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
+            else if (isTemplate)
+                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
+            return components;
+        }
+        public virtual void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
 
         public enum StopLineType
         {

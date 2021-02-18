@@ -28,11 +28,10 @@ namespace NodeMarkup.Manager
 
         public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddElevationProperty(this, parent, onHover, onLeave));
-            return components;
         }
         private static FloatPropertyPanel AddElevationProperty(Line3DStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {
