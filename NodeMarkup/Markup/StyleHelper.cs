@@ -217,8 +217,8 @@ namespace NodeMarkup.Manager
                 return CalculateSolidDash(trajectory, Vector3.zero, Vector3.zero, width, color);
             else
             {
-                var startOffset = trajectory.StartDirection.Turn90(true).normalized * offset;
-                var endOffset = trajectory.EndDirection.Turn90(false).normalized * offset;
+                var startOffset = trajectory.StartDirection.Turn90(true) * offset;
+                var endOffset = trajectory.EndDirection.Turn90(false) * offset;
                 return CalculateSolidDash(trajectory, startOffset, endOffset, width, color);
             }
         }

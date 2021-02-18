@@ -39,11 +39,11 @@ namespace NodeMarkup.Manager
         public TrajectoryType TrajectoryType => TrajectoryType.Bezier;
         public Bezier3 Trajectory { get; }
         public float Length => Trajectory.Length();
-        public float Magnitude => Direction.magnitude;
+        public float Magnitude => (Trajectory.d - Trajectory.a).magnitude;
         public float DeltaAngle => Trajectory.DeltaAngle();
-        public Vector3 Direction => Trajectory.d - Trajectory.a;
-        public Vector3 StartDirection => Trajectory.b - Trajectory.a;
-        public Vector3 EndDirection => Trajectory.c - Trajectory.d;
+        public Vector3 Direction => (Trajectory.d - Trajectory.a).normalized;
+        public Vector3 StartDirection => (Trajectory.b - Trajectory.a).normalized;
+        public Vector3 EndDirection => (Trajectory.c - Trajectory.d).normalized;
         public Vector3 StartPosition => Trajectory.a;
         public Vector3 EndPosition => Trajectory.d;
         public BezierTrajectory(Bezier3 trajectory)
@@ -78,7 +78,7 @@ namespace NodeMarkup.Manager
         public float Length => Direction.magnitude;
         public float Magnitude => Length;
         public float DeltaAngle => 0f;
-        public Vector3 Direction => Trajectory.b - Trajectory.a;
+        public Vector3 Direction => (Trajectory.b - Trajectory.a).normalized;
         public Vector3 StartDirection => Direction;
         public Vector3 EndDirection => -Direction;
         public Vector3 StartPosition => Trajectory.a;
@@ -98,8 +98,8 @@ namespace NodeMarkup.Manager
             trajectory1 = new StraightTrajectory(Trajectory.a, middle);
             trajectory2 = new StraightTrajectory(middle, Trajectory.b);
         }
-        public Vector3 Tangent(float t) => Direction.normalized;
-        public Vector3 Position(float t) => Trajectory.a + Direction * t;
+        public Vector3 Tangent(float t) => Direction;
+        public Vector3 Position(float t) => Trajectory.a + (Trajectory.b - Trajectory.a) * t;
         public float Travel(float start, float distance) => start + (distance / Length);
         public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
         public ILineTrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
