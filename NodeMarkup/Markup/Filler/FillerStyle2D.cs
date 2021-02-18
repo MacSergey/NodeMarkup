@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface IPeriodicFiller : IFillerStyle, IWidthStyle, IColorStyle
+    public interface IPeriodicFiller : IFillerStyle
     {
         PropertyValue<float> Step { get; }
     }
@@ -36,20 +36,120 @@ namespace NodeMarkup.Manager
         protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect rect, float height) => new MarkupStyleDashes(GetDashesEnum(trajectories, rect, height));
         protected abstract IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height);
     }
-
-    public abstract class SimpleFillerStyle : Filler2DStyle, IPeriodicFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public abstract class PeriodicFillerStyle : Filler2DStyle, IPeriodicFiller
     {
+        public PropertyValue<float> Step { get; }
+
+        public PeriodicFillerStyle(Color32 color, float width, float step, float medianOffset) : base(color, width, medianOffset)
+        {
+            Step = GetStepProperty(step);
+        }
+
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+
+            if (target is IPeriodicFiller periodicTarget)
+                periodicTarget.Step.Value = Step;
+        }
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+            components.Add(AddStepProperty(this, parent, onHover, onLeave));
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(Step.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            Step.FromXml(config, DefaultStepGrid);
+        }
+    }
+
+    public class StripeFillerStyle : PeriodicFillerStyle, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    {
+        public override StyleType Type => StyleType.FillerStripe;
+
+        public PropertyValue<float> Angle { get; }
+        public PropertyValue<bool> FollowLines { get; }
+        public PropertyValue<float> Offset { get; }
+
+        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines) : base(color, width, step, medianOffset) 
+        {
+            Angle = GetAngleProperty(angle);
+            FollowLines = new PropertyValue<bool>("FL", StyleChanged, followLines);
+            Offset = GetOffsetProperty(offset);
+        }
+        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, Angle, rect, height, Width, Step, Offset);
+
+        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines);
+        public override void CopyTo(Style target)
+        {
+            base.CopyTo(target);
+
+            if (target is IRotateFiller rotateTarget)
+                rotateTarget.Angle.Value = Angle;
+
+            if (target is StripeFillerStyle stripeTarget)
+                stripeTarget.FollowLines.Value = FollowLines;
+
+            if (target is IOffsetFiller offsetTarget)
+                offsetTarget.Offset.Value = Offset;
+        }
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        {
+            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+            if (!isTemplate)
+                components.Add(AddAngleProperty(this, parent, onHover, onLeave));
+            components.Add(AddFollowLinesProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+        }
+        protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
+        {
+            var followLinesProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
+            followLinesProperty.Text = "Follow lines"/*Localize.StyleOption_StartingFrom*/;
+            followLinesProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
+            followLinesProperty.SelectedObject = stripeStyle.FollowLines;
+            followLinesProperty.OnSelectObjectChanged += (bool value) => stripeStyle.FollowLines.Value = value;
+            return followLinesProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(Angle.ToXml());
+            config.Add(FollowLines.ToXml());
+            config.Add(Offset.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            Angle.FromXml(config, DefaultAngle);
+            FollowLines.FromXml(config, DefaultFollowLines);
+            Offset.FromXml(config, DefaultOffset);
+        }
+    }
+    public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    {
+        public override StyleType Type => StyleType.FillerGrid;
+
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Step { get; }
         public PropertyValue<float> Offset { get; }
 
-        public SimpleFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, medianOffset)
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, medianOffset) 
         {
             Angle = GetAngleProperty(angle);
             Step = GetStepProperty(step);
             Offset = GetOffsetProperty(offset);
         }
 
+        public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -63,7 +163,6 @@ namespace NodeMarkup.Manager
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
         }
-
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
@@ -72,6 +171,15 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
+
+        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height)
+        {
+            foreach (var dash in GetDashes(trajectories, Angle, rect, height, Width, Step, Offset))
+                yield return dash;
+            foreach (var dash in GetDashes(trajectories, Angle < 0 ? Angle + 90 : Angle - 90, rect, height, Width, Step, Offset))
+                yield return dash;
+        }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -86,55 +194,6 @@ namespace NodeMarkup.Manager
             Angle.FromXml(config, DefaultAngle);
             Step.FromXml(config, DefaultStepGrid);
             Offset.FromXml(config, DefaultOffset);
-        }
-    }
-
-    public class StripeFillerStyle : SimpleFillerStyle
-    {
-        public override StyleType Type => StyleType.FillerStripe;
-
-        public PropertyValue<bool> FollowLines { get; }
-
-        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines) : base(color, width, angle, step, offset, medianOffset) 
-        {
-            FollowLines = new PropertyValue<bool>("FL", StyleChanged, followLines);
-        }
-        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, Angle, rect, height, Width, Step, Offset);
-
-        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines);
-        public override void CopyTo(Style target)
-        {
-            base.CopyTo(target);
-
-            if (target is StripeFillerStyle stripeTarget)
-                stripeTarget.FollowLines.Value = FollowLines;
-        }
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(FollowLines.ToXml());
-            return config;
-        }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
-        {
-            base.FromXml(config, map, invert);
-            FollowLines.FromXml(config, DefaultFollowLines);
-        }
-    }
-    public class GridFillerStyle : SimpleFillerStyle
-    {
-        public override StyleType Type => StyleType.FillerGrid;
-
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, angle, step, offset, medianOffset) { }
-
-        public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
-        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height)
-        {
-            foreach (var dash in GetDashes(trajectories, Angle, rect, height, Width, Step, Offset))
-                yield return dash;
-            foreach (var dash in GetDashes(trajectories, Angle < 0 ? Angle + 90 : Angle - 90, rect, height, Width, Step, Offset))
-                yield return dash;
         }
     }
     public class SolidFillerStyle : Filler2DStyle, IColorStyle
@@ -152,20 +211,18 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
         }
     }
-    public class ChevronFillerStyle : Filler2DStyle, IPeriodicFiller, IWidthStyle, IColorStyle
+    public class ChevronFillerStyle : PeriodicFillerStyle, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
 
         public PropertyValue<float> AngleBetween { get; }
-        public PropertyValue<float> Step { get; }
         public PropertyBoolValue Invert { get; }
         public PropertyValue<int> Output { get; }
         public PropertyEnumValue<From> StartingFrom { get; }
 
-        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, medianOffset)
+        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, step, medianOffset)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
-            Step = GetStepProperty(step);
             Output = GetOutputProperty(output);
             Invert = GetInvertProperty(invert);
             StartingFrom = GetStartingFromProperty(From.Vertex);
@@ -187,7 +244,6 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
-            components.Add(AddStepProperty(this, parent, onHover, onLeave));
             if (!isTemplate)
             {
                 components.Add(AddStartingFromProperty(this, parent));
@@ -461,7 +517,6 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
             config.Add(AngleBetween.ToXml());
-            config.Add(Step.ToXml());
             config.Add(Output.ToXml());
             config.Add(Invert.ToXml());
             config.Add(StartingFrom.ToXml());
@@ -471,7 +526,6 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map, invert);
             AngleBetween.FromXml(config, DefaultAngle);
-            Step.FromXml(config, DefaultStepGrid);
             Invert.FromXml(config, false);
             Output.FromXml(config, 0);
             StartingFrom.FromXml(config, From.Vertex);
