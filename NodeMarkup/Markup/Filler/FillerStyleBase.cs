@@ -29,7 +29,7 @@ namespace NodeMarkup.Manager
         public static float StripeDefaultWidth => 0.5f;
         public static float DefaultAngleBetween => 90f;
         public static float DefaultElevation => 0.3f;
-        public static bool DefaultFollowLines => true;
+        public static bool DefaultFollowLines => false;
 
         static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
@@ -74,13 +74,9 @@ namespace NodeMarkup.Manager
 
         public sealed override Style Copy() => CopyFillerStyle();
         public abstract FillerStyle CopyFillerStyle();
-        public virtual IStyleData Calculate(MarkupFiller filler)
-        {
-            var trajectories = filler.IsMedian ? GetTrajectoriesWithoutMedian(filler) : filler.Contour.Trajectories.ToArray();
-            var rect = GetRect(trajectories);
-            return GetStyleData(trajectories, rect, filler.Markup.Height);
-        }
-        public ILineTrajectory[] GetTrajectoriesWithoutMedian(MarkupFiller filler)
+        public abstract IStyleData Calculate(MarkupFiller filler);
+
+        public ILineTrajectory[] SetMedianOffset(MarkupFiller filler)
         {
             var lineParts = filler.Contour.Parts.ToArray();
             var trajectories = filler.Contour.TrajectoriesRaw.ToArray();
@@ -117,143 +113,10 @@ namespace NodeMarkup.Manager
 
             return trajectories.Where(t => t != null).Select(t => t).ToArray();
         }
-        protected abstract IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect rect, float height);
-
-        protected IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory[] trajectories, float angleDeg, Rect rect, float height, float width, float step, float offset)
-        {
-            foreach (var point in GetItems(angleDeg, rect, height, width, step, offset, out Vector3 normal, out float partWidth))
-            {
-                var intersectSet = new HashSet<MarkupIntersect>();
-                var straight = new StraightTrajectory(point, point + normal, false);
-                foreach (var trajectory in trajectories)
-                    intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
-
-                var intersects = intersectSet.OrderBy(i => i, MarkupIntersect.FirstComparer).ToArray();
-
-                for (var i = 1; i < intersects.Length; i += 2)
-                {
-                    var start = point + normal * intersects[i - 1].FirstT;
-                    var end = point + normal * intersects[i].FirstT;
-
-                    if (offset != 0)
-                    {
-                        var startOffset = GetOffset(intersects[i - 1], offset);
-                        var endOffset = GetOffset(intersects[i], offset);
-
-                        if ((end - start).magnitude - Width < startOffset + endOffset)
-                            continue;
-
-                        var isStartToEnd = intersects[i].FirstT >= intersects[i - 1].FirstT;
-                        start += normal * (isStartToEnd ? startOffset : -startOffset);
-                        end += normal * (isStartToEnd ? -endOffset : endOffset);
-                    }
-
-                    yield return new MarkupStyleDash(start, end, normal, partWidth, Color.Value, MaterialType.RectangleFillers);
-                }
-            }
-        }
         protected float GetOffset(MarkupIntersect intersect, float offset)
         {
             var sin = Mathf.Sin(intersect.Angle);
             return sin != 0 ? offset / sin : 1000f;
-        }
-        protected List<Vector3> GetItems(float angle, Rect rect, float height, float width, float step, float offset, out Vector3 normal, out float partWidth)
-        {
-            var results = new List<Vector3>();
-
-            if (!GetRail(angle, rect, height, out Line3 rail))
-            {
-                normal = Vector3.zero;
-                partWidth = width;
-                return results;
-            }
-
-            var dir = rail.b - rail.a;
-            var length = dir.magnitude + width * (step - 1);
-            dir.Normalize();
-            normal = dir.Turn90(false);
-
-            var itemLength = width * step;
-            var itemsCount = Math.Max((int)(length / itemLength) - 1, 0);
-            var start = (length - (itemLength * itemsCount)) / 2;
-
-            StyleHelper.GetParts(width, offset, out int partsCount, out partWidth);
-
-            for (var i = 0; i < itemsCount; i += 1)
-            {
-                var stripStart = start + partWidth / 2 + i * itemLength;
-                for (var j = 0; j < partsCount; j += 1)
-                {
-                    results.Add(rail.a + dir * (stripStart + partWidth * j));
-                }
-            }
-
-            return results;
-        }
-        protected bool GetRail(float SceneAngle, Rect rect, float height, out Line3 rail)
-        {
-            if (SceneAngle > 90)
-                SceneAngle -= 180;
-            else if (SceneAngle < -90)
-                SceneAngle += 180;
-
-            var absAngle = Mathf.Abs(SceneAngle) * Mathf.Deg2Rad;
-            var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
-            var dx = railLength * Mathf.Sin(absAngle);
-            var dy = railLength * Mathf.Cos(absAngle);
-
-            if (SceneAngle == -90 || SceneAngle == 90)
-                rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
-            else if (90 > SceneAngle && SceneAngle > 0)
-                rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
-            else if (SceneAngle == 0)
-                rail = new Line3(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
-            else if (0 > SceneAngle && SceneAngle > -90)
-                rail = new Line3(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
-            else
-            {
-                rail = default;
-                return false;
-            }
-
-            return true;
-        }
-        protected Rect GetRect(ILineTrajectory[] trajectories)
-        {
-            var firstPos = trajectories.Any() ? trajectories[0].StartPosition : default;
-            var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
-
-            foreach (var trajectory in trajectories)
-            {
-                switch (trajectory)
-                {
-                    case BezierTrajectory bezierTrajectory:
-                        Set(bezierTrajectory.Trajectory.a);
-                        Set(bezierTrajectory.Trajectory.b);
-                        Set(bezierTrajectory.Trajectory.c);
-                        Set(bezierTrajectory.Trajectory.d);
-                        break;
-                    case StraightTrajectory straightTrajectory:
-                        Set(straightTrajectory.Trajectory.a);
-                        Set(straightTrajectory.Trajectory.b);
-                        break;
-                }
-            }
-
-            return rect;
-
-            void Set(Vector3 pos)
-            {
-                if (pos.x < rect.xMin)
-                    rect.xMin = pos.x;
-                else if (pos.x > rect.xMax)
-                    rect.xMax = pos.x;
-
-                if (pos.z < rect.yMin)
-                    rect.yMin = pos.z;
-                else if (pos.z > rect.yMax)
-                    rect.yMax = pos.z;
-            }
         }
 
         public override XElement ToXml()
@@ -292,6 +155,7 @@ namespace NodeMarkup.Manager
             angleProperty.MinValue = -90;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 90;
+            angleProperty.CyclicalValue = true;
             angleProperty.Init();
             angleProperty.Value = rotateStyle.Angle;
             angleProperty.OnValueChanged += (float value) => rotateStyle.Angle.Value = value;

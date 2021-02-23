@@ -33,8 +33,238 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
 
-        protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect rect, float height) => new MarkupStyleDashes(GetDashesEnum(trajectories, rect, height));
-        protected abstract IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height);
+        public sealed override IStyleData Calculate(MarkupFiller filler) => new MarkupStyleDashes(CalculateProcess(filler));
+        protected virtual IEnumerable<MarkupStyleDash> CalculateProcess(MarkupFiller filler)
+        {
+            var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
+            var rails = GetRails(filler, contour).ToArray();
+
+            foreach (var rail in rails)
+            {
+                var partItems = GetItems(rail).ToArray();
+
+                foreach (var partItem in partItems)
+                {
+                    foreach (var dash in GetDashes(partItem, contour))
+                        yield return dash;
+                }
+            }
+        }
+
+
+        protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour);
+        protected Rect GetRect(ILineTrajectory[] contour)
+        {
+            var firstPos = contour.Any() ? contour[0].StartPosition : default;
+            var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
+
+            foreach (var trajectory in contour)
+            {
+                switch (trajectory)
+                {
+                    case BezierTrajectory bezierTrajectory:
+                        Set(bezierTrajectory.Trajectory.a);
+                        Set(bezierTrajectory.Trajectory.b);
+                        Set(bezierTrajectory.Trajectory.c);
+                        Set(bezierTrajectory.Trajectory.d);
+                        break;
+                    case StraightTrajectory straightTrajectory:
+                        Set(straightTrajectory.Trajectory.a);
+                        Set(straightTrajectory.Trajectory.b);
+                        break;
+                }
+            }
+
+            return rect;
+
+            void Set(Vector3 pos)
+            {
+                if (pos.x < rect.xMin)
+                    rect.xMin = pos.x;
+                else if (pos.x > rect.xMax)
+                    rect.xMax = pos.x;
+
+                if (pos.z < rect.yMin)
+                    rect.yMin = pos.z;
+                else if (pos.z > rect.yMax)
+                    rect.yMax = pos.z;
+            }
+        }
+        protected StraightTrajectory GetRail(Rect rect, float height, float angle)
+        {
+            if (angle > 90)
+                angle -= 180;
+            else if (angle < -90)
+                angle += 180;
+
+            var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
+            var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
+            var dx = railLength * Mathf.Sin(absAngle);
+            var dy = railLength * Mathf.Cos(absAngle);
+
+            if (angle == -90 || angle == 90)
+                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
+            else if (90 > angle && angle > 0)
+                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
+            else if (angle == 0)
+                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
+            else if (0 > angle && angle > -90)
+                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
+            else
+                return default;
+        }
+
+        protected abstract IEnumerable<PartItem> GetItems(RailLine rail);
+        protected IEnumerable<StraightTrajectory> GetParts(RailLine rail, float dash, float space)
+        {
+            var dashesT = new List<float[]>();
+
+            var startSpace = space / 2;
+            for (var i = 0; i < 3; i += 1)
+            {
+                dashesT.Clear();
+                var isDash = false;
+
+                var prevT = 0f;
+                var currentT = 0f;
+                var nextT = Travel(currentT, startSpace);
+
+                while (nextT < rail.Count)
+                {
+                    if (isDash)
+                        dashesT.Add(new float[] { currentT, nextT });
+
+                    isDash = !isDash;
+
+                    prevT = currentT;
+                    currentT = nextT;
+                    nextT = Travel(currentT, isDash ? dash : space);
+                }
+
+                float endSpace;
+                if (isDash || ((Position(rail.Count) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
+                    endSpace = (Position(rail.Count) - Position(prevT)).magnitude;
+                else
+                    endSpace = tempLength;
+
+                startSpace = (startSpace + endSpace) / 2;
+
+                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
+                    break;
+            }
+
+            foreach (var dashT in dashesT)
+                yield return new StraightTrajectory(Position(dashT[0]), Position(dashT[1]));
+
+
+            Vector3 Position(float t)
+            {
+                var i = (int)t;
+                i = i > 0 && i == t ? i - 1 : i;
+                return rail[i].Position(t - i);
+            }
+            float Travel(float current, float distance)
+            {
+                var i = (int)current;
+                var next = 1f;
+                while (i < rail.Count)
+                {
+                    var line = rail[i];
+                    var start = current - i;
+                    next = line.Travel(start, distance);
+
+                    if (next < 1)
+                        break;
+                    else
+                    {
+                        i += 1;
+                        current = i;
+                        distance -= (line.Position(1f) - line.Position(start)).magnitude;
+                    }
+                }
+
+                return i + next;
+            }
+        }
+        protected void GetItemParams(ref float width, float angle, out int itemsCount, out float itemWidth, out float itemStep)
+        {
+            StyleHelper.GetParts(width, 0f, out itemsCount, out itemWidth);
+
+            var coef = Mathf.Sin(Mathf.Abs(angle) * Mathf.Deg2Rad);
+            width /= coef;
+            itemStep = itemWidth / coef;
+        }
+        protected IEnumerable<PartItem> GetPartItems(StraightTrajectory part, float angle, int itemsCount, float itemWidth, float itemStep, float offset = 0f, bool isBothDir = true)
+        {
+            var itemDir = part.Direction.TurnDeg(angle, true);
+
+            var start = (part.Length - itemStep * (itemsCount - 1)) / 2;
+            for (var i = 0; i < itemsCount; i += 1)
+            {
+                var itemPos = part.StartPosition + (start + itemStep * i) * part.StartDirection;
+                yield return new PartItem(itemPos, itemDir, itemWidth, offset, isBothDir);
+            }
+        }
+        protected IEnumerable<MarkupStyleDash> GetDashes(PartItem partItems, ILineTrajectory[] contour)
+        {
+            var intersectSet = new HashSet<MarkupIntersect>();
+            var straight = new StraightTrajectory(partItems.Position, partItems.Position + partItems.Direction, false);
+            foreach (var trajectory in contour)
+                intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
+
+            var intersects = intersectSet.OrderBy(i => i, MarkupIntersect.FirstComparer).ToArray();
+
+            for (var i = 1; i < intersects.Length; i += 2)
+            {
+                var input = intersects[i - 1].FirstT;
+                var output = intersects[i].FirstT;
+
+                if (!partItems.IsBothDir && input < 0)
+                {
+                    if (output < 0)
+                        continue;
+                    else
+                        input = 0f;
+                }
+
+                var start = partItems.Position + partItems.Direction * input;
+                var end = partItems.Position + partItems.Direction * output;
+
+                if (partItems.Offset != 0)
+                {
+                    var startOffset = GetOffset(intersects[i - 1], partItems.Offset);
+                    var endOffset = GetOffset(intersects[i], partItems.Offset);
+
+                    if ((end - start).magnitude - Width < startOffset + endOffset)
+                        continue;
+
+                    var isStartToEnd = output >= input;
+                    start += partItems.Direction * (isStartToEnd ? startOffset : -startOffset);
+                    end += partItems.Direction * (isStartToEnd ? -endOffset : endOffset);
+                }
+
+                yield return new MarkupStyleDash(start, end, partItems.Direction, partItems.Width, Color.Value, MaterialType.RectangleFillers);
+            }
+        }
+
+        protected class RailLine : List<ILineTrajectory> { }
+        protected class PartItem
+        {
+            public Vector3 Position { get; }
+            public Vector3 Direction { get; }
+            public float Width { get; }
+            public float Offset { get; }
+            public bool IsBothDir { get; }
+
+            public PartItem(Vector3 position, Vector3 direction, float width, float offset, bool isBothDir)
+            {
+                Position = position;
+                Direction = direction;
+                Width = width;
+                Offset = offset;
+                IsBothDir = isBothDir;
+            }
+        }
     }
     public abstract class PeriodicFillerStyle : Filler2DStyle, IPeriodicFiller
     {
@@ -57,6 +287,88 @@ namespace NodeMarkup.Manager
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
         }
+
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
+        {
+            var rect = GetRect(contour);
+            var rail = new RailLine();
+            var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
+            var middleLine = GetMiddleLine(contour);
+            if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ILineTrajectory lineBefore))
+                rail.Add(lineBefore.Invert());
+            rail.Add(middleLine);
+            if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ILineTrajectory lineAfter))
+                rail.Add(lineAfter);
+
+            yield return rail;
+        }
+        protected abstract float GetAngle();
+        private ILineTrajectory GetMiddleLine(ILineTrajectory[] contour)
+        {
+            GetIndexes(contour.Length, out int leftIndex, out int rightIndex);
+
+            var left = contour[leftIndex];
+            var right = contour[rightIndex];
+
+            var leftLength = left.Length;
+            var rightLength = right.Length;
+            if (leftLength < rightLength)
+                right = right.Cut(right.Travel(0, rightLength - leftLength), 1);
+            else
+                left = left.Cut(0, left.Travel(0, rightLength));
+
+            var middle = new Bezier3()
+            {
+                a = (right.EndPosition + left.StartPosition) / 2,
+                b = ((right.EndDirection + left.StartDirection) / 2).normalized,
+                c = ((right.StartDirection + left.EndDirection) / 2).normalized,
+                d = (right.StartPosition + left.EndPosition) / 2,
+            };
+            NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
+            var middleTrajectory = new BezierTrajectory(middle);
+
+            var cutT = 1f;
+            for (var i = 0; i < contour.Length; i += 1)
+            {
+                if (i == leftIndex || i == rightIndex)
+                    continue;
+                if (MarkupIntersect.Calculate(middleTrajectory, contour[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && 0.1 <= intersect.FirstT && intersect.FirstT < cutT)
+                    cutT = intersect.FirstT;
+            }
+
+            return new BezierTrajectory(cutT == 1f ? middle : middle.Cut(0, cutT));
+        }
+        protected abstract void GetIndexes(int count, out int leftIndex, out int rightIndex);
+        private bool GetBeforeMiddleLine(ILineTrajectory middleLine, float height, float halfAngelRad, Rect rect, out ILineTrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
+        private bool GetAfterMiddleLine(ILineTrajectory middleLine, float height, float halfAngelRad, Rect rect, out ILineTrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
+        private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ILineTrajectory line)
+        {
+            var dirRight = dir.TurnRad(halfAngelRad, true);
+            var dirLeft = dir.TurnRad(halfAngelRad, false);
+
+            var rightRail = GetRail(rect, height, dirRight.AbsoluteAngle() * Mathf.Rad2Deg);
+            var leftRail = GetRail(rect, height, dirLeft.AbsoluteAngle() * Mathf.Rad2Deg);
+
+            var t = Mathf.Max(0f, GetT(rightRail.StartPosition, dirRight), GetT(rightRail.EndPosition, dirRight), GetT(leftRail.StartPosition, dirLeft), GetT(leftRail.EndPosition, dirLeft));
+
+            if (t > 0.1)
+            {
+                line = new StraightTrajectory(pos, pos + dir * t);
+                return true;
+            }
+            else
+            {
+                line = default;
+                return false;
+            }
+
+            float GetT(Vector3 railPos, Vector3 railDir)
+            {
+                Line2.Intersect(pos.XZ(), (pos + dir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
+                return p;
+            }
+        }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -77,15 +389,17 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowLines { get; }
         public PropertyValue<float> Offset { get; }
+        public PropertyValue<int> LeftLine { get; }
+        public PropertyValue<int> RightLine { get; }
 
-        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines) : base(color, width, step, medianOffset) 
+        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines) : base(color, width, step, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             FollowLines = new PropertyValue<bool>("FL", StyleChanged, followLines);
             Offset = GetOffsetProperty(offset);
+            LeftLine = new PropertyValue<int>("F", StyleChanged, 0);
+            RightLine = new PropertyValue<int>("S", StyleChanged, 1);
         }
-        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, Angle, rect, height, Width, Step, Offset);
-
         public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines);
         public override void CopyTo(Style target)
         {
@@ -106,17 +420,59 @@ namespace NodeMarkup.Manager
             if (!isTemplate)
                 components.Add(AddAngleProperty(this, parent, onHover, onLeave));
             components.Add(AddFollowLinesProperty(this, parent));
+            components.Add(AddProperty(LeftLine, "Left line", parent, filler.Contour.VertexCount));
+            components.Add(AddProperty(RightLine, "Right line", parent, filler.Contour.VertexCount));
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
         protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
         {
             var followLinesProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
-            followLinesProperty.Text = "Follow lines"/*Localize.StyleOption_StartingFrom*/;
+            followLinesProperty.Text = "Follow lines"/*Localize.StyleOption_FollowLines*/;
             followLinesProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             followLinesProperty.SelectedObject = stripeStyle.FollowLines;
             followLinesProperty.OnSelectObjectChanged += (bool value) => stripeStyle.FollowLines.Value = value;
             return followLinesProperty;
         }
+        protected static IntListPropertyPanel AddProperty(PropertyValue<int> property, string label, UIComponent parent, int count)
+        {
+            var firstProperty = ComponentPool.Get<IntListPropertyPanel>(parent);
+            firstProperty.Text = label;
+            firstProperty.Init(count);
+            firstProperty.SelectedObject = property + 1;
+            firstProperty.OnSelectObjectChanged += (int value) => property.Value = value - 1;
+            return firstProperty;
+        }
+
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
+        {
+            if (FollowLines)
+            {
+                foreach (var rail in base.GetRails(filler, contour))
+                    yield return rail;
+            }
+            else
+            {
+                var rect = GetRect(contour);
+                yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
+            }
+        }
+        protected override IEnumerable<PartItem> GetItems(RailLine rail)
+        {
+            var angle = FollowLines ? 90f - Angle : 90f;
+            var width = Width.Value;
+            GetItemParams(ref width, angle, out int itemsCount, out float itemWidth, out float itemStep);
+            foreach (var part in GetParts(rail, width, width * (Step - 1)))
+            {
+                foreach (var item in GetPartItems(part, angle, itemsCount, itemWidth, itemStep, Offset))
+                    yield return item;
+            }
+        }
+        protected override void GetIndexes(int count, out int leftIndex, out int rightIndex)
+        {
+            leftIndex = LeftLine;
+            rightIndex = RightLine;
+        }
+        protected override float GetAngle() => 90f - Angle;
 
         public override XElement ToXml()
         {
@@ -142,7 +498,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Step { get; }
         public PropertyValue<float> Offset { get; }
 
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, medianOffset) 
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             Step = GetStepProperty(step);
@@ -172,12 +528,21 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
 
-        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height)
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
         {
-            foreach (var dash in GetDashes(trajectories, Angle, rect, height, Width, Step, Offset))
-                yield return dash;
-            foreach (var dash in GetDashes(trajectories, Angle < 0 ? Angle + 90 : Angle - 90, rect, height, Width, Step, Offset))
-                yield return dash;
+            var rect = GetRect(contour);
+            yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
+            yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
+        }
+        protected override IEnumerable<PartItem> GetItems(RailLine rail)
+        {
+            var width = Width.Value;
+            GetItemParams(ref width, 90f, out int itemsCount, out float itemWidth, out float itemStep);
+            foreach (var part in GetParts(rail, width, width * (Step - 1)))
+            {
+                foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep, Offset))
+                    yield return item;
+            }
         }
 
         public override XElement ToXml()
@@ -203,12 +568,21 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerSolid;
 
         public SolidFillerStyle(Color32 color, float medianOffset) : base(color, DefaultSolidWidth, medianOffset) { }
-        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height) => GetDashes(trajectories, 0f, rect, height, DefaultSolidWidth, 1, 0);
 
         public override FillerStyle CopyFillerStyle() => new SolidFillerStyle(Color, DefaultOffset);
-        public override void CopyTo(Style target)
+
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
         {
-            base.CopyTo(target);
+            var rect = GetRect(contour);
+            yield return new RailLine() { GetRail(rect, filler.Markup.Height, 0) };
+        }
+        protected override IEnumerable<PartItem> GetItems(RailLine rail)
+        {
+            var part = rail.First() as StraightTrajectory;
+            var width = part.Length;
+            GetItemParams(ref width, 90f, out int itemsCount, out float itemWidth, out float itemStep);
+            foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
+                yield return item;
         }
     }
     public class ChevronFillerStyle : PeriodicFillerStyle, IWidthStyle, IColorStyle
@@ -294,224 +668,25 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-        protected override IEnumerable<MarkupStyleDash> GetDashesEnum(ILineTrajectory[] trajectories, Rect rect, float height)
+        protected override IEnumerable<PartItem> GetItems(RailLine rail)
         {
-            if (trajectories.Length < 3)
-                yield break;
-
-            GetItems(trajectories, rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth);
-
-            for (var i = 0; i < directions.Count; i += 1)
+            var width = Width.Value;
+            var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;
+            GetItemParams(ref width, halfAngle, out int itemsCount, out float itemWidth, out float itemStep);
+            foreach (var part in GetParts(rail, width, width * (Step - 1)))
             {
-                var dir = directions[i];
-                foreach (var pos in positions[i])
-                {
-                    var line = new StraightTrajectory(pos, pos + dir, false);
-                    var intersectSet = new HashSet<MarkupIntersect>();
-                    foreach (var trajectory in trajectories)
-                        intersectSet.AddRange(MarkupIntersect.Calculate(line, trajectory).Where(k => k.FirstT > 0));
-
-                    if (intersectSet.Count % 2 == 1)
-                        intersectSet.Add(new MarkupIntersect(0, 0, 0));
-
-                    var intersects = intersectSet.OrderBy(j => j, MarkupIntersect.FirstComparer).ToArray();
-
-                    for (var j = 1; j < intersects.Length; j += 2)
-                    {
-                        var start = pos + dir * intersects[j - 1].FirstT;
-                        var end = pos + dir * intersects[j].FirstT;
-
-                        yield return new MarkupStyleDash(start, end, dir, partWidth, Color.Value, MaterialType.RectangleFillers);
-                    }
-                }
+                foreach (var item in GetPartItems(part, halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
+                    yield return item;
+                foreach (var item in GetPartItems(part, -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
+                    yield return item;
             }
         }
-        private void GetItems(ILineTrajectory[] trajectories, Rect rect, out List<Vector3[]> positions, out List<Vector3> directions, out float partWidth)
+        protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
+        protected override void GetIndexes(int count, out int leftIndex, out int rightIndex)
         {
-            var halfAngelRad = (Invert ? 360 - AngleBetween : AngleBetween) * Mathf.Deg2Rad / 2;
-            var coef = Mathf.Sin(halfAngelRad);
-            var width = Width / coef;
-
-            var bezier = GetMiddleBezier(trajectories);
-            var lines = new List<ILineTrajectory>();
-            if (GetMiddleLineBefore(bezier, halfAngelRad, rect, out Line3 lineBefore))
-                lines.Add(new StraightTrajectory(lineBefore).Invert());
-            lines.Add(new BezierTrajectory(bezier));
-            if (GetMiddleLineAfter(bezier, halfAngelRad, rect, out Line3 lineAfter))
-                lines.Add(new StraightTrajectory(lineAfter));
-
-            StyleHelper.GetParts(Width, 0, out int partsCount, out partWidth);
-            var partStep = partWidth / coef;
-
-            positions = new List<Vector3[]>();
-            directions = new List<Vector3>();
-
-            foreach (var itemPositions in GetItemsPositions(lines, width, width * (Step - 1)))
-            {
-                var dir = (itemPositions[1] - itemPositions[0]).normalized;
-                var dirRight = dir.TurnRad(halfAngelRad, true);
-                var dirLeft = dir.TurnRad(halfAngelRad, false);
-
-                var start = partStep / 2;
-
-                var rightPos = new Vector3[partsCount];
-                var leftPos = new Vector3[partsCount];
-
-                for (var i = 0; i < partsCount; i += 1)
-                {
-                    var partPos = itemPositions[0] + dir * (start + partStep * i);
-
-                    rightPos[i] = partPos;
-                    leftPos[i] = partPos;
-                }
-
-                positions.Add(rightPos);
-                directions.Add(dirRight);
-                positions.Add(leftPos);
-                directions.Add(dirLeft);
-            }
+            leftIndex = Output % count;
+            rightIndex = leftIndex.PrevIndex(count, StartingFrom == From.Vertex ? 1 : 2);
         }
-        private IEnumerable<Vector3[]> GetItemsPositions(List<ILineTrajectory> lines, float dash, float space)
-        {
-            var dashesT = new List<float[]>();
-
-            var startSpace = space / 2;
-            for (var i = 0; i < 3; i += 1)
-            {
-                dashesT.Clear();
-                var isDash = false;
-
-                var prevT = 0f;
-                var currentT = 0f;
-                var nextT = Travel(currentT, startSpace);
-
-                while (nextT < lines.Count)
-                {
-                    if (isDash)
-                        dashesT.Add(new float[] { currentT, nextT });
-
-                    isDash = !isDash;
-
-                    prevT = currentT;
-                    currentT = nextT;
-                    nextT = Travel(currentT, isDash ? dash : space);
-                }
-
-                float endSpace;
-                if (isDash || ((Position(lines.Count) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
-                    endSpace = (Position(lines.Count) - Position(prevT)).magnitude;
-                else
-                    endSpace = tempLength;
-
-                startSpace = (startSpace + endSpace) / 2;
-
-                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
-                    break;
-            }
-
-            foreach (var dashT in dashesT)
-                yield return new Vector3[] { Position(dashT[0]), Position(dashT[1]) };
-
-
-            Vector3 Position(float t)
-            {
-                var i = (int)t;
-                i = i > 0 && i == t ? i - 1 : i;
-                return lines[i].Position(t - i);
-            }
-            float Travel(float current, float distance)
-            {
-                var i = (int)current;
-                var next = 1f;
-                while (i < lines.Count)
-                {
-                    var line = lines[i];
-                    var start = current - i;
-                    next = line.Travel(start, distance);
-
-                    if (next < 1)
-                        break;
-                    else
-                    {
-                        i += 1;
-                        current = i;
-                        distance -= (line.Position(1f) - line.Position(start)).magnitude;
-                    }
-                }
-
-                return i + next;
-            }
-        }
-
-        private Bezier3 GetMiddleBezier(ILineTrajectory[] trajectories)
-        {
-            var leftIndex = Output % trajectories.Length;
-            var rightIndex = leftIndex.PrevIndex(trajectories.Length, StartingFrom == From.Vertex ? 1 : 2);
-            var left = trajectories[leftIndex];
-            var right = trajectories[rightIndex];
-
-            var leftLength = left.Length;
-            var rightLength = right.Length;
-            if (leftLength < rightLength)
-                right = right.Cut(right.Travel(0, rightLength - leftLength), 1);
-            else
-                left = left.Cut(0, left.Travel(0, rightLength));
-
-            var middle = new Bezier3()
-            {
-                a = (right.EndPosition + left.StartPosition) / 2,
-                b = (right.EndDirection + left.StartDirection) / 2,
-                c = (right.StartDirection + left.EndDirection) / 2,
-                d = (right.StartPosition + left.EndPosition) / 2,
-            };
-            NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
-            var middleTrajectory = new BezierTrajectory(middle);
-
-            var cutT = 1f;
-            for (var i = 0; i < trajectories.Length; i += 1)
-            {
-                if (i == leftIndex || i == rightIndex)
-                    continue;
-                if (MarkupIntersect.Calculate(middleTrajectory, trajectories[i]).FirstOrDefault() is MarkupIntersect intersect && intersect.IsIntersect && 0.1 <= intersect.FirstT && intersect.FirstT < cutT)
-                    cutT = intersect.FirstT;
-            }
-
-            return cutT == 1f ? middle : middle.Cut(0, cutT);
-        }
-
-        private bool GetMiddleLineBefore(Bezier3 middleBezier, float halfAngelRad, Rect rect, out Line3 line)
-            => GetMiddleLine(middleBezier.a, (middleBezier.a - middleBezier.b).normalized, halfAngelRad, rect, out line);
-        private bool GetMiddleLineAfter(Bezier3 middleBezier, float halfAngelRad, Rect rect, out Line3 line)
-            => GetMiddleLine(middleBezier.d, (middleBezier.d - middleBezier.c).normalized, halfAngelRad, rect, out line);
-
-        private bool GetMiddleLine(Vector3 pos, Vector3 dir, float halfAngelRad, Rect rect, out Line3 line)
-        {
-            var dirRight = dir.TurnRad(halfAngelRad, true);
-            var dirLeft = dir.TurnRad(halfAngelRad, false);
-
-            GetRail(dirRight.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 rightRail);
-            GetRail(dirLeft.AbsoluteAngle() * Mathf.Rad2Deg, rect, 0, out Line3 leftRail);
-
-            var t = new float[] { 0, GetT(rightRail.a, dirRight), GetT(rightRail.b, dirRight), GetT(leftRail.a, dirLeft), GetT(leftRail.b, dirLeft) }.Max();
-
-            if (t > 0.1)
-            {
-                line = new Line3(pos, pos + dir * t);
-                return true;
-            }
-            else
-            {
-                line = default;
-                return false;
-            }
-
-            float GetT(Vector3 railPos, Vector3 railDir)
-            {
-                Line2.Intersect(pos.XZ(), (pos + dir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
-                return p;
-            }
-        }
-
 
         public override XElement ToXml()
         {

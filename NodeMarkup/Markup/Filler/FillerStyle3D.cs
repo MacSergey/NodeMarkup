@@ -21,9 +21,6 @@ namespace NodeMarkup.Manager
     {
         protected abstract MaterialType MaterialType { get; }
 
-        //public PropertyValue<float> MinAngle { get; }
-        //public PropertyValue<float> MinLength { get; }
-        //public PropertyValue<float> MaxLength { get; }
         public float MinAngle => 10f;
         public float MinLength => 2f;
         public float MaxLength => 10f;
@@ -31,9 +28,6 @@ namespace NodeMarkup.Manager
 
         public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset)
         {
-            //MinAngle = new PropertyValue<float>(StyleChanged, minAngle);
-            //MinLength = new PropertyValue<float>(StyleChanged, minLength);
-            //MaxLength = new PropertyValue<float>(StyleChanged, maxLength);
             Elevation = GetElevationProperty(elevation);
         }
 
@@ -44,19 +38,21 @@ namespace NodeMarkup.Manager
                 triangulationTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData GetStyleData(ILineTrajectory[] trajectories, Rect _, float height)
+        public override IStyleData Calculate(MarkupFiller filler)
         {
-            var isClockWise = Vector3.Cross(trajectories[0].EndDirection, trajectories[1].StartDirection).y < 0;
-            if (!isClockWise)
-                trajectories = trajectories.Select(t => t.Invert()).Reverse().ToArray();
+            var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
 
-            var pointsGroups = trajectories.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr)).ToArray()).ToArray();
+            var isClockWise = Vector3.Cross(contour[0].EndDirection, contour[1].StartDirection).y < 0;
+            if (!isClockWise)
+                contour = contour.Select(t => t.Invert()).Reverse().ToArray();
+
+            var pointsGroups = contour.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr)).ToArray()).ToArray();
             var points = pointsGroups.SelectMany(g => g).ToArray();
             var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
             P2T.Triangulate(polygon);
             var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
 
-            return new MarkupStylePolygonMesh(height, Elevation, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
+            return new MarkupStylePolygonMesh(filler.Markup.Height, Elevation, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
 
             static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
             {
@@ -68,9 +64,6 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddElevationProperty(this, parent, onHover, onLeave));
-            //components.Add(AddMinAngleProperty(this, parent, onHover, onLeave));
-            //components.Add(AddMinLengthProperty(this, parent, onHover, onLeave));
-            //components.Add(AddMaxLengthProperty(this, parent, onHover, onLeave));
         }
         private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
         {
@@ -88,50 +81,6 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(elevationProperty, onHover, onLeave);
             return elevationProperty;
         }
-        //private static FloatPropertyPanel AddMinAngleProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        //{
-        //    var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-        //    minAngleProperty.Text = "Min angle";
-        //    minAngleProperty.UseWheel = true;
-        //    minAngleProperty.WheelStep = 1f;
-        //    minAngleProperty.CheckMin = true;
-        //    minAngleProperty.MinValue = 5f;
-        //    minAngleProperty.CheckMax = true;
-        //    minAngleProperty.MaxValue = 90f;
-        //    minAngleProperty.Init();
-        //    minAngleProperty.Value = triangulationStyle.MinAngle;
-        //    minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinAngle.Value = value;
-        //    AddOnHoverLeave(minAngleProperty, onHover, onLeave);
-        //    return minAngleProperty;
-        //}
-        //private static FloatPropertyPanel AddMinLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        //{
-        //    var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-        //    minAngleProperty.Text = "Min length";
-        //    minAngleProperty.UseWheel = true;
-        //    minAngleProperty.WheelStep = 0.1f;
-        //    minAngleProperty.CheckMin = true;
-        //    minAngleProperty.MinValue = 1f;
-        //    minAngleProperty.Init();
-        //    minAngleProperty.Value = triangulationStyle.MinLength;
-        //    minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MinLength.Value = value;
-        //    AddOnHoverLeave(minAngleProperty, onHover, onLeave);
-        //    return minAngleProperty;
-        //}
-        //private static FloatPropertyPanel AddMaxLengthProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
-        //{
-        //    var minAngleProperty = parent.AddUIComponent<FloatPropertyPanel>();
-        //    minAngleProperty.Text = "Max length";
-        //    minAngleProperty.UseWheel = true;
-        //    minAngleProperty.WheelStep = 0.1f;
-        //    minAngleProperty.CheckMin = true;
-        //    minAngleProperty.MinValue = 1f;
-        //    minAngleProperty.Init();
-        //    minAngleProperty.Value = triangulationStyle.MaxLength;
-        //    minAngleProperty.OnValueChanged += (float value) => triangulationStyle.MaxLength.Value = value;
-        //    AddOnHoverLeave(minAngleProperty, onHover, onLeave);
-        //    return minAngleProperty;
-        //}
         public override XElement ToXml()
         {
             var config = base.ToXml();
