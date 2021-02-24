@@ -439,10 +439,12 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             if (!isTemplate)
+            {
                 components.Add(AddAngleProperty(this, parent, onHover, onLeave));
-            components.Add(AddFollowLinesProperty(this, parent));
-            components.Add(AddProperty(LeftRail, "Left rail", parent, filler.Contour.VertexCount));
-            components.Add(AddProperty(RightRail, "Right rail", parent, filler.Contour.VertexCount));
+                components.Add(AddFollowLinesProperty(this, parent));
+                components.Add(AddProperty(LeftRail, "Left rail", parent, filler.Contour.VertexCount));
+                components.Add(AddProperty(RightRail, "Right rail", parent, filler.Contour.VertexCount));
+            }
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
         protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
