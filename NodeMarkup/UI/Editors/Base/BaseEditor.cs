@@ -157,6 +157,16 @@ namespace NodeMarkup.UI.Editors
 
         public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
         public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
+
+        public static void SetEven(UIComponent component)
+        {
+            var even = true;
+            foreach (var item in component.components.OfType<EditorItem>().Where(c => c.SupportEven))
+            {
+                item.IsEven = even;
+                even = !even;
+            }
+        }
     }
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor, IEditor<EditableObject>
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
@@ -396,5 +406,6 @@ namespace NodeMarkup.UI.Editors
             foreach (var item in ItemsPanel.components.OfType<EditableItemType>())
                 item.Refresh();
         }
+        protected void SetEven() => SetEven(PropertiesPanel);
     }
 }

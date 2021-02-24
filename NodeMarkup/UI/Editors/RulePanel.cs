@@ -47,6 +47,7 @@ namespace NodeMarkup.UI.Editors
 
             AddStyleTypeProperty();
             AddStyleProperties();
+            SetEven();
 
             base.Init();
         }
@@ -183,6 +184,7 @@ namespace NodeMarkup.UI.Editors
             Editor.RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         private void OnSelectTemplate(StyleTemplate template)
         {
@@ -210,12 +212,14 @@ namespace NodeMarkup.UI.Editors
             Editor.RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         public void Refresh()
         {
             Error.isVisible = Rule.IsOverlapped;
             FillEdges();
         }
+        private void SetEven() => Editors.Editor.SetEven(this);
         protected override void OnMouseEnter(UIMouseEventParameter p)
         {
             base.OnMouseEnter(p);

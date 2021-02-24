@@ -80,6 +80,7 @@ namespace NodeMarkup.UI.Editors
             AddAdditional();
 
             SetEditable();
+            SetEven();
         }
         private void ReloadAdditionalProperties()
         {

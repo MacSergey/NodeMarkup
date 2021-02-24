@@ -52,6 +52,8 @@ namespace NodeMarkup.UI.Editors
             AddBordersProperties();
             AddStyleTypeProperty();
             AddStyleProperties();
+            SetEven();
+
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
@@ -164,6 +166,7 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         private void SelectTemplate(StyleTemplate template)
         {
@@ -190,6 +193,7 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         private void ClearStyleProperties()
         {

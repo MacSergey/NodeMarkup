@@ -33,6 +33,7 @@ namespace NodeMarkup.UI.Editors
             AddHeader();
             AddStyleTypeProperty();
             AddStyleProperties();
+            SetEven();
         }
         protected override void OnClear()
         {
@@ -75,6 +76,7 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
 
         private void OnSaveTemplate()
@@ -96,6 +98,7 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         private void OnSelectTemplate(StyleTemplate template)
         {
