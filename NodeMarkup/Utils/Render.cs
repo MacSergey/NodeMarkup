@@ -29,6 +29,7 @@ namespace NodeMarkup.Utils
                 { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), CreateSplitUVTexture(128,128)) },
             };
         }
+        public static Texture SurfaceTexture { get; } = TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127));
 
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         static int[] VerticesIdxs { get; } = new int[]
@@ -257,16 +258,8 @@ namespace NodeMarkup.Utils
         protected Vector4 Scale { get; }
         protected MaterialType MaterialType { get; private set; }
 
-        protected Texture SurfaceTexA { get; }
-        protected Texture SurfaceTexB { get; }
-        protected Vector4 SurfaceMapping { get; }
-
         public MarkupStyleMesh()
         {
-            ItemsExtension.TerrainManager.GetSurfaceMapping(Position, out var surfaceTexA, out var surfaceTexB, out var surfaceMapping);
-            SurfaceTexA = surfaceTexA;
-            SurfaceTexB = surfaceTexB;
-            SurfaceMapping = surfaceMapping;
             Scale = new Vector4(0.5f / MeshHalfWidth, 0.5f / MeshHalfLength, 1f, 1f);
         }
         protected void Init(Vector3 position, Matrix4x4 left, Matrix4x4 right, MaterialType materialType)
@@ -289,9 +282,7 @@ namespace NodeMarkup.Utils
             instance.m_materialBlock.SetVector(instance.ID_ObjectIndex, data.m_dataVector3);
             instance.m_materialBlock.SetColor(instance.ID_Color, data.m_dataColor0);
 
-            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, SurfaceTexA);
-            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, SurfaceTexB);
-            instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, SurfaceMapping);
+            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceTexture);
 
             var mesh = Mesh;
             var material = RenderHelper.MaterialLib[MaterialType];
