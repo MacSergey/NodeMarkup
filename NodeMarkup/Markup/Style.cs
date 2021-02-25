@@ -131,6 +131,7 @@ namespace NodeMarkup.Manager
         {
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent);
             colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.WheelTip = Editor.WheelTip;
             colorProperty.Init();
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
@@ -142,6 +143,7 @@ namespace NodeMarkup.Manager
             widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
+            widthProperty.WheelTip = Editor.WheelTip;
             widthProperty.CheckMin = true;
             widthProperty.MinValue = WidthMinValue;
             widthProperty.Init();
@@ -157,6 +159,7 @@ namespace NodeMarkup.Manager
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
+            dashLengthProperty.WheelTip = Editor.WheelTip;
             dashLengthProperty.CheckMin = true;
             dashLengthProperty.MinValue = 0.1f;
             dashLengthProperty.Init();
@@ -171,6 +174,7 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
+            spaceLengthProperty.WheelTip = Editor.WheelTip;
             spaceLengthProperty.CheckMin = true;
             spaceLengthProperty.MinValue = 0.1f;
             spaceLengthProperty.Init();

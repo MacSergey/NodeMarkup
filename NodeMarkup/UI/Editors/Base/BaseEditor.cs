@@ -40,6 +40,8 @@ namespace NodeMarkup.UI.Editors
         public abstract string Name { get; }
         public abstract string EmptyMessage { get; }
 
+        public static string WheelTip => Settings.ShowToolTip ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
+
         public virtual bool Active
         {
             set

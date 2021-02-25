@@ -137,6 +137,7 @@ namespace NodeMarkup.Manager
             offsetProperty.Text = Localize.StyleOption_MedianOffset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelTip = Editor.WheelTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
             offsetProperty.Init();
@@ -151,6 +152,7 @@ namespace NodeMarkup.Manager
             angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
+            angleProperty.WheelTip = Editor.WheelTip;
             angleProperty.CheckMin = true;
             angleProperty.MinValue = -90;
             angleProperty.CheckMax = true;
@@ -168,6 +170,7 @@ namespace NodeMarkup.Manager
             stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
+            stepProperty.WheelTip = Editor.WheelTip;
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 1.5f;
             stepProperty.Init();
@@ -182,6 +185,7 @@ namespace NodeMarkup.Manager
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelTip = Editor.WheelTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
             offsetProperty.Init();
