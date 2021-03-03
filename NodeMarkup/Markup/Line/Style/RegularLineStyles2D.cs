@@ -418,7 +418,7 @@ namespace NodeMarkup.Manager
             config.Add(Base.ToXml());
             config.Add(Height.ToXml());
             config.Add(Space.ToXml());
-            config.Add(Invert.ToString());
+            config.Add(Invert.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
