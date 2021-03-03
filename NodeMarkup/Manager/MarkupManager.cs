@@ -164,6 +164,7 @@ namespace NodeMarkup.Manager
             if (Markups.ContainsKey(id))
                 NeedUpdate.Add(id);
         }
+        public void AddAllToUpdate() => NeedUpdate.AddRange(Markups.Keys);
         public void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {

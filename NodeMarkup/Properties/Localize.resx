@@ -456,7 +456,7 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Look actual beta change log on Discord</value>
+    <value>Look for actual beta change log on Discord</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -1370,5 +1370,14 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Pavement</value>
+  </data>
+  <data name="Settings_ApproximationMaxLength" xml:space="preserve">
+    <value>Approximation max length</value>
+  </data>
+  <data name="Settings_ApproximationMinAngle" xml:space="preserve">
+    <value>Approximation min angle</value>
+  </data>
+  <data name="Settings_ApproximationMinLength" xml:space="preserve">
+    <value>Approximation min length</value>
   </data>
 </root>

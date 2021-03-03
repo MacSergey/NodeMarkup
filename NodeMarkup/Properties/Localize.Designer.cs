@@ -1461,7 +1461,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Look actual beta change log on Discord.
+        ///   Ищет локализованную строку, похожую на Look for actual beta change log on Discord.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -1801,6 +1801,33 @@ namespace NodeMarkup {
         public static string Settings_ApplyAfterRestart {
             get {
                 return ResourceManager.GetString("Settings_ApplyAfterRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Approximation max length.
+        /// </summary>
+        public static string Settings_ApproximationMaxLength {
+            get {
+                return ResourceManager.GetString("Settings_ApproximationMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Approximation min angle.
+        /// </summary>
+        public static string Settings_ApproximationMinAngle {
+            get {
+                return ResourceManager.GetString("Settings_ApproximationMinAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Approximation min length.
+        /// </summary>
+        public static string Settings_ApproximationMinLength {
+            get {
+                return ResourceManager.GetString("Settings_ApproximationMinLength", resourceCulture);
             }
         }
         

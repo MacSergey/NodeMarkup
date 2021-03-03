@@ -33,6 +33,9 @@ namespace NodeMarkup
 
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor(Mod.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 300f, true);
+        public static SavedFloat ApproximationMinAngle { get; } = new SavedFloat(nameof(ApproximationMinAngle), SettingsFile, 10f, true);
+        public static SavedFloat ApproximationMinLength { get; } = new SavedFloat(nameof(ApproximationMinLength), SettingsFile, 2f, true);
+        public static SavedFloat ApproximationMaxLength { get; } = new SavedFloat(nameof(ApproximationMaxLength), SettingsFile, 10f, true);
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
@@ -214,6 +217,9 @@ namespace NodeMarkup
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddDistanceSetting(group);
+            AddMinAngleSetting(group);
+            AddMinLengthSetting(group);
+            AddMaxLengthSetting(group);
             AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
             group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
@@ -235,28 +241,16 @@ namespace NodeMarkup
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle });
             AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
         }
-        private static void AddDistanceSetting(UIHelper group)
+        private static void AddDistanceSetting(UIHelper group) => AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 300f, 0f);
+        private static void AddMinAngleSetting(UIHelper group) => AddFloatField(group, Localize.Settings_ApproximationMinAngle, ApproximationMinAngle, 10f, 1f, 90f, UpdateAllMarkings);
+        private static void AddMinLengthSetting(UIHelper group) => AddFloatField(group, Localize.Settings_ApproximationMinLength, ApproximationMinLength, 2f, 0.1f, 100f, UpdateAllMarkings);
+        private static void AddMaxLengthSetting(UIHelper group) => AddFloatField(group, Localize.Settings_ApproximationMaxLength, ApproximationMaxLength, 10f, 1f, 100f, UpdateAllMarkings);
+        private static void UpdateAllMarkings()
         {
-            UITextField distanceField = null;
-            distanceField = group.AddTextfield(Localize.Settings_RenderDistance, RenderDistance.ToString(), OnDistanceChanged, OnDistanceSubmitted) as UITextField;
-
-            static void OnDistanceChanged(string distance) { }
-            void OnDistanceSubmitted(string text)
-            {
-                if (float.TryParse(text, out float distance))
-                {
-                    if (distance < 0)
-                        distance = 300;
-
-                    RenderDistance.value = distance;
-                    distanceField.text = distance.ToString();
-                }
-                else
-                {
-                    distanceField.text = RenderDistance.ToString();
-                }
-            }
+            MarkupManager.NodeManager.AddAllToUpdate();
+            MarkupManager.SegmentManager.AddAllToUpdate();
         }
+
         #endregion
 
         #region ACCESS
@@ -420,6 +414,29 @@ namespace NodeMarkup
         private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.OpenUrl(Mod.TroubleshootingUrl));
 
         #endregion
+
+        private static void AddFloatField(UIHelper group, string label, SavedFloat saved, float? defaultValue, float? min = null, float? max = null, Action onSubmit = null)
+        {
+            UITextField field = null;
+            field = group.AddTextfield(label, saved.ToString(), OnChanged, OnSubmitted) as UITextField;
+
+            static void OnChanged(string distance) { }
+            void OnSubmitted(string text)
+            {
+                if (float.TryParse(text, out float value))
+                {
+                    if ((min.HasValue && value < min.Value) || (max.HasValue && value > max.Value))
+                        value = defaultValue ?? 0;
+
+                    saved.value = value;
+                    field.text = value.ToString();
+                }
+                else
+                    field.text = saved.ToString();
+
+                onSubmit?.Invoke();
+            }
+        }
 
         private static void AddCheckBox(UIHelper group, string label, SavedBool saved) => group.AddCheckbox(label, saved, (bool value) => saved.value = value);
 
