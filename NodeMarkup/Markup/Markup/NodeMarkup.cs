@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_NodeCaption, Id);
         public override MarkupLine.LineType SupportLines => MarkupLine.LineType.All;
-        protected Dictionary<int, ILineTrajectory> BetweenEnters { get; } = new Dictionary<int, ILineTrajectory>();
+        protected EnterDic<ILineTrajectory> BetweenEnters { get; } = new EnterDic<ILineTrajectory>();
         public IEnumerable<ILineTrajectory> Contour
         {
             get
@@ -58,14 +58,14 @@ namespace NodeMarkup.Manager
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
 
-                BetweenEnters[i * 10 + j] = new BezierTrajectory(betweenBezier);
+                BetweenEnters[i, j] = new BezierTrajectory(betweenBezier);
             }
         }
         public bool GetBordersLine(Enter first, Enter second, out ILineTrajectory line)
         {
             var i = EntersList.IndexOf(first);
             var j = EntersList.IndexOf(second);
-            return BetweenEnters.TryGetValue(Math.Max(i, j) * 10 + Math.Min(i, j), out line);
+            return BetweenEnters.TryGetValue(i,j, out line);
         }
 
         public static bool FromXml(Version version, XElement config, ObjectsMap map, out NodeMarkup markup)
@@ -93,6 +93,18 @@ namespace NodeMarkup.Manager
                 map = VersionMigration.Befor1_2(this, map);
 
             base.FromXml(version, config, map);
+        }
+
+        protected class EnterDic<T> : Dictionary<int, T>
+        {
+            public T this[int i, int j]
+            {
+                get => this[GetId(i, j)];
+                set => this[GetId(i, j)] = value;
+            }
+            private int GetId(int i, int j) => Math.Max(i, j) * 10 + Math.Min(i, j);
+
+            public bool TryGetValue(int i, int j, out T value) => TryGetValue(GetId(i, j), out value);
         }
     }
 }

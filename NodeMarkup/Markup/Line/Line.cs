@@ -44,7 +44,6 @@ namespace NodeMarkup.Manager
         protected ILineTrajectory LineTrajectory { get; private set; }
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
         public IStyleData[] StyleData { get; private set; } = new IStyleData[0];
-        //public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
 
         public LineBorders Borders => new LineBorders(this);
 
