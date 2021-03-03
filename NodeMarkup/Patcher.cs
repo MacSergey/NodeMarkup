@@ -34,7 +34,10 @@ namespace NodeMarkup
             success &= PatchLoadAssetPanelOnLoad();
 
             if (Settings.RailUnderMarking)
+            {
                 success &= PatchNetInfoNodeInitNodeInfo();
+                success &= PatchNetInfoInitSegmentInfo();
+            }
 
             if (Settings.LoadMarkingAssets)
             {
@@ -156,9 +159,15 @@ namespace NodeMarkup
         }
         private bool PatchNetInfoNodeInitNodeInfo()
         {
-            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix));
 
             return AddPostfix(postfix, typeof(NetInfo), "InitNodeInfo");
+        }
+        private bool PatchNetInfoInitSegmentInfo()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitSegmentInfoPostfix));
+
+            return AddPostfix(postfix, typeof(NetInfo), "InitSegmentInfo");
         }
         private bool PatchLoadingManagerLoadCustomContent()
         {

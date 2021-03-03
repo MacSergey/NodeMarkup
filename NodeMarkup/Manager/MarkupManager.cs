@@ -52,11 +52,18 @@ namespace NodeMarkup.Manager
             NodeManager.Update();
             SegmentManager.Update();
         }
-        public static void NetInfoNodeInitNodeInfoPostfix(Node info)
+        public static void NetInfoInitNodeInfoPostfix(Node info)
         {
             if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
                 info.m_nodeMaterial.renderQueue = 2470;
         }
+        public static void NetInfoInitSegmentInfoPostfix(Segment info)
+        {
+            if (info.m_segmentMaterial.shader.name == "Custom/Net/TrainBridge")
+                info.m_segmentMaterial.renderQueue = 2470;
+        }
+
+
         public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
         {
             if (!AssetDataExtension.TryGetValue(buildingInfo, out AssetMarking assetMarking))
