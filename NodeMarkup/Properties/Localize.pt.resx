@@ -321,9 +321,7 @@ Os dados recuperados vão substituir todas as marcações existentes.</value>
     <value>Nó #{0}
 Clique para editar marcações</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Seleccione um nó para editar marcações</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Selecione um ponto próprio para uma linha normal ou de paragem
 Arraste para trás do ponto para uma linha perpendicular</value>
@@ -1286,6 +1284,13 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Elevação</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

@@ -321,9 +321,7 @@ Les données restaurées ont remplacer tout les marquages existants.</value>
     <value>Noeud #{0}
 Cliquez pour modifier le marquage</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Sélectionnez un nœud pour changer le marquage</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop
 Glissez derrière le point pour une ligne perpendiculaire</value>
@@ -1260,6 +1258,13 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Auteur inconnu</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

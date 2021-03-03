@@ -321,8 +321,8 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
     <value>Node #{0}
 Klicken um die Markierungen zu bearbeiten</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Node zum Ändern der Markierungen auswählen</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Node oder Segment zum Ändern der Markierungen auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen
@@ -1321,9 +1321,33 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Bürgersteig</value>
   </data>
-  
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Höhe</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Bürgersteig</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LOD Distanz</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Klicken um die Markierungen zu bearbeiten</value>
+  </data>
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>Linien folgen</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Linke Außenlinie</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Rechte Außenlinie</value>
   </data>
   
   

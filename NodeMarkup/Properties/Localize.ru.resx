@@ -321,8 +321,9 @@ Shift X10, Ctrl X0.1</value>
     <value>Перекресток #{0}
 Нажмите для редактирования разметки</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Выберите перекресток для редактирования разметки</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Выберите перекресток или сегмент
+для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Выберите конечную точку для обычной или стоп линии
@@ -1371,4 +1372,16 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Тротуар</value>
   </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Дистанция LOD</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Сегмент #{0}
+Нажмите для редактирования разметки</value>
+  </data>
+  
+  
+  
+  
+  
 </root>

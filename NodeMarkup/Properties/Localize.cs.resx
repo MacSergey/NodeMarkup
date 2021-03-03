@@ -321,9 +321,7 @@ Původní data připíší všechna existující značení.</value>
     <value>Křižovatka #{0}
 Klikněte pro změnu značení</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Vyberte křižovatku pro změnu značení</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření čáry
 Táhněte za bod pro vytvoření kolmé čáry</value>
@@ -1262,7 +1260,9 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
     <value>- Zlepšení chybových zpráv o načítání dat.
 - Zlepšení lokalizací.</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>vše</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Upravit značení silnice #{0}</value>
   </data>
@@ -1272,6 +1272,21 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Beton</value>
   </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Vyvýšení</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Vyvýšení</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Tráva</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Beton</value>
+  </data>
+  
+  
+  
   
   
   

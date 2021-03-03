@@ -321,9 +321,7 @@ Los datos restaurados reemplazarán todas las marcas existentes.</value>
     <value>Nodo #{0}
 Haga clic para editar las marcas</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Seleccione un nodo para editar las marcas</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleccionar punto final para línea normal o transversal
 Arrastre detrás del punto para línea perpendicular</value>
@@ -1273,6 +1271,13 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Acera</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

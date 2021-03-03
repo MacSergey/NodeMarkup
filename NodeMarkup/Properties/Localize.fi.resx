@@ -321,9 +321,7 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
     <value>Risteys #{0}
 Napauta muokataksesi merkintöjä</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Valitse risteys muokataksesi merkintöjä</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Valitse päätepiste viivalle tai pysäytysviivalle
 Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
@@ -1269,6 +1267,13 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Päällyste</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

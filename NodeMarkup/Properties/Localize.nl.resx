@@ -321,9 +321,7 @@ De herstelde data zal alle bestaande markeringen vervangen.</value>
     <value>Punt #{0}
 Klik om de markering te wijzigen</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Selecteer punt om markering te wijzigen</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Selecteer een eindpunt voor een normale lijn of stoplijn
 Sleep achter het punt voor een loodrechte lijn</value>
@@ -1259,6 +1257,13 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Onbekende auteur</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   

@@ -322,8 +322,8 @@
     <value>ノード #{0}
 クリックしてマーキングの編集</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>マーキングを編集するノードを選択します</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>マーキングを編集する、ノード・セグメントを選択します</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>ライン・停止線の終点を選択
@@ -1273,10 +1273,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>#{0} のセグメントを編集中</value>
   </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>芝生</value>
+    <value>芝生（3Dスタイル）</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>舗装</value>
+    <value>舗装（3Dスタイル）</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>高さ・厚み</value>
@@ -1285,9 +1285,27 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>高さ・厚み</value>
   </data>
   <data name="LineStyle_Grass" xml:space="preserve">
-    <value>芝生</value>
+    <value>芝生（3Dスタイル）</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>舗装</value>
+    <value>舗装（3Dスタイル）</value>
   </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LODの描画距離</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>セグメント #{0}
+クリックしてマーキングの編集</value>
+  </data>
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>ラインを基準に描画</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>始点（左側）の基準</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>終点（右側）の基準</value>
+  </data>
+  
+  
 </root>

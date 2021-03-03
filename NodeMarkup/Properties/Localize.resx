@@ -321,8 +321,8 @@ The restored markings will replace all existing markings.</value>
     <value>Node #{0}
 Click to edit markings</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select a node to change markings</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Select a node or segment to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint for regular or stop line
@@ -456,7 +456,7 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Version 1.5 released</value>
+    <value>Look for actual beta change log on Discord</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -1370,5 +1370,27 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Pavement</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LOD distance</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Click to edit markings</value>
+  </data>
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>Follow lines</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Left rail</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Right rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Select a rail's first point or line as rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Select a rail's second point</value>
   </data>
 </root>

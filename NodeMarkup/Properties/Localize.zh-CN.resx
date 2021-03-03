@@ -321,8 +321,8 @@ Shift x10，Ctrl x0.1</value>
     <value>节点 #{0}
 点击以编辑地标线</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>选择节点以编辑地标线</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>选择节点或段落以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>点选终点来创建普通停止线
@@ -1286,4 +1286,22 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>路肩</value>
   </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LOD距离</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>段落 #{0}
+点击以编辑地标线</value>
+  </data>
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>遵循边界</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>左边界</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>右边界</value>
+  </data>
+  
+  
 </root>

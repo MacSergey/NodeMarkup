@@ -321,9 +321,7 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
     <value>Nodo #{0}
 Clicca per modificare il marcatore</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Seleziona un nodo per modificare il marcatore</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleziona il punto di fine per uno stop oppure una linea di stop
 Trascina dietro il punto per una linea perpendicolare</value>
@@ -1236,6 +1234,13 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Pavimentazione</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
   
   
   
