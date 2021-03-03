@@ -1461,7 +1461,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Version 1.5 released.
+        ///   Ищет локализованную строку, похожую на Look actual beta change log on Discord.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
