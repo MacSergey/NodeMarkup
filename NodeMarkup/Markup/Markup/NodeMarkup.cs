@@ -19,6 +19,7 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "M";
 
+        public override MarkupType Type => MarkupType.NodeMarkup;
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_NodeCaption, Id);
         public override MarkupLine.LineType SupportLines => MarkupLine.LineType.All;

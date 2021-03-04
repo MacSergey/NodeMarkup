@@ -13,6 +13,7 @@ namespace NodeMarkup.Manager
     {
         public static string XmlName { get; } = "S";
 
+        public override MarkupType Type => MarkupType.SegmentMarkup;
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_SegmentCaption, Id);
 

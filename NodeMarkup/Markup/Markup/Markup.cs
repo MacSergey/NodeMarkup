@@ -53,6 +53,7 @@ namespace NodeMarkup.Manager
     public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, IToXml
     {
         #region PROPERTIES
+        public abstract MarkupType Type { get; }
         public virtual MarkupLine.LineType SupportLines => MarkupLine.LineType.Regular;
 
         public ushort Id { get; }
@@ -645,6 +646,11 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = 0x800,
+        }
+        public enum MarkupType
+        {
+            NodeMarkup,
+            SegmentMarkup
         }
     }
     public abstract class Markup<EnterType> : Markup

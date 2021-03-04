@@ -18,7 +18,7 @@ namespace NodeMarkup.Manager
         private static Dictionary<int, float> LodScale { get; } = new Dictionary<int, float>()
         {
             { 0, 1f },
-            { 1, 5f }
+            { 1, 4f }
         };
         private static int MaxDepth => 5;
 
