@@ -321,8 +321,8 @@ The restored markings will replace all existing markings.</value>
     <value>Node #{0}
 Click to edit markings</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select a node to change markings</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Select a node or a segment to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint for regular or stop line
@@ -1373,5 +1373,9 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
     <value>LOD distance</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Click to edit markings</value>
   </data>
 </root>

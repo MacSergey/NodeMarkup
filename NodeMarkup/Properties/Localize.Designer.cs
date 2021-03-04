@@ -3369,20 +3369,21 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Segment #{0}
+        ///Click to edit markings.
+        /// </summary>
+        public static string Tool_InfoHoverSegment {
+            get {
+                return ResourceManager.GetString("Tool_InfoHoverSegment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Inverse order.
         /// </summary>
         public static string Tool_InfoInverseOrder {
             get {
                 return ResourceManager.GetString("Tool_InfoInverseOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a node to change markings.
-        /// </summary>
-        public static string Tool_InfoNode {
-            get {
-                return ResourceManager.GetString("Tool_InfoNode", resourceCulture);
             }
         }
         
@@ -3595,6 +3596,15 @@ namespace NodeMarkup {
         public static string Tool_RoadsWasChangedMessage {
             get {
                 return ResourceManager.GetString("Tool_RoadsWasChangedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a node or a segment to change markings.
+        /// </summary>
+        public static string Tool_SelectInfo {
+            get {
+                return ResourceManager.GetString("Tool_SelectInfo", resourceCulture);
             }
         }
     }

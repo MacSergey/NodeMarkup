@@ -65,7 +65,7 @@ namespace NodeMarkup.Tools
         }
 
 
-        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : (IsHoverSegment ? $"Segment #{HoverSegmentId}\nClick to edit marking" : Localize.Tool_InfoNode);
+        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : (IsHoverSegment ? Localize.Tool_InfoHoverSegment : Localize.Tool_SelectInfo);
 
         public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
