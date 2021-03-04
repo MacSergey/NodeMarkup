@@ -1805,33 +1805,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Approximation max length.
-        /// </summary>
-        public static string Settings_ApproximationMaxLength {
-            get {
-                return ResourceManager.GetString("Settings_ApproximationMaxLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Approximation min angle.
-        /// </summary>
-        public static string Settings_ApproximationMinAngle {
-            get {
-                return ResourceManager.GetString("Settings_ApproximationMinAngle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Approximation min length.
-        /// </summary>
-        public static string Settings_ApproximationMinLength {
-            get {
-                return ResourceManager.GetString("Settings_ApproximationMinLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup markings.
         /// </summary>
         public static string Settings_BackupMarking {
@@ -2188,6 +2161,15 @@ namespace NodeMarkup {
         public static string Settings_LoadMarkingAssets {
             get {
                 return ResourceManager.GetString("Settings_LoadMarkingAssets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на LOD distance.
+        /// </summary>
+        public static string Settings_LODDistance {
+            get {
+                return ResourceManager.GetString("Settings_LODDistance", resourceCulture);
             }
         }
         

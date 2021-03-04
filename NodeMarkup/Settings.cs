@@ -34,9 +34,6 @@ namespace NodeMarkup
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor(Mod.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 700f, true);
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
-        //public static SavedFloat ApproximationMinAngle { get; } = new SavedFloat(nameof(ApproximationMinAngle), SettingsFile, 10f, true);
-        //public static SavedFloat ApproximationMinLength { get; } = new SavedFloat(nameof(ApproximationMinLength), SettingsFile, 2f, true);
-        //public static SavedFloat ApproximationMaxLength { get; } = new SavedFloat(nameof(ApproximationMaxLength), SettingsFile, 10f, true);
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
@@ -219,9 +216,6 @@ namespace NodeMarkup
 
             AddDistanceSetting(group);
             AddLODSetting(group);
-            //AddMinAngleSetting(group);
-            //AddMinLengthSetting(group);
-            //AddMaxLengthSetting(group);
             AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
             group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
@@ -244,10 +238,7 @@ namespace NodeMarkup
             AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
         }
         private static void AddDistanceSetting(UIHelper group) => AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
-        private static void AddLODSetting(UIHelper group) => AddFloatField(group, "LOD distance", LODDistance, 300f, 0f);
-        //private static void AddMinAngleSetting(UIHelper group) => AddFloatField(group, Localize.Settings_ApproximationMinAngle, ApproximationMinAngle, 10f, 1f, 90f, UpdateAllMarkings);
-        //private static void AddMinLengthSetting(UIHelper group) => AddFloatField(group, Localize.Settings_ApproximationMinLength, ApproximationMinLength, 2f, 0.1f, 100f, UpdateAllMarkings);
-        //private static void AddMaxLengthSetting(UIHelper group) => AddFloatField(group, Localize.Settings_ApproximationMaxLength, ApproximationMaxLength, 10f, 1f, 100f, UpdateAllMarkings);
+        private static void AddLODSetting(UIHelper group) => AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
         private static void UpdateAllMarkings()
         {
             MarkupManager.NodeManager.AddAllToUpdate();

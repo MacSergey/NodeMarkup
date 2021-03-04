@@ -1371,13 +1371,7 @@ Are you sure you want to have multiple presets with the same name?</value>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Pavement</value>
   </data>
-  <data name="Settings_ApproximationMaxLength" xml:space="preserve">
-    <value>Approximation max length</value>
-  </data>
-  <data name="Settings_ApproximationMinAngle" xml:space="preserve">
-    <value>Approximation min angle</value>
-  </data>
-  <data name="Settings_ApproximationMinLength" xml:space="preserve">
-    <value>Approximation min length</value>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LOD distance</value>
   </data>
 </root>
