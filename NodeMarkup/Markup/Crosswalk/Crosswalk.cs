@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
 
-        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
+        public Dictionary<int, IStyleData> StyleData { get; private set; } = new Dictionary<int, IStyleData>();
         public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
@@ -103,7 +103,12 @@ namespace NodeMarkup.Manager
             if(!onlySelfUpdate)
                 Markup.Update(this);
         }
-        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(Style.Calculate(this));
+        public void RecalculateStyleData()
+        {
+            RecalculateStyleData(0);
+            RecalculateStyleData(1);
+        }
+        public void RecalculateStyleData(int lod) => StyleData[lod] = new MarkupStyleParts(Style.Calculate(this, lod));
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             foreach (var trajectory in BorderTrajectories)

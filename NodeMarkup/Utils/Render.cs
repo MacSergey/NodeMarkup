@@ -200,10 +200,10 @@ namespace NodeMarkup.Utils
 
     public interface IDrawData
     {
-        public void Draw(ushort id, RenderManager.Instance data);
+        public void Draw(RenderManager.Instance data);
     }
 
-    public class MarkupStyleDash
+    public class MarkupStylePart
     {
         public MaterialType MaterialType { get; set; }
         public Vector3 Position { get; set; }
@@ -212,7 +212,7 @@ namespace NodeMarkup.Utils
         public float Width { get; set; }
         public Color32 Color { get; set; }
 
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 position, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
         {
             Position = position;
             Angle = angle;
@@ -221,26 +221,26 @@ namespace NodeMarkup.Utils
             Color = color;
             MaterialType = materialType;
         }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this((start + end) / 2, angle, length, width, color, materialType) { }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, Vector3 dir, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this(start, end, end - start, (end - start).magnitude, width, color, materialType) { }
     }
-    public class MarkupStyleDashes : IStyleData, IEnumerable<MarkupStyleDash>
+    public class MarkupStyleParts : IStyleData, IEnumerable<MarkupStylePart>
     {
-        private List<MarkupStyleDash> Dashes { get; }
+        private List<MarkupStylePart> Dashes { get; }
 
-        public MarkupStyleDashes() => Dashes = new List<MarkupStyleDash>();
-        public MarkupStyleDashes(IEnumerable<MarkupStyleDash> dashes) => Dashes = dashes.ToList();
+        public MarkupStyleParts() => Dashes = new List<MarkupStylePart>();
+        public MarkupStyleParts(IEnumerable<MarkupStylePart> dashes) => Dashes = dashes.ToList();
 
-        public IEnumerator<MarkupStyleDash> GetEnumerator() => Dashes.GetEnumerator();
+        public IEnumerator<MarkupStylePart> GetEnumerator() => Dashes.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerable<IDrawData> GetDrawData() => RenderBatch.FromDashes(this);
@@ -270,7 +270,7 @@ namespace NodeMarkup.Utils
             MaterialType = materialType;
         }
 
-        public void Draw(ushort id, RenderManager.Instance data)
+        public void Draw(RenderManager.Instance data)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -576,7 +576,7 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size, MaterialType materialType)
+        public RenderBatch(MarkupStylePart[] dashes, int count, Vector3 size, MaterialType materialType)
         {
             MaterialType = materialType;
             Count = count;
@@ -597,7 +597,7 @@ namespace NodeMarkup.Utils
             Mesh = RenderHelper.CreateMesh(Count, size);
         }
 
-        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkupStyleDash> dashes)
+        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkupStylePart> dashes)
         {
             var materialGroups = dashes.GroupBy(d => d.MaterialType);
 
@@ -609,7 +609,7 @@ namespace NodeMarkup.Utils
                 {
                     var groupEnumerator = sizeGroup.GetEnumerator();
 
-                    var buffer = new MarkupStyleDash[16];
+                    var buffer = new MarkupStylePart[16];
                     var count = 0;
 
                     bool isEnd = groupEnumerator.MoveNext();
@@ -639,7 +639,7 @@ namespace NodeMarkup.Utils
 
         public override string ToString() => $"{Count}: {Size}";
 
-        public void Draw(ushort id, RenderManager.Instance data)
+        public void Draw(RenderManager.Instance data)
         {
             var instance = ItemsExtension.PropManager;
             var materialBlock = instance.m_materialBlock;

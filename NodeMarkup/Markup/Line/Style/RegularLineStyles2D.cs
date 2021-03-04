@@ -26,16 +26,16 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyRegularLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod)
         {
             var borders = line.Borders;
-            return new MarkupStyleDashes(StyleHelper.CalculateSolid(trajectory, GetDashes));
+            return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, GetDashes));
 
-            IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory trajectory) => CalculateDashes(trajectory, borders);
+            IEnumerable<MarkupStylePart> GetDashes(ILineTrajectory trajectory) => CalculateDashes(trajectory, borders);
         }
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, LineBorders borders)
+        protected virtual IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory trajectory, LineBorders borders)
         {
-            if (StyleHelper.CalculateSolidDash(borders, trajectory, 0f, Width, Color, out MarkupStyleDash dash))
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, 0f, Width, Color, out MarkupStylePart dash))
                 yield return dash;
         }
     }
@@ -62,7 +62,7 @@ namespace NodeMarkup.Manager
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
 
-        protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, LineBorders borders)
+        protected override IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory trajectory, LineBorders borders)
         {
             var firstOffset = Alignment.Value switch
             {
@@ -79,10 +79,10 @@ namespace NodeMarkup.Manager
                 _ => 0,
             };
 
-            if (StyleHelper.CalculateSolidDash(borders, trajectory, firstOffset, Width, Color, out MarkupStyleDash firstDash))
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, firstOffset, Width, Color, out MarkupStylePart firstDash))
                 yield return firstDash;
 
-            if (StyleHelper.CalculateSolidDash(borders, trajectory, secondOffset, Width, Color, out MarkupStyleDash secondDash))
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, Color, out MarkupStylePart secondDash))
                 yield return secondDash;
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -132,18 +132,21 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod)
         {
-            var borders = line.Borders;
-            return new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes));
+            if (!CheckDashedLod(lod, Width, DashLength))
+                return new MarkupStyleParts();
 
-            IEnumerable<MarkupStyleDash> GetDashes(ILineTrajectory trajectory, float startT, float endT)
+            var borders = line.Borders;
+            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes));
+
+            IEnumerable<MarkupStylePart> GetDashes(ILineTrajectory trajectory, float startT, float endT)
                 => CalculateDashes(trajectory, startT, endT, borders);
         }
 
-        protected virtual IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT, LineBorders borders)
+        protected virtual IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory trajectory, float startT, float endT, LineBorders borders)
         {
-            if (StyleHelper.CalculateDashedDash(borders, trajectory, startT, endT, DashLength, 0, Width, Color, out MarkupStyleDash dash))
+            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, 0, Width, Color, out MarkupStylePart dash))
                 yield return dash;
         }
 
@@ -191,7 +194,7 @@ namespace NodeMarkup.Manager
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
 
-        protected override IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT, LineBorders borders)
+        protected override IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory trajectory, float startT, float endT, LineBorders borders)
         {
             var firstOffset = Alignment.Value switch
             {
@@ -208,10 +211,10 @@ namespace NodeMarkup.Manager
                 _ => 0,
             };
 
-            if (StyleHelper.CalculateDashedDash(borders, trajectory, startT, endT, DashLength, firstOffset, Width, Color, out MarkupStyleDash firstDash))
+            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, firstOffset, Width, Color, out MarkupStylePart firstDash))
                 yield return firstDash;
 
-            if (StyleHelper.CalculateDashedDash(borders, trajectory, startT, endT, DashLength, secondOffset, Width, Color, out MarkupStyleDash secondDash))
+            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, secondOffset, Width, Color, out MarkupStylePart secondDash))
                 yield return secondDash;
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
@@ -265,27 +268,28 @@ namespace NodeMarkup.Manager
             Invert.Value = value == StyleAlignment.Right;
         }
 
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod)
         {
             var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
             var borders = line.Borders;
 
-            var dashes = new List<MarkupStyleDash>();
-            dashes.AddRange(StyleHelper.CalculateSolid(trajectory, CalculateSolidDash));
-            dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
+            var dashes = new List<MarkupStylePart>();
+            dashes.AddRange(StyleHelper.CalculateSolid(trajectory, lod, CalculateSolidDash));
+            if (CheckDashedLod(lod, Width, DashLength))
+                dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
 
-            return new MarkupStyleDashes(dashes);
+            return new MarkupStyleParts(dashes);
 
-            IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
+            IEnumerable<MarkupStylePart> CalculateSolidDash(ILineTrajectory lineTrajectory)
             {
-                if (StyleHelper.CalculateSolidDash(borders, lineTrajectory, solidOffset, Width, Color, out MarkupStyleDash dash))
+                if (StyleHelper.CalculateSolidPart(borders, lineTrajectory, solidOffset, Width, Color, out MarkupStylePart dash))
                     yield return dash;
             }
 
-            IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory lineTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashedDash(ILineTrajectory lineTrajectory, float startT, float endT)
             {
-                if (StyleHelper.CalculateDashedDash(borders, lineTrajectory, startT, endT, DashLength, dashedOffset, Width, Color, out MarkupStyleDash dash))
+                if (StyleHelper.CalculateDashedParts(borders, lineTrajectory, startT, endT, DashLength, dashedOffset, Width, Color, out MarkupStylePart dash))
                     yield return dash;
             }
         }
@@ -364,6 +368,7 @@ namespace NodeMarkup.Manager
     public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLine
     {
         public override StyleType Type { get; } = StyleType.LineSharkTeeth;
+        protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }
         public PropertyValue<float> Height { get; }
@@ -376,14 +381,17 @@ namespace NodeMarkup.Manager
             Space = GetSpaceProperty(space);
             Invert = GetInvertProperty(true);
         }
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory)
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod)
         {
-            var borders = line.Borders;
-            return new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
+            if (!CheckDashedLod(lod, Height, Base))
+                return new MarkupStyleParts();
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
+            var borders = line.Borders;
+            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
+
+            IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory trajectory, float startT, float endT)
             {
-                if (StyleHelper.CalculateDashedDash(borders, trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? 2 : -2), Height, Color, out MarkupStyleDash dash))
+                if (StyleHelper.CalculateDashedParts(borders, trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? 2 : -2), Height, Color, out MarkupStylePart dash))
                 {
                     dash.MaterialType = MaterialType.Triangle;
                     yield return dash;

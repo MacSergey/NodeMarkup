@@ -21,9 +21,9 @@ namespace NodeMarkup.Manager
     {
         protected abstract MaterialType MaterialType { get; }
 
-        public float MinAngle => Settings.ApproximationMinAngle; /*10f;*/
-        public float MinLength => Settings.ApproximationMinLength;/*2f;*/
-        public float MaxLength => Settings.ApproximationMaxLength;/*10f;*/
+        public float MinAngle => /*Settings.ApproximationMinAngle; */10f;
+        public float MinLength => /*Settings.ApproximationMinLength;*/2f;
+        public float MaxLength => /*Settings.ApproximationMaxLength;*/10f;
         public PropertyValue<float> Elevation { get; }
 
         public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset)
@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
                 triangulationTarget.Elevation.Value = Elevation;
         }
 
-        public override IStyleData Calculate(MarkupFiller filler)
+        public override IStyleData Calculate(MarkupFiller filler, int lod)
         {
             var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
 
@@ -46,7 +46,7 @@ namespace NodeMarkup.Manager
             if (!isClockWise)
                 contour = contour.Select(t => t.Invert()).Reverse().ToArray();
 
-            var pointsGroups = contour.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, (tr) => GetPoint(tr)).ToArray()).ToArray();
+            var pointsGroups = contour.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, lod, (tr) => GetPoint(tr)).ToArray()).ToArray();
             var points = pointsGroups.SelectMany(g => g).ToArray();
             var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
             P2T.Triangulate(polygon);

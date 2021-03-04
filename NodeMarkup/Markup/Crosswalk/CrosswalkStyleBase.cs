@@ -57,7 +57,7 @@ namespace NodeMarkup.Manager
         }
         public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupCrosswalk crosswalk);
+        public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod);
 
         public enum CrosswalkType
         {
@@ -124,11 +124,11 @@ namespace NodeMarkup.Manager
             return spaceLengthProperty;
         }
 
-        protected IEnumerable<MarkupStyleDash> CalculateCroswalkDash(ILineTrajectory trajectory, float startT, float endT, Vector3 direction, ILineTrajectory[] borders, float length, float width)
+        protected IEnumerable<MarkupStylePart> CalculateCroswalkPart(ILineTrajectory trajectory, float startT, float endT, Vector3 direction, ILineTrajectory[] borders, float length, float width)
         {
             var position = trajectory.Position((startT + endT) / 2);
-            var dashTrajectory = new StraightTrajectory(position, position + direction, false);
-            var intersects = MarkupIntersect.Calculate(dashTrajectory, borders, true);
+            var partTrajectory = new StraightTrajectory(position, position + direction, false);
+            var intersects = MarkupIntersect.Calculate(partTrajectory, borders, true);
             intersects = intersects.OrderBy(i => i.FirstT).ToList();
 
             var halfLength = length / 2;
@@ -148,7 +148,7 @@ namespace NodeMarkup.Manager
                 var startPosition = position + direction * start;
                 var endPosition = position + direction * end;
 
-                yield return new MarkupStyleDash(startPosition, endPosition, direction, width, Color);
+                yield return new MarkupStylePart(startPosition, endPosition, direction, width, Color);
             }
         }
     }

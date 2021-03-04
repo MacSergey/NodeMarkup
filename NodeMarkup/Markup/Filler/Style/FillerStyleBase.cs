@@ -74,7 +74,7 @@ namespace NodeMarkup.Manager
 
         public sealed override Style Copy() => CopyFillerStyle();
         public abstract FillerStyle CopyFillerStyle();
-        public abstract IStyleData Calculate(MarkupFiller filler);
+        public abstract IStyleData Calculate(MarkupFiller filler, int lod);
 
         public ILineTrajectory[] SetMedianOffset(MarkupFiller filler)
         {

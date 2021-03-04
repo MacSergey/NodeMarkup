@@ -146,17 +146,21 @@ namespace NodeMarkup.Manager
             if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
                 return;
 
-            if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                return;
-
             if (markup.NeedRecalculateDrawData)
             {
                 markup.NeedRecalculateDrawData = false;
                 markup.RecalculateDrawData();
             }
 
-            foreach (var item in markup.DrawData)
-                item.Draw(id, data);
+            if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
+                Render(markup, data, 0);
+            else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
+                Render(markup, data, 1);
+        }
+        private void Render(MarkupType markup, RenderManager.Instance data, int lod)
+        {
+            foreach (var item in markup.DrawData[lod])
+                item.Draw(data);
         }
 
         public void AddToUpdate(ushort id)

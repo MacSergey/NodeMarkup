@@ -83,7 +83,7 @@ namespace NodeMarkup.Manager
 
 
         public bool NeedRecalculateDrawData { get; set; }
-        public List<IDrawData> DrawData { get; private set; } = new List<IDrawData>();
+        public Dictionary<int,List<IDrawData>> DrawData { get; private set; } = new Dictionary<int, List<IDrawData>>();
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -322,24 +322,29 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateDrawData()
         {
-            var dashes = new List<MarkupStyleDash>();
-            var drawData = new List<IDrawData>();
+            DrawData.Clear();
 
-            Seporate(Lines.SelectMany(l => l.StyleData));
-            Seporate(Fillers.Select(l => l.StyleData));
-            Seporate(Crosswalks.Select(l => l.StyleData));
-
-            drawData.AddRange(RenderBatch.FromDashes(dashes));
-            DrawData = drawData;
-
-            void Seporate(IEnumerable<IStyleData> stylesData)
+            for (var i = 0; i <= 1; i += 1)
             {
-                foreach (var styleData in stylesData)
+                var dashes = new List<MarkupStylePart>();
+                var drawData = new List<IDrawData>();
+
+                Seporate(Lines.SelectMany(l => l.StyleData[i]));
+                Seporate(Fillers.Select(l => l.StyleData[i]));
+                Seporate(Crosswalks.Select(l => l.StyleData[i]));
+
+                drawData.AddRange(RenderBatch.FromDashes(dashes));
+                DrawData.Add(i, drawData);
+
+                void Seporate(IEnumerable<IStyleData> stylesData)
                 {
-                    if (styleData is IEnumerable<MarkupStyleDash> styleDashes)
-                        dashes.AddRange(styleDashes);
-                    else
-                        drawData.AddRange(styleData.GetDrawData());
+                    foreach (var styleData in stylesData)
+                    {
+                        if (styleData is IEnumerable<MarkupStylePart> styleDashes)
+                            dashes.AddRange(styleDashes);
+                        else
+                            drawData.AddRange(styleData.GetDrawData());
+                    }
                 }
             }
         }
