@@ -33,8 +33,8 @@ using System.Runtime.InteropServices;
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
 #if BETA
-[assembly: AssemblyVersion("1.6.0.286")]
-[assembly: AssemblyFileVersion("1.6.0.286")]
+[assembly: AssemblyVersion("1.6.0.289")]
+[assembly: AssemblyFileVersion("1.6.0.289")]
 #else
 [assembly: AssemblyVersion("1.5.1")]
 [assembly: AssemblyFileVersion("1.5.1")] 

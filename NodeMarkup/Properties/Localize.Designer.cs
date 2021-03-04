@@ -3600,7 +3600,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a node or a segment to change markings.
+        ///   Ищет локализованную строку, похожую на Select a node or segment to change markings.
         /// </summary>
         public static string Tool_SelectInfo {
             get {

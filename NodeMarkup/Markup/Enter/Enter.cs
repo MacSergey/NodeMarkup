@@ -15,7 +15,7 @@ using UnityEngine;
 namespace NodeMarkup.Manager
 {
 
-    public abstract class Enter : IRender, IComparable<Enter>
+    public abstract class Enter : IRender, IDeletable, ISupport, IComparable<Enter>
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -72,6 +72,8 @@ namespace NodeMarkup.Manager
 
         public EnterData Data => new EnterData(this);
 
+        public string DeleteCaptionDescription => throw new NotImplementedException();
+        public string DeleteMessageDescription => throw new NotImplementedException();
 
         public Enter(Markup markup, ushort segmentId)
         {
@@ -112,20 +114,6 @@ namespace NodeMarkup.Manager
             var points = sources.Select(s => new MarkupEnterPoint(this, s)).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
         }
-        //private bool CheckInfo(NetInfo info, out IEnumerable<float> markupPoints)
-        //{
-        //    if (info.GetType().GetInterfaces().FirstOrDefault(i => i.Name == nameof(IMarkingNetInfo)) is Type inter)
-        //    {
-        //        if (AccessTools.Method(inter, $"get_{nameof(IMarkingNetInfo.MarkupPoints)}") is MethodInfo method)
-        //        {
-        //            markupPoints = (IEnumerable<float>)method.Invoke(info, new object[0]);
-        //            return true;
-        //        }
-        //    }
-
-        //    markupPoints = null;
-        //    return false;
-        //}
 
         protected abstract ushort GetSegmentId();
         protected abstract NetSegment GetSegment();
@@ -211,6 +199,8 @@ namespace NodeMarkup.Manager
         }
         public int CompareTo(Enter other) => other.NormalAngle.CompareTo(NormalAngle);
         public override string ToString() => Id.ToString();
+
+        public Dependences GetDependences() => throw new NotImplementedException();
     }
     public abstract class Enter<MarkupType> : Enter
         where MarkupType : Markup

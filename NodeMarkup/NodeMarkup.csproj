@@ -119,6 +119,7 @@
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectMode.cs" />
+    <Compile Include="UI\Editors\EnterEditor.cs" />
     <Compile Include="UI\Panel\TabStrip.cs" />
     <Compile Include="UI\Property panels\ColorAdvancedProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />

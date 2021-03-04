@@ -24,6 +24,7 @@ namespace NodeMarkup.Manager
     public interface ISupport { }
     public interface ISupport<Type> where Type : ISupport { }
     public interface ISupportPoints : ISupport<MarkupPoint> { }
+    public interface ISupportEnters : ISupport<Enter> { }
     public interface ISupportLines : ISupport<MarkupLine> { }
     public interface ISupportFillers : ISupport<MarkupFiller> { }
     public interface ISupportCrosswalks : ISupport<MarkupCrosswalk> { }
@@ -50,7 +51,7 @@ namespace NodeMarkup.Manager
     {
         IEnumerable<IDrawData> GetDrawData();
     }
-    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, IToXml
+    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportEnters, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, IToXml
     {
         #region PROPERTIES
         public abstract MarkupType Type { get; }

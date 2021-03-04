@@ -322,7 +322,7 @@ The restored markings will replace all existing markings.</value>
 Click to edit markings</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Select a node or a segment to change markings</value>
+    <value>Select a node or segment to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint for regular or stop line
