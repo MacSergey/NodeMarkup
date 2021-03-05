@@ -210,17 +210,10 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, offset, isBothDir);
             }
         }
+#if !DEBUG_GET_DASHES
         protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, ITrajectory[] contour)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
-
-            //GetBorderT(item.Before, contour, out float beforeMinT, out float beforeMaxT);
-            //GetBorderT(item.After, contour, out float afterMinT, out float afterMaxT);
-            //var beforeIntersect = MarkupIntersect.CalculateSingle(straight, item.Before);
-            //var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.FirstT : float.MaxValue;
-            //var afterIntersect = MarkupIntersect.CalculateSingle(straight, item.After);
-            //var isBeforeMainIntersect = beforeIntersect.IsIntersect && beforeMinT < beforeIntersect.SecondT && beforeIntersect.SecondT < beforeMaxT;
-            //var isAfterMainIntersect = afterIntersect.IsIntersect && afterMinT < afterIntersect.SecondT && afterIntersect.SecondT < afterMaxT;
 
             var intersectSet = new HashSet<MarkupIntersect>();
             foreach (var trajectory in contour)
@@ -228,60 +221,222 @@ namespace NodeMarkup.Manager
 
             var intersects = intersectSet.OrderBy(i => i, MarkupIntersect.FirstComparer).ToArray();
 
+            var beforeIntersect = MarkupIntersect.CalculateSingle(straight, item.Before);
+            var afterIntersect = MarkupIntersect.CalculateSingle(straight, item.After);
+
+            var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.FirstT : float.MaxValue;
+            var afterT = afterIntersect.IsIntersect ? afterIntersect.FirstT : float.MinValue;
+
+            var beforeIsPriority = beforeIntersect.IsIntersect && Mathf.Abs(beforeIntersect.SecondT) < Mathf.Abs(beforeIntersect.FirstT);
+            var afterIsPriority = afterIntersect.IsIntersect && Mathf.Abs(afterIntersect.SecondT) < Mathf.Abs(afterIntersect.FirstT);
+
             for (var i = 1; i < intersects.Length; i += 2)
             {
-                var input = intersects[i - 1].FirstT;
-                var output = intersects[i].FirstT;
-
-                if (!item.IsBothDir && input < 0)
-                {
-                    if (output < 0)
-                        continue;
-                    else
-                        input = 0f;
-                }
-
-                //var isMain = input <= 0f && output >= 0f;
-                //var inBeforeIntersect = input < beforeT && beforeT < output;
-
-                //if (!isMain || (inBeforeIntersect && isBeforeMainIntersect))
-                //{
-                //    if ((beforeT < 0f && output < beforeT) || (beforeT > 0f && input > beforeT))
-                //        break;
-                //    else if (beforeT < 0f)
-                //        input = beforeT;
-                //    else
-                //        output = beforeT;
-                //}
-
-                var start = item.Position + item.Direction * input;
-                var end = item.Position + item.Direction * output;
-
-                if (item.Offset != 0)
-                {
-                    var startOffset = GetOffset(intersects[i - 1], item.Offset);
-                    var endOffset = GetOffset(intersects[i], item.Offset);
-
-                    if ((end - start).magnitude - Width < startOffset + endOffset)
-                        continue;
-
-                    var isStartToEnd = output >= input;
-                    start += item.Direction * (isStartToEnd ? startOffset : -startOffset);
-                    end += item.Direction * (isStartToEnd ? -endOffset : endOffset);
-                }
-
+                if (!GetDashesT(item, intersects, i, beforeT, beforeIsPriority, afterT, afterIsPriority, out float input, out float output))
+                    continue;
+                if (!GetStylePartParams(item, intersects, i, input, output, out Vector3 start, out Vector3 end))
+                    continue;
                 yield return new MarkupStylePart(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
             }
         }
-        private void GetBorderT(StraightTrajectory border, ITrajectory[] contour, out float minT, out float maxT)
+        private bool GetDashesT(PartItem item, MarkupIntersect[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, bool afterIsPriority, out float input, out float output)
         {
-            var intersects = contour.Select(c => MarkupIntersect.CalculateSingle(border, c)).Where(i => i.IsIntersect).ToArray();
-            var minBorders = intersects.Where(b => b.FirstT < 0).ToArray();
-            var maxBorders = intersects.Where(b => b.FirstT > 0).ToArray();
-            minT = minBorders.Any() ? minBorders.Max(b => b.FirstT) : float.MinValue;
-            maxT = maxBorders.Any() ? maxBorders.Min(b => b.FirstT) : float.MaxValue;
+            input = intersects[i - 1].FirstT;
+            output = intersects[i].FirstT;
+
+            if (!item.IsBothDir && input < 0)
+            {
+                if (output < 0)
+                    return false;
+                else
+                    input = 0f;
+            }
+
+            var isMain = input <= 0f && output >= 0f;
+
+            if (isMain)
+            {
+                Cut(beforeT, beforeIsPriority, ref input, ref output);
+                Cut(afterT, afterIsPriority, ref input, ref output);
+            }
+            else if (Skip(beforeT, beforeIsPriority, input, output) || Skip(afterT, afterIsPriority, input, output))
+                return false;
+
+            return true;
+
+            static void Cut(float t, bool isPriority, ref float input, ref float output)
+            {
+                if (t < 0f)
+                {
+                    if (input < t && isPriority)
+                        input = t;
+                }
+                else
+                {
+                    if (output > t && isPriority)
+                        output = t;
+                }
+            }
+            static bool Skip(float t, bool isPriority, float input, float output) => isPriority && ((t < 0f && input < t) || (t > 0f && output > t));
         }
-        private int Sign(float value) => value == 0f ? 0 : (value > 0f ? 1 : -1);
+#else
+        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, ITrajectory[] contour)
+        {
+            var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
+
+            var intersectSet = new HashSet<MarkupIntersect>();
+            foreach (var trajectory in contour)
+                intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
+
+            var intersects = intersectSet.OrderBy(i => i, MarkupIntersect.FirstComparer).ToArray();
+
+            var beforeIntersect = MarkupIntersect.CalculateSingle(straight, item.Before);
+            var afterIntersect = MarkupIntersect.CalculateSingle(straight, item.After);
+
+            var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.FirstT : float.MaxValue;
+            var afterT = afterIntersect.IsIntersect ? afterIntersect.FirstT : float.MinValue;
+
+            var beforeIsPriority = beforeIntersect.IsIntersect && Mathf.Abs(beforeIntersect.SecondT) < Mathf.Abs(beforeIntersect.FirstT);
+            var afterIsPriority = afterIntersect.IsIntersect && Mathf.Abs(afterIntersect.SecondT) < Mathf.Abs(afterIntersect.FirstT);
+
+            for (var i = 1; i < intersects.Length; i += 1)
+            {
+                if (!GetDashesT(item, intersects, i, beforeT, beforeIsPriority, afterT, afterIsPriority, out float input, out float output, out Color32 color))
+                    continue;
+                if (!GetStylePartParams(item, intersects, i, input, output, out Vector3 start, out Vector3 end))
+                    continue;
+                yield return new MarkupStylePart(start, end, item.Direction, item.Width, color, MaterialType.RectangleFillers);
+            }
+        }
+        private bool GetDashesT(PartItem item, MarkupIntersect[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, /*bool afterInterIsMain,*/ bool afterIsPriority, out float input, out float output, out Color32 color)
+        {
+            color = Color.Value;
+            input = intersects[i - 1].FirstT;
+            output = intersects[i].FirstT;
+
+            if (!item.IsBothDir && input < 0)
+            {
+                if (output < 0)
+                    return false;
+                else
+                    input = 0f;
+            }
+
+            if (i % 2 == 0)
+            {
+                color = Colors.Purple;
+                return true;
+            }
+
+            var isMain = input <= 0f && output >= 0f;
+
+            if (isMain)
+            {
+                if (beforeT < 0)
+                {
+                    if (input < beforeT && beforeIsPriority)
+                    {
+                        input = beforeT;
+                        color = Colors.Blue;
+                    }
+                }
+                else
+                {
+                    if (output > beforeT && beforeIsPriority)
+                    {
+                        output = beforeT;
+                        color = Colors.Blue;
+                    }
+                }
+
+                if (afterT < 0)
+                {
+                    if (input < afterT && afterIsPriority)
+                    {
+                        input = afterT;
+                        color = Colors.Blue;
+                    }
+                }
+                else
+                {
+                    if (output > afterT && afterIsPriority)
+                    {
+                        output = afterT;
+                        color = Colors.Blue;
+                    }
+                }
+            }
+            else
+            {
+                if (beforeT < 0 || afterT < 0)
+                {
+                    if ((input < beforeT && beforeIsPriority) || (input < afterT && afterIsPriority))
+                        color = Colors.Red;
+                    else
+                        color = Colors.Green;
+                }
+                else
+                {
+                    if ((output > beforeT && beforeIsPriority) || (output > afterT && afterIsPriority))
+                        color = Colors.Red;
+                    else
+                        color = Colors.Green;
+                }
+
+                //if (beforeT < 0)
+                //{
+                //    if (input < beforeT && beforeIsPriority)
+                //        color = Colors.Red;
+                //    else
+                //        color = Colors.Green;
+                //}
+                //else
+                //{
+                //    if (output > beforeT && beforeIsPriority)
+                //        color = Colors.Red;
+                //    else
+                //        color = Colors.Green;
+                //}
+
+                //if (afterT < 0)
+                //{
+                //    if (input < afterT && afterIsPriority)
+                //        color = Colors.Red;
+                //    else
+                //        color = Colors.Green;
+                //}
+                //else
+                //{
+                //    if (output > afterT && afterIsPriority)
+                //        color = Colors.Red;
+                //    else
+                //        color = Colors.Green;
+                //}
+            }
+
+            return true;
+        }
+#endif
+        private bool GetStylePartParams(PartItem item, MarkupIntersect[] intersects, int i, float input, float output, out Vector3 start, out Vector3 end)
+        {
+            start = item.Position + item.Direction * input;
+            end = item.Position + item.Direction * output;
+
+            if (item.Offset != 0)
+            {
+                var startOffset = GetOffset(intersects[i - 1], item.Offset);
+                var endOffset = GetOffset(intersects[i], item.Offset);
+
+                if ((end - start).magnitude - Width < startOffset + endOffset)
+                    return false;
+
+                var isStartToEnd = output >= input;
+                start += item.Direction * (isStartToEnd ? startOffset : -startOffset);
+                end += item.Direction * (isStartToEnd ? -endOffset : endOffset);
+            }
+
+            return true;
+        }
 
         protected class RailLine : List<ITrajectory> { }
         protected class PartItem
@@ -404,34 +559,34 @@ namespace NodeMarkup.Manager
                 return p;
             }
         }
-        //protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders)
-        //{
-        //    startBorders = parts.Select(p => new StraightTrajectory(p.StartPosition, p.StartPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
-        //    endBorders = parts.Select(p => new StraightTrajectory(p.EndPosition, p.EndPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
-        //}
-        //protected StraightTrajectory GetPartBorder(StraightTrajectory[] borders, StraightTrajectory part, int index, bool isIncrement)
-        //{
-        //    var step = isIncrement ? 1 : -1;
+        protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders)
+        {
+            startBorders = parts.Select(p => new StraightTrajectory(p.StartPosition, p.StartPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
+            endBorders = parts.Select(p => new StraightTrajectory(p.EndPosition, p.EndPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
+        }
+        protected StraightTrajectory GetPartBorder(StraightTrajectory[] borders, StraightTrajectory part, int index, bool isIncrement)
+        {
+            var step = isIncrement ? 1 : -1;
 
-        //    var border = default(StraightTrajectory);
-        //    var t = float.MaxValue;
+            var border = default(StraightTrajectory);
+            var t = float.MaxValue;
 
-        //    for (var i = index + step; isIncrement ? i < part.Length : i >= 0; i += step)
-        //    {
-        //        var intersection = MarkupIntersect.CalculateSingle(part, borders[i]);
-        //        if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 100f && Math.Abs(intersection.SecondT) < 100f)
-        //        {
-        //            if (Mathf.Abs(intersection.FirstT) < Mathf.Abs(t))
-        //            {
-        //                border = borders[i];
-        //                t = intersection.FirstT;
-        //            }
-        //            else
-        //                break;
-        //        }
-        //    }
-        //    return border;
-        //}
+            for (var i = index + step; isIncrement ? i < borders.Length : i >= 0; i += step)
+            {
+                var intersection = MarkupIntersect.CalculateSingle(part, borders[i]);
+                if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 1000f && Math.Abs(intersection.SecondT) < 1000f)
+                {
+                    if (Mathf.Abs(intersection.FirstT) < Mathf.Abs(t))
+                    {
+                        border = borders[i];
+                        t = intersection.FirstT;
+                    }
+                    else
+                        break;
+                }
+            }
+            return border;
+        }
 
         public override XElement ToXml()
         {
@@ -526,16 +681,16 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, angle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
             var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            //GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
+            GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
             {
-                //var before = GetPartBorder(endBorders, startBorders[i], i, false);
-                //var after = GetPartBorder(startBorders, endBorders[i], i, true);
+                var before = GetPartBorder(endBorders, startBorders[i], i, false);
+                var after = GetPartBorder(startBorders, endBorders[i], i, true);
                 foreach (var item in GetPartItems(parts[i], angle, itemsCount, itemWidth, itemStep, Offset))
                 {
-                    //item.Before = before;
-                    //item.After = after;
+                    item.Before = before;
+                    item.After = after;
                     yield return item;
                 }
             }
@@ -753,25 +908,25 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
             var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            //GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
-            //GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
+            GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
+            GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
             {
-                //var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
-                //var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
-                //var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
-                //var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
+                var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
+                var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
+                var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
+                var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
                 foreach (var item in GetPartItems(parts[i], halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
                 {
-                    //item.Before = leftBefore;
-                    //item.After = leftAfter;
+                    item.Before = leftBefore;
+                    item.After = leftAfter;
                     yield return item;
                 }
                 foreach (var item in GetPartItems(parts[i], -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
                 {
-                    //item.Before = rightBefore;
-                    //item.After = rightAfter;
+                    item.Before = rightBefore;
+                    item.After = rightAfter;
                     yield return item;
                 }
             }
