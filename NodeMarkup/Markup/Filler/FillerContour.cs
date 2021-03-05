@@ -39,13 +39,13 @@ namespace NodeMarkup.Manager
         List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
         public IEnumerable<MarkupLinePart> Parts => LineParts;
 
-        public IEnumerable<ILineTrajectory> TrajectoriesRaw
+        public IEnumerable<ITrajectory> TrajectoriesRaw
         {
             get
             {
                 foreach (var part in LineParts)
                 {
-                    if (part.GetTrajectory(out ILineTrajectory trajectory))
+                    if (part.GetTrajectory(out ITrajectory trajectory))
                         yield return trajectory;
                     else
                         yield return null;
@@ -53,7 +53,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public IEnumerable<ILineTrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t);
+        public IEnumerable<ITrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t);
 
         public FillerContour(Markup markup)
         {

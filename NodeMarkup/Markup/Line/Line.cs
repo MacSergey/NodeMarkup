@@ -41,8 +41,8 @@ namespace NodeMarkup.Manager
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
 
-        protected ILineTrajectory LineTrajectory { get; private set; }
-        public ILineTrajectory Trajectory => LineTrajectory.Copy();
+        protected ITrajectory LineTrajectory { get; private set; }
+        public ITrajectory Trajectory => LineTrajectory.Copy();
         public Dictionary<MarkupLOD, IStyleData[]> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData[]>();
 
         public LineBorders Borders => new LineBorders(this);
@@ -66,7 +66,7 @@ namespace NodeMarkup.Manager
             if (!onlySelfUpdate)
                 Markup.Update(this);
         }
-        protected abstract ILineTrajectory CalculateTrajectory();
+        protected abstract ITrajectory CalculateTrajectory();
 
         public void RecalculateStyleData()
         {
@@ -219,7 +219,7 @@ namespace NodeMarkup.Manager
                 RecalculateStyleData();
         }
 
-        protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
 
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
@@ -265,7 +265,7 @@ namespace NodeMarkup.Manager
             AddRule(lineStyle, false, false);
             RecalculateStyleData();
         }
-        protected override ILineTrajectory CalculateTrajectory()
+        protected override ITrajectory CalculateTrajectory()
         {
             var trajectory = new Bezier3
             {
@@ -379,7 +379,7 @@ namespace NodeMarkup.Manager
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : base(markup, pointPair, lineType) { }
 
-        protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
     {
@@ -401,7 +401,7 @@ namespace NodeMarkup.Manager
         }
         protected override void RuleChanged() => Markup.Update(this, true);
 
-        protected override ILineTrajectory CalculateTrajectory() => TrajectoryGetter();
+        protected override ITrajectory CalculateTrajectory() => TrajectoryGetter();
         public float GetT(BorderPosition border) => (int)border;
         public override IEnumerable<ILinePartEdge> RulesEdges
         {
@@ -507,25 +507,25 @@ namespace NodeMarkup.Manager
             public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
         }
     }
-    public class LineBorders : IEnumerable<ILineTrajectory>
+    public class LineBorders : IEnumerable<ITrajectory>
     {
         public Vector3 Center { get; }
-        public List<ILineTrajectory> Borders { get; }
+        public List<ITrajectory> Borders { get; }
         public bool IsEmpty => !Borders.Any();
         public LineBorders(MarkupLine line)
         {
             Center = line.Markup.Position;
             Borders = GetBorders(line).ToList();
         }
-        public IEnumerable<ILineTrajectory> GetBorders(MarkupLine line)
+        public IEnumerable<ITrajectory> GetBorders(MarkupLine line)
         {
-            if (line.Start.GetBorder(out ILineTrajectory startTrajectory))
+            if (line.Start.GetBorder(out ITrajectory startTrajectory))
                 yield return startTrajectory;
-            if (line.End.GetBorder(out ILineTrajectory endTrajectory))
+            if (line.End.GetBorder(out ITrajectory endTrajectory))
                 yield return endTrajectory;
         }
 
-        public IEnumerator<ILineTrajectory> GetEnumerator() => Borders.GetEnumerator();
+        public IEnumerator<ITrajectory> GetEnumerator() => Borders.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public StraightTrajectory[] GetVertex(MarkupStylePart dash)

@@ -10,8 +10,8 @@ namespace NodeMarkup.Manager
 {
     public static class StyleHelper
     {
-        public delegate IEnumerable<MarkupStylePart> SolidGetter(ILineTrajectory trajectory);
-        public delegate IEnumerable<MarkupStylePart> DashedGetter(ILineTrajectory trajectory, float startT, float endT);
+        public delegate IEnumerable<MarkupStylePart> SolidGetter(ITrajectory trajectory);
+        public delegate IEnumerable<MarkupStylePart> DashedGetter(ITrajectory trajectory, float startT, float endT);
         public static float MinAngleDelta { get; } = 5f;
         public static float MinLength { get; } = 1f;
         public static float MaxLength { get; } = 10f;
@@ -22,21 +22,21 @@ namespace NodeMarkup.Manager
         };
         private static int MaxDepth => 5;
 
-        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, MarkupLOD lod, Func<ILineTrajectory, IEnumerable<Result>> calculateParts) => CalculateSolid(trajectory, MinAngleDelta, MinLength, MaxLength, lod, calculateParts);
-        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, float minAngle, float minLength, float maxLength, MarkupLOD lod, Func<ILineTrajectory, IEnumerable<Result>> calculateParts)
+        public static IEnumerable<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts) => CalculateSolid(trajectory, MinAngleDelta, MinLength, MaxLength, lod, calculateParts);
+        public static IEnumerable<Result> CalculateSolid<Result>(ITrajectory trajectory, float minAngle, float minLength, float maxLength, MarkupLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts)
         {
             var lodScale = LodScale[lod];
             return CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle * lodScale, minLength * lodScale, maxLength * lodScale, calculateParts);
         }
 
-        private static IEnumerable<Result> CalculateSolid<Result>(int depth, ILineTrajectory trajectory, float deltaAngle, float minAngle, float minLength, float maxLength, Func<ILineTrajectory, IEnumerable<Result>> calculateParts)
+        private static IEnumerable<Result> CalculateSolid<Result>(int depth, ITrajectory trajectory, float deltaAngle, float minAngle, float minLength, float maxLength, Func<ITrajectory, IEnumerable<Result>> calculateParts)
         {
             var length = trajectory.Magnitude;
 
             var needDivide = (minAngle < deltaAngle && minLength <= length) || maxLength < length;
             if (depth < MaxDepth && (needDivide || depth == 0))
             {
-                trajectory.Divide(out ILineTrajectory first, out ILineTrajectory second);
+                trajectory.Divide(out ITrajectory first, out ITrajectory second);
                 var firstDeltaAngle = first.DeltaAngle;
                 var secondDeltaAngle = second.DeltaAngle;
 
@@ -56,7 +56,7 @@ namespace NodeMarkup.Manager
                 yield return part;
         }
 
-        public static IEnumerable<MarkupStylePart> CalculateDashed(ILineTrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
+        public static IEnumerable<MarkupStylePart> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
         {
             List<PartT> partsT;
             switch (trajectory)
@@ -139,7 +139,7 @@ namespace NodeMarkup.Manager
 
             return partsT;
         }
-        public static bool CalculateDashedParts(LineBorders borders, ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkupStylePart part)
+        public static bool CalculateDashedParts(LineBorders borders, ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkupStylePart part)
         {
             part = CalculateDashedPart(trajectory, startT, endT, dashLength, offset, width, color);
 
@@ -150,7 +150,7 @@ namespace NodeMarkup.Manager
             return !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
 
         }
-        public static MarkupStylePart CalculateDashedPart(ILineTrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
+        public static MarkupStylePart CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
         {
             if (offset == 0)
                 return CalculateDashedPart(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
@@ -161,7 +161,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedPart(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupStylePart CalculateDashedPart(ILineTrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color32 color, float? angle = null)
+        public static MarkupStylePart CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color32 color, float? angle = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -174,7 +174,7 @@ namespace NodeMarkup.Manager
             return new MarkupStylePart(startPosition, endPosition, dir, dashLength, width, color);
         }
 
-        public static bool CalculateSolidPart(LineBorders borders, ILineTrajectory trajectory, float offset, float width, Color32 color, out MarkupStylePart part)
+        public static bool CalculateSolidPart(LineBorders borders, ITrajectory trajectory, float offset, float width, Color32 color, out MarkupStylePart part)
         {
             part = CalculateSolidPart(trajectory, offset, width, color);
 
@@ -218,7 +218,7 @@ namespace NodeMarkup.Manager
             }
             return true;
         }
-        public static MarkupStylePart CalculateSolidPart(ILineTrajectory trajectory, float offset, float width, Color32 color)
+        public static MarkupStylePart CalculateSolidPart(ITrajectory trajectory, float offset, float width, Color32 color)
         {
             if (offset == 0)
                 return CalculateSolidPart(trajectory, Vector3.zero, Vector3.zero, width, color);
@@ -229,7 +229,7 @@ namespace NodeMarkup.Manager
                 return CalculateSolidPart(trajectory, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupStylePart CalculateSolidPart(ILineTrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color32 color)
+        public static MarkupStylePart CalculateSolidPart(ITrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color32 color)
         {
             var startPosition = trajectory.StartPosition + startOffset;
             var endPosition = trajectory.EndPosition + endOffset;

@@ -131,7 +131,7 @@ namespace NodeMarkup.Manager
         }
 
         public Dependences GetDependences() => throw new NotSupportedException();
-        public virtual bool GetBorder(out ILineTrajectory line)
+        public virtual bool GetBorder(out ITrajectory line)
         {
             line = null;
             return false;
@@ -179,7 +179,7 @@ namespace NodeMarkup.Manager
                 return position;
             }
         }
-        public override bool GetBorder(out ILineTrajectory line)
+        public override bool GetBorder(out ITrajectory line)
         {
             if(Enter is NodeEnter nodeEnter)
                 return nodeEnter.GetBorder(this, out line);

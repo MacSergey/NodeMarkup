@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
         public abstract FillerStyle CopyFillerStyle();
         public abstract IStyleData Calculate(MarkupFiller filler, MarkupLOD lod);
 
-        public ILineTrajectory[] SetMedianOffset(MarkupFiller filler)
+        public ITrajectory[] SetMedianOffset(MarkupFiller filler)
         {
             var lineParts = filler.Contour.Parts.ToArray();
             var trajectories = filler.Contour.TrajectoriesRaw.ToArray();
@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
                     trajectories[nextI] = new StraightTrajectory(trajectories[i].EndPosition, trajectories[nextI].EndPosition);
                 }
 
-                ILineTrajectory Shift(ILineTrajectory trajectory)
+                ITrajectory Shift(ITrajectory trajectory)
                 {
                     var newT = trajectory.Travel(0, MedianOffset);
                     return trajectory.Cut(newT, 1);

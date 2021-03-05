@@ -23,8 +23,8 @@ namespace NodeMarkup.Manager
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_NodeCaption, Id);
         public override MarkupLine.LineType SupportLines => MarkupLine.LineType.All;
-        protected EnterDic<ILineTrajectory> BetweenEnters { get; } = new EnterDic<ILineTrajectory>();
-        public IEnumerable<ILineTrajectory> Contour
+        protected EnterDic<ITrajectory> BetweenEnters { get; } = new EnterDic<ITrajectory>();
+        public IEnumerable<ITrajectory> Contour
         {
             get
             {
@@ -62,7 +62,7 @@ namespace NodeMarkup.Manager
                 BetweenEnters[i, j] = new BezierTrajectory(betweenBezier);
             }
         }
-        public bool GetBordersLine(Enter first, Enter second, out ILineTrajectory line)
+        public bool GetBordersLine(Enter first, Enter second, out ITrajectory line)
         {
             var i = EntersList.IndexOf(first);
             var j = EntersList.IndexOf(second);
@@ -103,7 +103,7 @@ namespace NodeMarkup.Manager
                 get => this[GetId(i, j)];
                 set => this[GetId(i, j)] = value;
             }
-            private int GetId(int i, int j) => Math.Max(i, j) * 10 + Math.Min(i, j);
+            private int GetId(int i, int j) => (i + 1) * 10 + j + 1; /*Math.Max(i, j) * 10 + Math.Min(i, j);*/
 
             public bool TryGetValue(int i, int j, out T value) => TryGetValue(GetId(i, j), out value);
         }

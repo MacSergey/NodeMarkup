@@ -124,7 +124,7 @@ namespace NodeMarkup.Manager
             return spaceLengthProperty;
         }
 
-        protected IEnumerable<MarkupStylePart> CalculateCroswalkPart(ILineTrajectory trajectory, float startT, float endT, Vector3 direction, ILineTrajectory[] borders, float length, float width)
+        protected IEnumerable<MarkupStylePart> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width)
         {
             var position = trajectory.Position((startT + endT) / 2);
             var partTrajectory = new StraightTrajectory(position, position + direction, false);

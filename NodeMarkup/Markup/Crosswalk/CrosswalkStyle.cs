@@ -127,7 +127,7 @@ namespace NodeMarkup.Manager
 
             return widthProperty;
         }
-        protected bool Cut(MarkupCrosswalk crosswalk, ILineTrajectory trajectory, float width, out ILineTrajectory cutTrajectory)
+        protected bool Cut(MarkupCrosswalk crosswalk, ITrajectory trajectory, float width, out ITrajectory cutTrajectory)
         {
             var delta = width / Mathf.Tan(crosswalk.CornerAndNormalAngle) / 2;
             if (2 * delta >= trajectory.Magnitude)
@@ -238,7 +238,7 @@ namespace NodeMarkup.Manager
 
             return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory crosswalkTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 => CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
@@ -311,7 +311,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, dashLength, spaceLength, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory crosswalkTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 => CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 
@@ -359,7 +359,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateSolid(secondTrajectory, lod, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory dashTrajectory)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
             {
                 yield return StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
             }
@@ -410,7 +410,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateDashed(secondTrajectory, DashLength, SpaceLength, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
                 yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, 0, LineWidth, Color);
             }
@@ -471,7 +471,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ILineTrajectory crosswalkTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 => CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength);
         }
 

@@ -102,7 +102,7 @@ namespace NodeMarkup.Tools
             if (IsHover)
             {
                 var linePart = Contour.GetFillerLine(Contour.Last, Hover);
-                if (linePart.GetTrajectory(out ILineTrajectory trajectory))
+                if (linePart.GetTrajectory(out ITrajectory trajectory))
                     trajectory.Render(cameraInfo, Colors.Green);
             }
             else

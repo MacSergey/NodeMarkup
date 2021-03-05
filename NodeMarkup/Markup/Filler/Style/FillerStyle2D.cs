@@ -52,8 +52,8 @@ namespace NodeMarkup.Manager
         }
 
 
-        protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour);
-        protected Rect GetRect(ILineTrajectory[] contour)
+        protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour);
+        protected Rect GetRect(ITrajectory[] contour)
         {
             var firstPos = contour.Any() ? contour[0].StartPosition : default;
             var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
@@ -205,14 +205,19 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, offset, isBothDir);
             }
         }
-        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, ILineTrajectory[] contour)
+        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, ITrajectory[] contour)
         {
-            var intersectSet = new HashSet<MarkupIntersect>();
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
 
-            GetBorderT(item.BordersBefore, straight, out float beforeMinT, out float beforeMaxT);
-            GetBorderT(item.BordersAfter, straight, out float afterMinT, out float afterMaxT);
+            //GetBorderT(item.Before, contour, out float beforeMinT, out float beforeMaxT);
+            //GetBorderT(item.After, contour, out float afterMinT, out float afterMaxT);
+            //var beforeIntersect = MarkupIntersect.CalculateSingle(straight, item.Before);
+            //var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.FirstT : float.MaxValue;
+            //var afterIntersect = MarkupIntersect.CalculateSingle(straight, item.After);
+            //var isBeforeMainIntersect = beforeIntersect.IsIntersect && beforeMinT < beforeIntersect.SecondT && beforeIntersect.SecondT < beforeMaxT;
+            //var isAfterMainIntersect = afterIntersect.IsIntersect && afterMinT < afterIntersect.SecondT && afterIntersect.SecondT < afterMaxT;
 
+            var intersectSet = new HashSet<MarkupIntersect>();
             foreach (var trajectory in contour)
                 intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
 
@@ -231,18 +236,18 @@ namespace NodeMarkup.Manager
                         input = 0f;
                 }
 
-                if(input < 0 && 0 < output)
-                {
-                    input = Mathf.Max(input, beforeMinT);
-                    output = Mathf.Min(output, beforeMaxT);
-                }
-                else
-                {
-                    input = Mathf.Max(input, beforeMinT, afterMinT);
-                    output = Mathf.Min(output, beforeMaxT, afterMaxT);
-                    if (input > output)
-                        continue;
-                }
+                //var isMain = input <= 0f && output >= 0f;
+                //var inBeforeIntersect = input < beforeT && beforeT < output;
+
+                //if (!isMain || (inBeforeIntersect && isBeforeMainIntersect))
+                //{
+                //    if ((beforeT < 0f && output < beforeT) || (beforeT > 0f && input > beforeT))
+                //        break;
+                //    else if (beforeT < 0f)
+                //        input = beforeT;
+                //    else
+                //        output = beforeT;
+                //}
 
                 var start = item.Position + item.Direction * input;
                 var end = item.Position + item.Direction * output;
@@ -263,16 +268,17 @@ namespace NodeMarkup.Manager
                 yield return new MarkupStylePart(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
             }
         }
-        private void GetBorderT(List<ILineTrajectory> borders, StraightTrajectory straight, out float minT, out float maxT)
+        private void GetBorderT(StraightTrajectory border, ITrajectory[] contour, out float minT, out float maxT)
         {
-            var intersects = borders.SelectMany(b => MarkupIntersect.Calculate(straight, b)).ToArray();
+            var intersects = contour.Select(c => MarkupIntersect.CalculateSingle(border, c)).Where(i => i.IsIntersect).ToArray();
             var minBorders = intersects.Where(b => b.FirstT < 0).ToArray();
             var maxBorders = intersects.Where(b => b.FirstT > 0).ToArray();
             minT = minBorders.Any() ? minBorders.Max(b => b.FirstT) : float.MinValue;
             maxT = maxBorders.Any() ? maxBorders.Min(b => b.FirstT) : float.MaxValue;
         }
+        private int Sign(float value) => value == 0f ? 0 : (value > 0f ? 1 : -1);
 
-        protected class RailLine : List<ILineTrajectory> { }
+        protected class RailLine : List<ITrajectory> { }
         protected class PartItem
         {
             public Vector3 Position { get; }
@@ -280,8 +286,8 @@ namespace NodeMarkup.Manager
             public float Width { get; }
             public float Offset { get; }
             public bool IsBothDir { get; }
-            public List<ILineTrajectory> BordersBefore { get; } = new List<ILineTrajectory>();
-            public List<ILineTrajectory> BordersAfter { get; } = new List<ILineTrajectory>();
+            public StraightTrajectory Before { get; set; }
+            public StraightTrajectory After { get; set; }
 
             public PartItem(Vector3 position, Vector3 direction, float width, float offset, bool isBothDir)
             {
@@ -315,22 +321,22 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
             var rail = new RailLine();
             var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
             var middleLine = GetMiddleLine(contour);
-            if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ILineTrajectory lineBefore))
+            if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineBefore))
                 rail.Add(lineBefore.Invert());
             rail.Add(middleLine);
-            if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ILineTrajectory lineAfter))
+            if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineAfter))
                 rail.Add(lineAfter);
 
             yield return rail;
         }
         protected abstract float GetAngle();
-        private ILineTrajectory GetMiddleLine(ILineTrajectory[] contour)
+        private ITrajectory GetMiddleLine(ITrajectory[] contour)
         {
             GetIndexes(contour.Length, out int leftIndex, out int rightIndex);
 
@@ -355,9 +361,9 @@ namespace NodeMarkup.Manager
 
         }
         protected abstract void GetIndexes(int count, out int leftIndex, out int rightIndex);
-        private bool GetBeforeMiddleLine(ILineTrajectory middleLine, float height, float halfAngelRad, Rect rect, out ILineTrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
-        private bool GetAfterMiddleLine(ILineTrajectory middleLine, float height, float halfAngelRad, Rect rect, out ILineTrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
-        private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ILineTrajectory line)
+        private bool GetBeforeMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
+        private bool GetAfterMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
+        private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ITrajectory line)
         {
             var dirRight = dir.TurnRad(halfAngelRad, true);
             var dirLeft = dir.TurnRad(halfAngelRad, false);
@@ -384,10 +390,21 @@ namespace NodeMarkup.Manager
                 return p;
             }
         }
-        protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out ILineTrajectory[] startBorders, out ILineTrajectory[] endBorders)
+        protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders)
         {
             startBorders = parts.Select(p => new StraightTrajectory(p.StartPosition, p.StartPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
             endBorders = parts.Select(p => new StraightTrajectory(p.EndPosition, p.EndPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
+        }
+        protected StraightTrajectory GetPartBorder(StraightTrajectory[] borders, StraightTrajectory part, int index, bool isIncrement)
+        {
+            var step = isIncrement ? 1 : -1;
+            for (var i = index + step; isIncrement ? i < part.Length : i >= 0; i += step)
+            {
+                var intersection = MarkupIntersect.CalculateSingle(part, borders[i]);
+                if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 100f && Math.Abs(intersection.SecondT) < 100f)
+                    return borders[i];
+            }
+            return null;
         }
 
         public override XElement ToXml()
@@ -466,7 +483,7 @@ namespace NodeMarkup.Manager
             return firstProperty;
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
             if (FollowLines)
             {
@@ -486,14 +503,16 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, angle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
             var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, angle, out ILineTrajectory[] startBorders, out ILineTrajectory[] endBorders);
+            GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
             {
+                var before = GetPartBorder(endBorders, startBorders[i], i, false);
+                var after = GetPartBorder(startBorders, endBorders[i], i, true);
                 foreach (var item in GetPartItems(parts[i], angle, itemsCount, itemWidth, itemStep, Offset))
                 {
-                    item.BordersBefore.AddRange(endBorders.Take(i));
-                    item.BordersAfter.AddRange(startBorders.Skip(i + 1));
+                    item.Before = before;
+                    item.After = after;
                     yield return item;
                 }
             }
@@ -563,7 +582,7 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
             yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
@@ -606,7 +625,7 @@ namespace NodeMarkup.Manager
 
         public override FillerStyle CopyFillerStyle() => new SolidFillerStyle(Color, DefaultOffset);
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ILineTrajectory[] contour)
+        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
             yield return new RailLine() { GetRail(rect, filler.Markup.Height, 0) };
@@ -711,21 +730,25 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
             var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, halfAngle, out ILineTrajectory[] leftStartBorders, out ILineTrajectory[] leftEndBorders);
-            GetPartBorders(parts, -halfAngle, out ILineTrajectory[] rightStartBorders, out ILineTrajectory[] rightEndBorders);
+            GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
+            GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
             {
+                var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
+                var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
+                var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
+                var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
                 foreach (var item in GetPartItems(parts[i], halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
                 {
-                    item.BordersBefore.AddRange(Invert ? leftStartBorders.Skip(i + 1) : leftEndBorders.Take(i));
-                    item.BordersAfter.AddRange(Invert ? leftEndBorders.Take(i) : leftStartBorders.Skip(i + 1));
+                    item.Before = leftBefore;
+                    item.After = leftAfter;
                     yield return item;
                 }
                 foreach (var item in GetPartItems(parts[i], -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
                 {
-                    item.BordersBefore.AddRange(Invert ? rightStartBorders.Skip(i + 1) : rightEndBorders.Take(i));
-                    item.BordersAfter.AddRange(Invert ? rightEndBorders.Take(i) : rightStartBorders.Skip(i + 1));
+                    item.Before = rightBefore;
+                    item.After = rightAfter;
                     yield return item;
                 }
             }

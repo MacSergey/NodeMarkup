@@ -53,12 +53,12 @@ namespace NodeMarkup.Manager
 
             return new MarkupStylePolygonMesh(filler.Markup.Height, Elevation, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
 
-            static IEnumerable<Vector3> GetPoint(ILineTrajectory trajectory)
+            static IEnumerable<Vector3> GetPoint(ITrajectory trajectory)
             {
                 yield return trajectory.StartPosition;
             }
         }
-        private bool NeedReverse(ILineTrajectory[] contour)
+        private bool NeedReverse(ITrajectory[] contour)
         {
             var isClockWise = 0;
             for (var i = 0; i < contour.Length; i += 1)

@@ -537,14 +537,14 @@ namespace NodeMarkup.Utils
         protected override float MeshHalfWidth => HalfWidth * 2;
         protected override float MeshHalfLength => HalfLength;
 
-        public MarkupStyleLineMesh(ILineTrajectory trajectory, float width, float elevation, MaterialType materialType)
+        public MarkupStyleLineMesh(ITrajectory trajectory, float width, float elevation, MaterialType materialType)
         {
             var position = (trajectory.StartPosition + trajectory.EndPosition) / 2;
             CalculateMatrix(trajectory, width, position, out Matrix4x4 left, out Matrix4x4 right);
             position += Vector3.up * (elevation - Height);
             Init(position, left, right, materialType);
         }
-        private void CalculateMatrix(ILineTrajectory trajectory, float width, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
+        private void CalculateMatrix(ITrajectory trajectory, float width, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
         {
             var startNormal = trajectory.StartDirection.Turn90(true);
             startNormal.y = 0f;

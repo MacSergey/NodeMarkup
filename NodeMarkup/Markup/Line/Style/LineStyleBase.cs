@@ -75,7 +75,7 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, MarkupLOD lod);
+        public abstract IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
@@ -249,8 +249,8 @@ namespace NodeMarkup.Manager
         public sealed override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
-        public sealed override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
-        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod);
+        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
+        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {

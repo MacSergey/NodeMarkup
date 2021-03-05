@@ -61,10 +61,10 @@ namespace NodeMarkup.Manager
         }
         private StraightTrajectory DefaultRightBorderTrajectory => new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
         private StraightTrajectory DefaultLeftBorderTrajectory => new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
-        public ILineTrajectory RightBorderTrajectory { get; private set; }
-        public ILineTrajectory LeftBorderTrajectory { get; private set; }
+        public ITrajectory RightBorderTrajectory { get; private set; }
+        public ITrajectory LeftBorderTrajectory { get; private set; }
 
-        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
+        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
 
         public float TotalWidth => Style.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
@@ -132,7 +132,7 @@ namespace NodeMarkup.Manager
 
             return (StraightTrajectory)trajectory.Cut(startT, endT);
         }
-        private ILineTrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
+        private ITrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
         {
             if (border != null && MarkupIntersect.CalculateSingle(trajectory, border.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
             {
@@ -167,7 +167,7 @@ namespace NodeMarkup.Manager
         private float MinAggregate(MarkupIntersect[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
         private float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
 
-        private float GetT(StraightTrajectory trajectory, ILineTrajectory lineTrajectory, float defaultT)
+        private float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
             => MarkupIntersect.CalculateSingle(trajectory, lineTrajectory) is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
 
         private float GetT(StraightTrajectory trajectory, Vector3 normal, IEnumerable<Vector3> positions, float defaultT, Func<MarkupIntersect[], float> aggregate)

@@ -15,7 +15,7 @@ namespace NodeMarkup.Manager
         Line,
         Bezier
     }
-    public interface ILineTrajectory : IRender
+    public interface ITrajectory : IRender
     {
         TrajectoryType TrajectoryType { get; }
         float Length { get; }
@@ -26,15 +26,15 @@ namespace NodeMarkup.Manager
         Vector3 EndDirection { get; }
         Vector3 StartPosition { get; }
         Vector3 EndPosition { get; }
-        ILineTrajectory Cut(float t0, float t1);
-        void Divide(out ILineTrajectory trajectory1, out ILineTrajectory trajectory2);
+        ITrajectory Cut(float t0, float t1);
+        void Divide(out ITrajectory trajectory1, out ITrajectory trajectory2);
         Vector3 Tangent(float t);
         Vector3 Position(float t);
         float Travel(float start, float distance);
-        ILineTrajectory Invert();
-        ILineTrajectory Copy();
+        ITrajectory Invert();
+        ITrajectory Copy();
     }
-    public class BezierTrajectory : ILineTrajectory
+    public class BezierTrajectory : ITrajectory
     {
         public TrajectoryType TrajectoryType => TrajectoryType.Bezier;
         public Bezier3 Trajectory { get; }
@@ -58,8 +58,8 @@ namespace NodeMarkup.Manager
             EndDirection = (Trajectory.c - Trajectory.d).normalized;
         }
 
-        public ILineTrajectory Cut(float t0, float t1) => new BezierTrajectory(Trajectory.Cut(t0, t1));
-        public void Divide(out ILineTrajectory trajectory1, out ILineTrajectory trajectory2)
+        public ITrajectory Cut(float t0, float t1) => new BezierTrajectory(Trajectory.Cut(t0, t1));
+        public void Divide(out ITrajectory trajectory1, out ITrajectory trajectory2)
         {
             Trajectory.Divide(out Bezier3 bezier1, out Bezier3 bezier2);
             trajectory1 = new BezierTrajectory(bezier1);
@@ -68,8 +68,8 @@ namespace NodeMarkup.Manager
         public Vector3 Tangent(float t) => Trajectory.Tangent(t);
         public Vector3 Position(float t) => Trajectory.Position(t);
         public float Travel(float start, float distance) => Trajectory.Travel(start, distance);
-        public ILineTrajectory Invert() => new BezierTrajectory(Trajectory.Invert());
-        public ILineTrajectory Copy() => new BezierTrajectory(Trajectory);
+        public ITrajectory Invert() => new BezierTrajectory(Trajectory.Invert());
+        public ITrajectory Copy() => new BezierTrajectory(Trajectory);
 
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
             => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory, color, width, alphaBlend, cut);
@@ -77,7 +77,7 @@ namespace NodeMarkup.Manager
         public static implicit operator Bezier3(BezierTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator BezierTrajectory(Bezier3 bezier) => new BezierTrajectory(bezier);
     }
-    public class StraightTrajectory : ILineTrajectory
+    public class StraightTrajectory : ITrajectory
     {
         public TrajectoryType TrajectoryType => TrajectoryType.Line;
         public Line3 Trajectory { get; }
@@ -100,9 +100,9 @@ namespace NodeMarkup.Manager
         }
         public StraightTrajectory(Vector3 start, Vector3 end, bool isSection = true) : this(new Line3(start, end), isSection) { }
 
-        public ILineTrajectory Cut(float t0, float t1) => new StraightTrajectory(Position(t0), Position(t1));
+        public ITrajectory Cut(float t0, float t1) => new StraightTrajectory(Position(t0), Position(t1));
 
-        public void Divide(out ILineTrajectory trajectory1, out ILineTrajectory trajectory2)
+        public void Divide(out ITrajectory trajectory1, out ITrajectory trajectory2)
         {
             var middle = (Trajectory.a + Trajectory.b) / 2;
             trajectory1 = new StraightTrajectory(Trajectory.a, middle);
@@ -111,8 +111,8 @@ namespace NodeMarkup.Manager
         public Vector3 Tangent(float t) => Direction;
         public Vector3 Position(float t) => Trajectory.a + (Trajectory.b - Trajectory.a) * t;
         public float Travel(float start, float distance) => start + (distance / Length);
-        public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
-        public ILineTrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
+        public ITrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
+        public ITrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
 
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
             => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend, cut);
@@ -123,11 +123,11 @@ namespace NodeMarkup.Manager
     public class TrajectoryBound : IRender
     {
         private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
-        public ILineTrajectory Trajectory { get; }
+        public ITrajectory Trajectory { get; }
         public float Size { get; }
         private List<Bounds> BoundsList { get; } = new List<Bounds>();
         public IEnumerable<Bounds> Bounds => BoundsList;
-        public TrajectoryBound(ILineTrajectory trajectory, float size)
+        public TrajectoryBound(ITrajectory trajectory, float size)
         {
             Trajectory = trajectory;
             Size = size;
