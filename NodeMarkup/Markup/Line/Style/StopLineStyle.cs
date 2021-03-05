@@ -20,7 +20,7 @@ namespace NodeMarkup.Manager
 
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
             return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
@@ -43,7 +43,7 @@ namespace NodeMarkup.Manager
         {
             Offset = GetOffsetProperty(offset);
         }
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
                 return new MarkupStyleParts();
@@ -160,7 +160,7 @@ namespace NodeMarkup.Manager
                 doubleTarget.Offset.Value = Offset;
         }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
                 return new MarkupStyleParts();
@@ -211,7 +211,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var solidOffset = offsetNormal * (Width / 2);
@@ -286,7 +286,7 @@ namespace NodeMarkup.Manager
             Height = GetHeightProperty(height);
             Space = GetSpaceProperty(space);
         }
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Base, Height))
                 return new MarkupStyleParts();

@@ -203,6 +203,12 @@ namespace NodeMarkup.Utils
         public void Draw(RenderManager.Instance data);
     }
 
+    public enum MarkupLOD
+    {
+        LOD0,
+        LOD1
+    }
+
     public class MarkupStylePart
     {
         public MaterialType MaterialType { get; set; }

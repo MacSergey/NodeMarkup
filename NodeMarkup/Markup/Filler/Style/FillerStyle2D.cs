@@ -33,8 +33,8 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
 
-        public sealed override IStyleData Calculate(MarkupFiller filler, int lod) => new MarkupStyleParts(CalculateProcess(filler, lod));
-        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, int lod)
+        public sealed override IStyleData Calculate(MarkupFiller filler, MarkupLOD lod) => new MarkupStyleParts(CalculateProcess(filler, lod));
+        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, MarkupLOD lod)
         {
             var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
             var rails = GetRails(filler, contour).ToArray();
@@ -114,7 +114,7 @@ namespace NodeMarkup.Manager
                 return default;
         }
 
-        protected abstract IEnumerable<PartItem> GetItems(RailLine rail, int lod);
+        protected abstract IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod);
         protected IEnumerable<StraightTrajectory> GetParts(RailLine rail, float dash, float space)
         {
             var dashesT = new List<float[]>();
@@ -186,7 +186,7 @@ namespace NodeMarkup.Manager
                 return i + next;
             }
         }
-        protected void GetItemParams(ref float width, float angle, int lod, out int itemsCount, out float itemWidth, out float itemStep)
+        protected void GetItemParams(ref float width, float angle, MarkupLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
         {
             StyleHelper.GetParts(width, 0f, lod, out itemsCount, out itemWidth);
 
@@ -479,7 +479,7 @@ namespace NodeMarkup.Manager
                 yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
             }
         }
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, int lod)
+        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
             var angle = FollowLines ? 90f - Angle : 90f;
             var width = Width.Value;
@@ -569,7 +569,7 @@ namespace NodeMarkup.Manager
             yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
             yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
         }
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, int lod)
+        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
             var width = Width.Value;
             GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
@@ -611,7 +611,7 @@ namespace NodeMarkup.Manager
             var rect = GetRect(contour);
             yield return new RailLine() { GetRail(rect, filler.Markup.Height, 0) };
         }
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, int lod)
+        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
             var part = rail.First() as StraightTrajectory;
             var width = part.Length;
@@ -704,7 +704,7 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, int lod)
+        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
             var width = Width.Value;
             var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;

@@ -43,7 +43,7 @@ namespace NodeMarkup.Manager
 
         protected ILineTrajectory LineTrajectory { get; private set; }
         public ILineTrajectory Trajectory => LineTrajectory.Copy();
-        public Dictionary<int, IStyleData[]> StyleData { get; private set; } = new Dictionary<int, IStyleData[]>();
+        public Dictionary<MarkupLOD, IStyleData[]> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData[]>();
 
         public LineBorders Borders => new LineBorders(this);
 
@@ -70,11 +70,11 @@ namespace NodeMarkup.Manager
 
         public void RecalculateStyleData()
         {
-            RecalculateStyleData(0);
-            RecalculateStyleData(1);
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData(int lod) => StyleData[lod] = GetStyleData(lod).ToArray();
-        protected abstract IEnumerable<IStyleData> GetStyleData(int lod);
+        private void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = GetStyleData(lod).ToArray();
+        protected abstract IEnumerable<IStyleData> GetStyleData(MarkupLOD lod);
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
@@ -221,7 +221,7 @@ namespace NodeMarkup.Manager
 
         protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
 
-        protected override IEnumerable<IStyleData> GetStyleData(int lod)
+        protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
             yield return Rule.Style.Calculate(this, LineTrajectory, lod);
         }
@@ -254,7 +254,10 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
-        protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
+        protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) 
+        {
+            RecalculateStyleData();
+        }
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
             base(markup, pointPair)
         {
@@ -328,7 +331,7 @@ namespace NodeMarkup.Manager
         public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
-        protected override IEnumerable<IStyleData> GetStyleData(int lod)
+        protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
             var rules = MarkupLineRawRule<RegularLineStyle>.GetRules(RawRules);
 

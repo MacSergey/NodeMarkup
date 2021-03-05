@@ -15,15 +15,15 @@ namespace NodeMarkup.Manager
         public static float MinAngleDelta { get; } = 5f;
         public static float MinLength { get; } = 1f;
         public static float MaxLength { get; } = 10f;
-        private static Dictionary<int, float> LodScale { get; } = new Dictionary<int, float>()
+        private static Dictionary<MarkupLOD, float> LodScale { get; } = new Dictionary<MarkupLOD, float>()
         {
-            { 0, 1f },
-            { 1, 4f }
+            { MarkupLOD.LOD0, 1f },
+            { MarkupLOD.LOD1, 4f }
         };
         private static int MaxDepth => 5;
 
-        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, int lod, Func<ILineTrajectory, IEnumerable<Result>> calculateParts) => CalculateSolid(trajectory, MinAngleDelta, MinLength, MaxLength, lod, calculateParts);
-        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, float minAngle, float minLength, float maxLength, int lod, Func<ILineTrajectory, IEnumerable<Result>> calculateParts)
+        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, MarkupLOD lod, Func<ILineTrajectory, IEnumerable<Result>> calculateParts) => CalculateSolid(trajectory, MinAngleDelta, MinLength, MaxLength, lod, calculateParts);
+        public static IEnumerable<Result> CalculateSolid<Result>(ILineTrajectory trajectory, float minAngle, float minLength, float maxLength, MarkupLOD lod, Func<ILineTrajectory, IEnumerable<Result>> calculateParts)
         {
             var lodScale = LodScale[lod];
             return CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle * lodScale, minLength * lodScale, maxLength * lodScale, calculateParts);
@@ -235,12 +235,12 @@ namespace NodeMarkup.Manager
             var endPosition = trajectory.EndPosition + endOffset;
             return new MarkupStylePart(startPosition, endPosition, endPosition - startPosition, width, color);
         }
-        private static Dictionary<int, float> LodMax { get; } = new Dictionary<int, float>
+        private static Dictionary<MarkupLOD, float> LodMax { get; } = new Dictionary<MarkupLOD, float>
         {
-            {0, 0.2f},
-            {1, 1f}
+            {MarkupLOD.LOD0, 0.2f},
+            {MarkupLOD.LOD1, 1f}
         };
-        public static void GetParts(float width, float offset, int lod, out int count, out float partWidth)
+        public static void GetParts(float width, float offset, MarkupLOD lod, out int count, out float partWidth)
         {
             var max = LodMax[lod];
 

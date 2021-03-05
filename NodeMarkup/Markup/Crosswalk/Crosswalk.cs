@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
 
-        public Dictionary<int, IStyleData> StyleData { get; private set; } = new Dictionary<int, IStyleData>();
+        public Dictionary<MarkupLOD, IStyleData> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData>();
         public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
@@ -105,10 +105,10 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateStyleData()
         {
-            RecalculateStyleData(0);
-            RecalculateStyleData(1);
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData(int lod) => StyleData[lod] = new MarkupStyleParts(Style.Calculate(this, lod));
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = new MarkupStyleParts(Style.Calculate(this, lod));
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             foreach (var trajectory in BorderTrajectories)

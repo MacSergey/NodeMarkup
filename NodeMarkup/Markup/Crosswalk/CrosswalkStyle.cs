@@ -21,7 +21,7 @@ namespace NodeMarkup.Manager
 
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod) => new MarkupStylePart[0];
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod) => new MarkupStylePart[0];
         public override CrosswalkStyle CopyCrosswalkStyle() => new ExistCrosswalkStyle(Width);
 
         public override XElement ToXml()
@@ -224,7 +224,7 @@ namespace NodeMarkup.Manager
                 parallelTarget.Parallel.Value = Parallel;
         }
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             var offset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
 
@@ -289,7 +289,7 @@ namespace NodeMarkup.Manager
                 doubleTarget.Offset.Value = Offset;
         }
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
             var deltaOffset = GetLengthCoef((Width + Offset) / 2, crosswalk);
@@ -346,7 +346,7 @@ namespace NodeMarkup.Manager
 
         public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth);
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
             var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
@@ -397,7 +397,7 @@ namespace NodeMarkup.Manager
             components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
         }
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
             var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
@@ -455,7 +455,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             foreach (var dash in base.Calculate(crosswalk, lod))
                 yield return dash;
@@ -505,7 +505,7 @@ namespace NodeMarkup.Manager
         public override CrosswalkStyle CopyCrosswalkStyle() => new SolidCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter);
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             StyleHelper.GetParts(Width, 0, lod, out int count, out float partWidth);
             var partOffset = GetVisibleWidth(crosswalk) / count;
@@ -531,7 +531,7 @@ namespace NodeMarkup.Manager
             LineCount = GetLineCountProperty(lineCount);
             Invert = GetInvertProperty(invert);
         }
-        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod)
+        public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             var deltaOffset = GetLengthCoef(SquareSide, crosswalk);
             var startOffset = deltaOffset / 2 + OffsetBefore;

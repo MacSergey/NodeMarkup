@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
                 triangulationTarget.Elevation.Value = Elevation;
         }
 
-        public override IStyleData Calculate(MarkupFiller filler, int lod)
+        public override IStyleData Calculate(MarkupFiller filler, MarkupLOD lod)
         {
             var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
 

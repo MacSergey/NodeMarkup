@@ -153,11 +153,11 @@ namespace NodeMarkup.Manager
             }
 
             if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
-                Render(markup, data, 0);
+                Render(markup, data, MarkupLOD.LOD0);
             else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                Render(markup, data, 1);
+                Render(markup, data, MarkupLOD.LOD1);
         }
-        private void Render(MarkupType markup, RenderManager.Instance data, int lod)
+        private void Render(MarkupType markup, RenderManager.Instance data, MarkupLOD lod)
         {
             foreach (var item in markup.DrawData[lod])
                 item.Draw(data);

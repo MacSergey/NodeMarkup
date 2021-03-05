@@ -26,7 +26,7 @@ namespace NodeMarkup.Manager
                 pavementTarget.Elevation.Value = Elevation;
         }
 
-        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+        public override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, MarkupLOD lod) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {

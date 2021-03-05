@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -33,7 +34,7 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
-        public Dictionary<int, IStyleData> StyleData { get; private set; } = new Dictionary<int, IStyleData>();
+        public Dictionary<MarkupLOD, IStyleData> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData>();
         public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine);
 
         public string XmlSection => XmlName;
@@ -60,10 +61,10 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateStyleData()
         {
-            RecalculateStyleData(0);
-            RecalculateStyleData(1);
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData(int lod) => StyleData[lod] = Style.Calculate(this, lod);
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = Style.Calculate(this, lod);
 
         public Dependences GetDependences() => new Dependences();
 

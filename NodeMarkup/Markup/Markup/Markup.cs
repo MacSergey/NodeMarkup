@@ -85,7 +85,7 @@ namespace NodeMarkup.Manager
 
 
         public bool NeedRecalculateDrawData { get; set; }
-        public Dictionary<int,List<IDrawData>> DrawData { get; private set; } = new Dictionary<int, List<IDrawData>>();
+        public Dictionary<MarkupLOD, List<IDrawData>> DrawData { get; private set; } = new Dictionary<MarkupLOD, List<IDrawData>>();
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -285,6 +285,7 @@ namespace NodeMarkup.Manager
         public void Update(MarkupCrosswalk crosswalk, bool recalculate = false)
         {
             crosswalk.Line.Update();
+
             if (recalculate && !UpdateProgress)
                 RecalculateDashes();
         }
@@ -326,17 +327,17 @@ namespace NodeMarkup.Manager
         {
             DrawData.Clear();
 
-            for (var i = 0; i <= 1; i += 1)
+            foreach(var lod in EnumExtension.GetEnumValues<MarkupLOD>())
             {
                 var dashes = new List<MarkupStylePart>();
                 var drawData = new List<IDrawData>();
 
-                Seporate(Lines.SelectMany(l => l.StyleData[i]));
-                Seporate(Fillers.Select(l => l.StyleData[i]));
-                Seporate(Crosswalks.Select(l => l.StyleData[i]));
+                Seporate(Lines.SelectMany(l => l.StyleData[lod]));
+                Seporate(Fillers.Select(l => l.StyleData[lod]));
+                Seporate(Crosswalks.Select(l => l.StyleData[lod]));
 
                 drawData.AddRange(RenderBatch.FromDashes(dashes));
-                DrawData.Add(i, drawData);
+                DrawData[lod] = drawData;
 
                 void Seporate(IEnumerable<IStyleData> stylesData)
                 {

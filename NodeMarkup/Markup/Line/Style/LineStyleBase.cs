@@ -75,13 +75,13 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod);
+        public abstract IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, MarkupLOD lod);
         public override Style Copy() => CopyLineStyle();
         public abstract LineStyle CopyLineStyle();
 
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
-        protected bool CheckDashedLod(int lod, float width, float length) => lod != 1 || width > LodWidth || length > LodLength;
+        protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
 
         protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
         {
@@ -249,8 +249,8 @@ namespace NodeMarkup.Manager
         public sealed override LineStyle CopyLineStyle() => CopyStopLineStyle();
         public abstract StopLineStyle CopyStopLineStyle();
 
-        public sealed override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, int lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
-        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, int lod);
+        public sealed override IStyleData Calculate(MarkupLine line, ILineTrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
+        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {

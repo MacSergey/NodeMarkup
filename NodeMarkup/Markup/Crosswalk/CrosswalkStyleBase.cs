@@ -57,7 +57,7 @@ namespace NodeMarkup.Manager
         }
         public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
 
-        public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, int lod);
+        public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
         public enum CrosswalkType
         {
