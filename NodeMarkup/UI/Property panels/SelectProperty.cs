@@ -36,9 +36,11 @@ namespace NodeMarkup.UI.Editors
 
         protected override bool IsEqual(ILinePartEdge first, ILinePartEdge second) => (first == null && second == null) || first?.Equals(second) == true;
     }
+
     public class MarkupCrosswalkSelectPropertyPanel : SelectPropertyPanel<MarkupRegularLine>
     {
         public new event Action<MarkupCrosswalkSelectPropertyPanel> OnSelect;
+        public event Action<MarkupCrosswalkSelectPropertyPanel> OnReset;
         public new event Action<MarkupCrosswalkSelectPropertyPanel> OnHover;
         public new event Action<MarkupCrosswalkSelectPropertyPanel> OnLeave;
 
@@ -55,6 +57,7 @@ namespace NodeMarkup.UI.Editors
             base.DeInit();
 
             OnSelect = null;
+            OnReset = null;
             OnHover = null;
             OnLeave = null;
         }
@@ -70,7 +73,11 @@ namespace NodeMarkup.UI.Editors
             button.textPadding = new RectOffset(0, 0, 0, 0);
             button.eventClick += ResetClick;
         }
-        private void ResetClick(UIComponent component, UIMouseEventParameter eventParam) => SelectedObject = null;
+        private void ResetClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            SelectedObject = null;
+            OnReset?.Invoke(this);
+        }
 
         protected override void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(this);
         protected override void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnHover?.Invoke(this);

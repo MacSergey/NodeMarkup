@@ -133,6 +133,7 @@ namespace NodeMarkup.UI.Editors
             border.Position = position;
             border.Init();
             border.OnSelect += (panel) => SelectBorder(panel);
+            border.OnReset += (panel) => Tool.SetDefaultMode();
             border.OnHover += HoverBorder;
             border.OnLeave += LeaveBorder;
             return border;
@@ -257,7 +258,7 @@ namespace NodeMarkup.UI.Editors
     public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, MarkupCrosswalkSelectPropertyPanel, MarkupRegularLine>
     {
         protected override bool IsHover => IsHoverLine;
-        protected override MarkupRegularLine Hover => HoverLine?.Line as MarkupRegularLine;
+        protected override MarkupRegularLine Hover => HoverLine?.Line;
 
         private MarkupLineBound[] BorderLines { get; set; }
         private MarkupLineBound HoverLine { get; set; }

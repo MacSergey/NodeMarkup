@@ -20,13 +20,18 @@ namespace NodeMarkup.Manager
     {
         PropertyValue<float> Step { get; }
     }
-    public interface IOffsetFiller : IFillerStyle, IWidthStyle, IColorStyle
+    public interface IOffsetFiller : IFillerStyle
     {
         PropertyValue<float> Offset { get; }
     }
-    public interface IRotateFiller : IFillerStyle, IWidthStyle, IColorStyle
+    public interface IRotateFiller : IFillerStyle
     {
         PropertyValue<float> Angle { get; }
+    }
+    public interface IRailFiller : IFillerStyle
+    {
+        PropertyValue<int> LeftRail { get; }
+        PropertyValue<int> RightRail { get; }
     }
 
     public abstract class Filler2DStyle : FillerStyle
@@ -320,6 +325,15 @@ namespace NodeMarkup.Manager
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
         }
+        protected static IntListPropertyPanel AddRailProperty(PropertyValue<int> property, string label, UIComponent parent, int count)
+        {
+            var firstProperty = ComponentPool.Get<IntListPropertyPanel>(parent);
+            firstProperty.Text = label;
+            firstProperty.Init(count);
+            firstProperty.SelectedObject = property + 1;
+            firstProperty.OnSelectObjectChanged += (int value) => property.Value = value - 1;
+            return firstProperty;
+        }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
@@ -432,7 +446,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class StripeFillerStyle : PeriodicFillerStyle, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public class StripeFillerStyle : PeriodicFillerStyle, IOffsetFiller, IRotateFiller, IRailFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
 
@@ -445,10 +459,10 @@ namespace NodeMarkup.Manager
         public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines, int leftRail, int rightRail) : base(color, width, step, medianOffset)
         {
             Angle = GetAngleProperty(angle);
-            FollowLines = new PropertyValue<bool>("FL", StyleChanged, followLines);
+            FollowLines = GetFollowLinesProperty(followLines);
             Offset = GetOffsetProperty(offset);
-            LeftRail = new PropertyValue<int>("LR", StyleChanged, leftRail);
-            RightRail = new PropertyValue<int>("RR", StyleChanged, rightRail);
+            LeftRail = GetLeftRailProperty(leftRail);
+            RightRail = GetRightRailProperty(rightRail);
         }
         public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines, LeftRail, RightRail);
         public override void CopyTo(Style target)
@@ -463,6 +477,12 @@ namespace NodeMarkup.Manager
 
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
+
+            if (target is IRailFiller railTarget)
+            {
+                railTarget.LeftRail.Value = LeftRail;
+                railTarget.RightRail.Value = RightRail;
+            }
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -471,28 +491,19 @@ namespace NodeMarkup.Manager
             {
                 components.Add(AddAngleProperty(this, parent, onHover, onLeave));
                 components.Add(AddFollowLinesProperty(this, parent));
-                components.Add(AddProperty(LeftRail, "Left rail", parent, filler.Contour.VertexCount));
-                components.Add(AddProperty(RightRail, "Right rail", parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(LeftRail, Localize.StyleOption_LeftRail, parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(RightRail, Localize.StyleOption_RightRail, parent, filler.Contour.VertexCount));
             }
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
         protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
         {
             var followLinesProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
-            followLinesProperty.Text = "Follow lines"/*Localize.StyleOption_FollowLines*/;
+            followLinesProperty.Text = Localize.StyleOption_FollowLines;
             followLinesProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             followLinesProperty.SelectedObject = stripeStyle.FollowLines;
             followLinesProperty.OnSelectObjectChanged += (bool value) => stripeStyle.FollowLines.Value = value;
             return followLinesProperty;
-        }
-        protected static IntListPropertyPanel AddProperty(PropertyValue<int> property, string label, UIComponent parent, int count)
-        {
-            var firstProperty = ComponentPool.Get<IntListPropertyPanel>(parent);
-            firstProperty.Text = label;
-            firstProperty.Init(count);
-            firstProperty.SelectedObject = property + 1;
-            firstProperty.OnSelectObjectChanged += (int value) => property.Value = value - 1;
-            return firstProperty;
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)

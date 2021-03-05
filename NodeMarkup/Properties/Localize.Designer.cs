@@ -2690,11 +2690,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Follow lines.
+        /// </summary>
+        public static string StyleOption_FollowLines {
+            get {
+                return ResourceManager.GetString("StyleOption_FollowLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invert.
         /// </summary>
         public static string StyleOption_Invert {
             get {
                 return ResourceManager.GetString("StyleOption_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left rail.
+        /// </summary>
+        public static string StyleOption_LeftRail {
+            get {
+                return ResourceManager.GetString("StyleOption_LeftRail", resourceCulture);
             }
         }
         
@@ -2785,6 +2803,15 @@ namespace NodeMarkup {
         public static string StyleOption_ParallelToLanes {
             get {
                 return ResourceManager.GetString("StyleOption_ParallelToLanes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right rail.
+        /// </summary>
+        public static string StyleOption_RightRail {
+            get {
+                return ResourceManager.GetString("StyleOption_RightRail", resourceCulture);
             }
         }
         
