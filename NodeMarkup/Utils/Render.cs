@@ -279,15 +279,12 @@ namespace NodeMarkup.Utils
             instance.m_materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             instance.m_materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             instance.m_materialBlock.SetVector(instance.ID_MeshScale, Scale);
-            instance.m_materialBlock.SetVector(instance.ID_ObjectIndex, data.m_dataVector3);
-            instance.m_materialBlock.SetColor(instance.ID_Color, data.m_dataColor0);
+            //instance.m_materialBlock.SetVector(instance.ID_ObjectIndex, data.m_dataVector3);
+            //instance.m_materialBlock.SetColor(instance.ID_Color, data.m_dataColor0);
 
             instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceTexture);
 
-            var mesh = Mesh;
-            var material = RenderHelper.MaterialLib[MaterialType];
-
-            Graphics.DrawMesh(mesh, Position, Quaternion.identity, material, 0, null, 0, instance.m_materialBlock);
+            Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 0, null, 0, instance.m_materialBlock);
         }
         public IEnumerable<IDrawData> GetDrawData()
         {
@@ -296,6 +293,11 @@ namespace NodeMarkup.Utils
             yield return this;
         }
         protected abstract Mesh GetMesh();
+        protected static IEnumerable<Vector3> FixNormals(Vector3[] normals, int from, int count)
+        {
+            for (var i = 0; i < normals.Length; i += 1)
+                yield return (i >= from && i < from + count ? -1 : 1) * normals[i];
+        }
     }
     public class MarkupStylePolygonMesh : MarkupStyleMesh
     {
@@ -304,12 +306,14 @@ namespace NodeMarkup.Utils
         private Vector3[] Vertices { get; }
         private int[] Triangles { get; }
         private Vector2[] UV { get; }
+        private int TopPoints { get; }
 
         public MarkupStylePolygonMesh(float height, float elevation, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType)
         {
             var vertices = points.ToList();
             var triangles = polygons.ToList();
             var uv = new List<Vector2>();
+            TopPoints = points.Length;
 
             var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
             var position = new Vector3(minMax.center.x, height, minMax.center.y);
@@ -393,6 +397,7 @@ namespace NodeMarkup.Utils
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
             };
             mesh.RecalculateNormals();
+            mesh.normals = FixNormals(mesh.normals, 0, TopPoints).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
@@ -416,6 +421,8 @@ namespace NodeMarkup.Utils
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
             };
             mesh.RecalculateNormals();
+            var lanePoints = (Split + 1) * 2;
+            mesh.normals = FixNormals(mesh.normals, 4 + lanePoints, lanePoints).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
