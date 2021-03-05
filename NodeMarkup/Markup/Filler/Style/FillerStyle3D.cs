@@ -42,8 +42,7 @@ namespace NodeMarkup.Manager
         {
             var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
 
-            var isClockWise = Vector3.Cross(contour[0].EndDirection, contour[1].StartDirection).y < 0;
-            if (!isClockWise)
+            if (NeedReverse(contour))
                 contour = contour.Select(t => t.Invert()).Reverse().ToArray();
 
             var pointsGroups = contour.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, lod, (tr) => GetPoint(tr)).ToArray()).ToArray();
@@ -58,6 +57,14 @@ namespace NodeMarkup.Manager
             {
                 yield return trajectory.StartPosition;
             }
+        }
+        private bool NeedReverse(ILineTrajectory[] contour)
+        {
+            var isClockWise = 0;
+            for (var i = 0; i < contour.Length; i += 1)
+                isClockWise += (Vector3.Cross(-contour[i].Direction, contour[(i + 1) % contour.Length].Direction).y < 0) ? 1 : -1;
+
+            return isClockWise < 0;
         }
 
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)

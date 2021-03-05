@@ -38,17 +38,24 @@ namespace NodeMarkup.Manager
     {
         public TrajectoryType TrajectoryType => TrajectoryType.Bezier;
         public Bezier3 Trajectory { get; }
-        public float Length => Trajectory.Length();
-        public float Magnitude => (Trajectory.d - Trajectory.a).magnitude;
-        public float DeltaAngle => Trajectory.DeltaAngle();
-        public Vector3 Direction => (Trajectory.d - Trajectory.a).normalized;
-        public Vector3 StartDirection => (Trajectory.b - Trajectory.a).normalized;
-        public Vector3 EndDirection => (Trajectory.c - Trajectory.d).normalized;
+        public float Length { get; }
+        public float Magnitude { get; }
+        public float DeltaAngle { get; }
+        public Vector3 Direction { get; }
+        public Vector3 StartDirection { get; }
+        public Vector3 EndDirection { get; }
         public Vector3 StartPosition => Trajectory.a;
         public Vector3 EndPosition => Trajectory.d;
         public BezierTrajectory(Bezier3 trajectory)
         {
             Trajectory = trajectory;
+
+            Length = Trajectory.Length();
+            Magnitude = (Trajectory.d - Trajectory.a).magnitude;
+            DeltaAngle = Trajectory.DeltaAngle();
+            Direction = (Trajectory.d - Trajectory.a).normalized;
+            StartDirection = (Trajectory.b - Trajectory.a).normalized;
+            EndDirection = (Trajectory.c - Trajectory.d).normalized;
         }
 
         public ILineTrajectory Cut(float t0, float t1) => new BezierTrajectory(Trajectory.Cut(t0, t1));
@@ -75,10 +82,10 @@ namespace NodeMarkup.Manager
         public TrajectoryType TrajectoryType => TrajectoryType.Line;
         public Line3 Trajectory { get; }
         public bool IsSection { get; }
-        public float Length => (Trajectory.b - Trajectory.a).magnitude;
+        public float Length { get; }
         public float Magnitude => Length;
         public float DeltaAngle => 0f;
-        public Vector3 Direction => (Trajectory.b - Trajectory.a).normalized;
+        public Vector3 Direction { get; }
         public Vector3 StartDirection => Direction;
         public Vector3 EndDirection => -Direction;
         public Vector3 StartPosition => Trajectory.a;
@@ -87,6 +94,9 @@ namespace NodeMarkup.Manager
         {
             Trajectory = trajectory;
             IsSection = isSection;
+
+            Length = (Trajectory.b - Trajectory.a).magnitude;
+            Direction = (Trajectory.b - Trajectory.a).normalized;
         }
         public StraightTrajectory(Vector3 start, Vector3 end, bool isSection = true) : this(new Line3(start, end), isSection) { }
 
@@ -104,7 +114,7 @@ namespace NodeMarkup.Manager
         public ILineTrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
         public ILineTrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
             => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend, cut);
 
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
