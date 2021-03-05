@@ -390,22 +390,34 @@ namespace NodeMarkup.Manager
                 return p;
             }
         }
-        protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders)
-        {
-            startBorders = parts.Select(p => new StraightTrajectory(p.StartPosition, p.StartPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
-            endBorders = parts.Select(p => new StraightTrajectory(p.EndPosition, p.EndPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
-        }
-        protected StraightTrajectory GetPartBorder(StraightTrajectory[] borders, StraightTrajectory part, int index, bool isIncrement)
-        {
-            var step = isIncrement ? 1 : -1;
-            for (var i = index + step; isIncrement ? i < part.Length : i >= 0; i += step)
-            {
-                var intersection = MarkupIntersect.CalculateSingle(part, borders[i]);
-                if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 100f && Math.Abs(intersection.SecondT) < 100f)
-                    return borders[i];
-            }
-            return null;
-        }
+        //protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders)
+        //{
+        //    startBorders = parts.Select(p => new StraightTrajectory(p.StartPosition, p.StartPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
+        //    endBorders = parts.Select(p => new StraightTrajectory(p.EndPosition, p.EndPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
+        //}
+        //protected StraightTrajectory GetPartBorder(StraightTrajectory[] borders, StraightTrajectory part, int index, bool isIncrement)
+        //{
+        //    var step = isIncrement ? 1 : -1;
+
+        //    var border = default(StraightTrajectory);
+        //    var t = float.MaxValue;
+
+        //    for (var i = index + step; isIncrement ? i < part.Length : i >= 0; i += step)
+        //    {
+        //        var intersection = MarkupIntersect.CalculateSingle(part, borders[i]);
+        //        if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 100f && Math.Abs(intersection.SecondT) < 100f)
+        //        {
+        //            if (Mathf.Abs(intersection.FirstT) < Mathf.Abs(t))
+        //            {
+        //                border = borders[i];
+        //                t = intersection.FirstT;
+        //            }
+        //            else
+        //                break;
+        //        }
+        //    }
+        //    return border;
+        //}
 
         public override XElement ToXml()
         {
@@ -503,16 +515,16 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, angle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
             var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
+            //GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
             {
-                var before = GetPartBorder(endBorders, startBorders[i], i, false);
-                var after = GetPartBorder(startBorders, endBorders[i], i, true);
+                //var before = GetPartBorder(endBorders, startBorders[i], i, false);
+                //var after = GetPartBorder(startBorders, endBorders[i], i, true);
                 foreach (var item in GetPartItems(parts[i], angle, itemsCount, itemWidth, itemStep, Offset))
                 {
-                    item.Before = before;
-                    item.After = after;
+                    //item.Before = before;
+                    //item.After = after;
                     yield return item;
                 }
             }
@@ -730,25 +742,25 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
             var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
-            GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
+            //GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
+            //GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
             {
-                var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
-                var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
-                var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
-                var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
+                //var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
+                //var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
+                //var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
+                //var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
                 foreach (var item in GetPartItems(parts[i], halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
                 {
-                    item.Before = leftBefore;
-                    item.After = leftAfter;
+                    //item.Before = leftBefore;
+                    //item.After = leftAfter;
                     yield return item;
                 }
                 foreach (var item in GetPartItems(parts[i], -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
                 {
-                    item.Before = rightBefore;
-                    item.After = rightAfter;
+                    //item.Before = rightBefore;
+                    //item.After = rightAfter;
                     yield return item;
                 }
             }
