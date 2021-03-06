@@ -30,8 +30,10 @@ namespace NodeMarkup.Manager
     }
     public interface IRailFiller : IFillerStyle
     {
-        PropertyValue<int> LeftRail { get; }
-        PropertyValue<int> RightRail { get; }
+        PropertyValue<int> LeftRailA { get; }
+        PropertyValue<int> LeftRailB { get; }
+        PropertyValue<int> RightRailA { get; }
+        PropertyValue<int> RightRailB { get; }
     }
 
     public abstract class Filler2DStyle : FillerStyle
@@ -507,10 +509,7 @@ namespace NodeMarkup.Manager
         protected abstract float GetAngle();
         private ITrajectory GetMiddleLine(ITrajectory[] contour)
         {
-            GetIndexes(contour.Length, out int leftIndex, out int rightIndex);
-
-            var left = contour[leftIndex];
-            var right = contour[rightIndex];
+            GetRails(contour, out ITrajectory left, out ITrajectory right);
 
             var leftLength = left.Length;
             var rightLength = right.Length;
@@ -529,7 +528,7 @@ namespace NodeMarkup.Manager
             return new BezierTrajectory(middle);
 
         }
-        protected abstract void GetIndexes(int count, out int leftIndex, out int rightIndex);
+        protected abstract void GetRails(ITrajectory[] contour, out ITrajectory left, out ITrajectory right);
         private bool GetBeforeMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
         private bool GetAfterMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
         private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ITrajectory line)
@@ -608,18 +607,22 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowLines { get; }
         public PropertyValue<float> Offset { get; }
-        public PropertyValue<int> LeftRail { get; }
-        public PropertyValue<int> RightRail { get; }
+        public PropertyValue<int> LeftRailA { get; }
+        public PropertyValue<int> RightRailA { get; }
+        public PropertyValue<int> LeftRailB { get; }
+        public PropertyValue<int> RightRailB { get; }
 
-        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines, int leftRail, int rightRail) : base(color, width, step, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines, int leftRailA, int leftRailB, int rightRailA, int rightRailB) : base(color, width, step, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             FollowLines = GetFollowLinesProperty(followLines);
             Offset = GetOffsetProperty(offset);
-            LeftRail = GetLeftRailProperty(leftRail);
-            RightRail = GetRightRailProperty(rightRail);
+            LeftRailA = GetLeftRailAProperty(leftRailA);
+            LeftRailB = GetLeftRailBProperty(leftRailB);
+            RightRailA = GetRightRailAProperty(rightRailA);
+            RightRailB = GetRightRailBProperty(rightRailB);
         }
-        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines, LeftRail, RightRail);
+        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines, LeftRailA, LeftRailB, RightRailA, RightRailB);
         public override void CopyTo(Style target)
         {
             base.CopyTo(target);
@@ -632,12 +635,6 @@ namespace NodeMarkup.Manager
 
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
-
-            if (target is IRailFiller railTarget)
-            {
-                railTarget.LeftRail.Value = LeftRail;
-                railTarget.RightRail.Value = RightRail;
-            }
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -646,8 +643,10 @@ namespace NodeMarkup.Manager
             {
                 components.Add(AddAngleProperty(this, parent, onHover, onLeave));
                 components.Add(AddFollowLinesProperty(this, parent));
-                components.Add(AddRailProperty(LeftRail, Localize.StyleOption_LeftRail, parent, filler.Contour.VertexCount));
-                components.Add(AddRailProperty(RightRail, Localize.StyleOption_RightRail, parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(LeftRailA, Localize.StyleOption_LeftRail + " A", parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(LeftRailB, Localize.StyleOption_LeftRail + " B", parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(RightRailA, Localize.StyleOption_RightRail + " A", parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(RightRailB, Localize.StyleOption_RightRail + " B", parent, filler.Contour.VertexCount));
             }
             components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
@@ -695,10 +694,30 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected override void GetIndexes(int count, out int leftIndex, out int rightIndex)
+        protected override void GetRails(ITrajectory[] contour, out ITrajectory left, out ITrajectory right)
         {
-            leftIndex = LeftRail;
-            rightIndex = RightRail;
+            left = GetRail(contour, LeftRailA, LeftRailB, true);
+            right = GetRail(contour, RightRailA, RightRailB, false);
+        }
+        private ITrajectory GetRail(ITrajectory[] contour, PropertyValue<int> a, PropertyValue<int> b, bool clockWise)
+        {
+            if (Mathf.Abs(b - a) == 1)
+                return contour[Math.Min(a, b)];
+            else if (Mathf.Abs(b - a) == contour.Length - 1)
+                return contour.Last();
+            else if (clockWise)
+            {
+                var ai = a;
+                var bi = (b + contour.Length - 1) % contour.Length;
+                return new BezierTrajectory(contour[ai].StartPosition, contour[ai].StartDirection, contour[bi].EndPosition, contour[bi].EndDirection);
+            }
+            else
+            {
+                var ai = (a + contour.Length - 1) % contour.Length;
+                var bi = b;
+                return new BezierTrajectory(contour[ai].EndPosition, contour[ai].EndDirection, contour[bi].StartPosition, contour[bi].StartDirection);
+            }
+
         }
         protected override float GetAngle() => 90f - Angle;
 
@@ -708,8 +727,10 @@ namespace NodeMarkup.Manager
             config.Add(Angle.ToXml());
             config.Add(FollowLines.ToXml());
             config.Add(Offset.ToXml());
-            config.Add(LeftRail.ToXml());
-            config.Add(RightRail.ToXml());
+            config.Add(LeftRailA.ToXml());
+            config.Add(LeftRailB.ToXml());
+            config.Add(RightRailA.ToXml());
+            config.Add(RightRailB.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -718,8 +739,10 @@ namespace NodeMarkup.Manager
             Angle.FromXml(config, DefaultAngle);
             FollowLines.FromXml(config, DefaultFollowLines);
             Offset.FromXml(config, DefaultOffset);
-            LeftRail.FromXml(config, 0);
-            RightRail.FromXml(config, 1);
+            LeftRailA.FromXml(config, 0);
+            LeftRailB.FromXml(config, 1);
+            RightRailA.FromXml(config, 1);
+            RightRailB.FromXml(config, 2);
         }
     }
     public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
@@ -932,10 +955,12 @@ namespace NodeMarkup.Manager
             }
         }
         protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
-        protected override void GetIndexes(int count, out int leftIndex, out int rightIndex)
+        protected override void GetRails(ITrajectory[] contour, out ITrajectory left, out ITrajectory right)
         {
-            leftIndex = Output % count;
-            rightIndex = leftIndex.PrevIndex(count, StartingFrom == From.Vertex ? 1 : 2);
+            var leftIndex = Output % contour.Length;
+            var rightIndex = leftIndex.PrevIndex(contour.Length, StartingFrom == From.Vertex ? 1 : 2);
+            left = contour[leftIndex];
+            right = contour[rightIndex];
         }
 
         public override XElement ToXml()

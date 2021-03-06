@@ -232,8 +232,10 @@ namespace NodeMarkup.Manager
         protected PropertyValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
         protected PropertyEnumValue<ChevronFillerStyle.From> GetStartingFromProperty(ChevronFillerStyle.From defaultValue) => new PropertyEnumValue<ChevronFillerStyle.From>("SF", StyleChanged, defaultValue);
         protected PropertyValue<float> GetElevationProperty(float defaultValue) => new PropertyValue<float>("E", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetLeftRailProperty(int defaultValue) => new PropertyValue<int>("LR", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetRightRailProperty(int defaultValue) => new PropertyValue<int>("RR", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyValue<int>("LRA", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyValue<int>("LRB", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetRightRailAProperty(int defaultValue) => new PropertyValue<int>("RRA", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetRightRailBProperty(int defaultValue) => new PropertyValue<int>("RRB", StyleChanged, defaultValue);
         protected PropertyBoolValue GetFollowLinesProperty(bool defaultValue) => new PropertyBoolValue("FL", StyleChanged, defaultValue);
 
         public enum StyleType

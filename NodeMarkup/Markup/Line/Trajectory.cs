@@ -57,6 +57,19 @@ namespace NodeMarkup.Manager
             StartDirection = (Trajectory.b - Trajectory.a).normalized;
             EndDirection = (Trajectory.c - Trajectory.d).normalized;
         }
+        public BezierTrajectory(Vector3 startPos, Vector3 startDir, Vector3 endPos, Vector3 endDir) : this(GetBezier(startPos, startDir, endPos, endDir)) { }
+        private static Bezier3 GetBezier(Vector3 startPos, Vector3 startDir, Vector3 endPos, Vector3 endDir)
+        {
+            var bezier = new Bezier3()
+            {
+                a = startPos,
+                b = startDir.normalized,
+                c = endDir.normalized,
+                d = endPos,
+            };
+            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+            return bezier;
+        }
 
         public ITrajectory Cut(float t0, float t1) => new BezierTrajectory(Trajectory.Cut(t0, t1));
         public void Divide(out ITrajectory trajectory1, out ITrajectory trajectory2)
