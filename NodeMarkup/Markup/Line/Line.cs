@@ -253,7 +253,10 @@ namespace NodeMarkup.Manager
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) 
+        {
+            RecalculateStyleData();
+        }
         protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) 
         {
             RecalculateStyleData();
