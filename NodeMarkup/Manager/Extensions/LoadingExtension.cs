@@ -40,14 +40,6 @@ namespace NodeMarkup
             NodeMarkupTool.Remove();
         }
 
-        public override void OnCreated(ILoading loading)
-        {
-            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnCreated)}");
-            base.OnCreated(loading);
-
-            MarkupManager.Clear();
-            TemplateManager.Clear();
-        }
         private void ShowLoadError()
         {
             if (MarkupManager.HasLoadErrors)
