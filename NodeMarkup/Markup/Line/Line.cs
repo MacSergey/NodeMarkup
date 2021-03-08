@@ -43,7 +43,7 @@ namespace NodeMarkup.Manager
 
         protected ITrajectory LineTrajectory { get; private set; }
         public ITrajectory Trajectory => LineTrajectory.Copy();
-        public Dictionary<MarkupLOD, IStyleData[]> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData[]>();
+        public LodDictionaryArray<IStyleData> StyleData { get;} = new LodDictionaryArray<IStyleData>();
 
         public LineBorders Borders => new LineBorders(this);
 

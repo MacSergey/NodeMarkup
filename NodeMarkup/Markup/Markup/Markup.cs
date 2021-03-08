@@ -85,7 +85,7 @@ namespace NodeMarkup.Manager
 
 
         public bool NeedRecalculateDrawData { get; set; }
-        public Dictionary<MarkupLOD, List<IDrawData>> DrawData { get; private set; } = new Dictionary<MarkupLOD, List<IDrawData>>();
+        public LodDictionaryArray<IDrawData> DrawData { get; } = new LodDictionaryArray<IDrawData>();
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -333,11 +333,11 @@ namespace NodeMarkup.Manager
                 var drawData = new List<IDrawData>();
 
                 Seporate(Lines.SelectMany(l => l.StyleData[lod]));
-                Seporate(Fillers.Select(l => l.StyleData[lod]));
-                Seporate(Crosswalks.Select(l => l.StyleData[lod]));
+                Seporate(Fillers.Select(f => f.StyleData[lod]));
+                Seporate(Crosswalks.Select(c => c.StyleData[lod]));
 
                 drawData.AddRange(RenderBatch.FromDashes(dashes));
-                DrawData[lod] = drawData;
+                DrawData[lod] = drawData.ToArray();
 
                 void Seporate(IEnumerable<IStyleData> stylesData)
                 {

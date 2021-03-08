@@ -208,6 +208,23 @@ namespace NodeMarkup.Utils
         LOD0,
         LOD1
     }
+    public class LodDictionary<Type> : Dictionary<MarkupLOD, Type>
+    {
+        protected virtual Type Default => default;
+        public LodDictionary()
+        {
+            Clear();
+        }
+        public new void Clear()
+        {
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                this[lod] = Default;
+        }
+    }
+    public class LodDictionaryArray<Type> : LodDictionary<Type[]>
+    {
+        protected override Type[] Default => new Type[0];
+    }
 
     public class MarkupStylePart
     {

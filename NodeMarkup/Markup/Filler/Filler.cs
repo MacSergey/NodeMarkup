@@ -34,7 +34,7 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
-        public Dictionary<MarkupLOD, IStyleData> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData>();
+        public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
         public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine);
 
         public string XmlSection => XmlName;

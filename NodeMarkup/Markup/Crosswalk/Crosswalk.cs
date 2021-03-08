@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
 
-        public Dictionary<MarkupLOD, IStyleData> StyleData { get; private set; } = new Dictionary<MarkupLOD, IStyleData>();
+        public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
         public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
