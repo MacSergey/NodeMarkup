@@ -1362,4 +1362,7 @@ Are you sure you want to have multiple presets with the same name?</value>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
     <value>- Update Harmony dependence: resolving conflicts with others mods that use it</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>- Fixed a situation where markings could disappear from saving</value>
+  </data>
 </root>

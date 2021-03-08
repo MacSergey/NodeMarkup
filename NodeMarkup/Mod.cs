@@ -40,6 +40,7 @@ namespace NodeMarkup
 
         public static List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.5.3"),
             new Version("1.5.2"),
             new Version("1.5.1"),
             new Version("1.5"),
