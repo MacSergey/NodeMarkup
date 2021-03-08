@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
     public interface IUpdate<Type>
         where Type : IUpdate
     {
-        void Update(Type item, bool recalculate = false);
+        void Update(Type item, bool recalculate = false, bool recalcDependences = false);
     }
     public interface IUpdatePoints : IUpdate<MarkupPoint> { }
     public interface IUpdateLines : IUpdate<MarkupLine> { }
@@ -46,6 +46,10 @@ namespace NodeMarkup.Manager
     public interface IUpdateCrosswalks : IUpdate<MarkupCrosswalk> { }
 
     public interface IItem : IUpdate, IDeletable, IRender { }
+    public interface IStyleItem : IItem
+    {
+        void RecalculateStyleData();
+    }
 
     public interface IStyleData
     {
@@ -84,7 +88,7 @@ namespace NodeMarkup.Manager
         public int FillersCount => FillersList.Count;
 
 
-        public bool NeedRecalculateDrawData { get; private set;}
+        public bool NeedRecalculateDrawData { get; private set; }
         public LodDictionaryArray<IDrawData> DrawData { get; } = new LodDictionaryArray<IDrawData>();
 
         private bool _needSetOrder;
@@ -125,7 +129,7 @@ namespace NodeMarkup.Manager
             UpdateFillers();
             UpdateCrosswalks();
 
-            RecalculateDashes();
+            RecalculateAllStyleData();
 
             UpdateProgress = false;
         }
@@ -240,55 +244,77 @@ namespace NodeMarkup.Manager
             foreach (var crosswalk in Crosswalks)
                 crosswalk.Update(true);
         }
-       
-        public void Update(MarkupPoint point, bool recalculate = false)
+
+        public void Update(MarkupPoint point, bool recalculate = false, bool recalcDependences = false)
         {
             point.Update();
 
-            foreach (var line in GetPointLines(point))
-                line.Update();
+            var toRecalculate = new HashSet<IStyleItem>();
 
-            foreach (var filler in GetPointFillers(point))
-                filler.Update();
-
-            foreach (var crosswalk in GetPointCrosswalks(point))
-                crosswalk.Update();
-
-            if (recalculate && !UpdateProgress)
-                RecalculateDashes();
-        }
-        public void Update(MarkupLine line, bool recalculate = false)
-        {
-            line.Update(true);
-
-            foreach (var intersect in GetExistIntersects(line).ToArray())
+            if (recalcDependences)
             {
-                LineIntersects.Remove(intersect.Pair);
-                intersect.Pair.GetOther(line).Update();
+                foreach (var line in GetPointLines(point))
+                {
+                    line.Update();
+                    toRecalculate.Add(line);
+                }
+
+                foreach (var filler in GetPointFillers(point))
+                {
+                    filler.Update();
+                    toRecalculate.Add(filler);
+                }
+
+                foreach (var crosswalk in GetPointCrosswalks(point))
+                {
+                    crosswalk.Update();
+                    toRecalculate.Add(crosswalk);
+                }
             }
 
-            foreach (var filler in GetLineFillers(line))
-                filler.Update();
+            if (recalculate && !UpdateProgress)
+                RecalculateStyleData(toRecalculate);
+        }
+        public void Update(MarkupLine line, bool recalculate = false, bool recalcDependences = false)
+        {
+            var toRecalculate = new HashSet<IStyleItem>();
+            toRecalculate.Add(line);
 
-            foreach (var crosswalk in GetLinesIsBorder(line))
-                crosswalk.Update();
+            line.Update(true);
+
+            if (recalcDependences)
+            {
+                foreach (var intersect in GetExistIntersects(line).ToArray())
+                {
+                    LineIntersects.Remove(intersect.Pair);
+                    var otherLine = intersect.Pair.GetOther(line);
+                    otherLine.Update();
+                    toRecalculate.Add(otherLine);
+                }
+
+                foreach (var filler in GetLineFillers(line))
+                {
+                    filler.Update();
+                    toRecalculate.Add(filler);
+                }
+
+                foreach (var crosswalk in GetLinesIsBorder(line))
+                {
+                    crosswalk.Update();
+                    toRecalculate.Add(crosswalk);
+                }
+            }
 
             if (recalculate && !UpdateProgress)
-                RecalculateDashes();
+                RecalculateStyleData(toRecalculate);
         }
-        public void Update(MarkupFiller filler, bool recalculate = false)
+        public void Update(MarkupFiller filler, bool recalculate = false, bool recalcDependences = false)
         {
             filler.Update();
             if (recalculate && !UpdateProgress)
-                RecalculateDashes();
+                RecalculateStyleData(filler);
         }
-        public void Update(MarkupCrosswalk crosswalk, bool recalculate = false)
-        {
-            crosswalk.Line.Update();
-
-            if (recalculate && !UpdateProgress)
-                RecalculateDashes();
-        }
+        public void Update(MarkupCrosswalk crosswalk, bool recalculate = false, bool recalcDependences = false) => Update(crosswalk.Line, recalculate, recalcDependences);
 
         public void Clear()
         {
@@ -297,7 +323,7 @@ namespace NodeMarkup.Manager
             CrosswalksDictionary.Clear();
             NeedSetOrder = false;
 
-            RecalculateDashes();
+            RecalculateAllStyleData();
         }
         public void ResetOffsets()
         {
@@ -309,28 +335,44 @@ namespace NodeMarkup.Manager
 
         #region RECALCULATE
 
-        public void RecalculateDashes()
+        public void RecalculateAllStyleData()
         {
 #if DEBUG
             Mod.Logger.Debug($"Recalculate markup {this}");
 #endif
             LineIntersects.Clear();
+
+            var toRecalculate = new HashSet<IStyleItem>();
+
             foreach (var line in Lines)
-                line.RecalculateStyleData();
+                toRecalculate.Add(line);
 
             foreach (var filler in Fillers)
-                filler.RecalculateStyleData();
+                toRecalculate.Add(filler);
 
             foreach (var crosswalk in Crosswalks)
-                crosswalk.RecalculateStyleData();
+                toRecalculate.Add(crosswalk);
+
+            RecalculateStyleData(toRecalculate);
+        }
+        public void RecalculateStyleData(IStyleItem toRecalculate = null)
+        {
+            toRecalculate?.RecalculateStyleData();
+            NeedRecalculateDrawData = true;
+        }
+        public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
+        {
+            foreach (var item in toRecalculate)
+                item.RecalculateStyleData();
 
             NeedRecalculateDrawData = true;
         }
+
         public void RecalculateDrawData()
         {
             DrawData.Clear();
 
-            foreach(var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
             {
                 var dashes = new List<MarkupStylePart>();
                 var drawData = new List<IDrawData>();
@@ -361,32 +403,33 @@ namespace NodeMarkup.Manager
 
         #region LINES
 
-        public bool ExistConnection(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
+        public bool ExistLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public MarkupLine AddConnection(MarkupPointPair pointPair, Style.StyleType style)
+        public MarkupLine AddLine(MarkupPointPair pointPair, Style.StyleType style)
         {
             if (!TryGetLine(pointPair, out MarkupLine line))
             {
                 line = MarkupLine.FromStyle(this, pointPair, style);
                 LinesDictionary[pointPair.Hash] = line;
-                NeedRecalculateDrawData = true;
+                RecalculateStyleData();
             }
 
             return line;
         }
-        public void RemoveConnect(MarkupLine line)
+        public void RemoveLine(MarkupLine line) => RemoveLine(line, true);
+        private void RemoveLine(MarkupLine line, bool recalculate = false)
         {
-            RemoveLine(line);
-            RecalculateDashes();
-        }
-        private void RemoveLine(MarkupLine line)
-        {
+            var toRecalculate = new HashSet<IStyleItem>();
+
             LinesDictionary.Remove(line.PointPair.Hash);
 
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
                 if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
-                    regularLine.RemoveRules(line);
+                {
+                    if (regularLine.RemoveRules(line))
+                        toRecalculate.Add(regularLine);
+                }
 
                 LineIntersects.Remove(intersect.Pair);
             }
@@ -398,8 +441,14 @@ namespace NodeMarkup.Manager
             else
             {
                 foreach (var crosswalk in GetLinesIsBorder(line))
+                {
                     crosswalk.RemoveBorder(line);
+                    toRecalculate.Add(crosswalk);
+                }
             }
+
+            if (recalculate)
+                RecalculateStyleData(toRecalculate);
         }
         public Dependences GetLineDependences(MarkupLine line)
         {
@@ -426,13 +475,12 @@ namespace NodeMarkup.Manager
         public void AddFiller(MarkupFiller filler)
         {
             FillersList.Add(filler);
-            filler.RecalculateStyleData();
-            NeedRecalculateDrawData = true;
+            RecalculateStyleData(filler);
         }
         public void RemoveFiller(MarkupFiller filler)
         {
             FillersList.Remove(filler);
-            NeedRecalculateDrawData = true;
+            RecalculateStyleData();
         }
 
         #endregion
@@ -442,10 +490,9 @@ namespace NodeMarkup.Manager
         public void AddCrosswalk(MarkupCrosswalk crosswalk)
         {
             CrosswalksDictionary[crosswalk.Line] = crosswalk;
-            crosswalk.RecalculateStyleData();
-            NeedRecalculateDrawData = true;
+            RecalculateStyleData(crosswalk);
         }
-        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveConnect(crosswalk.Line);
+        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveLine(crosswalk.Line);
         public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
         {
             var dependences = GetLineDependences(crosswalk.Line);

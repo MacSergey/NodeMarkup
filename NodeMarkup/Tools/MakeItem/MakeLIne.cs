@@ -68,13 +68,13 @@ namespace NodeMarkup.Tools
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
                     Tool.DeleteItem(line, () =>
                     {
-                        Tool.Markup.RemoveConnect(line);
+                        Tool.Markup.RemoveLine(line);
                         Panel.UpdatePanel();
                     });
                 else
                 {
                     var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
-                    var newLine = Tool.Markup.AddConnection(pointPair, lineType);
+                    var newLine = Tool.Markup.AddLine(pointPair, lineType);
                     Panel.EditLine(newLine);
                 }
 
@@ -167,7 +167,7 @@ namespace NodeMarkup.Tools
             };
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
+            var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color);
@@ -175,7 +175,7 @@ namespace NodeMarkup.Tools
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Purple;
+            var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Purple;
 
             var lineBezier = new Bezier3()
             {

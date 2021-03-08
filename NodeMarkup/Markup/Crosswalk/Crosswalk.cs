@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IItem, IToXml
+    public class MarkupCrosswalk : IStyleItem, IToXml
     {
         #region PROPERTIES
 
@@ -95,7 +95,7 @@ namespace NodeMarkup.Manager
             EnterLine = new MarkupEnterLine(Markup, startPoint, endPoint);
         }
 
-        protected void CrosswalkChanged() => Markup.Update(this, true);
+        protected void CrosswalkChanged() => Markup.Update(this, true, true);
 
         public void Update(bool onlySelfUpdate = false)
         {

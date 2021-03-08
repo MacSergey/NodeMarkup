@@ -90,7 +90,7 @@ namespace NodeMarkup.Tools
         public static NodeMarkupTool Instance { get; set; }
         protected override void Awake()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(Awake)}");
+            Mod.Logger.Debug($"Awake tool");
             base.Awake();
 
             Instance = this;
@@ -117,12 +117,12 @@ namespace NodeMarkup.Tools
         public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
         public static void Create()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(Create)}");
+            Mod.Logger.Debug($"Create tool");
             ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
         }
         public static void Remove()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(Remove)}");
+            Mod.Logger.Debug($"Remove tool");
             if (Instance != null)
             {
                 Destroy(Instance);
@@ -132,7 +132,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnDestroy()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(OnDestroy)}");
+            Mod.Logger.Debug($"On tool destroy");
             NodeMarkupButton.RemoveButton();
             NodeMarkupPanel.RemovePanel();
             ComponentPool.Clear();
@@ -140,7 +140,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnEnable()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(OnEnable)}");
+            Mod.Logger.Debug($"On tool enable");
             Reset();
 
             PrevTool = m_toolController.CurrentTool;
@@ -151,7 +151,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnDisable()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(OnDisable)}");
+            Mod.Logger.Debug($"On tool disable");
             Reset();
 
             if (m_toolController?.NextTool == null && PrevTool != null)
@@ -170,7 +170,7 @@ namespace NodeMarkup.Tools
 
         public void ToggleTool()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(ToggleTool)}: {(!enabled ? "enable" : "disable")}");
+            Mod.Logger.Debug($"Toogle tool");
             enabled = !enabled;
         }
         public void Disable() => enabled = false;
@@ -332,7 +332,7 @@ namespace NodeMarkup.Tools
         }
         private void DeleteAllMarking()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(DeleteAllMarking)}");
+            Mod.Logger.Debug($"Delete all markings");
 
             var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
             messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
@@ -348,7 +348,7 @@ namespace NodeMarkup.Tools
         }
         private void ResetAllOffsets()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(ResetAllOffsets)}");
+            Mod.Logger.Debug($"Reset all points offsets");
 
             if (Settings.DeleteWarnings)
             {
@@ -406,12 +406,12 @@ namespace NodeMarkup.Tools
 
         private void CopyMarkup()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(CopyMarkup)}");
+            Mod.Logger.Debug($"Copy marking");
             MarkupBuffer = new IntersectionTemplate(Markup);
         }
         private void PasteMarkup()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(PasteMarkup)}");
+            Mod.Logger.Debug($"Paste marking");
 
             if (Settings.DeleteWarnings)
             {
@@ -432,28 +432,28 @@ namespace NodeMarkup.Tools
         }
         private void EditMarkup()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(EditMarkup)}");
+            Mod.Logger.Debug($"Edit marking order");
 
             BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
         }
         public void ApplyIntersectionTemplate(IntersectionTemplate template)
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(ApplyIntersectionTemplate)}");
+            Mod.Logger.Debug($"Apply intersection template");
 
             BaseOrderToolMode.IntersectionTemplate = template;
             SetMode(ToolModeType.ApplyIntersectionTemplateOrder);
         }
         private void CreateEdgeLines()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(CreateEdgeLines)}");
+            Mod.Logger.Debug($"Create edge lines");
 
-            var lines = Markup.Enters.Select(e => Markup.AddConnection(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
+            var lines = Markup.Enters.Select(e => Markup.AddLine(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
             Panel.EditLine(lines.Last());
         }
         private void SaveAsIntersectionTemplate()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(SaveAsIntersectionTemplate)}");
+            Mod.Logger.Debug($"Save as intersection template");
 
             StartCoroutine(MakeScreenshot(Callback));
 
@@ -465,7 +465,7 @@ namespace NodeMarkup.Tools
         }
         private void CutByCrosswalks()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(CutByCrosswalks)}");
+            Mod.Logger.Debug($"Cut by crosswalk");
 
             foreach (var crosswalk in Markup.Crosswalks)
                 Markup.CutLinesByCrosswalk(crosswalk);
@@ -476,7 +476,7 @@ namespace NodeMarkup.Tools
             if (callback == null)
                 yield break;
 
-            Mod.Logger.Debug($"{nameof(NodeMarkupTool)}.{nameof(MakeScreenshot)}");
+            Mod.Logger.Debug($"Make screenshot");
 
             var cameraController = ToolsModifierControl.cameraController;
             var camera = Camera.main;

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IItem, IToXml
+    public class MarkupFiller : IStyleItem, IToXml
     {
         public static string XmlName { get; } = "F";
 

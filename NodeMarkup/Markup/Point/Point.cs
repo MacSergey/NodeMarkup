@@ -56,7 +56,7 @@ namespace NodeMarkup.Manager
             set
             {
                 _offset = value;
-                Markup.Update(this, true);
+                Markup.Update(this, true, true);
             }
         }
 
@@ -108,7 +108,7 @@ namespace NodeMarkup.Manager
         }
         public abstract void UpdateProcess();
         public bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
-        public override string ToString() => $"{Enter}-{Num}";
+        public override string ToString() => $"{Enter}:{Num}";
         public override int GetHashCode() => Id;
 
         public XElement ToXml()

@@ -219,7 +219,7 @@ namespace NodeMarkup.UI.Editors
             GetRuleEdges();
             RefreshRulePanels();
         }
-        protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveConnect(line);
+        protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveLine(line);
         public void Refresh()
         {
             RefreshItem();

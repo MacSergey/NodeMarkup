@@ -147,17 +147,17 @@ namespace NodeMarkup
 
         public static bool ImportMarkingData(string file)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(ImportMarkingData)}");
+            Mod.Logger.Debug($"Import marking data");
             return ImportData(file, (config) => MarkupManager.Import(config));
         }
         public static bool ImportStylesData(string file)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(ImportStylesData)}");
+            Mod.Logger.Debug($"Import styles data");
             return ImportTemplatesData(file, TemplateManager.StyleManager);
         }
         public static bool ImportIntersectionsData(string file)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(ImportIntersectionsData)}");
+            Mod.Logger.Debug($"Import intersections data");
             return ImportTemplatesData(file, TemplateManager.IntersectionManager);
         }
         private static bool ImportTemplatesData(string file, TemplateManager manager)
@@ -171,7 +171,7 @@ namespace NodeMarkup
 
         private static bool ImportData(string file, Action<XElement> processData)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(ImportData)}");
+            Mod.Logger.Debug($"Import data");
 
             try
             {
@@ -194,23 +194,23 @@ namespace NodeMarkup
         }
         public static bool DumpMarkingData(out string path)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(DumpMarkingData)}");
+            Mod.Logger.Debug($"Dump marking data");
             return DumpData(GetString(MarkupManager.ToXml()), MarkingName, out path);
         }
         public static bool DumpStyleTemplatesData(out string path)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(DumpStyleTemplatesData)}");
+            Mod.Logger.Debug($"Dump style templates data");
             return DumpData(Settings.Templates, TemplatesRecovery, out path);
         }
         public static bool DumpIntersectionTemplatesData(out string path)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(DumpIntersectionTemplatesData)}");
+            Mod.Logger.Debug($"Dump intersection templates data");
             return DumpData(Settings.Intersections, PresetsRecovery, out path);
         }
 
         private static bool DumpData(string data, string name, out string path)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(DumpData)}");
+            Mod.Logger.Debug($"Dump data");
 
             try
             {
@@ -227,7 +227,7 @@ namespace NodeMarkup
 
         public static bool SaveToFile(string name, string xml, out string file)
         {
-            Mod.Logger.Debug($"{nameof(Loader)}.{nameof(SaveToFile)}");
+            Mod.Logger.Debug($"Save to file");
             try
             {
                 if (!Directory.Exists(RecoveryDirectory))

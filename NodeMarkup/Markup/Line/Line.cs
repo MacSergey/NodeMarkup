@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IItem, IToXml
+    public abstract class MarkupLine : IStyleItem, IToXml
     {
         public static string XmlName { get; } = "L";
 
@@ -323,15 +323,17 @@ namespace NodeMarkup.Manager
             RawRules.Remove(rule);
             RuleChanged();
         }
-        public void RemoveRules(MarkupLine intersectLine)
+        public bool RemoveRules(MarkupLine intersectLine)
         {
             if (!RawRules.Any())
-                return;
+                return false;
 
-            RawRules.RemoveAll(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
+            var removed = RawRules.RemoveAll(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
 
             if (!RawRules.Any())
                 AddRule(false, false);
+
+            return removed != 0;
         }
         private bool Match(MarkupLine intersectLine, ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
         public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));

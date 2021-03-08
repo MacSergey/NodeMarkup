@@ -78,6 +78,7 @@ namespace NodeMarkup.Tools
             else
                 return;
 
+            Mod.Logger.Debug($"Select marking {markup}");
             Tool.SetMarkup(markup);
 
             if (markup.NeedSetOrder)

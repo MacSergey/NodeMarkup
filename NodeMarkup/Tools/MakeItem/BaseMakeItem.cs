@@ -55,7 +55,7 @@ namespace NodeMarkup.Tools
         public override string GetToolInfo()
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var exist = Tool.Markup.ExistConnection(pointPair);
+            var exist = Tool.Markup.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
                 return exist ? Localize.Tool_InfoDeleteStopLine : GetCreateToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);

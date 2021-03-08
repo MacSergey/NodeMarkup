@@ -51,13 +51,13 @@ namespace NodeMarkup.UI
         }
         public static void CreateButton()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
+            Mod.Logger.Debug($"Create buton");
             Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
             Mod.Logger.Debug($"Button created");
         }
         public static void RemoveButton()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupButton)}.{nameof(RemoveButton)}");
+            Mod.Logger.Debug($"Remove button");
 
             if (Instance != null)
             {
@@ -70,7 +70,7 @@ namespace NodeMarkup.UI
 
         protected override void OnClick(UIMouseEventParameter p)
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupButton)}.{nameof(OnClick)}");
+            Mod.Logger.Debug($"On button click");
 
             base.OnClick(p);
             NodeMarkupTool.Instance.ToggleTool();
