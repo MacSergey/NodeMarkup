@@ -132,7 +132,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnDestroy()
         {
-            Mod.Logger.Debug($"On tool destroy");
+            Mod.Logger.Debug($"Destroy tool");
             NodeMarkupButton.RemoveButton();
             NodeMarkupPanel.RemovePanel();
             ComponentPool.Clear();
@@ -140,7 +140,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnEnable()
         {
-            Mod.Logger.Debug($"On tool enable");
+            Mod.Logger.Debug($"Enable tool");
             Reset();
 
             PrevTool = m_toolController.CurrentTool;
@@ -151,7 +151,7 @@ namespace NodeMarkup.Tools
         }
         protected override void OnDisable()
         {
-            Mod.Logger.Debug($"On tool disable");
+            Mod.Logger.Debug($"Disable tool");
             Reset();
 
             if (m_toolController?.NextTool == null && PrevTool != null)
@@ -168,11 +168,7 @@ namespace NodeMarkup.Tools
             cursorInfoLabel.text = string.Empty;
         }
 
-        public void ToggleTool()
-        {
-            Mod.Logger.Debug($"Toogle tool");
-            enabled = !enabled;
-        }
+        public void ToggleTool() => enabled = !enabled;
         public void Disable() => enabled = false;
 
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
@@ -751,7 +747,10 @@ namespace NodeMarkup.Tools
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
             if (!UIView.HasModalInput() && !UIView.HasInputFocus() && NodeMarkupTool.ActivationShortcut.InputKey.IsKeyUp())
+            {
+                Mod.Logger.Debug($"On press shortcut");
                 NodeMarkupTool.Instance.ToggleTool();
+            }
         }
     }
 }

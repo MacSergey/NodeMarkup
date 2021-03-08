@@ -303,6 +303,9 @@ namespace NodeMarkup.Manager
                     crosswalk.Update();
                     toRecalculate.Add(crosswalk);
                 }
+
+                if (line is MarkupCrosswalkLine crosswalkLine)
+                    toRecalculate.Add(crosswalkLine.Crosswalk);
             }
 
             if (recalculate && !UpdateProgress)
