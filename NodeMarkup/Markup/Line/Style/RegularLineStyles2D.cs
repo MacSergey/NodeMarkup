@@ -102,7 +102,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, StyleAlignment.Centre);
             if (invert)
                 Alignment.Value = Alignment.Value.Invert();
@@ -234,7 +234,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, StyleAlignment.Centre);
             if (invert)
                 Alignment.Value = Alignment.Value.Invert();
@@ -342,7 +342,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
             Invert.FromXml(config, false);

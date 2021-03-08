@@ -115,7 +115,7 @@ namespace NodeMarkup.Manager
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             Contour.Render(cameraInfo, color, width, alphaBlend);
-            //Style.Render
+            Style.Render(this, cameraInfo, color, width, alphaBlend, cut);
         }
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();

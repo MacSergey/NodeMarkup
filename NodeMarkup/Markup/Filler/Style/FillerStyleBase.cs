@@ -72,8 +72,6 @@ namespace NodeMarkup.Manager
                 components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
         }
 
-        //public sealed override Style Copy() => CopyFillerStyle();
-        //public abstract FillerStyle CopyFillerStyle();
         public abstract IStyleData Calculate(MarkupFiller filler, MarkupLOD lod);
 
         public ITrajectory[] SetMedianOffset(MarkupFiller filler)
@@ -118,6 +116,8 @@ namespace NodeMarkup.Manager
             var sin = Mathf.Sin(intersect.Angle);
             return sin != 0 ? offset / sin : 1000f;
         }
+
+        public virtual void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) { }
 
         public override XElement ToXml()
         {

@@ -587,10 +587,12 @@ namespace NodeMarkup.Manager
             return border;
         }
 
-        //public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-        //{
-        //    base.Render(cameraInfo, color, width, alphaBlend, cut);
-        //}
+        public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            GetRails(filler.Contour.Trajectories.ToArray(), out ITrajectory left, out ITrajectory right);
+            left.Render(cameraInfo, Colors.Green, width, alphaBlend, cut);
+            right.Render(cameraInfo, Colors.Red, width, alphaBlend, cut);
+        }
 
         public override XElement ToXml()
         {
@@ -718,9 +720,9 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                var ai = (a + contour.Length - 1) % contour.Length;
-                var bi = b;
-                return new BezierTrajectory(contour[ai].EndPosition, contour[ai].EndDirection, contour[bi].StartPosition, contour[bi].StartDirection);
+                var ai = b;
+                var bi = (a + contour.Length - 1) % contour.Length;
+                return new BezierTrajectory(contour[ai].StartPosition, contour[ai].StartDirection, contour[bi].EndPosition, contour[bi].EndDirection);
             }
 
         }

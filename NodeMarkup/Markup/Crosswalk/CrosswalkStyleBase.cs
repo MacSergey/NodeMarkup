@@ -43,9 +43,6 @@ namespace NodeMarkup.Manager
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
-        //public sealed override Style Copy() => CopyCrosswalkStyle();
-        //public abstract CrosswalkStyle CopyCrosswalkStyle();
-
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
@@ -58,34 +55,6 @@ namespace NodeMarkup.Manager
         public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
 
         public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod);
-
-        public enum CrosswalkType
-        {
-            [Description(nameof(Localize.CrosswalkStyle_Existent))]
-            Existent = StyleType.CrosswalkExistent,
-
-            [Description(nameof(Localize.CrosswalkStyle_Zebra))]
-            Zebra = StyleType.CrosswalkZebra,
-
-            [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
-            DoubleZebra = StyleType.CrosswalkDoubleZebra,
-
-            [Description(nameof(Localize.CrosswalkStyle_ParallelSolidLines))]
-            ParallelSolidLines = StyleType.CrosswalkParallelSolidLines,
-
-            [Description(nameof(Localize.CrosswalkStyle_ParallelDashedLines))]
-            ParallelDashedLines = StyleType.CrosswalkParallelDashedLines,
-
-            [Description(nameof(Localize.CrosswalkStyle_Ladder))]
-            Ladder = StyleType.CrosswalkLadder,
-
-            [Description(nameof(Localize.CrosswalkStyle_Solid))]
-            Solid = StyleType.CrosswalkSolid,
-
-            [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
-            ChessBoard = StyleType.CrosswalkChessBoard,
-        }
-
 
         protected float GetOffset(MarkupIntersect intersect, float offset)
         {
@@ -150,6 +119,33 @@ namespace NodeMarkup.Manager
 
                 yield return new MarkupStylePart(startPosition, endPosition, direction, width, Color);
             }
+        }
+
+        public enum CrosswalkType
+        {
+            [Description(nameof(Localize.CrosswalkStyle_Existent))]
+            Existent = StyleType.CrosswalkExistent,
+
+            [Description(nameof(Localize.CrosswalkStyle_Zebra))]
+            Zebra = StyleType.CrosswalkZebra,
+
+            [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
+            DoubleZebra = StyleType.CrosswalkDoubleZebra,
+
+            [Description(nameof(Localize.CrosswalkStyle_ParallelSolidLines))]
+            ParallelSolidLines = StyleType.CrosswalkParallelSolidLines,
+
+            [Description(nameof(Localize.CrosswalkStyle_ParallelDashedLines))]
+            ParallelDashedLines = StyleType.CrosswalkParallelDashedLines,
+
+            [Description(nameof(Localize.CrosswalkStyle_Ladder))]
+            Ladder = StyleType.CrosswalkLadder,
+
+            [Description(nameof(Localize.CrosswalkStyle_Solid))]
+            Solid = StyleType.CrosswalkSolid,
+
+            [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
+            ChessBoard = StyleType.CrosswalkChessBoard,
         }
     }
 }

@@ -26,6 +26,17 @@ namespace NodeMarkup.Manager
     }
     public abstract class Style : IToXml
     {
+        public static float DefaultDashLength => 1.5f;
+        public static float DefaultSpaceLength => 1.5f;
+        public static float DefaultDoubleOffset => 0.15f;
+
+        public static float DefaultSharkBaseLength => 0.5f;
+        public static float DefaultSharkSpaceLength => 0.5f;
+        public static float DefaultSharkHeight => 0.6f;
+
+        public static float Default3DWidth => 0.3f;
+        public static float Default3DHeigth => 0.3f;
+
         public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
@@ -355,18 +366,6 @@ namespace NodeMarkup.Manager
     public abstract class Style<StyleType> : Style
         where StyleType : Style<StyleType>
     {
-        public static float DefaultDashLength => 1.5f;
-        public static float DefaultSpaceLength => 1.5f;
-        public static float DefaultOffset => 0.15f;
-
-        public static float DefaultSharkBaseLength => 0.5f;
-        public static float DefaultSharkSpaceLength => 0.5f;
-        public static float DefaultSharkHeight => 0.6f;
-
-        public static float Default3DWidth => 0.3f;
-        public static float Default3DHeigth => 0.3f;
-
-
         public Style(Color32 color, float width) : base(color, width) { }
 
         public virtual void CopyTo(StyleType target) => base.CopyTo(target);

@@ -88,6 +88,7 @@ namespace NodeMarkup.Manager
             AddOnHoverLeave(elevationProperty, onHover, onLeave);
             return elevationProperty;
         }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();

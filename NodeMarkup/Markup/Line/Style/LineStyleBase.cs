@@ -62,22 +62,9 @@ namespace NodeMarkup.Manager
 
     public abstract class LineStyle : Style<LineStyle>
     {
-        //public static float DefaultDashLength => 1.5f;
-        //public static float DefaultSpaceLength => 1.5f;
-        //public static float DefaultOffset => 0.15f;
-
-        //public static float DefaultSharkBaseLength => 0.5f;
-        //public static float DefaultSharkSpaceLength => 0.5f;
-        //public static float DefaultSharkHeight => 0.6f;
-
-        //public static float Default3DWidth => 0.3f;
-        //public static float Default3DHeigth => 0.3f;
-
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod);
-        //public override Style Copy() => CopyLineStyle();
-        //public abstract LineStyle CopyLineStyle();
 
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
@@ -180,9 +167,9 @@ namespace NodeMarkup.Manager
         {
             {RegularLineType.Solid, new SolidLineStyle(DefaultColor, DefaultWidth)},
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
-            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffset)},
-            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
-            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
+            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultDoubleOffset)},
+            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
+            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
             //{RegularLineType.Grass, new GrassLineStyle(Default3DWidth, Default3DHeigth) },
@@ -190,9 +177,6 @@ namespace NodeMarkup.Manager
         public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyLineStyle() : null;
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
-
-        //public sealed override LineStyle CopyStyle() => CopyRegularLineStyle();
-        //public abstract RegularLineStyle CopyRegularLineStyle();
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -254,9 +238,6 @@ namespace NodeMarkup.Manager
         public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyLineStyle() : null;
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
-
-        //public sealed override LineStyle CopyLineStyle() => CopyStopLineStyle();
-        //public abstract StopLineStyle CopyStopLineStyle();
 
         public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
         protected abstract IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
