@@ -105,6 +105,9 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateStyleData()
         {
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate crosswalk {this}");
+#endif
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
                 RecalculateStyleData(lod);
         }

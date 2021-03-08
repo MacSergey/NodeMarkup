@@ -70,6 +70,9 @@ namespace NodeMarkup.Manager
 
         public void RecalculateStyleData()
         {
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate line {this}");
+#endif
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
                 RecalculateStyleData(lod);
         }
@@ -402,7 +405,6 @@ namespace NodeMarkup.Manager
             var to = empty ? null : new CrosswalkBorderEdge(this, BorderPosition.Left);
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
-        protected override void RuleChanged() => Markup.Update(this, true);
 
         protected override ITrajectory CalculateTrajectory() => TrajectoryGetter();
         public float GetT(BorderPosition border) => (int)border;

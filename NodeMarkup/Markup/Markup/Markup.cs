@@ -84,7 +84,7 @@ namespace NodeMarkup.Manager
         public int FillersCount => FillersList.Count;
 
 
-        public bool NeedRecalculateDrawData { get; set; }
+        public bool NeedRecalculateDrawData { get; private set;}
         public LodDictionaryArray<IDrawData> DrawData { get; } = new LodDictionaryArray<IDrawData>();
 
         private bool _needSetOrder;
@@ -240,7 +240,7 @@ namespace NodeMarkup.Manager
             foreach (var crosswalk in Crosswalks)
                 crosswalk.Update(true);
         }
-
+       
         public void Update(MarkupPoint point, bool recalculate = false)
         {
             point.Update();
@@ -311,6 +311,9 @@ namespace NodeMarkup.Manager
 
         public void RecalculateDashes()
         {
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate markup {this}");
+#endif
             LineIntersects.Clear();
             foreach (var line in Lines)
                 line.RecalculateStyleData();
@@ -350,6 +353,8 @@ namespace NodeMarkup.Manager
                     }
                 }
             }
+
+            NeedRecalculateDrawData = false;
         }
 
         #endregion

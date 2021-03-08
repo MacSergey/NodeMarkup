@@ -147,10 +147,7 @@ namespace NodeMarkup.Manager
                 return;
 
             if (markup.NeedRecalculateDrawData)
-            {
-                markup.NeedRecalculateDrawData = false;
                 markup.RecalculateDrawData();
-            }
 
             if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
                 Render(markup, data, MarkupLOD.LOD0);

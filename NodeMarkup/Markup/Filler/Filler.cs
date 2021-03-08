@@ -61,6 +61,9 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateStyleData()
         {
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate filler {this}");
+#endif
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
                 RecalculateStyleData(lod);
         }
