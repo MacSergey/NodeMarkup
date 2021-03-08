@@ -86,7 +86,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(FillerStyle style)
         {
-            var newStyle = style.CopyFillerStyle();
+            var newStyle = style.CopyStyle();
 
             newStyle.MedianOffset.Value = EditObject.Style.MedianOffset;
             if (newStyle is IRotateFiller newSimple && EditObject.Style is IRotateFiller oldSimple)
@@ -105,7 +105,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyFillerStyle();
+        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
         private void PasteStyle()
         {
             if (Buffer is FillerStyle style)

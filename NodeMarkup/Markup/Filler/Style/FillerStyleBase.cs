@@ -20,7 +20,7 @@ namespace NodeMarkup.Manager
     {
         PropertyValue<float> MedianOffset { get;}
     }
-    public abstract class FillerStyle : Style, IFillerStyle
+    public abstract class FillerStyle : Style<FillerStyle>, IFillerStyle
     {
         public static float DefaultAngle => 0f;
         public static float DefaultStepStripe => 3f;
@@ -41,7 +41,7 @@ namespace NodeMarkup.Manager
             {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
         };
 
-        public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyFillerStyle() : null;
+        public static FillerStyle GetDefault(FillerType type) => Defaults.TryGetValue(type, out FillerStyle style) ? style.CopyStyle() : null;
 
         public PropertyValue<float> MedianOffset { get; }
 
@@ -50,7 +50,7 @@ namespace NodeMarkup.Manager
             MedianOffset = GetMedianOffsetProperty(medianOffset);
         }
 
-        public override void CopyTo(Style target)
+        public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
             if (target is IFillerStyle fillerTarget)
@@ -72,8 +72,8 @@ namespace NodeMarkup.Manager
                 components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
         }
 
-        public sealed override Style Copy() => CopyFillerStyle();
-        public abstract FillerStyle CopyFillerStyle();
+        //public sealed override Style Copy() => CopyFillerStyle();
+        //public abstract FillerStyle CopyFillerStyle();
         public abstract IStyleData Calculate(MarkupFiller filler, MarkupLOD lod);
 
         public ITrajectory[] SetMedianOffset(MarkupFiller filler)

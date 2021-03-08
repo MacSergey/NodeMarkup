@@ -102,13 +102,12 @@ namespace NodeMarkup.Manager
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            //var colorVersion = config.GetAttrValue<int>("CV");
             Color.FromXml(config, DefaultColor);
             Width.FromXml(config, DefaultWidth);
         }
 
         public abstract Style Copy();
-        public virtual void CopyTo(Style target)
+        protected void CopyTo(Style target)
         {
             if (this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
                 widthTarget.Width.Value = widthSource.Width;
@@ -352,5 +351,26 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
         }
+    }
+    public abstract class Style<StyleType> : Style
+        where StyleType : Style<StyleType>
+    {
+        public static float DefaultDashLength => 1.5f;
+        public static float DefaultSpaceLength => 1.5f;
+        public static float DefaultOffset => 0.15f;
+
+        public static float DefaultSharkBaseLength => 0.5f;
+        public static float DefaultSharkSpaceLength => 0.5f;
+        public static float DefaultSharkHeight => 0.6f;
+
+        public static float Default3DWidth => 0.3f;
+        public static float Default3DHeigth => 0.3f;
+
+
+        public Style(Color32 color, float width) : base(color, width) { }
+
+        public virtual void CopyTo(StyleType target) => base.CopyTo(target);
+        public override sealed Style Copy() => CopyStyle();
+        public abstract StyleType CopyStyle();
     }
 }

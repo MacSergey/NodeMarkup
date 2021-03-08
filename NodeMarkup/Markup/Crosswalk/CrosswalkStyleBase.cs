@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class CrosswalkStyle : Style
+    public abstract class CrosswalkStyle : Style<CrosswalkStyle>
     {
         public static float DefaultCrosswalkWidth { get; } = 2f;
         public static float DefaultCrosswalkDashLength { get; } = 0.4f;
@@ -28,7 +28,7 @@ namespace NodeMarkup.Manager
             {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) },
             {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true, DefaultCrosswalkOffset) },
             {CrosswalkType.ParallelSolidLines, new ParallelSolidLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth) },
-            {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, LineStyle.DefaultDashLength, LineStyle.DefaultSpaceLength) },
+            {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, DefaultDashLength, DefaultSpaceLength) },
             {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
             {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
             {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
@@ -37,14 +37,14 @@ namespace NodeMarkup.Manager
         protected override float WidthWheelStep => 0.1f;
         protected override float WidthMinValue => 0.1f;
 
-        public static Style GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyCrosswalkStyle() : null;
+        public static Style GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyStyle() : null;
 
         public abstract float GetTotalWidth(MarkupCrosswalk crosswalk);
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override Style Copy() => CopyCrosswalkStyle();
-        public abstract CrosswalkStyle CopyCrosswalkStyle();
+        //public sealed override Style Copy() => CopyCrosswalkStyle();
+        //public abstract CrosswalkStyle CopyCrosswalkStyle();
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {

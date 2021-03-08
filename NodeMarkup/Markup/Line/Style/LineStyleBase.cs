@@ -60,24 +60,24 @@ namespace NodeMarkup.Manager
         PropertyValue<float> SpaceLength { get; }
     }
 
-    public abstract class LineStyle : Style
+    public abstract class LineStyle : Style<LineStyle>
     {
-        public static float DefaultDashLength => 1.5f;
-        public static float DefaultSpaceLength => 1.5f;
-        public static float DefaultOffset => 0.15f;
+        //public static float DefaultDashLength => 1.5f;
+        //public static float DefaultSpaceLength => 1.5f;
+        //public static float DefaultOffset => 0.15f;
 
-        public static float DefaultSharkBaseLength => 0.5f;
-        public static float DefaultSharkSpaceLength => 0.5f;
-        public static float DefaultSharkHeight => 0.6f;
+        //public static float DefaultSharkBaseLength => 0.5f;
+        //public static float DefaultSharkSpaceLength => 0.5f;
+        //public static float DefaultSharkHeight => 0.6f;
 
-        public static float Default3DWidth => 0.3f;
-        public static float Default3DHeigth => 0.3f;
+        //public static float Default3DWidth => 0.3f;
+        //public static float Default3DHeigth => 0.3f;
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod);
-        public override Style Copy() => CopyLineStyle();
-        public abstract LineStyle CopyLineStyle();
+        //public override Style Copy() => CopyLineStyle();
+        //public abstract LineStyle CopyLineStyle();
 
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
@@ -164,8 +164,17 @@ namespace NodeMarkup.Manager
             Right
         }
     }
+    public abstract class LineStyle<StyleType> : LineStyle
+        where StyleType : LineStyle<StyleType>
+    {
+        public LineStyle(Color32 color, float width) : base(color, width) { }
 
-    public abstract class RegularLineStyle : LineStyle
+        public virtual void CopyTo(StyleType target) => base.CopyTo(target);
+        public override LineStyle CopyStyle() => CopyLineStyle();
+        public abstract StyleType CopyLineStyle();
+    }
+
+    public abstract class RegularLineStyle : LineStyle<RegularLineStyle>
     {
         static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
         {
@@ -178,12 +187,12 @@ namespace NodeMarkup.Manager
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
             //{RegularLineType.Grass, new GrassLineStyle(Default3DWidth, Default3DHeigth) },
         };
-        public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyRegularLineStyle() : null;
+        public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyLineStyle() : null;
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override LineStyle CopyLineStyle() => CopyRegularLineStyle();
-        public abstract RegularLineStyle CopyRegularLineStyle();
+        //public sealed override LineStyle CopyStyle() => CopyRegularLineStyle();
+        //public abstract RegularLineStyle CopyRegularLineStyle();
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
@@ -227,7 +236,7 @@ namespace NodeMarkup.Manager
             Empty = StyleType.EmptyLine
         }
     }
-    public abstract class StopLineStyle : LineStyle
+    public abstract class StopLineStyle : LineStyle<StopLineStyle>
     {
         public static float DefaultStopWidth { get; } = 0.3f;
         public static float DefaultStopOffset { get; } = 0.3f;
@@ -242,12 +251,12 @@ namespace NodeMarkup.Manager
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
 
-        public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyStopLineStyle() : null;
+        public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyLineStyle() : null;
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override LineStyle CopyLineStyle() => CopyStopLineStyle();
-        public abstract StopLineStyle CopyStopLineStyle();
+        //public sealed override LineStyle CopyLineStyle() => CopyStopLineStyle();
+        //public abstract StopLineStyle CopyStopLineStyle();
 
         public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
         protected abstract IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);

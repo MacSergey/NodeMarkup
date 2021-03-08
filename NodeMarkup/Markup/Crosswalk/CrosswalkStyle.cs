@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }
 
         public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod) => new MarkupStylePart[0];
-        public override CrosswalkStyle CopyCrosswalkStyle() => new ExistCrosswalkStyle(Width);
+        public override CrosswalkStyle CopyStyle() => new ExistCrosswalkStyle(Width);
 
         public override XElement ToXml()
         {
@@ -49,7 +49,7 @@ namespace NodeMarkup.Manager
             OffsetBefore = GetOffsetBeforeProperty(offsetBefore);
             OffsetAfter = GetOffsetAfterProperty(offsetAfter);
         }
-        public override void CopyTo(Style target)
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
 
@@ -168,7 +168,7 @@ namespace NodeMarkup.Manager
             LineWidth = GetLineWidthProperty(lineWidth);
         }
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
-        public override void CopyTo(Style target)
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is ILinedCrosswalk linedTarget)
@@ -209,8 +209,8 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
             Parallel = GetParallelProperty(parallel);
         }
-        public override CrosswalkStyle CopyCrosswalkStyle() => new ZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel);
-        public override void CopyTo(Style target)
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel);
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
 
@@ -264,8 +264,8 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            DashLength.FromXml(config, LineStyle.DefaultDashLength);
-            SpaceLength.FromXml(config, LineStyle.DefaultSpaceLength);
+            DashLength.FromXml(config, DefaultDashLength);
+            SpaceLength.FromXml(config, DefaultSpaceLength);
             Parallel.FromXml(config, true);
         }
     }
@@ -281,8 +281,8 @@ namespace NodeMarkup.Manager
             Offset = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
-        public override CrosswalkStyle CopyCrosswalkStyle() => new DoubleZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
-        public override void CopyTo(Style target)
+        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleCrosswalk doubleTarget)
@@ -344,7 +344,7 @@ namespace NodeMarkup.Manager
             base(color, width, offsetBefore, offsetAfter, lineWidth)
         { }
 
-        public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth);
+        public override CrosswalkStyle CopyStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth);
 
         public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
@@ -379,9 +379,9 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyCrosswalkStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
+        public override CrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
 
-        public override void CopyTo(Style target)
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -426,8 +426,8 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            DashLength.FromXml(config, LineStyle.DefaultDashLength);
-            SpaceLength.FromXml(config, LineStyle.DefaultSpaceLength);
+            DashLength.FromXml(config, DefaultDashLength);
+            SpaceLength.FromXml(config, DefaultSpaceLength);
         }
     }
     public class LadderCrosswalkStyle : ParallelSolidLinesCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk
@@ -443,8 +443,8 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyCrosswalkStyle() => new LadderCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, LineWidth);
-        public override void CopyTo(Style target)
+        public override CrosswalkStyle CopyStyle() => new LadderCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, LineWidth);
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
 
@@ -492,8 +492,8 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            DashLength.FromXml(config, LineStyle.DefaultDashLength);
-            SpaceLength.FromXml(config, LineStyle.DefaultSpaceLength);
+            DashLength.FromXml(config, DefaultDashLength);
+            SpaceLength.FromXml(config, DefaultSpaceLength);
         }
     }
     public class SolidCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle
@@ -502,7 +502,7 @@ namespace NodeMarkup.Manager
 
         public SolidCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width, offsetBefore, offsetAfter) { }
 
-        public override CrosswalkStyle CopyCrosswalkStyle() => new SolidCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter);
+        public override CrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter);
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
         public override IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
@@ -556,8 +556,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override CrosswalkStyle CopyCrosswalkStyle() => new ChessBoardCrosswalkStyle(Color, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
-        public override void CopyTo(Style target)
+        public override CrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
+        public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is ChessBoardCrosswalkStyle chessBoardTarget)

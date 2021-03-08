@@ -470,7 +470,7 @@ namespace NodeMarkup.Manager
             Step = GetStepProperty(step);
         }
 
-        public override void CopyTo(Style target)
+        public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
@@ -587,6 +587,11 @@ namespace NodeMarkup.Manager
             return border;
         }
 
+        //public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        //{
+        //    base.Render(cameraInfo, color, width, alphaBlend, cut);
+        //}
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -622,8 +627,8 @@ namespace NodeMarkup.Manager
             RightRailA = GetRightRailAProperty(rightRailA);
             RightRailB = GetRightRailBProperty(rightRailB);
         }
-        public override FillerStyle CopyFillerStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines, LeftRailA, LeftRailB, RightRailA, RightRailB);
-        public override void CopyTo(Style target)
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines, LeftRailA, LeftRailB, RightRailA, RightRailB);
+        public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
@@ -760,8 +765,8 @@ namespace NodeMarkup.Manager
             Offset = GetOffsetProperty(offset);
         }
 
-        public override FillerStyle CopyFillerStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
-        public override void CopyTo(Style target)
+        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
+        public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
@@ -824,7 +829,7 @@ namespace NodeMarkup.Manager
 
         public SolidFillerStyle(Color32 color, float medianOffset) : base(color, DefaultSolidWidth, medianOffset) { }
 
-        public override FillerStyle CopyFillerStyle() => new SolidFillerStyle(Color, DefaultOffset);
+        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, DefaultOffset);
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
@@ -857,8 +862,8 @@ namespace NodeMarkup.Manager
             StartingFrom = GetStartingFromProperty(From.Vertex);
         }
 
-        public override FillerStyle CopyFillerStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
-        public override void CopyTo(Style target)
+        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
+        public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
             if (target is ChevronFillerStyle chevronTarget)

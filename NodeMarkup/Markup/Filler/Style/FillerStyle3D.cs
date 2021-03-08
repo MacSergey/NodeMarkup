@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
             Elevation = GetElevationProperty(elevation);
         }
 
-        public override void CopyTo(Style target)
+        public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
             if (target is TriangulationFillerStyle triangulationTarget)
@@ -107,7 +107,7 @@ namespace NodeMarkup.Manager
 
         public PavementFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
 
-        public override FillerStyle CopyFillerStyle() => new PavementFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, MedianOffset, Elevation);
     }
     public class GrassFillerStyle : TriangulationFillerStyle
     {
@@ -116,6 +116,6 @@ namespace NodeMarkup.Manager
 
         public GrassFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
 
-        public override FillerStyle CopyFillerStyle() => new GrassFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, MedianOffset, Elevation);
     }
 }

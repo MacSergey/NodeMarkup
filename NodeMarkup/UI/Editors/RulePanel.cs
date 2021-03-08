@@ -178,7 +178,7 @@ namespace NodeMarkup.UI.Editors
             if ((Rule.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
                 return;
 
-            Rule.Style = style.CopyLineStyle();
+            Rule.Style = style.CopyStyle();
             Style.SelectedObject = Rule.Style.Type;
 
             Editor.RefreshItem();
@@ -191,7 +191,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = Rule.Style.CopyLineStyle();
+        private void CopyStyle() => Buffer = Rule.Style.CopyStyle();
         private void PasteStyle()
         {
             if (Buffer is LineStyle style)

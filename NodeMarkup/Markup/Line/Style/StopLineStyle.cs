@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new SolidStopLineStyle(Color, Width);
+        public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
     }
     public class DoubleSolidStopLineStyle : SolidStopLineStyle, IStopLine, IDoubleLine
     {
@@ -58,8 +58,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new DoubleSolidStopLineStyle(Color, Width, Offset);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, Width, Offset);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -112,8 +112,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -152,8 +152,8 @@ namespace NodeMarkup.Manager
         {
             Offset = GetOffsetProperty(offset);
         }
-        public override StopLineStyle CopyStopLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -235,8 +235,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new SolidAndDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new SolidAndDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -302,8 +302,8 @@ namespace NodeMarkup.Manager
             yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, Base, Height / -2, Height, Color);
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is SharkTeethStopLineStyle sharkTeethTarget)

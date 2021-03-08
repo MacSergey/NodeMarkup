@@ -210,7 +210,7 @@ namespace NodeMarkup.Manager
         {
             _rightBorder = GetBorder(map.IsMirror ? "LB" : "RB");
             _leftBorder = GetBorder(map.IsMirror ? "RB" : "LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, out CrosswalkStyle style))
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Style<CrosswalkStyle>.FromXml(styleConfig, map, false, out CrosswalkStyle style))
             {
                 _style = style;
                 _style.OnStyleChanged = CrosswalkChanged;

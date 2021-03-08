@@ -161,7 +161,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            EditObject.Style = style.CopyCrosswalkStyle();
+            EditObject.Style = style.CopyStyle();
             Style.SelectedObject = EditObject.Style.Type;
 
             RefreshItem();
@@ -174,7 +174,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyCrosswalkStyle();
+        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
         private void PasteStyle()
         {
             if (Buffer is CrosswalkStyle style)

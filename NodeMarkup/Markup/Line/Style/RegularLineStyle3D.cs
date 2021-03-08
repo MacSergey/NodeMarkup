@@ -19,7 +19,7 @@ namespace NodeMarkup.Manager
         {
             Elevation = GetElevationProperty(elevation);
         }
-        public override void CopyTo(Style target)
+        public override void CopyTo(RegularLineStyle target)
         {
             base.CopyTo(target);
             if (target is Line3DStyle pavementTarget)
@@ -71,7 +71,7 @@ namespace NodeMarkup.Manager
 
         public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
 
-        public override RegularLineStyle CopyRegularLineStyle() => new PavementLineStyle(Width, Elevation);
+        public override RegularLineStyle CopyLineStyle() => new PavementLineStyle(Width, Elevation);
     }
     //public class GrassLineStyle : Line3DStyle
     //{
