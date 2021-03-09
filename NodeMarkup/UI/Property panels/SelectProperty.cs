@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class RuleEdgeSelectPropertyPanel : SelectPropertyPanel<ILinePartEdge, RuleEdgeSelectPropertyPanel>
+    public class RuleEdgeSelectPropertyPanel : SelectListPropertyPanel<ILinePartEdge, RuleEdgeSelectPropertyPanel>
     {
         protected override string NotSet => NodeMarkup.Localize.SelectPanel_NotSet;
 
@@ -32,13 +32,10 @@ namespace NodeMarkup.UI.Editors
         protected override bool IsEqual(MarkupRegularLine first, MarkupRegularLine second) => ReferenceEquals(first, second);
     }
 
-    public class FillerRailSelectPropertyPanel : ResetableSelectPropertyPanel<object, FillerRailSelectPropertyPanel>
+    public class FillerRailSelectPropertyPanel : SelectItemPropertyPanel<FillerRail, FillerRailSelectPropertyPanel>
     {
-        protected override string ResetToolTip => throw new NotImplementedException();
-        protected override string NotSet => throw new NotImplementedException();
+        protected override string NotSet => string.Empty;
 
-        protected override float Width => 150f;
-
-        protected override bool IsEqual(object first, object second) => ReferenceEquals(first, second);
+        protected override float Width => 100f;
     }
 }

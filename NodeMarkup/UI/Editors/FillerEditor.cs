@@ -23,6 +23,17 @@ namespace NodeMarkup.UI.Editors
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
+        private FillerRailToolMode FillerRailToolMode { get; }
+
+        public FillerRailSelectPropertyPanel HoverRailPanel { get; private set; }
+        public bool IsHoverRailPanel => HoverRailPanel != null;
+
+        public FillerEditor()
+        {
+            FillerRailToolMode = Tool.CreateToolMode<FillerRailToolMode>();
+            FillerRailToolMode.Init(this);
+        }
+
         protected override void FillItems()
         {
             foreach (var filler in Markup.Fillers)
@@ -60,8 +71,18 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperties()
         {
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
-            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+
+            foreach(var property in StyleProperties)
+            {
+                if(property is ColorPropertyPanel colorProperty)
+                    colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+                else if(property is FillerRailSelectPropertyPanel railProperty)
+                {
+                    railProperty.OnSelect += (panel) => SelectRail(panel);
+                    railProperty.OnHover += HoverRail;
+                    railProperty.OnLeave += LeaveRail;
+                }
+            }
         }
         private void StyleChanged(Style.StyleType style)
         {
@@ -119,6 +140,27 @@ namespace NodeMarkup.UI.Editors
             StyleProperties.Clear();
         }
 
+        #region EDITOR ACTION
+        public void HoverRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = selectPanel;
+        public void LeaveRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = null;
+        public bool SelectRail(FillerRailSelectPropertyPanel selectPanel) => SelectRail(selectPanel, null);
+        public bool SelectRail(FillerRailSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
+        {
+            if (Tool.Mode == FillerRailToolMode && selectPanel == FillerRailToolMode.SelectPanel)
+            {
+                Tool.SetDefaultMode();
+                return true;
+            }
+            else
+            {
+                Tool.SetMode(FillerRailToolMode);
+                FillerRailToolMode.Contour = EditObject.Contour;
+                FillerRailToolMode.SelectPanel = selectPanel;
+                FillerRailToolMode.AfterSelectPanel = afterAction;              
+                selectPanel.Focus();
+                return false;
+            }
+        }
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
@@ -127,6 +169,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);
+
+        #endregion
     }
     public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
     {
@@ -139,8 +183,29 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    //public class FillerRailToolMode : BasePanelMode<FillerEditor, >
-    //{
+    public class FillerRailToolMode : BasePanelMode<FillerEditor, FillerRailSelectPropertyPanel, FillerRail>
+    {
+        protected override bool IsHover => throw new NotImplementedException();
+        protected override FillerRail Hover => throw new NotImplementedException();
 
-    //}
+        public FillerContour Contour { get; set; }
+        private PointsSelector<IFillerVertex> PointsSelector { get; set; }
+        private LinesSelector<TrajectoryBound> LineSelector { get; set; }
+
+        protected override void OnSetPanel()
+        {
+            PointsSelector = new PointsSelector<IFillerVertex>(Contour.Vertices, Colors.Purple);
+            LineSelector = new LinesSelector<TrajectoryBound>(Contour.Trajectories.Select(t => new TrajectoryBound(t, 0.5f)), Colors.Orange);
+        }
+        public override void OnToolUpdate()
+        {
+            PointsSelector.OnUpdate();
+            LineSelector.OnUpdate();
+        }
+        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
+        {
+            LineSelector.Render(cameraInfo, !PointsSelector.IsHoverPoint);
+            PointsSelector.Render(cameraInfo);
+        }
+    }
 }

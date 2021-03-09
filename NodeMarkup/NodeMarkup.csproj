@@ -120,6 +120,7 @@
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectMode.cs" />
     <Compile Include="UI\Editors\EnterEditor.cs" />
+    <Compile Include="UI\Selectors\LinesSelector.cs" />
     <Compile Include="UI\Panel\TabStrip.cs" />
     <Compile Include="UI\Property panels\ColorAdvancedProperty.cs" />
     <Compile Include="UI\Property panels\EnumProperty.cs" />
@@ -181,11 +182,12 @@
     <Compile Include="UI\Editors\RulePanel.cs" />
     <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
-    <Compile Include="UI\PointsSelector.cs" />
+    <Compile Include="UI\Selectors\PointsSelector.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
+    <Compile Include="UI\Selectors\Selector.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -286,7 +288,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">

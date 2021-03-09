@@ -210,7 +210,7 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverRulePanel)
                     HoverRulePanel.Rule.Render(cameraInfo, HoverAlpha, 2f);
 
-                if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is SupportPoint supportPoint)
+                if (IsHoverPartEdgePanel && HoverPartEdgePanel.Value is SupportPoint supportPoint)
                     supportPoint.Render(cameraInfo, Colors.Hover);
             }
         }

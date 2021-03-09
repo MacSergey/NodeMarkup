@@ -116,10 +116,10 @@ namespace NodeMarkup.UI.Editors
             if (panel == null)
                 return;
 
-            panel.OnSelectChanged -= action;
+            panel.OnValueChanged -= action;
             panel.Clear();
             panel.AddRange(Editor.SupportPoints);
-            panel.SelectedObject = value;
+            panel.Value = value;
 
             if (Settings.ShowPanelTip && Line.IsSupportRules)
             {
@@ -132,7 +132,7 @@ namespace NodeMarkup.UI.Editors
                 panel.isVisible = Editor.CanDivide;
             }
 
-            panel.OnSelectChanged += action;
+            panel.OnValueChanged += action;
         }
         private void AddStyleTypeProperty()
         {

@@ -646,16 +646,22 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+
+            if (!isTemplate)
+                components.Add(AddAngleProperty(this, parent, onHover, onLeave));
+
+            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+
             if (!isTemplate)
             {
-                components.Add(AddAngleProperty(this, parent, onHover, onLeave));
                 components.Add(AddFollowLinesProperty(this, parent));
-                components.Add(AddRailProperty(LeftRailA, Localize.StyleOption_LeftRail + " A", parent, filler.Contour.VertexCount));
-                components.Add(AddRailProperty(LeftRailB, Localize.StyleOption_LeftRail + " B", parent, filler.Contour.VertexCount));
-                components.Add(AddRailProperty(RightRailA, Localize.StyleOption_RightRail + " A", parent, filler.Contour.VertexCount));
-                components.Add(AddRailProperty(RightRailB, Localize.StyleOption_RightRail + " B", parent, filler.Contour.VertexCount));
+                //components.Add(AddRailProperty(LeftRailA, Localize.StyleOption_LeftRail + " A", parent, filler.Contour.VertexCount));
+                //components.Add(AddRailProperty(LeftRailB, Localize.StyleOption_LeftRail + " B", parent, filler.Contour.VertexCount));
+                //components.Add(AddRailProperty(RightRailA, Localize.StyleOption_RightRail + " A", parent, filler.Contour.VertexCount));
+                //components.Add(AddRailProperty(RightRailB, Localize.StyleOption_RightRail + " B", parent, filler.Contour.VertexCount));
+                components.Add(AddRailProperty(LeftRailA, LeftRailB, parent, Localize.StyleOption_LeftRail));
+                components.Add(AddRailProperty(RightRailA, RightRailB, parent, Localize.StyleOption_RightRail));
             }
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
         }
         protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
         {
@@ -665,6 +671,22 @@ namespace NodeMarkup.Manager
             followLinesProperty.SelectedObject = stripeStyle.FollowLines;
             followLinesProperty.OnSelectObjectChanged += (bool value) => stripeStyle.FollowLines.Value = value;
             return followLinesProperty;
+        }
+        protected static FillerRailSelectPropertyPanel AddRailProperty(PropertyValue<int> railA, PropertyValue<int> railB, UIComponent parent, string label)
+        {
+            var rail = new FillerRail(railA, railB);
+            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent);
+            railProperty.Text = label;
+            railProperty.Init();
+            railProperty.Value = rail;
+            railProperty.OnValueChanged += RailPropertyChanged;
+            return railProperty;
+
+            void RailPropertyChanged(FillerRail rail)
+            {
+                railA.Value = rail.A;
+                railB.Value = rail.B;
+            }
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)

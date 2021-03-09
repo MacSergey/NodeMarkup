@@ -65,7 +65,7 @@ namespace NodeMarkup.Tools
         {
             if (IsHover)
             {
-                SelectPanel.SelectedObject = Hover;
+                SelectPanel.Value = Hover;
                 if (AfterSelectPanel?.Invoke(e) ?? true)
                     Tool.SetDefaultMode();
             }

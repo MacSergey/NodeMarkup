@@ -206,4 +206,17 @@ namespace NodeMarkup.Manager
                 trajectory.Render(cameraInfo, color, width, alphaBlend);
         }
     }
+
+    public class FillerRail
+    {
+        public int A { get; }
+        public int B { get; }
+
+        public FillerRail(int a, int b)
+        {
+            A = a;
+            B = b;
+        }
+        public override string ToString() => $"{A + 1}-{B + 1}";
+    }
 }

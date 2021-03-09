@@ -40,7 +40,6 @@ namespace NodeMarkup.Tools
         {
             if (IsHover)
                 return HoverInfo();
-            //return $"{HoverInfo()}\n({Hover})";
             else if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerSelectStart;
             else

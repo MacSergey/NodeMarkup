@@ -108,10 +108,10 @@ namespace NodeMarkup.UI.Editors
         }
         private void FillBorder(CrosswalkBorderSelectPropertyPanel panel, Action<MarkupRegularLine> action, MarkupRegularLine[] lines, MarkupRegularLine value)
         {
-            panel.OnSelectChanged -= action;
+            panel.OnValueChanged -= action;
             panel.Clear();
             panel.AddRange(lines);
-            panel.SelectedObject = value;
+            panel.Value = value;
 
             if (Settings.ShowPanelTip)
             {
@@ -124,7 +124,7 @@ namespace NodeMarkup.UI.Editors
                 panel.isVisible = lines.Any();
             }
 
-            panel.OnSelectChanged += action;
+            panel.OnValueChanged += action;
         }
         private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
         {
@@ -235,7 +235,7 @@ namespace NodeMarkup.UI.Editors
             if (IsHoverItem)
                 HoverItem.Object.Render(cameraInfo, Colors.Hover);
 
-            if (IsHoverBorderPanel && HoverBorderPanel.SelectedObject is MarkupRegularLine borderLine)
+            if (IsHoverBorderPanel && HoverBorderPanel.Value is MarkupRegularLine borderLine)
                 borderLine.Render(cameraInfo, Colors.Hover);
         }
 
@@ -268,16 +268,18 @@ namespace NodeMarkup.UI.Editors
 
     public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, CrosswalkBorderSelectPropertyPanel, MarkupRegularLine>
     {
-        protected override bool IsHover => IsHoverLine;
-        protected override MarkupRegularLine Hover => HoverLine?.Line;
+        protected override bool IsHover => LineSelector.IsHoverLine;
+        protected override MarkupRegularLine Hover => LineSelector.HoverLine?.Line;
 
-        private MarkupLineBound[] BorderLines { get; set; }
-        private MarkupLineBound HoverLine { get; set; }
-        private bool IsHoverLine => HoverLine != null;
+        private LinesSelector<MarkupLineBound> LineSelector { get; set; }
 
-        protected override void OnSetPanel() => BorderLines = SelectPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray();
+        protected override void OnSetPanel()
+        {
+            var color = SelectPanel.Position == BorderPosition.Left ? Colors.Green : Colors.Red;
+            LineSelector = new LinesSelector<MarkupLineBound>(SelectPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray(), color);
+        }
 
-        public override void OnToolUpdate() => HoverLine = NodeMarkupTool.MouseRayValid ? BorderLines.FirstOrDefault(i => i.IntersectRay(NodeMarkupTool.MouseRay)) : null;
+        public override void OnToolUpdate() => LineSelector.OnUpdate();
         public override string GetToolInfo()
         {
             return SelectPanel.Position switch
@@ -289,11 +291,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            foreach (var borderLine in BorderLines)
-                borderLine.Render(cameraInfo, SelectPanel.Position == BorderPosition.Left ? Colors.Green : Colors.Red);
-
-            if (IsHoverLine)
-                HoverLine.Render(cameraInfo, Colors.Hover, 1f);
+            LineSelector.Render(cameraInfo);
         }
     }
 }
