@@ -138,4 +138,9 @@ namespace NodeMarkup.UI.Editors
             Icon.StyleColor = Object.Style.Color;
         }
     }
+
+    //public class FillerRailToolMode : BasePanelMode<FillerEditor, >
+    //{
+
+    //}
 }

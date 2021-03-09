@@ -12,7 +12,7 @@ namespace NodeMarkup.Tools
 {
     public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : BaseToolMode
         where EditorType : Editor
-        where PanelType : SelectPropertyPanel<ObjectType>
+        where PanelType : SelectPropertyPanel<ObjectType, PanelType>
     {
         public override ToolModeType Type => ToolModeType.PanelAction;
 

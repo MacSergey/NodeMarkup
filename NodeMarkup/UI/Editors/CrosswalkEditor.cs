@@ -255,6 +255,17 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
     }
+    public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>
+    {
+        public override void Refresh()
+        {
+            base.Refresh();
+
+            Icon.Type = Object.Style.Type;
+            Icon.StyleColor = Object.Style.Color;
+        }
+    }
+
     public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, MarkupCrosswalkSelectPropertyPanel, MarkupRegularLine>
     {
         protected override bool IsHover => IsHoverLine;
@@ -283,17 +294,6 @@ namespace NodeMarkup.UI.Editors
 
             if (IsHoverLine)
                 HoverLine.Render(cameraInfo, Colors.Hover, 1f);
-        }
-    }
-
-    public class CrosswalkItem : EditableItem<MarkupCrosswalk, StyleIcon>
-    {
-        public override void Refresh()
-        {
-            base.Refresh();
-
-            Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style.Color;
         }
     }
 }
