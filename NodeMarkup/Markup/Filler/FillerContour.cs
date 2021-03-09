@@ -200,6 +200,29 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End);
         }
 
+        public ITrajectory GetRail(int a, int b, bool clockWise)
+        {
+            var trajectories = Trajectories.ToArray();
+
+            if (Mathf.Abs(b - a) == 1)
+                return trajectories[Math.Min(a, b)];
+            else if (Mathf.Abs(b - a) == trajectories.Length - 1)
+                return trajectories.Last();
+            else if (clockWise)
+            {
+                var ai = a;
+                var bi = (b + trajectories.Length - 1) % trajectories.Length;
+                return new BezierTrajectory(trajectories[ai].StartPosition, trajectories[ai].StartDirection, trajectories[bi].EndPosition, trajectories[bi].EndDirection);
+            }
+            else
+            {
+                var ai = b;
+                var bi = (a + trajectories.Length - 1) % trajectories.Length;
+                return new BezierTrajectory(trajectories[ai].StartPosition, trajectories[ai].StartDirection, trajectories[bi].EndPosition, trajectories[bi].EndDirection);
+            }
+
+        }
+
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             foreach (var trajectory in Trajectories)

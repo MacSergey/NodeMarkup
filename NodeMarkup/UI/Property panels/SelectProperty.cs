@@ -37,5 +37,18 @@ namespace NodeMarkup.UI.Editors
         protected override string NotSet => string.Empty;
 
         protected override float Width => 100f;
+
+        public bool ClockWise { get; private set; } = true;
+
+        public void Init(bool clockWise)
+        {
+            ClockWise = clockWise;
+            base.Init();
+        }
+        public override void DeInit()
+        {
+            ClockWise = true;
+            base.DeInit();
+        }
     }
 }

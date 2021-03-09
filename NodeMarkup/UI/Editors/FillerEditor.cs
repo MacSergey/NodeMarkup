@@ -72,11 +72,11 @@ namespace NodeMarkup.UI.Editors
         {
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
 
-            foreach(var property in StyleProperties)
+            foreach (var property in StyleProperties)
             {
-                if(property is ColorPropertyPanel colorProperty)
+                if (property is ColorPropertyPanel colorProperty)
                     colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
-                else if(property is FillerRailSelectPropertyPanel railProperty)
+                else if (property is FillerRailSelectPropertyPanel railProperty)
                 {
                     railProperty.OnSelect += (panel) => SelectRail(panel);
                     railProperty.OnHover += HoverRail;
@@ -156,7 +156,7 @@ namespace NodeMarkup.UI.Editors
                 Tool.SetMode(FillerRailToolMode);
                 FillerRailToolMode.Contour = EditObject.Contour;
                 FillerRailToolMode.SelectPanel = selectPanel;
-                FillerRailToolMode.AfterSelectPanel = afterAction;              
+                FillerRailToolMode.AfterSelectPanel = afterAction;
                 selectPanel.Focus();
                 return false;
             }
@@ -166,6 +166,12 @@ namespace NodeMarkup.UI.Editors
         {
             if (IsHoverItem)
                 HoverItem.Object.Render(cameraInfo, Colors.Hover);
+
+            if (IsHoverRailPanel)
+            {
+                var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.ClockWise);
+                rail.Render(cameraInfo, Colors.Hover);
+            }
         }
         private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);
@@ -185,27 +191,79 @@ namespace NodeMarkup.UI.Editors
 
     public class FillerRailToolMode : BasePanelMode<FillerEditor, FillerRailSelectPropertyPanel, FillerRail>
     {
-        protected override bool IsHover => throw new NotImplementedException();
         protected override FillerRail Hover => throw new NotImplementedException();
+        protected override bool IsHover => throw new NotImplementedException();
+
+        private IFillerVertex First { get; set; }
+        private bool IsFirst => First != null;
 
         public FillerContour Contour { get; set; }
         private PointsSelector<IFillerVertex> PointsSelector { get; set; }
-        private LinesSelector<TrajectoryBound> LineSelector { get; set; }
+        private LinesSelector<RailBound> LineSelector { get; set; }
 
         protected override void OnSetPanel()
         {
-            PointsSelector = new PointsSelector<IFillerVertex>(Contour.Vertices, Colors.Purple);
-            LineSelector = new LinesSelector<TrajectoryBound>(Contour.Trajectories.Select(t => new TrajectoryBound(t, 0.5f)), Colors.Orange);
+            First = null;
+            PointsSelector = GetPointsSelector();
+            LineSelector = new LinesSelector<RailBound>(Contour.Trajectories.Select((t, i) => new RailBound(t, 0.5f, i)), Colors.Orange);
         }
         public override void OnToolUpdate()
         {
+            if (!IsFirst)
+                LineSelector.OnUpdate();
             PointsSelector.OnUpdate();
-            LineSelector.OnUpdate();
         }
+
+        public override void OnPrimaryMouseClicked(Event e)
+        {
+            if (!IsFirst)
+            {
+                if (PointsSelector.IsHoverPoint)
+                {
+                    First = PointsSelector.HoverPoint;
+                    PointsSelector = GetPointsSelector(First);
+                }
+                else if (LineSelector.IsHoverLine)
+                    SetValue(e, LineSelector.HoverLine.Index, LineSelector.HoverLine.Index + 1);
+            }
+            else if (PointsSelector.IsHoverPoint)
+            {
+                var vertices = Contour.Vertices.ToList();
+                SetValue(e, vertices.IndexOf(First), vertices.IndexOf(PointsSelector.HoverPoint));
+            }
+        }
+        public override void OnSecondaryMouseClicked()
+        {
+            if (IsFirst)
+            {
+                First = null;
+                PointsSelector = GetPointsSelector();
+            }
+            else
+                base.OnSecondaryMouseClicked();
+        }
+        private void SetValue(Event e, int a, int b)
+        {
+            SelectPanel.Value = new FillerRail(a % Contour.VertexCount, b % Contour.VertexCount);
+            if (AfterSelectPanel?.Invoke(e) ?? true)
+                Tool.SetDefaultMode();
+        }
+        private PointsSelector<IFillerVertex> GetPointsSelector(object ignore = null) => new PointsSelector<IFillerVertex>(Contour.Vertices.Where(v => v != ignore), Colors.Purple);
+
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            LineSelector.Render(cameraInfo, !PointsSelector.IsHoverPoint);
+            if (!IsFirst)
+                LineSelector.Render(cameraInfo, !PointsSelector.IsHoverPoint);
             PointsSelector.Render(cameraInfo);
+        }
+
+        private class RailBound : TrajectoryBound
+        {
+            public int Index { get; }
+            public RailBound(ITrajectory trajectory, float size, int index) : base(trajectory, size)
+            {
+                Index = index;
+            }
         }
     }
 }

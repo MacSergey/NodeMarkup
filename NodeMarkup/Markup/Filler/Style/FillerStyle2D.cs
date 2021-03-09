@@ -497,7 +497,7 @@ namespace NodeMarkup.Manager
             var rect = GetRect(contour);
             var rail = new RailLine();
             var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
-            var middleLine = GetMiddleLine(contour);
+            var middleLine = GetMiddleLine(filler.Contour);
             if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineBefore))
                 rail.Add(lineBefore.Invert());
             rail.Add(middleLine);
@@ -507,7 +507,7 @@ namespace NodeMarkup.Manager
             yield return rail;
         }
         protected abstract float GetAngle();
-        private ITrajectory GetMiddleLine(ITrajectory[] contour)
+        private ITrajectory GetMiddleLine(FillerContour contour)
         {
             GetRails(contour, out ITrajectory left, out ITrajectory right);
 
@@ -528,7 +528,7 @@ namespace NodeMarkup.Manager
             return new BezierTrajectory(middle);
 
         }
-        protected abstract void GetRails(ITrajectory[] contour, out ITrajectory left, out ITrajectory right);
+        protected abstract void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right);
         private bool GetBeforeMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
         private bool GetAfterMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
         private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ITrajectory line)
@@ -589,7 +589,7 @@ namespace NodeMarkup.Manager
 
         public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
-            GetRails(filler.Contour.Trajectories.ToArray(), out ITrajectory left, out ITrajectory right);
+            GetRails(filler.Contour, out ITrajectory left, out ITrajectory right);
             left.Render(cameraInfo, Colors.Green, width, alphaBlend, cut);
             right.Render(cameraInfo, Colors.Red, width, alphaBlend, cut);
         }
@@ -659,8 +659,8 @@ namespace NodeMarkup.Manager
                 //components.Add(AddRailProperty(LeftRailB, Localize.StyleOption_LeftRail + " B", parent, filler.Contour.VertexCount));
                 //components.Add(AddRailProperty(RightRailA, Localize.StyleOption_RightRail + " A", parent, filler.Contour.VertexCount));
                 //components.Add(AddRailProperty(RightRailB, Localize.StyleOption_RightRail + " B", parent, filler.Contour.VertexCount));
-                components.Add(AddRailProperty(LeftRailA, LeftRailB, parent, Localize.StyleOption_LeftRail));
-                components.Add(AddRailProperty(RightRailA, RightRailB, parent, Localize.StyleOption_RightRail));
+                components.Add(AddRailProperty(LeftRailA, LeftRailB, true, parent, Localize.StyleOption_LeftRail));
+                components.Add(AddRailProperty(RightRailA, RightRailB, false, parent, Localize.StyleOption_RightRail));
             }
         }
         protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
@@ -672,12 +672,12 @@ namespace NodeMarkup.Manager
             followLinesProperty.OnSelectObjectChanged += (bool value) => stripeStyle.FollowLines.Value = value;
             return followLinesProperty;
         }
-        protected static FillerRailSelectPropertyPanel AddRailProperty(PropertyValue<int> railA, PropertyValue<int> railB, UIComponent parent, string label)
+        protected static FillerRailSelectPropertyPanel AddRailProperty(PropertyValue<int> railA, PropertyValue<int> railB, bool clockWise, UIComponent parent, string label)
         {
             var rail = new FillerRail(railA, railB);
             var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent);
             railProperty.Text = label;
-            railProperty.Init();
+            railProperty.Init(clockWise);
             railProperty.Value = rail;
             railProperty.OnValueChanged += RailPropertyChanged;
             return railProperty;
@@ -723,31 +723,12 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected override void GetRails(ITrajectory[] contour, out ITrajectory left, out ITrajectory right)
+        protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
-            left = GetRail(contour, LeftRailA, LeftRailB, true);
-            right = GetRail(contour, RightRailA, RightRailB, false);
+            left = contour.GetRail(LeftRailA, LeftRailB, true);
+            right = contour.GetRail(RightRailA, RightRailB, false);
         }
-        private ITrajectory GetRail(ITrajectory[] contour, PropertyValue<int> a, PropertyValue<int> b, bool clockWise)
-        {
-            if (Mathf.Abs(b - a) == 1)
-                return contour[Math.Min(a, b)];
-            else if (Mathf.Abs(b - a) == contour.Length - 1)
-                return contour.Last();
-            else if (clockWise)
-            {
-                var ai = a;
-                var bi = (b + contour.Length - 1) % contour.Length;
-                return new BezierTrajectory(contour[ai].StartPosition, contour[ai].StartDirection, contour[bi].EndPosition, contour[bi].EndDirection);
-            }
-            else
-            {
-                var ai = b;
-                var bi = (a + contour.Length - 1) % contour.Length;
-                return new BezierTrajectory(contour[ai].StartPosition, contour[ai].StartDirection, contour[bi].EndPosition, contour[bi].EndDirection);
-            }
-
-        }
+        
         protected override float GetAngle() => 90f - Angle;
 
         public override XElement ToXml()
@@ -984,12 +965,13 @@ namespace NodeMarkup.Manager
             }
         }
         protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
-        protected override void GetRails(ITrajectory[] contour, out ITrajectory left, out ITrajectory right)
+        protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
-            var leftIndex = Output % contour.Length;
-            var rightIndex = leftIndex.PrevIndex(contour.Length, StartingFrom == From.Vertex ? 1 : 2);
-            left = contour[leftIndex];
-            right = contour[rightIndex];
+            var trajectories = contour.Trajectories.ToArray();
+            var leftIndex = Output % trajectories.Length;
+            var rightIndex = leftIndex.PrevIndex(trajectories.Length, StartingFrom == From.Vertex ? 1 : 2);
+            left = trajectories[leftIndex];
+            right = trajectories[rightIndex];
         }
 
         public override XElement ToXml()
