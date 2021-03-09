@@ -217,9 +217,10 @@ namespace NodeMarkup.Manager
                 };
                 NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
 
-                BetweenEnters[Math.Max(i, j) * 10 + Math.Min(i, j)] = new BezierTrajectory(betweenBezier);
+                BetweenEnters[GetId(i,j)] = new BezierTrajectory(betweenBezier);
             }
         }
+        private int GetId(int i, int j) => (i + 1) * 10 + j + 1;
         private void UpdateRadius() => Radius = EntersList.Where(e => e.Position != null).Aggregate(0f, (delta, e) => Mathf.Max(delta, (Position - e.Position.Value).magnitude));
 
         private void UpdateLines()
@@ -556,7 +557,7 @@ namespace NodeMarkup.Manager
         {
             var i = EntersList.IndexOf(first);
             var j = EntersList.IndexOf(second);
-            return BetweenEnters.TryGetValue(Math.Max(i, j) * 10 + Math.Min(i, j), out line);
+            return BetweenEnters.TryGetValue(GetId(i, j), out line);
         }
 
         public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
