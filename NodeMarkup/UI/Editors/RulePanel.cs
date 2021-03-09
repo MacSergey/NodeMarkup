@@ -24,8 +24,8 @@ namespace NodeMarkup.UI.Editors
         private StyleHeaderPanel Header { get; set; }
         private ErrorTextProperty Error { get; set; }
         private WarningTextProperty Warning { get; set; }
-        public MarkupLineSelectPropertyPanel From { get; private set; }
-        public MarkupLineSelectPropertyPanel To { get; private set; }
+        public RuleEdgeSelectPropertyPanel From { get; private set; }
+        public RuleEdgeSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -92,9 +92,9 @@ namespace NodeMarkup.UI.Editors
             Warning.Init();
         }
 
-        private MarkupLineSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
+        private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
         {
-            var edgeProperty = ComponentPool.Get<MarkupLineSelectPropertyPanel>(this);
+            var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this);
             edgeProperty.Text = text;
             edgeProperty.Position = position;
             edgeProperty.Init();
@@ -103,7 +103,7 @@ namespace NodeMarkup.UI.Editors
             edgeProperty.OnLeave += Editor.LeaveRuleEdge;
             return edgeProperty;
         }
-        private void OnSelectPanel(MarkupLineSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
+        private void OnSelectPanel(RuleEdgeSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
 
         private void FillEdges()
         {
@@ -111,7 +111,7 @@ namespace NodeMarkup.UI.Editors
             FillEdge(To, ToChanged, Rule.To);
             Warning.isVisible = Settings.ShowPanelTip && !Editor.CanDivide;
         }
-        private void FillEdge(MarkupLineSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
+        private void FillEdge(RuleEdgeSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
         {
             if (panel == null)
                 return;

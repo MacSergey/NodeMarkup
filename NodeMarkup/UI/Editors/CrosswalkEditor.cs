@@ -23,13 +23,13 @@ namespace NodeMarkup.UI.Editors
         public override Type SupportType { get; } = typeof(ISupportCrosswalks);
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
-        private MarkupCrosswalkSelectPropertyPanel RightBorder { get; set; }
-        private MarkupCrosswalkSelectPropertyPanel LeftBorder { get; set; }
+        private CrosswalkBorderSelectPropertyPanel RightBorder { get; set; }
+        private CrosswalkBorderSelectPropertyPanel LeftBorder { get; set; }
         private WarningTextProperty Warning { get; set; }
         private StylePropertyPanel Style { get; set; }
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
 
-        public MarkupCrosswalkSelectPropertyPanel HoverBorderPanel { get; private set; }
+        public CrosswalkBorderSelectPropertyPanel HoverBorderPanel { get; private set; }
         public bool IsHoverBorderPanel => HoverBorderPanel != null;
 
         public CrosswalksEditor()
@@ -106,7 +106,7 @@ namespace NodeMarkup.UI.Editors
             else
                 return new MarkupRegularLine[0];
         }
-        private void FillBorder(MarkupCrosswalkSelectPropertyPanel panel, Action<MarkupRegularLine> action, MarkupRegularLine[] lines, MarkupRegularLine value)
+        private void FillBorder(CrosswalkBorderSelectPropertyPanel panel, Action<MarkupRegularLine> action, MarkupRegularLine[] lines, MarkupRegularLine value)
         {
             panel.OnSelectChanged -= action;
             panel.Clear();
@@ -126,9 +126,9 @@ namespace NodeMarkup.UI.Editors
 
             panel.OnSelectChanged += action;
         }
-        private MarkupCrosswalkSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
+        private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
         {
-            var border = ComponentPool.Get<MarkupCrosswalkSelectPropertyPanel>(PropertiesPanel);
+            var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel);
             border.Text = text;
             border.Position = position;
             border.Init();
@@ -210,11 +210,11 @@ namespace NodeMarkup.UI.Editors
 
         #region EDITOR ACTION
 
-        public void HoverBorder(MarkupCrosswalkSelectPropertyPanel selectPanel) => HoverBorderPanel = selectPanel;
-        public void LeaveBorder(MarkupCrosswalkSelectPropertyPanel selectPanel) => HoverBorderPanel = null;
+        public void HoverBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => HoverBorderPanel = selectPanel;
+        public void LeaveBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => HoverBorderPanel = null;
 
-        public bool SelectBorder(MarkupCrosswalkSelectPropertyPanel selectPanel) => SelectBorder(selectPanel, null);
-        public bool SelectBorder(MarkupCrosswalkSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
+        public bool SelectBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => SelectBorder(selectPanel, null);
+        public bool SelectBorder(CrosswalkBorderSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
         {
             if (Tool.Mode == CrosswalkBorderToolMode && selectPanel == CrosswalkBorderToolMode.SelectPanel)
             {
@@ -266,7 +266,7 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, MarkupCrosswalkSelectPropertyPanel, MarkupRegularLine>
+    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, CrosswalkBorderSelectPropertyPanel, MarkupRegularLine>
     {
         protected override bool IsHover => IsHoverLine;
         protected override MarkupRegularLine Hover => HoverLine?.Line;
