@@ -171,8 +171,9 @@ namespace NodeMarkup.UI.Editors
 
             if (IsHoverRailPanel)
             {
-                var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.ClockWise);
+                var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B, HoverRailPanel.RailType);
                 rail.Render(cameraInfo, Colors.Hover);
+                NodeMarkupTool.RenderCircle(cameraInfo, rail.StartPosition, Color.black);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();
@@ -196,8 +197,8 @@ namespace NodeMarkup.UI.Editors
         protected override FillerRail Hover => throw new NotImplementedException();
         protected override bool IsHover => throw new NotImplementedException();
 
-        private IFillerVertex First { get; set; }
-        private bool IsFirst => First != null;
+        private IFillerVertex FirstPoint { get; set; }
+        private bool IsFirstSelected => FirstPoint != null;
 
         public FillerContour Contour { get; set; }
         private PointsSelector<IFillerVertex> PointsSelector { get; set; }
@@ -205,25 +206,25 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnSetPanel()
         {
-            First = null;
+            FirstPoint = null;
             PointsSelector = GetPointsSelector();
             LineSelector = new LinesSelector<RailBound>(Contour.Trajectories.Select((t, i) => new RailBound(t, 0.5f, i)), Colors.Orange);
         }
         public override void OnToolUpdate()
         {
-            if (!IsFirst)
+            if (!IsFirstSelected)
                 LineSelector.OnUpdate();
             PointsSelector.OnUpdate();
         }
 
         public override void OnPrimaryMouseClicked(Event e)
         {
-            if (!IsFirst)
+            if (!IsFirstSelected)
             {
                 if (PointsSelector.IsHoverPoint)
                 {
-                    First = PointsSelector.HoverPoint;
-                    PointsSelector = GetPointsSelector(First);
+                    FirstPoint = PointsSelector.HoverPoint;
+                    PointsSelector = GetPointsSelector(FirstPoint);
                 }
                 else if (LineSelector.IsHoverLine)
                     SetValue(e, LineSelector.HoverLine.Index, LineSelector.HoverLine.Index + 1);
@@ -231,14 +232,14 @@ namespace NodeMarkup.UI.Editors
             else if (PointsSelector.IsHoverPoint)
             {
                 var vertices = Contour.Vertices.ToList();
-                SetValue(e, vertices.IndexOf(First), vertices.IndexOf(PointsSelector.HoverPoint));
+                SetValue(e, vertices.IndexOf(FirstPoint), vertices.IndexOf(PointsSelector.HoverPoint));
             }
         }
         public override void OnSecondaryMouseClicked()
         {
-            if (IsFirst)
+            if (IsFirstSelected)
             {
-                First = null;
+                FirstPoint = null;
                 PointsSelector = GetPointsSelector();
             }
             else
@@ -250,11 +251,13 @@ namespace NodeMarkup.UI.Editors
             if (AfterSelectPanel?.Invoke(e) ?? true)
                 Tool.SetDefaultMode();
         }
+        public override string GetToolInfo() => !IsFirstSelected ? Localize.FillerEditor_InfoSelectRailFirst : Localize.FillerEditor_InfoSelectRailSecond;
+
         private PointsSelector<IFillerVertex> GetPointsSelector(object ignore = null) => new PointsSelector<IFillerVertex>(Contour.Vertices.Where(v => v != ignore), Colors.Purple);
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            if (!IsFirst)
+            if (!IsFirstSelected)
                 LineSelector.Render(cameraInfo, !(PointsSelector.IsHoverGroup || PointsSelector.IsHoverPoint));
             PointsSelector.Render(cameraInfo);
         }

@@ -38,16 +38,17 @@ namespace NodeMarkup.UI.Editors
 
         protected override float Width => 100f;
 
-        public bool ClockWise { get; private set; } = true;
+        public PeriodicFillerStyle.RailType RailType { get; private set; }
+        public FillerRailSelectPropertyPanel OtherRail { get; set; }
 
-        public void Init(bool clockWise)
+        public void Init(PeriodicFillerStyle.RailType railType)
         {
-            ClockWise = clockWise;
+            RailType = railType;
             base.Init();
         }
         public override void DeInit()
         {
-            ClockWise = true;
+            RailType = PeriodicFillerStyle.RailType.Left;
             base.DeInit();
         }
     }

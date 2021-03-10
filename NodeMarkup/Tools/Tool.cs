@@ -674,7 +674,7 @@ namespace NodeMarkup.Tools
             foreach (var style in EnumExtension.GetEnumValues<StyleType>())
             {
                 var general = (Style.StyleType)(object)style;
-                var modifier = (StyleModifier)NodeMarkupTool.StylesModifier[general].value;
+                var modifier = (StyleModifier)StylesModifier[general].value;
                 if (modifier != StyleModifier.NotSet)
                     yield return $"{general.Description()} - {modifier.Description()}";
             }

@@ -543,6 +543,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a rail&apos;s first point or line as rail.
+        /// </summary>
+        public static string FillerEditor_InfoSelectRailFirst {
+            get {
+                return ResourceManager.GetString("FillerEditor_InfoSelectRailFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a rail&apos;s second point.
+        /// </summary>
+        public static string FillerEditor_InfoSelectRailSecond {
+            get {
+                return ResourceManager.GetString("FillerEditor_InfoSelectRailSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Chevron.
         /// </summary>
         public static string FillerStyle_Chevron {

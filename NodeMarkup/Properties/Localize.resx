@@ -1387,4 +1387,10 @@ Click to edit markings</value>
   <data name="StyleOption_RightRail" xml:space="preserve">
     <value>Right rail</value>
   </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Select a rail's first point or line as rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Select a rail's second point</value>
+  </data>
 </root>

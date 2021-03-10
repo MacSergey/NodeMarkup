@@ -200,7 +200,20 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End);
         }
 
-        public ITrajectory GetRail(int a, int b, bool clockWise)
+        public ITrajectory GetRail(int a1, int b1, int a2, int b2, PeriodicFillerStyle.RailType railType)
+        {
+            var min1 = GetCorrectIndex(Math.Min(a1, b1));
+            var max1 = GetCorrectIndex(Math.Max(a1, b1));
+            var min2 = GetCorrectIndex(Math.Min(a2, b2));
+            var max2 = GetCorrectIndex(Math.Max(a2, b2));
+
+            if (max1 <= min2 || max2 <= min1 || (min2 <= min1 && max1 <= max2))
+                return GetRail(min1, max1);
+            else
+                return GetRail(max1, min1);
+        }
+
+        private ITrajectory GetRail(int a, int b)
         {
             var trajectories = Trajectories.ToArray();
 
@@ -208,20 +221,16 @@ namespace NodeMarkup.Manager
                 return trajectories[Math.Min(a, b)];
             else if (Mathf.Abs(b - a) == trajectories.Length - 1)
                 return trajectories.Last();
-            else if (clockWise)
-            {
-                var ai = a;
-                var bi = (b + trajectories.Length - 1) % trajectories.Length;
-                return new BezierTrajectory(trajectories[ai].StartPosition, trajectories[ai].StartDirection, trajectories[bi].EndPosition, trajectories[bi].EndDirection);
-            }
             else
             {
-                var ai = b;
-                var bi = (a + trajectories.Length - 1) % trajectories.Length;
-                return new BezierTrajectory(trajectories[ai].StartPosition, trajectories[ai].StartDirection, trajectories[bi].EndPosition, trajectories[bi].EndDirection);
+                var first = trajectories[a];
+                var second = trajectories[(b - 1 + trajectories.Length) % trajectories.Length];
+                return new BezierTrajectory(first.StartPosition, first.StartDirection, second.EndPosition, second.EndDirection);
             }
-
         }
+        public int GetCorrectIndex(int value) => value >= 0 ? value % VertexCount : value % VertexCount + VertexCount;
+
+
         public void Update()
         {
             foreach (var part in LineParts)
@@ -250,6 +259,9 @@ namespace NodeMarkup.Manager
             A = a;
             B = b;
         }
+        public static FillerRail operator +(FillerRail rail, int delta) => new FillerRail(rail.A + delta, rail.B + delta);
+        public static FillerRail operator %(FillerRail rail, int max) => new FillerRail(rail.A % max, rail.B % max);
+
         public override string ToString() => $"{A + 1}-{B + 1}";
     }
 }

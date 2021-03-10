@@ -596,31 +596,107 @@ namespace NodeMarkup.Manager
             base.FromXml(config, map, invert);
             Step.FromXml(config, DefaultStepGrid);
         }
+
+        public enum RailType
+        {
+            Left,
+            Right
+        }
+    }
+    public abstract class RailFillerStyle : PeriodicFillerStyle, IRailFiller
+    {
+        public PropertyValue<int> LeftRailA { get; }
+        public PropertyValue<int> RightRailA { get; }
+        public PropertyValue<int> LeftRailB { get; }
+        public PropertyValue<int> RightRailB { get; }
+
+        public RailFillerStyle(Color32 color, float width, float step, float medianOffset) : base(color, width, step, medianOffset)
+        {
+            LeftRailA = GetLeftRailAProperty(0);
+            LeftRailB = GetLeftRailBProperty(1);
+            RightRailA = GetRightRailAProperty(1);
+            RightRailB = GetRightRailBProperty(2);
+        }
+
+        public override void CopyTo(FillerStyle target)
+        {
+            base.CopyTo(target);
+
+            if (target is IRailFiller railTarget)
+            {
+                railTarget.LeftRailA.Value = LeftRailA;
+                railTarget.LeftRailB.Value = LeftRailB;
+                railTarget.RightRailA.Value = RightRailA;
+                railTarget.RightRailB.Value = RightRailB;
+            }
+        }
+
+        protected void AddRailProperty(FillerContour contour, UIComponent parent, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
+        {
+            leftRailProperty = AddRailProperty(contour, parent, LeftRailA, LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
+            rightRailProperty = AddRailProperty(contour, parent, RightRailA, RightRailB, RailType.Right, Localize.StyleOption_RightRail);
+
+            leftRailProperty.OtherRail = rightRailProperty;
+            rightRailProperty.OtherRail = leftRailProperty;
+        }
+
+        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
+        {
+            var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
+            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent);
+            railProperty.Text = label;
+            railProperty.Init(railType);
+            railProperty.Value = rail;
+            railProperty.OnValueChanged += RailPropertyChanged;
+            return railProperty;
+
+            void RailPropertyChanged(FillerRail rail)
+            {
+                railA.Value = rail.A;
+                railB.Value = rail.B;
+            }
+        }
+
+        protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
+        {
+            left = contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB, RailType.Left);
+            right = contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB, RailType.Right);
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(LeftRailA.ToXml());
+            config.Add(LeftRailB.ToXml());
+            config.Add(RightRailA.ToXml());
+            config.Add(RightRailB.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            LeftRailA.FromXml(config, LeftRailA);
+            LeftRailB.FromXml(config, LeftRailB);
+            RightRailA.FromXml(config, RightRailA);
+            RightRailB.FromXml(config, RightRailB);
+        }
     }
 
-    public class StripeFillerStyle : PeriodicFillerStyle, IOffsetFiller, IRotateFiller, IRailFiller, IWidthStyle, IColorStyle
+    public class StripeFillerStyle : RailFillerStyle, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowLines { get; }
         public PropertyValue<float> Offset { get; }
-        public PropertyValue<int> LeftRailA { get; }
-        public PropertyValue<int> RightRailA { get; }
-        public PropertyValue<int> LeftRailB { get; }
-        public PropertyValue<int> RightRailB { get; }
 
-        public StripeFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset, bool followLines, int leftRailA, int leftRailB, int rightRailA, int rightRailB) : base(color, width, step, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, float medianOffset, float angle, float step, float offset, bool followLines) : base(color, width, step, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             FollowLines = GetFollowLinesProperty(followLines);
             Offset = GetOffsetProperty(offset);
-            LeftRailA = GetLeftRailAProperty(leftRailA);
-            LeftRailB = GetLeftRailBProperty(leftRailB);
-            RightRailA = GetRightRailAProperty(rightRailA);
-            RightRailB = GetRightRailBProperty(rightRailB);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset, FollowLines, LeftRailA, LeftRailB, RightRailA, RightRailB);
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultOffset, DefaultAngle, Step, Offset, FollowLines);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -645,51 +721,53 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                var followLines = AddFollowLinesProperty(this, parent);
-                var leftRail = AddRailProperty(LeftRailA, LeftRailB, true, parent, Localize.StyleOption_LeftRail);
-                var rightRail = AddRailProperty(RightRailA, RightRailB, false, parent, Localize.StyleOption_RightRail);
-                for (var i = 0; i < 20; i += 1)
-                    components.Add(AddRailProperty(RightRailA, RightRailB, false, parent, "Test"));
+                var vertexCount = filler.Contour.VertexCount;
+
+                var followLines = AddFollowLinesProperty(parent);
+                AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
+                var turn = AddTurnProperty(parent);
 
                 components.Add(followLines);
                 components.Add(leftRail);
                 components.Add(rightRail);
+                components.Add(turn);
 
                 followLines.OnSelectObjectChanged += ChangeRailsVisible;
                 ChangeRailsVisible(followLines.SelectedObject);
+                
+                turn.OnButtonClick += TurnClick;
 
                 void ChangeRailsVisible(bool followLines)
                 {
                     leftRail.isVisible = followLines;
                     rightRail.isVisible = followLines;
+                    turn.isVisible = followLines;
+                }
+
+                void TurnClick()
+                {
+                    leftRail.Value = (leftRail.Value + 1) % vertexCount;
+                    rightRail.Value = (rightRail.Value + 1) % vertexCount;
                 }
             }
         }
 
-        protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
+        protected BoolListPropertyPanel AddFollowLinesProperty(UIComponent parent)
         {
             var followLinesProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
             followLinesProperty.Text = Localize.StyleOption_FollowLines;
             followLinesProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            followLinesProperty.SelectedObject = stripeStyle.FollowLines;
-            followLinesProperty.OnSelectObjectChanged += (bool value) => stripeStyle.FollowLines.Value = value;
+            followLinesProperty.SelectedObject = FollowLines;
+            followLinesProperty.OnSelectObjectChanged += (bool value) => FollowLines.Value = value;
             return followLinesProperty;
         }
-        protected static FillerRailSelectPropertyPanel AddRailProperty(PropertyValue<int> railA, PropertyValue<int> railB, bool clockWise, UIComponent parent, string label)
+        protected static ButtonPanel AddTurnProperty(UIComponent parent)
         {
-            var rail = new FillerRail(railA, railB);
-            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent);
-            railProperty.Text = label;
-            railProperty.Init(clockWise);
-            railProperty.Value = rail;
-            railProperty.OnValueChanged += RailPropertyChanged;
-            return railProperty;
+            var buttonPanel = ComponentPool.Get<ButtonPanel>(parent);
+            buttonPanel.Text = Localize.StyleOption_Turn;
+            buttonPanel.Init();
 
-            void RailPropertyChanged(FillerRail rail)
-            {
-                railA.Value = rail.A;
-                railB.Value = rail.B;
-            }
+            return buttonPanel;
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -726,13 +804,14 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
-        {
-            left = contour.GetRail(LeftRailA, LeftRailB, true);
-            right = contour.GetRail(RightRailA, RightRailB, false);
-        }
-        
+
         protected override float GetAngle() => 90f - Angle;
+
+        public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            if (FollowLines)
+                base.Render(filler, cameraInfo, color, width, alphaBlend, cut);
+        }
 
         public override XElement ToXml()
         {
@@ -740,10 +819,6 @@ namespace NodeMarkup.Manager
             config.Add(Angle.ToXml());
             config.Add(FollowLines.ToXml());
             config.Add(Offset.ToXml());
-            config.Add(LeftRailA.ToXml());
-            config.Add(LeftRailB.ToXml());
-            config.Add(RightRailA.ToXml());
-            config.Add(RightRailB.ToXml());
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -752,10 +827,163 @@ namespace NodeMarkup.Manager
             Angle.FromXml(config, DefaultAngle);
             FollowLines.FromXml(config, DefaultFollowLines);
             Offset.FromXml(config, DefaultOffset);
-            LeftRailA.FromXml(config, 0);
-            LeftRailB.FromXml(config, 1);
-            RightRailA.FromXml(config, 1);
-            RightRailB.FromXml(config, 2);
+        }
+    }
+    public class ChevronFillerStyle : RailFillerStyle, IWidthStyle, IColorStyle
+    {
+        public override StyleType Type => StyleType.FillerChevron;
+
+        public PropertyValue<float> AngleBetween { get; }
+        public PropertyBoolValue Invert { get; }
+        public PropertyValue<int> Output { get; }
+        public PropertyEnumValue<From> StartingFrom { get; }
+
+        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step) : base(color, width, step, medianOffset)
+        {
+            AngleBetween = GetAngleBetweenProperty(angleBetween);
+            Invert = GetInvertProperty(false);
+
+            Output = GetOutputProperty(0);
+            StartingFrom = GetStartingFromProperty(From.Vertex);
+        }
+
+        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
+        public override void CopyTo(FillerStyle target)
+        {
+            base.CopyTo(target);
+
+            if (target is ChevronFillerStyle chevronTarget)
+            {
+                chevronTarget.AngleBetween.Value = AngleBetween;
+                chevronTarget.Step.Value = Step;
+                chevronTarget.Invert.Value = Invert;
+            }
+        }
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(filler, components, parent, isTemplate);
+            components.Add(AddAngleBetweenProperty(this, parent));
+            if (!isTemplate)
+            {
+                AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
+                var turnAndInvert = AddInvertAndTurnProperty(parent, out int invertIndex, out int turnIndex);
+
+                components.Add(leftRail);
+                components.Add(rightRail);
+                components.Add(turnAndInvert);
+
+                var vertexCount = filler.Contour.VertexCount;
+                turnAndInvert.OnButtonClick += OnButtonClick;
+
+                void OnButtonClick(int buttonIndex)
+                {
+                    if (buttonIndex == invertIndex)
+                        Invert.Value = !Invert;
+                    else if (buttonIndex == turnIndex)
+                    {
+                        leftRail.Value = (leftRail.Value + 1) % vertexCount;
+                        rightRail.Value = (rightRail.Value + 1) % vertexCount;
+                    }
+                }
+            }
+        }
+        protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        {
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            angleProperty.Text = Localize.StyleOption_AngleBetween;
+            angleProperty.UseWheel = true;
+            angleProperty.WheelStep = 1f;
+            angleProperty.WheelTip = Editor.WheelTip;
+            angleProperty.CheckMin = true;
+            angleProperty.MinValue = 30;
+            angleProperty.CheckMax = true;
+            angleProperty.MaxValue = 150;
+            angleProperty.Init();
+            angleProperty.Value = chevronStyle.AngleBetween;
+            angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween.Value = value;
+
+            return angleProperty;
+        }
+        protected static ButtonsPanel AddInvertAndTurnProperty(UIComponent parent, out int invertIndex, out int turnIndex)
+        {
+            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent);
+            invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
+            turnIndex = buttonsPanel.AddButton(Localize.StyleOption_Turn);
+            buttonsPanel.Init();
+
+            return buttonsPanel;
+        }
+
+        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
+        {
+            var width = Width.Value;
+            var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;
+            GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
+
+            var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
+            GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
+            GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
+
+            for (var i = 0; i < parts.Length; i += 1)
+            {
+                var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
+                var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
+                var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
+                var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
+                foreach (var item in GetPartItems(parts[i], halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
+                {
+                    item.Before = leftBefore;
+                    item.After = leftAfter;
+                    yield return item;
+                }
+                foreach (var item in GetPartItems(parts[i], -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
+                {
+                    item.Before = rightBefore;
+                    item.After = rightAfter;
+                    yield return item;
+                }
+            }
+        }
+        protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(AngleBetween.ToXml());
+            config.Add(Invert.ToXml());
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            Output.FromXml(config, 0);
+            StartingFrom.FromXml(config, From.Vertex);
+
+            LeftRailA.Value = Output;
+            LeftRailB.Value = Output + 1;
+
+            if (StartingFrom == From.Vertex)
+            {
+                RightRailA.Value = Output;
+                RightRailB.Value = Output - 1;
+            }
+            else if(StartingFrom == From.Edge)
+            {
+                RightRailA.Value = Output - 1;
+                RightRailB.Value = Output - 2;
+            }
+
+            base.FromXml(config, map, invert);
+            AngleBetween.FromXml(config, DefaultAngle);
+            Invert.FromXml(config, false);
+        }
+
+        public enum From
+        {
+            [Description(nameof(Localize.StyleOption_Vertex))]
+            Vertex = 0,
+
+            [Description(nameof(Localize.StyleOption_Edge))]
+            Edge = 1
         }
     }
     public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
@@ -851,157 +1079,6 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
             foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
                 yield return item;
-        }
-    }
-    public class ChevronFillerStyle : PeriodicFillerStyle, IWidthStyle, IColorStyle
-    {
-        public override StyleType Type => StyleType.FillerChevron;
-
-        public PropertyValue<float> AngleBetween { get; }
-        public PropertyBoolValue Invert { get; }
-        public PropertyValue<int> Output { get; }
-        public PropertyEnumValue<From> StartingFrom { get; }
-
-        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step, int output = 0, bool invert = false) : base(color, width, step, medianOffset)
-        {
-            AngleBetween = GetAngleBetweenProperty(angleBetween);
-            Output = GetOutputProperty(output);
-            Invert = GetInvertProperty(invert);
-            StartingFrom = GetStartingFromProperty(From.Vertex);
-        }
-
-        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
-        public override void CopyTo(FillerStyle target)
-        {
-            base.CopyTo(target);
-            if (target is ChevronFillerStyle chevronTarget)
-            {
-                chevronTarget.AngleBetween.Value = AngleBetween;
-                chevronTarget.Step.Value = Step;
-                chevronTarget.Invert.Value = Invert;
-                chevronTarget.Output.Value = Output;
-            }
-        }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
-        {
-            base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddAngleBetweenProperty(this, parent));
-            if (!isTemplate)
-            {
-                components.Add(AddStartingFromProperty(this, parent));
-                components.Add(AddInvertAndTurnProperty(this, parent));
-            }
-        }
-        protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
-        {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
-            angleProperty.Text = Localize.StyleOption_AngleBetween;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Editor.WheelTip;
-            angleProperty.CheckMin = true;
-            angleProperty.MinValue = 30;
-            angleProperty.CheckMax = true;
-            angleProperty.MaxValue = 150;
-            angleProperty.Init();
-            angleProperty.Value = chevronStyle.AngleBetween;
-            angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween.Value = value;
-
-            return angleProperty;
-        }
-        protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
-        {
-            var fromProperty = ComponentPool.Get<ChevronFromPropertyPanel>(parent);
-            fromProperty.Text = Localize.StyleOption_StartingFrom;
-            fromProperty.Init();
-            fromProperty.SelectedObject = chevronStyle.StartingFrom;
-            fromProperty.OnSelectObjectChanged += (From value) => chevronStyle.StartingFrom.Value = value;
-            return fromProperty;
-        }
-        protected static ButtonsPanel AddInvertAndTurnProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
-        {
-            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent);
-            var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
-            var turnIndex = buttonsPanel.AddButton(Localize.StyleOption_Turn);
-            buttonsPanel.Init();
-            buttonsPanel.OnButtonClick += OnButtonClick;
-
-            void OnButtonClick(int index)
-            {
-                if (index == invertIndex)
-                    chevronStyle.Invert.Value = !chevronStyle.Invert;
-                else if (index == turnIndex)
-                    chevronStyle.Output.Value += 1;
-            }
-
-            return buttonsPanel;
-        }
-
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
-        {
-            var width = Width.Value;
-            var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;
-            GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
-
-            var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
-            GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
-
-            for (var i = 0; i < parts.Length; i += 1)
-            {
-                var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
-                var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
-                var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
-                var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
-                foreach (var item in GetPartItems(parts[i], halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
-                {
-                    item.Before = leftBefore;
-                    item.After = leftAfter;
-                    yield return item;
-                }
-                foreach (var item in GetPartItems(parts[i], -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
-                {
-                    item.Before = rightBefore;
-                    item.After = rightAfter;
-                    yield return item;
-                }
-            }
-        }
-        protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
-        protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
-        {
-            var trajectories = contour.Trajectories.ToArray();
-            var leftIndex = Output % trajectories.Length;
-            var rightIndex = leftIndex.PrevIndex(trajectories.Length, StartingFrom == From.Vertex ? 1 : 2);
-            left = trajectories[leftIndex];
-            right = trajectories[rightIndex];
-        }
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            config.Add(AngleBetween.ToXml());
-            config.Add(Output.ToXml());
-            config.Add(Invert.ToXml());
-            config.Add(StartingFrom.ToXml());
-            return config;
-        }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
-        {
-            base.FromXml(config, map, invert);
-            AngleBetween.FromXml(config, DefaultAngle);
-            Invert.FromXml(config, false);
-            Output.FromXml(config, 0);
-            StartingFrom.FromXml(config, From.Vertex);
-        }
-
-        public enum From
-        {
-            [Description(nameof(Localize.StyleOption_Vertex))]
-            Vertex = 0,
-
-            [Description(nameof(Localize.StyleOption_Edge))]
-            Edge = 1
         }
     }
 }
