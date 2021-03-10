@@ -67,12 +67,12 @@ namespace NodeMarkup.Manager
             return isClockWise < 0;
         }
 
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddElevationProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(filler, components, parent, isTemplate);
+            components.Add(AddElevationProperty(this, parent));
         }
-        private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, Action onHover, Action onLeave)
+        private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
         {
             var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
             elevationProperty.Text = Localize.FillerStyle_Elevation;
@@ -85,7 +85,7 @@ namespace NodeMarkup.Manager
             elevationProperty.Init();
             elevationProperty.Value = triangulationStyle.Elevation;
             elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
-            AddOnHoverLeave(elevationProperty, onHover, onLeave);
+
             return elevationProperty;
         }
 

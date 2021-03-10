@@ -126,14 +126,14 @@ namespace NodeMarkup.Manager
                 colorTarget.Color.Value = colorSource.Color;
         }
 
-        public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
             var components = new List<EditorItem>();
 
             if (this is IColorStyle)
                 components.Add(AddColorProperty(parent));
             if (this is IWidthStyle)
-                components.Add(AddWidthProperty(parent, onHover, onLeave));
+                components.Add(AddWidthProperty(parent));
 
             return components;
         }
@@ -145,9 +145,10 @@ namespace NodeMarkup.Manager
             colorProperty.Init();
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
+
             return colorProperty;
         }
-        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
+        protected FloatPropertyPanel AddWidthProperty(UIComponent parent)
         {
             var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             widthProperty.Text = Localize.StyleOption_Width;
@@ -159,11 +160,10 @@ namespace NodeMarkup.Manager
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width.Value = value;
-            AddOnHoverLeave(widthProperty, onHover, onLeave);
 
             return widthProperty;
         }
-        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent)
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
@@ -175,10 +175,10 @@ namespace NodeMarkup.Manager
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
             dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
-            AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
+
             return dashLengthProperty;
         }
-        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent)
         {
             var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
@@ -190,7 +190,7 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
             spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
-            AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
+
             return spaceLengthProperty;
         }
         protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
@@ -207,14 +207,6 @@ namespace NodeMarkup.Manager
             }
 
             return buttonsPanel;
-        }
-        protected static void AddOnHoverLeave<ValueType, FieldType>(FieldPropertyPanel<ValueType, FieldType> fieldPanel, Action onHover, Action onLeave)
-            where FieldType : UITextField<ValueType>
-        {
-            if (onHover != null)
-                fieldPanel.OnHover += onHover;
-            if (onLeave != null)
-                fieldPanel.OnLeave += onLeave;
         }
 
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);

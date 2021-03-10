@@ -70,7 +70,7 @@ namespace NodeMarkup.Manager
         protected virtual float LodWidth => 0.15f;
         protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
 
-        protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_Offset;
@@ -82,10 +82,10 @@ namespace NodeMarkup.Manager
             offsetProperty.Init();
             offsetProperty.Value = doubleStyle.Offset;
             offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset.Value = value;
-            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+
             return offsetProperty;
         }
-        protected static FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
             var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
@@ -97,10 +97,10 @@ namespace NodeMarkup.Manager
             baseProperty.Init();
             baseProperty.Value = sharkTeethStyle.Base;
             baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base.Value = value;
-            AddOnHoverLeave(baseProperty, onHover, onLeave);
+ 
             return baseProperty;
         }
-        protected static FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
             var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
@@ -112,10 +112,10 @@ namespace NodeMarkup.Manager
             heightProperty.Init();
             heightProperty.Value = sharkTeethStyle.Height;
             heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height.Value = value;
-            AddOnHoverLeave(heightProperty, onHover, onLeave);
+
             return heightProperty;
         }
-        protected static FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
             var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
@@ -127,7 +127,7 @@ namespace NodeMarkup.Manager
             spaceProperty.Init();
             spaceProperty.Value = sharkTeethStyle.Space;
             spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space.Value = value;
-            AddOnHoverLeave(spaceProperty, onHover, onLeave);
+
             return spaceProperty;
         }
         protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
@@ -178,16 +178,16 @@ namespace NodeMarkup.Manager
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            var components = base.GetUIComponents(editObject, parent, isTemplate);
             if (editObject is MarkupRegularLine line)
-                GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(line, components, parent, isTemplate);
             else if(isTemplate)
-                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
+        public virtual void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public enum RegularLineType
         {
@@ -242,16 +242,16 @@ namespace NodeMarkup.Manager
         public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
         protected abstract IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            var components = base.GetUIComponents(editObject, parent, isTemplate);
             if (editObject is MarkupStopLine line)
-                GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(line, components, parent, isTemplate);
             else if (isTemplate)
-                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
+        public virtual void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public enum StopLineType
         {

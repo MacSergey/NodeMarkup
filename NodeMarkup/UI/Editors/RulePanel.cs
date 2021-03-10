@@ -155,9 +155,11 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties()
         {
-            StyleProperties = Rule.Style.GetUIComponents(Rule.Line, this, Editor.StopScroll, Editor.StartScroll);
+            StyleProperties = Rule.Style.GetUIComponents(Rule.Line, this);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
+
+            Editor.SetStopScroll(StyleProperties);
         }
 
         private void ClearStyleProperties()
@@ -219,7 +221,7 @@ namespace NodeMarkup.UI.Editors
             Error.isVisible = Rule.IsOverlapped;
             FillEdges();
         }
-        private void SetEven() => Editors.Editor.SetEven(this);
+        private void SetEven() => Editor.SetEven(this);
         protected override void OnMouseEnter(UIMouseEventParameter p)
         {
             base.OnMouseEnter(p);

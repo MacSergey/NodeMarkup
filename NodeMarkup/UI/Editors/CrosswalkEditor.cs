@@ -150,7 +150,11 @@ namespace NodeMarkup.UI.Editors
             Style.SelectedObject = EditObject.Style.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddStyleProperties() => StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel, isTemplate: false);
+        private void AddStyleProperties()
+        {
+            StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
+            SetStopScroll(StyleProperties);
+        }
 
         #endregion
 

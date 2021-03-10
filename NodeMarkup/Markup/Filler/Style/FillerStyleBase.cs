@@ -57,19 +57,19 @@ namespace NodeMarkup.Manager
                 fillerTarget.MedianOffset.Value = MedianOffset;
         }
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            var components = base.GetUIComponents(editObject, parent, isTemplate);
             if (editObject is MarkupFiller filler)
-                GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(filler, components, parent, isTemplate);
             else if (isTemplate)
-                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             if (!isTemplate && filler.IsMedian)
-                components.Add(AddMedianOffsetProperty(this, parent, onHover, onLeave));
+                components.Add(AddMedianOffsetProperty(this, parent));
         }
 
         public abstract IStyleData Calculate(MarkupFiller filler, MarkupLOD lod);
@@ -131,7 +131,7 @@ namespace NodeMarkup.Manager
             MedianOffset.FromXml(config, DefaultOffset);
         }
 
-        protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_MedianOffset;
@@ -143,10 +143,10 @@ namespace NodeMarkup.Manager
             offsetProperty.Init();
             offsetProperty.Value = fillerStyle.MedianOffset;
             offsetProperty.OnValueChanged += (float value) => fillerStyle.MedianOffset.Value = value;
-            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+
             return offsetProperty;
         }
-        protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent)
         {
             var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             angleProperty.Text = Localize.StyleOption_Angle;
@@ -161,10 +161,10 @@ namespace NodeMarkup.Manager
             angleProperty.Init();
             angleProperty.Value = rotateStyle.Angle;
             angleProperty.OnValueChanged += (float value) => rotateStyle.Angle.Value = value;
-            AddOnHoverLeave(angleProperty, onHover, onLeave);
+
             return angleProperty;
         }
-        protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent)
         {
             var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             stepProperty.Text = Localize.StyleOption_Step;
@@ -176,10 +176,10 @@ namespace NodeMarkup.Manager
             stepProperty.Init();
             stepProperty.Value = periodicStyle.Step;
             stepProperty.OnValueChanged += (float value) => periodicStyle.Step.Value = value;
-            AddOnHoverLeave(stepProperty, onHover, onLeave);
+
             return stepProperty;
         }
-        protected static FloatPropertyPanel AddOffsetProperty(IOffsetFiller offsetStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddOffsetProperty(IOffsetFiller offsetStyle, UIComponent parent)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_Offset;
@@ -191,7 +191,7 @@ namespace NodeMarkup.Manager
             offsetProperty.Init();
             offsetProperty.Value = offsetStyle.Offset;
             offsetProperty.OnValueChanged += (float value) => offsetStyle.Offset.Value = value;
-            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+
             return offsetProperty;
         }
 

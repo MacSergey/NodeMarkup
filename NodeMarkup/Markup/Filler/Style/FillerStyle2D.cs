@@ -477,10 +477,10 @@ namespace NodeMarkup.Manager
             if (target is IPeriodicFiller periodicTarget)
                 periodicTarget.Step.Value = Step;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddStepProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(filler, components, parent, isTemplate);
+            components.Add(AddStepProperty(this, parent));
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -634,14 +634,14 @@ namespace NodeMarkup.Manager
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(filler, components, parent, isTemplate);
 
             if (!isTemplate)
-                components.Add(AddAngleProperty(this, parent, onHover, onLeave));
+                components.Add(AddAngleProperty(this, parent));
 
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            components.Add(AddOffsetProperty(this, parent));
 
             if (!isTemplate)
             {
@@ -771,13 +771,13 @@ namespace NodeMarkup.Manager
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
+            base.GetUIComponents(filler, components, parent, isTemplate);
             if (!isTemplate)
-                components.Add(AddAngleProperty(this, parent, onHover, onLeave));
-            components.Add(AddStepProperty(this, parent, onHover, onLeave));
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+                components.Add(AddAngleProperty(this, parent));
+            components.Add(AddStepProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent));
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -866,17 +866,17 @@ namespace NodeMarkup.Manager
                 chevronTarget.Output.Value = Output;
             }
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddAngleBetweenProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(filler, components, parent, isTemplate);
+            components.Add(AddAngleBetweenProperty(this, parent));
             if (!isTemplate)
             {
                 components.Add(AddStartingFromProperty(this, parent));
                 components.Add(AddInvertAndTurnProperty(this, parent));
             }
         }
-        protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
         {
             var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             angleProperty.Text = Localize.StyleOption_AngleBetween;
@@ -890,7 +890,7 @@ namespace NodeMarkup.Manager
             angleProperty.Init();
             angleProperty.Value = chevronStyle.AngleBetween;
             angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween.Value = value;
-            AddOnHoverLeave(angleProperty, onHover, onLeave);
+
             return angleProperty;
         }
         protected static ChevronFromPropertyPanel AddStartingFromProperty(ChevronFillerStyle chevronStyle, UIComponent parent)

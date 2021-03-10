@@ -42,8 +42,8 @@ namespace NodeMarkup.UI.Editors
             pointProperty.Init();
             pointProperty.Value = point.Offset;
             pointProperty.OnValueChanged += OffsetChanged;
-            pointProperty.OnHover += Hover;
-            pointProperty.OnLeave += Leave;
+            //pointProperty.OnHover += Hover;
+            //pointProperty.OnLeave += Leave;
             return pointProperty;
 
             void OffsetChanged(float value) => point.Offset = value;

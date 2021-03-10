@@ -85,10 +85,10 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, Color, out MarkupStylePart secondDash))
                 yield return secondDash;
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddOffsetProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddAlignmentProperty(this, parent));
         }
@@ -150,11 +150,11 @@ namespace NodeMarkup.Manager
                 yield return dash;
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent));
+            components.Add(AddSpaceLengthProperty(this, parent));
         }
 
         public override XElement ToXml()
@@ -217,10 +217,10 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, secondOffset, Width, Color, out MarkupStylePart secondDash))
                 yield return secondDash;
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddOffsetProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddAlignmentProperty(this, parent));
         }
@@ -307,12 +307,12 @@ namespace NodeMarkup.Manager
             if (target is IDoubleAlignmentLine doubleAlignmentTarget)
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent));
+            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent));
             if (!isTemplate)
             {
                 components.Add(AddCenterSolidProperty(this, parent));
@@ -410,12 +410,12 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddBaseProperty(this, parent, onHover, onLeave));
-            components.Add(AddHeightProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddBaseProperty(this, parent));
+            components.Add(AddHeightProperty(this, parent));
+            components.Add(AddSpaceProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddInvertProperty(this, parent));
         }

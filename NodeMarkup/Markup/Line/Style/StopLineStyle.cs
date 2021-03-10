@@ -68,10 +68,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddOffsetProperty(this, parent));
         }
         public override XElement ToXml()
         {
@@ -122,11 +122,11 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent));
+            components.Add(AddSpaceLengthProperty(this, parent));
         }
 
         public override XElement ToXml()
@@ -178,10 +178,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddOffsetProperty(this, parent));
         }
         public override XElement ToXml()
         {
@@ -248,12 +248,12 @@ namespace NodeMarkup.Manager
             if (target is IDoubleLine doubleTarget)
                 doubleTarget.Offset.Value = Offset;
         }
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent));
+            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent));
         }
 
         public override XElement ToXml()
@@ -313,12 +313,12 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, onHover, onLeave, isTemplate);
-            components.Add(AddBaseProperty(this, parent, onHover, onLeave));
-            components.Add(AddHeightProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceProperty(this, parent, onHover, onLeave));
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddBaseProperty(this, parent));
+            components.Add(AddHeightProperty(this, parent));
+            components.Add(AddSpaceProperty(this, parent));
         }
 
         public override XElement ToXml()

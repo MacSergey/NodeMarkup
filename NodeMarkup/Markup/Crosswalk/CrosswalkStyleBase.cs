@@ -43,16 +43,16 @@ namespace NodeMarkup.Manager
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
+            var components = base.GetUIComponents(editObject, parent, isTemplate);
             if (editObject is MarkupCrosswalk crosswalk)
-                GetUIComponents(crosswalk, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(crosswalk, components, parent, isTemplate);
             else if (isTemplate)
-                GetUIComponents(null, components, parent, onHover, onLeave, isTemplate);
+                GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false) { }
+        public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
@@ -62,7 +62,7 @@ namespace NodeMarkup.Manager
             return tan != 0 ? offset / tan : 1000f;
         }
 
-        protected static FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
@@ -74,10 +74,10 @@ namespace NodeMarkup.Manager
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
             dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
-            AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
+
             return dashLengthProperty;
         }
-        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {
             var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
@@ -89,7 +89,7 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
             spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
-            AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
+
             return spaceLengthProperty;
         }
 

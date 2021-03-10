@@ -160,13 +160,21 @@ namespace NodeMarkup.UI.Editors
         public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
         public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
 
-        public static void SetEven(UIComponent component)
+        public void SetEven(UIComponent component)
         {
             var even = true;
             foreach (var item in component.components.OfType<EditorItem>().Where(c => c.SupportEven))
             {
                 item.IsEven = even;
                 even = !even;
+            }
+        }
+        public void SetStopScroll(IEnumerable<EditorItem> items)
+        {
+            foreach (var item in items.OfType<IWheelChangeable>())
+            {
+                item.OnStartWheel += StopScroll;
+                item.OnStopWheel += StartScroll;
             }
         }
     }

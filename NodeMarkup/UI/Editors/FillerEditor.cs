@@ -83,6 +83,8 @@ namespace NodeMarkup.UI.Editors
                     railProperty.OnLeave += LeaveRail;
                 }
             }
+
+            SetStopScroll(StyleProperties);
         }
         private void StyleChanged(Style.StyleType style)
         {
