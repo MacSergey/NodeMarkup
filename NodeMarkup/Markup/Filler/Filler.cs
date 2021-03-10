@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IItem, IToXml
+    public class MarkupFiller : IStyleItem, IToXml
     {
         public static string XmlName { get; } = "F";
 
@@ -33,7 +34,7 @@ namespace NodeMarkup.Manager
                 OnStyleChanged();
             }
         }
-        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
+        public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
         public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine);
 
         public string XmlSection => XmlName;
@@ -50,15 +51,16 @@ namespace NodeMarkup.Manager
         public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => Contour.Vertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
-        public void Update(bool onlySelfUpdate = false)
+        public void Update(bool onlySelfUpdate = false) => Contour.Update();
+        public void RecalculateStyleData()
         {
-            foreach (var part in Contour.Parts)
-            {
-                if (part.Line is MarkupEnterLine fakeLine)
-                    fakeLine.Update(true);
-            }
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate filler {this}");
+#endif
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData() => StyleData = Style.Calculate(this);
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = Style.Calculate(this, lod);
 
         public Dependences GetDependences() => new Dependences();
 
@@ -73,7 +75,7 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
         {
-            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
+            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Style<FillerStyle>.FromXml(styleConfig, map, false, out FillerStyle style))
             {
                 filler = default;
                 return false;
@@ -103,8 +105,11 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
-            => Contour.Render(cameraInfo, color, width, alphaBlend);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            Contour.Render(cameraInfo, color, width, alphaBlend);
+            Style.Render(this, cameraInfo, color, width, alphaBlend, cut);
+        }
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();
     }

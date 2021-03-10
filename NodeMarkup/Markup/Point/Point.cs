@@ -30,8 +30,16 @@ namespace NodeMarkup.Manager
             var num = GetNum(id);
             var type = GetType(id);
 
-            if (map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment))
-                enterId = targetSegment.Segment;
+            switch(markup.Type)
+            {
+                case Markup.MarkupType.NodeMarkup when map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment):
+                    enterId = targetSegment.Segment;
+                    break;
+                case Markup.MarkupType.SegmentMarkup when map.TryGetValue(new ObjectId() { Node = enterId }, out ObjectId targetNode):
+                    enterId = targetNode.Node;
+                    break;
+            }
+
             if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, num, type) }, out ObjectId targetPoint))
                 num = GetNum(targetPoint.Point);
 
@@ -48,7 +56,7 @@ namespace NodeMarkup.Manager
             set
             {
                 _offset = value;
-                Markup.Update(this, true);
+                Markup.Update(this, true, true);
             }
         }
 
@@ -100,7 +108,7 @@ namespace NodeMarkup.Manager
         }
         public abstract void UpdateProcess();
         public bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
-        public override string ToString() => $"{Enter}-{Num}";
+        public override string ToString() => $"{Enter}:{Num}";
         public override int GetHashCode() => Id;
 
         public XElement ToXml()
@@ -123,7 +131,7 @@ namespace NodeMarkup.Manager
         }
 
         public Dependences GetDependences() => throw new NotSupportedException();
-        public virtual bool GetBorder(out ILineTrajectory line)
+        public virtual bool GetBorder(out ITrajectory line)
         {
             line = null;
             return false;
@@ -171,7 +179,7 @@ namespace NodeMarkup.Manager
                 return position;
             }
         }
-        public override bool GetBorder(out ILineTrajectory line)
+        public override bool GetBorder(out ITrajectory line)
         {
             if(Enter is NodeEnter nodeEnter)
                 return nodeEnter.GetBorder(this, out line);

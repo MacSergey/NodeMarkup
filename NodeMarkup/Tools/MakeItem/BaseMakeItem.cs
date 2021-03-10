@@ -55,16 +55,16 @@ namespace NodeMarkup.Tools
         public override string GetToolInfo()
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var exist = Tool.Markup.ExistConnection(pointPair);
+            var exist = Tool.Markup.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
-                return exist ? Localize.Tool_InfoDeleteStopLine : GetCreateToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);
+                return exist ? Localize.Tool_InfoDeleteStopLine : NodeMarkupTool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);
             else if (pointPair.IsCrosswalk)
-                return exist ? Localize.Tool_InfoDeleteCrosswalk : GetCreateToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk);
+                return exist ? Localize.Tool_InfoDeleteCrosswalk : NodeMarkupTool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk);
             else if (pointPair.IsNormal)
-                return exist ? Localize.Tool_InfoDeleteNormalLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine);
+                return exist ? Localize.Tool_InfoDeleteNormalLine : NodeMarkupTool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine);
             else
-                return exist ? Localize.Tool_InfoDeleteLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
+                return exist ? Localize.Tool_InfoDeleteLine : NodeMarkupTool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
         }
         public override void OnPrimaryMouseClicked(Event e)
         {

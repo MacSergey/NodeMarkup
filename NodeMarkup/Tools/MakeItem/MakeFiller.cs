@@ -40,7 +40,6 @@ namespace NodeMarkup.Tools
         {
             if (IsHover)
                 return HoverInfo();
-            //return $"{HoverInfo()}\n({Hover})";
             else if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerSelectStart;
             else
@@ -50,8 +49,8 @@ namespace NodeMarkup.Tools
         {
             if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerClickStart;
-            else if (Hover == Contour.First)
-                return GetCreateToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
+            else if (Hover.Equals(Contour.First))
+                return NodeMarkupTool.GetModifierToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
             else
                 return Localize.Tool_InfoFillerClickNext;
         }
@@ -102,7 +101,7 @@ namespace NodeMarkup.Tools
             if (IsHover)
             {
                 var linePart = Contour.GetFillerLine(Contour.Last, Hover);
-                if (linePart.GetTrajectory(out ILineTrajectory trajectory))
+                if (linePart.GetTrajectory(out ITrajectory trajectory))
                     trajectory.Render(cameraInfo, Colors.Green);
             }
             else

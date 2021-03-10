@@ -52,11 +52,18 @@ namespace NodeMarkup.Manager
             NodeManager.Update();
             SegmentManager.Update();
         }
-        public static void NetInfoNodeInitNodeInfoPostfix(Node info)
+        public static void NetInfoInitNodeInfoPostfix(Node info)
         {
             if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
                 info.m_nodeMaterial.renderQueue = 2470;
         }
+        public static void NetInfoInitSegmentInfoPostfix(Segment info)
+        {
+            if (info.m_segmentMaterial.shader.name == "Custom/Net/TrainBridge")
+                info.m_segmentMaterial.renderQueue = 2470;
+        }
+
+
         public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
         {
             if (!AssetDataExtension.TryGetValue(buildingInfo, out AssetMarking assetMarking))
@@ -139,17 +146,18 @@ namespace NodeMarkup.Manager
             if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
                 return;
 
-            if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                return;
-
             if (markup.NeedRecalculateDrawData)
-            {
-                markup.NeedRecalculateDrawData = false;
                 markup.RecalculateDrawData();
-            }
 
-            foreach (var item in markup.DrawData)
-                item.Draw(id, data);
+            if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
+                Render(markup, data, MarkupLOD.LOD0);
+            else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
+                Render(markup, data, MarkupLOD.LOD1);
+        }
+        private void Render(MarkupType markup, RenderManager.Instance data, MarkupLOD lod)
+        {
+            foreach (var item in markup.DrawData[lod])
+                item.Draw(data);
         }
 
         public void AddToUpdate(ushort id)
@@ -157,6 +165,7 @@ namespace NodeMarkup.Manager
             if (Markups.ContainsKey(id))
                 NeedUpdate.Add(id);
         }
+        public void AddAllToUpdate() => NeedUpdate.AddRange(Markups.Keys);
         public void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {

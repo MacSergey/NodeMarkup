@@ -40,8 +40,18 @@ namespace NodeMarkup.Utils
             => Paste(targetInstanceID, record, false, sourceMap, PasteMapFiller);
         private void PasteMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
-            foreach (var source in sourceMap.Where(p => IsCorrect(p)))
-                map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
+            foreach(var source in sourceMap)
+            {
+                switch(source.Key.Type)
+                {
+                    case InstanceType.NetNode when source.Value.Type == InstanceType.NetNode:
+                        map.AddNode(source.Key.NetNode, source.Value.NetNode);
+                        break;
+                    case InstanceType.NetSegment when source.Value.Type == InstanceType.NetSegment:
+                        map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
+                        break;
+                }
+            }
         }
 
         public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation)
@@ -73,7 +83,7 @@ namespace NodeMarkup.Utils
                     markup = MarkupManager.NodeManager.Get(targetInstanceID.NetNode);
                     break;
                 case InstanceType.NetSegment:
-                    markup = MarkupManager.SegmentManager.Get(targetInstanceID.NetNode);
+                    markup = MarkupManager.SegmentManager.Get(targetInstanceID.NetSegment);
                     break;
                 default:
                     return;

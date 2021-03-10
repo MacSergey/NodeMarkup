@@ -16,7 +16,7 @@ namespace NodeMarkup.UI
     {
         private List<PointsGroup<PointType>> Groups { get; } = new List<PointsGroup<PointType>>();
         private PointsGroup<PointType> HoverGroup { get; set; }
-        private bool IsHoverGroup => HoverGroup != null;
+        public bool IsHoverGroup => HoverGroup != null;
         public PointType HoverPoint => HoverGroup?.HoverPoint;
         public bool IsHoverPoint => HoverPoint != null;
 
@@ -47,12 +47,12 @@ namespace NodeMarkup.UI
             else
                 HoverGroup = null;
         }
-        public void Render(RenderManager.CameraInfo cameraInfo)
+        public void Render(RenderManager.CameraInfo cameraInfo, bool renderHover = true)
         {
             foreach (var group in Groups)
                 group.Render(cameraInfo);
 
-            if (IsHoverGroup)
+            if (renderHover && IsHoverGroup)
                 HoverGroup.Render(cameraInfo);
         }
     }
@@ -60,7 +60,7 @@ namespace NodeMarkup.UI
         where PointType : ISupportPoint
     {
         protected Color Color { get; }
-        protected float Space { get; } = 0.5f;
+        protected float Space => 0.5f;
         protected float PointSize { get; }
         protected float Step => PointSize + Space;
         protected float IntersectSize { get; }

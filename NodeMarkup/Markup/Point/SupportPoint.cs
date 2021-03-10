@@ -14,6 +14,7 @@ namespace NodeMarkup.Manager
         Vector3 Position { get; }
         bool GetT(MarkupLine line, out float t);
         bool IsIntersect(Ray ray);
+        void Update();
     }
     public enum SupportType
     {
@@ -26,16 +27,16 @@ namespace NodeMarkup.Manager
     {
         protected static float DefaultWidth => 0.5f;
         protected static Vector3 MarkerSize { get; } = Vector3.one * DefaultWidth;
-        Bounds Bounds { get; }
+        Bounds Bounds { get; set; }
         public Vector3 Position => Bounds.center;
 
         public abstract string XmlSection { get; }
         public abstract SupportType Type { get; }
 
-        public SupportPoint(Vector3 position)
-        {
-            Bounds = new Bounds(position, MarkerSize);
-        }
+        //public SupportPoint(Vector3 position)
+        //{
+        //    Update(position);
+        //}
 
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
@@ -44,6 +45,8 @@ namespace NodeMarkup.Manager
             => NodeMarkupTool.RenderCircle(cameraInfo, Position, color, width ?? DefaultWidth, alphaBlend);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
+        public abstract void Update();
+        protected void Init(Vector3 position) => Bounds = new Bounds(position, MarkerSize);
 
         public virtual XElement ToXml()
         {
@@ -60,9 +63,10 @@ namespace NodeMarkup.Manager
         public MarkupPoint Point { get; }
         public Enter Enter => Point.Enter;
 
-        public EnterSupportPoint(MarkupPoint point) : base(point.Position)
+        public EnterSupportPoint(MarkupPoint point)
         {
             Point = point;
+            Update();
         }
         public override bool GetT(MarkupLine line, out float t)
         {
@@ -78,6 +82,7 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
+        public override void Update() => Init(Point.Position);
 
         public override XElement ToXml()
         {
@@ -93,9 +98,10 @@ namespace NodeMarkup.Manager
         public MarkupLine First => LinePair.First;
         public MarkupLine Second => LinePair.Second;
 
-        public IntersectSupportPoint(MarkupLinePair linePair) : base(linePair.Markup.GetIntersect(linePair).Position)
+        public IntersectSupportPoint(MarkupLinePair linePair)
         {
             LinePair = linePair;
+            Update();
         }
         public IntersectSupportPoint(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
         public override bool GetT(MarkupLine line, out float t)
@@ -113,6 +119,7 @@ namespace NodeMarkup.Manager
             }
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
+        public override void Update() => Init(LinePair.Markup.GetIntersect(LinePair).Position);
         public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             First.Render(cameraInfo, color, width, alphaBlend, cut);

@@ -20,18 +20,18 @@ namespace NodeMarkup.Manager
 
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return new MarkupStyleDashes(StyleHelper.CalculateSolid(trajectory, CalculateDashes));
+            return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
             {
-                yield return StyleHelper.CalculateSolidDash(dashTrajectory, offset, offset, Width, Color);
+                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new SolidStopLineStyle(Color, Width);
+        public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
     }
     public class DoubleSolidStopLineStyle : SolidStopLineStyle, IStopLine, IDoubleLine
     {
@@ -43,23 +43,23 @@ namespace NodeMarkup.Manager
         {
             Offset = GetOffsetProperty(offset);
         }
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return new MarkupStyleDashes(StyleHelper.CalculateSolid(trajectory, CalculateDashes));
+            return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
             {
-                yield return StyleHelper.CalculateSolidDash(dashTrajectory, offsetLeft, offsetLeft, Width, Color);
-                yield return StyleHelper.CalculateSolidDash(dashTrajectory, offsetRight, offsetRight, Width, Color);
+                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetLeft, offsetLeft, Width, Color);
+                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetRight, offsetRight, Width, Color);
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new DoubleSolidStopLineStyle(Color, Width, Offset);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, Width, Offset);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -68,11 +68,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            return components;
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddOffsetProperty(this, parent));
         }
         public override XElement ToXml()
         {
@@ -83,7 +82,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultDoubleOffset);
         }
     }
     public class DashedStopLineStyle : StopLineStyle, IStopLine, IDashedLine
@@ -99,19 +98,22 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
-            var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
+            if (!CheckDashedLod(lod, Width, DashLength))
+                return new MarkupStyleParts();
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
+            var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
+            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
+
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
-                yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offset, offset, Width, Color);
+                yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offset, offset, Width, Color);
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -120,12 +122,11 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            return components;
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent));
+            components.Add(AddSpaceLengthProperty(this, parent));
         }
 
         public override XElement ToXml()
@@ -151,34 +152,36 @@ namespace NodeMarkup.Manager
         {
             Offset = GetOffsetProperty(offset);
         }
-        public override StopLineStyle CopyStopLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
                 doubleTarget.Offset.Value = Offset;
         }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
+            if (!CheckDashedLod(lod, Width, DashLength))
+                return new MarkupStyleParts();
+
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
+            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
 
-            IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
-                yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft, Width, Color);
-                yield return StyleHelper.CalculateDashedDash(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, Color);
+                yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft, Width, Color);
+                yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, Color);
             }
         }
 
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-            return components;
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddOffsetProperty(this, parent));
         }
         public override XElement ToXml()
         {
@@ -189,7 +192,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultDoubleOffset);
         }
     }
     public class SolidAndDashedStopLineStyle : StopLineStyle, IStopLine, IDoubleLine, IDashedLine
@@ -208,31 +211,32 @@ namespace NodeMarkup.Manager
         }
 
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var solidOffset = offsetNormal * (Width / 2);
             var dashedOffset = offsetNormal * (Width / 2 + 2 * Offset);
 
-            var dashes = new List<MarkupStyleDash>();
-            dashes.AddRange(StyleHelper.CalculateSolid(trajectory, CalculateSolidDash));
-            dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
+            var dashes = new List<MarkupStylePart>();
+            dashes.AddRange(StyleHelper.CalculateSolid(trajectory, lod, CalculateSolidDash));
+            if (CheckDashedLod(lod, Width, DashLength))
+                dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
 
-            return new MarkupStyleDashes(dashes);
+            return new MarkupStyleParts(dashes);
 
-            IEnumerable<MarkupStyleDash> CalculateSolidDash(ILineTrajectory lineTrajectory)
+            IEnumerable<MarkupStylePart> CalculateSolidDash(ITrajectory lineTrajectory)
             {
-                yield return StyleHelper.CalculateSolidDash(lineTrajectory, solidOffset, solidOffset, Width, Color);
+                yield return StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
             }
 
-            IEnumerable<MarkupStyleDash> CalculateDashedDash(ILineTrajectory lineTrajectory, float startT, float endT)
+            IEnumerable<MarkupStylePart> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
             {
-                yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, DashLength, dashedOffset, dashedOffset, Width, Color);
+                yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, DashLength, dashedOffset, dashedOffset, Width, Color);
             }
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new SolidAndDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new SolidAndDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -244,14 +248,12 @@ namespace NodeMarkup.Manager
             if (target is IDoubleLine doubleTarget)
                 doubleTarget.Offset.Value = Offset;
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceLengthProperty(this, parent, onHover, onLeave));
-            components.Add(AddOffsetProperty(this, parent, onHover, onLeave));
-
-            return components;
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddDashLengthProperty(this, parent));
+            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent));
         }
 
         public override XElement ToXml()
@@ -265,7 +267,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Offset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
         }
@@ -273,6 +275,7 @@ namespace NodeMarkup.Manager
     public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLine
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
+        protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }
         public PropertyValue<float> Height { get; }
@@ -283,21 +286,24 @@ namespace NodeMarkup.Manager
             Height = GetHeightProperty(height);
             Space = GetSpaceProperty(space);
         }
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory)
+        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
-            var styleData = new MarkupStyleDashes(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
+            if (!CheckDashedLod(lod, Base, Height))
+                return new MarkupStyleParts();
+
+            var styleData = new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
             foreach (var dash in styleData)
                 dash.MaterialType = MaterialType.Triangle;
 
             return styleData;
         }
-        IEnumerable<MarkupStyleDash> CalculateDashes(ILineTrajectory lineTrajectory, float startT, float endT)
+        IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory lineTrajectory, float startT, float endT)
         {
-            yield return StyleHelper.CalculateDashedDash(lineTrajectory, startT, endT, Base, Height / -2, Height, Color);
+            yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, Base, Height / -2, Height, Color);
         }
 
-        public override StopLineStyle CopyStopLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
-        public override void CopyTo(Style target)
+        public override StopLineStyle CopyLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
+        public override void CopyTo(StopLineStyle target)
         {
             base.CopyTo(target);
             if (target is SharkTeethStopLineStyle sharkTeethTarget)
@@ -307,14 +313,12 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            var components = base.GetUIComponents(editObject, parent, onHover, onLeave, isTemplate);
-            components.Add(AddBaseProperty(this, parent, onHover, onLeave));
-            components.Add(AddHeightProperty(this, parent, onHover, onLeave));
-            components.Add(AddSpaceProperty(this, parent, onHover, onLeave));
-
-            return components;
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddBaseProperty(this, parent));
+            components.Add(AddHeightProperty(this, parent));
+            components.Add(AddSpaceProperty(this, parent));
         }
 
         public override XElement ToXml()

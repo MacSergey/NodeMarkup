@@ -37,27 +37,30 @@ namespace NodeMarkup.Utils
             IsIntersect = false;
         }
 
-        public static MarkupIntersect CalculateSingle(ILineTrajectory trajectory1, ILineTrajectory trajectory2) => Calculate(trajectory1, trajectory2).FirstOrDefault() ?? NotIntersect;
-        public static List<MarkupIntersect> Calculate(ILineTrajectory trajectory1, ILineTrajectory trajectory2)
+        public static MarkupIntersect CalculateSingle(ITrajectory trajectory1, ITrajectory trajectory2) => Calculate(trajectory1, trajectory2).FirstOrDefault() ?? NotIntersect;
+        public static List<MarkupIntersect> Calculate(ITrajectory trajectory1, ITrajectory trajectory2)
         {
-            if (trajectory1.TrajectoryType == TrajectoryType.Bezier)
+            if (trajectory1 != null && trajectory2 != null)
             {
-                if (trajectory2.TrajectoryType == TrajectoryType.Bezier)
-                    return Calculate(trajectory1 as BezierTrajectory, trajectory2 as BezierTrajectory);
-                else if (trajectory2.TrajectoryType == TrajectoryType.Line)
-                    return Calculate(trajectory1 as BezierTrajectory, trajectory2 as StraightTrajectory);
-            }
-            else if (trajectory1.TrajectoryType == TrajectoryType.Line)
-            {
-                if (trajectory2.TrajectoryType == TrajectoryType.Bezier)
-                    return Calculate(trajectory1 as StraightTrajectory, trajectory2 as BezierTrajectory);
-                else if (trajectory2.TrajectoryType == TrajectoryType.Line)
-                    return Calculate(trajectory1 as StraightTrajectory, trajectory2 as StraightTrajectory);
+                if (trajectory1.TrajectoryType == TrajectoryType.Bezier)
+                {
+                    if (trajectory2.TrajectoryType == TrajectoryType.Bezier)
+                        return Calculate(trajectory1 as BezierTrajectory, trajectory2 as BezierTrajectory);
+                    else if (trajectory2.TrajectoryType == TrajectoryType.Line)
+                        return Calculate(trajectory1 as BezierTrajectory, trajectory2 as StraightTrajectory);
+                }
+                else if (trajectory1.TrajectoryType == TrajectoryType.Line)
+                {
+                    if (trajectory2.TrajectoryType == TrajectoryType.Bezier)
+                        return Calculate(trajectory1 as StraightTrajectory, trajectory2 as BezierTrajectory);
+                    else if (trajectory2.TrajectoryType == TrajectoryType.Line)
+                        return Calculate(trajectory1 as StraightTrajectory, trajectory2 as StraightTrajectory);
+                }
             }
 
             return new List<MarkupIntersect>();
         }
-        public static List<MarkupIntersect> Calculate(ILineTrajectory trajectory, IEnumerable<ILineTrajectory> otherTrajectories, bool onlyIntersect = false) 
+        public static List<MarkupIntersect> Calculate(ITrajectory trajectory, IEnumerable<ITrajectory> otherTrajectories, bool onlyIntersect = false) 
             => otherTrajectories.SelectMany(t => Calculate(trajectory, t)).Where(i => !onlyIntersect || i.IsIntersect).ToList();
 
         #region BEZIER - BEZIER
@@ -231,7 +234,7 @@ namespace NodeMarkup.Utils
 
             return new MarkupLinesIntersect(pair);
 
-            static ILineTrajectory GetTrajectory(MarkupLine line, bool? mustIntersect)
+            static ITrajectory GetTrajectory(MarkupLine line, bool? mustIntersect)
                     => mustIntersect == true && line.Trajectory is StraightTrajectory st ? new StraightTrajectory(st, false) : line.Trajectory;
         }
 

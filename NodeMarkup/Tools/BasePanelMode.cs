@@ -12,7 +12,7 @@ namespace NodeMarkup.Tools
 {
     public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : BaseToolMode
         where EditorType : Editor
-        where PanelType : SelectPropertyPanel<ObjectType>
+        where PanelType : SelectPropertyPanel<ObjectType, PanelType>
     {
         public override ToolModeType Type => ToolModeType.PanelAction;
 
@@ -65,7 +65,7 @@ namespace NodeMarkup.Tools
         {
             if (IsHover)
             {
-                SelectPanel.SelectedObject = Hover;
+                SelectPanel.Value = Hover;
                 if (AfterSelectPanel?.Invoke(e) ?? true)
                     Tool.SetDefaultMode();
             }

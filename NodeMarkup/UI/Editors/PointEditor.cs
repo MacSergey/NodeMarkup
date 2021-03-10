@@ -35,6 +35,7 @@ namespace NodeMarkup.UI.Editors
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
+            Offset.WheelTip = WheelTip;
             Offset.Init();
             Offset.Value = EditObject.Offset;
             Offset.OnValueChanged += OffsetChanged;

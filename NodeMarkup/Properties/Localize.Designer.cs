@@ -543,6 +543,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a rail&apos;s first point or line as rail.
+        /// </summary>
+        public static string FillerEditor_InfoSelectRailFirst {
+            get {
+                return ResourceManager.GetString("FillerEditor_InfoSelectRailFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a rail&apos;s second point.
+        /// </summary>
+        public static string FillerEditor_InfoSelectRailSecond {
+            get {
+                return ResourceManager.GetString("FillerEditor_InfoSelectRailSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Chevron.
         /// </summary>
         public static string FillerStyle_Chevron {
@@ -1461,7 +1479,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Version 1.5 released.
+        ///   Ищет локализованную строку, похожую на Look for actual beta change log on Discord.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -2165,6 +2183,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на LOD distance.
+        /// </summary>
+        public static string Settings_LODDistance {
+            get {
+                return ResourceManager.GetString("Settings_LODDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Notifications.
         /// </summary>
         public static string Settings_Notifications {
@@ -2681,11 +2708,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Follow lines.
+        /// </summary>
+        public static string StyleOption_FollowLines {
+            get {
+                return ResourceManager.GetString("StyleOption_FollowLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invert.
         /// </summary>
         public static string StyleOption_Invert {
             get {
                 return ResourceManager.GetString("StyleOption_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left rail.
+        /// </summary>
+        public static string StyleOption_LeftRail {
+            get {
+                return ResourceManager.GetString("StyleOption_LeftRail", resourceCulture);
             }
         }
         
@@ -2776,6 +2821,15 @@ namespace NodeMarkup {
         public static string StyleOption_ParallelToLanes {
             get {
                 return ResourceManager.GetString("StyleOption_ParallelToLanes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right rail.
+        /// </summary>
+        public static string StyleOption_RightRail {
+            get {
+                return ResourceManager.GetString("StyleOption_RightRail", resourceCulture);
             }
         }
         
@@ -3360,20 +3414,21 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Segment #{0}
+        ///Click to edit markings.
+        /// </summary>
+        public static string Tool_InfoHoverSegment {
+            get {
+                return ResourceManager.GetString("Tool_InfoHoverSegment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Inverse order.
         /// </summary>
         public static string Tool_InfoInverseOrder {
             get {
                 return ResourceManager.GetString("Tool_InfoInverseOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a node to change markings.
-        /// </summary>
-        public static string Tool_InfoNode {
-            get {
-                return ResourceManager.GetString("Tool_InfoNode", resourceCulture);
             }
         }
         
@@ -3586,6 +3641,15 @@ namespace NodeMarkup {
         public static string Tool_RoadsWasChangedMessage {
             get {
                 return ResourceManager.GetString("Tool_RoadsWasChangedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a node or segment to change markings.
+        /// </summary>
+        public static string Tool_SelectInfo {
+            get {
+                return ResourceManager.GetString("Tool_SelectInfo", resourceCulture);
             }
         }
     }

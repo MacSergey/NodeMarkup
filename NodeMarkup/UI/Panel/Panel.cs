@@ -60,7 +60,7 @@ namespace NodeMarkup.UI.Panel
 
         public static void CreatePanel()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(CreatePanel)}");
+            Mod.Logger.Debug($"Create panel");
             UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
             Mod.Logger.Debug($"Panel created");
         }
@@ -98,7 +98,7 @@ namespace NodeMarkup.UI.Panel
         }
         public static void RemovePanel()
         {
-            Mod.Logger.Debug($"{nameof(NodeMarkupPanel)}.{nameof(RemovePanel)}");
+            Mod.Logger.Debug($"Remove panel");
             if (Instance != null)
             {
                 Instance.Hide();

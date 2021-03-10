@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using ModsCommon;
 using NodeMarkup.Manager;
+using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +34,13 @@ namespace NodeMarkup
 
             success &= PatchLoadAssetPanelOnLoad();
 
+            success &= PatchGeneratedScrollPanelCreateOptionPanel();
+
             if (Settings.RailUnderMarking)
+            {
                 success &= PatchNetInfoNodeInitNodeInfo();
+                success &= PatchNetInfoInitSegmentInfo();
+            }
 
             if (Settings.LoadMarkingAssets)
             {
@@ -154,11 +160,24 @@ namespace NodeMarkup
 
             return AddPostfix(postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
+        private bool PatchGeneratedScrollPanelCreateOptionPanel()
+        {
+            var postfix = AccessTools.Method(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix));
+
+            return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
+        }
+
         private bool PatchNetInfoNodeInitNodeInfo()
         {
-            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix));
 
             return AddPostfix(postfix, typeof(NetInfo), "InitNodeInfo");
+        }
+        private bool PatchNetInfoInitSegmentInfo()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitSegmentInfoPostfix));
+
+            return AddPostfix(postfix, typeof(NetInfo), "InitSegmentInfo");
         }
         private bool PatchLoadingManagerLoadCustomContent()
         {

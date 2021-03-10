@@ -39,7 +39,7 @@ namespace NodeMarkup.UI.Editors
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
-        private MarkupLineSelectPropertyPanel HoverPartEdgePanel { get; set; }
+        private RuleEdgeSelectPropertyPanel HoverPartEdgePanel { get; set; }
         private bool IsHoverPartEdgePanel => HoverPartEdgePanel != null;
         private RulePanel HoverRulePanel { get; set; }
         private bool IsHoverRulePanel => HoverRulePanel != null;
@@ -161,8 +161,8 @@ namespace NodeMarkup.UI.Editors
                 return true;
             }
         }
-        public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => SelectRuleEdge(selectPanel, null);
-        public bool SelectRuleEdge(MarkupLineSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
+        public bool SelectRuleEdge(RuleEdgeSelectPropertyPanel selectPanel) => SelectRuleEdge(selectPanel, null);
+        public bool SelectRuleEdge(RuleEdgeSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
         {
             if (Tool.Mode == PartEdgeToolMode && selectPanel == PartEdgeToolMode.SelectPanel)
             {
@@ -178,8 +178,8 @@ namespace NodeMarkup.UI.Editors
                 return false;
             }
         }
-        public void HoverRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
-        public void LeaveRuleEdge(MarkupLineSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
+        public void HoverRuleEdge(RuleEdgeSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
+        public void LeaveRuleEdge(RuleEdgeSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
         private void RuleMouseHover(RulePanel rulePanel, UIMouseEventParameter eventParam) => HoverRulePanel = rulePanel;
         private void RuleMouseLeave(RulePanel rulePanel, UIMouseEventParameter eventParam)
         {
@@ -210,7 +210,7 @@ namespace NodeMarkup.UI.Editors
                 if (IsHoverRulePanel)
                     HoverRulePanel.Rule.Render(cameraInfo, HoverAlpha, 2f);
 
-                if (IsHoverPartEdgePanel && HoverPartEdgePanel.SelectedObject is SupportPoint supportPoint)
+                if (IsHoverPartEdgePanel && HoverPartEdgePanel.Value is SupportPoint supportPoint)
                     supportPoint.Render(cameraInfo, Colors.Hover);
             }
         }
@@ -219,7 +219,7 @@ namespace NodeMarkup.UI.Editors
             GetRuleEdges();
             RefreshRulePanels();
         }
-        protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveConnect(line);
+        protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveLine(line);
         public void Refresh()
         {
             RefreshItem();
@@ -244,7 +244,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class PartEdgeToolMode : BasePanelMode<LinesEditor, MarkupLineSelectPropertyPanel, ILinePartEdge>
+    public class PartEdgeToolMode : BasePanelMode<LinesEditor, RuleEdgeSelectPropertyPanel, ILinePartEdge>
     {
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
@@ -262,7 +262,7 @@ namespace NodeMarkup.UI.Editors
             var info = SelectPanel?.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
-                EdgePosition.End => Localize.LineEditor_InfoSelectTo,
+                EdgePosition.End => NodeMarkupTool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.LineEditor_InfoSelectTo),
                 _ => string.Empty,
             };
 

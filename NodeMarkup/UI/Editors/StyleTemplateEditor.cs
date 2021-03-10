@@ -66,7 +66,11 @@ namespace NodeMarkup.UI.Editors
             base.OnClear();
             StyleProperties.Clear();
         }
-        private void AddStyleProperties() => StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, isTemplate: true);
+        private void AddStyleProperties()
+        {
+            StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, true);
+            SetStopScroll(StyleProperties);
+        }
 
         private void ToggleAsDefault()
         {

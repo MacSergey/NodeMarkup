@@ -34,27 +34,38 @@ namespace NodeMarkup.Tools
         {
             if (NodeMarkupTool.MouseRayValid)
             {
-                RaycastInput input = new RaycastInput(NodeMarkupTool.MouseRay, Camera.main.farClipPlane)
-                {
-                    m_ignoreTerrain = true,
-                    m_ignoreNodeFlags = InputExtension.OnlyShiftIsPressed ? NetNode.Flags.All : NetNode.Flags.None,
-                    m_ignoreSegmentFlags = NetSegment.Flags.None,
-                };
-                input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);
-                input.m_netService.m_service = ItemClass.Service.Road;
-
-                if (NodeMarkupTool.RayCast(input, out RaycastOutput output))
-                {
-                    HoverNodeId = output.m_netNode;
-                    HoverSegmentId = output.m_netSegment;
+                if (GetRayCast(ItemClass.Service.Road))
                     return;
-                }
+                if (GetRayCast(ItemClass.Service.PublicTransport))
+                    return;
             }
 
             HoverNodeId = 0;
             HoverSegmentId = 0;
         }
-        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : (IsHoverSegment ? $"Segment #{HoverSegmentId}\nClick to edit marking" : Localize.Tool_InfoNode);
+        private bool GetRayCast(ItemClass.Service service)
+        {
+            RaycastInput input = new RaycastInput(NodeMarkupTool.MouseRay, Camera.main.farClipPlane)
+            {
+                m_ignoreTerrain = true,
+                m_ignoreNodeFlags = InputExtension.OnlyShiftIsPressed ? NetNode.Flags.All : NetNode.Flags.None,
+                m_ignoreSegmentFlags = NetSegment.Flags.None,
+            };
+            input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);
+            input.m_netService.m_service = service;
+
+            if (NodeMarkupTool.RayCast(input, out RaycastOutput output))
+            {
+                HoverNodeId = output.m_netNode;
+                HoverSegmentId = output.m_netSegment;
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : (IsHoverSegment ? string.Format(Localize.Tool_InfoHoverSegment, HoverSegmentId) : Localize.Tool_SelectInfo);
 
         public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
@@ -67,6 +78,7 @@ namespace NodeMarkup.Tools
             else
                 return;
 
+            Mod.Logger.Debug($"Select marking {markup}");
             Tool.SetMarkup(markup);
 
             if (markup.NeedSetOrder)

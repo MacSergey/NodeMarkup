@@ -29,6 +29,7 @@ namespace NodeMarkup.Utils
                 { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), CreateSplitUVTexture(128,128)) },
             };
         }
+        public static Texture SurfaceTexture { get; } = TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127));
 
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         static int[] VerticesIdxs { get; } = new int[]
@@ -199,10 +200,33 @@ namespace NodeMarkup.Utils
 
     public interface IDrawData
     {
-        public void Draw(ushort id, RenderManager.Instance data);
+        public void Draw(RenderManager.Instance data);
     }
 
-    public class MarkupStyleDash
+    public enum MarkupLOD
+    {
+        LOD0,
+        LOD1
+    }
+    public class LodDictionary<Type> : Dictionary<MarkupLOD, Type>
+    {
+        protected virtual Type Default => default;
+        public LodDictionary()
+        {
+            Clear();
+        }
+        public new void Clear()
+        {
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                this[lod] = Default;
+        }
+    }
+    public class LodDictionaryArray<Type> : LodDictionary<Type[]>
+    {
+        protected override Type[] Default => new Type[0];
+    }
+
+    public class MarkupStylePart
     {
         public MaterialType MaterialType { get; set; }
         public Vector3 Position { get; set; }
@@ -211,7 +235,7 @@ namespace NodeMarkup.Utils
         public float Width { get; set; }
         public Color32 Color { get; set; }
 
-        public MarkupStyleDash(Vector3 position, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 position, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
         {
             Position = position;
             Angle = angle;
@@ -220,26 +244,26 @@ namespace NodeMarkup.Utils
             Color = color;
             MaterialType = materialType;
         }
-        public MarkupStyleDash(Vector3 start, Vector3 end, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, float angle, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this((start + end) / 2, angle, length, width, color, materialType) { }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this(start, end, dir.AbsoluteAngle(), length, width, color, materialType) { }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, Vector3 dir, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, Vector3 dir, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this(start, end, dir, (end - start).magnitude, width, color, materialType) { }
 
-        public MarkupStyleDash(Vector3 start, Vector3 end, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
+        public MarkupStylePart(Vector3 start, Vector3 end, float width, Color32 color, MaterialType materialType = MaterialType.RectangleLines)
             : this(start, end, end - start, (end - start).magnitude, width, color, materialType) { }
     }
-    public class MarkupStyleDashes : IStyleData, IEnumerable<MarkupStyleDash>
+    public class MarkupStyleParts : IStyleData, IEnumerable<MarkupStylePart>
     {
-        private List<MarkupStyleDash> Dashes { get; }
+        private List<MarkupStylePart> Dashes { get; }
 
-        public MarkupStyleDashes() => Dashes = new List<MarkupStyleDash>();
-        public MarkupStyleDashes(IEnumerable<MarkupStyleDash> dashes) => Dashes = dashes.ToList();
+        public MarkupStyleParts() => Dashes = new List<MarkupStylePart>();
+        public MarkupStyleParts(IEnumerable<MarkupStylePart> dashes) => Dashes = dashes.ToList();
 
-        public IEnumerator<MarkupStyleDash> GetEnumerator() => Dashes.GetEnumerator();
+        public IEnumerator<MarkupStylePart> GetEnumerator() => Dashes.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerable<IDrawData> GetDrawData() => RenderBatch.FromDashes(this);
@@ -257,16 +281,8 @@ namespace NodeMarkup.Utils
         protected Vector4 Scale { get; }
         protected MaterialType MaterialType { get; private set; }
 
-        protected Texture SurfaceTexA { get; }
-        protected Texture SurfaceTexB { get; }
-        protected Vector4 SurfaceMapping { get; }
-
         public MarkupStyleMesh()
         {
-            ItemsExtension.TerrainManager.GetSurfaceMapping(Position, out var surfaceTexA, out var surfaceTexB, out var surfaceMapping);
-            SurfaceTexA = surfaceTexA;
-            SurfaceTexB = surfaceTexB;
-            SurfaceMapping = surfaceMapping;
             Scale = new Vector4(0.5f / MeshHalfWidth, 0.5f / MeshHalfLength, 1f, 1f);
         }
         protected void Init(Vector3 position, Matrix4x4 left, Matrix4x4 right, MaterialType materialType)
@@ -277,7 +293,7 @@ namespace NodeMarkup.Utils
             MaterialType = materialType;
         }
 
-        public void Draw(ushort id, RenderManager.Instance data)
+        public void Draw(RenderManager.Instance data)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -286,17 +302,12 @@ namespace NodeMarkup.Utils
             instance.m_materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             instance.m_materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             instance.m_materialBlock.SetVector(instance.ID_MeshScale, Scale);
-            instance.m_materialBlock.SetVector(instance.ID_ObjectIndex, data.m_dataVector3);
-            instance.m_materialBlock.SetColor(instance.ID_Color, data.m_dataColor0);
+            //instance.m_materialBlock.SetVector(instance.ID_ObjectIndex, data.m_dataVector3);
+            //instance.m_materialBlock.SetColor(instance.ID_Color, data.m_dataColor0);
 
-            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, SurfaceTexA);
-            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, SurfaceTexB);
-            instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, SurfaceMapping);
+            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceTexture);
 
-            var mesh = Mesh;
-            var material = RenderHelper.MaterialLib[MaterialType];
-
-            Graphics.DrawMesh(mesh, Position, Quaternion.identity, material, 0, null, 0, instance.m_materialBlock);
+            Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 0, null, 0, instance.m_materialBlock);
         }
         public IEnumerable<IDrawData> GetDrawData()
         {
@@ -305,6 +316,11 @@ namespace NodeMarkup.Utils
             yield return this;
         }
         protected abstract Mesh GetMesh();
+        protected static IEnumerable<Vector3> FixNormals(Vector3[] normals, int from, int count)
+        {
+            for (var i = 0; i < normals.Length; i += 1)
+                yield return (i >= from && i < from + count ? -1 : 1) * normals[i];
+        }
     }
     public class MarkupStylePolygonMesh : MarkupStyleMesh
     {
@@ -313,12 +329,14 @@ namespace NodeMarkup.Utils
         private Vector3[] Vertices { get; }
         private int[] Triangles { get; }
         private Vector2[] UV { get; }
+        private int TopPoints { get; }
 
         public MarkupStylePolygonMesh(float height, float elevation, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType)
         {
             var vertices = points.ToList();
             var triangles = polygons.ToList();
             var uv = new List<Vector2>();
+            TopPoints = points.Length;
 
             var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
             var position = new Vector3(minMax.center.x, height, minMax.center.y);
@@ -402,6 +420,7 @@ namespace NodeMarkup.Utils
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
             };
             mesh.RecalculateNormals();
+            mesh.normals = FixNormals(mesh.normals, 0, TopPoints).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
@@ -425,6 +444,8 @@ namespace NodeMarkup.Utils
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
             };
             mesh.RecalculateNormals();
+            var lanePoints = (Split + 1) * 2;
+            mesh.normals = FixNormals(mesh.normals, 4 + lanePoints, lanePoints).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
@@ -533,14 +554,14 @@ namespace NodeMarkup.Utils
         protected override float MeshHalfWidth => HalfWidth * 2;
         protected override float MeshHalfLength => HalfLength;
 
-        public MarkupStyleLineMesh(ILineTrajectory trajectory, float width, float elevation, MaterialType materialType)
+        public MarkupStyleLineMesh(ITrajectory trajectory, float width, float elevation, MaterialType materialType)
         {
             var position = (trajectory.StartPosition + trajectory.EndPosition) / 2;
             CalculateMatrix(trajectory, width, position, out Matrix4x4 left, out Matrix4x4 right);
             position += Vector3.up * (elevation - Height);
             Init(position, left, right, materialType);
         }
-        private void CalculateMatrix(ILineTrajectory trajectory, float width, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
+        private void CalculateMatrix(ITrajectory trajectory, float width, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
         {
             var startNormal = trajectory.StartDirection.Turn90(true);
             startNormal.y = 0f;
@@ -585,7 +606,7 @@ namespace NodeMarkup.Utils
 
         public Vector4 Size { get; }
 
-        public RenderBatch(MarkupStyleDash[] dashes, int count, Vector3 size, MaterialType materialType)
+        public RenderBatch(MarkupStylePart[] dashes, int count, Vector3 size, MaterialType materialType)
         {
             MaterialType = materialType;
             Count = count;
@@ -606,7 +627,7 @@ namespace NodeMarkup.Utils
             Mesh = RenderHelper.CreateMesh(Count, size);
         }
 
-        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkupStyleDash> dashes)
+        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkupStylePart> dashes)
         {
             var materialGroups = dashes.GroupBy(d => d.MaterialType);
 
@@ -618,7 +639,7 @@ namespace NodeMarkup.Utils
                 {
                     var groupEnumerator = sizeGroup.GetEnumerator();
 
-                    var buffer = new MarkupStyleDash[16];
+                    var buffer = new MarkupStylePart[16];
                     var count = 0;
 
                     bool isEnd = groupEnumerator.MoveNext();
@@ -648,7 +669,7 @@ namespace NodeMarkup.Utils
 
         public override string ToString() => $"{Count}: {Size}";
 
-        public void Draw(ushort id, RenderManager.Instance data)
+        public void Draw(RenderManager.Instance data)
         {
             var instance = ItemsExtension.PropManager;
             var materialBlock = instance.m_materialBlock;

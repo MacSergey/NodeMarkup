@@ -26,6 +26,17 @@ namespace NodeMarkup.Manager
     }
     public abstract class Style : IToXml
     {
+        public static float DefaultDashLength => 1.5f;
+        public static float DefaultSpaceLength => 1.5f;
+        public static float DefaultDoubleOffset => 0.15f;
+
+        public static float DefaultSharkBaseLength => 0.5f;
+        public static float DefaultSharkSpaceLength => 0.5f;
+        public static float DefaultSharkHeight => 0.6f;
+
+        public static float Default3DWidth => 0.3f;
+        public static float Default3DHeigth => 0.3f;
+
         public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
@@ -102,13 +113,12 @@ namespace NodeMarkup.Manager
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
         {
-            //var colorVersion = config.GetAttrValue<int>("CV");
             Color.FromXml(config, DefaultColor);
             Width.FromXml(config, DefaultWidth);
         }
 
         public abstract Style Copy();
-        public virtual void CopyTo(Style target)
+        protected void CopyTo(Style target)
         {
             if (this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
                 widthTarget.Width.Value = widthSource.Width;
@@ -116,14 +126,14 @@ namespace NodeMarkup.Manager
                 colorTarget.Color.Value = colorSource.Color;
         }
 
-        public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, Action onHover = null, Action onLeave = null, bool isTemplate = false)
+        public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
             var components = new List<EditorItem>();
 
             if (this is IColorStyle)
                 components.Add(AddColorProperty(parent));
             if (this is IWidthStyle)
-                components.Add(AddWidthProperty(parent, onHover, onLeave));
+                components.Add(AddWidthProperty(parent));
 
             return components;
         }
@@ -131,52 +141,56 @@ namespace NodeMarkup.Manager
         {
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent);
             colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.WheelTip = Editor.WheelTip;
             colorProperty.Init();
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
+
             return colorProperty;
         }
-        protected FloatPropertyPanel AddWidthProperty(UIComponent parent, Action onHover, Action onLeave)
+        protected FloatPropertyPanel AddWidthProperty(UIComponent parent)
         {
             var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
+            widthProperty.WheelTip = Editor.WheelTip;
             widthProperty.CheckMin = true;
             widthProperty.MinValue = WidthMinValue;
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width.Value = value;
-            AddOnHoverLeave(widthProperty, onHover, onLeave);
 
             return widthProperty;
         }
-        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent)
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
+            dashLengthProperty.WheelTip = Editor.WheelTip;
             dashLengthProperty.CheckMin = true;
             dashLengthProperty.MinValue = 0.1f;
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
             dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
-            AddOnHoverLeave(dashLengthProperty, onHover, onLeave);
+
             return dashLengthProperty;
         }
-        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent)
         {
             var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
+            spaceLengthProperty.WheelTip = Editor.WheelTip;
             spaceLengthProperty.CheckMin = true;
             spaceLengthProperty.MinValue = 0.1f;
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
             spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
-            AddOnHoverLeave(spaceLengthProperty, onHover, onLeave);
+
             return spaceLengthProperty;
         }
         protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
@@ -193,14 +207,6 @@ namespace NodeMarkup.Manager
             }
 
             return buttonsPanel;
-        }
-        protected static void AddOnHoverLeave<ValueType, FieldType>(FieldPropertyPanel<ValueType, FieldType> fieldPanel, Action onHover, Action onLeave)
-            where FieldType : UITextField<ValueType>
-        {
-            if (onHover != null)
-                fieldPanel.OnHover += onHover;
-            if (onLeave != null)
-                fieldPanel.OnLeave += onLeave;
         }
 
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);
@@ -228,6 +234,11 @@ namespace NodeMarkup.Manager
         protected PropertyValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
         protected PropertyEnumValue<ChevronFillerStyle.From> GetStartingFromProperty(ChevronFillerStyle.From defaultValue) => new PropertyEnumValue<ChevronFillerStyle.From>("SF", StyleChanged, defaultValue);
         protected PropertyValue<float> GetElevationProperty(float defaultValue) => new PropertyValue<float>("E", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyValue<int>("LRA", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyValue<int>("LRB", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetRightRailAProperty(int defaultValue) => new PropertyValue<int>("RRA", StyleChanged, defaultValue);
+        protected PropertyValue<int> GetRightRailBProperty(int defaultValue) => new PropertyValue<int>("RRB", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetFollowLinesProperty(bool defaultValue) => new PropertyBoolValue("FL", StyleChanged, defaultValue);
 
         public enum StyleType
         {
@@ -343,5 +354,14 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
         }
+    }
+    public abstract class Style<StyleType> : Style
+        where StyleType : Style<StyleType>
+    {
+        public Style(Color32 color, float width) : base(color, width) { }
+
+        public virtual void CopyTo(StyleType target) => base.CopyTo(target);
+        public override sealed Style Copy() => CopyStyle();
+        public abstract StyleType CopyStyle();
     }
 }

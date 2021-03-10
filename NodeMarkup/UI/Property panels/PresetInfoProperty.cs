@@ -81,7 +81,7 @@ namespace NodeMarkup.UI
             Screenshot = AddUIComponent<CustomUITextureSprite>();
             Screenshot.material = Material;
             Screenshot.size = new Vector2(Size, Size);
-            Screenshot.relativePosition = new Vector2(0, 5);
+            Screenshot.relativePosition = new Vector2(ItemsPadding, 5);
         }
         private void AddNoScreenshot()
         {
@@ -178,7 +178,7 @@ namespace NodeMarkup.UI
         {
             if (Screenshot != null && Titles != null && Values != null)
             {
-                var space = Mathf.Max(width - Screenshot.width - Titles.width - Values.width, 0f) / 2;
+                var space = Mathf.Max(width - Screenshot.width - Screenshot.relativePosition.x - Titles.width - Values.width, 0f) / 2;
                 Values.relativePosition = new Vector2(width - Values.width - space, (height - Values.height) / 2);
                 Titles.relativePosition = new Vector2(Values.relativePosition.x - Titles.width, (height - Titles.height) / 2);
 
