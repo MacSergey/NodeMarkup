@@ -1379,9 +1379,20 @@ Shift X10, Ctrl X0.1</value>
     <value>Сегмент #{0}
 Нажмите для редактирования разметки</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>Следовать за линиями</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Левая направляющая</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Правая направляющая</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Выберете первую точку направляющей
+или линию в линию в качестве направляющей</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Выберете вторую точку направляющей</value>
+  </data>
 </root>
