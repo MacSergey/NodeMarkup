@@ -50,7 +50,7 @@ namespace NodeMarkup.Tools
             if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerClickStart;
             else if (Hover == Contour.First)
-                return GetCreateToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
+                return NodeMarkupTool.GetModifierToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
             else
                 return Localize.Tool_InfoFillerClickNext;
         }
