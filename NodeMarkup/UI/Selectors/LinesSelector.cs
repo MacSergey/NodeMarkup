@@ -41,7 +41,7 @@ namespace NodeMarkup.UI
                 line.Render(cameraInfo, Color, LineSize);
 
             if (renderHover && IsHoverLine)
-                HoverLine.Render(cameraInfo, Colors.White, LineSize + Space);
+                HoverLine.Render(cameraInfo, Colors.Hover, LineSize + Space);
         }
     }
 }

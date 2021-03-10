@@ -51,14 +51,7 @@ namespace NodeMarkup.Manager
         public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => Contour.Vertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
-        public void Update(bool onlySelfUpdate = false)
-        {
-            foreach (var part in Contour.Parts)
-            {
-                if (part.Line is MarkupEnterLine fakeLine)
-                    fakeLine.Update(true);
-            }
-        }
+        public void Update(bool onlySelfUpdate = false) => Contour.Update();
         public void RecalculateStyleData()
         {
 #if DEBUG

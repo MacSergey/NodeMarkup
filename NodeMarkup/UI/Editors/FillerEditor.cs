@@ -253,7 +253,7 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (!IsFirst)
-                LineSelector.Render(cameraInfo, !PointsSelector.IsHoverPoint);
+                LineSelector.Render(cameraInfo, !(PointsSelector.IsHoverGroup || PointsSelector.IsHoverPoint));
             PointsSelector.Render(cameraInfo);
         }
 

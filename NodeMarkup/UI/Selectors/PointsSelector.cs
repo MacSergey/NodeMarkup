@@ -16,7 +16,7 @@ namespace NodeMarkup.UI
     {
         private List<PointsGroup<PointType>> Groups { get; } = new List<PointsGroup<PointType>>();
         private PointsGroup<PointType> HoverGroup { get; set; }
-        private bool IsHoverGroup => HoverGroup != null;
+        public bool IsHoverGroup => HoverGroup != null;
         public PointType HoverPoint => HoverGroup?.HoverPoint;
         public bool IsHoverPoint => HoverPoint != null;
 

@@ -249,31 +249,17 @@ namespace NodeMarkup.Manager
         {
             point.Update();
 
-            var toRecalculate = new HashSet<IStyleItem>();
+            foreach (var line in GetPointLines(point))
+                line.Update();
 
-            if (recalcDependences)
-            {
-                foreach (var line in GetPointLines(point))
-                {
-                    line.Update();
-                    toRecalculate.Add(line);
-                }
+            foreach (var filler in GetPointFillers(point))
+                filler.Update();
 
-                foreach (var filler in GetPointFillers(point))
-                {
-                    filler.Update();
-                    toRecalculate.Add(filler);
-                }
-
-                foreach (var crosswalk in GetPointCrosswalks(point))
-                {
-                    crosswalk.Update();
-                    toRecalculate.Add(crosswalk);
-                }
-            }
+            foreach (var crosswalk in GetPointCrosswalks(point))
+                crosswalk.Update();
 
             if (recalculate && !UpdateProgress)
-                RecalculateStyleData(toRecalculate);
+                RecalculateAllStyleData();
         }
         public void Update(MarkupLine line, bool recalculate = false, bool recalcDependences = false)
         {

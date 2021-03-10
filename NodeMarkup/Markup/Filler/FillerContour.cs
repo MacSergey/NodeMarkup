@@ -222,6 +222,16 @@ namespace NodeMarkup.Manager
             }
 
         }
+        public void Update()
+        {
+            foreach (var part in LineParts)
+            {
+                if (part.Line is MarkupEnterLine fakeLine)
+                    fakeLine.Update(true);
+            }
+            //foreach(var vertex in Vertices)
+            //    vertex
+        }
 
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
