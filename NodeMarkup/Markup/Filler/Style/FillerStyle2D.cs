@@ -645,11 +645,27 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddFollowLinesProperty(this, parent));
-                components.Add(AddRailProperty(LeftRailA, LeftRailB, true, parent, Localize.StyleOption_LeftRail));
-                components.Add(AddRailProperty(RightRailA, RightRailB, false, parent, Localize.StyleOption_RightRail));
+                var followLines = AddFollowLinesProperty(this, parent);
+                var leftRail = AddRailProperty(LeftRailA, LeftRailB, true, parent, Localize.StyleOption_LeftRail);
+                var rightRail = AddRailProperty(RightRailA, RightRailB, false, parent, Localize.StyleOption_RightRail);
+                for (var i = 0; i < 20; i += 1)
+                    components.Add(AddRailProperty(RightRailA, RightRailB, false, parent, "Test"));
+
+                components.Add(followLines);
+                components.Add(leftRail);
+                components.Add(rightRail);
+
+                followLines.OnSelectObjectChanged += ChangeRailsVisible;
+                ChangeRailsVisible(followLines.SelectedObject);
+
+                void ChangeRailsVisible(bool followLines)
+                {
+                    leftRail.isVisible = followLines;
+                    rightRail.isVisible = followLines;
+                }
             }
         }
+
         protected static BoolListPropertyPanel AddFollowLinesProperty(StripeFillerStyle stripeStyle, UIComponent parent)
         {
             var followLinesProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
