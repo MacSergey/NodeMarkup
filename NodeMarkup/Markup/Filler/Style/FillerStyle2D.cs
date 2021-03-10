@@ -482,15 +482,6 @@ namespace NodeMarkup.Manager
             base.GetUIComponents(filler, components, parent, onHover, onLeave, isTemplate);
             components.Add(AddStepProperty(this, parent, onHover, onLeave));
         }
-        protected static IntListPropertyPanel AddRailProperty(PropertyValue<int> property, string label, UIComponent parent, int count)
-        {
-            var firstProperty = ComponentPool.Get<IntListPropertyPanel>(parent);
-            firstProperty.Text = label;
-            firstProperty.Init(count);
-            firstProperty.SelectedObject = property + 1;
-            firstProperty.OnSelectObjectChanged += (int value) => property.Value = value - 1;
-            return firstProperty;
-        }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
@@ -655,10 +646,6 @@ namespace NodeMarkup.Manager
             if (!isTemplate)
             {
                 components.Add(AddFollowLinesProperty(this, parent));
-                //components.Add(AddRailProperty(LeftRailA, Localize.StyleOption_LeftRail + " A", parent, filler.Contour.VertexCount));
-                //components.Add(AddRailProperty(LeftRailB, Localize.StyleOption_LeftRail + " B", parent, filler.Contour.VertexCount));
-                //components.Add(AddRailProperty(RightRailA, Localize.StyleOption_RightRail + " A", parent, filler.Contour.VertexCount));
-                //components.Add(AddRailProperty(RightRailB, Localize.StyleOption_RightRail + " B", parent, filler.Contour.VertexCount));
                 components.Add(AddRailProperty(LeftRailA, LeftRailB, true, parent, Localize.StyleOption_LeftRail));
                 components.Add(AddRailProperty(RightRailA, RightRailB, false, parent, Localize.StyleOption_RightRail));
             }

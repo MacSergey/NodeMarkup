@@ -47,24 +47,6 @@ namespace NodeMarkup.Tools
         public virtual void OnPrimaryMouseClicked(Event e) { }
         public virtual void OnSecondaryMouseClicked() { }
         public virtual void RenderOverlay(RenderManager.CameraInfo cameraInfo) { }
-
-        protected string GetCreateToolTip<StyleType>(string text)
-            where StyleType : Enum
-        {
-            var modifiers = GetStylesModifier<StyleType>().ToArray();
-            return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
-        }
-        protected IEnumerable<string> GetStylesModifier<StyleType>()
-            where StyleType : Enum
-        {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
-            {
-                var general = (Style.StyleType)(object)style;
-                var modifier = (StyleModifier)NodeMarkupTool.StylesModifier[general].value;
-                if (modifier != StyleModifier.NotSet)
-                    yield return $"{general.Description()} - {modifier.Description()}";
-            }
-        }
     }
 
     public enum ToolModeType

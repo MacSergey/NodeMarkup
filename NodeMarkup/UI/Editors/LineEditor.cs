@@ -262,7 +262,7 @@ namespace NodeMarkup.UI.Editors
             var info = SelectPanel?.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
-                EdgePosition.End => Localize.LineEditor_InfoSelectTo,
+                EdgePosition.End => NodeMarkupTool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.LineEditor_InfoSelectTo),
                 _ => string.Empty,
             };
 

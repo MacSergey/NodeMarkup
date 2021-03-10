@@ -665,6 +665,23 @@ namespace NodeMarkup.Tools
                 _ => StyleModifier.NotSet,
             };
         }
+        public static string GetModifierToolTip<StyleType>(string text)
+            where StyleType : Enum
+        {
+            var modifiers = GetStylesModifier<StyleType>().ToArray();
+            return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
+        }
+        public static IEnumerable<string> GetStylesModifier<StyleType>()
+            where StyleType : Enum
+        {
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
+            {
+                var general = (Style.StyleType)(object)style;
+                var modifier = (StyleModifier)NodeMarkupTool.StylesModifier[general].value;
+                if (modifier != StyleModifier.NotSet)
+                    yield return $"{general.Description()} - {modifier.Description()}";
+            }
+        }
 
         public static void GetCentreAndRadius(Markup markup, out Vector3 centre, out float radius)
         {
