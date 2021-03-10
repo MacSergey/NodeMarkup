@@ -20,7 +20,7 @@ namespace NodeMarkup.UI
             if (__result == null || templateName != RoadsOptionPanel)
                 return;
 
-            Mod.Logger.Debug($"Create buton");
+            Mod.Logger.Debug($"Create button");
             __result.component.AddUIComponent<NodeMarkupButton>();
             Mod.Logger.Debug($"Button created");
         }
