@@ -17,7 +17,7 @@ namespace NodeMarkup.UI
 
         public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result)
         {
-            if (__result == null || templateName != RoadsOptionPanel)
+            if (__result == null || templateName != RoadsOptionPanel || __result.component.Find<NodeMarkupButton>(nameof(NodeMarkupButton)) != null)
                 return;
 
             Mod.Logger.Debug($"Create button");
