@@ -229,8 +229,8 @@ namespace NodeMarkup.Manager
                 if (part.Line is MarkupEnterLine fakeLine)
                     fakeLine.Update(true);
             }
-            //foreach(var vertex in Vertices)
-            //    vertex
+            foreach (var supportPoint in SupportPoints)
+                supportPoint.Update();
         }
 
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
