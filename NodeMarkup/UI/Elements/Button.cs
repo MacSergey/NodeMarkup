@@ -11,16 +11,20 @@ namespace NodeMarkup.UI
 {
     public class NodeMarkupButton : UIButton
     {
-        const string CONTAINING_PANEL_NAME = "RoadsOptionPanel";
+        private static string RoadsOptionPanel => nameof(RoadsOptionPanel);
         private static int ButtonSize => 31;
         private static Vector2 ButtonPosition => new Vector3(64, 38);
-        public static NodeMarkupButton Instance { get; private set; }
 
-        static UIComponent GetContainingPanel()
+        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result)
         {
-            var ret = ModsCommon.UI.UIHelper.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, ModsCommon.UI.UIHelper.FindOptions.NameContains);
-            return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
+            if (__result == null || templateName != RoadsOptionPanel)
+                return;
+
+            Mod.Logger.Debug($"Create buton");
+            __result.component.AddUIComponent<NodeMarkupButton>();
+            Mod.Logger.Debug($"Button created");
         }
+
         public override void Start()
         {
             atlas = TextureUtil.Atlas;
@@ -48,24 +52,6 @@ namespace NodeMarkup.UI
                 state = ButtonState.Focused;
             else if (!enable && state == ButtonState.Focused)
                 state = ButtonState.Normal;
-        }
-        public static void CreateButton()
-        {
-            Mod.Logger.Debug($"Create buton");
-            Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
-            Mod.Logger.Debug($"Button created");
-        }
-        public static void RemoveButton()
-        {
-            Mod.Logger.Debug($"Remove button");
-
-            if (Instance != null)
-            {
-                GetContainingPanel().RemoveUIComponent(Instance);
-                Destroy(Instance);
-                Instance = null;
-                Mod.Logger.Debug($"Button removed");
-            }
         }
 
         protected override void OnClick(UIMouseEventParameter p)

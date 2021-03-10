@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using ModsCommon;
 using NodeMarkup.Manager;
+using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,8 @@ namespace NodeMarkup
             success &= PatchBuildingDecorationLoadPaths();
 
             success &= PatchLoadAssetPanelOnLoad();
+
+            success &= PatchGeneratedScrollPanelCreateOptionPanel();
 
             if (Settings.RailUnderMarking)
             {
@@ -157,6 +160,13 @@ namespace NodeMarkup
 
             return AddPostfix(postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
+        private bool PatchGeneratedScrollPanelCreateOptionPanel()
+        {
+            var postfix = AccessTools.Method(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix));
+
+            return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
+        }
+
         private bool PatchNetInfoNodeInitNodeInfo()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix));

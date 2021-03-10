@@ -78,7 +78,6 @@ namespace NodeMarkup.Tools
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
-        private NodeMarkupButton Button => NodeMarkupButton.Instance;
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
@@ -109,7 +108,6 @@ namespace NodeMarkup.Tools
                 { ToolModeType.PointsOrder, Instance.CreateToolMode<PointsOrderToolMode>()},
             };
 
-            NodeMarkupButton.CreateButton();
             NodeMarkupPanel.CreatePanel();
 
             enabled = false;
@@ -133,7 +131,6 @@ namespace NodeMarkup.Tools
         protected override void OnDestroy()
         {
             Mod.Logger.Debug($"Destroy tool");
-            NodeMarkupButton.RemoveButton();
             NodeMarkupPanel.RemovePanel();
             ComponentPool.Clear();
             base.OnDestroy();
