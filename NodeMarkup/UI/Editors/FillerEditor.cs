@@ -173,7 +173,6 @@ namespace NodeMarkup.UI.Editors
             {
                 var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B, HoverRailPanel.RailType);
                 rail.Render(cameraInfo, Colors.Hover);
-                NodeMarkupTool.RenderCircle(cameraInfo, rail.StartPosition, Color.black);
             }
         }
         private void RefreshItem() => SelectItem.Refresh();
