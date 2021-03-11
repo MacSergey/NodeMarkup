@@ -1262,9 +1262,7 @@ Shift x10，Ctrl x0.1</value>
     <value>-改善了加载错误弹窗信息
 -纠正及更新了翻译文档</value>
   </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>全部</value>
-  </data>
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>编辑段落 #{0} 的地标线</value>
   </data>
@@ -1293,15 +1291,21 @@ Shift x10，Ctrl x0.1</value>
     <value>段落 #{0}
 点击以编辑地标线</value>
   </data>
-  
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>垂直于边线</value>
+  </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>左边界</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
     <value>右边界</value>
   </data>
-  
-  
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>选择一条边线或者边线的一个端点</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>选择边线的第二个端点</value>
+  </data>
   
   
 </root>

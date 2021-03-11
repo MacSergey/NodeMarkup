@@ -1259,9 +1259,7 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
     <value>- Mejorados mensajes de errores al cargar datos de marcado.
 - Traducciones fijas y actualizadas.</value>
   </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>todos</value>
-  </data>
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar las marcas del segmento #{0}</value>
   </data>

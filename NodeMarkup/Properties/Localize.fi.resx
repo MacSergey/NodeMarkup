@@ -321,7 +321,9 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
     <value>Risteys #{0}
 Napauta muokataksesi merkintöjä</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Valitse risteys tai jaoke muokataksesi merkintöjä</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Valitse päätepiste viivalle tai pysäytysviivalle
 Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
@@ -751,7 +753,7 @@ poistaaksesi suojatien</value>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
-{0}n risteyksen merkintöjen lataus epäonnistui.</value>
+{0}:n risteyksen merkintöjen lataus epäonnistui.</value>
   </data>
   <data name="Mod_Support" xml:space="preserve">
     <value>Tuki</value>
@@ -1257,7 +1259,10 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
     <value>Tuntematon tekijä</value>
   </data>
   
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Tallennnuksen avaamisessa tapahtui virheitä.
+Kaikkien risteyksien merkintöjen lataus epäonnistui.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Muokkaa jaokkeen #{0} merkintöjä</value>
   </data>
@@ -1267,17 +1272,40 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Päällyste</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Korkeus</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Korkeus</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Ruoho</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Päällyste</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Yksityiskohtien piirtoetäisyys</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Jaoke #{0}
+Napauta muokataksesi merkintöjä</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Seuraa ratoja</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Vasen rata</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Oikea rata</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Valitse viiva tai radan ensimmäinen piste</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Valitse radan toinen piste</value>
+  </data>
   
   
 </root>

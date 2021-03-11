@@ -1309,9 +1309,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>- Informationen bei Ladefehlern korrigiert.
 - Lokalisierungen aktualisiert und verbessert.</value>
   </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>alle</value>
-  </data>
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Markierungen von Segment #{0} bearbeiten</value>
   </data>
@@ -1340,12 +1338,14 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>Segment #{0}
 Klicken um die Markierungen zu bearbeiten</value>
   </data>
-  
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Folge den Leitlinien</value>
+  </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linke Außenlinie</value>
+    <value>Linke Leitlinie</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Rechte Außenlinie</value>
+    <value>Rechte Leitlinie</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Wählen den Startpunkt oder eine Linie als Leitlinie aus</value>
@@ -1353,6 +1353,10 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Wähle den zweiten Punkt der Leitlinie</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>- Harmony Abhängigkeiten aktualisiert: Probleme mit anderen Mods gelöst</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>- Fehler behoben, bei dem Markierungen aus dem Speicherstand verschwanden</value>
+  </data>
 </root>
