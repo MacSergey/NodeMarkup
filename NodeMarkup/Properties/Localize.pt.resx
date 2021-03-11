@@ -1271,7 +1271,10 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
     <value>- Improve mensagens sobre erros no carregamento de dados.
 - Linguagens corrigidas e atualizadas.</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>O carregamento foi completado com erros.
+O carregamento de todas marcações falhou.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar marcações do segmento #{0}</value>
   </data>
@@ -1300,7 +1303,9 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
     <value>Segmento #{0}
 Clique para editar marcações</value>
   </data>
-  
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Seguir as linhas</value>
+  </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Carril esquerdo</value>
   </data>
@@ -1313,6 +1318,7 @@ Clique para editar marcações</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecione o segundo ponto do carril</value>
   </data>
+  
   
   
 </root>

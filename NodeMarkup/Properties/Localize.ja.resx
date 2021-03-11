@@ -1266,7 +1266,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>不明な作成者</value>
   </data>
   
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>マーキングが正常に描画されず、ロードエラーがありました。
+全ての交差点（ノード）で、マーキングの描画に失敗しました。</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} のセグメントを編集中</value>
   </data>
@@ -1310,6 +1313,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>終点側のラインやポイントを選択</value>
   </data>
+  
   
   
 </root>

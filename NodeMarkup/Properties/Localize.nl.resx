@@ -215,7 +215,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>Bewerk markering punt #{0}</value>
+    <value>Bewerk markering van knooppunt #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>punt</value>
@@ -321,7 +321,9 @@ De herstelde data zal alle bestaande markeringen vervangen.</value>
     <value>Punt #{0}
 Klik om de markering te wijzigen</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Selecteer een knooppunt of segment om markeringen te wijzigen</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Selecteer een eindpunt voor een normale lijn of stoplijn
 Sleep achter het punt voor een loodrechte lijn</value>
@@ -1181,13 +1183,13 @@ De herstelde presets zullen alle bestaande presets vervangen.</value>
     <value>Preset asset overschrijven</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Om de naam te hernoemen moet de asset overschreven worden. Doorgaan?</value>
+    <value>Om de naam te wijzigen moet het asset-bestand overschreven worden. Doorgaan?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
     <value>Sjabloon asset overschrijven</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Om de naam te hernoemen en de waardes te veranderen moet de asset overschreven worden. Doorgaan?</value>
+    <value>Om de naam en waardes te wijzigen moet het asset-bestand overschreven worden. Doorgaan?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Om zebrapad randen in te stellen moeten er lijnen zijn die starten vanaf dezelfde punten als het zebrapad</value>
@@ -1258,20 +1260,53 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
     <value>Onbekende auteur</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Er zijn fouten opgetreden tijdens het laden.
+Het laden van de markeringen is voor alle kruispunten mislukt.</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Bewerk segment #{0} markering</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Bestrating</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Hoogte</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Hoogte</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Bestrating</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Detail-niveau (LOD) afstand</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Klik om de markering te wijzigen</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Hulplijnen volgen</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Linker hulplijn</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Rechter hulplijn</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Selecteer beginpunt van de hulplijn, of kies een bestaande lijn als hulplijn</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Selecteer tweede punt van de hulplijn</value>
+  </data>
   
   
   

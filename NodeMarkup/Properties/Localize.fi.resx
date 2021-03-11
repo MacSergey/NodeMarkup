@@ -1308,4 +1308,15 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   
   
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>- Lisätty mahdollisuus tehdä merkintöjä jaokkeisiin.
+- Lisätty sulkualueiden 3D tyylit: "Päällyste" ja "Ruoho".
+- Lisätty viivan 3D tyyli: "Päällyste".
+- Lisätty mahdollisuus seurata ratoja sulkualueiden tyyleille "Raidat" ja "Chevron".
+- Suorituskykyä parannetty lisäämällä yksityiskohtien tasot merkinnöille. Yksityiskohtien piirtoetäisyyttä voi muuttaa asetuksissa.
+- Lisätty tuki lentokenttien rullausteille.
+- Korjattu ristiriitoja muiden modien kanssa, jotka voivat aiheuttaa työkalun napin katoamisen.
+- Korjattu ristiriita arvojen muuttamisen hiiren rullalla ja valikon rullaamisen välillä.
+- Nyt työkalun valikossa toimivat sekä pilkku että piste</value>
+  </data>
 </root>

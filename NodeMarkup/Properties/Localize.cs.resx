@@ -1262,7 +1262,10 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
     <value>- Zlepšení chybových zpráv o načítání dat.
 - Zlepšení lokalizací.</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Při načítání se vyskytly chyby.
+Nepodařilo se načíst značení pro všechny křižovatky.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Upravit značení silnice #{0}</value>
   </data>
@@ -1270,7 +1273,7 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
     <value>Tráva</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Beton</value>
+    <value>Chodník</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Vyvýšení</value>
@@ -1282,7 +1285,7 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
     <value>Tráva</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>Beton</value>
+    <value>Chodník</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
     <value>Vzdálenost vykreslování detailů</value>
@@ -1291,7 +1294,9 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
     <value>Silnice #{0}
 Klikněte pro změnu značení</value>
   </data>
-  
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Následovat koleje</value>
+  </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Levá kolej</value>
   </data>
@@ -1306,4 +1311,15 @@ Klikněte pro změnu značení</value>
   </data>
   
   
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>- Přidána možnost značení silnic a segmentů.
+- Přidány 3D výplně "Chodník" a "Tráva".
+- Přidána 3D čára "Chodník".
+- Přidána možnost sledovat koleje pro výplně "Pruhy" a "Lomené pruhy".
+- Přidáno nastavení Vzdálenost vykreslování detailů pro zvýšení výkonu.
+- Přidána podpora pro letištní dráhy.
+- Opraven konflikt s jinými mody kvůli kterému se nezobrazovalo tlačítko modu.
+- Opravena chyba se scrollováním a používáním kolečka myši pro změnu hodnot.
+- Při zadávání hodnot již není rozlišována tečka od čárky</value>
+  </data>
 </root>
