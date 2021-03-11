@@ -321,7 +321,9 @@ Os dados recuperados vão substituir todas as marcações existentes.</value>
     <value>Nó #{0}
 Clique para editar marcações</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Selecione um nó ou segmento para editar marcações</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Selecione um ponto próprio para uma linha normal ou de paragem
 Arraste para trás do ponto para uma linha perpendicular</value>
@@ -1284,14 +1286,35 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Elevação</value>
   </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Elevação</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Relva</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Pavimento</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Distancia LOD</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segmento #{0}
+Clique para editar marcações</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Carril esquerdo</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Carril direito</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Selecione o primeiro ponto do carril ou uma linha como um carril</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Selecione o segundo ponto do carril</value>
+  </data>
   
   
 </root>

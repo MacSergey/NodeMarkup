@@ -321,7 +321,9 @@ Původní data připíší všechna existující značení.</value>
     <value>Křižovatka #{0}
 Klikněte pro změnu značení</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Vyberte křižovatku nebo silnici pro změnu značení</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření čáry
 Táhněte za bod pro vytvoření kolmé čáry</value>
@@ -1284,11 +1286,26 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Beton</value>
   </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Vzdálenost vykreslování detailů</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Silnice #{0}
+Klikněte pro změnu značení</value>
+  </data>
   
-  
-  
-  
-  
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Levá kolej</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Pravá kolej</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Vyberte počáteční bod koleje nebo čáru jako kolej</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Vyberte koncový bod koleje</value>
+  </data>
   
   
 </root>

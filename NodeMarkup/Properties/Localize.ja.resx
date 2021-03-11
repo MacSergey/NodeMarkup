@@ -1297,14 +1297,18 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>セグメント #{0}
 クリックしてマーキングの編集</value>
   </data>
-  <data name="StyleOption_FollowLines" xml:space="preserve">
-    <value>ラインを基準に描画</value>
-  </data>
+  
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>始点（左側）の基準</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
     <value>終点（右側）の基準</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>始点側のラインやポイントを選択</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>終点側のラインやポイントを選択</value>
   </data>
   
   
