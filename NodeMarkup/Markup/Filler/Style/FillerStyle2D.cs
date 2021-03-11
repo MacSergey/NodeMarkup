@@ -30,11 +30,14 @@ namespace NodeMarkup.Manager
     }
     public interface IRailFiller : IFillerStyle
     {
-        PropertyValue<bool> FollowRails { get; }
         PropertyValue<int> LeftRailA { get; }
         PropertyValue<int> LeftRailB { get; }
         PropertyValue<int> RightRailA { get; }
         PropertyValue<int> RightRailB { get; }
+    }
+    public interface IFollowRailFiller : IRailFiller
+    {
+        PropertyValue<bool> FollowRails { get; }
     }
 
     public abstract class Filler2DStyle : FillerStyle
@@ -610,11 +613,9 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RightRailA { get; }
         public PropertyValue<int> LeftRailB { get; }
         public PropertyValue<int> RightRailB { get; }
-        public PropertyValue<bool> FollowRails { get; }
 
-        public RailFillerStyle(Color32 color, float width, float step, float medianOffset, bool followRails) : base(color, width, step, medianOffset)
+        public RailFillerStyle(Color32 color, float width, float step, float medianOffset) : base(color, width, step, medianOffset)
         {
-            FollowRails = GetFollowRailsProperty(followRails);
             LeftRailA = GetLeftRailAProperty(0);
             LeftRailB = GetLeftRailBProperty(1);
             RightRailA = GetRightRailAProperty(1);
@@ -627,7 +628,6 @@ namespace NodeMarkup.Manager
 
             if (target is IRailFiller railTarget)
             {
-                railTarget.FollowRails.Value = FollowRails;
                 railTarget.LeftRailA.Value = LeftRailA;
                 railTarget.LeftRailB.Value = LeftRailB;
                 railTarget.RightRailA.Value = RightRailA;
@@ -686,17 +686,19 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class StripeFillerStyle : RailFillerStyle, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public class StripeFillerStyle : RailFillerStyle, IFollowRailFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Offset { get; }
+        public PropertyValue<bool> FollowRails { get; }
 
-        public StripeFillerStyle(Color32 color, float width, float medianOffset, float angle, float step, float offset, bool followRails = false) : base(color, width, step, medianOffset, followRails)
+        public StripeFillerStyle(Color32 color, float width, float medianOffset, float angle, float step, float offset, bool followRails = false) : base(color, width, step, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             Offset = GetOffsetProperty(offset);
+            FollowRails = GetFollowRailsProperty(followRails);
         }
         public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultOffset, DefaultAngle, Step, Offset, FollowRails);
         public override void CopyTo(FillerStyle target)
@@ -708,6 +710,9 @@ namespace NodeMarkup.Manager
 
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
+
+            if (target is IFollowRailFiller followRailTarget)
+                followRailTarget.FollowRails.Value = FollowRails;
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -733,7 +738,7 @@ namespace NodeMarkup.Manager
 
                 followRails.OnSelectObjectChanged += ChangeRailsVisible;
                 ChangeRailsVisible(followRails.SelectedObject);
-                
+
                 turn.OnButtonClick += TurnClick;
 
                 void ChangeRailsVisible(bool followRails)
@@ -837,7 +842,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> Output { get; }
         public PropertyEnumValue<From> StartingFrom { get; }
 
-        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step) : base(color, width, step, medianOffset, false)
+        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step) : base(color, width, step, medianOffset)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
             Invert = GetInvertProperty(false);
@@ -857,6 +862,8 @@ namespace NodeMarkup.Manager
                 chevronTarget.Step.Value = Step;
                 chevronTarget.Invert.Value = Invert;
             }
+            if (target is IFollowRailFiller followRailTarget)
+                followRailTarget.FollowRails.Value = true;
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -965,7 +972,7 @@ namespace NodeMarkup.Manager
                 RightRailA.Value = Output;
                 RightRailB.Value = Output - 1;
             }
-            else if(StartingFrom == From.Edge)
+            else if (StartingFrom == From.Edge)
             {
                 RightRailA.Value = Output - 1;
                 RightRailB.Value = Output - 2;

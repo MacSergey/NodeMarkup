@@ -70,6 +70,7 @@ namespace NodeMarkup.Utils
                 nameof(Style.StyleType.LineDoubleDashed),
                 nameof(Style.StyleType.LineSolidAndDashed),
                 nameof(Style.StyleType.LineSharkTeeth),
+                nameof(Style.StyleType.LinePavement),
 
                 nameof(Style.StyleType.StopLineSolid),
                 nameof(Style.StyleType.StopLineDashed),
@@ -82,6 +83,8 @@ namespace NodeMarkup.Utils
                 nameof(Style.StyleType.FillerGrid),
                 nameof(Style.StyleType.FillerSolid),
                 nameof(Style.StyleType.FillerChevron),
+                nameof(Style.StyleType.FillerPavement),
+                nameof(Style.StyleType.FillerGrass),
 
                 nameof(Style.StyleType.CrosswalkExistent),
                 nameof(Style.StyleType.CrosswalkZebra),
