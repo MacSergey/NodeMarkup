@@ -1262,9 +1262,7 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
     <value>- Zlepšení chybových zpráv o načítání dat.
 - Zlepšení lokalizací.</value>
   </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>vše</value>
-  </data>
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Upravit značení silnice #{0}</value>
   </data>

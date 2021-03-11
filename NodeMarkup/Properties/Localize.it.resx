@@ -1224,9 +1224,7 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
     <value>Autore sconosciuto</value>
   </data>
   
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>tutto</value>
-  </data>
+  
   
   <data name="FillerStyle_Grass" xml:space="preserve">
     <value>Erba</value>

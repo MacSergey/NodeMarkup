@@ -414,7 +414,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите следующую точку контура</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Отступ от разделительной полосы</value>
+    <value>Отступ от раздел. полосы</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Копировать</value>
@@ -1349,7 +1349,8 @@ Shift X10, Ctrl X0.1</value>
 - Исправлены и обновлены переводы.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>всех</value>
+    <value>Загрузка завершилась с ошибками.
+Не удалось загрузить разметку для всех перекрестков.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Редактирование сегмента #{0}</value>
