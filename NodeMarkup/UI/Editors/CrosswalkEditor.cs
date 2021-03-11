@@ -53,9 +53,6 @@ namespace NodeMarkup.UI.Editors
             AddStyleTypeProperty();
             AddStyleProperties();
             SetEven();
-
-            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
         }
         protected override void OnClear()
         {
@@ -153,6 +150,8 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperties()
         {
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
+                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
             SetStopScroll(StyleProperties);
         }
 
