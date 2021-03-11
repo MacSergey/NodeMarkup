@@ -29,11 +29,11 @@ namespace NodeMarkup.Manager
         public static float StripeDefaultWidth => 0.5f;
         public static float DefaultAngleBetween => 90f;
         public static float DefaultElevation => 0.3f;
-        public static bool DefaultFollowLines => false;
+        public static bool DefaultFollowRails => false;
 
         static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowLines)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowRails)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},

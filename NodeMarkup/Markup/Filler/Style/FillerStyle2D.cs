@@ -30,6 +30,7 @@ namespace NodeMarkup.Manager
     }
     public interface IRailFiller : IFillerStyle
     {
+        PropertyValue<bool> FollowRails { get; }
         PropertyValue<int> LeftRailA { get; }
         PropertyValue<int> LeftRailB { get; }
         PropertyValue<int> RightRailA { get; }
@@ -609,9 +610,11 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RightRailA { get; }
         public PropertyValue<int> LeftRailB { get; }
         public PropertyValue<int> RightRailB { get; }
+        public PropertyValue<bool> FollowRails { get; }
 
-        public RailFillerStyle(Color32 color, float width, float step, float medianOffset) : base(color, width, step, medianOffset)
+        public RailFillerStyle(Color32 color, float width, float step, float medianOffset, bool followRails) : base(color, width, step, medianOffset)
         {
+            FollowRails = GetFollowRailsProperty(followRails);
             LeftRailA = GetLeftRailAProperty(0);
             LeftRailB = GetLeftRailBProperty(1);
             RightRailA = GetRightRailAProperty(1);
@@ -624,6 +627,7 @@ namespace NodeMarkup.Manager
 
             if (target is IRailFiller railTarget)
             {
+                railTarget.FollowRails.Value = FollowRails;
                 railTarget.LeftRailA.Value = LeftRailA;
                 railTarget.LeftRailB.Value = LeftRailB;
                 railTarget.RightRailA.Value = RightRailA;
@@ -687,25 +691,20 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerStripe;
 
         public PropertyValue<float> Angle { get; }
-        public PropertyValue<bool> FollowLines { get; }
         public PropertyValue<float> Offset { get; }
 
-        public StripeFillerStyle(Color32 color, float width, float medianOffset, float angle, float step, float offset, bool followLines) : base(color, width, step, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, float medianOffset, float angle, float step, float offset, bool followRails = false) : base(color, width, step, medianOffset, followRails)
         {
             Angle = GetAngleProperty(angle);
-            FollowLines = GetFollowLinesProperty(followLines);
             Offset = GetOffsetProperty(offset);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultOffset, DefaultAngle, Step, Offset, FollowLines);
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultOffset, DefaultAngle, Step, Offset, FollowRails);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
             if (target is IRotateFiller rotateTarget)
                 rotateTarget.Angle.Value = Angle;
-
-            if (target is StripeFillerStyle stripeTarget)
-                stripeTarget.FollowLines.Value = FollowLines;
 
             if (target is IOffsetFiller offsetTarget)
                 offsetTarget.Offset.Value = Offset;
@@ -723,25 +722,25 @@ namespace NodeMarkup.Manager
             {
                 var vertexCount = filler.Contour.VertexCount;
 
-                var followLines = AddFollowLinesProperty(parent);
+                var followRails = AddFollowRailsProperty(parent);
                 AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
                 var turn = AddTurnProperty(parent);
 
-                components.Add(followLines);
+                components.Add(followRails);
                 components.Add(leftRail);
                 components.Add(rightRail);
                 components.Add(turn);
 
-                followLines.OnSelectObjectChanged += ChangeRailsVisible;
-                ChangeRailsVisible(followLines.SelectedObject);
+                followRails.OnSelectObjectChanged += ChangeRailsVisible;
+                ChangeRailsVisible(followRails.SelectedObject);
                 
                 turn.OnButtonClick += TurnClick;
 
-                void ChangeRailsVisible(bool followLines)
+                void ChangeRailsVisible(bool followRails)
                 {
-                    leftRail.isVisible = followLines;
-                    rightRail.isVisible = followLines;
-                    turn.isVisible = followLines;
+                    leftRail.isVisible = followRails;
+                    rightRail.isVisible = followRails;
+                    turn.isVisible = followRails;
                 }
 
                 void TurnClick()
@@ -752,14 +751,14 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected BoolListPropertyPanel AddFollowLinesProperty(UIComponent parent)
+        protected BoolListPropertyPanel AddFollowRailsProperty(UIComponent parent)
         {
-            var followLinesProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
-            followLinesProperty.Text = Localize.StyleOption_FollowLines;
-            followLinesProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            followLinesProperty.SelectedObject = FollowLines;
-            followLinesProperty.OnSelectObjectChanged += (bool value) => FollowLines.Value = value;
-            return followLinesProperty;
+            var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
+            followRailsProperty.Text = Localize.StyleOption_FollowRails;
+            followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
+            followRailsProperty.SelectedObject = FollowRails;
+            followRailsProperty.OnSelectObjectChanged += (bool value) => FollowRails.Value = value;
+            return followRailsProperty;
         }
         protected static ButtonPanel AddTurnProperty(UIComponent parent)
         {
@@ -772,7 +771,7 @@ namespace NodeMarkup.Manager
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
-            if (FollowLines)
+            if (FollowRails)
             {
                 foreach (var rail in base.GetRails(filler, contour))
                     yield return rail;
@@ -785,7 +784,7 @@ namespace NodeMarkup.Manager
         }
         protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
-            var angle = FollowLines ? 90f - Angle : 90f;
+            var angle = FollowRails ? 90f - Angle : 90f;
             var width = Width.Value;
             GetItemParams(ref width, angle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
@@ -809,7 +808,7 @@ namespace NodeMarkup.Manager
 
         public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
-            if (FollowLines)
+            if (FollowRails)
                 base.Render(filler, cameraInfo, color, width, alphaBlend, cut);
         }
 
@@ -817,7 +816,7 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
             config.Add(Angle.ToXml());
-            config.Add(FollowLines.ToXml());
+            config.Add(FollowRails.ToXml());
             config.Add(Offset.ToXml());
             return config;
         }
@@ -825,7 +824,7 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map, invert);
             Angle.FromXml(config, DefaultAngle);
-            FollowLines.FromXml(config, DefaultFollowLines);
+            FollowRails.FromXml(config, DefaultFollowRails);
             Offset.FromXml(config, DefaultOffset);
         }
     }
@@ -838,7 +837,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> Output { get; }
         public PropertyEnumValue<From> StartingFrom { get; }
 
-        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step) : base(color, width, step, medianOffset)
+        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step) : base(color, width, step, medianOffset, false)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
             Invert = GetInvertProperty(false);

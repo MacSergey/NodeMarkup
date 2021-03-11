@@ -213,8 +213,7 @@ namespace NodeMarkup.Manager
         protected PropertyValue<float> GetWidthProperty(float defaultValue) => new PropertyValue<float>("W", StyleChanged, defaultValue);
         protected PropertyValue<float> GetOffsetProperty(float defaultValue) => new PropertyValue<float>("O", StyleChanged, defaultValue);
         protected PropertyValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyValue<float>("MO", StyleChanged, defaultValue);
-        protected string AlignmentLabel => "A";
-        protected PropertyEnumValue<LineStyle.StyleAlignment> GetAlignmentProperty(LineStyle.StyleAlignment defaultValue) => new PropertyEnumValue<LineStyle.StyleAlignment>(AlignmentLabel, StyleChanged, defaultValue);
+        protected PropertyEnumValue<LineStyle.StyleAlignment> GetAlignmentProperty(LineStyle.StyleAlignment defaultValue) => new PropertyEnumValue<LineStyle.StyleAlignment>("A", StyleChanged, defaultValue);
         protected PropertyValue<float> GetDashLengthProperty(float defaultValue) => new PropertyValue<float>("DL", StyleChanged, defaultValue);
         protected PropertyValue<float> GetSpaceLengthProperty(float defaultValue) => new PropertyValue<float>("SL", StyleChanged, defaultValue);
         protected PropertyBoolValue GetInvertProperty(bool defaultValue) => new PropertyBoolValue("I", StyleChanged, defaultValue);
@@ -238,7 +237,7 @@ namespace NodeMarkup.Manager
         protected PropertyValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyValue<int>("LRB", StyleChanged, defaultValue);
         protected PropertyValue<int> GetRightRailAProperty(int defaultValue) => new PropertyValue<int>("RRA", StyleChanged, defaultValue);
         protected PropertyValue<int> GetRightRailBProperty(int defaultValue) => new PropertyValue<int>("RRB", StyleChanged, defaultValue);
-        protected PropertyBoolValue GetFollowLinesProperty(bool defaultValue) => new PropertyBoolValue("FL", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetFollowRailsProperty(bool defaultValue) => new PropertyBoolValue("FR", StyleChanged, defaultValue);
 
         public enum StyleType
         {

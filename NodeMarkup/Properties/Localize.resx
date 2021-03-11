@@ -1378,8 +1378,8 @@ Are you sure you want to have multiple presets with the same name?</value>
     <value>Segment #{0}
 Click to edit markings</value>
   </data>
-  <data name="StyleOption_FollowLines" xml:space="preserve">
-    <value>Follow lines</value>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Follow rails</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Left rail</value>

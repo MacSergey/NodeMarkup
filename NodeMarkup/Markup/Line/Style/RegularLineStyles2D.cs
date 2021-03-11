@@ -259,7 +259,7 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
             Invert = GetInvertProperty(false);
             CenterSolid = GetCenterSolidProperty(false);
-            FakeAligment = new FakeAligmentProperty(AlignmentLabel, StyleChanged, GetAlignment, SetAlignment, StyleAlignment.Centre);
+            FakeAligment = new FakeAligmentProperty(string.Empty, StyleChanged, GetAlignment, SetAlignment, StyleAlignment.Centre);
         }
         private StyleAlignment GetAlignment() => CenterSolid ? (Invert ? StyleAlignment.Right : StyleAlignment.Left) : StyleAlignment.Centre;
         private void SetAlignment(StyleAlignment value)

@@ -1497,12 +1497,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-        ///- Added the ability to save templates and presets as asset and share it over Workshop.
-        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-        ///- Added panel tips (can be disable in settings).
-        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на Look for actual beta change log on Discord.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {
             get {
@@ -2731,11 +2726,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Follow lines.
+        ///   Ищет локализованную строку, похожую на Follow rails.
         /// </summary>
-        public static string StyleOption_FollowLines {
+        public static string StyleOption_FollowRails {
             get {
-                return ResourceManager.GetString("StyleOption_FollowLines", resourceCulture);
+                return ResourceManager.GetString("StyleOption_FollowRails", resourceCulture);
             }
         }
         
