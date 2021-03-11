@@ -1203,7 +1203,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на all.
+        ///   Ищет локализованную строку, похожую на Load was completed with errors.
+        ///Failed to load markings for all intersections..
         /// </summary>
         public static string Mod_LoadFailedAll {
             get {

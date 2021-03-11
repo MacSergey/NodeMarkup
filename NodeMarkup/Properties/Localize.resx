@@ -1348,7 +1348,8 @@ Are you sure you want to have multiple presets with the same name?</value>
 - Fix and update localizes.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>all</value>
+    <value>Load was completed with errors.
+Failed to load markings for all intersections.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Edit segment #{0} markings</value>

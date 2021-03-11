@@ -47,7 +47,7 @@ namespace NodeMarkup
             if (MarkupManager.HasLoadErrors)
             {
                 var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors > 0 ? (object)MarkupManager.LoadErrors : (object)Localize.Mod_LoadFailedAll);
+                messageBox.MessageText = MarkupManager.LoadErrors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors) : Localize.Mod_LoadFailedAll;
             }
         }
         private void ShowBetaWarning()
