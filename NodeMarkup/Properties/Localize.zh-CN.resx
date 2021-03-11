@@ -1293,15 +1293,15 @@ Shift x10，Ctrl x0.1</value>
     <value>段落 #{0}
 点击以编辑地标线</value>
   </data>
-  <data name="StyleOption_FollowLines" xml:space="preserve">
-    <value>遵循边界</value>
-  </data>
+  
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>左边界</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
     <value>右边界</value>
   </data>
+  
+  
   
   
 </root>

@@ -1340,14 +1340,18 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>Segment #{0}
 Klicken um die Markierungen zu bearbeiten</value>
   </data>
-  <data name="StyleOption_FollowLines" xml:space="preserve">
-    <value>Linien folgen</value>
-  </data>
+  
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Linke Außenlinie</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
     <value>Rechte Außenlinie</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Wählen den Startpunkt oder eine Linie als Leitlinie aus</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Wähle den zweiten Punkt der Leitlinie</value>
   </data>
   
   

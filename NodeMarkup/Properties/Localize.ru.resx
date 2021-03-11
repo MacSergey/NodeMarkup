@@ -414,7 +414,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите следующую точку контура</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Отступ от разд. полосы</value>
+    <value>Отступ от разделительной полосы</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Копировать</value>
@@ -1379,8 +1379,8 @@ Shift X10, Ctrl X0.1</value>
     <value>Сегмент #{0}
 Нажмите для редактирования разметки</value>
   </data>
-  <data name="StyleOption_FollowLines" xml:space="preserve">
-    <value>Следовать за линиями</value>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Следовать за направляющими</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Левая направляющая</value>
@@ -1390,9 +1390,11 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Выберете первую точку направляющей
-или линию в линию в качестве направляющей</value>
+или линию в качестве направляющей</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Выберете вторую точку направляющей</value>
   </data>
+  
+  
 </root>

@@ -1378,8 +1378,8 @@ Are you sure you want to have multiple presets with the same name?</value>
     <value>Segment #{0}
 Click to edit markings</value>
   </data>
-  <data name="StyleOption_FollowLines" xml:space="preserve">
-    <value>Follow lines</value>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Follow rails</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Left rail</value>
@@ -1392,5 +1392,11 @@ Click to edit markings</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Select a rail's second point</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>- Update Harmony dependence: resolving conflicts with others mods that use it</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>- Fixed a situation where markings could disappear from saving</value>
   </data>
 </root>
