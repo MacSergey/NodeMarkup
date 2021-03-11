@@ -406,7 +406,7 @@ namespace NodeMarkup.Tools
         {
             Mod.Logger.Debug($"Paste marking");
 
-            if (Settings.DeleteWarnings)
+            if (Settings.DeleteWarnings && !Markup.IsEmpty)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaprionText = Localize.Tool_PasteMarkingsCaption;

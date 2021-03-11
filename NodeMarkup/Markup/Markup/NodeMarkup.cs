@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class NodeMarkup : Markup<NodeEnter>, ISupportCrosswalks, ISupportIntersectionTemplate
+    public class NodeMarkup : Markup<NodeEnter>, ISupportCrosswalks
     {
         public static string XmlName { get; } = "M";
 

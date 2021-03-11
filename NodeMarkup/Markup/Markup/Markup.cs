@@ -55,7 +55,7 @@ namespace NodeMarkup.Manager
     {
         IEnumerable<IDrawData> GetDrawData();
     }
-    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportEnters, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, IToXml
+    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportEnters, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, ISupportIntersectionTemplate, IToXml
     {
         #region PROPERTIES
         public abstract MarkupType Type { get; }
