@@ -321,6 +321,6 @@
   <Target Name="AfterBuildRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
     <RemoveDir Directories="$(WorkshopDir)" />
     <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-    <Copy SourceFiles="$(ProjectDir)Resources\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
+    <Copy SourceFiles="$(ProjectDir)..\Workshop\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
   </Target>
 </Project>
