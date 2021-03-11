@@ -1400,4 +1400,15 @@ Click to edit markings</value>
   <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
     <value>- Fixed a situation where markings could disappear from saving</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>- Added the ability to make markings on segments.
+- Added filler 3D styles: "Pavement" and "Grass".
+- Added line 3D style: "Pavement".
+- Added the ability follow rails to filler styles "Stripes" and "Chevron".
+- Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
+- Added support taxiways.
+- Fixed a conflict with other mods that could cause the tool button to not appear.
+- Fixed a conflict with scroll panel and scroll wheel to change values.
+- Now there is no difference that you enter a dot or a comma in the properties value field</value>
+  </data>
 </root>

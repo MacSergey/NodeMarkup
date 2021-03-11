@@ -1498,6 +1498,23 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added the ability to make markings on segments.
+        ///- Added filler 3D styles: &quot;Pavement&quot; and &quot;Grass&quot;.
+        ///- Added line 3D style: &quot;Pavement&quot;.
+        ///- Added the ability follow rails to filler styles &quot;Stripes&quot; and &quot;Chevron&quot;.
+        ///- Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
+        ///- Added support taxiways.
+        ///- Fixed a conflict with other mods that could cause the tool button to not appear.
+        ///- Fixed a conflict with scroll panel and scroll wheel to change values.
+        ///- Now  [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_6 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Look for actual beta change log on Discord.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {

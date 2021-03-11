@@ -33,6 +33,7 @@ namespace NodeMarkup
         public override string Id => nameof(NodeMarkup);
         protected override List<Version> ModVersions { get; } = new List<Version>
         {
+            new Version("1.6"),
             new Version("1.5.3"),
             new Version("1.5.2"),
             new Version("1.5.1"),
