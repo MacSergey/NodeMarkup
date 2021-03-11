@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Tools;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
 using System;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IItem, IToXml
+    public class MarkupCrosswalk : IStyleItem, IToXml
     {
         #region PROPERTIES
 
@@ -23,7 +24,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine Line { get; }
 
-        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
+        public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
         public MarkupEnterLine EnterLine { get; private set; }
 
         MarkupRegularLine _rightBorder;
@@ -60,10 +61,10 @@ namespace NodeMarkup.Manager
         }
         private StraightTrajectory DefaultRightBorderTrajectory => new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
         private StraightTrajectory DefaultLeftBorderTrajectory => new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
-        public ILineTrajectory RightBorderTrajectory { get; private set; }
-        public ILineTrajectory LeftBorderTrajectory { get; private set; }
+        public ITrajectory RightBorderTrajectory { get; private set; }
+        public ITrajectory LeftBorderTrajectory { get; private set; }
 
-        public ILineTrajectory[] BorderTrajectories => new ILineTrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
+        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
 
         public float TotalWidth => Style.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
@@ -94,7 +95,7 @@ namespace NodeMarkup.Manager
             EnterLine = new MarkupEnterLine(Markup, startPoint, endPoint);
         }
 
-        protected void CrosswalkChanged() => Markup.Update(this, true);
+        protected void CrosswalkChanged() => Markup.Update(this, true, true);
 
         public void Update(bool onlySelfUpdate = false)
         {
@@ -102,7 +103,15 @@ namespace NodeMarkup.Manager
             if(!onlySelfUpdate)
                 Markup.Update(this);
         }
-        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(Style.Calculate(this));
+        public void RecalculateStyleData()
+        {
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate crosswalk {this}");
+#endif
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                RecalculateStyleData(lod);
+        }
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = new MarkupStyleParts(Style.Calculate(this, lod));
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             foreach (var trajectory in BorderTrajectories)
@@ -126,7 +135,7 @@ namespace NodeMarkup.Manager
 
             return (StraightTrajectory)trajectory.Cut(startT, endT);
         }
-        private ILineTrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
+        private ITrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
         {
             if (border != null && MarkupIntersect.CalculateSingle(trajectory, border.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
             {
@@ -161,7 +170,7 @@ namespace NodeMarkup.Manager
         private float MinAggregate(MarkupIntersect[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
         private float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
 
-        private float GetT(StraightTrajectory trajectory, ILineTrajectory lineTrajectory, float defaultT)
+        private float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
             => MarkupIntersect.CalculateSingle(trajectory, lineTrajectory) is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
 
         private float GetT(StraightTrajectory trajectory, Vector3 normal, IEnumerable<Vector3> positions, float defaultT, Func<MarkupIntersect[], float> aggregate)
@@ -201,7 +210,7 @@ namespace NodeMarkup.Manager
         {
             _rightBorder = GetBorder(map.IsMirror ? "LB" : "RB");
             _leftBorder = GetBorder(map.IsMirror ? "RB" : "LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, out CrosswalkStyle style))
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Style<CrosswalkStyle>.FromXml(styleConfig, map, false, out CrosswalkStyle style))
             {
                 _style = style;
                 _style.OnStyleChanged = CrosswalkChanged;

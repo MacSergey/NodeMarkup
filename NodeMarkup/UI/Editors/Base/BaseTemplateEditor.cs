@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
@@ -79,6 +80,7 @@ namespace NodeMarkup.UI.Editors
             AddAdditional();
 
             SetEditable();
+            SetEven();
         }
         private void ReloadAdditionalProperties()
         {
@@ -244,9 +246,9 @@ namespace NodeMarkup.UI.Editors
                 var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
                 messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
                 messageBox.MessageText = SaveChangesMessage;
-                messageBox.Button1Text = MessageBoxBase.Yes;
-                messageBox.Button2Text = MessageBoxBase.No;
-                messageBox.Button3Text = MessageBoxBase.Cancel;
+                messageBox.Button1Text = NodeMarkupMessageBox.Yes;
+                messageBox.Button2Text = NodeMarkupMessageBox.No;
+                messageBox.Button3Text = NodeMarkupMessageBox.Cancel;
                 messageBox.OnButton1Click = OnSave;
                 messageBox.OnButton2Click = OnNotSave;
             }

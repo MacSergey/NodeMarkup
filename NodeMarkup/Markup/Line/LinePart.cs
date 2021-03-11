@@ -56,7 +56,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool GetTrajectory(out ILineTrajectory bezier)
+        public bool GetTrajectory(out ITrajectory bezier)
         {
             var succes = false;
             succes |= GetFromT(out float from);
@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
         }
         public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
-            if (GetTrajectory(out ILineTrajectory trajectory))
+            if (GetTrajectory(out ITrajectory trajectory))
                 trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
         }
 

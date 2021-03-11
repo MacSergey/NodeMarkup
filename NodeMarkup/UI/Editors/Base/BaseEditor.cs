@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
@@ -22,6 +24,7 @@ namespace NodeMarkup.UI.Editors
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public NodeMarkupPanel Panel { get; private set; }
         protected Markup Markup => Panel.Markup;
+        public abstract Type SupportType { get; }
 
         protected UIScrollablePanel ItemsPanel { get; set; }
         protected UIScrollablePanel ContentPanel { get; set; }
@@ -37,6 +40,8 @@ namespace NodeMarkup.UI.Editors
         public abstract string Name { get; }
         public abstract string EmptyMessage { get; }
 
+        public static string WheelTip => Settings.ShowToolTip ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
+
         public virtual bool Active
         {
             set
@@ -49,7 +54,7 @@ namespace NodeMarkup.UI.Editors
         public Editor()
         {
             clipChildren = true;
-            atlas = TextureUtil.InGameAtlas;
+            atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
@@ -66,7 +71,7 @@ namespace NodeMarkup.UI.Editors
             panel.builtinKeyNavigation = true;
             panel.clipChildren = true;
 
-            panel.atlas = TextureUtil.InGameAtlas;
+            panel.atlas = TextureHelper.InGameAtlas;
             panel.backgroundSprite = background;
 
             this.AddScrollbar(panel);
@@ -154,6 +159,24 @@ namespace NodeMarkup.UI.Editors
 
         public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
         public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
+
+        public void SetEven(UIComponent component)
+        {
+            var even = true;
+            foreach (var item in component.components.OfType<EditorItem>().Where(c => c.SupportEven))
+            {
+                item.IsEven = even;
+                even = !even;
+            }
+        }
+        public void SetStopScroll(IEnumerable<EditorItem> items)
+        {
+            foreach (var item in items.OfType<IWheelChangeable>())
+            {
+                item.OnStartWheel += StopScroll;
+                item.OnStopWheel += StartScroll;
+            }
+        }
     }
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor, IEditor<EditableObject>
         where EditableItemType : EditableItem<EditableObject, ItemIcon>
@@ -393,5 +416,6 @@ namespace NodeMarkup.UI.Editors
             foreach (var item in ItemsPanel.components.OfType<EditableItemType>())
                 item.Refresh();
         }
+        protected void SetEven() => SetEven(PropertiesPanel);
     }
 }

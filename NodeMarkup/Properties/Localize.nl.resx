@@ -121,7 +121,7 @@
     <value>Verwijder {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Wil je {0} {1} echt verwijderen?</value>
+    <value>Wil je {0} "{1}" echt verwijderen?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scroll het wiel om te veranderen
@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Bewerk markering punt #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -318,22 +318,17 @@ De herstelde data zal alle bestaande markeringen vervangen.</value>
     <value>Klik om de lijn te verwijderen</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Punt #{0}</value>
+    <value>Punt #{0}
+Klik om de markering te wijzigen</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Selecteer punt om markering te wijzigen</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selecteer eindpunt
-+Shift - Ononderbroken
-+Ctrl - Dubbel</value>
+    <value>Selecteer een eindpunt voor een normale lijn of stoplijn
+Sleep achter het punt voor een loodrechte lijn</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
-een lijn te creëren of te verwijderen
-+Ctrl om een punt te verplaatsen
-Houd Alt ingedrukt om een opvulling te creëren
-Houd Shift ingedrukt om een zebrapad te creëren</value>
+een lijn te creëren of te verwijderen</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Wat is er nieuw in {0}</value>
@@ -466,7 +461,7 @@ Houdt Alt ingedrukt of klik {0} om een opvulling te maken.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>De lijst met sjablonen is leeg.
-Klik «{0}» bij de lijnstijl om een sjabloon te maken.</value>
+Klik «{0}» bij de lijn-, zebrapad- of opvuliingstijl om een sjabloon te maken.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activeren met sleutel</value>
@@ -575,7 +570,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Duits</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Engels</value>
+    <value>Engels VS</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spaans</value>
@@ -611,9 +606,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
     <value>Taal</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klik om een loodrechte lijn te maken
-+Shift - Niet onderbroken
-+Ctrl - Dubbel</value>
+    <value>Klik om een loodrechte lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klik om de loodrechte lijn te verwijderen</value>
@@ -1062,7 +1055,7 @@ Wil je de markering handmatig toepassen?</value>
     <value>Snelle zebrapad randen setup</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Markeringen onder rails (Vereist herstart)</value>
+    <value>Markeringen onder spoor</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>
@@ -1264,6 +1257,20 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Onbekende auteur</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 </root>

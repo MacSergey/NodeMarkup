@@ -21,7 +21,7 @@ namespace NodeMarkup.Utils
     {
         public override void OnLoadData()
         {
-            Logger.LogDebug($"Start load map data");
+            Mod.Logger.Debug($"Start load map data");
 
             if (serializableDataManager.LoadData(Loader.Id) is byte[] data)
             {
@@ -30,45 +30,45 @@ namespace NodeMarkup.Utils
                     var sw = Stopwatch.StartNew();
 
                     var decompress = Loader.Decompress(data);
-#if DEBUG
-                    Logger.LogDebug(decompress);
+#if BETA
+                    Mod.Logger.Debug(decompress);
 #endif
                     var config = Loader.Parse(decompress);
                     MarkupManager.FromXml(config, new ObjectsMap());
 
                     sw.Stop();
-                    Logger.LogDebug($"Map data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
+                    Mod.Logger.Debug($"Map data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
                 }
                 catch(Exception error)
                 {
-                    Logger.LogError("Could not load map data", error);
+                    Mod.Logger.Error("Could not load map data", error);
                     MarkupManager.SetFiled();
                 }
             }
             else
-                Logger.LogDebug($"Saved map data not founded");
+                Mod.Logger.Debug($"Saved map data not founded");
         }
         public override void OnSaveData()
         {
-            Logger.LogDebug($"Start save map data");
+            Mod.Logger.Debug($"Start save map data");
 
             string config = string.Empty;
             try
             {
                 var sw = Stopwatch.StartNew();
                 config = Loader.GetString(MarkupManager.ToXml());
-#if DEBUG
-            Logger.LogDebug(config);
+#if BETA
+                Mod.Logger.Debug(config);
 #endif
                 var compress = Loader.Compress(config);
                 serializableDataManager.SaveData(Loader.Id, compress);
 
                 sw.Stop();
-                Logger.LogDebug($"Map data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
+                Mod.Logger.Debug($"Map data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
             }
             catch(Exception error)
             {
-                Logger.LogError("Save map data failed", error);
+                Mod.Logger.Error("Save map data failed", error);
                 Loader.SaveToFile(Loader.MarkingName, config, out _);
                 throw;
             }

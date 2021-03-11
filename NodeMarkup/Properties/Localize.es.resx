@@ -121,7 +121,7 @@
     <value>Eliminar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar {0} {1}?</value>
+    <value>¿De verdad quieres eliminar {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Desplazar la rueda para cambiar
@@ -214,7 +214,7 @@ Mayús x10, Ctrl x0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>¡Esta es una versión BETA, pueden ocurrir errores y no se garantiza la estabilidad!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Editar las marcas del node #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -321,20 +321,13 @@ Los datos restaurados reemplazarán todas las marcas existentes.</value>
     <value>Nodo #{0}
 Haga clic para editar las marcas</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Seleccione un nodo para editar las marcas</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccione el punto final
-+Mayús - Continua
-+Ctrl - Doble</value>
+    <value>Seleccionar punto final para línea normal o transversal
+Arrastre detrás del punto para línea perpendicular</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione el punto para
-crear o eliminar la línea
-+Ctrl para mover el punto
-Mantenga Alt para crear un relleno
-Mantenga Mayús para crear un paso de peatones</value>
+    <value>Seleccione el punto para crear o eliminar la línea</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Novedades de {0}</value>
@@ -467,7 +460,7 @@ Para crear un relleno, mantenga Alt o presione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista de plantillas está vacía.
-Para crear una plantilla, haga clic en «{0}» en el estilo de línea.</value>
+Para crear una plantilla, haga clic en «{0}» en el estilo de línea, paso de peatones o relleno.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar con clave</value>
@@ -576,7 +569,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Alemán</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglés</value>
+    <value>Inglés EEUU</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Español</value>
@@ -612,9 +605,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
     <value>Idioma</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Haga clic para crear una línea perpendicular
-+Mayús - Continua
-+Ctrl - Doble</value>
+    <value>Haga clic para crear una línea perpendicular</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Haga clic para eliminar la línea perpendicular</value>
@@ -1062,7 +1053,7 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Configuración rápida de bordes del paso de peatones</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Las marcas debajo del carril (Se aplica después del reinicio)</value>
+    <value>Las marcas debajo del carril</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
@@ -1184,24 +1175,102 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="Mod_Locale_en-gb" xml:space="preserve">
     <value>Inglés Reino Unido</value>
   </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Reescribir recurso de preajuste</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Para cambiar su nombre, es necesario reescribir el archivo de recursos. ¿Seguir?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Reescribir recurso de plantilla</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Para cambiar su nombre y valores, es necesario reescribir el archivo de recursos. ¿Seguir?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Para poder establecer los bordes del paso de peatones, debe tener líneas que comienzan desde los mismos puntos que el paso de peatones</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Debe tener líneas que se crucen con esta línea para poder cambiar los puntos "Desde" y "Hasta" de la regla y crear reglas adicionales.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Mostrar sugerencias en el panel</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Guardar los cambios</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>No guarde los cambios</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Anular</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>¿Quieres guardar el cambio del nombre del preajuste?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Guardar los cambios</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>¿Quieres guardar los cambios en los valores de la plantilla?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>El nombre "{0}" ya lo utiliza otro preajuste.
+¿Está seguro de que desea tener varios preajustes con el mismo nombre?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Solo se puede eliminar del administrador de contenido del juego.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Este preajusto no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Este preajusto es un recurso.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Solo se puede eliminar del administrador de contenido del juego.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Esta plantilla no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Esta plantilla es un recurso.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>preajusto</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>preajusto</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Este tipo de línea no apoya reglas</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>No corte línea por paso de peatones si es su confine</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Autor desconocido</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Mejorados mensajes de errores al cargar datos de marcado.
+- Traducciones fijas y actualizadas.</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>todos</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Editar las marcas del segmento #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Césped</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Acera</value>
+  </data>
   
   
   

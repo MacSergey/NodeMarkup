@@ -121,7 +121,7 @@
     <value>Apagar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo apagar {0} {1}?</value>
+    <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Faça scroll para mudar
@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Isto é uma versão BETA, podem ocorrer erros e não é garantida a estabilidade!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Editar marcações do nó #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -251,7 +251,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Exportar dados de marcações para um ficheiro</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Copiar caminho para área de transferência</value>
+    <value>Copiar caminho para a área de transferência</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Exportar dados das marcações</value>
@@ -321,20 +321,13 @@ Os dados recuperados vão substituir todas as marcações existentes.</value>
     <value>Nó #{0}
 Clique para editar marcações</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Seleccione um nó para editar marcações</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar ponto final
-+Shift - Sólida
-+Ctrl - Dupla</value>
+    <value>Selecione um ponto próprio para uma linha normal ou de paragem
+Arraste para trás do ponto para uma linha perpendicular</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione um ponto para
-criar ou remover a uma linha
-+Ctrl para mover o ponto
-Prima Alt para criar um preenchimento
-Prima Shift para criar uma passadeira</value>
+    <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>O que há de novo em {0}</value>
@@ -477,7 +470,7 @@ Para criar um preenchimento mantenha Alt premido ou pressione {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>A lista de modelos está vazia.
-Para criar um modelo, clique «{0}» no estilo da linha ou preenchimento.</value>
+Para criar um modelo, clique «{0}» no estilo da linha, da passadeira ou do preenchimento.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activar com chave</value>
@@ -586,7 +579,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
     <value>Alemão</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglês</value>
+    <value>Inglês EUA</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanhol</value>
@@ -623,8 +616,8 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clique para criar uma linha perpendicular
-+ Shift - Solid
-+ Ctrl - Double</value>
++ Shift - Solida
++ Ctrl - Dupla</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
@@ -1193,16 +1186,16 @@ As predefinições recuperadas vão substituir todas as predefinições existent
     <value>Inglês RU</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Sobrepor predefinição asset</value>
+    <value>Reescrever a predefinição asset</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Para modificar o nome requer sobrepor o asset. Continuar?</value>
+    <value>Para modificar o nome requer reescrever o ficheiro asset. Continuar?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Sobrepor predefinição asset</value>
+    <value>Reescrever predefinição asset</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Para modificar o nome e valores requer sobrepor o asset. Continuar?</value>
+    <value>Para modificar o nome e valores requer reescrever o ficheiro do asset. Continuar?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Para ser capaz de definir bordas na passadeira, precisa de ter linhas que comecem nos mesmos pontos da passadeira</value>
@@ -1272,6 +1265,33 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autor desconhecido</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Improve mensagens sobre erros no carregamento de dados.
+- Linguagens corrigidas e atualizadas.</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>todos</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Editar marcações do segmento #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Relva</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Pavimento</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Elevação</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 </root>

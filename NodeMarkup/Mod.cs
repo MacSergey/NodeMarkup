@@ -14,10 +14,13 @@ using ColossalFramework.PlatformServices;
 using NodeMarkup.Utils;
 using NodeMarkup.Tools;
 using UnityEngine.SceneManagement;
+using ModsCommon;
+using ModsCommon.Utilities;
+using ModsCommon.UI;
 
 namespace NodeMarkup
 {
-    public class Mod : IUserMod
+    public class Mod : BasePatcherMod<Mod, Patcher>
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
@@ -26,19 +29,9 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
-        public static bool LoadedSuccess { get; set; } = true;
-
-        public static string StaticName { get; } = "Intersection Marking Tool";
-#if DEBUG
-        public static string StaticFullName => $"{StaticName} {Version.GetString()} [BETA]";
-#else
-        public static string StaticFullName => $"{StaticName} {Version.GetString()}";
-#endif
-
-        public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
-        public static Version VersionBuild => Version.Build();
-
-        public static List<Version> Versions { get; } = new List<Version>
+        protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
+        public override string Id => nameof(NodeMarkup);
+        protected override List<Version> ModVersions { get; } = new List<Version>
         {
             new Version("1.5.3"),
             new Version("1.5.2"),
@@ -53,82 +46,29 @@ namespace NodeMarkup
             new Version("1.0")
         };
 
-        public string Name => StaticFullName;
-#if DEBUG
-        public static bool IsBeta => true;
-        public string Description => Localize.Mod_DescriptionBeta;
+        protected override string ModName => "Intersection Marking Tool";
+        protected override string ModDescription => !ModIsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
+        public override string WorkshopUrl => StableURL;
+        protected override string ModLocale => Settings.Locale.value;
+
+#if BETA
+        protected override bool ModIsBeta => true;
 #else
-        public static bool IsBeta => false;
-        public string Description => Localize.Mod_Description;
+        protected override bool ModIsBeta => false;
 #endif
-
-        public static bool InGame => SceneManager.GetActiveScene().name is string scene && scene != "MainMenu" && scene != "IntroScreen";
-        static CultureInfo Culture
+        public override void OnDisabled()
         {
-            get
-            {
-                var locale = string.IsNullOrEmpty(Settings.Locale.value) ? SingletonLite<LocaleManager>.instance.language : Settings.Locale.value;
-                if (locale == "zh")
-                    locale = "zh-cn";
-
-                return new CultureInfo(locale);
-            }
-        }
-        public void OnEnabled()
-        {
-            LoadedSuccess = true;
-
-            LoadingManager.instance.m_introLoaded += CheckLoadError;
-            Logger.LogDebug($"Version {Version}");
-            Logger.LogDebug("Enabled");
-
-            try
-            {
-                Patcher.Patch();
-            }
-            catch (Exception error)
-            {
-                Logger.LogError("Patch failed", error);
-                LoadedSuccess = false;
-            }
-
-            CheckLoadError();
-        }
-        public void OnDisabled()
-        {
-            LoadingManager.instance.m_introLoaded -= CheckLoadError;
-            Logger.LogDebug("Disabled");
-
-            try
-            {
-                Patcher.Unpatch();
-            }
-            catch (Exception error)
-            {
-                Logger.LogError("Unpatch failed", error);
-            }
-
+            base.OnDisabled();
             NodeMarkupTool.Remove();
-
-            LocaleManager.eventLocaleChanged -= LocaleChanged;
-
-            LoadedSuccess = true;
         }
+        protected override Patcher CreatePatcher() => new Patcher(this);
 
-        public void OnSettingsUI(UIHelperBase helper)
-        {
-            LocaleManager.eventLocaleChanged -= LocaleChanged;
-            LocaleChanged();
-            LocaleManager.eventLocaleChanged += LocaleChanged;
+        protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
 
-            Logger.LogDebug("Load SettingsUI");
-            Settings.OnSettingsUI(helper);
-        }
-
-        public static void LocaleChanged()
+        public override void LocaleChanged()
         {
             Localize.Culture = Culture;
-            Logger.LogDebug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
+            Logger.Debug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
         public static bool OpenTroubleshooting()
@@ -142,13 +82,10 @@ namespace NodeMarkup
             return true;
         }
 
-        public static void CheckLoadError()
+        public override void OnLoadedError()
         {
-            if (!InGame && !LoadedSuccess)
-            {
-                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = Localize.Mod_LoaledWithErrors;
-            }
+            var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+            messageBox.MessageText = Localize.Mod_LoaledWithErrors;
         }
     }
 }

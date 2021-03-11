@@ -121,7 +121,7 @@
     <value>Supprimer {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} {1} ?</value>
+    <value>Voulez-vous vraiment supprimer {0} "{1}" ?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Utilisez la molette pour changer
@@ -214,7 +214,7 @@ Maj X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Ceci est une version BETA, des erreurs peuvent se produire et la stabilité n'est pas garantie!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifier le marquage du nœud #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -321,20 +321,14 @@ Les données restaurées ont remplacer tout les marquages existants.</value>
     <value>Noeud #{0}
 Cliquez pour modifier le marquage</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Sélectionnez un nœud pour changer le marquage</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Sélectionnez un point de fin
-+Maj - Solide
-+Ctrl - Double</value>
+    <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop
+Glissez derrière le point pour une ligne perpendiculaire</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
-créer ou supprimer une ligne
-+Ctrl pour bouger le point
-Maintenir Alt pour créer un remplisseur
-Maintenez Maj pour créer un passage piéton</value>
+créer ou supprimer une ligne</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Nouveautés dans {0}</value>
@@ -401,7 +395,7 @@ Maintenez Maj pour créer un passage piéton</value>
     <value>Sélectionnez le prochain point du contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Sélectionnez un point pour commencer le filler</value>
+    <value>Selectionnez un point pour commencer le remplissseur</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Sélectionnez le prochain point pour le contour</value>
@@ -467,7 +461,7 @@ Pour créer un remplisseur, maintenez Alt ou appuyez sur {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La liste des modèles est vide.
-Pour créer un modèle, cliquez sur {0} sur le style de ligne.</value>
+Pour créer un modèle, cliquez {0} sur une ligne, passage piéton ou remplisseur.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Activer avec la clé</value>
@@ -576,7 +570,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
     <value>Allemand</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais</value>
+    <value>Anglais États-Unis</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espagnol</value>
@@ -1063,7 +1057,7 @@ Voulez-vous changer le marquage manuellement ?</value>
     <value>Bordures de passage piétons rapide</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marquage en dessous des rails (nécessite un redémarrage)</value>
+    <value>Marquage en dessous des rails</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>
@@ -1264,6 +1258,20 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Auteur inconnu</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 </root>

@@ -121,7 +121,7 @@
     <value>Poista {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa {0} {1}?</value>
+    <value>Haluatko varmasti poistaa {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Vieritä hiiren rullalla vaihtaaksesi
@@ -214,7 +214,7 @@ Shift X10, Ctrl X0,1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Muokkaa risteyksen #{0} merkintöjä</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -321,19 +321,13 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
     <value>Risteys #{0}
 Napauta muokataksesi merkintöjä</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Valitse risteys muokataksesi merkintöjä</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Valitse päätepiste
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
+    <value>Valitse päätepiste viivalle tai pysäytysviivalle
+Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Valitse piste luodaksesi tai poistaaksesi viivan
-+Ctrl siirtääksesi pistettä
-Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen
-Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+    <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Uutta modissa {0}</value>
@@ -466,7 +460,7 @@ Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Mallinelista on tyhjä.
-Napauta {0} viivan tyylissä luodaksesi mallineen.</value>
+Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi mallineen.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivoi avaimella</value>
@@ -575,7 +569,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
     <value>Saksa</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englanti</value>
+    <value>Englanti US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Espanja</value>
@@ -611,9 +605,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
     <value>Kieli</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Napauta luodaksesi kohtisuora viiva
-+Shift - Sulku-
-+Ctrl - Kaksois-</value>
+    <value>Napauta luodaksesi kohtisuora viiva</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Napauta poistaaksesi kohtisuoran viivan</value>
@@ -1062,7 +1054,7 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Nopea suojateiden reunojen luominen</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Merkinnät raiteiden alla (Vaatii uudelleenkäynnistyksen)</value>
+    <value>Merkinnät raiteiden alla</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Varoitus: Tämä asetus muuttaa pelin piirtojärjestyksen</value>
@@ -1264,6 +1256,26 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Tuntematon tekijä</value>
   </data>
+  
+  
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Muokkaa jaokkeen #{0} merkintöjä</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Ruoho</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Päällyste</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 </root>

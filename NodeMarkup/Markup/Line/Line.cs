@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -14,7 +15,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IItem, IToXml
+    public abstract class MarkupLine : IStyleItem, IToXml
     {
         public static string XmlName { get; } = "L";
 
@@ -40,9 +41,9 @@ namespace NodeMarkup.Manager
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
 
-        protected ILineTrajectory LineTrajectory { get; private set; }
-        public ILineTrajectory Trajectory => LineTrajectory.Copy();
-        public IStyleData StyleData { get; private set; } = new MarkupStyleDashes();
+        protected ITrajectory LineTrajectory { get; private set; }
+        public ITrajectory Trajectory => LineTrajectory.Copy();
+        public LodDictionaryArray<IStyleData> StyleData { get;} = new LodDictionaryArray<IStyleData>();
 
         public LineBorders Borders => new LineBorders(this);
 
@@ -56,7 +57,7 @@ namespace NodeMarkup.Manager
             if (update)
                 Update(true);
         }
-        protected MarkupLine(Markup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
+        protected MarkupLine(NodeMarkup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
         protected virtual void RuleChanged() => Markup.Update(this, true);
 
         public void Update(bool onlySelfUpdate = false)
@@ -65,10 +66,18 @@ namespace NodeMarkup.Manager
             if (!onlySelfUpdate)
                 Markup.Update(this);
         }
-        protected abstract ILineTrajectory CalculateTrajectory();
+        protected abstract ITrajectory CalculateTrajectory();
 
-        public void RecalculateStyleData() => StyleData = new MarkupStyleDashes(GetDashes());
-        protected abstract IEnumerable<MarkupStyleDash> GetDashes();
+        public void RecalculateStyleData()
+        {
+#if DEBUG
+            Mod.Logger.Debug($"Recalculate line {this}");
+#endif
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                RecalculateStyleData(lod);
+        }
+        private void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = GetStyleData(lod).ToArray();
+        protected abstract IEnumerable<IStyleData> GetStyleData(MarkupLOD lod);
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
 
@@ -145,6 +154,9 @@ namespace NodeMarkup.Manager
             if (!makrup.TryGetLine(pointPair, out line))
             {
                 var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
+                if ((type & makrup.SupportLines) == 0)
+                    return false;
+
                 switch (type)
                 {
                     case LineType.Regular:
@@ -175,6 +187,10 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
             Crosswalk = Markup.Item.Crosswalk,
+
+
+            [NotVisible]
+            All = Regular | Stop | Crosswalk,
         }
         public override string ToString() => PointPair.ToString();
     }
@@ -206,9 +222,12 @@ namespace NodeMarkup.Manager
                 RecalculateStyleData();
         }
 
-        protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes() => Rule.Style.Calculate(this, LineTrajectory);
+        protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
+        {
+            yield return Rule.Style.Calculate(this, LineTrajectory, lod);
+        }
         private void SetRule(MarkupLineRawRule<Style> rule)
         {
             rule.OnRuleChanged = RuleChanged;
@@ -237,8 +256,14 @@ namespace NodeMarkup.Manager
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
-        protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) 
+        {
+            RecalculateStyleData();
+        }
+        protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) 
+        {
+            RecalculateStyleData();
+        }
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
             base(markup, pointPair)
         {
@@ -246,7 +271,7 @@ namespace NodeMarkup.Manager
             AddRule(lineStyle, false, false);
             RecalculateStyleData();
         }
-        protected override ILineTrajectory CalculateTrajectory()
+        protected override ITrajectory CalculateTrajectory()
         {
             var trajectory = new Bezier3
             {
@@ -298,34 +323,31 @@ namespace NodeMarkup.Manager
             RawRules.Remove(rule);
             RuleChanged();
         }
-        public void RemoveRules(MarkupLine intersectLine)
+        public bool RemoveRules(MarkupLine intersectLine)
         {
             if (!RawRules.Any())
-                return;
+                return false;
 
-            RawRules.RemoveAll(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
+            var removed = RawRules.RemoveAll(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
 
             if (!RawRules.Any())
                 AddRule(false, false);
+
+            return removed != 0;
         }
         private bool Match(MarkupLine intersectLine, ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
         public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
-        protected override IEnumerable<MarkupStyleDash> GetDashes()
+        protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
             var rules = MarkupLineRawRule<RegularLineStyle>.GetRules(RawRules);
 
-            var dashes = new List<MarkupStyleDash>();
             foreach (var rule in rules)
             {
                 var trajectoryPart = LineTrajectory.Cut(rule.Start, rule.End);
-                var ruleDashes = rule.LineStyle.Calculate(this, trajectoryPart).ToArray();
-
-                dashes.AddRange(ruleDashes);
+                yield return rule.LineStyle.Calculate(this, trajectoryPart, lod);
             }
-
-            return dashes;
         }
         public override IEnumerable<ILinePartEdge> RulesEdges
         {
@@ -365,7 +387,7 @@ namespace NodeMarkup.Manager
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : base(markup, pointPair, lineType) { }
 
-        protected override ILineTrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
     {
@@ -385,9 +407,8 @@ namespace NodeMarkup.Manager
             var to = empty ? null : new CrosswalkBorderEdge(this, BorderPosition.Left);
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
-        protected override void RuleChanged() => Markup.Update(this, true);
 
-        protected override ILineTrajectory CalculateTrajectory() => TrajectoryGetter();
+        protected override ITrajectory CalculateTrajectory() => TrajectoryGetter();
         public float GetT(BorderPosition border) => (int)border;
         public override IEnumerable<ILinePartEdge> RulesEdges
         {
@@ -493,28 +514,28 @@ namespace NodeMarkup.Manager
             public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
         }
     }
-    public class LineBorders : IEnumerable<ILineTrajectory>
+    public class LineBorders : IEnumerable<ITrajectory>
     {
         public Vector3 Center { get; }
-        public List<ILineTrajectory> Borders { get; }
+        public List<ITrajectory> Borders { get; }
         public bool IsEmpty => !Borders.Any();
         public LineBorders(MarkupLine line)
         {
             Center = line.Markup.Position;
             Borders = GetBorders(line).ToList();
         }
-        public IEnumerable<ILineTrajectory> GetBorders(MarkupLine line)
+        public IEnumerable<ITrajectory> GetBorders(MarkupLine line)
         {
-            if (line.Start.GetBorder(out ILineTrajectory startTrajectory))
+            if (line.Start.GetBorder(out ITrajectory startTrajectory))
                 yield return startTrajectory;
-            if (line.End.GetBorder(out ILineTrajectory endTrajectory))
+            if (line.End.GetBorder(out ITrajectory endTrajectory))
                 yield return endTrajectory;
         }
 
-        public IEnumerator<ILineTrajectory> GetEnumerator() => Borders.GetEnumerator();
+        public IEnumerator<ITrajectory> GetEnumerator() => Borders.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public StraightTrajectory[] GetVertex(MarkupStyleDash dash)
+        public StraightTrajectory[] GetVertex(MarkupStylePart dash)
         {
             var dirX = dash.Angle.Direction();
             var dirY = dirX.Turn90(true);

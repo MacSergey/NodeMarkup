@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -25,7 +26,7 @@ namespace NodeMarkup.Tools
         {
             base.OnToolUpdate();
 
-            if (!IsSelectPoint && !NodeMarkupTool.ShiftIsPressed)
+            if (!IsSelectPoint && !InputExtension.ShiftIsPressed)
                 Tool.SetDefaultMode();
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -42,12 +43,12 @@ namespace NodeMarkup.Tools
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
                     Tool.DeleteItem(line, () =>
                     {
-                        Tool.Markup.RemoveConnect(line);
+                        Tool.Markup.RemoveLine(line);
                         Panel.UpdatePanel();
                     });
                 else
                 {
-                    var newCrosswalkLine = Tool.Markup.AddConnection(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;
+                    var newCrosswalkLine = Tool.Markup.AddLine(pointPair, NodeMarkupTool.GetStyle(CrosswalkStyle.CrosswalkType.Zebra)) as MarkupCrosswalkLine;
                     Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
                 }
 
@@ -60,9 +61,10 @@ namespace NodeMarkup.Tools
             if (ignore != null && ignore.Enter != enter)
                 yield break;
 
-            var allow = enter.Crosswalks.Select(i => 1).ToArray();
+            var nodeEnter = (NodeEnter)enter;
+            var allow = nodeEnter.Crosswalks.Select(i => 1).ToArray();
             var bridge = new Dictionary<MarkupPoint, int>();
-            foreach (var crosswalk in enter.Crosswalks)
+            foreach (var crosswalk in nodeEnter.Crosswalks)
                 bridge.Add(crosswalk, bridge.Count);
 
             var isIgnore = ignore?.Enter == enter;
@@ -123,7 +125,7 @@ namespace NodeMarkup.Tools
         {
             var bezier = new Line3(SelectPoint.Position, HoverPoint.Position).GetBezier();
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
+            var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
 
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, MarkupCrosswalkPoint.Shift * 2, cut: true);
         }

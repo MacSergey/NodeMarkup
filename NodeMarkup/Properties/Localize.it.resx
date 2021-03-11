@@ -121,7 +121,7 @@
     <value>Cancella {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Vuoi veramente cancellare {0} {1}?</value>
+    <value>Vuoi veramente cancellare {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Scorri con la rotella per cambiare
@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Questa è una versione BETA, potrebbero verificarsi errori e la stabilità non è garantita!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifica il marcatore del nodo #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -321,20 +321,13 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
     <value>Nodo #{0}
 Clicca per modificare il marcatore</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Seleziona un nodo per modificare il marcatore</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleziona il punto finale
-+Shift - Continua
-+Ctrl - Tratteggiata</value>
+    <value>Seleziona il punto di fine per uno stop oppure una linea di stop
+Trascina dietro il punto per una linea perpendicolare</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleziona un punto per
-creare o cancellare una linea
-+Ctrl per muovere il punto
-Tieni premuto Alt per impostare il riempimento
-Tieni premuto Shift per impostare le strisce pedonali</value>
+    <value>Seleziona un punto per creare o cancellare una linea</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Cosa c'è di nuovo in {0}</value>
@@ -432,9 +425,9 @@ Tieni premuto Shift per impostare le strisce pedonali</value>
     <value>Continua</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Risolto il problema con i tasti Alt, Ctrl e Shift su mac OS and Linux.
-- Aggiunti gli stili linea di stop "Doppia continua" e "Doppia tratteggiata".
-- Aggiunte le localizzazioni di Italiano e Portoghese.</value>
+    <value>- Correttii pulsanti Alt, Ctrl e Shift su Mac OS e Linux.
+- Aggiunti gli stili di linea di stop "Doppia continua" e "Doppia tratteggiata".
+- Aggiunte traduzioni in italiano e portoghese.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
     <value>- Il messaggio "Novità - What's New" verrà visualizzato una volta dopo un aggiornamento e può essere disabilitato nel menu Opzioni.
@@ -460,9 +453,7 @@ Tieni premuto Shift per impostare le strisce pedonali</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>È stata rilasciata la versione 1.4</value>
-  </data>
+  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia continua</value>
   </data>
@@ -494,7 +485,7 @@ Per creare uno riempimento, tieni premuto Alt o premi {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista dei modelli è vuota.
-Per creare una modello, clicca «{0}» sullo stile linea.</value>
+Per creare un modello, clicca «{0}» sulla linea, sull'attraversamento pedonale o sullo stile del riempimento.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Attiva con codice</value>
@@ -603,7 +594,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
     <value>Tedesco</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglese</value>
+    <value>Inglese US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Spagnolo</value>
@@ -639,9 +630,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
     <value>Lingua</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Clicca per creare una linea perpendicolare
-+Shift - Continua
-+Ctrl - Doppia</value>
+    <value>Clicca per creare una linea perpendicolare</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clicca per cancellare le linea perpendicolare</value>
@@ -930,10 +919,10 @@ Premi sul cerchio per modificare l'ordine delle strade</value>
     <value>Rilascia il cerchio dentro/fuori dal bersaglio per impostare/cancellare l'ordine delle strade</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
-    <value>Copia la marcatura</value>
+    <value>Copia marcatura</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
-    <value>Incolla la marcatura</value>
+    <value>Incolla marcatura</value>
   </data>
   <data name="Tool_InfoInverseOrder" xml:space="preserve">
     <value>Inverti l'ordine</value>
@@ -1052,7 +1041,9 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Solido in centro</value>
   </data>
-  
+  <data name="StyleOption_No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Si</value>
   </data>
@@ -1065,30 +1056,7 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Trascina con Ctrl per muovere il punto</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
-    <value>ATTENZIONE: l'impostazione dei modelli predefiniti verrà ripristinata.
-
-- Aggiunta la possibilità di copiare / incollare la marcatura da un'intersezione esistente a un'altra intersezione esistente.
-- Ora la marcatura non viene rimossa se si sostituisce la strada con un diverso numero di punti.
-- Aggiunto supporto per l'editor di mappe.
-- Aggiunta la possibilità di salvare i dati di marcatura nelle risorse di intersezione.
-- Aggiunta la linea "Denti di squalo" e lo stile della linea di arresto.
-- Aggiunto stile di linea di arresto "Continua e tratteggiata".
-- Aggiunto stile attracersamento a "scacchiera".
-- Aggiunta la possibilità di impostare modificatori di creazione per qualsiasi stile.
-- Aggiunta la possibilità di duplicare i modelli.
-- Aggiunta la possibilità di avere diversi modelli con un nome.
-- Aggiunta l'opzione di allineamento a tutti gli stili di doppia linea.
-- Aggiunta la possibilità di avviare lo stile "Caporali o spina di pesce" di riempimento dai bordi.
-- Aggiunta la possibilità di ricevere un avviso di eliminazione solo se interesserà altri elementi.
-- Aggiunta la possibilità di ridimensionare il pannello.
-- Aggiunta la possibilità di eseguire il backup dei modelli.
-- Aggiunta la possibilità di ripristinare tutti gli offset dei punti.
-- Aggiunto il supporto per il mirroring di MoveIt (attendere l'aggiornamento di MoveIt).
-- Aggiorna l'algoritmo di calcolo dello stile "Caporali o spina di pesce" di riempimento.
-- Risolti i duplicati dei vertici di riempimento nell'interfaccia di creazione.
-- Risolve il valore di inversione errato delle linee asym dopo il caricamento.</value>
-  </data>
+  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Questa azione non può esser annullata.</value>
   </data>
@@ -1209,6 +1177,32 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
+  <data name="Mod_Locale_en-gb" xml:space="preserve">
+    <value>Inglese UK</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Salva le modifiche</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Non salvare le modifiche</value>
+  </data>
+  <data name="MessageBox_Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Salva le modifiche</value>
+  </data>
   
   
   
@@ -1220,14 +1214,26 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Questo tipo di linea non supporta le regole</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Non tagliare la linea del marciapiede se è il bordo</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Autore sconosciuto</value>
+  </data>
   
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>tutto</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Erba</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Pavimentazione</value>
+  </data>
   
   
   

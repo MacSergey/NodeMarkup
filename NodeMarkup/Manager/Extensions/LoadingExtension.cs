@@ -1,4 +1,6 @@
 ﻿using ICities;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
@@ -14,7 +16,7 @@ namespace NodeMarkup
     {
         public override void OnLevelLoaded(LoadMode mode)
         {
-            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnLevelLoaded)}");
+            Mod.Logger.Debug($"On level loaded");
             switch (mode)
             {
                 case LoadMode.NewGame:
@@ -36,7 +38,7 @@ namespace NodeMarkup
 
         public override void OnLevelUnloading()
         {
-            Logger.LogDebug($"{nameof(LoadingExtension)}.{nameof(OnLevelUnloading)}");
+            Mod.Logger.Debug($"On level unloading");
             NodeMarkupTool.Remove();
         }
 
@@ -56,7 +58,7 @@ namespace NodeMarkup
             {
                 var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                 messageBox.CaprionText = Localize.Mod_BetaWarningCaption;
-                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, Mod.StaticName);
+                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, Mod.ShortName);
                 messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
                 messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
                 messageBox.OnButton1Click = AgreeClick;
@@ -81,7 +83,7 @@ namespace NodeMarkup
                 return;
 
             var messageBox = !Mod.IsBeta ? MessageBoxBase.ShowModal<WhatsNewMessageBox>() : MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
-            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.StaticName);
+            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.ShortName);
             messageBox.OnButtonClick = Confirm;
             messageBox.Init(messages);
 
@@ -94,7 +96,7 @@ namespace NodeMarkup
         private Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
         {
             var messages = new Dictionary<Version, string>(Mod.Versions.Count);
-#if DEBUG
+#if BETA
             messages[Mod.Version] = Localize.Mod_WhatsNewMessageBeta;
 #endif
             foreach (var version in Mod.Versions)

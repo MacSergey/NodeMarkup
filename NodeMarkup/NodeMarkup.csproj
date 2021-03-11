@@ -14,46 +14,46 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
+    <OutputPath>bin\Stable Release\</OutputPath>
+    <LangVersion>8.0</LangVersion>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Debug|AnyCPU'">
+    <OutputPath>bin\Stable Debug\</OutputPath>
+    <LangVersion>8.0</LangVersion>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PRERELEASE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>8.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>8.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug noWorkshop|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug noWorkshop\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PRERELEASE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>8.0</LangVersion>
+    <DebugSymbols>true</DebugSymbols>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release noWorkshop|AnyCPU'">
-    <OutputPath>bin\Release noWorkshop\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Release|AnyCPU'">
+    <OutputPath>bin\Beta Release\</OutputPath>
+    <LangVersion>8.0</LangVersion>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>BETA</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Debug|AnyCPU'">
+    <OutputPath>bin\Beta Debug\</OutputPath>
+    <LangVersion>8.0</LangVersion>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>BETA, DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -81,6 +81,9 @@
       <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="Poly2Tri, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Poly2Tri.1.0.1.0\lib\net35-Client\Poly2Tri.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -97,6 +100,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markup\Enter\SegmentEnter.cs" />
+    <Compile Include="Markup\Enter\NodeEnter.cs" />
+    <Compile Include="Markup\Enter\Sources.cs" />
+    <Compile Include="Markup\Filler\Style\FillerStyle3D.cs" />
+    <Compile Include="Markup\Line\Style\RegularLineStyle3D.cs" />
+    <Compile Include="Markup\Markup\Markup.cs" />
+    <Compile Include="Markup\Markup\SegmentMarkup.cs" />
     <Compile Include="Markup\Template.cs" />
     <Compile Include="Tools\BaseMode.cs" />
     <Compile Include="Tools\DragPointMode.cs" />
@@ -108,39 +118,38 @@
     <Compile Include="Tools\Order\EntersOrderMode.cs" />
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
-    <Compile Include="Tools\SelectNodeMode.cs" />
+    <Compile Include="Tools\SelectMode.cs" />
+    <Compile Include="UI\Editors\EnterEditor.cs" />
+    <Compile Include="UI\Selectors\LinesSelector.cs" />
+    <Compile Include="UI\Panel\TabStrip.cs" />
+    <Compile Include="UI\Property panels\ColorAdvancedProperty.cs" />
+    <Compile Include="UI\Property panels\EnumProperty.cs" />
     <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
-    <Compile Include="UI\Property panels\GroupPanel.cs" />
     <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
     <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
-    <Compile Include="UI\Editors\Headers\HeaderButton.cs" />
-    <Compile Include="UI\Editors\Headers\HeaderPopup.cs" />
     <Compile Include="UI\Editors\IntersectionTemplateEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
-    <Compile Include="UI\ComponentPool.cs" />
     <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
     <Compile Include="Manager\Extensions\LoadingExtension.cs" />
-    <Compile Include="EarlyAccess.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="Markup\Crosswalk\Crosswalk.cs" />
     <Compile Include="Markup\Crosswalk\CrosswalkStyleBase.cs" />
     <Compile Include="Markup\Filler\Filler.cs" />
     <Compile Include="Markup\Filler\FillerContour.cs" />
-    <Compile Include="Markup\Filler\FillerStyle.cs" />
-    <Compile Include="Markup\Filler\FillerStyleBase.cs" />
+    <Compile Include="Markup\Filler\Style\FillerStyle2D.cs" />
+    <Compile Include="Markup\Filler\Style\FillerStyleBase.cs" />
     <Compile Include="Markup\Filler\FillerVertex.cs" />
     <Compile Include="Markup\Line\Line.cs" />
     <Compile Include="Markup\Line\LinePart.cs" />
     <Compile Include="Markup\Line\LineRule.cs" />
     <Compile Include="Markup\Crosswalk\CrosswalkStyle.cs" />
     <Compile Include="Markup\Line\Style\StopLineStyle.cs" />
-    <Compile Include="Markup\Line\Style\RegularLineStyles.cs" />
+    <Compile Include="Markup\Line\Style\RegularLineStyles2D.cs" />
     <Compile Include="Markup\Line\Trajectory.cs" />
-    <Compile Include="Markup\Markup.cs" />
+    <Compile Include="Markup\Markup\NodeMarkup.cs" />
     <Compile Include="Markup\Line\LinePartEdge.cs" />
     <Compile Include="Markup\Point\Point.cs" />
-    <Compile Include="Markup\Point\Enter.cs" />
+    <Compile Include="Markup\Enter\Enter.cs" />
     <Compile Include="Markup\Point\SupportPoint.cs" />
     <Compile Include="Markup\Line\Style\LineStyleBase.cs" />
     <Compile Include="Markup\Style.cs" />
@@ -157,7 +166,6 @@
     </Compile>
     <Compile Include="Tools\Tool.cs" />
     <Compile Include="Tools\Order\BaseOrderMode.cs" />
-    <Compile Include="UI\Elements\DropDown.cs" />
     <Compile Include="UI\Editors\Base\BaseEditor.cs" />
     <Compile Include="UI\Editors\Base\BaseGroupEditor.cs" />
     <Compile Include="UI\Editors\CrosswalkEditor.cs" />
@@ -167,40 +175,25 @@
     <Compile Include="UI\Editors\LineEditor.cs" />
     <Compile Include="UI\Editors\PointEditor.cs" />
     <Compile Include="UI\Elements\Button.cs" />
-    <Compile Include="UI\Elements\Segmented.cs" />
     <Compile Include="UI\GUI\Button.cs" />
-    <Compile Include="UI\Message boxes\EarlyAccessMessageBox.cs" />
     <Compile Include="UI\Message boxes\ImportMessageBox.cs" />
     <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
     <Compile Include="UI\Message boxes\WhatsNewMessageBox.cs" />
     <Compile Include="UI\Editors\RulePanel.cs" />
     <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
-    <Compile Include="UI\Elements\Keymapping.cs" />
-    <Compile Include="UI\Message boxes\BaseMessageBox.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
-    <Compile Include="UI\PointsSelector.cs" />
-    <Compile Include="UI\Property panels\BaseProperty.cs" />
-    <Compile Include="UI\Property panels\BoolProperty.cs" />
-    <Compile Include="UI\Property panels\ButtonPanel.cs" />
-    <Compile Include="UI\Property panels\ColorProperty.cs" />
-    <Compile Include="UI\Property panels\EnumProperty.cs" />
-    <Compile Include="UI\Property panels\FieldProperty.cs" />
+    <Compile Include="UI\Selectors\PointsSelector.cs" />
     <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
-    <Compile Include="UI\Property panels\ListProperty.cs" />
-    <Compile Include="UI\Property panels\SelectProperty.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
-    <Compile Include="UI\Elements\TabPanel.cs" />
-    <Compile Include="UI\Property panels\TextProperty.cs" />
-    <Compile Include="UI\Property panels\ValueField.cs" />
-    <Compile Include="UI\UIUtils.cs" />
+    <Compile Include="UI\Property panels\SelectProperty.cs" />
+    <Compile Include="UI\Selectors\Selector.cs" />
     <Compile Include="Utils\Dependences.cs" />
     <Compile Include="Utils\Intersects.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\MoveItIntegration.cs" />
     <Compile Include="Utils\ObjectId.cs" />
-    <Compile Include="Utils\Patreon.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
     <Compile Include="Utils\Shortcut.cs" />
@@ -234,12 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
-    <EmbeddedResource Include="Resources\TextFieldPanel.tga" />
-    <EmbeddedResource Include="Resources\ColorPicker.tga" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
-    <EmbeddedResource Include="Resources\OpacitySlider.tga" />
-    <EmbeddedResource Include="Resources\TabButton.tga" />
-    <EmbeddedResource Include="Resources\DefaultTabButtons.tga" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Styles.png" />
@@ -251,20 +239,11 @@
     <EmbeddedResource Include="Resources\SharkTooth.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resize.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Button.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\HeaderButtons.png" />
     <EmbeddedResource Include="Resources\OrderButtons.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\CloseButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Empty.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
@@ -295,53 +274,43 @@
     <EmbeddedResource Include="Resources\StylesPreview\StopLineSolid.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StopLineSolidAndDashed.png" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Release noWorkshop' ">
-    <PostBuildEvent>
-set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\"
-set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2140418403\"
-
-del "$(TargetDir)*.pdb"
-del "$(TargetDir)Assembly-CSharp-firstpass.dll"
-del "$(TargetDir)ICSharpCode.SharpZipLib.dll"
-del "$(TargetDir)PopsApiWrapper.dll"
-del "$(TargetDir)Newtonsoft.Json.xml"
-rmdir /s /q "%ModDir%"
-mkdir "%ModDir%"
-
-xcopy /y /e "$(TargetDir)*"  "%ModDir%"
-xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
-
-copy $(ProjectDir)Resources\PreviewImage.png  "%ModDir%"
-copy $(ProjectDir)Resources\PreviewImage.png  "%WorkshopDir%"
-	</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Debug noWorkshop'">
-    <PostBuildEvent>
-set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)Beta\"
-set "WorkshopDir=C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2159934925\"
-
-del "$(TargetDir)*.pdb"
-del "$(TargetDir)Assembly-CSharp-firstpass.dll"
-del "$(TargetDir)ICSharpCode.SharpZipLib.dll"
-del "$(TargetDir)PopsApiWrapper.dll"
-del "$(TargetDir)Newtonsoft.Json.xml"
-rmdir /s /q "%ModDir%"
-mkdir "%ModDir%"
-
-xcopy /y /e "$(TargetDir)*"  "%ModDir%"
-xcopy /y /e "$(TargetDir)*"  "%WorkshopDir%"
-
-copy $(ProjectDir)Resources\PreviewImageBeta.png  "%ModDir%PreviewImage.png"
-copy $(ProjectDir)Resources\PreviewImageBeta.png  "%WorkshopDir%PreviewImage.png"
-	</PostBuildEvent>
-  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_ConfigurationName="Debug noWorkshop" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
+    <WorkshopId>2140418403</WorkshopId>
+    <Type>Stable</Type>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
+    <WorkshopId>2159934925</WorkshopId>
+    <Type>Beta</Type>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)$(Type)</LocalDir>
+    <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+  </PropertyGroup>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <FilesToDelete Include="$(OutDir)*.pdb" />
+      <FilesToDelete Include="$(OutDir)Assembly-CSharp-firstpass.dll" />
+      <FilesToDelete Include="$(OutDir)ICSharpCode.SharpZipLib.dll" />
+      <FilesToDelete Include="$(OutDir)PopsApiWrapper.dll" />
+    </ItemGroup>
+    <Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high">
+    </Message>
+    <Delete Files="@(FilesToDelete)" />
+    <RemoveDir Directories="$(LocalDir)" />
+    <ItemGroup>
+      <FilesToCopy Include="$(OutDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(LocalDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="AfterBuildRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
+    <RemoveDir Directories="$(WorkshopDir)" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(ProjectDir)Resources\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
+  </Target>
 </Project>

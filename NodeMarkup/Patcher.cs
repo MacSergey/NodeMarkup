@@ -1,9 +1,5 @@
-﻿using CitiesHarmony.API;
-using ColossalFramework;
-using ColossalFramework.Packaging;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
-using HarmonyLib;
+﻿using HarmonyLib;
+using ModsCommon;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using System;
@@ -11,130 +7,115 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 
 namespace NodeMarkup
 {
-    public static class Patcher
+    public class Patcher : Patcher<Mod>
     {
-        private static string HarmonyId { get; } = nameof(NodeMarkup);
-        public static bool Success { get; private set; }
+        public Patcher(BaseMod<Mod> mod) : base(mod) { }
 
-        public static void Patch()
+        protected override bool PatchProcess()
         {
-            Logger.LogDebug("Patch");
-            HarmonyHelper.DoOnHarmonyReady(() => Begin());
-        }
-        public static void Unpatch()
-        {
-            Logger.LogDebug($"Unpatch");
+            var success = true;
 
-            var harmony = new Harmony(HarmonyId);
-            harmony.UnpatchAll(HarmonyId);
+            success &= PatchNetNodeRenderInstance();
+            success &= PatchNetSegmentRenderInstance();
 
-            Logger.LogDebug($"Unpatched");
-        }
+            success &= PatchNetManagerReleaseNodeImplementation();
+            success &= PatchNetManagerReleaseSegmentImplementation();
 
-        private static void Begin()
-        {
-            Logger.LogDebug($"Start patching");
+            success &= PatchNetManagerUpdateNode();
+            success &= PatchNetManagerUpdateSegment();
+            success &= PatchNetSegmentUpdateLanes();
 
-            Success = true;
+            success &= PatchNetManagerSimulationStepImpl();
 
-            var harmony = new Harmony(HarmonyId);
-            Success &= PatchNetNodeRenderInstance(harmony);
-            Success &= PatchNetManagerReleaseNodeImplementation(harmony);
-            Success &= PatchNetManagerUpdateNode(harmony);
-            Success &= PatchNetSegmentUpdateLanes(harmony);
-            Success &= PatchNetManagerSimulationStepImpl(harmony);
-            Success &= PatchBuildingDecorationLoadPaths(harmony);
-            Success &= PatchLoadAssetPanelOnLoad(harmony);
+            success &= PatchBuildingDecorationLoadPaths();
+
+            success &= PatchLoadAssetPanelOnLoad();
+
+            success &= PatchGeneratedScrollPanelCreateOptionPanel();
 
             if (Settings.RailUnderMarking)
-                Success &= PatchNetInfoNodeInitNodeInfo(harmony);
+            {
+                success &= PatchNetInfoNodeInitNodeInfo();
+                success &= PatchNetInfoInitSegmentInfo();
+            }
 
             if (Settings.LoadMarkingAssets)
             {
-                Success &= PatchLoadingManagerLoadCustomContent(harmony);
-                Success &= PatchLoadingScreenModLoadImpl(harmony);
+                success &= PatchLoadingManagerLoadCustomContent();
+                success &= PatchLoadingScreenModLoadImpl();
             }
 
-            Mod.LoadedSuccess &= Success;
-            Mod.CheckLoadError();
-
-            Logger.LogDebug(Success ? "Putching success" : "Putching failed");
-        }
-        private static bool AddPrefix(Harmony harmony, MethodInfo prefix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
-            => AddPatch((original) => harmony.Patch(original, prefix: new HarmonyMethod(prefix)), type, method, originalGetter);
-
-        private static bool AddPostfix(Harmony harmony, MethodInfo postfix, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
-            => AddPatch((original) => harmony.Patch(original, postfix: new HarmonyMethod(postfix)), type, method, originalGetter);
-
-        private static bool AddTranspiler(Harmony harmony, MethodInfo transpiler, Type type, string method, Func<Type, string, MethodInfo> originalGetter = null)
-            => AddPatch((original) => harmony.Patch(original, transpiler: new HarmonyMethod(transpiler)), type, method, originalGetter);
-
-        private static bool AddPatch(Action<MethodInfo> patch, Type type, string method, Func<Type, string, MethodInfo> originalGetter)
-        {
-            var methodName = $"{type.Name}.{method}()";
-            try
-            {
-                Logger.LogDebug($"Patch {methodName}");
-
-                var original = originalGetter?.Invoke(type, method) ?? AccessTools.Method(type, method);
-                patch(original);
-
-                Logger.LogDebug($"Patched {methodName}");
-                return true;
-            }
-            catch (Exception error)
-            {
-                Logger.LogError($"Failed Patch {methodName}", error);
-                return false;
-            }
+            return success;
         }
 
-        private static bool PatchNetNodeRenderInstance(Harmony harmony)
+        private bool PatchNetNodeRenderInstance()
         {
             static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix));
 
-            return AddPostfix(harmony, postfix, typeof(NetNode), "RenderInstance", OriginalGetter);
+            return AddPostfix(postfix, typeof(NetNode), nameof(NetNode.RenderInstance), OriginalGetter);
         }
 
-        private static bool PatchNetManagerUpdateNode(Harmony harmony)
+        private bool PatchNetSegmentRenderInstance()
+        {
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(int), typeof(NetInfo), typeof(RenderManager.Instance).MakeByRefType() });
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentRenderInstancePostfix));
+
+            return AddPostfix(postfix, typeof(NetSegment), nameof(NetSegment.RenderInstance), OriginalGetter);
+        }
+
+        private bool PatchNetManagerUpdateNode()
         {
             static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix));
 
-            return AddPostfix(harmony, postfix, typeof(NetManager), nameof(NetManager.UpdateNode), OriginalGetter);
+            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateNode), OriginalGetter);
         }
 
-        private static bool PatchNetManagerReleaseNodeImplementation(Harmony harmony)
+        private bool PatchNetManagerUpdateSegment()
+        {
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(ushort), typeof(int) });
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateSegmentPostfix));
+
+            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateSegment), OriginalGetter);
+        }
+
+        private bool PatchNetManagerReleaseNodeImplementation()
         {
             static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() });
             var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix));
 
-            return AddPrefix(harmony, prefix, typeof(NetManager), "ReleaseNodeImplementation", OriginalGetter);
+            return AddPrefix(prefix, typeof(NetManager), "ReleaseNodeImplementation", OriginalGetter);
+        }
+        private bool PatchNetManagerReleaseSegmentImplementation()
+        {
+            static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) });
+            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix));
+
+            return AddPrefix(prefix, typeof(NetManager), "ReleaseSegmentImplementation", OriginalGetter);
         }
 
-        private static bool PatchNetSegmentUpdateLanes(Harmony harmony)
+        private bool PatchNetSegmentUpdateLanes()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentUpdateLanesPostfix));
 
-            return AddPostfix(harmony, postfix, typeof(NetSegment), nameof(NetSegment.UpdateLanes));
+            return AddPostfix(postfix, typeof(NetSegment), nameof(NetSegment.UpdateLanes));
         }
 
-        private static bool PatchNetManagerSimulationStepImpl(Harmony harmony)
+        private bool PatchNetManagerSimulationStepImpl()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix));
 
-            return AddPostfix(harmony, postfix, typeof(NetManager), "SimulationStepImpl");
+            return AddPostfix(postfix, typeof(NetManager), "SimulationStepImpl");
         }
-        private static bool PatchBuildingDecorationLoadPaths(Harmony harmony)
+        private bool PatchBuildingDecorationLoadPaths()
         {
             var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler));
 
-            return AddTranspiler(harmony, transpiler, typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
+            return AddTranspiler(transpiler, typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
         }
         private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
@@ -173,24 +154,37 @@ namespace NodeMarkup
             if (prevInstruction != null)
                 yield return prevInstruction;
         }
-        private static bool PatchLoadAssetPanelOnLoad(Harmony harmony)
+        private bool PatchLoadAssetPanelOnLoad()
         {
             var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
 
-            return AddPostfix(harmony, postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
+            return AddPostfix(postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
-        private static bool PatchNetInfoNodeInitNodeInfo(Harmony harmony)
+        private bool PatchGeneratedScrollPanelCreateOptionPanel()
         {
-            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoNodeInitNodeInfoPostfix));
+            var postfix = AccessTools.Method(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix));
 
-            return AddPostfix(harmony, postfix, typeof(NetInfo), "InitNodeInfo");
+            return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
         }
-        private static bool PatchLoadingManagerLoadCustomContent(Harmony harmony)
+
+        private bool PatchNetInfoNodeInitNodeInfo()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix));
+
+            return AddPostfix(postfix, typeof(NetInfo), "InitNodeInfo");
+        }
+        private bool PatchNetInfoInitSegmentInfo()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitSegmentInfoPostfix));
+
+            return AddPostfix(postfix, typeof(NetInfo), "InitSegmentInfo");
+        }
+        private bool PatchLoadingManagerLoadCustomContent()
         {
             var nestedType = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
             var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingManagerLoadCustomContentTranspiler));
 
-            return AddTranspiler(harmony, transpiler, nestedType, "MoveNext");
+            return AddTranspiler(transpiler, nestedType, "MoveNext");
         }
 
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
@@ -207,17 +201,17 @@ namespace NodeMarkup
 
             return LoadingTranspiler(instructions, OpCodes.Ldloc_S, 26, additional);
         }
-        private static bool PatchLoadingScreenModLoadImpl(Harmony harmony)
+        private bool PatchLoadingScreenModLoadImpl()
         {
             try
             {
                 var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader");
                 var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler));
-                return AddTranspiler(harmony, transpiler, type, "LoadImpl");
+                return AddTranspiler(transpiler, type, "LoadImpl");
             }
             catch (Exception error)
             {
-                Logger.LogError($"LSM not founded", error);
+                Mod.Logger.Error($"LSM not founded", error);
                 return true;
             }
         }

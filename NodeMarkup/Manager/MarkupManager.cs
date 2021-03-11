@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
+using ModsCommon.Utilities;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,105 +15,75 @@ namespace NodeMarkup.Manager
 {
     public static class MarkupManager
     {
-        static Dictionary<ushort, Markup> NodesMarkup { get; } = new Dictionary<ushort, Markup>();
-        static HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
-
-        static PropManager PropManager => Singleton<PropManager>.instance;
-        
-        public static int LoadErrors { get; private set; } = 0;
+        public static NodeMarkupManager NodeManager { get; }
+        public static SegmentMarkupManager SegmentManager { get; }
+        public static int LoadErrors { get; set; } = 0;
         public static bool HasLoadErrors => LoadErrors != 0;
 
-        public static bool TryGetMarkup(ushort nodeId, out Markup markup) => NodesMarkup.TryGetValue(nodeId, out markup);
-
-        public static Markup Get(ushort nodeId)
+        static MarkupManager()
         {
-            if (!NodesMarkup.TryGetValue(nodeId, out Markup markup))
-            {
-                markup = new Markup(nodeId);
-                NodesMarkup[nodeId] = markup;
-            }
-
-            return markup;
+            NodeManager = new NodeMarkupManager();
+            SegmentManager = new SegmentMarkupManager();
         }
 
-        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data)
+        public static void Clear()
         {
-            if (data.m_nextInstance != ushort.MaxValue)
-                return;
-
-            if (!TryGetMarkup(nodeID, out Markup markup))
-                return;
-
-            if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
-                return;
-
-            if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                return;
-
-            if (markup.NeedRecalculateDrawData)
-            {
-                markup.NeedRecalculateDrawData = false;
-                markup.RecalculateDrawData();
-            }
-
-            foreach (var item in markup.DrawData)
-                item.Draw();
+            NodeManager.Clear();
+            SegmentManager.Clear();
         }
 
+        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => NodeManager.Render(cameraInfo, nodeID, ref data);
 
-        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => NodesMarkup.Remove(node);
-        public static void NetManagerUpdateNodePostfix(ushort node, ushort fromSegment, int level) => AddToUpdate(node);
+        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SegmentManager.Render(cameraInfo, segmentID, ref data);
+
+        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => NodeManager.Remove(node);
+        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SegmentManager.Remove(segment);
+        public static void NetManagerUpdateNodePostfix(ushort node) => NodeManager.AddToUpdate(node);
+        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SegmentManager.AddToUpdate(segment);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
         {
-            var segment = Utilities.GetSegment(segmentID);
-            AddToUpdate(segment.m_startNode);
-            AddToUpdate(segment.m_endNode);
-        }
-
-        static void AddToUpdate(ushort nodeId)
-        {
-            if (NodesMarkup.ContainsKey(nodeId))
-            {
-                NeedUpdate.Add(nodeId);
-            }
+            SegmentManager.AddToUpdate(segmentID);
+            var segment = segmentID.GetSegment();
+            NodeManager.AddToUpdate(segment.m_startNode);
+            NodeManager.AddToUpdate(segment.m_endNode);
         }
         public static void NetManagerSimulationStepImplPostfix()
         {
-            var needUpdate = NeedUpdate.ToArray();
-            NeedUpdate.Clear();
-            foreach (var nodeId in needUpdate)
-            {
-                if (NodesMarkup.TryGetValue(nodeId, out Markup markup))
-                    markup.Update();
-            }
+            NodeManager.Update();
+            SegmentManager.Update();
         }
-        public static void NetInfoNodeInitNodeInfoPostfix(Node info)
+        public static void NetInfoInitNodeInfoPostfix(Node info)
         {
             if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
                 info.m_nodeMaterial.renderQueue = 2470;
         }
+        public static void NetInfoInitSegmentInfoPostfix(Segment info)
+        {
+            if (info.m_segmentMaterial.shader.name == "Custom/Net/TrainBridge")
+                info.m_segmentMaterial.renderQueue = 2470;
+        }
+
+
         public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
         {
             if (!AssetDataExtension.TryGetValue(buildingInfo, out AssetMarking assetMarking))
                 return;
 
-            FromXml(assetMarking.Config, assetMarking.GetMap(segments.m_buffer, nodes.m_buffer), false);
+            var map = assetMarking.GetMap(segments.m_buffer, nodes.m_buffer);
+            FromXml(assetMarking.Config, map, false);
         }
-        public static void Clear()
-        {
-            Logger.LogDebug($"{nameof(MarkupManager)}.{nameof(Clear)}");
-            NeedUpdate.Clear();
-            NodesMarkup.Clear();
-        }
+
         public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {
             var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", Mod.Version));
-            foreach (var markup in NodesMarkup.Values)
-            {
-                var markupConfig = markup.ToXml();
+
+            foreach(var markupConfig in NodeManager.ToXml())
                 confix.Add(markupConfig);
-            }
+
+            foreach (var markupConfig in SegmentManager.ToXml())
+                confix.Add(markupConfig);
+
             return confix;
         }
         public static void FromXml(XElement config, ObjectsMap map, bool clear = true)
@@ -123,13 +94,9 @@ namespace NodeMarkup.Manager
             LoadErrors = 0;
 
             var version = config.GetAttrValue("V", Mod.Version);
-            foreach (var markupConfig in config.Elements(Markup.XmlName))
-            {
-                if (Markup.FromXml(version, markupConfig, map, out Markup markup))
-                    NeedUpdate.Add(markup.Id);
-                else
-                    LoadErrors += 1;
-            }
+
+            NodeManager.FromXml(config, map, version);
+            SegmentManager.FromXml(config, map, version);
         }
         public static void SetFiled()
         {
@@ -137,11 +104,115 @@ namespace NodeMarkup.Manager
             LoadErrors = -1;
         }
     }
+    public abstract class MarkupManager<MarkupType>
+        where MarkupType : Markup
+    {
+        protected Dictionary<ushort, MarkupType> Markups { get; } = new Dictionary<ushort, MarkupType>();
+        protected HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
+
+        static PropManager PropManager => Singleton<PropManager>.instance;
+
+        public bool TryGetMarkup(ushort id, out MarkupType markup) => Markups.TryGetValue(id, out markup);
+        public MarkupType Get(ushort id)
+        {
+            if (!Markups.TryGetValue(id, out MarkupType markup))
+            {
+                markup = NewMarkup(id);
+                Markups[id] = markup;
+            }
+
+            return markup;
+        }
+        protected abstract MarkupType NewMarkup(ushort id);
+
+        public void Update()
+        {
+            var needUpdate = NeedUpdate.ToArray();
+            NeedUpdate.Clear();
+            foreach (var nodeId in needUpdate)
+            {
+                if (Markups.TryGetValue(nodeId, out MarkupType markup))
+                    markup.Update();
+            }
+        }
+        public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
+        {
+            if (data.m_nextInstance != ushort.MaxValue)
+                return;
+
+            if (!TryGetMarkup(id, out MarkupType markup))
+                return;
+
+            if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
+                return;
+
+            if (markup.NeedRecalculateDrawData)
+                markup.RecalculateDrawData();
+
+            if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
+                Render(markup, data, MarkupLOD.LOD0);
+            else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
+                Render(markup, data, MarkupLOD.LOD1);
+        }
+        private void Render(MarkupType markup, RenderManager.Instance data, MarkupLOD lod)
+        {
+            foreach (var item in markup.DrawData[lod])
+                item.Draw(data);
+        }
+
+        public void AddToUpdate(ushort id)
+        {
+            if (Markups.ContainsKey(id))
+                NeedUpdate.Add(id);
+        }
+        public void AddAllToUpdate() => NeedUpdate.AddRange(Markups.Keys);
+        public void Remove(ushort id) => Markups.Remove(id);
+        public void Clear()
+        {
+            Mod.Logger.Debug($"{nameof(MarkupManager)}.{nameof(Clear)}");
+            NeedUpdate.Clear();
+            Markups.Clear();
+        }
+        public IEnumerable<XElement> ToXml() => Markups.Values.Select(m => m.ToXml());
+        public abstract void FromXml(XElement config, ObjectsMap map, Version version);
+    }
+    public class NodeMarkupManager : MarkupManager<NodeMarkup>
+    {
+        protected override NodeMarkup NewMarkup(ushort id) => new NodeMarkup(id);
+
+        public override void FromXml(XElement config, ObjectsMap map, Version version)
+        {
+            foreach (var markupConfig in config.Elements(NodeMarkup.XmlName))
+            {
+                if (NodeMarkup.FromXml(version, markupConfig, map, out NodeMarkup markup))
+                    NeedUpdate.Add(markup.Id);
+                else
+                    MarkupManager.LoadErrors += 1;
+            }
+        }
+    }
+    public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
+    {
+        protected override SegmentMarkup NewMarkup(ushort id) => new SegmentMarkup(id);
+
+        public override void FromXml(XElement config, ObjectsMap map, Version version)
+        {
+            foreach (var markupConfig in config.Elements(SegmentMarkup.XmlName))
+            {
+                if (SegmentMarkup.FromXml(version, markupConfig, map, out SegmentMarkup markup))
+                    NeedUpdate.Add(markup.Id);
+                else
+                    MarkupManager.LoadErrors += 1;
+            }
+        }
+    }
+
     public enum MaterialType
     {
         RectangleLines,
         RectangleFillers,
         Triangle,
         Pavement,
+        Grass,
     }
 }

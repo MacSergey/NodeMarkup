@@ -58,7 +58,17 @@ namespace NodeMarkup.Tools
             foreach (var source in SourceEnters)
             {
                 var enterTarget = source.Target as TargetEnter;
-                map.AddSegment(source.Enter.Id, enterTarget?.Enter.Id ?? 0);
+                var sourceId = source.Enter.Id;
+                var targetId = enterTarget?.Enter.Id ?? 0;
+                switch (Markup.Type)
+                {
+                    case Markup.MarkupType.NodeMarkup:
+                        map.AddSegment(sourceId, targetId);
+                        break;
+                    case Markup.MarkupType.SegmentMarkup:
+                        map.AddNode(sourceId, targetId);
+                        break;
+                }
 
                 if (enterTarget != null)
                 {

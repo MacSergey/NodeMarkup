@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utils;
@@ -17,6 +18,7 @@ namespace NodeMarkup.UI.Editors
 
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
+        public override Type SupportType { get; } = typeof(ISupportPoints);
 
         private FloatPropertyPanel Offset { get; set; }
         protected override void FillItems()
@@ -33,6 +35,7 @@ namespace NodeMarkup.UI.Editors
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
+            Offset.WheelTip = WheelTip;
             Offset.Init();
             Offset.Value = EditObject.Offset;
             Offset.OnValueChanged += OffsetChanged;

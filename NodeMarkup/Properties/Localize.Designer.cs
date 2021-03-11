@@ -543,11 +543,47 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a rail&apos;s first point or line as rail.
+        /// </summary>
+        public static string FillerEditor_InfoSelectRailFirst {
+            get {
+                return ResourceManager.GetString("FillerEditor_InfoSelectRailFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a rail&apos;s second point.
+        /// </summary>
+        public static string FillerEditor_InfoSelectRailSecond {
+            get {
+                return ResourceManager.GetString("FillerEditor_InfoSelectRailSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Chevron.
         /// </summary>
         public static string FillerStyle_Chevron {
             get {
                 return ResourceManager.GetString("FillerStyle_Chevron", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Elevation.
+        /// </summary>
+        public static string FillerStyle_Elevation {
+            get {
+                return ResourceManager.GetString("FillerStyle_Elevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Grass.
+        /// </summary>
+        public static string FillerStyle_Grass {
+            get {
+                return ResourceManager.GetString("FillerStyle_Grass", resourceCulture);
             }
         }
         
@@ -566,6 +602,15 @@ namespace NodeMarkup {
         public static string FillerStyle_Group {
             get {
                 return ResourceManager.GetString("FillerStyle_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string FillerStyle_Pavement {
+            get {
+                return ResourceManager.GetString("FillerStyle_Pavement", resourceCulture);
             }
         }
         
@@ -914,11 +959,38 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Elevation.
+        /// </summary>
+        public static string LineStyle_Elevation {
+            get {
+                return ResourceManager.GetString("LineStyle_Elevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Empty.
         /// </summary>
         public static string LineStyle_Empty {
             get {
                 return ResourceManager.GetString("LineStyle_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Grass.
+        /// </summary>
+        public static string LineStyle_Grass {
+            get {
+                return ResourceManager.GetString("LineStyle_Grass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string LineStyle_Pavement {
+            get {
+                return ResourceManager.GetString("LineStyle_Pavement", resourceCulture);
             }
         }
         
@@ -1457,15 +1529,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
-        /// </summary>
-        public static string Panel_Caption {
-            get {
-                return ResourceManager.GetString("Panel_Caption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Clear markings.
         /// </summary>
         public static string Panel_ClearMarking {
@@ -1511,6 +1574,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit node #{0} markings.
+        /// </summary>
+        public static string Panel_NodeCaption {
+            get {
+                return ResourceManager.GetString("Panel_NodeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Panel_PasteMarking {
@@ -1534,6 +1606,15 @@ namespace NodeMarkup {
         public static string Panel_SaveAsPreset {
             get {
                 return ResourceManager.GetString("Panel_SaveAsPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit segment #{0} markings.
+        /// </summary>
+        public static string Panel_SegmentCaption {
+            get {
+                return ResourceManager.GetString("Panel_SegmentCaption", resourceCulture);
             }
         }
         
@@ -2125,6 +2206,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на LOD distance.
+        /// </summary>
+        public static string Settings_LODDistance {
+            get {
+                return ResourceManager.GetString("Settings_LODDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Notifications.
         /// </summary>
         public static string Settings_Notifications {
@@ -2641,11 +2731,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Follow lines.
+        /// </summary>
+        public static string StyleOption_FollowLines {
+            get {
+                return ResourceManager.GetString("StyleOption_FollowLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invert.
         /// </summary>
         public static string StyleOption_Invert {
             get {
                 return ResourceManager.GetString("StyleOption_Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Left rail.
+        /// </summary>
+        public static string StyleOption_LeftRail {
+            get {
+                return ResourceManager.GetString("StyleOption_LeftRail", resourceCulture);
             }
         }
         
@@ -2736,6 +2844,15 @@ namespace NodeMarkup {
         public static string StyleOption_ParallelToLanes {
             get {
                 return ResourceManager.GetString("StyleOption_ParallelToLanes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right rail.
+        /// </summary>
+        public static string StyleOption_RightRail {
+            get {
+                return ResourceManager.GetString("StyleOption_RightRail", resourceCulture);
             }
         }
         
@@ -3320,20 +3437,21 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Segment #{0}
+        ///Click to edit markings.
+        /// </summary>
+        public static string Tool_InfoHoverSegment {
+            get {
+                return ResourceManager.GetString("Tool_InfoHoverSegment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Inverse order.
         /// </summary>
         public static string Tool_InfoInverseOrder {
             get {
                 return ResourceManager.GetString("Tool_InfoInverseOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a node to change markings.
-        /// </summary>
-        public static string Tool_InfoNode {
-            get {
-                return ResourceManager.GetString("Tool_InfoNode", resourceCulture);
             }
         }
         
@@ -3546,6 +3664,15 @@ namespace NodeMarkup {
         public static string Tool_RoadsWasChangedMessage {
             get {
                 return ResourceManager.GetString("Tool_RoadsWasChangedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select a node or segment to change markings.
+        /// </summary>
+        public static string Tool_SelectInfo {
+            get {
+                return ResourceManager.GetString("Tool_SelectInfo", resourceCulture);
             }
         }
     }

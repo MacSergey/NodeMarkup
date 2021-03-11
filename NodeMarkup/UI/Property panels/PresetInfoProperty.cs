@@ -1,4 +1,6 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -17,7 +19,7 @@ namespace NodeMarkup.UI
         protected virtual Color32 TextColor => Color.white;
 
         private static Material Material { get; } = new Material(Shader.Find("UI/Default UI Shader"));
-        private static Texture2D Empty { get; } = RenderHelper.CreateTexture(400, 400, Color.black);
+        private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
         private UILabel NoScreenshot { get; set; }
         private UIPanel Titles { get; set; }
@@ -79,7 +81,7 @@ namespace NodeMarkup.UI
             Screenshot = AddUIComponent<CustomUITextureSprite>();
             Screenshot.material = Material;
             Screenshot.size = new Vector2(Size, Size);
-            Screenshot.relativePosition = new Vector2(0, 5);
+            Screenshot.relativePosition = new Vector2(ItemsPadding, 5);
         }
         private void AddNoScreenshot()
         {
@@ -176,7 +178,7 @@ namespace NodeMarkup.UI
         {
             if (Screenshot != null && Titles != null && Values != null)
             {
-                var space = Mathf.Max(width - Screenshot.width - Titles.width - Values.width, 0f) / 2;
+                var space = Mathf.Max(width - Screenshot.width - Screenshot.relativePosition.x - Titles.width - Values.width, 0f) / 2;
                 Values.relativePosition = new Vector2(width - Values.width - space, (height - Values.height) / 2);
                 Titles.relativePosition = new Vector2(Values.relativePosition.x - Titles.width, (height - Titles.height) / 2);
 

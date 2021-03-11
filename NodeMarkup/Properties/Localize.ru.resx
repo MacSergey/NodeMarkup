@@ -121,7 +121,7 @@
     <value>Удалить {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить {0} {1}?</value>
+    <value>Вы действительно хотите удалить {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Крутите колесико для изменения
@@ -182,7 +182,7 @@ Shift X10, Ctrl X0.1</value>
     <value>До</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Пересеч. с {0}</value>
+    <value>Пересечение с {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Собственная точка {0}</value>
@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Это BETA версия, стабильная работа и отсутствие ошибок не гарантировано!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Редактирование перекрестка #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -282,7 +282,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Быстрая настройка правил</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Дистанция отрисовки</value>
+    <value>Дистанция отображения</value>
   </data>
   <data name="Settings_Shortcuts" xml:space="preserve">
     <value>Горячие клавиши</value>
@@ -321,20 +321,17 @@ Shift X10, Ctrl X0.1</value>
     <value>Перекресток #{0}
 Нажмите для редактирования разметки</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Выберите перекресток для редактирования разметки</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Выберите перекресток или сегмент
+для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value>Выберите конечную точку для обычной или стоп линии
+Потяните из перекрестка для перпендикулярной линии</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
-для создания или удаления линии
-+Ctrl для перемещения точки
-Зажмите Alt для создания заполнителя
-Зажмите Shift для создания перехода</value>
+для создания или удаления линии</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Что нового в {0}</value>
@@ -492,7 +489,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Список шаблонов пуст.
-Для создания шаблона нажмите «{0}» у стиля линии.</value>
+Для создания шаблона нажмите «{0}» у стиля линии или перехода или заполнителя.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Активировать ключом</value>
@@ -601,7 +598,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Немецкий</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Английский</value>
+    <value>Английский США</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Испанский</value>
@@ -637,9 +634,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Язык</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Нажмите для создания перпендикулярной линии
-+Shift - Сплошная
-+Ctrl - Двойная</value>
+    <value>Нажмите для создания перпендикулярной линии</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Нажмите для удаления перпендикулярной линии</value>
@@ -1125,7 +1120,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Быстрая настройка границ перехода</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Разметка под рельсами (Изменения вступят в силу после перезагрузки)</value>
+    <value>Разметка под рельсами</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Предупреждение: Эта опция меняет порядок отрисовки игровых объектов</value>
@@ -1355,5 +1350,49 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>всех</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Редактирование сегмента #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Трава</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Тротуар</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Подъем</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Подъем</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Трава</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Тротуар</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Дистанция LOD</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Сегмент #{0}
+Нажмите для редактирования разметки</value>
+  </data>
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>Следовать за линиями</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Левая направляющая</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Правая направляющая</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Выберете первую точку направляющей
+или линию в линию в качестве направляющей</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Выберете вторую точку направляющей</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -18,7 +19,19 @@ namespace NodeMarkup.Tools
             if (IsSelectPoint)
                 return IsHoverPoint ? base.GetToolInfo() : Localize.Tool_InfoSelectLineEndPoint;
             else
-                return $"{Localize.Tool_InfoSelectLineStartPoint}\n{Localize.Tool_InfoStartDragPointMode}\n{Localize.Tool_InfoStartCreateFiller}\n{Localize.Tool_InfoStartCreateCrosswalk}";
+            {
+                var tips = new List<string>()
+                {
+                    Localize.Tool_InfoSelectLineStartPoint,
+                    Localize.Tool_InfoStartDragPointMode
+                };
+                if (Markup is ISupportFillers)
+                    tips.Add(Localize.Tool_InfoStartCreateFiller);
+                if (Markup is ISupportCrosswalks)
+                    tips.Add(Localize.Tool_InfoStartCreateCrosswalk);
+
+                return string.Join("\n", tips.ToArray());
+            }
         }
         public override void OnToolUpdate()
         {
@@ -26,19 +39,19 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint)
                 return;
-            else if (NodeMarkupTool.OnlyAltIsPressed)
+            else if (InputExtension.OnlyAltIsPressed && Markup is ISupportFillers)
             {
                 Tool.SetMode(ToolModeType.MakeFiller);
                 if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
-            else if (NodeMarkupTool.OnlyShiftIsPressed)
+            else if (InputExtension.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
         }
 
         public override void OnMouseDown(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && NodeMarkupTool.CtrlIsPressed)
+            if (!IsSelectPoint && IsHoverPoint && InputExtension.CtrlIsPressed)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -55,13 +68,13 @@ namespace NodeMarkup.Tools
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
                     Tool.DeleteItem(line, () =>
                     {
-                        Tool.Markup.RemoveConnect(line);
+                        Tool.Markup.RemoveLine(line);
                         Panel.UpdatePanel();
                     });
                 else
                 {
                     var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
-                    var newLine = Tool.Markup.AddConnection(pointPair, lineType);
+                    var newLine = Tool.Markup.AddLine(pointPair, lineType);
                     Panel.EditLine(newLine);
                 }
 
@@ -75,6 +88,9 @@ namespace NodeMarkup.Tools
 
             if (ignore != null && ignore.Enter == enter)
             {
+                if ((Markup.SupportLines & MarkupLine.LineType.Stop) == 0)
+                    yield break;
+
                 var ignoreIdx = ignore.Num - 1;
                 var leftIdx = ignoreIdx;
                 var rightIdx = ignoreIdx;
@@ -151,7 +167,7 @@ namespace NodeMarkup.Tools
             };
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Green;
+            var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             NodeMarkupTool.RenderBezier(cameraInfo, bezier, color);
@@ -159,7 +175,7 @@ namespace NodeMarkup.Tools
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistConnection(pointPair) ? Colors.Red : Colors.Purple;
+            var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Purple;
 
             var lineBezier = new Bezier3()
             {

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -41,6 +42,12 @@ namespace NodeMarkup.Tools
         {
             DragPoint.Enter.Render(cameraInfo, Colors.Hover, 2f);
             DragPoint.Render(cameraInfo);
+
+            //if(DragPoint.Markup is Manager.NodeMarkup markup)
+            //{
+            //    foreach (var line in markup.Contour)
+            //        line.Render(cameraInfo, Colors.Purple);
+            //}
         }
     }
 }

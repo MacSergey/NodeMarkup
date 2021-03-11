@@ -11,16 +11,20 @@ namespace NodeMarkup.UI
 {
     public class NodeMarkupButton : UIButton
     {
-        const string CONTAINING_PANEL_NAME = "RoadsOptionPanel";
+        private static string RoadsOptionPanel => nameof(RoadsOptionPanel);
         private static int ButtonSize => 31;
         private static Vector2 ButtonPosition => new Vector3(64, 38);
-        public static NodeMarkupButton Instance { get; private set; }
 
-        static UIComponent GetContainingPanel()
+        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result)
         {
-            var ret = UIUtils.FindComponent<UIComponent>(CONTAINING_PANEL_NAME, null, UIUtils.FindOptions.NameContains);
-            return ret ?? throw new Exception($"Could not find {CONTAINING_PANEL_NAME}");
+            if (__result == null || templateName != RoadsOptionPanel || __result.component.Find<NodeMarkupButton>(nameof(NodeMarkupButton)) != null)
+                return;
+
+            Mod.Logger.Debug($"Create button");
+            __result.component.AddUIComponent<NodeMarkupButton>();
+            Mod.Logger.Debug($"Button created");
         }
+
         public override void Start()
         {
             atlas = TextureUtil.Atlas;
@@ -49,35 +53,17 @@ namespace NodeMarkup.UI
             else if (!enable && state == ButtonState.Focused)
                 state = ButtonState.Normal;
         }
-        public static void CreateButton()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(CreateButton)}");
-            Instance = GetContainingPanel().AddUIComponent<NodeMarkupButton>();
-            Logger.LogDebug($"Button created");
-        }
-        public static void RemoveButton()
-        {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(RemoveButton)}");
-
-            if (Instance != null)
-            {
-                GetContainingPanel().RemoveUIComponent(Instance);
-                Destroy(Instance);
-                Instance = null;
-                Logger.LogDebug($"Button removed");
-            }
-        }
 
         protected override void OnClick(UIMouseEventParameter p)
         {
-            Logger.LogDebug($"{nameof(NodeMarkupButton)}.{nameof(OnClick)}");
+            Mod.Logger.Debug($"On button click");
 
             base.OnClick(p);
             NodeMarkupTool.Instance.ToggleTool();
         }
         protected override void OnTooltipEnter(UIMouseEventParameter p)
         {
-            tooltip = $"{Mod.StaticName} ({NodeMarkupTool.ActivationShortcut})";
+            tooltip = $"{Mod.ShortName} ({NodeMarkupTool.ActivationShortcut})";
             base.OnTooltipEnter(p);
         }
     }

@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter)
+            if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
             {
                 var connectLine = NodeMarkupTool.MouseWorldPosition - SelectPoint.Position;
                 if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(SelectPoint.Direction.XZ(), connectLine.XZ()) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
@@ -54,16 +55,16 @@ namespace NodeMarkup.Tools
         public override string GetToolInfo()
         {
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var exist = Tool.Markup.ExistConnection(pointPair);
+            var exist = Tool.Markup.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
-                return exist ? Localize.Tool_InfoDeleteStopLine : GetCreateToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);
+                return exist ? Localize.Tool_InfoDeleteStopLine : NodeMarkupTool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);
             else if (pointPair.IsCrosswalk)
-                return exist ? Localize.Tool_InfoDeleteCrosswalk : GetCreateToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk);
+                return exist ? Localize.Tool_InfoDeleteCrosswalk : NodeMarkupTool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk);
             else if (pointPair.IsNormal)
-                return exist ? Localize.Tool_InfoDeleteNormalLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine);
+                return exist ? Localize.Tool_InfoDeleteNormalLine : NodeMarkupTool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine);
             else
-                return exist ? Localize.Tool_InfoDeleteLine : GetCreateToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
+                return exist ? Localize.Tool_InfoDeleteLine : NodeMarkupTool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
         }
         public override void OnPrimaryMouseClicked(Event e)
         {
@@ -80,7 +81,7 @@ namespace NodeMarkup.Tools
             else
             {
                 Tool.SetMarkup(null);
-                Tool.SetMode(ToolModeType.SelectNode);
+                Tool.SetMode(ToolModeType.Select);
             }
         }
 

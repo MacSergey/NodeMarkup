@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -23,8 +24,8 @@ namespace NodeMarkup.UI.Editors
         private StyleHeaderPanel Header { get; set; }
         private ErrorTextProperty Error { get; set; }
         private WarningTextProperty Warning { get; set; }
-        public MarkupLineSelectPropertyPanel From { get; private set; }
-        public MarkupLineSelectPropertyPanel To { get; private set; }
+        public RuleEdgeSelectPropertyPanel From { get; private set; }
+        public RuleEdgeSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -46,6 +47,7 @@ namespace NodeMarkup.UI.Editors
 
             AddStyleTypeProperty();
             AddStyleProperties();
+            SetEven();
 
             base.Init();
         }
@@ -90,9 +92,9 @@ namespace NodeMarkup.UI.Editors
             Warning.Init();
         }
 
-        private MarkupLineSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
+        private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
         {
-            var edgeProperty = ComponentPool.Get<MarkupLineSelectPropertyPanel>(this);
+            var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this);
             edgeProperty.Text = text;
             edgeProperty.Position = position;
             edgeProperty.Init();
@@ -101,7 +103,7 @@ namespace NodeMarkup.UI.Editors
             edgeProperty.OnLeave += Editor.LeaveRuleEdge;
             return edgeProperty;
         }
-        private void OnSelectPanel(MarkupLineSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
+        private void OnSelectPanel(RuleEdgeSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
 
         private void FillEdges()
         {
@@ -109,15 +111,15 @@ namespace NodeMarkup.UI.Editors
             FillEdge(To, ToChanged, Rule.To);
             Warning.isVisible = Settings.ShowPanelTip && !Editor.CanDivide;
         }
-        private void FillEdge(MarkupLineSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
+        private void FillEdge(RuleEdgeSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
         {
             if (panel == null)
                 return;
 
-            panel.OnSelectChanged -= action;
+            panel.OnValueChanged -= action;
             panel.Clear();
             panel.AddRange(Editor.SupportPoints);
-            panel.SelectedObject = value;
+            panel.Value = value;
 
             if (Settings.ShowPanelTip && Line.IsSupportRules)
             {
@@ -130,7 +132,7 @@ namespace NodeMarkup.UI.Editors
                 panel.isVisible = Editor.CanDivide;
             }
 
-            panel.OnSelectChanged += action;
+            panel.OnValueChanged += action;
         }
         private void AddStyleTypeProperty()
         {
@@ -153,9 +155,11 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleProperties()
         {
-            StyleProperties = Rule.Style.GetUIComponents(Rule, this, Editor.StopScroll, Editor.StartScroll);
-            if (StyleProperties.FirstOrDefault() is ColorPropertyPanel colorProperty)
+            StyleProperties = Rule.Style.GetUIComponents(Rule.Line, this);
+            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
+
+            Editor.SetStopScroll(StyleProperties);
         }
 
         private void ClearStyleProperties()
@@ -176,19 +180,20 @@ namespace NodeMarkup.UI.Editors
             if ((Rule.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
                 return;
 
-            Rule.Style = style.CopyLineStyle();
+            Rule.Style = style.CopyStyle();
             Style.SelectedObject = Rule.Style.Type;
 
             Editor.RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         private void OnSelectTemplate(StyleTemplate template)
         {
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = Rule.Style.CopyLineStyle();
+        private void CopyStyle() => Buffer = Rule.Style.CopyStyle();
         private void PasteStyle()
         {
             if (Buffer is LineStyle style)
@@ -209,12 +214,14 @@ namespace NodeMarkup.UI.Editors
             Editor.RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
+            SetEven();
         }
         public void Refresh()
         {
             Error.isVisible = Rule.IsOverlapped;
             FillEdges();
         }
+        private void SetEven() => Editor.SetEven(this);
         protected override void OnMouseEnter(UIMouseEventParameter p)
         {
             base.OnMouseEnter(p);

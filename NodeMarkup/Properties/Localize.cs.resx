@@ -121,7 +121,7 @@
     <value>Odstranit {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit {0} {1}?</value>
+    <value>Opravdu chcete odstranit {0} "{1}"?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Použijte kolečko myši pro změnu hodnoty
@@ -194,10 +194,10 @@ Shift ×10, Ctrl ×0.1</value>
     <value>Dvojitá přerušovaná</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Dvojitá nepřerušovaná</value>
+    <value>Dvojitá plná</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
     <value>Ne</value>
@@ -214,7 +214,7 @@ Shift ×10, Ctrl ×0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>Toto je BETA verze, mohou se zde vyskytovat chyby a stabilita není zaručena!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Upravit značení křižovatky #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -321,26 +321,19 @@ Původní data připíší všechna existující značení.</value>
     <value>Křižovatka #{0}
 Klikněte pro změnu značení</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Vyberte křižovatku pro změnu značení</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte koncový bod
-+Shift - plná čára
-+Ctrl - dvojitá čára</value>
+    <value>Vyberte bod pro vytvoření čáry
+Táhněte za bod pro vytvoření kolmé čáry</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření
-nebo odstranění čáry
-+Ctrl pro posunutí bodu
-+Alt pro vytvoření výplně
-+Shift pro vytvoření přechodu</value>
+    <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
   </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Zobrazit novinky</value>
+    <value>Zobrazovat novinky</value>
   </data>
   
   <data name="Settings_Restore" xml:space="preserve">
@@ -419,7 +412,7 @@ nebo odstranění čáry
     <value>Výchozí</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Nepřerušovná</value>
+    <value>Plná</value>
   </data>
   
   
@@ -467,7 +460,7 @@ Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Nejsou vytvořeny žádné šablony.
-Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry.</value>
+Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry, přechodu nebo výplně.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivujte klávesou</value>
@@ -576,7 +569,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Němčina</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Angličtina</value>
+    <value>Anglicky US</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Španělština</value>
@@ -612,9 +605,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Jazyk</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klikněte pro vytvoření kolmé čáry
-+Shift - plná
-+Ctrl - dvojitá</value>
+    <value>Klikněte pro vytvoření kolmé čáry</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klikněte pro odstranění kolmé čáry</value>
@@ -1063,7 +1054,7 @@ Chcete nastavit předchozí značení manuálně?</value>
     <value>Rychlé nastavení krajů přechodu</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Značení pod kolejemi (po restartu)</value>
+    <value>Značení pod kolejemi</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
@@ -1265,6 +1256,39 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Neznámý autor</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Zlepšení chybových zpráv o načítání dat.
+- Zlepšení lokalizací.</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>vše</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Upravit značení silnice #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Tráva</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Beton</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Vyvýšení</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Vyvýšení</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Tráva</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Beton</value>
+  </data>
+  
+  
+  
+  
+  
   
   
 </root>

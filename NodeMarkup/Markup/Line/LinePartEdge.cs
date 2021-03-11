@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Utils;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,10 +118,11 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalk Crosswalk => CrosswalkLine.Crosswalk;
         public BorderPosition Border { get; }
 
-        public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalkLine, BorderPosition border) : base(crosswalkLine.Trajectory.Position(crosswalkLine.GetT(border)))
+        public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalkLine, BorderPosition border) : base()
         {
             CrosswalkLine = crosswalkLine;
             Border = border;
+            Update();
         }
 
         public override bool GetT(MarkupLine line, out float t)
@@ -136,7 +138,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-
+        public override void Update() => Init(CrosswalkLine.Trajectory.Position(CrosswalkLine.GetT(Border)));
         public override bool Equals(ISupportPoint other) => other is CrosswalkBorderEdge otherBorder && otherBorder.Border == Border;
         public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
 

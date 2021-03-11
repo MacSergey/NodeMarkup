@@ -2,12 +2,14 @@
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -15,7 +17,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class Template : IDeletable, IToXml
+    public abstract class Template : IDeletable, ISupport, IToXml
     {
         public static string XmlName { get; } = "T";
 
@@ -113,13 +115,14 @@ namespace NodeMarkup.Manager
 
         private Texture2D GetTexture(string name)
         {
-            var background = TextureUtil.LoadTextureFromAssembly(name);
-            var logo = TextureUtil.LoadTextureFromAssembly(Style.Type.ToString());
+            var assembly = Assembly.GetExecutingAssembly();
+            var background = assembly.LoadTextureFromAssembly(name);
+            var logo = assembly.LoadTextureFromAssembly(Style.Type.ToString());
 
             var widthShift = (background.width - logo.width) / 2;
             var heightShift = (background.height - logo.height) / 2;
 
-            var sc = (Color)Style.Color.GetStyleIconColor();
+            var sc = (Color)Style.Color.Value.GetStyleIconColor();
 
             for (var i = 0; i < logo.width; i += 1)
             {
@@ -239,7 +242,7 @@ namespace NodeMarkup.Manager
 
         public override bool FromXml(XElement config)
         {
-            if (base.FromXml(config) && config.Element(Markup.XmlName) is XElement data)
+            if (base.FromXml(config) && config.Element(NodeMarkup.XmlName) is XElement data)
             {
                 Data = data;
                 Enters = config.Elements(Enter.XmlName).Select(c => EnterData.FromXml(c)).ToArray();
@@ -298,7 +301,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Logger.LogError("Could not get template screenshot", error);
+                Mod.Logger.Error("Could not get template screenshot", error);
                 return null;
             }
         }

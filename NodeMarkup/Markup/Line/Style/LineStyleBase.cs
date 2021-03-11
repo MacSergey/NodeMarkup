@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -19,115 +21,113 @@ namespace NodeMarkup.Manager
     public interface ICrosswalkStyle : ILineStyle { }
     public interface IDashedLine
     {
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
+        PropertyValue<float> DashLength { get; }
+        PropertyValue<float> SpaceLength { get; }
     }
     public interface IDoubleLine
     {
-        float Offset { get; set; }
+        PropertyValue<float> Offset { get; }
     }
     public interface IDoubleAlignmentLine : IDoubleLine
     {
-        LineStyle.StyleAlignment Alignment { get; set; }
+        PropertyEnumValue<LineStyle.StyleAlignment> Alignment { get; }
     }
     public interface IAsymLine
     {
-        bool Invert { get; set; }
+        PropertyBoolValue Invert { get; }
     }
-    public interface ISharkLIne
+    public interface ISharkLine
     {
-        float Base { get; set; }
-        float Height { get; set; }
-        float Space { get; set; }
+        PropertyValue<float> Base { get; }
+        PropertyValue<float> Height { get; }
+        PropertyValue<float> Space { get; }
     }
     public interface IParallel
     {
-        bool Parallel { get; set; }
+        PropertyBoolValue Parallel { get; }
     }
     public interface IDoubleCrosswalk
     {
-        float Offset { get; set; }
+        PropertyValue<float> Offset { get; }
     }
     public interface ILinedCrosswalk
     {
-        float LineWidth { get; set; }
+        PropertyValue<float> LineWidth { get; }
     }
     public interface IDashedCrosswalk
     {
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
+        PropertyValue<float> DashLength { get; }
+        PropertyValue<float> SpaceLength { get; }
     }
 
-    public abstract class LineStyle : Style
+    public abstract class LineStyle : Style<LineStyle>
     {
-        public static float DefaultDashLength { get; } = 1.5f;
-        public static float DefaultSpaceLength { get; } = 1.5f;
-        public static float DefaultOffset { get; } = 0.15f;
-
-        public static float DefaultSharkBaseLength { get; } = 0.5f;
-        public static float DefaultSharkSpaceLength { get; } = 0.5f;
-        public static float DefaultSharkHeight { get; } = 0.6f;
-
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory);
-        public override Style Copy() => CopyLineStyle();
-        public abstract LineStyle CopyLineStyle();
+        public abstract IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod);
 
-        protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected virtual float LodLength => 0.5f;
+        protected virtual float LodWidth => 0.15f;
+        protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
+
+        protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelTip = Editor.WheelTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0.05f;
             offsetProperty.Init();
             offsetProperty.Value = doubleStyle.Offset;
-            offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset = value;
-            AddOnHoverLeave(offsetProperty, onHover, onLeave);
+            offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset.Value = value;
+
             return offsetProperty;
         }
-        protected static FloatPropertyPanel AddBaseProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
             var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
+            baseProperty.WheelTip = Editor.WheelTip;
             baseProperty.CheckMin = true;
             baseProperty.MinValue = 0.3f;
             baseProperty.Init();
             baseProperty.Value = sharkTeethStyle.Base;
-            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base = value;
-            AddOnHoverLeave(baseProperty, onHover, onLeave);
+            baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base.Value = value;
+ 
             return baseProperty;
         }
-        protected static FloatPropertyPanel AddHeightProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
             var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
+            heightProperty.WheelTip = Editor.WheelTip;
             heightProperty.CheckMin = true;
             heightProperty.MinValue = 0.3f;
             heightProperty.Init();
             heightProperty.Value = sharkTeethStyle.Height;
-            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height = value;
-            AddOnHoverLeave(heightProperty, onHover, onLeave);
+            heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height.Value = value;
+
             return heightProperty;
         }
-        protected static FloatPropertyPanel AddSpaceProperty(ISharkLIne sharkTeethStyle, UIComponent parent, Action onHover, Action onLeave)
+        protected static FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
             var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
+            spaceProperty.WheelTip = Editor.WheelTip;
             spaceProperty.CheckMin = true;
             spaceProperty.MinValue = 0.1f;
             spaceProperty.Init();
             spaceProperty.Value = sharkTeethStyle.Space;
-            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space = value;
-            AddOnHoverLeave(spaceProperty, onHover, onLeave);
+            spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space.Value = value;
+
             return spaceProperty;
         }
         protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
@@ -136,7 +136,7 @@ namespace NodeMarkup.Manager
             alignmentProperty.Text = Localize.StyleOption_Alignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;
-            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment = value;
+            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
             return alignmentProperty;
         }
         public enum StyleAlignment
@@ -151,24 +151,43 @@ namespace NodeMarkup.Manager
             Right
         }
     }
+    public abstract class LineStyle<StyleType> : LineStyle
+        where StyleType : LineStyle<StyleType>
+    {
+        public LineStyle(Color32 color, float width) : base(color, width) { }
 
-    public abstract class RegularLineStyle : LineStyle
+        public virtual void CopyTo(StyleType target) => base.CopyTo(target);
+        public override LineStyle CopyStyle() => CopyLineStyle();
+        public abstract StyleType CopyLineStyle();
+    }
+
+    public abstract class RegularLineStyle : LineStyle<RegularLineStyle>
     {
         static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
         {
             {RegularLineType.Solid, new SolidLineStyle(DefaultColor, DefaultWidth)},
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
-            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultOffset)},
-            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
-            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultOffset)},
+            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultDoubleOffset)},
+            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
+            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
+            {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
+            //{RegularLineType.Grass, new GrassLineStyle(Default3DWidth, Default3DHeigth) },
         };
-        public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyRegularLineStyle() : null;
+        public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyLineStyle() : null;
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public override LineStyle CopyLineStyle() => CopyRegularLineStyle();
-        public abstract RegularLineStyle CopyRegularLineStyle();
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, isTemplate);
+            if (editObject is MarkupRegularLine line)
+                GetUIComponents(line, components, parent, isTemplate);
+            else if(isTemplate)
+                GetUIComponents(null, components, parent, isTemplate);
+            return components;
+        }
+        public virtual void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public enum RegularLineType
         {
@@ -190,12 +209,18 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
 
+            [Description(nameof(Localize.LineStyle_Pavement))]
+            Pavement = StyleType.LinePavement,
+
+            //[Description(nameof(Localize.LineStyle_Grass))]
+            //Grass = StyleType.LineGrass,
+
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
             Empty = StyleType.EmptyLine
         }
     }
-    public abstract class StopLineStyle : LineStyle
+    public abstract class StopLineStyle : LineStyle<StopLineStyle>
     {
         public static float DefaultStopWidth { get; } = 0.3f;
         public static float DefaultStopOffset { get; } = 0.3f;
@@ -210,15 +235,23 @@ namespace NodeMarkup.Manager
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
 
-        public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyStopLineStyle() : null;
+        public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyLineStyle() : null;
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public override LineStyle CopyLineStyle() => CopyStopLineStyle();
-        public abstract StopLineStyle CopyStopLineStyle();
+        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
+        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
 
-        public override IEnumerable<MarkupStyleDash> Calculate(MarkupLine line, ILineTrajectory trajectory) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory) : new MarkupStyleDash[0];
-        protected abstract IEnumerable<MarkupStyleDash> Calculate(MarkupStopLine stopLine, ILineTrajectory trajectory);
+        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
+        {
+            var components = base.GetUIComponents(editObject, parent, isTemplate);
+            if (editObject is MarkupStopLine line)
+                GetUIComponents(line, components, parent, isTemplate);
+            else if (isTemplate)
+                GetUIComponents(null, components, parent, isTemplate);
+            return components;
+        }
+        public virtual void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public enum StopLineType
         {

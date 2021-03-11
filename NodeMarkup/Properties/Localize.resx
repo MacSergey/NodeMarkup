@@ -214,7 +214,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_DescriptionBeta" xml:space="preserve">
     <value>This is a BETA version, errors may occur and stability is not guaranteed!</value>
   </data>
-  <data name="Panel_Caption" xml:space="preserve">
+  <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Edit node #{0} markings</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -321,8 +321,8 @@ The restored markings will replace all existing markings.</value>
     <value>Node #{0}
 Click to edit markings</value>
   </data>
-  <data name="Tool_InfoNode" xml:space="preserve">
-    <value>Select a node to change markings</value>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Select a node or segment to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Select endpoint for regular or stop line
@@ -456,16 +456,7 @@ Drag behind point for perpendicular line</value>
     <value>Add new filler</value>
   </data>
   <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-- Added the ability to save templates and presets as asset and share it over Workshop.
-- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-- Added panel tips (can be disable in settings).
-- Added the ability to cut new line by crosswalks (can be disable in settings).
-- Added the ability to change color values with mouse wheel.
-- Added English-UK translation.
-- Fix train and monorail roads (and any else without points).
-- Fix and improve points group overlay.</value>
+    <value>Look for actual beta change log on Discord</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -1358,6 +1349,49 @@ Are you sure you want to have multiple presets with the same name?</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>all</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Edit segment #{0} markings</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Grass</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Elevation</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Elevation</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Grass</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LOD distance</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Click to edit markings</value>
+  </data>
+  <data name="StyleOption_FollowLines" xml:space="preserve">
+    <value>Follow lines</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Left rail</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Right rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Select a rail's first point or line as rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Select a rail's second point</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
     <value>- Update Harmony dependence: resolving conflicts with others mods that use it</value>

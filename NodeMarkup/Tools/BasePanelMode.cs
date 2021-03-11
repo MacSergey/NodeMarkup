@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using System;
@@ -11,7 +12,7 @@ namespace NodeMarkup.Tools
 {
     public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : BaseToolMode
         where EditorType : Editor
-        where PanelType : SelectPropertyPanel<ObjectType>
+        where PanelType : SelectPropertyPanel<ObjectType, PanelType>
     {
         public override ToolModeType Type => ToolModeType.PanelAction;
 
@@ -28,7 +29,6 @@ namespace NodeMarkup.Tools
                 if (_selectPanel != null)
                 {
                     _selectPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    _selectPanel.eventLostFocus -= SelectPanelLeaveFocus;
                     _selectPanel.Selected = false;
                 }
 
@@ -38,7 +38,6 @@ namespace NodeMarkup.Tools
                 {
                     OnSetPanel();
                     _selectPanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    _selectPanel.eventLostFocus += SelectPanelLeaveFocus;
                     _selectPanel.Selected = true;
                 }
             }
@@ -57,11 +56,7 @@ namespace NodeMarkup.Tools
         public override void Deactivate()
         {
             base.Deactivate();
-            if (SelectPanel is PanelType panel)
-            {
-                panel.Selected = true;
-                SelectPanel = null;
-            }
+            SelectPanel = null;
         }
         protected virtual void OnSetPanel() { }
 
@@ -70,7 +65,7 @@ namespace NodeMarkup.Tools
         {
             if (IsHover)
             {
-                SelectPanel.SelectedObject = Hover;
+                SelectPanel.Value = Hover;
                 if (AfterSelectPanel?.Invoke(e) ?? true)
                     Tool.SetDefaultMode();
             }

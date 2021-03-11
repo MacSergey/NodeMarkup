@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -155,7 +156,7 @@ namespace NodeMarkup.Tools
 
         public TargetPoint[] Points { get; }
 
-        public TargetEnter(Enter enter, int num) : base(num, enter.Position.Value)
+        public TargetEnter(Enter enter, int num) : base(num, enter.Position)
         {
             Enter = enter.Data;
             Points = enter.Points.Select((p, i) => new TargetPoint(p, i)).ToArray();
