@@ -379,7 +379,7 @@ namespace NodeMarkup.Manager
                     {
                         if (styleData is IEnumerable<MarkupStylePart> styleDashes)
                             dashes.AddRange(styleDashes);
-                        else
+                        else if(styleData != null)
                             drawData.AddRange(styleData.GetDrawData());
                     }
                 }

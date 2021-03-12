@@ -47,6 +47,9 @@ namespace NodeMarkup.Manager
 
             var pointsGroups = contour.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, lod, (tr) => GetPoint(tr)).ToArray()).ToArray();
             var points = pointsGroups.SelectMany(g => g).ToArray();
+            if (points.Length < 3)
+                return null;
+
             var polygon = new Polygon(points.Select(p => new PolygonPoint(p.x, p.z)));
             P2T.Triangulate(polygon);
             var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
