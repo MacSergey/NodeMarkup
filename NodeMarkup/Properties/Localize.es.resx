@@ -321,7 +321,9 @@ Los datos restaurados reemplazarán todas las marcas existentes.</value>
     <value>Nodo #{0}
 Haga clic para editar las marcas</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Seleccione un nodo o un segmento para editar las marcas</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleccionar punto final para línea normal o transversal
 Arrastre detrás del punto para línea perpendicular</value>
@@ -1259,7 +1261,9 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
     <value>- Mejorados mensajes de errores al cargar datos de marcado.
 - Traducciones fijas y actualizadas.</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>La carga se completó con errores. Fallo al cargar las marcas para todas las {0} intersecciones.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar las marcas del segmento #{0}</value>
   </data>
@@ -1269,16 +1273,40 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Acera</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Elevación</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Elevación</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Césped</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Acera</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Distancia LOD</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segmento #{0}
+Haga clic para editar las marcas</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Sigue las pautas</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Pauta izquierda</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Pauta derecha</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Seleccione el primer punto de la pauta o una línea como pauta</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Seleccione el segundo punto de la pauta</value>
+  </data>
   
   
   

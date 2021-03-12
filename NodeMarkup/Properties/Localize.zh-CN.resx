@@ -1262,7 +1262,10 @@ Shift x10，Ctrl x0.1</value>
     <value>-改善了加载错误弹窗信息
 -纠正及更新了翻译文档</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>导入完毕，但出现了以下错误：
+全部交叉口的地标线导入失败</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>编辑段落 #{0} 的地标线</value>
   </data>
@@ -1308,4 +1311,15 @@ Shift x10，Ctrl x0.1</value>
   </data>
   
   
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>- 添加了在道路节段上创建标线的功能
+- 添加了3D填充图案：路肩及草地
+- 添加了3D线段样式：路肩
+- 添加了条纹和锯齿形填充向边线垂直的功能
+- 添加了地标线的LOD（精细模型可视距离）以提升性能。LOD距离可在设置菜单内更改
+- 添加了对机场滑行道的支持
+- 修复了与其他mod冲突导致工具图标不显示的问题
+- 修复了用滚轮修改数据时滚动窗口的冲突问题
+- 填写数字时既可使用逗号或句号为小数点</value>
+  </data>
 </root>

@@ -1309,7 +1309,10 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>- Informationen bei Ladefehlern korrigiert.
 - Lokalisierungen aktualisiert und verbessert.</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Laden mit Fehlern beendet.
+Die Markierungen von alle Kreuzungen konnten nicht geladen werden.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Markierungen von Segment #{0} bearbeiten</value>
   </data>
@@ -1358,5 +1361,16 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
     <value>- Fehler behoben, bei dem Markierungen aus dem Speicherstand verschwanden</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>- Möglichkeit zum Erstellen von Markierungen auf Segmenten hinzugefügt.
+- 3D Füllungsstil hinzugefügt: "Gehweg" and "Gras".
+- 3D Linienstil hinzugefügt: "Gehweg".
+- "Leitlinien folgen" für die Füllungsstile "Streifen" and "Winkel".
+- Performance-Verbesserung durch LOD (Level Of Detail) für Markierungen. Die Distanzeinstellungen ist in den Optionen zu finden.
+- Unterstützung für Rollbahnen hinzugefügt.
+- Konflikt mit anderen Mods behoben, der dafür sorgen knnte, dass der Button nicht sichtbar war.
+- Konflikt zwischen Scrollbalken und Mausscroll behoben.
+- Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden</value>
   </data>
 </root>
