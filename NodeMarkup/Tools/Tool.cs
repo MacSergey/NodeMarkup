@@ -239,11 +239,12 @@ namespace NodeMarkup.Tools
         {
             var position = GetInfoPosition();
 
+            var isModalShown = UIView.HasModalInput();
             var isToolTipEnable = Settings.ShowToolTip || Mode.Type == ToolModeType.Select;
             var isPanelHover = Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position);
             var isHasText = Mode.GetToolInfo() is string info && !string.IsNullOrEmpty(info);
 
-            if (isToolTipEnable && !isPanelHover && isHasText)
+            if (!isModalShown && isToolTipEnable && !isPanelHover && isHasText)
                 ShowToolInfo(Mode.GetToolInfo(), position);
             else
                 cursorInfoLabel.isVisible = false;

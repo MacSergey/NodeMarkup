@@ -32,7 +32,7 @@ namespace NodeMarkup.UI
         private void AddFileList()
         {
             DropDown = ScrollableContent.AddUIComponent<FileDropDown>();
-            DropDown.SetSettingsStyle(new Vector2(Width - 2 * Padding, 38));
+            DropDown.SetSettingsStyle(new Vector2(DefaultWidth - 2 * Padding, 38));
 
             DropDown.listWidth = (int)DropDown.width;
             DropDown.listHeight = 200;
