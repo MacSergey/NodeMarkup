@@ -33,7 +33,7 @@
 [/list]
 [list]
 [*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][b]Lines and Stop Lines[/b][/url][/h2]
-[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/QiInmaa.png[/img][/url]
+[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/15VfsK5.png[/img][/url]
 
 [*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Fillers][b]Fillers[/b][/url][/h2]
 [url=https://github.com/MacSergey/NodeMarkup/wiki/Fillers][img]https://i.imgur.com/iMLKUdM.png[/img][/url]
