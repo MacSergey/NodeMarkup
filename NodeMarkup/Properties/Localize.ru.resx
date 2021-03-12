@@ -1396,8 +1396,12 @@ Shift X10, Ctrl X0.1</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Выберете вторую точку направляющей</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>- Исправлен конфликт с другими модами использующими зависимость Harmony</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>- Исправлена ситуация когда данные разметки могли пропасть из сохранения</value>
+  </data>
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>- Добавлена возможность делать разметку на сегментах.
 - Добавлены 3D стили для заполнителей: "Тротуар" и "Трава".
