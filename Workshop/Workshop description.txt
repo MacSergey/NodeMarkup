@@ -32,11 +32,8 @@
 [*] Template and Line grouping options
 [/list]
 [list]
-[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][b]Lines[/b][/url][/h2]
-[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/HoxL3DG.png?1[/img][/url]
-
-[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][b]Stop Lines[/b][/url][/h2]
-[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/8ia1lEx.png?1[/img][/url]
+[*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][b]Lines and Stop Lines[/b][/url][/h2]
+[url=https://github.com/MacSergey/NodeMarkup/wiki/Lines][img]https://i.imgur.com/QiInmaa.png[/img][/url]
 
 [*][h2][url=https://github.com/MacSergey/NodeMarkup/wiki/Fillers][b]Fillers[/b][/url][/h2]
 [url=https://github.com/MacSergey/NodeMarkup/wiki/Fillers][img]https://i.imgur.com/jLFH1wu.png?1[/img][/url]
