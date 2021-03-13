@@ -30,7 +30,7 @@ namespace NodeMarkup
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
         protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
-        public override string Id => nameof(NodeMarkup);
+        protected override string ModId => nameof(NodeMarkup);
         protected override List<Version> ModVersions { get; } = new List<Version>
         {
             new Version("1.6"),

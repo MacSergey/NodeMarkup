@@ -85,7 +85,7 @@ namespace NodeMarkup.UI
 
             public void Init(Version version, string message)
             {
-                Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, Mod.IsBeta && version == Mod.Version ? $"{version} [BETA]" : version.ToString());
+                Label = string.Format(NodeMarkup.Localize.Mod_WhatsNewVersion, version == Mod.Version ? Mod.VersionString : version.ToString());
                 Message.text = message;
                 IsMinimize = true;
 

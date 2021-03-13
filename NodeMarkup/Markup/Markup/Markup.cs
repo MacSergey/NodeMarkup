@@ -326,7 +326,7 @@ namespace NodeMarkup.Manager
 
         public void RecalculateAllStyleData()
         {
-#if DEBUG
+#if DEBUG_RECALCULATE
             Mod.Logger.Debug($"Recalculate markup {this}");
 #endif
             LineIntersects.Clear();

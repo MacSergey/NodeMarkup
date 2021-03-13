@@ -54,7 +54,7 @@ namespace NodeMarkup.Manager
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
         public void RecalculateStyleData()
         {
-#if DEBUG
+#if DEBUG_RECALCULATE
             Mod.Logger.Debug($"Recalculate filler {this}");
 #endif
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
