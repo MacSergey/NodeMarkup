@@ -80,7 +80,7 @@ namespace NodeMarkup.Tools
 
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
-        private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
+        //private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
         public IntersectionTemplate MarkupBuffer { get; private set; }
 
         #endregion
@@ -202,13 +202,13 @@ namespace NodeMarkup.Tools
                 NextMode = null;
             }
 
-            if (PauseMenu?.isVisible == true)
-            {
-                PrevTool = null;
-                Disable();
-                UIView.library.Hide("PauseMenu");
-                return;
-            }
+            //if (PauseMenu?.isVisible == true)
+            //{
+            //    PrevTool = null;
+            //    Disable();
+            //    UIView.library.Hide("PauseMenu");
+            //    return;
+            //}
             if ((RenderManager.CurrentCameraInfo.m_layerMask & (3 << 24)) == 0)
             {
                 PrevTool = null;
@@ -283,7 +283,6 @@ namespace NodeMarkup.Tools
 
         #region GUI
 
-        private bool IsMouseDown { get; set; }
         private bool IsMouseMove { get; set; }
         protected override void OnToolGUI(Event e)
         {
@@ -295,7 +294,6 @@ namespace NodeMarkup.Tools
             switch (e.type)
             {
                 case EventType.MouseDown when MouseRayValid && e.button == 0:
-                    IsMouseDown = true;
                     IsMouseMove = false;
                     Mode.OnMouseDown(e);
                     break;
@@ -308,7 +306,6 @@ namespace NodeMarkup.Tools
                         Mode.OnMouseUp(e);
                     else
                         Mode.OnPrimaryMouseClicked(e);
-                    IsMouseDown = false;
                     break;
                 case EventType.MouseUp when MouseRayValid && e.button == 1:
                     Mode.OnSecondaryMouseClicked();
@@ -633,6 +630,17 @@ namespace NodeMarkup.Tools
             RenderManager.OverlayEffect.DrawCircle(cameraInfo, color ?? Colors.White, position, width ?? DefaultWidth, -1f, 1280f, false, alphaBlend ?? DefaultBlend);
 
         #endregion
+
+        public static bool PatchGameKeyShortcutsEscapePrefix()
+        {
+            if (Instance.enabled)
+            {
+                Instance.Disable();
+                return false;
+            }
+            else
+                return true;
+        }
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
 

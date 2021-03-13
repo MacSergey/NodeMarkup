@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using ModsCommon;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace NodeMarkup
             success &= PatchLoadAssetPanelOnLoad();
 
             success &= PatchGeneratedScrollPanelCreateOptionPanel();
+            success &= PatchGameKeyShortcutsEscape();
 
             if (Settings.RailUnderMarking)
             {
@@ -166,6 +168,57 @@ namespace NodeMarkup
 
             return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
         }
+        //private bool PatchGameKeyShortcutsEscape()
+        //{
+        //    var prefix = AccessTools.Method(typeof(NodeMarkupTool), nameof(NodeMarkupTool.PatchGameKeyShortcutsEscapePrefix));
+
+        //    return AddPrefix(prefix, typeof(GameKeyShortcuts), "Escape");
+        //}
+        private bool PatchGameKeyShortcutsEscape()
+        {
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.GameKeyShortcutsEscapeTranspiler));
+
+            return AddTranspiler(transpiler, typeof(GameKeyShortcuts), "Escape");
+        }
+        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            var instructionList = instructions.ToList();
+
+            var elseIndex = instructionList.FindLastIndex(i => i.opcode == OpCodes.Brfalse);
+            var elseLabel = (Label)instructionList[elseIndex].operand;
+
+            for(var i = elseIndex + 1; i < instructionList.Count; i+= 1)
+            {
+                if(instructionList[i].labels.Contains(elseLabel))
+                {
+                    var elseInstruction = instructionList[i];
+                    var oldElseLabels = elseInstruction.labels;
+                    var newElseLabel = generator.DefineLabel();
+                    elseInstruction.labels = new List<Label>() { newElseLabel };
+                    var returnLabel = generator.DefineLabel();
+
+                    var newInstructions = new List<CodeInstruction>()
+                    {
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
+                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.enabled)}")),
+                        new CodeInstruction(OpCodes.Brfalse, newElseLabel),
+
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Disable))),
+                        new CodeInstruction(OpCodes.Br, returnLabel),
+                    };
+
+                    newInstructions[0].labels = oldElseLabels;
+                    instructionList.InsertRange(i, newInstructions);
+                    instructionList.Last().labels.Add(returnLabel);
+
+                    break;
+                }
+            }
+
+            return instructionList;
+        }
+
 
         private bool PatchNetInfoNodeInitNodeInfo()
         {
