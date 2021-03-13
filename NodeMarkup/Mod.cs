@@ -24,7 +24,7 @@ namespace NodeMarkup
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
-        public static string DiscordURL { get; } = "https://discord.gg/QRYq8m2";
+        public static string DiscordURL { get; } = "https://discord.gg/NnwhuBKMqj";
         public static string ReportBugUrl { get; } = "https://github.com/MacSergey/NodeMarkup/issues/new?assignees=&labels=NEW+ISSUE&template=bug_report.md";
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
