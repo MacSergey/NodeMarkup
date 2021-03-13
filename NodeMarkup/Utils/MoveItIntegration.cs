@@ -36,13 +36,12 @@ namespace NodeMarkup.Utils
         };
 
 
-        public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap)
-            => Paste(targetInstanceID, record, false, sourceMap, PasteMapFiller);
+        public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap) => Paste(targetInstanceID, record, false, sourceMap, PasteMapFiller);
         private void PasteMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
-            foreach(var source in sourceMap)
+            foreach (var source in sourceMap)
             {
-                switch(source.Key.Type)
+                switch (source.Key.Type)
                 {
                     case InstanceType.NetNode when source.Value.Type == InstanceType.NetNode:
                         map.AddNode(source.Key.NetNode, source.Value.NetNode);
@@ -54,8 +53,7 @@ namespace NodeMarkup.Utils
             }
         }
 
-        public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation)
-            => Paste(targetInstanceID, record, true, sourceMap, MirrorMapFiller);
+        public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation) => Paste(targetInstanceID, record, true, sourceMap, MirrorMapFiller);
         private void MirrorMapFiller(Markup markup, ObjectsMap map, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             foreach (var source in sourceMap.Where(p => IsCorrect(p)))
@@ -63,11 +61,11 @@ namespace NodeMarkup.Utils
                 if (!markup.TryGetEnter(source.Value.NetSegment, out Enter enter))
                     continue;
 
-                var sourceSegment = source.Key.NetSegment;
-                var targetSetment = source.Value.NetSegment;
-                map.AddSegment(sourceSegment, targetSetment);
+                map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
                 map.AddMirrorEnter(enter);
             }
+
+            static bool IsCorrect(KeyValuePair<InstanceID, InstanceID> pair) => pair.Key.Type == InstanceType.NetSegment && pair.Value.Type == InstanceType.NetSegment;
         }
 
         private void Paste(InstanceID targetInstanceID, object record, bool isMirror, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, ObjectsMap, Dictionary<InstanceID, InstanceID>> mapFiller)
@@ -75,8 +73,7 @@ namespace NodeMarkup.Utils
             if (!(record is XElement config))
                 return;
 
-            var markup = default(Markup);
-
+            Markup markup;
             switch (targetInstanceID.Type)
             {
                 case InstanceType.NetNode:
@@ -93,34 +90,22 @@ namespace NodeMarkup.Utils
             mapFiller(markup, map, sourceMap);
             markup.FromXml(Mod.Version, config, map);
         }
-        private bool IsCorrect(KeyValuePair<InstanceID, InstanceID> pair) => pair.Key.Type == InstanceType.NetSegment && pair.Value.Type == InstanceType.NetSegment;
 
-
-        public override string Encode64(object record)
-        {
-            if (record == null) return null;
-            return EncodeUtil.BinaryEncode64(record.ToString());
-        }
-
+        public override string Encode64(object record) => record == null ? null : EncodeUtil.BinaryEncode64(record?.ToString());
         public override object Decode64(string record, Version dataVersion)
         {
-            if (record == null || record.Length == 0) return null;
+            if (record == null || record.Length == 0)
+                return null;
 
-            XElement xml;
-            using (StringReader input = new StringReader((string)EncodeUtil.BinaryDecode64(record)))
+            using StringReader input = new StringReader((string)EncodeUtil.BinaryDecode64(record));
+            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
             {
-                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
-                {
-                    IgnoreWhitespace = true,
-                    ProhibitDtd = false,
-                    XmlResolver = null
-                };
-                using (XmlReader reader = XmlReader.Create(input, xmlReaderSettings))
-                {
-                    xml = XElement.Load(reader, LoadOptions.None);
-                }
-            }
-            return xml;
+                IgnoreWhitespace = true,
+                ProhibitDtd = false,
+                XmlResolver = null
+            };
+            using XmlReader reader = XmlReader.Create(input, xmlReaderSettings);
+            return XElement.Load(reader, LoadOptions.None);
         }
     }
 }
