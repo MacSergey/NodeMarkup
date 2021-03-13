@@ -102,12 +102,15 @@ namespace NodeMarkup.Manager
             else
             {
                 var driveLanes = DriveLanes.ToArray();
-                for (var i = 0; i <= driveLanes.Length; i += 1)
+                if (driveLanes.Any())
                 {
-                    var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
-                    var right = i < driveLanes.Length ? driveLanes[i] : null;
-                    foreach (var source in NetInfoPointSource.GetSource(this, left, right))
-                        sources.Add(source);
+                    for (var i = 0; i <= driveLanes.Length; i += 1)
+                    {
+                        var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
+                        var right = i < driveLanes.Length ? driveLanes[i] : null;
+                        foreach (var source in NetInfoPointSource.GetSource(this, left, right))
+                            sources.Add(source);
+                    }
                 }
             }
 

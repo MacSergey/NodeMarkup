@@ -36,14 +36,14 @@ namespace NodeMarkup.Tools
             {
                 if (GetRayCast(ItemClass.Service.Road))
                     return;
-                if (GetRayCast(ItemClass.Service.PublicTransport))
+                if (GetRayCast(ItemClass.Service.PublicTransport, ItemClass.SubService.PublicTransportPlane))
                     return;
             }
 
             HoverNodeId = 0;
             HoverSegmentId = 0;
         }
-        private bool GetRayCast(ItemClass.Service service)
+        private bool GetRayCast(ItemClass.Service service, ItemClass.SubService subService = ItemClass.SubService.None)
         {
             RaycastInput input = new RaycastInput(NodeMarkupTool.MouseRay, Camera.main.farClipPlane)
             {
@@ -53,6 +53,7 @@ namespace NodeMarkup.Tools
             };
             input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);
             input.m_netService.m_service = service;
+            input.m_netService.m_subService = subService;
 
             if (NodeMarkupTool.RayCast(input, out RaycastOutput output))
             {
