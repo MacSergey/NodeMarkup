@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
         public override Type SupportType { get; } = typeof(ISupportLines);
         protected override bool GroupingEnabled => Settings.GroupLines.value;
 
-        private ButtonPanel AddButton { get; set; }
+        private AddRuleButton AddButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkupRegularLine;
@@ -99,7 +99,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (AddRuleAvailable)
             {
-                AddButton = ComponentPool.Get<ButtonPanel>(ContentPanel);
+                AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel);
                 AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
                 AddButton.Init();
                 AddButton.OnButtonClick += AddRule;
@@ -302,4 +302,18 @@ namespace NodeMarkup.UI.Editors
         }
     }
     public class LineGroup : EditableGroup<MarkupLine.LineType, LineItem, MarkupLine, LineIcon> { }
+    public class AddRuleButton : ButtonPanel
+    {
+        public AddRuleButton()
+        {
+            Button.textScale = 1f;
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+
+            Button.size = size;
+            Button.relativePosition = default;
+        }
+    }
 }
