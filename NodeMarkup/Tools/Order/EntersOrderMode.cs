@@ -142,7 +142,13 @@ namespace NodeMarkup.Tools
         }
         protected abstract string EndCaption { get; }
         protected abstract string EndMessage { get; }
-        public override void OnSecondaryMouseClicked()
+        public override void OnSecondaryMouseClicked() => Exit();
+        public override bool OnEscape()
+        {
+            Exit();
+            return true;
+        }
+        private void Exit()
         {
             var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
             messageBox.CaprionText = EndCaption;
@@ -164,6 +170,7 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
+
         private void SetBackup()
         {
             Markup.Clear();

@@ -167,6 +167,11 @@ namespace NodeMarkup.Tools
 
         public void ToggleTool() => enabled = !enabled;
         public void Disable() => enabled = false;
+        public void Escape()
+        {
+            if (!Mode.OnEscape() && ! Panel.OnEscape())
+                Disable();
+        }
 
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
         public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);

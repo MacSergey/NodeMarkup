@@ -168,12 +168,6 @@ namespace NodeMarkup
 
             return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
         }
-        //private bool PatchGameKeyShortcutsEscape()
-        //{
-        //    var prefix = AccessTools.Method(typeof(NodeMarkupTool), nameof(NodeMarkupTool.PatchGameKeyShortcutsEscapePrefix));
-
-        //    return AddPrefix(prefix, typeof(GameKeyShortcuts), "Escape");
-        //}
         private bool PatchGameKeyShortcutsEscape()
         {
             var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.GameKeyShortcutsEscapeTranspiler));
@@ -204,7 +198,7 @@ namespace NodeMarkup
                         new CodeInstruction(OpCodes.Brfalse, newElseLabel),
 
                         new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Disable))),
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Escape))),
                         new CodeInstruction(OpCodes.Br, returnLabel),
                     };
 

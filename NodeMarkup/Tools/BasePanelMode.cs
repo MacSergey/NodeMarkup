@@ -60,7 +60,6 @@ namespace NodeMarkup.Tools
         }
         protected virtual void OnSetPanel() { }
 
-        public override void OnSecondaryMouseClicked() => Tool.SetDefaultMode();
         public override void OnPrimaryMouseClicked(Event e)
         {
             if (IsHover)
@@ -70,6 +69,13 @@ namespace NodeMarkup.Tools
                     Tool.SetDefaultMode();
             }
         }
+        public override void OnSecondaryMouseClicked() => Exit();
+        public override bool OnEscape()
+        {
+            Exit();
+            return true;
+        }
+        private void Exit() => Tool.SetDefaultMode();
 
         private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
     }

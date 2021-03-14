@@ -152,6 +152,7 @@ namespace NodeMarkup.UI.Editors
         public virtual void Select(int index) { }
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
         public virtual bool OnShortcut(Event e) => false;
+        public virtual bool OnEscape() => false;
 
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);

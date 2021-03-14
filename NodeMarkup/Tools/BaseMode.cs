@@ -46,6 +46,7 @@ namespace NodeMarkup.Tools
         public virtual void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public virtual void OnPrimaryMouseClicked(Event e) { }
         public virtual void OnSecondaryMouseClicked() { }
+        public virtual bool OnEscape() => false;
         public virtual void RenderOverlay(RenderManager.CameraInfo cameraInfo) { }
     }
 

@@ -29,10 +29,13 @@ namespace NodeMarkup.Tools
         protected override Target<SourcePoint>[] GetTargets(BaseToolMode prevMode) => TargetEnter?.Points ?? new TargetPoint[0];
         protected override SourcePoint[] GetSources(BaseToolMode prevMode) => SourceEnter?.Points ?? new SourcePoint[0];
 
-        public override void OnSecondaryMouseClicked()
+        public override void OnSecondaryMouseClicked() => Exit();
+        public override bool OnEscape()
         {
-            Tool.SetMode(PrevMode);
+            Exit();
+            return true;
         }
+        private void Exit() => Tool.SetMode(PrevMode);
         protected override Target<SourcePoint>[] GetAvailableTargets(SourcePoint source)
         {
             var borders = new PointsBorders(this, source);

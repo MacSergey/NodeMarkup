@@ -301,6 +301,8 @@ namespace NodeMarkup.UI.Panel
         public void EditIntersectionTemplate(IntersectionTemplate template, bool editName = true) => EditTemplate<IntersectionTemplateEditor, IntersectionTemplate>(template, editName);
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
+        public bool OnEscape() => CurrentEditor?.OnEscape() == true;
+
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
 
         #endregion

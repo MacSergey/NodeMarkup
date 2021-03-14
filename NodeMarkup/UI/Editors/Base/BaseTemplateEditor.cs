@@ -49,7 +49,7 @@ namespace NodeMarkup.UI.Editors
             {
                 base.Active = value;
                 EditMode = false;
-                if(value && SelectItem is Item)
+                if (value && SelectItem is Item)
                     SetEditable();
             }
         }
@@ -81,6 +81,16 @@ namespace NodeMarkup.UI.Editors
 
             SetEditable();
             SetEven();
+        }
+        public override bool OnEscape()
+        {
+            if (EditMode)
+            {
+                Cancel();
+                return true;
+            }
+            else
+                return false;
         }
         private void ReloadAdditionalProperties()
         {
