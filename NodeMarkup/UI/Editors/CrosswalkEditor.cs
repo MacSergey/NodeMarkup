@@ -14,8 +14,6 @@ namespace NodeMarkup.UI.Editors
 {
     public class CrosswalksEditor : Editor<CrosswalkItem, MarkupCrosswalk, StyleIcon>
     {
-        protected override bool UseGroupPanel => true;
-
         private static CrosswalkStyle Buffer { get; set; }
 
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
@@ -52,7 +50,6 @@ namespace NodeMarkup.UI.Editors
             AddBordersProperties();
             AddStyleTypeProperty();
             AddStyleProperties();
-            SetEven();
         }
         protected override void OnClear()
         {
@@ -170,7 +167,6 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
-            SetEven();
         }
         private void SelectTemplate(StyleTemplate template)
         {
@@ -197,7 +193,6 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
-            SetEven();
         }
         private void ClearStyleProperties()
         {

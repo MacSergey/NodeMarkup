@@ -169,7 +169,7 @@ namespace NodeMarkup.Tools
         public void Disable() => enabled = false;
         public void Escape()
         {
-            if (!Mode.OnEscape() && ! Panel.OnEscape())
+            if (!Mode.OnEscape() && !Panel.OnEscape())
                 Disable();
         }
 

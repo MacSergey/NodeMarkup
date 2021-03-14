@@ -69,7 +69,7 @@ namespace NodeMarkup.Manager
         public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             if (!isTemplate && filler.IsMedian)
-                components.Add(AddMedianOffsetProperty(this, parent));
+                components.Add(AddMedianOffsetProperty(parent));
         }
 
         public abstract IStyleData Calculate(MarkupFiller filler, MarkupLOD lod);
@@ -122,7 +122,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(MedianOffset.ToXml());
+            MedianOffset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -131,9 +131,9 @@ namespace NodeMarkup.Manager
             MedianOffset.FromXml(config, DefaultOffset);
         }
 
-        protected static FloatPropertyPanel AddMedianOffsetProperty(FillerStyle fillerStyle, UIComponent parent)
+        private FloatPropertyPanel AddMedianOffsetProperty(UIComponent parent)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianOffset));
             offsetProperty.Text = Localize.StyleOption_MedianOffset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -141,14 +141,14 @@ namespace NodeMarkup.Manager
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
             offsetProperty.Init();
-            offsetProperty.Value = fillerStyle.MedianOffset;
-            offsetProperty.OnValueChanged += (float value) => fillerStyle.MedianOffset.Value = value;
+            offsetProperty.Value = MedianOffset;
+            offsetProperty.OnValueChanged += (float value) => MedianOffset.Value = value;
 
             return offsetProperty;
         }
-        protected static FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent)
+        protected FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(rotateStyle.Angle));
             angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -164,9 +164,9 @@ namespace NodeMarkup.Manager
 
             return angleProperty;
         }
-        protected static FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent)
+        protected FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent)
         {
-            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(periodicStyle.Step));
             stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
@@ -179,9 +179,9 @@ namespace NodeMarkup.Manager
 
             return stepProperty;
         }
-        protected static FloatPropertyPanel AddOffsetProperty(IOffsetFiller offsetStyle, UIComponent parent)
+        protected FloatPropertyPanel AddOffsetProperty(IOffsetFiller offsetStyle, UIComponent parent)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(offsetStyle.Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;

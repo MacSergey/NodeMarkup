@@ -24,8 +24,6 @@ namespace NodeMarkup.UI.Editors
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
         where EditToolMode : EditTemplateMode<TemplateType>
     {
-        protected override bool UseGroupPanel => true;
-
         protected bool EditMode { get; private set; }
         protected bool HasChanges { get; set; }
 
@@ -80,7 +78,6 @@ namespace NodeMarkup.UI.Editors
             AddAdditional();
 
             SetEditable();
-            SetEven();
         }
         public override bool OnEscape()
         {

@@ -18,6 +18,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : GroupedEditor<LineItem, MarkupLine, LineIcon, LineGroup, MarkupLine.LineType>
     {
+        protected override bool UsePropertiesPanel => false;
+
         public static Color HoverAlpha
         {
             get
@@ -308,12 +310,6 @@ namespace NodeMarkup.UI.Editors
         {
             Button.textScale = 1f;
         }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            Button.size = size;
-            Button.relativePosition = default;
-        }
+        protected override void SetSize() => Button.size = size;
     }
 }

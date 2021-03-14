@@ -106,9 +106,8 @@ namespace NodeMarkup.Manager
         public virtual XElement ToXml()
         {
             var config = BaseToXml();
-            config.Add(Color.ToXml());
-            config.Add(new XAttribute("CV", ColorVersion));
-            config.Add(Width.ToXml());
+            Color.ToXml(config);
+            Width.ToXml(config);
             return config;
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -137,9 +136,9 @@ namespace NodeMarkup.Manager
 
             return components;
         }
-        protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
+        private ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
         {
-            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent);
+            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Editor.WheelTip;
             colorProperty.Init();
@@ -148,9 +147,9 @@ namespace NodeMarkup.Manager
 
             return colorProperty;
         }
-        protected FloatPropertyPanel AddWidthProperty(UIComponent parent)
+        private FloatPropertyPanel AddWidthProperty(UIComponent parent)
         {
-            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Width));
             widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
@@ -163,9 +162,9 @@ namespace NodeMarkup.Manager
 
             return widthProperty;
         }
-        protected static FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent)
         {
-            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
@@ -178,9 +177,9 @@ namespace NodeMarkup.Manager
 
             return dashLengthProperty;
         }
-        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent)
         {
-            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
@@ -193,23 +192,20 @@ namespace NodeMarkup.Manager
 
             return spaceLengthProperty;
         }
-        protected static ButtonsPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        protected ButtonPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent);
-            var invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
+            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(asymStyle.Invert));
+            buttonsPanel.Text = Localize.StyleOption_Invert;
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
 
-            void OnButtonClick(int index)
-            {
-                if (index == invertIndex)
-                    asymStyle.Invert.Value = !asymStyle.Invert;
-            }
+            void OnButtonClick() => asymStyle.Invert.Value = !asymStyle.Invert;
 
             return buttonsPanel;
         }
 
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);
+        protected PropertyColorValue GetSecondColorProperty(Color32 defaultValue) => new PropertyColorValue("SC", StyleChanged, defaultValue);
         protected PropertyValue<float> GetWidthProperty(float defaultValue) => new PropertyValue<float>("W", StyleChanged, defaultValue);
         protected PropertyValue<float> GetOffsetProperty(float defaultValue) => new PropertyValue<float>("O", StyleChanged, defaultValue);
         protected PropertyValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyValue<float>("MO", StyleChanged, defaultValue);
@@ -225,6 +221,7 @@ namespace NodeMarkup.Manager
         protected PropertyValue<float> GetOffsetAfterProperty(float defaultValue) => new PropertyValue<float>("OA", StyleChanged, defaultValue);
         protected PropertyValue<float> GetLineWidthProperty(float defaultValue) => new PropertyValue<float>("LW", StyleChanged, defaultValue);
         protected PropertyBoolValue GetParallelProperty(bool defaultValue) => new PropertyBoolValue("P", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetUseSecondColorProperty(bool defaultValue) => new PropertyBoolValue("USC", StyleChanged, defaultValue);
         protected PropertyValue<float> GetSquareSideProperty(float defaultValue) => new PropertyValue<float>("SS", StyleChanged, defaultValue);
         protected PropertyValue<int> GetLineCountProperty(int defaultValue) => new PropertyValue<int>("LC", StyleChanged, defaultValue);
         protected PropertyValue<float> GetAngleProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);

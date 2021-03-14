@@ -76,7 +76,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -132,8 +132,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -186,7 +186,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -259,9 +259,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            Offset.ToXml(config);
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -324,9 +324,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Base.ToXml());
-            config.Add(Height.ToXml());
-            config.Add(Space.ToXml());
+            Base.ToXml(config);
+            Height.ToXml(config);
+            Space.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

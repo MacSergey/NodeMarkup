@@ -62,9 +62,9 @@ namespace NodeMarkup.Manager
             return tan != 0 ? offset / tan : 1000f;
         }
 
-        protected static FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {
-            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
@@ -77,9 +77,9 @@ namespace NodeMarkup.Manager
 
             return dashLengthProperty;
         }
-        protected static FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {
-            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
@@ -93,7 +93,7 @@ namespace NodeMarkup.Manager
             return spaceLengthProperty;
         }
 
-        protected IEnumerable<MarkupStylePart> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width)
+        protected IEnumerable<MarkupStylePart> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)
         {
             var position = trajectory.Position((startT + endT) / 2);
             var partTrajectory = new StraightTrajectory(position, position + direction, false);
@@ -117,7 +117,7 @@ namespace NodeMarkup.Manager
                 var startPosition = position + direction * start;
                 var endPosition = position + direction * end;
 
-                yield return new MarkupStylePart(startPosition, endPosition, direction, width, Color);
+                yield return new MarkupStylePart(startPosition, endPosition, direction, width, color);
             }
         }
 

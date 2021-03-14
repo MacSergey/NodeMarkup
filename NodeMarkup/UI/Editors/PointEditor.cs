@@ -14,8 +14,6 @@ namespace NodeMarkup.UI.Editors
 {
     public class PointsEditor : Editor<PointItem, MarkupPoint, ColorIcon>
     {
-        protected override bool UseGroupPanel => true;
-
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
         public override Type SupportType { get; } = typeof(ISupportPoints);

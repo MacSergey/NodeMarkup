@@ -70,9 +70,9 @@ namespace NodeMarkup.Manager
         protected virtual float LodWidth => 0.15f;
         protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
 
-        protected static FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent)
+        protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(doubleStyle.Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -85,9 +85,9 @@ namespace NodeMarkup.Manager
 
             return offsetProperty;
         }
-        protected static FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent)
+        protected FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
-            var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Base));
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
@@ -100,9 +100,9 @@ namespace NodeMarkup.Manager
  
             return baseProperty;
         }
-        protected static FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent)
+        protected FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
-            var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Height));
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
@@ -115,9 +115,9 @@ namespace NodeMarkup.Manager
 
             return heightProperty;
         }
-        protected static FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent)
+        protected FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent)
         {
-            var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Space));
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
@@ -130,9 +130,9 @@ namespace NodeMarkup.Manager
 
             return spaceProperty;
         }
-        protected static LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
+        protected LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
         {
-            var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(parent);
+            var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(parent, nameof(alignmentStyle.Alignment));
             alignmentProperty.Text = Localize.StyleOption_Alignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;

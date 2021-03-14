@@ -602,7 +602,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Step.ToXml());
+            Step.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -680,10 +680,10 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(LeftRailA.ToXml());
-            config.Add(LeftRailB.ToXml());
-            config.Add(RightRailA.ToXml());
-            config.Add(RightRailB.ToXml());
+            LeftRailA.ToXml(config);
+            LeftRailB.ToXml(config);
+            RightRailA.ToXml(config);
+            RightRailB.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -768,7 +768,7 @@ namespace NodeMarkup.Manager
 
         protected BoolListPropertyPanel AddFollowRailsProperty(UIComponent parent)
         {
-            var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent);
+            var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(FollowRails));
             followRailsProperty.Text = Localize.StyleOption_FollowRails;
             followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             followRailsProperty.SelectedObject = FollowRails;
@@ -830,9 +830,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Angle.ToXml());
-            config.Add(FollowRails.ToXml());
-            config.Add(Offset.ToXml());
+            Angle.ToXml(config);
+            FollowRails.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -878,7 +878,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddAngleBetweenProperty(this, parent));
+            components.Add(AddAngleBetweenProperty(parent));
             if (!isTemplate)
             {
                 AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
@@ -903,9 +903,9 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected static FloatPropertyPanel AddAngleBetweenProperty(ChevronFillerStyle chevronStyle, UIComponent parent)
+        protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent);
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -915,8 +915,8 @@ namespace NodeMarkup.Manager
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 150;
             angleProperty.Init();
-            angleProperty.Value = chevronStyle.AngleBetween;
-            angleProperty.OnValueChanged += (float value) => chevronStyle.AngleBetween.Value = value;
+            angleProperty.Value = AngleBetween;
+            angleProperty.OnValueChanged += (float value) => AngleBetween.Value = value;
 
             return angleProperty;
         }
@@ -965,8 +965,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(AngleBetween.ToXml());
-            config.Add(Invert.ToXml());
+            AngleBetween.ToXml(config);
+            Invert.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -1060,9 +1060,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Angle.ToXml());
-            config.Add(Step.ToXml());
-            config.Add(Offset.ToXml());
+            Angle.ToXml(config);
+            Step.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

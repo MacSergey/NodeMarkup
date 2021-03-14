@@ -12,8 +12,6 @@ namespace NodeMarkup.UI.Editors
 {
     public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
     {
-        protected override bool UseGroupPanel => true;
-
         private static FillerStyle Buffer { get; set; }
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
@@ -44,7 +42,6 @@ namespace NodeMarkup.UI.Editors
             AddHeader();
             AddStyleTypeProperty();
             AddStyleProperties();
-            SetEven();
         }
         protected override void OnClear()
         {
@@ -99,7 +96,6 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
-            SetEven();
         }
 
         private void OnSaveTemplate()
@@ -121,7 +117,6 @@ namespace NodeMarkup.UI.Editors
             RefreshItem();
             ClearStyleProperties();
             AddStyleProperties();
-            SetEven();
         }
         private void OnSelectTemplate(StyleTemplate template)
         {

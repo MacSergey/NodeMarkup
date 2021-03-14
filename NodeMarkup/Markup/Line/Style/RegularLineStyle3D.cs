@@ -53,8 +53,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = BaseToXml();
-            config.Add(Width.ToXml());
-            config.Add(Elevation.ToXml());
+            Width.ToXml(config);
+            Elevation.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

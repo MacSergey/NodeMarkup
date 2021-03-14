@@ -161,15 +161,6 @@ namespace NodeMarkup.UI.Editors
         public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
         public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
 
-        public void SetEven(UIComponent component)
-        {
-            var even = true;
-            foreach (var item in component.components.OfType<EditorItem>().Where(c => c.SupportEven))
-            {
-                item.IsEven = even;
-                even = !even;
-            }
-        }
         public void SetStopScroll(IEnumerable<EditorItem> items)
         {
             foreach (var item in items.OfType<IWheelChangeable>())
@@ -184,9 +175,8 @@ namespace NodeMarkup.UI.Editors
         where ItemIcon : UIComponent
         where EditableObject : class, IDeletable
     {
-        protected PropertyGroupPanel GroupPanel { get; private set; }
-        protected virtual bool UseGroupPanel => false;
-        protected UIComponent PropertiesPanel => UseGroupPanel ? (UIComponent)GroupPanel : (UIComponent)ContentPanel;
+        protected PropertyGroupPanel PropertiesPanel { get; private set; }
+        protected virtual bool UsePropertiesPanel => true;
 
         EditableItemType _selectItem;
 
@@ -210,7 +200,7 @@ namespace NodeMarkup.UI.Editors
 
         public Editor()
         {
-            if (UseGroupPanel)
+            if (UsePropertiesPanel)
                 ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
         }
 
@@ -350,8 +340,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override void ClearSettings()
         {
-            if (UseGroupPanel)
-                ClearSettings(GroupPanel);
+            if (UsePropertiesPanel)
+                ClearSettings(PropertiesPanel);
 
             ClearSettings(ContentPanel);
 
@@ -376,11 +366,11 @@ namespace NodeMarkup.UI.Editors
             ContentPanel.autoLayout = false;
             ClearSettings();
             SelectItem = item;
-            if (UseGroupPanel)
-                GroupPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            if (UsePropertiesPanel)
+                PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             OnObjectSelect();
-            if (UseGroupPanel)
-                GroupPanel.Init();
+            if (UsePropertiesPanel)
+                PropertiesPanel.Init();
             ContentPanel.autoLayout = true;
         }
         protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
@@ -417,6 +407,5 @@ namespace NodeMarkup.UI.Editors
             foreach (var item in ItemsPanel.components.OfType<EditableItemType>())
                 item.Refresh();
         }
-        protected void SetEven() => SetEven(PropertiesPanel);
     }
 }

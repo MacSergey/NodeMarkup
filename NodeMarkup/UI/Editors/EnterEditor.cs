@@ -10,8 +10,6 @@ namespace NodeMarkup.UI.Editors
 {
     public class EnterEditor : Editor<EnterItem, Enter, ColorIcon>
     {
-        protected override bool UseGroupPanel => true;
-
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
         public override Type SupportType { get; } = typeof(ISupportEnters);
@@ -30,7 +28,6 @@ namespace NodeMarkup.UI.Editors
             foreach (var point in EditObject.Points)
                 Points.Add(AddPointProperty(point));
 
-            SetEven();
         }
         private FloatPropertyPanel AddPointProperty(MarkupPoint point)
         {
