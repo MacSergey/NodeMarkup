@@ -79,7 +79,6 @@ namespace NodeMarkup.UI.Panel
             CreateEditors();
             CreateSizeChanger();
 
-            size = new Vector2(Width, Header.height + TabStrip.height + 400);
             minimumSize = new Vector2(Width, Header.height + TabStrip.height + 200);
 
             Instance.Active = false;
@@ -87,7 +86,8 @@ namespace NodeMarkup.UI.Panel
         public override void Start()
         {
             base.Start();
-            SetPosition();
+            SetDefaultPosition();
+            SetDefaulSize();
         }
         public override void OnEnable()
         {
@@ -110,13 +110,14 @@ namespace NodeMarkup.UI.Panel
         private void CheckPosition()
         {
             if (absolutePosition.x < 0 || absolutePosition.y < 0)
-                SetPosition();
+                SetDefaultPosition();
         }
-        private void SetPosition()
+        private void SetDefaultPosition()
         {
             Mod.Logger.Debug($"Set default panel position");
             absolutePosition = DefaultPosition;
         }
+        private void SetDefaulSize() => size = new Vector2(Width, Header.height + TabStrip.height + 400);
         private new void Reset() => Available = true;
 
         #endregion
@@ -183,6 +184,7 @@ namespace NodeMarkup.UI.Panel
             SizeChanger.backgroundSprite = TextureHelper.ResizeSprite;
             SizeChanger.color = new Color32(255, 255, 255, 160);
             SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
+            SizeChanger.eventDoubleClick += SizeChangerDoubleClick;
 
             var handle = SizeChanger.AddUIComponent<UIDragHandle>();
             handle.size = SizeChanger.size;
@@ -199,6 +201,7 @@ namespace NodeMarkup.UI.Panel
             size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
             SizeChanger.relativePosition = size - SizeChanger.size;
         }
+        private void SizeChangerDoubleClick(UIComponent component, UIMouseEventParameter eventParam) => SetDefaulSize();
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
