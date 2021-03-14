@@ -512,15 +512,25 @@ namespace NodeMarkup.Manager
             var leftRatio = leftLength / (leftLength + rightLength);
             var rightRatio = rightLength / (leftLength + rightLength);
 
+            var straight = new StraightTrajectory((right.EndPosition + left.StartPosition) / 2, (right.StartPosition + left.EndPosition) / 2);
             var middle = new Bezier3()
             {
                 a = (right.EndPosition + left.StartPosition) / 2,
-                b = (rightRatio * right.EndDirection + leftRatio * left.StartDirection).normalized,
-                c = (rightRatio * right.StartDirection + leftRatio * left.EndDirection).normalized,
+                b = GetDirection(rightRatio * right.EndDirection, leftRatio * left.StartDirection, straight.StartDirection),
+                c = GetDirection(rightRatio * right.StartDirection, leftRatio * left.EndDirection, straight.EndDirection),
                 d = (right.StartPosition + left.EndPosition) / 2,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
             return new BezierTrajectory(middle);
+
+            static Vector3 GetDirection(Vector3 left, Vector3 right, Vector3 straight)
+            {
+                var dir = (left + right).normalized;
+                if (Vector2.Angle(left.XZ(), right.XZ()) > 150f || Vector2.Angle(dir.XZ(), straight.XZ()) > 90f)
+                    dir = straight;
+
+                return dir;
+            }
 
         }
         protected abstract void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right);
