@@ -93,10 +93,15 @@ namespace NodeMarkup.Manager
 
             LoadErrors = 0;
 
-            var version = config.GetAttrValue("V", Mod.Version);
+            var version = GetVersion(config);
 
             NodeManager.FromXml(config, map, version);
             SegmentManager.FromXml(config, map, version);
+        }
+        private static Version GetVersion(XElement config)
+        {
+            try { return new Version(config.Attribute("V").Value); }
+            catch { return Mod.Version; }
         }
         public static void SetFiled()
         {

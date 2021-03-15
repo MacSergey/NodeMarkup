@@ -203,6 +203,8 @@ namespace NodeMarkup.Utils
             }
         }
         public static bool CorrectT(float t) => 0 <= t && t <= 1;
+
+        public override string ToString() => $"{IsIntersect}:{FirstT};{SecondT}";
     }
     public class MarkupLinesIntersect : MarkupIntersect
     {
