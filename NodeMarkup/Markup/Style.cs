@@ -68,7 +68,6 @@ namespace NodeMarkup.Manager
             return rawType;
         }
 
-        private static int ColorVersion { get; } = 1;
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
         public static float DefaultWidth { get; } = 0.15f;
 

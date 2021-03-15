@@ -418,10 +418,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateSolid(secondTrajectory, lod, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
-            {
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
-            }
+            MarkupStylePart CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
         }
     }
     public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IDashedLine

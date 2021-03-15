@@ -25,10 +25,7 @@ namespace NodeMarkup.Manager
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
             return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
-            {
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
-            }
+            MarkupStylePart CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
         }
 
         public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
@@ -224,10 +221,7 @@ namespace NodeMarkup.Manager
 
             return new MarkupStyleParts(dashes);
 
-            IEnumerable<MarkupStylePart> CalculateSolidDash(ITrajectory lineTrajectory)
-            {
-                yield return StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
-            }
+            MarkupStylePart CalculateSolidDash(ITrajectory lineTrajectory) => StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
 
             IEnumerable<MarkupStylePart> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
             {
