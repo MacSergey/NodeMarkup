@@ -237,7 +237,7 @@ namespace NodeMarkup.Utils
             return new MarkupLinesIntersect(pair);
 
             static ITrajectory GetTrajectory(MarkupLine line, bool? mustIntersect)
-                    => mustIntersect == true && line.Trajectory is StraightTrajectory st ? new StraightTrajectory(st, false) : line.Trajectory;
+                    => mustIntersect == true && line.Trajectory is StraightTrajectory straight ? new StraightTrajectory(straight.Trajectory, false) : line.Trajectory;
         }
 
         public float this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);

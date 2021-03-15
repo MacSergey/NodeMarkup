@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = BaseToXml();
-            config.Add(Width.ToXml());
+            Width.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -150,8 +150,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(OffsetBefore.ToXml());
-            config.Add(OffsetAfter.ToXml());
+            OffsetBefore.ToXml(config);
+            OffsetAfter.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -185,7 +185,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(LineWidth.ToXml());
+            LineWidth.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -259,9 +259,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
-            config.Add(Parallel.ToXml());
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
+            Parallel.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -330,7 +330,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -362,10 +362,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateSolid(secondTrajectory, lod, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
-            {
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
-            }
+            MarkupStylePart CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
         }
     }
     public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IDashedLine
@@ -422,8 +419,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -488,8 +485,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -615,9 +612,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(SquareSide.ToXml());
-            config.Add(LineCount.ToXml());
-            config.Add(Invert.ToXml());
+            SquareSide.ToXml(config);
+            LineCount.ToXml(config);
+            Invert.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

@@ -70,6 +70,7 @@ namespace NodeMarkup.Manager
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
             return bezier;
         }
+        public BezierTrajectory(ITrajectory trajectory) : this(trajectory.StartPosition, trajectory.StartDirection, trajectory.EndPosition, trajectory.EndDirection) { }
 
         public ITrajectory Cut(float t0, float t1) => new BezierTrajectory(Trajectory.Cut(t0, t1));
         public void Divide(out ITrajectory trajectory1, out ITrajectory trajectory2)
@@ -112,6 +113,7 @@ namespace NodeMarkup.Manager
             Direction = (Trajectory.b - Trajectory.a).normalized;
         }
         public StraightTrajectory(Vector3 start, Vector3 end, bool isSection = true) : this(new Line3(start, end), isSection) { }
+        public StraightTrajectory(ITrajectory trajectory, bool isSection = true) : this(new Line3(trajectory.StartPosition, trajectory.EndPosition), isSection) { }
 
         public ITrajectory Cut(float t0, float t1) => new StraightTrajectory(Position(t0), Position(t1));
 

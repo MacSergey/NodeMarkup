@@ -22,14 +22,28 @@ namespace NodeMarkup.Manager
         };
         private static int MaxDepth => 5;
 
-        public static IEnumerable<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts) => CalculateSolid(trajectory, MinAngleDelta, MinLength, MaxLength, lod, calculateParts);
-        public static IEnumerable<Result> CalculateSolid<Result>(ITrajectory trajectory, float minAngle, float minLength, float maxLength, MarkupLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts)
+        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, Result> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
         {
-            var lodScale = LodScale[lod];
-            return CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle * lodScale, minLength * lodScale, maxLength * lodScale, calculateParts);
+            return CalculateSolid<Result>(trajectory, lod, minAngle, minLength, maxLength, AddToResult);
+            void AddToResult(List<Result> result, ITrajectory trajectory) => result.Add(calculateParts(trajectory));
+        }
+        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
+        {
+            return CalculateSolid<Result>(trajectory, lod, minAngle, minLength, maxLength, AddToResult);
+            void AddToResult(List<Result> result, ITrajectory trajectory) => result.AddRange(calculateParts(trajectory));
         }
 
-        private static IEnumerable<Result> CalculateSolid<Result>(int depth, ITrajectory trajectory, float deltaAngle, float minAngle, float minLength, float maxLength, Func<ITrajectory, IEnumerable<Result>> calculateParts)
+        private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, float? minAngle, float? minLength, float? maxLength,  Action<List<Result>, ITrajectory> addToResult)
+        {
+            var lodScale = LodScale[lod];
+            var result = new List<Result>();
+
+            CalculateSolid(0, trajectory, trajectory.DeltaAngle, (minAngle ?? MinAngleDelta) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale, t => addToResult(result, t));
+
+            return result;
+        }
+
+        private static void CalculateSolid(int depth, ITrajectory trajectory, float deltaAngle, float minAngle, float minLength, float maxLength, Action<ITrajectory> addToResult)
         {
             var length = trajectory.Magnitude;
 
@@ -42,18 +56,14 @@ namespace NodeMarkup.Manager
 
                 if (needDivide || minAngle < deltaAngle || minAngle < firstDeltaAngle + secondDeltaAngle)
                 {
-                    foreach (var part in CalculateSolid(depth + 1, first, firstDeltaAngle, minAngle, minLength, maxLength, calculateParts))
-                        yield return part;
+                    CalculateSolid(depth + 1, first, firstDeltaAngle, minAngle, minLength, maxLength, addToResult);
+                    CalculateSolid(depth + 1, second, secondDeltaAngle, minAngle, minLength, maxLength, addToResult);
 
-                    foreach (var part in CalculateSolid(depth + 1, second, secondDeltaAngle, minAngle, minLength, maxLength, calculateParts))
-                        yield return part;
-
-                    yield break;
+                    return;
                 }
             }
 
-            foreach (var part in calculateParts(trajectory))
-                yield return part;
+            addToResult(trajectory);
         }
 
         public static IEnumerable<MarkupStylePart> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)

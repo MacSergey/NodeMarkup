@@ -75,7 +75,7 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
         {
-            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Style<FillerStyle>.FromXml(styleConfig, map, false, out FillerStyle style))
+            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
             {
                 filler = default;
                 return false;

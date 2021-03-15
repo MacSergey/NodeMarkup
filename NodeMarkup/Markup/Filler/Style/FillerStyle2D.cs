@@ -602,7 +602,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Step.ToXml());
+            Step.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -680,10 +680,10 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(LeftRailA.ToXml());
-            config.Add(LeftRailB.ToXml());
-            config.Add(RightRailA.ToXml());
-            config.Add(RightRailB.ToXml());
+            LeftRailA.ToXml(config);
+            LeftRailB.ToXml(config);
+            RightRailA.ToXml(config);
+            RightRailB.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -830,9 +830,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Angle.ToXml());
-            config.Add(FollowRails.ToXml());
-            config.Add(Offset.ToXml());
+            Angle.ToXml(config);
+            FollowRails.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -965,8 +965,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(AngleBetween.ToXml());
-            config.Add(Invert.ToXml());
+            AngleBetween.ToXml(config);
+            Invert.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -1060,9 +1060,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Angle.ToXml());
-            config.Add(Step.ToXml());
-            config.Add(Offset.ToXml());
+            Angle.ToXml(config);
+            Step.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

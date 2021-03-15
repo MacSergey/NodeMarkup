@@ -25,10 +25,7 @@ namespace NodeMarkup.Manager
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
             return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
-            {
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
-            }
+            MarkupStylePart CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
         }
 
         public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
@@ -76,7 +73,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -132,8 +129,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -186,7 +183,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -224,10 +221,7 @@ namespace NodeMarkup.Manager
 
             return new MarkupStyleParts(dashes);
 
-            IEnumerable<MarkupStylePart> CalculateSolidDash(ITrajectory lineTrajectory)
-            {
-                yield return StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
-            }
+            MarkupStylePart CalculateSolidDash(ITrajectory lineTrajectory) => StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
 
             IEnumerable<MarkupStylePart> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
             {
@@ -259,9 +253,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            Offset.ToXml(config);
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -324,9 +318,9 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Base.ToXml());
-            config.Add(Height.ToXml());
-            config.Add(Space.ToXml());
+            Base.ToXml(config);
+            Height.ToXml(config);
+            Space.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

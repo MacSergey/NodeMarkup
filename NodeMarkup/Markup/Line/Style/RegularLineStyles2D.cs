@@ -95,8 +95,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
-            config.Add(Alignment.ToXml());
+            Offset.ToXml(config);
+            Alignment.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -160,8 +160,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -227,8 +227,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
-            config.Add(Alignment.ToXml());
+            Offset.ToXml(config);
+            Alignment.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -332,11 +332,11 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Offset.ToXml());
-            config.Add(DashLength.ToXml());
-            config.Add(SpaceLength.ToXml());
-            config.Add(Invert.ToXml());
-            config.Add(CenterSolid.ToXml());
+            Offset.ToXml(config);
+            DashLength.ToXml(config);
+            SpaceLength.ToXml(config);
+            Invert.ToXml(config);
+            CenterSolid.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -423,10 +423,10 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Base.ToXml());
-            config.Add(Height.ToXml());
-            config.Add(Space.ToXml());
-            config.Add(Invert.ToXml());
+            Base.ToXml(config);
+            Height.ToXml(config);
+            Space.ToXml(config);
+            Invert.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

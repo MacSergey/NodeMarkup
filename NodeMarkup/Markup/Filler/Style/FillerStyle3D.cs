@@ -45,8 +45,18 @@ namespace NodeMarkup.Manager
             if (NeedReverse(contour))
                 contour = contour.Select(t => t.Invert()).Reverse().ToArray();
 
-            var pointsGroups = contour.Select(t => StyleHelper.CalculateSolid(t, MinAngle, MinLength, MaxLength, lod, (tr) => GetPoint(tr)).ToArray()).ToArray();
-            var points = pointsGroups.SelectMany(g => g).ToArray();
+            var parts = contour.Select(t => StyleHelper.CalculateSolid(t, lod, (tr) => tr, MinAngle, MinLength, MaxLength)).ToArray();
+            for (var i = 0; i < parts.Length; i += 1)
+            {
+                var partI = parts[i];
+                var partJ = parts[(i + 1) % parts.Length];
+
+                if(!FindIntersects(partI, partJ, false))
+                    FindIntersects(partJ, partI, true);
+            }
+
+
+            var points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
             if (points.Length < 3)
                 return null;
 
@@ -54,13 +64,39 @@ namespace NodeMarkup.Manager
             P2T.Triangulate(polygon);
             var triangles = polygon.Triangles.SelectMany(t => t.Points.Select(p => polygon.IndexOf(p))).ToArray();
 
-            return new MarkupStylePolygonMesh(filler.Markup.Height, Elevation, pointsGroups.Select(g => g.Length).ToArray(), points, triangles, MaterialType);
-
-            static IEnumerable<Vector3> GetPoint(ITrajectory trajectory)
-            {
-                yield return trajectory.StartPosition;
-            }
+            return new MarkupStylePolygonMesh(filler.Markup.Height, Elevation, parts.Select(g => g.Count).ToArray(), points, triangles, MaterialType);
         }
+        private bool FindIntersects(List<ITrajectory> A, List<ITrajectory> B, bool invert)
+        {
+            var x = !invert ? A.Count - 1 : 0;
+            var xPart = new StraightTrajectory(A[x]);
+
+            for (var y = !invert ? 1 : B.Count - 2; !invert ? y < B.Count : y >= 0; y += !invert ? 1 : -1)
+            {
+                var yPart = new StraightTrajectory(B[y]);
+                var intersect = MarkupIntersect.CalculateSingle(xPart, yPart);
+                if (intersect.IsIntersect)
+                {
+                    if (!invert)
+                    {
+                        A[x] = xPart.Cut(0f, intersect.FirstT);
+                        B[y] = yPart.Cut(intersect.SecondT, 1f);
+                        B.RemoveRange(0, y);
+                    }
+                    else
+                    {
+                        A[x] = xPart.Cut(intersect.FirstT, 1f);
+                        B[y] = yPart.Cut(0f, intersect.SecondT);
+                        B.RemoveRange(y + 1, B.Count - (y + 1));
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private bool NeedReverse(ITrajectory[] contour)
         {
             var isClockWise = 0;
@@ -95,7 +131,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(Elevation.ToXml());
+            Elevation.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)

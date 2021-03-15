@@ -68,7 +68,6 @@ namespace NodeMarkup.Manager
             return rawType;
         }
 
-        private static int ColorVersion { get; } = 1;
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
         public static float DefaultWidth { get; } = 0.15f;
 
@@ -106,9 +105,8 @@ namespace NodeMarkup.Manager
         public virtual XElement ToXml()
         {
             var config = BaseToXml();
-            config.Add(Color.ToXml());
-            config.Add(new XAttribute("CV", ColorVersion));
-            config.Add(Width.ToXml());
+            Color.ToXml(config);
+            Width.ToXml(config);
             return config;
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
