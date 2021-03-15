@@ -157,18 +157,6 @@ namespace NodeMarkup.UI.Editors
         protected abstract void ItemClick(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemHover(UIComponent component, UIMouseEventParameter eventParam);
         protected abstract void ItemLeave(UIComponent component, UIMouseEventParameter eventParam);
-
-        public void StopScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Horizontal;
-        public void StartScroll() => ContentPanel.scrollWheelDirection = UIOrientation.Vertical;
-
-        public void SetStopScroll(IEnumerable<EditorItem> items)
-        {
-            foreach (var item in items.OfType<IWheelChangeable>())
-            {
-                item.OnStartWheel += StopScroll;
-                item.OnStopWheel += StartScroll;
-            }
-        }
     }
     public abstract class Editor<EditableItemType, EditableObject, ItemIcon> : Editor, IEditor<EditableObject>
         where EditableItemType : EditableItem<EditableObject, ItemIcon>

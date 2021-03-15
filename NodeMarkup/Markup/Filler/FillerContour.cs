@@ -200,7 +200,7 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End);
         }
 
-        public ITrajectory GetRail(int a1, int b1, int a2, int b2, PeriodicFillerStyle.RailType railType)
+        public ITrajectory GetRail(int a1, int b1, int a2, int b2)
         {
             var min1 = GetCorrectIndex(Math.Min(a1, b1));
             var max1 = GetCorrectIndex(Math.Max(a1, b1));

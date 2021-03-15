@@ -80,8 +80,6 @@ namespace NodeMarkup.UI.Editors
                     railProperty.OnLeave += LeaveRail;
                 }
             }
-
-            SetStopScroll(StyleProperties);
         }
         private void StyleChanged(Style.StyleType style)
         {
@@ -166,7 +164,7 @@ namespace NodeMarkup.UI.Editors
 
             if (IsHoverRailPanel)
             {
-                var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B, HoverRailPanel.RailType);
+                var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B);
                 rail.Render(cameraInfo, Colors.Hover);
             }
         }

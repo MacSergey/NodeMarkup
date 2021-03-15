@@ -673,8 +673,8 @@ namespace NodeMarkup.Manager
 
         protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
-            left = contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB, RailType.Left);
-            right = contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB, RailType.Right);
+            left = contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB);
+            right = contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB);
         }
 
         public override XElement ToXml()

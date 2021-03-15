@@ -69,7 +69,6 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleProperties()
         {
             StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, true);
-            SetStopScroll(StyleProperties);
         }
 
         private void ToggleAsDefault()

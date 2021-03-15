@@ -149,7 +149,6 @@ namespace NodeMarkup.UI.Editors
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
-            SetStopScroll(StyleProperties);
         }
 
         #endregion
