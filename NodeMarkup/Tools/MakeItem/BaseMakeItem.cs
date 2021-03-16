@@ -84,6 +84,17 @@ namespace NodeMarkup.Tools
                 Tool.SetMode(ToolModeType.Select);
             }
         }
+        public override bool OnEscape()
+        {
+            if (IsSelectPoint)
+            {
+                SelectPoint = null;
+                SetTarget();
+                return true;
+            }
+            else
+                return false;
+        }
 
         #region SET TARGET
 

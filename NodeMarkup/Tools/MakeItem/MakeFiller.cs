@@ -81,6 +81,11 @@ namespace NodeMarkup.Tools
                 GetFillerPoints();
             }
         }
+        public override bool OnEscape()
+        {
+            Tool.SetDefaultMode();
+            return true;
+        }
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             RenderFillerLines(cameraInfo);

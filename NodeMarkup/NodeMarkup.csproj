@@ -113,7 +113,7 @@
     <Compile Include="Tools\MakeItem\MakeCrosswalk.cs" />
     <Compile Include="Tools\MakeItem\MakeFiller.cs" />
     <Compile Include="Tools\MakeItem\BaseMakeItem.cs" />
-    <Compile Include="Tools\MakeItem\MakeLIne.cs" />
+    <Compile Include="Tools\MakeItem\MakeLine.cs" />
     <Compile Include="Tools\Order\PasteClasses.cs" />
     <Compile Include="Tools\Order\EntersOrderMode.cs" />
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
