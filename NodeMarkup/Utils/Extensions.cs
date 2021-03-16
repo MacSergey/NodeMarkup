@@ -59,5 +59,8 @@ namespace NodeMarkup.Utils
         public static LineStyle.StyleAlignment Invert(this LineStyle.StyleAlignment alignment) => (LineStyle.StyleAlignment)(1 - ((int)alignment - 1));
         public static void Render(this Bounds bounds, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
             => NodeMarkupTool.RenderCircle(cameraInfo, bounds.center, color, width ?? bounds.Magnitude(), alphaBlend);
+
+        public static LinkedListNode<T> GetPrevious<T>(this LinkedListNode<T> item) => item.Previous ?? item.List.Last;
+        public static LinkedListNode<T> GetNext<T>(this LinkedListNode<T> item) => item.Next ?? item.List.First;
     }
 }

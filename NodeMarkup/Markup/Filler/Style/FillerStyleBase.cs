@@ -109,7 +109,7 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            return trajectories.Where(t => t != null).Select(t => t).ToArray();
+            return trajectories.Where(t => t != null).ToArray();
         }
         protected float GetOffset(MarkupIntersect intersect, float offset)
         {

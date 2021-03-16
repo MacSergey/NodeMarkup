@@ -196,6 +196,7 @@
     <Compile Include="Utils\ObjectId.cs" />
     <Compile Include="Utils\Render.cs" />
     <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
+    <Compile Include="Utils\Triangulator.cs" />
     <Compile Include="Utils\Shortcut.cs" />
     <Compile Include="Utils\TextureUtil.cs" />
     <Compile Include="Utils\VersionMigration.cs" />

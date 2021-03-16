@@ -53,7 +53,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public IEnumerable<ITrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null).Select(t => t);
+        public IEnumerable<ITrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null);
 
         public FillerContour(Markup markup)
         {
