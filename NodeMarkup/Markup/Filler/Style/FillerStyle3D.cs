@@ -3,8 +3,6 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
-//using Poly2Tri;
-//using Poly2Tri.Triangulation.Polygon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
