@@ -321,7 +321,9 @@ Les données restaurées ont remplacer tout les marquages existants.</value>
     <value>Noeud #{0}
 Cliquez pour modifier le marquage</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Sélectionnez un nœud ou segment pour changer les marquages</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop
 Glissez derrière le point pour une ligne perpendiculaire</value>
@@ -1259,21 +1261,53 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Auteur inconnu</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Erreur lors du chargement.
+Le marquage de toutes les intersections n'a pas pu être chargé.</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Modifier le marquage du segment #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Herbe</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Béton</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Herbe</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Béton</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Distance LOD</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Cliquez pour modifier le marquage</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Suivre le rail</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Rail de gauche</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Rail de droite</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Sélectionnez le premier point ou ligne du rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Sélectionnez le second point du rail</value>
+  </data>
   
   
   
