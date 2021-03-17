@@ -20,7 +20,7 @@ namespace NodeMarkup.Manager
 {
     public class SolidLineStyle : RegularLineStyle, IRegularLine
     {
-        public override StyleType Type { get; } = StyleType.LineSolid;
+        public override StyleType Type => StyleType.LineSolid;
 
         public SolidLineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -41,7 +41,7 @@ namespace NodeMarkup.Manager
     }
     public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine
     {
-        public override StyleType Type { get; } = StyleType.LineDoubleSolid;
+        public override StyleType Type => StyleType.LineDoubleSolid;
 
         public PropertyValue<float> Offset { get; }
         public PropertyEnumValue<StyleAlignment> Alignment { get; }
@@ -110,7 +110,7 @@ namespace NodeMarkup.Manager
     }
     public class DashedLineStyle : RegularLineStyle, IRegularLine, IDashedLine
     {
-        public override StyleType Type { get; } = StyleType.LineDashed;
+        public override StyleType Type => StyleType.LineDashed;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -173,7 +173,7 @@ namespace NodeMarkup.Manager
     }
     public class DoubleDashedLineStyle : DashedLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine
     {
-        public override StyleType Type { get; } = StyleType.LineDoubleDashed;
+        public override StyleType Type => StyleType.LineDoubleDashed;
 
         public PropertyValue<float> Offset { get; }
         public PropertyEnumValue<StyleAlignment> Alignment { get; }
@@ -367,7 +367,7 @@ namespace NodeMarkup.Manager
     }
     public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLine
     {
-        public override StyleType Type { get; } = StyleType.LineSharkTeeth;
+        public override StyleType Type => StyleType.LineSharkTeeth;
         protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }
@@ -439,4 +439,22 @@ namespace NodeMarkup.Manager
             Invert.Value ^= map.IsMirror ^ invert;
         }
     }
+
+    //public class ZigZagLineStyle : RegularLineStyle
+    //{
+    //    public PropertyValue<float> Offset { get; }
+    //    public PropertyValue<float> Length { get; }
+
+    //    public override StyleType Type => StyleType.LineZigZag;
+
+    //    public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override RegularLineStyle CopyLineStyle()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

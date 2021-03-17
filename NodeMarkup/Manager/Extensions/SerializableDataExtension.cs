@@ -14,6 +14,7 @@ using System.Linq.Expressions;
 using NodeMarkup.UI;
 using HarmonyLib;
 using ColossalFramework.Globalization;
+using ModsCommon.Utilities;
 
 namespace NodeMarkup.Utils
 {
@@ -33,7 +34,7 @@ namespace NodeMarkup.Utils
 #if DEBUG
                     Mod.Logger.Debug(decompress);
 #endif
-                    var config = Loader.Parse(decompress);
+                    var config = XmlExtension.Parse(decompress);
                     MarkupManager.FromXml(config, new ObjectsMap());
 
                     sw.Stop();

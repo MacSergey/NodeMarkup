@@ -209,6 +209,9 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
 
+            //[Description("ZigZag")]
+            //ZigZag = StyleType.LineZigZag,
+
             [Description(nameof(Localize.LineStyle_Pavement))]
             Pavement = StyleType.LinePavement,
 

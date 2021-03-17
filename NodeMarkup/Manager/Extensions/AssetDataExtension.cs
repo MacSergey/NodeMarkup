@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using HarmonyLib;
 using ICities;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -37,7 +38,7 @@ namespace NodeMarkup
             try
             {
                 var decompress = Loader.Decompress(data);
-                var config = Loader.Parse(decompress);
+                var config = XmlExtension.Parse(decompress);
 
                 var count = map.Length / 6;
                 var segments = new ushort[count];

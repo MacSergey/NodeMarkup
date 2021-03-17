@@ -26,8 +26,8 @@ namespace NodeMarkup.UI.Editors
         protected Markup Markup => Panel.Markup;
         public abstract Type SupportType { get; }
 
-        protected UIScrollablePanel ItemsPanel { get; set; }
-        protected UIScrollablePanel ContentPanel { get; set; }
+        protected UIAutoLayoutScrollablePanel ItemsPanel { get; set; }
+        protected UIAutoLayoutScrollablePanel ContentPanel { get; set; }
 
         public bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
         public bool AvailableContent { set => ContentPanel.SetAvailable(value); }
@@ -58,12 +58,12 @@ namespace NodeMarkup.UI.Editors
             backgroundSprite = "UnlockingItemBackground";
 
             AddItemsPanel();
-            AddSettingPanel();
+            AddContentPanel();
             AddEmptyLabel();
         }
-        private UIScrollablePanel AddPanel(string background)
+        private UIAutoLayoutScrollablePanel AddPanel(string background)
         {
-            var panel = AddUIComponent<UIScrollablePanel>();
+            var panel = AddUIComponent<UIAutoLayoutScrollablePanel>();
 
             panel.autoLayout = true;
             panel.autoLayoutDirection = LayoutDirection.Vertical;
@@ -95,21 +95,21 @@ namespace NodeMarkup.UI.Editors
         private void ItemsScrollbarVisibilityChanged(UIComponent component, bool value)
             => ItemsPanel.width = size.x * ItemsRatio - (ItemsPanel.verticalScrollbar.isVisible ? ItemsPanel.verticalScrollbar.width : 0);
 
-        private void AddSettingPanel()
+        private void AddContentPanel()
         {
             ContentPanel = AddPanel("UnlockingItemBackground");
             ContentPanel.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-            ContentPanel.eventSizeChanged += SettingsPanelSizeChanged;
-            ContentPanel.verticalScrollbar.eventVisibilityChanged += SettingsScrollbarVisibilityChanged;
+            ContentPanel.eventSizeChanged += ContentPanelSizeChanged;
+            ContentPanel.verticalScrollbar.eventVisibilityChanged += ContentScrollbarVisibilityChanged;
         }
 
-        private void SettingsPanelSizeChanged(UIComponent component, Vector2 value)
+        private void ContentPanelSizeChanged(UIComponent component, Vector2 value)
         {
             foreach (var item in ContentPanel.components)
                 item.width = ContentPanel.width - ContentPanel.autoLayoutPadding.horizontal;
         }
         private bool InProgress { get; set; } = false;
-        private void SettingsScrollbarVisibilityChanged(UIComponent component, bool value)
+        private void ContentScrollbarVisibilityChanged(UIComponent component, bool value)
         {
             if (InProgress && !value)
                 return;
@@ -147,7 +147,7 @@ namespace NodeMarkup.UI.Editors
             AvailableContent = true;
         }
         protected virtual void ClearItems() { }
-        protected virtual void ClearSettings() { }
+        protected virtual void ClearContent() { }
         protected virtual void FillItems() { }
         public virtual void Select(int index) { }
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
@@ -207,8 +207,8 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.size = new Vector2(itemsPanelWidth, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
-            var settingsPanelWidth = size.x * ContentRatio - (ContentPanel.verticalScrollbar.isVisible ? ContentPanel.verticalScrollbar.width : 0);
-            ContentPanel.size = new Vector2(settingsPanelWidth, size.y);
+            var contentPanelWidth = size.x * ContentRatio - (ContentPanel.verticalScrollbar.isVisible ? ContentPanel.verticalScrollbar.width : 0);
+            ContentPanel.size = new Vector2(contentPanelWidth, size.y);
             ContentPanel.relativePosition = new Vector2(size.x * ItemsRatio, 0);
 
             EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y / 2);
@@ -253,7 +253,7 @@ namespace NodeMarkup.UI.Editors
             if (!isSelect)
                 return;
 
-            ClearSettings();
+            ClearContent();
             SelectItem = null;
             Select(index);
         }
@@ -305,7 +305,11 @@ namespace NodeMarkup.UI.Editors
 
             ClearItems();
             if (Markup != null)
+            {
+                ItemsPanel.StopLayout();
                 FillItems();
+                ItemsPanel.StartLayout();
+            }
 
             if (selectObject != null && GetItem(selectObject) is EditableItemType selectItem)
                 Select(selectItem);
@@ -318,7 +322,7 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 SelectItem = null;
-                ClearSettings();
+                ClearContent();
                 Select(0);
             }
 
@@ -326,16 +330,16 @@ namespace NodeMarkup.UI.Editors
         }
         public override void UpdateEditor() => Edit(null);
 
-        protected override void ClearSettings()
+        protected override void ClearContent()
         {
             if (UsePropertiesPanel)
-                ClearSettings(PropertiesPanel);
+                ClearContent(PropertiesPanel);
 
-            ClearSettings(ContentPanel);
+            ClearContent(ContentPanel);
 
             OnClear();
         }
-        private void ClearSettings(UIComponent parent)
+        private void ClearContent(UIComponent parent)
         {
             if (parent == null)
                 return;
@@ -351,15 +355,23 @@ namespace NodeMarkup.UI.Editors
         protected override void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => ItemClick((EditableItemType)component);
         protected virtual void ItemClick(EditableItemType item)
         {
-            ContentPanel.autoLayout = false;
-            ClearSettings();
+            ContentPanel.StopLayout();
+            ClearContent();
             SelectItem = item;
+
             if (UsePropertiesPanel)
+            {
                 PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
-            OnObjectSelect();
+                PropertiesPanel.StopLayout();
+            }
+                OnObjectSelect();
             if (UsePropertiesPanel)
+            {
+                PropertiesPanel.StartLayout();
                 PropertiesPanel.Init();
-            ContentPanel.autoLayout = true;
+            }
+
+            ContentPanel.StartLayout();
         }
         protected override void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
         {

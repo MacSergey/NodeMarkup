@@ -657,7 +657,7 @@ namespace NodeMarkup.Manager
         private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
         {
             var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
-            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent);
+            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, "Rail");
             railProperty.Text = label;
             railProperty.Init(railType);
             railProperty.Value = rail;

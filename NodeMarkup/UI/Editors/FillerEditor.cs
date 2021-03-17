@@ -88,12 +88,17 @@ namespace NodeMarkup.UI.Editors
 
             var newStyle = TemplateManager.StyleManager.GetDefault<FillerStyle>(style);
             EditObject.Style.CopyTo(newStyle);
-
             EditObject.Style = newStyle;
 
+            AfterStyleChanged();
+        }
+        private void AfterStyleChanged()
+        {
             RefreshItem();
+            PropertiesPanel.StopLayout();
             ClearStyleProperties();
             AddStyleProperties();
+            PropertiesPanel.StartLayout();
         }
 
         private void OnSaveTemplate()
@@ -112,9 +117,7 @@ namespace NodeMarkup.UI.Editors
             EditObject.Style = newStyle;
             Style.SelectedObject = EditObject.Style.Type;
 
-            RefreshItem();
-            ClearStyleProperties();
-            AddStyleProperties();
+            AfterStyleChanged();
         }
         private void OnSelectTemplate(StyleTemplate template)
         {

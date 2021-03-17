@@ -29,10 +29,10 @@ namespace NodeMarkup.UI.Editors
         protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         protected override string GroupName(bool group) => throw new NotSupportedException();
 
-        protected override void ClearSettings()
+        protected override void ClearContent()
         {
             RemovePreview();
-            base.ClearSettings();
+            base.ClearContent();
         }
         protected override void AddHeader()
         {

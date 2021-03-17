@@ -163,9 +163,7 @@ namespace NodeMarkup.UI.Editors
             EditObject.Style = style.CopyStyle();
             Style.SelectedObject = EditObject.Style.Type;
 
-            RefreshItem();
-            ClearStyleProperties();
-            AddStyleProperties();
+            AfterStyleChanged();
         }
         private void SelectTemplate(StyleTemplate template)
         {
@@ -186,12 +184,17 @@ namespace NodeMarkup.UI.Editors
 
             var newStyle = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(style);
             EditObject.Style.CopyTo(newStyle);
-
             EditObject.Style = newStyle;
 
+            AfterStyleChanged();
+        }
+        private void AfterStyleChanged()
+        {
             RefreshItem();
+            PropertiesPanel.StopLayout();
             ClearStyleProperties();
             AddStyleProperties();
+            PropertiesPanel.StartLayout();
         }
         private void ClearStyleProperties()
         {

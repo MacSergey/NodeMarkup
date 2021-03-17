@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             SelectItem = null;
-            ClearSettings();
+            ClearContent();
 
             if (GroupingEnabled)
                 Select(group, index);

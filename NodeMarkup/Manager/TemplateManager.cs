@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
                 var xml = Saved.value;
                 if (!string.IsNullOrEmpty(xml))
                 {
-                    var config = Loader.Parse(xml);
+                    var config = XmlExtension.Parse(xml);
                     FromXml(config);
                 }
 

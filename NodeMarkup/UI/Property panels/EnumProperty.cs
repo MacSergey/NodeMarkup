@@ -11,7 +11,7 @@ using System.Text;
 
 namespace NodeMarkup.UI
 {
-    public abstract class StylePropertyPanel : EnumPropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
+    public abstract class StylePropertyPanel : EnumOncePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
     {
         protected override bool IsEqual(Style.StyleType first, Style.StyleType second) => first == second;
         public class StyleDropDown : UIDropDown<Style.StyleType> { }
@@ -41,16 +41,16 @@ namespace NodeMarkup.UI
         protected override bool IsEqual(MarkupLine first, MarkupLine second) => ReferenceEquals(first, second);
         public class MarkupLineDropDown : UIDropDown<MarkupLine> { }
     }
-    public class ChevronFromPropertyPanel : EnumPropertyPanel<ChevronFillerStyle.From, ChevronFromPropertyPanel.ChevronFromSegmented>
+    public class ChevronFromPropertyPanel : EnumOncePropertyPanel<ChevronFillerStyle.From, ChevronFromPropertyPanel.ChevronFromSegmented>
     {
         protected override bool IsEqual(ChevronFillerStyle.From first, ChevronFillerStyle.From second) => first == second;
-        public class ChevronFromSegmented : UISegmented<ChevronFillerStyle.From> { }
+        public class ChevronFromSegmented : UIOnceSegmented<ChevronFillerStyle.From> { }
         protected override string GetDescription(ChevronFillerStyle.From value) => value.Description();
     }
-    public class LineAlignmentPropertyPanel : EnumPropertyPanel<LineStyle.StyleAlignment, LineAlignmentPropertyPanel.AlignmentSegmented>
+    public class LineAlignmentPropertyPanel : EnumOncePropertyPanel<LineStyle.StyleAlignment, LineAlignmentPropertyPanel.AlignmentSegmented>
     {
         protected override bool IsEqual(LineStyle.StyleAlignment first, LineStyle.StyleAlignment second) => first == second;
-        public class AlignmentSegmented : UISegmented<LineStyle.StyleAlignment> { }
+        public class AlignmentSegmented : UIOnceSegmented<LineStyle.StyleAlignment> { }
         protected override string GetDescription(LineStyle.StyleAlignment value) => value.Description();
     }
 }

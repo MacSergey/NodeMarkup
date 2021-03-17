@@ -36,6 +36,8 @@ namespace NodeMarkup.UI.Editors
             Editor = editor;
             Rule = rule;
 
+            StopLayout();
+
             AddHeader();
             AddError();
             AddWarning();
@@ -47,6 +49,8 @@ namespace NodeMarkup.UI.Editors
 
             AddStyleTypeProperty();
             AddStyleProperties();
+
+            StartLayout();
 
             base.Init();
         }
@@ -180,9 +184,7 @@ namespace NodeMarkup.UI.Editors
             Rule.Style = style.CopyStyle();
             Style.SelectedObject = Rule.Style.Type;
 
-            Editor.RefreshItem();
-            ClearStyleProperties();
-            AddStyleProperties();
+            AfterStyleChanged();
         }
         private void OnSelectTemplate(StyleTemplate template)
         {
@@ -204,12 +206,17 @@ namespace NodeMarkup.UI.Editors
 
             var newStyle = TemplateManager.StyleManager.GetDefault<LineStyle>(style);
             Rule.Style.CopyTo(newStyle);
-
             Rule.Style = newStyle;
 
+            AfterStyleChanged();
+        }
+        private void AfterStyleChanged()
+        {
             Editor.RefreshItem();
+            StopLayout();
             ClearStyleProperties();
             AddStyleProperties();
+            StartLayout();
         }
         public void Refresh()
         {

@@ -74,7 +74,6 @@ namespace NodeMarkup.UI.Editors
             AddTemplateName();
 
             ReloadAdditionalProperties();
-
             AddAdditional();
 
             SetEditable();
