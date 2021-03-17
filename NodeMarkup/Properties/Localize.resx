@@ -1380,19 +1380,19 @@ Failed to load markings for all intersections.</value>
 Click to edit markings</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Follow rails</value>
+    <value>Follow guide</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Left rail</value>
+    <value>Left guide</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Right rail</value>
+    <value>Right guide</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Select a rail's first point or line as rail</value>
+    <value>Select a guide's first point or line as guide</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Select a rail's second point</value>
+    <value>Select a guide's second point</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
     <value>- Update Harmony dependence: resolving conflicts with others mods that use it</value>
