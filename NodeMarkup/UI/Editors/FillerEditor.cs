@@ -190,7 +190,7 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
     }
-    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkupFiller, StyleIcon>
+    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkupFiller>
     {
         public override int Compare(MarkupFiller x, MarkupFiller y) => 0;
     }

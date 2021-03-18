@@ -32,7 +32,6 @@ namespace NodeMarkup.UI.Editors
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
         public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
         public override Type SupportType { get; } = typeof(ISupportLines);
-        //protected override bool GroupingEnabled => Settings.GroupLines.value;
 
         private AddRuleButton AddButton { get; set; }
 
@@ -45,8 +44,6 @@ namespace NodeMarkup.UI.Editors
         private RulePanel HoverRulePanel { get; set; }
 
         private PartEdgeToolMode PartEdgeToolMode { get; }
-        //protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
-        //protected override string GroupName(MarkupLine.LineType group) => group.Description();
 
         #endregion
 
@@ -277,8 +274,9 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }
 
-    public class LineItemsPanel : ItemsPanel<LineItem, MarkupLine, LineIcon>
+    public class LineItemsPanel : ItemsGroupPanel<LineItem, MarkupLine, LineGroup, MarkupLine.LineType>
     {
+        public override bool GroupingEnable => Settings.GroupLines.value;
         public override int Compare(MarkupLine x, MarkupLine y)
         {
             int result;
@@ -290,6 +288,10 @@ namespace NodeMarkup.UI.Editors
 
             return result;
         }
+        public override int Compare(MarkupLine.LineType x, MarkupLine.LineType y) => x.CompareTo(y);
+
+        protected override string GroupName(MarkupLine.LineType group) => group.Description();
+        protected override MarkupLine.LineType SelectGroup(MarkupLine editObject) => editObject.Type;
     }
     public class LineItem : EditItem<MarkupLine, LineIcon>
     {
@@ -321,7 +323,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class LineGroup : EditableGroup<MarkupLine.LineType, LineItem, MarkupLine, LineIcon> { }
+    public class LineGroup : EditGroup<MarkupLine.LineType, LineItem, MarkupLine> { }
     public class AddRuleButton : ButtonPanel
     {
         public AddRuleButton()

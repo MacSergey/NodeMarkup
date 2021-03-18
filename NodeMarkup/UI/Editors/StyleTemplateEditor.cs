@@ -25,16 +25,10 @@ namespace NodeMarkup.UI.Editors
         protected override string IsAssetWarningMessage => NodeMarkup.Localize.TemplateEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.TemplateEditor_IsWorkshopWarningMessage;
 
-        //protected override bool GroupingEnabled => Settings.GroupTemplates.value;
-
         private Style EditStyle { get; set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetObjects() => TemplateManager.StyleManager.Templates;
-        //protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
-        //    => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
-        //protected override string GroupName(Style.StyleType group)
-        //    => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
         protected override void OnFillPropertiesPanel(StyleTemplate template)
         {
@@ -95,9 +89,15 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class StyleTemplateItemsPanel : ItemsPanel<StyleTemplateItem, StyleTemplate, StyleTemplateIcon>
+    public class StyleTemplateItemsPanel : ItemsGroupPanel<StyleTemplateItem, StyleTemplate, StyleTemplateGroup, Style.StyleType>
     {
+        public override bool GroupingEnable => Settings.GroupTemplates.value;
         public override int Compare(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+        public override int Compare(Style.StyleType x, Style.StyleType y) => x.CompareTo(y);
+
+        protected override string GroupName(Style.StyleType group) => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
+
+        protected override Style.StyleType SelectGroup(StyleTemplate editObject) => Settings.GroupTemplatesType == 0 ? editObject.Style.Type & Style.StyleType.GroupMask : editObject.Style.Type;
     }
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {
@@ -123,6 +123,6 @@ namespace NodeMarkup.UI.Editors
     {
         public bool IsDefault { set => BorderColor = value ? new Color32(255, 215, 0, 255) : (Color32)Color.white; }
     }
-    public class StyleTemplateGroup : EditableGroup<Style.StyleType, StyleTemplateItem, StyleTemplate, StyleTemplateIcon> { }
+    public class StyleTemplateGroup : EditGroup<Style.StyleType, StyleTemplateItem, StyleTemplate> { }
     public class EditStyleTemplateMode : EditTemplateMode<StyleTemplate> { }
 }

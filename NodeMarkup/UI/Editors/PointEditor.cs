@@ -49,7 +49,7 @@ namespace NodeMarkup.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
     }
-    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupPoint, ColorIcon>
+    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupPoint>
     {
         public override int Compare(MarkupPoint x, MarkupPoint y) => 0;
     }

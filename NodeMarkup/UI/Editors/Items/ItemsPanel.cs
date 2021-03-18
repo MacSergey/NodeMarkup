@@ -25,9 +25,8 @@ namespace NodeMarkup.UI.Editors
         public void EditObject(ObjectType editObject);
         public void RefreshSelectedItem();
     }
-    public abstract class ItemsPanel<ItemType, ObjectType, ItemIcon> : AdvancedScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
-        where ItemType : EditItem<ObjectType, ItemIcon>
-        where ItemIcon : UIComponent
+    public abstract class ItemsPanel<ItemType, ObjectType> : AdvancedScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
+        where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
         #region EVENTS
@@ -44,7 +43,7 @@ namespace NodeMarkup.UI.Editors
         protected ItemType SelectItem
         {
             get => _selectItem;
-            private set
+            set
             {
                 if (_selectItem != null)
                     _selectItem.IsSelect = false;
@@ -59,7 +58,7 @@ namespace NodeMarkup.UI.Editors
         }
         public ObjectType SelectObject => SelectItem?.Object;
 
-        private ItemType HoverItem { get; set; }
+        protected ItemType HoverItem { get; set; }
         public ObjectType HoverObject => HoverItem?.Object;
         public virtual bool IsEmpty => !Content.components.Any(c => c is ItemType);
 
@@ -80,7 +79,7 @@ namespace NodeMarkup.UI.Editors
             StartLayout();
         }
         public void AddObject(ObjectType editObject) => AddObjectImpl(editObject);
-        private ItemType AddObjectImpl(ObjectType editObject)
+        protected virtual ItemType AddObjectImpl(ObjectType editObject)
         {
             var index = FindIndex(editObject);
             return AddObjectImpl(editObject, index >= 0 ? index : ~index);
@@ -111,7 +110,7 @@ namespace NodeMarkup.UI.Editors
 
         #region DELETE OBJECT
 
-        public void DeleteObject(ObjectType editObject)
+        public virtual void DeleteObject(ObjectType editObject)
         {
             if (!(FindItem(editObject) is ItemType item))
                 return;
@@ -121,15 +120,20 @@ namespace NodeMarkup.UI.Editors
 
             if (SelectItem == item)
             {
-                var index = Math.Min(Content.components.IndexOf(item), Content.components.Count - 2);
                 SelectItem = null;
-                DeleteItem(item);
-                Select(FindItem(index));
+                DeleteSelectedItem(item);
             }
             else
                 DeleteItem(item);
         }
-        private void DeleteItem(ItemType item)
+        protected virtual void DeleteSelectedItem(ItemType item)
+        {
+            var index = Math.Min(Content.components.IndexOf(item), Content.components.Count - 2);
+            DeleteItem(item);
+            Select(FindItem(index));
+        }
+
+        protected virtual void DeleteItem(ItemType item)
         {
             item.eventClick -= ItemClick;
             item.eventMouseEnter -= ItemHover;
@@ -137,12 +141,7 @@ namespace NodeMarkup.UI.Editors
             item.OnDelete -= ItemDelete;
             ComponentPool.Free(item);
         }
-        private void DeleteUIComponent(UIComponent component)
-        {
-            Content.RemoveUIComponent(component);
-            Destroy(component);
-        }
-        public void Clear()
+        public virtual void Clear()
         {
             HoverItem = null;
             SelectItem = null;
@@ -153,7 +152,7 @@ namespace NodeMarkup.UI.Editors
                 if (component is ItemType item)
                     DeleteItem(item);
                 else
-                    DeleteUIComponent(component);
+                    ComponentPool.Free(component);
             }
         }
 
@@ -204,7 +203,7 @@ namespace NodeMarkup.UI.Editors
                 ItemClick(item);
             }
         }
-        private void ItemDelete(EditItem<ObjectType, ItemIcon> item) => OnDeleteClick?.Invoke(item.Object);
+        private void ItemDelete(EditItem<ObjectType> item) => OnDeleteClick?.Invoke(item.Object);
         private void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (component is ItemType item)
@@ -230,16 +229,20 @@ namespace NodeMarkup.UI.Editors
 
         #region ADDITIONAL
 
-        private ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
-        private ItemType FindItem(int index) => index >= 0 && Content.components.Count > index ? Content.components[index] as ItemType : null;
-        private int FindIndex(ObjectType editObject) => Array.BinarySearch(Content.components.OfType<ItemType>().Select(i => i.Object).ToArray(), editObject, this);
+        protected virtual ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+        protected virtual ItemType FindItem(int index) => FindItem(index, Content);
+        protected ItemType FindItem(int index, UIComponent parent) => index >= 0 && parent.components.Count > index ? parent.components[index] as ItemType : null;
+        
+        protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, Content);
+        protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.Object).ToArray(), editObject, this);
+
         public virtual void ScrollTo(ItemType item)
         {
             Content.ScrollToBottom();
             Content.ScrollIntoView(item);
         }
         public void RefreshSelectedItem() => SelectItem?.Refresh();
-        public void RefreshItems()
+        public virtual void RefreshItems()
         {
             foreach (var item in Content.components.OfType<ItemType>())
                 item.Refresh();

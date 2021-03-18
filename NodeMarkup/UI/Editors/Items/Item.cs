@@ -79,11 +79,10 @@ namespace NodeMarkup.UI.Editors
             Label.textColor = TextColor;
         }
     }
-    public abstract class EditItem<ObjectType, IconType> : EditItemBase, IReusable
-        where IconType : UIComponent
+    public abstract class EditItem<ObjectType> : EditItemBase, IReusable
         where ObjectType : class, IDeletable
     {
-        public event Action<EditItem<ObjectType, IconType>> OnDelete;
+        public event Action<EditItem<ObjectType>> OnDelete;
 
         ObjectType _object;
         public ObjectType Object
@@ -97,25 +96,18 @@ namespace NodeMarkup.UI.Editors
             }
         }
         protected bool Inited => Object != null;
-
-        protected IconType Icon { get; set; }
-        private UIButton DeleteButton { get; set; }
-
-        public virtual bool ShowIcon => true;
+        protected UIButton DeleteButton { get; set; }
         public virtual bool ShowDelete => true;
 
         public EditItem()
         {
             Label.eventSizeChanged += LabelSizeChanged;
-            AddIcon();
             AddDeleteButton();
         }
 
         public virtual void Init(ObjectType editObject)
         {
             Object = editObject;
-
-            Icon.isVisible = ShowIcon;
             DeleteButton.isVisible = ShowDelete;
 
             Refresh();
@@ -129,8 +121,6 @@ namespace NodeMarkup.UI.Editors
             Object = null;
         }
 
-        private void AddIcon() => Icon = AddUIComponent<IconType>();
-
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<UIButton>();
@@ -142,6 +132,31 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.eventClick += DeleteClick;
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
+
+        protected abstract void LabelSizeChanged(UIComponent component, Vector2 value);
+
+        public virtual void Refresh()
+        {
+            Text = Object.ToString();
+            SetColors();
+        }
+    }
+    public abstract class EditItem<ObjectType, IconType> : EditItem<ObjectType>
+        where ObjectType : class, IDeletable
+        where IconType : UIComponent
+    {
+        public virtual bool ShowIcon => true;
+        protected IconType Icon { get; set; }
+
+        public EditItem()
+        {
+            Icon = AddUIComponent<IconType>();
+        }
+        public override void Init(ObjectType editObject)
+        {
+            Icon.isVisible = ShowIcon;
+            base.Init(editObject);
+        }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -166,13 +181,7 @@ namespace NodeMarkup.UI.Editors
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
         }
-        private void LabelSizeChanged(UIComponent component, Vector2 value) => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
-
-        public virtual void Refresh()
-        {
-            Text = Object.ToString();
-            SetColors();
-        }
+        protected override void LabelSizeChanged(UIComponent component, Vector2 value) => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
     }
 
     public class ColorIcon : UIButton

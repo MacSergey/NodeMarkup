@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
         private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
     }
 
-    public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon>
+    public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate>
     {
         PropertyGroupPanel Preview { get; set; }
 
@@ -132,7 +132,7 @@ namespace NodeMarkup.UI.Editors
                 CountLabel.size = size;
         }
     }
-    public class IntersectionTemplateGroup : EditableGroup<bool, IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon> { }
+    public class IntersectionTemplateGroup : EditGroup<bool, IntersectionTemplateItem, IntersectionTemplate> { }
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {

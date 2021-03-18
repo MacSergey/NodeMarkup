@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utils;
 using System;
@@ -9,10 +10,9 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon> : UIPanel
-        where EditableItemType : EditItem<EditableObject, ItemIcon>
-        where ItemIcon : UIComponent
-        where EditableObject : class, IDeletable
+    public class EditGroup<GroupType, ItemType, ObjectType> : UIAutoLayoutPanel, IReusable
+        where ItemType : EditItem<ObjectType>
+        where ObjectType : class, IDeletable
     {
         bool _isExpand = true;
         public bool IsExpand
@@ -34,7 +34,7 @@ namespace NodeMarkup.UI.Editors
         public GroupType Selector { get; private set; }
         public bool IsEmpty => components.Count <= 1;
 
-        public EditableGroup()
+        public EditGroup()
         {
             autoLayout = true;
             autoLayoutDirection = LayoutDirection.Vertical;
@@ -42,7 +42,6 @@ namespace NodeMarkup.UI.Editors
             autoFitChildrenVertically = true;
 
             AddGroupItem();
-            IsExpand = false;
         }
         private void AddGroupItem()
         {
@@ -57,10 +56,11 @@ namespace NodeMarkup.UI.Editors
         {
             Selector = selector;
             Item.Text = groupName;
+            IsExpand = false;
         }
         public virtual void Refresh()
         {
-            foreach (var item in components.OfType<EditableItemType>())
+            foreach (var item in components.OfType<ItemType>())
                 item.Refresh();
         }
 
@@ -70,6 +70,17 @@ namespace NodeMarkup.UI.Editors
 
             foreach (var item in components)
                 item.width = width;
+        }
+
+        public void DeInit()
+        {
+            StopLayout();
+
+            var components = this.components.OfType<ItemType>().ToArray();
+            foreach (var component in components)
+                ComponentPool.Free(component);
+
+            StartLayout();
         }
     }
 

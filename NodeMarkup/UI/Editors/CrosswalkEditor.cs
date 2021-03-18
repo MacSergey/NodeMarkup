@@ -266,7 +266,7 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
     }
-    public class CrosswalkItemsPanel : ItemsPanel<CrosswalkItem, MarkupCrosswalk, StyleIcon>
+    public class CrosswalkItemsPanel : ItemsPanel<CrosswalkItem, MarkupCrosswalk>
     {
         public override int Compare(MarkupCrosswalk x, MarkupCrosswalk y)
         {
