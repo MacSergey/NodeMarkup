@@ -16,11 +16,9 @@ namespace NodeMarkup.UI.Editors
         void Cancel();
         void EditName();
     }
-    public abstract class BaseTemplateEditor<Item, TemplateType, Icon, Group, GroupType, HeaderPanelType, EditToolMode> : GroupedEditor<Item, TemplateType, Icon, Group, GroupType>, ITemplateEditor<TemplateType>
-        where Item : EditableItem<TemplateType, Icon>
-        where Icon : UIComponent
+    public abstract class BaseTemplateEditor<ItemsPanelType, TemplateType, HeaderPanelType, EditToolMode> : Editor<ItemsPanelType, TemplateType>, ITemplateEditor<TemplateType>
+        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<TemplateType>
         where TemplateType : Template<TemplateType>
-        where Group : EditableGroup<GroupType, Item, TemplateType, Icon>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
         where EditToolMode : EditTemplateMode<TemplateType>
     {
@@ -47,7 +45,7 @@ namespace NodeMarkup.UI.Editors
             {
                 base.Active = value;
                 EditMode = false;
-                if (value && SelectItem is Item)
+                if (value && EditObject is TemplateType)
                     SetEditable();
             }
         }
@@ -59,25 +57,27 @@ namespace NodeMarkup.UI.Editors
             ToolMode.Init(this);
         }
 
+        protected override IEnumerable<TemplateType> GetObjects() => GetTemplates();
         protected abstract IEnumerable<TemplateType> GetTemplates();
-        protected override void FillItems()
-        {
-            var templates = GetTemplates().ToArray();
-            foreach (var template in templates)
-                AddItem(template);
-        }
-        protected override void OnObjectSelect()
-        {
-            AddHeader();
-            AddWarning();
-            AddAuthor();
-            AddTemplateName();
+        //protected override void FillItems()
+        //{
+        //    var templates = GetTemplates().ToArray();
+        //    foreach (var template in templates)
+        //        AddItem(template);
+        //}
+        //protected override void OnObjectSelect()
+        //{
+        //    AddHeader();
+        //    AddWarning();
+        //    AddAuthor();
+        //    AddTemplateName();
 
-            ReloadAdditionalProperties();
-            AddAdditional();
+        //    ReloadAdditionalProperties();
+        //    AddAdditional();
 
-            SetEditable();
-        }
+        //    SetEditable();
+        //}
+        protected override void OnObjectSelect(TemplateType editObject) { }
         public override bool OnEscape()
         {
             if (EditMode)
@@ -99,13 +99,13 @@ namespace NodeMarkup.UI.Editors
             Aditional = AddAditionalProperties().ToArray();
         }
         protected virtual void AddAdditional() { }
-        protected override void OnClear()
-        {
-            HeaderPanel = null;
-            Warning = null;
-            NameProperty = null;
-            Aditional = null;
-        }
+        //protected override void OnClear()
+        //{
+        //    HeaderPanel = null;
+        //    Warning = null;
+        //    NameProperty = null;
+        //    Aditional = null;
+        //}
         protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
 
         protected override void OnObjectDelete(TemplateType template) => (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
@@ -161,11 +161,11 @@ namespace NodeMarkup.UI.Editors
 
         private void SaveAsset()
         {
-            if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
-            {
-                SelectItem.Refresh();
-                ItemClick(SelectItem);
-            }
+            //if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
+            //{
+            //    SelectItem.Refresh();
+            //    ItemClick(SelectItem);
+            //}
         }
 
         private void StartEditTemplate()
@@ -231,7 +231,7 @@ namespace NodeMarkup.UI.Editors
                 OnApplyChanges();
                 (EditObject.Manager as TemplateManager<TemplateType>).TemplateChanged(EditObject);
                 EndEditTemplate();
-                SelectItem.Refresh();
+                RefreshItem();
                 return true;
             }
         }

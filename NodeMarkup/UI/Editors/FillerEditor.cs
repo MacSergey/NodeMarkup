@@ -10,7 +10,7 @@ using System;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class FillerEditor : Editor<FillerItem, MarkupFiller, StyleIcon>
+    public class FillerEditor : Editor<FillerItemsPanel, MarkupFiller>
     {
         private static FillerStyle Buffer { get; set; }
 
@@ -31,23 +31,23 @@ namespace NodeMarkup.UI.Editors
             FillerRailToolMode = Tool.CreateToolMode<FillerRailToolMode>();
             FillerRailToolMode.Init(this);
         }
-
-        protected override void FillItems()
-        {
-            foreach (var filler in Markup.Fillers)
-                AddItem(filler);
-        }
-        protected override void OnObjectSelect()
-        {
-            AddHeader();
-            AddStyleTypeProperty();
-            AddStyleProperties();
-        }
-        protected override void OnClear()
-        {
-            Style = null;
-            StyleProperties.Clear();
-        }
+        protected override IEnumerable<MarkupFiller> GetObjects() => Markup.Fillers;
+        //protected override void FillItems()
+        //{
+        //    foreach (var filler in Markup.Fillers)
+        //        AddItem(filler);
+        //}
+        //protected override void OnObjectSelect()
+        //{
+        //    AddHeader();
+        //    AddStyleTypeProperty();
+        //    AddStyleProperties();
+        //}
+        //protected override void OnClear()
+        //{
+        //    Style = null;
+        //    StyleProperties.Clear();
+        //}
 
         private void AddHeader()
         {
@@ -162,8 +162,7 @@ namespace NodeMarkup.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            if (IsHoverItem)
-                HoverItem.Object.Render(cameraInfo, Colors.Hover);
+            ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
 
             if (IsHoverRailPanel)
             {
@@ -171,12 +170,13 @@ namespace NodeMarkup.UI.Editors
                 rail.Render(cameraInfo, Colors.Hover);
             }
         }
-        private void RefreshItem() => SelectItem.Refresh();
         protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);
+        protected override void OnObjectSelect(MarkupFiller editObject) { }
 
         #endregion
     }
-    public class FillerItem : EditableItem<MarkupFiller, StyleIcon>
+    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkupFiller, StyleIcon> { }
+    public class FillerItem : EditItem<MarkupFiller, StyleIcon>
     {
         public override void Refresh()
         {

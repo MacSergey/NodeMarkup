@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItem, StyleTemplate, StyleTemplateIcon, StyleTemplateGroup, Style.StyleType, StyleTemplateHeaderPanel, EditStyleTemplateMode>
+    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
@@ -25,22 +25,22 @@ namespace NodeMarkup.UI.Editors
         protected override string IsAssetWarningMessage => NodeMarkup.Localize.TemplateEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.TemplateEditor_IsWorkshopWarningMessage;
 
-        protected override bool GroupingEnabled => Settings.GroupTemplates.value;
+        //protected override bool GroupingEnabled => Settings.GroupTemplates.value;
 
         private Style EditStyle { get; set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetTemplates() => TemplateManager.StyleManager.Templates.OrderBy(t => t.Name);
-        protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
-            => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
-        protected override string GroupName(Style.StyleType group)
-            => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
+        //protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
+        //    => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
+        //protected override string GroupName(Style.StyleType group)
+        //    => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
-        protected override void OnObjectSelect()
-        {
-            CopyStyle();
-            base.OnObjectSelect();
-        }
+        //protected override void OnObjectSelect()
+        //{
+        //    CopyStyle();
+        //    base.OnObjectSelect();
+        //}
         private void CopyStyle()
         {
             EditStyle = EditObject.Style.Copy();
@@ -50,7 +50,7 @@ namespace NodeMarkup.UI.Editors
         {
             AddStyleProperties();
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => SelectItem.Refresh();
+                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
 
             return StyleProperties;
         }
@@ -61,11 +61,11 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
         }
-        protected override void OnClear()
-        {
-            base.OnClear();
-            StyleProperties.Clear();
-        }
+        //protected override void OnClear()
+        //{
+        //    base.OnClear();
+        //    StyleProperties.Clear();
+        //}
         private void AddStyleProperties()
         {
             StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, true);
@@ -73,9 +73,9 @@ namespace NodeMarkup.UI.Editors
 
         private void ToggleAsDefault()
         {
-            TemplateManager.StyleManager.ToggleAsDefaultTemplate(EditObject);
-            RefreshItems();
-            HeaderPanel.Init(EditObject);
+            //TemplateManager.StyleManager.ToggleAsDefaultTemplate(EditObject);
+            //RefreshItems();
+            //HeaderPanel.Init(EditObject);
         }
         private void Duplicate()
         {
@@ -94,7 +94,8 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class StyleTemplateItem : EditableItem<StyleTemplate, StyleTemplateIcon>
+    public class StyleTemplateItemsPanel : ItemsPanel<StyleTemplateItem, StyleTemplate, StyleTemplateIcon> { }
+    public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {
         public override bool ShowDelete => !Object.IsAsset;
 

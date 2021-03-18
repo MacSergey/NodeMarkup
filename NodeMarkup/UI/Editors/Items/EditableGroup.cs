@@ -10,7 +10,7 @@ using UnityEngine;
 namespace NodeMarkup.UI.Editors
 {
     public class EditableGroup<GroupType, EditableItemType, EditableObject, ItemIcon> : UIPanel
-        where EditableItemType : EditableItem<EditableObject, ItemIcon>
+        where EditableItemType : EditItem<EditableObject, ItemIcon>
         where ItemIcon : UIComponent
         where EditableObject : class, IDeletable
     {
@@ -73,7 +73,7 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class GroupItem : EditableItemBase
+    public class GroupItem : EditItemBase
     {
         public override Color32 NormalColor => new Color32(114, 197, 255, 255);
         public override Color32 HoveredColor => new Color32(97, 180, 239, 255);

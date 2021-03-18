@@ -14,11 +14,11 @@ namespace NodeMarkup.Tools
     public class DragPointToolMode : BaseToolMode
     {
         public override ToolModeType Type => ToolModeType.DragPoint;
-        public MarkupPoint DragPoint { get; set; } = null;
+        public MarkupEnterPoint DragPoint { get; set; } = null;
 
         protected override void Reset(BaseToolMode prevMode)
         {
-            DragPoint = prevMode is MakeLineToolMode makeLineMode ? makeLineMode.HoverPoint : null;
+            DragPoint = prevMode is MakeLineToolMode makeLineMode ? makeLineMode.HoverPoint as MarkupEnterPoint : null;
         }
         public override void OnMouseDrag(Event e)
         {

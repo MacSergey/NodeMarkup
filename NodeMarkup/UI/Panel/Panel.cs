@@ -270,7 +270,7 @@ namespace NodeMarkup.UI.Panel
 
         private EditorType Edit<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
-            where ItemType : ISupport
+            where ItemType : class, ISupport, IDeletable
         {
             if (!(Markup is ISupport<ItemType>))
                 return null;
@@ -280,17 +280,17 @@ namespace NodeMarkup.UI.Panel
             editor?.Edit(item);
             return editor;
         }
-        public void EditPoint(MarkupPoint point) => Edit<PointsEditor, MarkupPoint>(point);
+        public void EditPoint(MarkupEnterPoint point) => Edit<PointsEditor, MarkupEnterPoint>(point);
         public void EditLine(MarkupLine line) => Edit<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
             var editor = Edit<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
-            editor?.BorderSetup();
+            //editor?.BorderSetup();
         }
         public void EditFiller(MarkupFiller filler) => Edit<FillerEditor, MarkupFiller>(filler);
 
         private void EditTemplate<EditorType, TemplateType>(TemplateType template, bool editName)
-            where EditorType : Editor, ITemplateEditor<TemplateType>
+            where EditorType : Editor, IEditor<TemplateType>, ITemplateEditor<TemplateType>
             where TemplateType : Template
         {
             var editor = Edit<EditorType, TemplateType>(template);

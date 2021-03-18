@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class EditableItemBase : UIButton
+    public abstract class EditItemBase : UIButton
     {
         public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
         public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
@@ -42,7 +42,7 @@ namespace NodeMarkup.UI.Editors
             set => Label.text = value;
         }
 
-        public EditableItemBase()
+        public EditItemBase()
         {
             AddLable();
 
@@ -79,14 +79,14 @@ namespace NodeMarkup.UI.Editors
             Label.textColor = TextColor;
         }
     }
-    public abstract class EditableItem<EditableObject, IconType> : EditableItemBase, IReusable
+    public abstract class EditItem<ObjectType, IconType> : EditItemBase, IReusable
         where IconType : UIComponent
-        where EditableObject : class, IDeletable
+        where ObjectType : class, IDeletable
     {
-        public event Action<EditableItem<EditableObject, IconType>> OnDelete;
+        public event Action<EditItem<ObjectType, IconType>> OnDelete;
 
-        EditableObject _object;
-        public EditableObject Object
+        ObjectType _object;
+        public ObjectType Object
         {
             get => _object;
             private set
@@ -104,16 +104,16 @@ namespace NodeMarkup.UI.Editors
         public virtual bool ShowIcon => true;
         public virtual bool ShowDelete => true;
 
-        public EditableItem()
+        public EditItem()
         {
             Label.eventSizeChanged += LabelSizeChanged;
             AddIcon();
             AddDeleteButton();
         }
 
-        public virtual void Init(EditableObject editableObject)
+        public virtual void Init(ObjectType editObject)
         {
-            Object = editableObject;
+            Object = editObject;
 
             Icon.isVisible = ShowIcon;
             DeleteButton.isVisible = ShowDelete;
