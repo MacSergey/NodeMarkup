@@ -19,6 +19,7 @@ namespace NodeMarkup.UI.Editors
         where ObjectType : class, IDeletable
     {
         void Edit(ObjectType editObject);
+        void Delete(ObjectType editObject);
     }
     public abstract class Editor : UIPanel
     {
@@ -30,18 +31,30 @@ namespace NodeMarkup.UI.Editors
         public abstract Type SupportType { get; }
         public abstract string EmptyMessage { get; }
 
+        protected bool NeedUpdate { get; set; }
         public virtual bool Active
         {
             set
             {
                 enabled = value;
                 isVisible = value;
+
+                if (NeedUpdate)
+                    UpdateEditor();
             }
+            get => enabled && isVisible;
         }
 
         public void Init(NodeMarkupPanel panel) => Panel = panel;
+        public void UpdateEditor()
+        {
+            if (Active)
+                UpdateEditorImpl();
+            else
+                NeedUpdate = true;
+        }
+        protected abstract void UpdateEditorImpl();
 
-        public abstract void UpdateEditor();
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
         public virtual bool OnShortcut(Event e) => false;
         public virtual bool OnEscape() => false;
@@ -50,12 +63,15 @@ namespace NodeMarkup.UI.Editors
         where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
         where ObjectType : class, IDeletable
     {
+        #region PROPERTIES
+
         protected static float ItemsRatio => 0.3f;
         protected static float ContentRatio => 1f - ItemsRatio;
 
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected Markup Markup => Panel.Markup;
+        protected bool NeedInit { get; private set; }
         public ObjectType EditObject => ItemsPanel.SelectObject;
 
 
@@ -70,6 +86,10 @@ namespace NodeMarkup.UI.Editors
         public bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
         public bool AvailableContent { set => ContentPanel.SetAvailable(value); }
 
+        #endregion
+
+        #region CONSTRUCTOR
+
         public Editor()
         {
             clipChildren = true;
@@ -79,8 +99,8 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.atlas = TextureHelper.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
-            ItemsPanel.OnSelect += OnObjectSelect;
-            ItemsPanel.OnDelete += OnObjectDelete;
+            ItemsPanel.OnSelectClick += OnItemSelect;
+            ItemsPanel.OnDeleteClick += OnItemDelete;
 
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
@@ -102,24 +122,42 @@ namespace NodeMarkup.UI.Editors
             EmptyLabel.wordWrap = true;
             EmptyLabel.autoSize = false;
 
-            SwitchEmpty();
-        }
-        protected void SwitchEmpty()
-        {
-            if (ItemsPanel.IsEmpty)
-            {
-                EmptyLabel.isVisible = true;
-                EmptyLabel.text = EmptyMessage;
-            }
-            else
-                EmptyLabel.isVisible = false;
+            SwitchEmptyMessage();
         }
 
-        public override void UpdateEditor()
+        #endregion
+
+        #region UPDATE EDIT DELETE
+
+        protected override void UpdateEditorImpl()
         {
             AvailableItems = true;
             AvailableContent = true;
+
+            ItemsPanel.Init(GetObjects());
+            ItemsPanel.EditObject(null);
+
+            SwitchEmptyMessage();
+
+            NeedUpdate = false;
         }
+
+        public virtual void Edit(ObjectType editObject = null)
+        {
+            ItemsPanel.EditObject(editObject);
+            SwitchEmptyMessage();
+        }
+        public virtual void Delete(ObjectType deleteObject)
+        {
+            ItemsPanel.DeleteObject(deleteObject);
+            SwitchEmptyMessage();
+        }
+
+        protected abstract IEnumerable<ObjectType> GetObjects();
+
+        #endregion
+
+        #region HANDLERS
 
         protected override void OnSizeChanged()
         {
@@ -134,18 +172,35 @@ namespace NodeMarkup.UI.Editors
             EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y / 2);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
-        protected abstract void OnObjectDelete(ObjectType editObject);
-        protected abstract void OnObjectSelect(ObjectType editObject);
-
-        public virtual void Edit(ObjectType selectObject = null)
+        private void OnItemDelete(ObjectType editObject)
         {
-            UpdateEditor();
-            //ItemsPanel.Clear();
-            ItemsPanel.EditObject(selectObject);
+            Tool.DeleteItem(editObject, () => OnObjectDelete(editObject));
         }
-        protected abstract IEnumerable<ObjectType> GetObjects();
+        protected virtual void OnObjectDelete(ObjectType editObject)
+        {
+            ItemsPanel.DeleteObject(editObject);
+            SwitchEmptyMessage();
+        }
 
+        protected abstract void OnItemSelect(ObjectType editObject);
+
+        #endregion
+
+        #region ADDITIONAL
+
+        protected void SwitchEmptyMessage()
+        {
+            if (ItemsPanel.IsEmpty)
+            {
+                EmptyLabel.isVisible = true;
+                EmptyLabel.text = EmptyMessage;
+            }
+            else
+                EmptyLabel.isVisible = false;
+        }
         public void RefreshItem() => ItemsPanel.RefreshSelectedItem();
+
+        #endregion
     }
 
 

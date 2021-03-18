@@ -36,7 +36,7 @@ namespace NodeMarkup.UI.Editors
             CrosswalkBorderToolMode.Init(this);
         }
 
-        protected override IEnumerable<MarkupCrosswalk> GetObjects() => Markup.Crosswalks.OrderBy(c => c.Line.Start.Enter).ThenBy(c => c.Line.Start.Num);
+        protected override IEnumerable<MarkupCrosswalk> GetObjects() => Markup.Crosswalks;
 
         //protected override void OnObjectSelect()
         //{
@@ -200,8 +200,12 @@ namespace NodeMarkup.UI.Editors
             StyleProperties.Clear();
         }
         private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);
-        protected override void OnObjectDelete(MarkupCrosswalk crosswalk) => Markup.RemoveCrosswalk(crosswalk);
-        protected override void OnObjectSelect(MarkupCrosswalk crosswalk) { } /*=> FillBorders();*/
+        protected override void OnObjectDelete(MarkupCrosswalk crosswalk)
+        {
+            Markup.RemoveCrosswalk(crosswalk);
+            base.OnObjectDelete(crosswalk);
+        }
+        protected override void OnItemSelect(MarkupCrosswalk crosswalk) { } /*=> FillBorders();*/
 
         #region EDITOR ACTION
 
@@ -227,7 +231,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-                ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
+            ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
 
             if (IsHoverBorderPanel && HoverBorderPanel.Value is MarkupRegularLine borderLine)
                 borderLine.Render(cameraInfo, Colors.Hover);
@@ -235,21 +239,30 @@ namespace NodeMarkup.UI.Editors
 
         public void BorderSetup()
         {
-            if (!Settings.QuickBorderSetup)
-                return;
+            //if (!Settings.QuickBorderSetup)
+            //    return;
 
-            var hasLeft = LeftBorder.Objects.Any();
-            var hasRight = RightBorder.Objects.Any();
+            //var hasLeft = LeftBorder.Objects.Any();
+            //var hasRight = RightBorder.Objects.Any();
 
-            if (hasLeft)
-                SelectBorder(LeftBorder, hasRight ? (_) => SelectBorder(RightBorder) : (Func<Event, bool>)null);
-            else if (hasRight)
-                SelectBorder(RightBorder);
+            //if (hasLeft)
+            //    SelectBorder(LeftBorder, hasRight ? (_) => SelectBorder(RightBorder) : (Func<Event, bool>)null);
+            //else if (hasRight)
+            //    SelectBorder(RightBorder);
         }
 
         #endregion
     }
-    public class CrosswalkItemsPanel : ItemsPanel<CrosswalkItem, MarkupCrosswalk, StyleIcon> { }
+    public class CrosswalkItemsPanel : ItemsPanel<CrosswalkItem, MarkupCrosswalk, StyleIcon>
+    {
+        public override int Compare(MarkupCrosswalk x, MarkupCrosswalk y)
+        {
+            int result;
+            if ((result = x.Line.Start.Enter.CompareTo(y.Line.Start.Enter)) == 0)
+                result = x.Line.Start.Num.CompareTo(y.Line.Start.Num);
+            return result;
+        }
+    }
     public class CrosswalkItem : EditItem<MarkupCrosswalk, StyleIcon>
     {
         public override void Refresh()

@@ -170,12 +170,19 @@ namespace NodeMarkup.UI.Editors
                 rail.Render(cameraInfo, Colors.Hover);
             }
         }
-        protected override void OnObjectDelete(MarkupFiller filler) => Markup.RemoveFiller(filler);
-        protected override void OnObjectSelect(MarkupFiller editObject) { }
+        protected override void OnObjectDelete(MarkupFiller filler)
+        {
+            Markup.RemoveFiller(filler);
+            base.OnObjectDelete(filler);
+        }
+        protected override void OnItemSelect(MarkupFiller editObject) { }
 
         #endregion
     }
-    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkupFiller, StyleIcon> { }
+    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkupFiller, StyleIcon>
+    {
+        public override int Compare(MarkupFiller x, MarkupFiller y) => 0;
+    }
     public class FillerItem : EditItem<MarkupFiller, StyleIcon>
     {
         public override void Refresh()

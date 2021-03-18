@@ -69,7 +69,7 @@ namespace NodeMarkup.Tools
                     Tool.DeleteItem(line, () =>
                     {
                         Tool.Markup.RemoveLine(line);
-                        Panel.UpdatePanel();
+                        Panel.DeleteLine(line);
                     });
                 else
                 {

@@ -118,27 +118,6 @@ namespace NodeMarkup.UI.Panel
             absolutePosition = DefaultPosition;
         }
         private void SetDefaulSize() => size = new Vector2(Width, Header.height + TabStrip.height + 400);
-        private new void Reset() => Available = true;
-
-        #endregion
-
-        #region UPDATE
-
-        public void UpdatePanel()
-        {
-            Reset();
-            CurrentEditor?.UpdateEditor();
-        }
-        private void UpdateOnVisible()
-        {
-            NeedUpdateOnVisible = false;
-
-            Header.Text = Markup.PanelCaption;
-            TabStrip.SetVisible(Markup);
-            TabStrip.ArrangeTabs();
-            TabStrip.SelectedTab = -1;
-            SelectEditor<LinesEditor>();
-        }
 
         #endregion
 
@@ -194,6 +173,37 @@ namespace NodeMarkup.UI.Panel
 
         #endregion
 
+        #region UPDATE
+
+        public void SetMarkup(Markup markup)
+        {
+            if ((Markup = markup) != null)
+            {
+                if (isVisible)
+                    UpdateOnVisible();
+                else
+                    NeedUpdateOnVisible = true;
+            }
+        }
+        public void UpdatePanel()
+        {
+            Available = true;
+            foreach (var editor in Editors)
+                editor.UpdateEditor();
+        }
+        private void UpdateOnVisible()
+        {
+            NeedUpdateOnVisible = false;
+
+            Header.Text = Markup.PanelCaption;
+            TabStrip.SetVisible(Markup);
+            TabStrip.ArrangeTabs();
+            TabStrip.SelectedTab = -1;
+            SelectEditor<LinesEditor>();
+        }
+
+        #endregion
+
         #region ONEVENTS
 
         private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
@@ -217,18 +227,14 @@ namespace NodeMarkup.UI.Panel
             }
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
-        }   
+        }
         protected override void OnVisibilityChanged()
         {
             base.OnVisibilityChanged();
             if (isVisible && NeedUpdateOnVisible)
                 UpdateOnVisible();
-        }           
-        private void OnSelectedTabChanged(int index)
-        {
-            CurrentEditor = SelectEditor(index);
-            UpdatePanel();
         }
+        private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
         private Editor SelectEditor(int index)
         {
             if (index >= 0 && Editors.Count > index)
@@ -254,19 +260,7 @@ namespace NodeMarkup.UI.Panel
 
         #endregion
 
-        #region EDIT
-
-        public void SetMarkup(Markup markup)
-        {
-            Markup = markup;
-            if (Markup != null)
-            {
-                if (isVisible)
-                    UpdateOnVisible();
-                else
-                    NeedUpdateOnVisible = true;
-            }
-        }
+        #region EDIT OBJECT
 
         private EditorType Edit<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -275,7 +269,7 @@ namespace NodeMarkup.UI.Panel
             if (!(Markup is ISupport<ItemType>))
                 return null;
 
-            Reset();
+            Available = true;
             var editor = SelectEditor<EditorType>();
             editor?.Edit(item);
             return editor;
@@ -284,8 +278,9 @@ namespace NodeMarkup.UI.Panel
         public void EditLine(MarkupLine line) => Edit<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
+            EditLine(crosswalk.Line);
             var editor = Edit<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
-            //editor?.BorderSetup();
+            editor?.BorderSetup();
         }
         public void EditFiller(MarkupFiller filler) => Edit<FillerEditor, MarkupFiller>(filler);
 
@@ -295,13 +290,34 @@ namespace NodeMarkup.UI.Panel
         {
             var editor = Edit<EditorType, TemplateType>(template);
             if (editName && editor != null)
-            {
                 editor.EditName();
-            }
         }
 
         public void EditStyleTemplate(StyleTemplate template, bool editName = true) => EditTemplate<StyleTemplateEditor, StyleTemplate>(template, editName);
         public void EditIntersectionTemplate(IntersectionTemplate template, bool editName = true) => EditTemplate<IntersectionTemplateEditor, IntersectionTemplate>(template, editName);
+
+        #endregion
+
+        #region DELETE OBJECT
+
+        private void Delete<EditorType, ItemType>(ItemType item)
+            where EditorType : Editor, IEditor<ItemType>
+            where ItemType : class, ISupport, IDeletable
+        {
+            if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
+                editor.Delete(item);
+        }
+
+        public void DeleteLine(MarkupLine line) => Delete<LinesEditor, MarkupLine>(line);
+        public void DeleteCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            DeleteLine(crosswalk.Line);
+            Delete<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+        }
+
+        #endregion
+
+        #region ADDITIONAL
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public bool OnEscape() => CurrentEditor?.OnEscape() == true;

@@ -44,7 +44,7 @@ namespace NodeMarkup.Tools
                     Tool.DeleteItem(line, () =>
                     {
                         Tool.Markup.RemoveLine(line);
-                        Panel.UpdatePanel();
+                        Panel.DeleteCrosswalk((line as MarkupCrosswalkLine).Crosswalk);
                     });
                 else
                 {

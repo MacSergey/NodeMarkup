@@ -30,7 +30,7 @@ namespace NodeMarkup.UI.Editors
         private Style EditStyle { get; set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
-        protected override IEnumerable<StyleTemplate> GetTemplates() => TemplateManager.StyleManager.Templates.OrderBy(t => t.Name);
+        protected override IEnumerable<StyleTemplate> GetTemplates() => TemplateManager.StyleManager.Templates;
         //protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
         //    => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
         //protected override string GroupName(Style.StyleType group)
@@ -94,7 +94,10 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class StyleTemplateItemsPanel : ItemsPanel<StyleTemplateItem, StyleTemplate, StyleTemplateIcon> { }
+    public class StyleTemplateItemsPanel : ItemsPanel<StyleTemplateItem, StyleTemplate, StyleTemplateIcon>
+    {
+        public override int Compare(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+    }
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {
         public override bool ShowDelete => !Object.IsAsset;

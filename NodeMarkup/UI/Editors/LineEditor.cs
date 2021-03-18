@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
 
         //protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
         //protected override string GroupName(MarkupLine.LineType group) => group.Description();
-        protected override IEnumerable<MarkupLine> GetObjects() => Markup.Lines.OrderBy(l => l.Start.Enter).ThenBy(l => l.Start.Num).ThenBy(l => l.End.Enter).ThenBy(l => l.End.Num);
+        protected override IEnumerable<MarkupLine> GetObjects() => Markup.Lines;
         //protected override void FillItems()
         //{
         //    var sortLines = Markup.Lines.OrderBy(l => l.Start.Enter).ThenBy(l => l.Start.Num).ThenBy(l => l.End.Enter).ThenBy(l => l.End.Num).ToArray();
@@ -71,7 +71,7 @@ namespace NodeMarkup.UI.Editors
         //    AddRulePanels();
         //    AddAddButton();
         //}
-        protected override void OnObjectSelect(MarkupLine editObject) { }
+        protected override void OnItemSelect(MarkupLine editObject) { }
         private void GetRuleEdges()
         {
             SupportPoints.Clear();
@@ -221,7 +221,11 @@ namespace NodeMarkup.UI.Editors
         //    GetRuleEdges();
         //    RefreshRulePanels();
         //}
-        protected override void OnObjectDelete(MarkupLine line) => Markup.RemoveLine(line);
+        protected override void OnObjectDelete(MarkupLine line)
+        {
+            Markup.RemoveLine(line);
+            base.OnObjectDelete(line);
+        }
         public void Refresh()
         {
             RefreshItem();
@@ -272,7 +276,20 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }
 
-    public class LineItemsPanel : ItemsPanel<LineItem, MarkupLine, LineIcon> { }
+    public class LineItemsPanel : ItemsPanel<LineItem, MarkupLine, LineIcon>
+    {
+        public override int Compare(MarkupLine x, MarkupLine y)
+        {
+            int result;
+
+            if ((result = x.Start.Enter.CompareTo(y.Start.Enter)) == 0)
+                if ((result = x.Start.Num.CompareTo(y.Start.Num)) == 0)
+                    if ((result = x.End.Enter.CompareTo(y.End.Enter)) == 0)
+                        result = x.End.Num.CompareTo(y.End.Num);
+
+            return result;
+        }
+    }
     public class LineItem : EditItem<MarkupLine, LineIcon>
     {
         private bool HasOverlapped { get; set; }

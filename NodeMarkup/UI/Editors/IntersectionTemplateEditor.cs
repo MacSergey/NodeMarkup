@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
 
         //protected override bool GroupingEnabled => false;
 
-        protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates.OrderBy(t => t.Roads).ThenBy(t => t.Name);
+        protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates;
         //protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         //protected override string GroupName(bool group) => throw new NotSupportedException();
 
@@ -92,7 +92,16 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon> { }
+    public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon>
+    {
+        public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
+        {
+            int result;
+            if((result = x.Roads.CompareTo(y.Roads)) == 0)
+                result = x.Name.CompareTo(y.Name);
+            return result;
+        }
+    }
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
         public override bool ShowDelete => !Object.IsAsset;

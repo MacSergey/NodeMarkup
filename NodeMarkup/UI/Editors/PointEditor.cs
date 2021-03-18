@@ -29,8 +29,7 @@ namespace NodeMarkup.UI.Editors
         //            AddItem(point);
         //    }
         //}
-        protected override void OnObjectSelect(MarkupEnterPoint editObject) { }
-        protected override void OnObjectDelete(MarkupEnterPoint editObject) { }
+        protected override void OnItemSelect(MarkupEnterPoint editObject) { }
         //protected override void OnObjectSelect()
         //{
         //    Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
@@ -59,7 +58,10 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
         }
     }
-    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupEnterPoint, ColorIcon> { }
+    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupEnterPoint, ColorIcon>
+    {
+        public override int Compare(MarkupEnterPoint x, MarkupEnterPoint y) => 0;
+    }
     public class PointItem : EditItem<MarkupEnterPoint, ColorIcon>
     {
         public override bool ShowDelete => false;

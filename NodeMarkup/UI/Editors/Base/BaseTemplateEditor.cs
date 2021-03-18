@@ -77,7 +77,7 @@ namespace NodeMarkup.UI.Editors
 
         //    SetEditable();
         //}
-        protected override void OnObjectSelect(TemplateType editObject) { }
+        protected override void OnItemSelect(TemplateType editObject) { }
         public override bool OnEscape()
         {
             if (EditMode)
@@ -108,7 +108,11 @@ namespace NodeMarkup.UI.Editors
         //}
         protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
 
-        protected override void OnObjectDelete(TemplateType template) => (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
+        protected override void OnObjectDelete(TemplateType template)
+        {
+            (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
+            base.OnObjectDelete(template);
+        }
 
         protected virtual void AddHeader()
         {
@@ -151,12 +155,12 @@ namespace NodeMarkup.UI.Editors
 
         protected virtual void SetEditable()
         {
-            Panel.Available = AvailableItems = !EditMode;
-            HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
-            Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && !EditMode;
+            //Panel.Available = AvailableItems = !EditMode;
+            //HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
+            //Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && !EditMode;
 
-            foreach (var aditional in Aditional)
-                aditional.EnableControl = EditMode;
+            //foreach (var aditional in Aditional)
+            //    aditional.EnableControl = EditMode;
         }
 
         private void SaveAsset()
