@@ -235,6 +235,11 @@ namespace NodeMarkup.UI.Panel
                 UpdateOnVisible();
         }
         private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
+
+        #endregion
+
+        #region GET SELECT
+
         private Editor SelectEditor(int index)
         {
             if (index >= 0 && Editors.Count > index)
@@ -260,9 +265,41 @@ namespace NodeMarkup.UI.Panel
 
         #endregion
 
+        #region ADD OBJECT
+
+        private void AddObject<EditorType, ItemType>(ItemType item)
+            where EditorType : Editor, IEditor<ItemType>
+            where ItemType : class, ISupport, IDeletable
+        {
+            if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
+                editor.Add(item);
+        }
+        private void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
+
+        #endregion
+
+        #region DELETE OBJECT
+
+        private void DeleteObject<EditorType, ItemType>(ItemType item)
+            where EditorType : Editor, IEditor<ItemType>
+            where ItemType : class, ISupport, IDeletable
+        {
+            if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
+                editor.Delete(item);
+        }
+
+        public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
+        public void DeleteCrosswalk(MarkupCrosswalk crosswalk)
+        {
+            DeleteLine(crosswalk.Line);
+            DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+        }
+
+        #endregion
+
         #region EDIT OBJECT
 
-        private EditorType Edit<EditorType, ItemType>(ItemType item)
+        private EditorType EditObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
             where ItemType : class, ISupport, IDeletable
         {
@@ -274,46 +311,27 @@ namespace NodeMarkup.UI.Panel
             editor?.Edit(item);
             return editor;
         }
-        public void EditPoint(MarkupEnterPoint point) => Edit<PointsEditor, MarkupEnterPoint>(point);
-        public void EditLine(MarkupLine line) => Edit<LinesEditor, MarkupLine>(line);
+        public void EditPoint(MarkupEnterPoint point) => EditObject<PointsEditor, MarkupEnterPoint>(point);
+        public void EditLine(MarkupLine line) => EditObject<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
-            EditLine(crosswalk.Line);
-            var editor = Edit<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+            AddLine(crosswalk.Line);
+            var editor = EditObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
             editor?.BorderSetup();
         }
-        public void EditFiller(MarkupFiller filler) => Edit<FillerEditor, MarkupFiller>(filler);
+        public void EditFiller(MarkupFiller filler) => EditObject<FillerEditor, MarkupFiller>(filler);
 
         private void EditTemplate<EditorType, TemplateType>(TemplateType template, bool editName)
             where EditorType : Editor, IEditor<TemplateType>, ITemplateEditor<TemplateType>
             where TemplateType : Template
         {
-            var editor = Edit<EditorType, TemplateType>(template);
+            var editor = EditObject<EditorType, TemplateType>(template);
             if (editName && editor != null)
                 editor.EditName();
         }
 
         public void EditStyleTemplate(StyleTemplate template, bool editName = true) => EditTemplate<StyleTemplateEditor, StyleTemplate>(template, editName);
         public void EditIntersectionTemplate(IntersectionTemplate template, bool editName = true) => EditTemplate<IntersectionTemplateEditor, IntersectionTemplate>(template, editName);
-
-        #endregion
-
-        #region DELETE OBJECT
-
-        private void Delete<EditorType, ItemType>(ItemType item)
-            where EditorType : Editor, IEditor<ItemType>
-            where ItemType : class, ISupport, IDeletable
-        {
-            if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
-                editor.Delete(item);
-        }
-
-        public void DeleteLine(MarkupLine line) => Delete<LinesEditor, MarkupLine>(line);
-        public void DeleteCrosswalk(MarkupCrosswalk crosswalk)
-        {
-            DeleteLine(crosswalk.Line);
-            Delete<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
-        }
 
         #endregion
 

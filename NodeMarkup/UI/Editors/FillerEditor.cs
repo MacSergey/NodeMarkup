@@ -10,8 +10,10 @@ using System;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class FillerEditor : Editor<FillerItemsPanel, MarkupFiller>
+    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkupFiller>
     {
+        #region PROPERTIES
+
         private static FillerStyle Buffer { get; set; }
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
@@ -26,36 +28,41 @@ namespace NodeMarkup.UI.Editors
         public FillerRailSelectPropertyPanel HoverRailPanel { get; private set; }
         public bool IsHoverRailPanel => HoverRailPanel != null;
 
+        #endregion
+
+        #region BASIC
+
         public FillerEditor()
         {
             FillerRailToolMode = Tool.CreateToolMode<FillerRailToolMode>();
             FillerRailToolMode.Init(this);
         }
         protected override IEnumerable<MarkupFiller> GetObjects() => Markup.Fillers;
-        //protected override void FillItems()
-        //{
-        //    foreach (var filler in Markup.Fillers)
-        //        AddItem(filler);
-        //}
-        //protected override void OnObjectSelect()
-        //{
-        //    AddHeader();
-        //    AddStyleTypeProperty();
-        //    AddStyleProperties();
-        //}
-        //protected override void OnClear()
-        //{
-        //    Style = null;
-        //    StyleProperties.Clear();
-        //}
+
+        protected override void OnFillPropertiesPanel(MarkupFiller filler)
+        {
+            AddHeader();
+            AddStyleTypeProperty();
+            AddStyleProperties();
+        }
+        protected override void OnObjectDelete(MarkupFiller filler)
+        {
+            Markup.RemoveFiller(filler);
+            base.OnObjectDelete(filler);
+        }
+        protected override void OnClearPropertiesPanel()
+        {
+            Style = null;
+            StyleProperties.Clear();
+        }
 
         private void AddHeader()
         {
             var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
             header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
             header.OnSaveTemplate += OnSaveTemplate;
-            header.OnCopy += CopyStyle;
-            header.OnPaste += PasteStyle;
+            header.OnCopy += OnCopyStyle;
+            header.OnPaste += OnPasteStyle;
         }
         private void AddStyleTypeProperty()
         {
@@ -81,6 +88,18 @@ namespace NodeMarkup.UI.Editors
                 }
             }
         }
+        private void ClearStyleProperties()
+        {
+            foreach (var property in StyleProperties)
+                ComponentPool.Free(property);
+
+            StyleProperties.Clear();
+        }
+
+        #endregion
+
+        #region STYLE CHANGE
+
         private void StyleChanged(Style.StyleType style)
         {
             if (style == EditObject.Style.Type)
@@ -101,11 +120,6 @@ namespace NodeMarkup.UI.Editors
             PropertiesPanel.StartLayout();
         }
 
-        private void OnSaveTemplate()
-        {
-            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
-                Panel.EditStyleTemplate(template);
-        }
         private void ApplyStyle(FillerStyle style)
         {
             var newStyle = style.CopyStyle();
@@ -119,26 +133,32 @@ namespace NodeMarkup.UI.Editors
 
             AfterStyleChanged();
         }
+
+        #endregion
+
+        #region HANDLERS
+
+        private void OnSaveTemplate()
+        {
+            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+                Panel.EditStyleTemplate(template);
+        }
         private void OnSelectTemplate(StyleTemplate template)
         {
             if (template.Style is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
-        private void PasteStyle()
+        private void OnCopyStyle() => Buffer = EditObject.Style.CopyStyle();
+        private void OnPasteStyle()
         {
             if (Buffer is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void ClearStyleProperties()
-        {
-            foreach (var property in StyleProperties)
-                ComponentPool.Free(property);
 
-            StyleProperties.Clear();
-        }
+        #endregion
 
         #region EDITOR ACTION
+
         public void HoverRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = selectPanel;
         public void LeaveRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = null;
         public bool SelectRail(FillerRailSelectPropertyPanel selectPanel) => SelectRail(selectPanel, null);
@@ -170,12 +190,6 @@ namespace NodeMarkup.UI.Editors
                 rail.Render(cameraInfo, Colors.Hover);
             }
         }
-        protected override void OnObjectDelete(MarkupFiller filler)
-        {
-            Markup.RemoveFiller(filler);
-            base.OnObjectDelete(filler);
-        }
-        protected override void OnItemSelect(MarkupFiller editObject) { }
 
         #endregion
     }

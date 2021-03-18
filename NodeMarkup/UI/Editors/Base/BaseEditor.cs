@@ -15,11 +15,12 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public interface IEditor<ObjectType> 
+    public interface IEditor<ObjectType>
         where ObjectType : class, IDeletable
     {
-        void Edit(ObjectType editObject);
+        void Add(ObjectType editObject);
         void Delete(ObjectType editObject);
+        void Edit(ObjectType editObject);
     }
     public abstract class Editor : UIPanel
     {
@@ -68,20 +69,14 @@ namespace NodeMarkup.UI.Editors
         protected static float ItemsRatio => 0.3f;
         protected static float ContentRatio => 1f - ItemsRatio;
 
-
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected Markup Markup => Panel.Markup;
         protected bool NeedInit { get; private set; }
         public ObjectType EditObject => ItemsPanel.SelectObject;
 
-
-        protected virtual bool UsePropertiesPanel => true;
-
         protected ItemsPanelType ItemsPanel { get; set; }
         protected AdvancedScrollablePanel ContentPanel { get; set; }
-        protected PropertyGroupPanel PropertiesPanel { get; private set; }
         protected UILabel EmptyLabel { get; set; }
-
 
         public bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
         public bool AvailableContent { set => ContentPanel.SetAvailable(value); }
@@ -108,9 +103,6 @@ namespace NodeMarkup.UI.Editors
             ContentPanel.backgroundSprite = "UnlockingItemBackground";
 
             AddEmptyLabel();
-
-            if (UsePropertiesPanel)
-                ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
         }
 
         private void AddEmptyLabel()
@@ -127,7 +119,7 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
 
-        #region UPDATE EDIT DELETE
+        #region UPDATE ADD DELETE EDIT
 
         protected override void UpdateEditorImpl()
         {
@@ -142,14 +134,19 @@ namespace NodeMarkup.UI.Editors
             NeedUpdate = false;
         }
 
-        public virtual void Edit(ObjectType editObject = null)
+        public virtual void Add(ObjectType deleteObject)
         {
-            ItemsPanel.EditObject(editObject);
+            ItemsPanel.AddObject(deleteObject);
             SwitchEmptyMessage();
         }
         public virtual void Delete(ObjectType deleteObject)
         {
             ItemsPanel.DeleteObject(deleteObject);
+            SwitchEmptyMessage();
+        }
+        public virtual void Edit(ObjectType editObject = null)
+        {
+            ItemsPanel.EditObject(editObject);
             SwitchEmptyMessage();
         }
 
@@ -182,7 +179,21 @@ namespace NodeMarkup.UI.Editors
             SwitchEmptyMessage();
         }
 
-        protected abstract void OnItemSelect(ObjectType editObject);
+        protected void OnItemSelect(ObjectType editObject)
+        {
+            if (editObject != null)
+                OnObjectSelect(editObject);
+            else
+                OnClear();
+        }
+        protected abstract void OnObjectSelect(ObjectType editObject);
+        protected abstract void OnClear();
+
+        protected void ClearPanel(UIComponent panel)
+        {
+            foreach (var component in panel.components.ToArray())
+                ComponentPool.Free(component);
+        }
 
         #endregion
 
@@ -201,6 +212,35 @@ namespace NodeMarkup.UI.Editors
         public void RefreshItem() => ItemsPanel.RefreshSelectedItem();
 
         #endregion
+    }
+    public abstract class SimpleEditor<ItemsPanelType, ObjectType> : Editor<ItemsPanelType, ObjectType>
+        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
+        where ObjectType : class, IDeletable
+    {
+        protected PropertyGroupPanel PropertiesPanel { get; private set; }
+
+        public SimpleEditor()
+        {
+            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+        }
+
+        protected sealed override void OnObjectSelect(ObjectType editObject)
+        {
+            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            PropertiesPanel.StopLayout();
+            OnFillPropertiesPanel(editObject);
+            PropertiesPanel.StartLayout();
+            PropertiesPanel.Init();
+        }
+        protected abstract void OnFillPropertiesPanel(ObjectType editObject);
+        protected sealed override void OnClear()
+        {
+            ClearPanel(PropertiesPanel);
+            ComponentPool.Free(PropertiesPanel);
+            PropertiesPanel = null;
+            OnClearPropertiesPanel();
+        }
+        protected abstract void OnClearPropertiesPanel();
     }
 
 
