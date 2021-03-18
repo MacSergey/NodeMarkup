@@ -23,15 +23,26 @@ namespace NodeMarkup.UI.Editors
         protected override string IsAssetWarningMessage => NodeMarkup.Localize.PresetEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.PresetEditor_IsWorkshopWarningMessage;
 
+        private PropertyGroupPanel Screenshot { get; set; }
         //protected override bool GroupingEnabled => false;
         //protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         //protected override string GroupName(bool group) => throw new NotSupportedException();
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => TemplateManager.IntersectionManager.Templates;
-        protected override void OnClearPropertiesPanel()
+        protected override void OnObjectSelect(IntersectionTemplate editObject)
         {
-            base.OnClearPropertiesPanel();
-            //RemovePreview();
+            base.OnObjectSelect(editObject);
+
+            ItemsPanel.RemovePreview();
+
+            Screenshot = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(Screenshot);
+            info.Init(EditObject);
+        }
+        protected override void OnClear()
+        {
+            base.OnClear();
+            Screenshot = null;
         }
         protected override void OnObjectDelete(IntersectionTemplate template)
         {
@@ -42,13 +53,6 @@ namespace NodeMarkup.UI.Editors
         {
             base.AddHeader();
             HeaderPanel.OnApply += Apply;
-        }
-        protected override void AddAdditional() => AddScreenshot();
-        private void AddScreenshot()
-        {
-            var group = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
-            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(group);
-            info.Init(EditObject);
         }
         private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
     }

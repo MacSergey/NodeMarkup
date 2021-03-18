@@ -70,8 +70,10 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectUpdate(MarkupLine editObject)
         {
+            RefreshSelectedItem();
             GetRuleEdges(editObject);
             RefreshRulePanels();
+            SetAddButton();
         }
         protected override void OnObjectDelete(MarkupLine line)
         {
@@ -80,7 +82,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnClear()
         {
-            ClearPanel(ContentPanel.Content);
+            base.OnClear();
             HoverRulePanel = null;
         }
         private void GetRuleEdges(MarkupLine editObject)
@@ -139,19 +141,6 @@ namespace NodeMarkup.UI.Editors
 
             RefreshSelectedItem();
         }
-        public override void Delete(MarkupLine deleteObject)
-        {
-            base.Delete(deleteObject);
-
-            if (deleteObject != EditObject)
-                Refresh();
-        }
-        public void Refresh()
-        {
-            RefreshSelectedItem();
-            OnObjectUpdate(EditObject);
-            SetAddButton();
-        }
         private void RefreshRulePanels()
         {
             var rulePanels = ContentPanel.Content.components.OfType<RulePanel>().ToArray();
@@ -201,7 +190,7 @@ namespace NodeMarkup.UI.Editors
             {
                 regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
                 RemoveRulePanel(rulePanel);
-                Refresh();
+                RefreshEditor();
                 return true;
             }
         }
@@ -271,7 +260,7 @@ namespace NodeMarkup.UI.Editors
         public override void Deactivate()
         {
             base.Deactivate();
-            Editor.Refresh();
+            Editor.RefreshEditor();
         }
         public override void OnToolUpdate() => PointsSelector?.OnUpdate();
         public override string GetToolInfo()

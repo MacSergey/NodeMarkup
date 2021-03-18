@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkupEnterPoint>
+    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkupPoint>
     {
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
@@ -20,9 +20,9 @@ namespace NodeMarkup.UI.Editors
 
         private FloatPropertyPanel Offset { get; set; }
 
-        protected override IEnumerable<MarkupEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.Points);
+        protected override IEnumerable<MarkupPoint> GetObjects() => Markup.Enters.SelectMany(e => e.Points.Cast<MarkupPoint>());
 
-        protected override void OnFillPropertiesPanel(MarkupEnterPoint filler)
+        protected override void OnFillPropertiesPanel(MarkupPoint point)
         {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
@@ -33,11 +33,12 @@ namespace NodeMarkup.UI.Editors
             Offset.Value = EditObject.Offset;
             Offset.OnValueChanged += OffsetChanged;
         }
-        protected override void OnClearPropertiesPanel()
+        protected override void OnClear()
         {
+            base.OnClear();
             Offset = null;
         }
-        protected override void OnObjectUpdate(MarkupEnterPoint editObject)
+        protected override void OnObjectUpdate(MarkupPoint editObject)
         {
             Offset.OnValueChanged -= OffsetChanged;
             Offset.Value = EditObject.Offset;
@@ -48,14 +49,14 @@ namespace NodeMarkup.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
     }
-    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupEnterPoint, ColorIcon>
+    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupPoint, ColorIcon>
     {
-        public override int Compare(MarkupEnterPoint x, MarkupEnterPoint y) => 0;
+        public override int Compare(MarkupPoint x, MarkupPoint y) => 0;
     }
-    public class PointItem : EditItem<MarkupEnterPoint, ColorIcon>
+    public class PointItem : EditItem<MarkupPoint, ColorIcon>
     {
         public override bool ShowDelete => false;
-        public override void Init(MarkupEnterPoint editableObject)
+        public override void Init(MarkupPoint editableObject)
         {
             base.Init(editableObject);
             Icon.InnerColor = Object.Color;

@@ -41,9 +41,9 @@ namespace NodeMarkup.UI.Editors
             CopyStyle();
             base.OnFillPropertiesPanel(template);
         }
-        protected override void OnClearPropertiesPanel()
+        protected override void OnClear()
         {
-            base.OnClearPropertiesPanel();
+            base.OnClear();
             StyleProperties.Clear();
         }
 

@@ -23,7 +23,6 @@ namespace NodeMarkup.UI.Editors
         public void AddObject(ObjectType editObject);
         public void DeleteObject(ObjectType editObject);
         public void EditObject(ObjectType editObject);
-        public void Clear();
         public void RefreshSelectedItem();
     }
     public abstract class ItemsPanel<ItemType, ObjectType, ItemIcon> : AdvancedScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
@@ -70,12 +69,14 @@ namespace NodeMarkup.UI.Editors
 
         public void Init(IEnumerable<ObjectType> editObjects)
         {
-            Clear();
-            var objects = editObjects.OrderBy(o => o, this).ToArray();
-
             StopLayout();
+
+            Clear();
+
+            var objects = editObjects.OrderBy(o => o, this).ToArray();
             foreach (var editObject in objects)
                 AddObjectImpl(editObject, -1);
+
             StartLayout();
         }
         public void AddObject(ObjectType editObject) => AddObjectImpl(editObject);
@@ -84,7 +85,7 @@ namespace NodeMarkup.UI.Editors
             var index = FindIndex(editObject);
             return AddObjectImpl(editObject, index >= 0 ? index : ~index);
         }
-        private ItemType AddObjectImpl(ObjectType editObject, int zOrder)
+        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder)
         {
             var item = GetItem(Content, zOrder);
             InitItem(item, editObject);
@@ -184,7 +185,8 @@ namespace NodeMarkup.UI.Editors
         }
         public override void Update()
         {
-            base.Update();
+            //WAIT FPS BOOSTER FIX 
+            //base.Update();
 
             if (SelectItem is ItemType item)
                 item.IsSelect = true;

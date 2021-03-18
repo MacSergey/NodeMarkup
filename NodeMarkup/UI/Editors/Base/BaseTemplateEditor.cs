@@ -59,12 +59,13 @@ namespace NodeMarkup.UI.Editors
             AddTemplateName();
 
             ReloadAdditionalProperties();
-            AddAdditional();
 
             SetEditable();
         }
-        protected override void OnClearPropertiesPanel()
+        protected override void OnClear()
         {
+            base.OnClear();
+
             HeaderPanel = null;
             Warning = null;
             NameProperty = null;
@@ -131,7 +132,6 @@ namespace NodeMarkup.UI.Editors
 
             Aditional = AddAditionalProperties().ToArray();
         }
-        protected virtual void AddAdditional() { }
         protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
 
         #endregion

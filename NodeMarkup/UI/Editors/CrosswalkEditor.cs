@@ -59,8 +59,10 @@ namespace NodeMarkup.UI.Editors
             Markup.RemoveCrosswalk(crosswalk);
             base.OnObjectDelete(crosswalk);
         }
-        protected override void OnClearPropertiesPanel()
+        protected override void OnClear()
         {
+            base.OnClear();
+
             RightBorder = null;
             LeftBorder = null;
             Warning = null;

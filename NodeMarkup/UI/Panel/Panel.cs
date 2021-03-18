@@ -23,10 +23,25 @@ namespace NodeMarkup.UI.Panel
 
         public bool Active
         {
+            get => enabled && isVisible;
             set
             {
+                if (value == Active)
+                    return;
+
                 enabled = value;
                 isVisible = value;
+
+                if (value)
+                {
+                    if (CurrentEditor is Editor editor)
+                        editor.Active = true;
+                }
+                else
+                {
+                    foreach (var editor in Editors)
+                        editor.Active = false;
+                }
             }
         }
 
@@ -272,7 +287,10 @@ namespace NodeMarkup.UI.Panel
             where ItemType : class, ISupport, IDeletable
         {
             if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
+            {
                 editor.Add(item);
+                CurrentEditor?.RefreshEditor();
+            }
         }
         private void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
 
@@ -285,7 +303,10 @@ namespace NodeMarkup.UI.Panel
             where ItemType : class, ISupport, IDeletable
         {
             if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
+            {
                 editor.Delete(item);
+                CurrentEditor?.RefreshEditor();
+            }
         }
 
         public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
@@ -311,7 +332,7 @@ namespace NodeMarkup.UI.Panel
             editor?.Edit(item);
             return editor;
         }
-        public void EditPoint(MarkupEnterPoint point) => EditObject<PointsEditor, MarkupEnterPoint>(point);
+        public void EditPoint(MarkupPoint point) => EditObject<PointsEditor, MarkupPoint>(point);
         public void EditLine(MarkupLine line) => EditObject<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {

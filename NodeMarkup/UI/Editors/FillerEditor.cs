@@ -49,8 +49,10 @@ namespace NodeMarkup.UI.Editors
             Markup.RemoveFiller(filler);
             base.OnObjectDelete(filler);
         }
-        protected override void OnClearPropertiesPanel()
+        protected override void OnClear()
         {
+            base.OnClear();
+
             Style = null;
             StyleProperties.Clear();
         }
