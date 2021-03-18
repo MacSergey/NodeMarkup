@@ -33,28 +33,22 @@ namespace NodeMarkup.UI.Editors
         public abstract string EmptyMessage { get; }
 
         protected bool NeedUpdate { get; set; }
-        public virtual bool Active
+        public bool Active
         {
+            get => enabled && isVisible;
             set
             {
                 enabled = value;
                 isVisible = value;
 
-                if (NeedUpdate)
-                    UpdateEditor();
+                if (value)
+                    ActiveEditor();
             }
-            get => enabled && isVisible;
         }
 
         public void Init(NodeMarkupPanel panel) => Panel = panel;
-        public void UpdateEditor()
-        {
-            if (Active)
-                UpdateEditorImpl();
-            else
-                NeedUpdate = true;
-        }
-        protected abstract void UpdateEditorImpl();
+        public abstract void UpdateEditor();
+        protected abstract void ActiveEditor();
 
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
         public virtual bool OnShortcut(Event e) => false;
@@ -121,17 +115,30 @@ namespace NodeMarkup.UI.Editors
 
         #region UPDATE ADD DELETE EDIT
 
-        protected override void UpdateEditorImpl()
+        protected override void ActiveEditor()
         {
-            AvailableItems = true;
-            AvailableContent = true;
+            if (NeedUpdate)
+                UpdateEditor();
 
-            ItemsPanel.Init(GetObjects());
-            ItemsPanel.EditObject(null);
+            else if (EditObject is ObjectType editObject)
+                OnObjectUpdate(editObject);
+        }
+        public sealed override void UpdateEditor()
+        {
+            if (Active)
+            {
+                AvailableItems = true;
+                AvailableContent = true;
 
-            SwitchEmptyMessage();
+                ItemsPanel.Init(GetObjects());
+                ItemsPanel.EditObject(null);
 
-            NeedUpdate = false;
+                SwitchEmptyMessage();
+
+                NeedUpdate = false;
+            }
+            else
+                NeedUpdate = true;
         }
 
         public virtual void Add(ObjectType deleteObject)
@@ -169,31 +176,26 @@ namespace NodeMarkup.UI.Editors
             EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y / 2);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
+        protected void OnItemSelect(ObjectType editObject)
+        {
+            OnClear();
+
+            if (editObject != null)
+                OnObjectSelect(editObject);
+        }
         private void OnItemDelete(ObjectType editObject)
         {
             Tool.DeleteItem(editObject, () => OnObjectDelete(editObject));
         }
+
+        protected virtual void OnObjectSelect(ObjectType editObject) { }
         protected virtual void OnObjectDelete(ObjectType editObject)
         {
             ItemsPanel.DeleteObject(editObject);
             SwitchEmptyMessage();
         }
-
-        protected void OnItemSelect(ObjectType editObject)
-        {
-            if (editObject != null)
-                OnObjectSelect(editObject);
-            else
-                OnClear();
-        }
-        protected abstract void OnObjectSelect(ObjectType editObject);
-        protected abstract void OnClear();
-
-        protected void ClearPanel(UIComponent panel)
-        {
-            foreach (var component in panel.components.ToArray())
-                ComponentPool.Free(component);
-        }
+        protected virtual void OnClear() { }
+        protected virtual void OnObjectUpdate(ObjectType editObject) { }
 
         #endregion
 
@@ -209,7 +211,12 @@ namespace NodeMarkup.UI.Editors
             else
                 EmptyLabel.isVisible = false;
         }
-        public void RefreshItem() => ItemsPanel.RefreshSelectedItem();
+        protected void ClearPanel(UIComponent panel)
+        {
+            foreach (var component in panel.components.ToArray())
+                ComponentPool.Free(component);
+        }
+        public void RefreshSelectedItem() => ItemsPanel.RefreshSelectedItem();
 
         #endregion
     }
@@ -235,10 +242,13 @@ namespace NodeMarkup.UI.Editors
         protected abstract void OnFillPropertiesPanel(ObjectType editObject);
         protected sealed override void OnClear()
         {
-            ClearPanel(PropertiesPanel);
-            ComponentPool.Free(PropertiesPanel);
-            PropertiesPanel = null;
-            OnClearPropertiesPanel();
+            if (PropertiesPanel != null)
+            {
+                ClearPanel(PropertiesPanel);
+                ComponentPool.Free(PropertiesPanel);
+                PropertiesPanel = null;
+                OnClearPropertiesPanel();
+            }
         }
         protected abstract void OnClearPropertiesPanel();
     }

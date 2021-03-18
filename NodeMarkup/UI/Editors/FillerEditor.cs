@@ -26,7 +26,6 @@ namespace NodeMarkup.UI.Editors
         private FillerRailToolMode FillerRailToolMode { get; }
 
         public FillerRailSelectPropertyPanel HoverRailPanel { get; private set; }
-        public bool IsHoverRailPanel => HoverRailPanel != null;
 
         #endregion
 
@@ -59,10 +58,10 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
-            header.Init(Manager.Style.StyleType.Filler, OnSelectTemplate, false);
-            header.OnSaveTemplate += OnSaveTemplate;
-            header.OnCopy += OnCopyStyle;
-            header.OnPaste += OnPasteStyle;
+            header.Init(Manager.Style.StyleType.Filler, SelectTemplate, false);
+            header.OnSaveTemplate += SaveTemplate;
+            header.OnCopy += CopyStyle;
+            header.OnPaste += PasteStyle;
         }
         private void AddStyleTypeProperty()
         {
@@ -79,7 +78,7 @@ namespace NodeMarkup.UI.Editors
             foreach (var property in StyleProperties)
             {
                 if (property is ColorPropertyPanel colorProperty)
-                    colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+                    colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
                 else if (property is FillerRailSelectPropertyPanel railProperty)
                 {
                     railProperty.OnSelect += (panel) => SelectRail(panel);
@@ -113,7 +112,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AfterStyleChanged()
         {
-            RefreshItem();
+            RefreshSelectedItem();
             PropertiesPanel.StopLayout();
             ClearStyleProperties();
             AddStyleProperties();
@@ -138,26 +137,22 @@ namespace NodeMarkup.UI.Editors
 
         #region HANDLERS
 
-        private void OnSaveTemplate()
+        private void SaveTemplate()
         {
             if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
                 Panel.EditStyleTemplate(template);
         }
-        private void OnSelectTemplate(StyleTemplate template)
+        private void SelectTemplate(StyleTemplate template)
         {
             if (template.Style is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void OnCopyStyle() => Buffer = EditObject.Style.CopyStyle();
-        private void OnPasteStyle()
+        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
+        private void PasteStyle()
         {
             if (Buffer is FillerStyle style)
                 ApplyStyle(style);
         }
-
-        #endregion
-
-        #region EDITOR ACTION
 
         public void HoverRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = selectPanel;
         public void LeaveRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = null;
@@ -184,7 +179,7 @@ namespace NodeMarkup.UI.Editors
         {
             ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
 
-            if (IsHoverRailPanel)
+            if (HoverRailPanel != null)
             {
                 var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B);
                 rail.Render(cameraInfo, Colors.Hover);

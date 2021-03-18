@@ -42,10 +42,10 @@ namespace NodeMarkup.UI.Editors
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         ItemType _selectItem;
-        private ItemType SelectItem
+        protected ItemType SelectItem
         {
             get => _selectItem;
-            set
+            private set
             {
                 if (_selectItem != null)
                     _selectItem.IsSelect = false;
@@ -194,10 +194,35 @@ namespace NodeMarkup.UI.Editors
 
         #region HANDLERS
 
-        private void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => SelectItem = component as ItemType;
+        private void ItemClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (component is ItemType item)
+            {
+                SelectItem = item;
+                ItemClick(item);
+            }
+        }
         private void ItemDelete(EditItem<ObjectType, ItemIcon> item) => OnDeleteClick?.Invoke(item.Object);
-        private void ItemHover(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = component as ItemType;
-        private void ItemLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverItem = null;
+        private void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (component is ItemType item)
+            {
+                HoverItem = item;
+                ItemHover(item);
+            }
+        }
+        private void ItemLeave(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (component is ItemType item)
+            {
+                HoverItem = null;
+                ItemLeave(item);
+            }
+        }
+
+        protected virtual void ItemClick(ItemType item) { }
+        protected virtual void ItemHover(ItemType item) { }
+        protected virtual void ItemLeave(ItemType item) { }
 
         #endregion
 
@@ -212,6 +237,11 @@ namespace NodeMarkup.UI.Editors
             Content.ScrollIntoView(item);
         }
         public void RefreshSelectedItem() => SelectItem?.Refresh();
+        public void RefreshItems()
+        {
+            foreach (var item in Content.components.OfType<ItemType>())
+                item.Refresh();
+        }
         public abstract int Compare(ObjectType x, ObjectType y);
 
         #endregion

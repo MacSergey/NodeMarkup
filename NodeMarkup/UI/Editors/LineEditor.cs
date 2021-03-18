@@ -18,8 +18,6 @@ namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : Editor<LineItemsPanel, MarkupLine>
     {
-        protected override bool UsePropertiesPanel => false;
-
         public static Color HoverAlpha
         {
             get
@@ -42,9 +40,7 @@ namespace NodeMarkup.UI.Editors
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
 
         private RuleEdgeSelectPropertyPanel HoverPartEdgePanel { get; set; }
-        private bool IsHoverPartEdgePanel => HoverPartEdgePanel != null;
         private RulePanel HoverRulePanel { get; set; }
-        private bool IsHoverRulePanel => HoverRulePanel != null;
 
         private PartEdgeToolMode PartEdgeToolMode { get; }
 
@@ -58,28 +54,33 @@ namespace NodeMarkup.UI.Editors
         //protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
         //protected override string GroupName(MarkupLine.LineType group) => group.Description();
         protected override IEnumerable<MarkupLine> GetObjects() => Markup.Lines;
-        //protected override void FillItems()
-        //{
-        //    var sortLines = Markup.Lines.OrderBy(l => l.Start.Enter).ThenBy(l => l.Start.Num).ThenBy(l => l.End.Enter).ThenBy(l => l.End.Num).ToArray();
-        //    foreach (var line in sortLines)
-        //        AddItem(line);
-        //}
-        //protected override void OnClear() => HoverRulePanel = null;
-        //protected override void OnObjectSelect()
-        //{
-        //    GetRuleEdges();
-        //    AddRulePanels();
-        //    AddAddButton();
-        //}
-        protected override void OnItemSelect(MarkupLine editObject) { }
-        private void GetRuleEdges()
+        protected override void OnObjectSelect(MarkupLine editObject)
+        {
+            ContentPanel.StopLayout();
+            GetRuleEdges(editObject);
+            AddRulePanels(editObject);
+            AddAddButton();
+            ContentPanel.StartLayout();
+        }
+        protected override void OnObjectUpdate(MarkupLine editObject)
+        {
+            GetRuleEdges(editObject);
+            RefreshRulePanels();
+        }
+        protected override void OnClear()
+        {
+            ClearPanel(ContentPanel.Content);
+            HoverRulePanel = null;
+        }
+
+        private void GetRuleEdges(MarkupLine editObject)
         {
             SupportPoints.Clear();
-            SupportPoints.AddRange(EditObject.RulesEdges);
+            SupportPoints.AddRange(editObject.RulesEdges);
         }
-        private void AddRulePanels()
+        private void AddRulePanels(MarkupLine editObject)
         {
-            foreach (var rule in EditObject.Rules)
+            foreach (var rule in editObject.Rules)
                 AddRulePanel(rule);
         }
 
@@ -100,18 +101,16 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddAddButton()
         {
-            if (AddRuleAvailable)
-            {
-                AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel.Content);
-                AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
-                AddButton.Init();
-                AddButton.OnButtonClick += AddRule;
-            }
+            AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel.Content);
+            AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
+            AddButton.Init();
+            AddButton.OnButtonClick += AddRule;
+            SetAddButton();
         }
-        private void DeleteAddButton()
+        private void SetAddButton()
         {
-            ComponentPool.Free(AddButton);
-            AddButton = null;
+            AddButton.zOrder = -1;
+            AddButton.isVisible = AddRuleAvailable;
         }
 
         private void AddRule()
@@ -120,16 +119,15 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             var newRule = regularLine.AddRule(CanDivide);
-            DeleteAddButton();
             var rulePanel = AddRulePanel(newRule);
-            AddAddButton();
+            SetAddButton();
 
             ContentPanel.Content.ScrollToBottom();
 
             if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
 
-            RefreshItem();
+            RefreshSelectedItem();
         }
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (_) => SetStyle(rulePanel)));
         private bool SetStyle(RulePanel rulePanel)
@@ -159,8 +157,7 @@ namespace NodeMarkup.UI.Editors
                 regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
                 RemoveRulePanel(rulePanel);
                 Refresh();
-                DeleteAddButton();
-                AddAddButton();
+                SetAddButton();
                 return true;
             }
         }
@@ -208,19 +205,10 @@ namespace NodeMarkup.UI.Editors
         {
             {
                 ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover, 2f);
-
-                if (IsHoverRulePanel)
-                    HoverRulePanel.Rule.Render(cameraInfo, HoverAlpha, 2f);
-
-                if (IsHoverPartEdgePanel && HoverPartEdgePanel.Value is SupportPoint supportPoint)
-                    supportPoint.Render(cameraInfo, Colors.Hover);
+                HoverRulePanel?.Rule.Render(cameraInfo, HoverAlpha, 2f);
+                HoverPartEdgePanel?.Value?.Render(cameraInfo, Colors.Hover);
             }
         }
-        //protected override void OnObjectUpdate()
-        //{
-        //    GetRuleEdges();
-        //    RefreshRulePanels();
-        //}
         protected override void OnObjectDelete(MarkupLine line)
         {
             Markup.RemoveLine(line);
@@ -228,7 +216,7 @@ namespace NodeMarkup.UI.Editors
         }
         public void Refresh()
         {
-            RefreshItem();
+            RefreshSelectedItem();
             RefreshRulePanels();
         }
         private void RefreshRulePanels()

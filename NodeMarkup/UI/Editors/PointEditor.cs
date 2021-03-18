@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class PointsEditor : Editor<PointsItemsPanel, MarkupEnterPoint>
+    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkupEnterPoint>
     {
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
@@ -21,42 +21,32 @@ namespace NodeMarkup.UI.Editors
         private FloatPropertyPanel Offset { get; set; }
 
         protected override IEnumerable<MarkupEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.Points);
-        //protected override void FillItems()
-        //{
-        //    foreach (var enter in Markup.Enters)
-        //    {
-        //        foreach (var point in enter.Points)
-        //            AddItem(point);
-        //    }
-        //}
-        protected override void OnItemSelect(MarkupEnterPoint editObject) { }
-        //protected override void OnObjectSelect()
-        //{
-        //    Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
-        //    Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
-        //    Offset.UseWheel = true;
-        //    Offset.WheelStep = 0.1f;
-        //    Offset.WheelTip = WheelTip;
-        //    Offset.Init();
-        //    Offset.Value = EditObject.Offset;
-        //    Offset.OnValueChanged += OffsetChanged;
-        //}
-        //protected override void OnClear()
-        //{
-        //    Offset = null;
-        //}
-        //protected override void OnObjectUpdate()
-        //{
-        //    Offset.OnValueChanged -= OffsetChanged;
-        //    Offset.Value = EditObject.Offset;
-        //    Offset.OnValueChanged += OffsetChanged;
-        //}
+
+        protected override void OnFillPropertiesPanel(MarkupEnterPoint filler)
+        {
+            Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
+            Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
+            Offset.UseWheel = true;
+            Offset.WheelStep = 0.1f;
+            Offset.WheelTip = WheelTip;
+            Offset.Init();
+            Offset.Value = EditObject.Offset;
+            Offset.OnValueChanged += OffsetChanged;
+        }
+        protected override void OnClearPropertiesPanel()
+        {
+            Offset = null;
+        }
+        protected override void OnObjectUpdate(MarkupEnterPoint editObject)
+        {
+            Offset.OnValueChanged -= OffsetChanged;
+            Offset.Value = EditObject.Offset;
+            Offset.OnValueChanged += OffsetChanged;
+        }
+
         private void OffsetChanged(float value) => EditObject.Offset = value;
 
-        public override void Render(RenderManager.CameraInfo cameraInfo)
-        {
-            ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
-        }
+        public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
     }
     public class PointsItemsPanel : ItemsPanel<PointItem, MarkupEnterPoint, ColorIcon>
     {

@@ -24,20 +24,24 @@ namespace NodeMarkup.UI.Editors
         protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.PresetEditor_IsWorkshopWarningMessage;
 
         //protected override bool GroupingEnabled => false;
-
-        protected override IEnumerable<IntersectionTemplate> GetTemplates() => TemplateManager.IntersectionManager.Templates;
         //protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
         //protected override string GroupName(bool group) => throw new NotSupportedException();
 
-        //protected override void ClearContent()
-        //{
-        //    RemovePreview();
-        //    base.ClearContent();
-        //}
+        protected override IEnumerable<IntersectionTemplate> GetObjects() => TemplateManager.IntersectionManager.Templates;
+        protected override void OnClearPropertiesPanel()
+        {
+            base.OnClearPropertiesPanel();
+            //RemovePreview();
+        }
+        protected override void OnObjectDelete(IntersectionTemplate template)
+        {
+            base.OnObjectDelete(template);
+            ItemsPanel.RemovePreview();
+        }
         protected override void AddHeader()
         {
             base.AddHeader();
-            HeaderPanel.OnApply += OnApply;
+            HeaderPanel.OnApply += Apply;
         }
         protected override void AddAdditional() => AddScreenshot();
         private void AddScreenshot()
@@ -46,60 +50,49 @@ namespace NodeMarkup.UI.Editors
             var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(group);
             info.Init(EditObject);
         }
-        private void OnApply() => Tool.ApplyIntersectionTemplate(EditObject);
-        protected override void OnObjectDelete(IntersectionTemplate template)
-        {
-            base.OnObjectDelete(template);
-            RemovePreview();
-        }
-
-        PropertyGroupPanel Preview { get; set; }
-        //protected override void ItemHover(IntersectionTemplateItem editableItem)
-        //{
-        //    base.ItemHover(editableItem);
-        //    AddPreview(editableItem);
-        //}
-        //protected override void ItemLeave()
-        //{
-        //    base.ItemLeave();
-        //    RemovePreview();
-        //}
-        //private void AddPreview(IntersectionTemplateItem editableItem)
-        //{
-        //    if (HoverItem == SelectItem)
-        //        return;
-
-        //    ContentPanel.opacity = 0.15f;
-
-        //    var root = GetRootContainer();
-        //    Preview = ComponentPool.Get<PreviewPanel>(root);
-        //    var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview);
-        //    info.Init(HoverItem.Object);
-        //    Preview.width = 365f;
-
-        //    var x = editableItem.absolutePosition.x + editableItem.width;
-        //    var y = Mathf.Min(editableItem.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
-        //    Preview.absolutePosition = new Vector2(x, y);
-        //}
-        private void RemovePreview()
-        {
-            if (Preview == null)
-                return;
-
-            ContentPanel.opacity = 1f;
-            ComponentPool.Free(Preview);
-            Preview = null;
-        }
+        private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
     }
 
     public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateIcon>
     {
+        PropertyGroupPanel Preview { get; set; }
+
         public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
         {
             int result;
             if((result = x.Roads.CompareTo(y.Roads)) == 0)
                 result = x.Name.CompareTo(y.Name);
             return result;
+        }
+
+        protected override void ItemHover(IntersectionTemplateItem item) => AddPreview(item);
+        protected override void ItemLeave(IntersectionTemplateItem item) => RemovePreview();
+
+        private void AddPreview(IntersectionTemplateItem item)
+        {
+            if (item == SelectItem)
+                return;
+
+            //ContentPanel.opacity = 0.15f;
+
+            var root = GetRootContainer();
+            Preview = ComponentPool.Get<PreviewPanel>(root);
+            var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview);
+            info.Init(item.Object);
+            Preview.width = 365f;
+
+            var x = item.absolutePosition.x + item.width;
+            var y = Mathf.Min(item.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
+            Preview.absolutePosition = new Vector2(x, y);
+        }
+        public void RemovePreview()
+        {
+            if (Preview == null)
+                return;
+
+            //ContentPanel.opacity = 1f;
+            ComponentPool.Free(Preview);
+            Preview = null;
         }
     }
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
@@ -110,6 +103,7 @@ namespace NodeMarkup.UI.Editors
         {
             base.Refresh();
             Icon.Count = Object.Roads;
+            Label.wordWrap = !Object.IsAsset;
         }
     }
     public class IntersectionTemplateIcon : ColorIcon

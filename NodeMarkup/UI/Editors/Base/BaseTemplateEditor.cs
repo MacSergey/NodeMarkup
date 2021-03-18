@@ -16,12 +16,14 @@ namespace NodeMarkup.UI.Editors
         void Cancel();
         void EditName();
     }
-    public abstract class BaseTemplateEditor<ItemsPanelType, TemplateType, HeaderPanelType, EditToolMode> : Editor<ItemsPanelType, TemplateType>, ITemplateEditor<TemplateType>
+    public abstract class BaseTemplateEditor<ItemsPanelType, TemplateType, HeaderPanelType, EditToolMode> : SimpleEditor<ItemsPanelType, TemplateType>, ITemplateEditor<TemplateType>
         where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<TemplateType>
         where TemplateType : Template<TemplateType>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
         where EditToolMode : EditTemplateMode<TemplateType>
     {
+        #region PROPERTIES
+
         protected bool EditMode { get; private set; }
         protected bool HasChanges { get; set; }
 
@@ -38,80 +40,48 @@ namespace NodeMarkup.UI.Editors
         protected abstract string IsWorkshopWarningMessage { get; }
 
         private EditorItem[] Aditional { get; set; }
-
-        public override bool Active
-        {
-            set
-            {
-                base.Active = value;
-                EditMode = false;
-                if (value && EditObject is TemplateType)
-                    SetEditable();
-            }
-        }
         private EditToolMode ToolMode { get; }
+
+        #endregion
+
+        #region BASIC
 
         public BaseTemplateEditor()
         {
             ToolMode = Tool.CreateToolMode<EditToolMode>();
             ToolMode.Init(this);
         }
-
-        protected override IEnumerable<TemplateType> GetObjects() => GetTemplates();
-        protected abstract IEnumerable<TemplateType> GetTemplates();
-        //protected override void FillItems()
-        //{
-        //    var templates = GetTemplates().ToArray();
-        //    foreach (var template in templates)
-        //        AddItem(template);
-        //}
-        //protected override void OnObjectSelect()
-        //{
-        //    AddHeader();
-        //    AddWarning();
-        //    AddAuthor();
-        //    AddTemplateName();
-
-        //    ReloadAdditionalProperties();
-        //    AddAdditional();
-
-        //    SetEditable();
-        //}
-        protected override void OnItemSelect(TemplateType editObject) { }
-        public override bool OnEscape()
+        protected override void OnFillPropertiesPanel(TemplateType template)
         {
-            if (EditMode)
-            {
-                Cancel();
-                return true;
-            }
-            else
-                return false;
+            AddHeader();
+            AddWarning();
+            AddAuthor();
+            AddTemplateName();
+
+            ReloadAdditionalProperties();
+            AddAdditional();
+
+            SetEditable();
         }
-        private void ReloadAdditionalProperties()
+        protected override void OnClearPropertiesPanel()
         {
-            if (Aditional != null)
-            {
-                foreach (var aditional in Aditional)
-                    ComponentPool.Free(aditional);
-            }
-
-            Aditional = AddAditionalProperties().ToArray();
+            HeaderPanel = null;
+            Warning = null;
+            NameProperty = null;
+            Aditional = null;
         }
-        protected virtual void AddAdditional() { }
-        //protected override void OnClear()
-        //{
-        //    HeaderPanel = null;
-        //    Warning = null;
-        //    NameProperty = null;
-        //    Aditional = null;
-        //}
-        protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
-
         protected override void OnObjectDelete(TemplateType template)
         {
             (template.Manager as TemplateManager<TemplateType>).DeleteTemplate(template);
             base.OnObjectDelete(template);
+        }
+        protected override void ActiveEditor()
+        {
+            base.ActiveEditor();
+
+            EditMode = false;
+            if (Active && EditObject is TemplateType)
+                SetEditable();
         }
 
         protected virtual void AddHeader()
@@ -129,7 +99,6 @@ namespace NodeMarkup.UI.Editors
             Warning.Text = $"{IsAssetMessage} {(EditObject.IsAsset && EditObject.Asset.CanEdit ? IsAssetWarningMessage : IsWorkshopWarningMessage)}";
             Warning.Init();
         }
-
         private void AddAuthor()
         {
             if (EditObject.IsAsset)
@@ -152,26 +121,31 @@ namespace NodeMarkup.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += (name) => OnChanged();
         }
-
-        protected virtual void SetEditable()
+        private void ReloadAdditionalProperties()
         {
-            //Panel.Available = AvailableItems = !EditMode;
-            //HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
-            //Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && !EditMode;
+            if (Aditional != null)
+            {
+                foreach (var aditional in Aditional)
+                    ComponentPool.Free(aditional);
+            }
 
-            //foreach (var aditional in Aditional)
-            //    aditional.EnableControl = EditMode;
+            Aditional = AddAditionalProperties().ToArray();
         }
+        protected virtual void AddAdditional() { }
+        protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
+
+        #endregion
+
+        #region HANDLERS
 
         private void SaveAsset()
         {
-            //if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
-            //{
-            //    SelectItem.Refresh();
-            //    ItemClick(SelectItem);
-            //}
+            if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
+            {
+                RefreshSelectedItem();
+                OnObjectSelect(EditObject);
+            }
         }
-
         private void StartEditTemplate()
         {
             EditMode = true;
@@ -179,6 +153,31 @@ namespace NodeMarkup.UI.Editors
             SetEditable();
             Tool.SetMode(ToolMode);
         }
+        public override bool OnEscape()
+        {
+            if (EditMode)
+            {
+                Cancel();
+                return true;
+            }
+            else
+                return false;
+        }
+
+        #endregion
+
+        #region EDIT TEMPLATE
+
+        protected virtual void SetEditable()
+        {
+            Panel.Available = AvailableItems = !EditMode;
+            HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
+            Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && !EditMode;
+
+            foreach (var aditional in Aditional)
+                aditional.EnableControl = EditMode;
+        }
+
         public void EditName()
         {
             StartEditTemplate();
@@ -235,7 +234,7 @@ namespace NodeMarkup.UI.Editors
                 OnApplyChanges();
                 (EditObject.Manager as TemplateManager<TemplateType>).TemplateChanged(EditObject);
                 EndEditTemplate();
-                RefreshItem();
+                RefreshSelectedItem();
                 return true;
             }
         }
@@ -276,6 +275,8 @@ namespace NodeMarkup.UI.Editors
                 return true;
             }
         }
+
+        #endregion
     }
 
     public abstract class EditTemplateMode<TemplateType> : BaseToolMode

@@ -12,8 +12,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class CrosswalksEditor : Editor<CrosswalkItemsPanel, MarkupCrosswalk>
+    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkupCrosswalk>
     {
+        #region PROPERTIES
+
         private static CrosswalkStyle Buffer { get; set; }
 
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
@@ -28,7 +30,10 @@ namespace NodeMarkup.UI.Editors
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
 
         public CrosswalkBorderSelectPropertyPanel HoverBorderPanel { get; private set; }
-        public bool IsHoverBorderPanel => HoverBorderPanel != null;
+
+        #endregion
+
+        #region BASIC
 
         public CrosswalksEditor()
         {
@@ -38,24 +43,34 @@ namespace NodeMarkup.UI.Editors
 
         protected override IEnumerable<MarkupCrosswalk> GetObjects() => Markup.Crosswalks;
 
-        //protected override void OnObjectSelect()
-        //{
-        //    AddHeader();
-        //    AddWarning();
+        protected override void OnFillPropertiesPanel(MarkupCrosswalk crosswalk)
+        {
+            AddHeader();
+            AddWarning();
 
-        //    AddBordersProperties();
-        //    AddStyleTypeProperty();
-        //    AddStyleProperties();
-        //}
-        //protected override void OnClear()
-        //{
-        //    RightBorder = null;
-        //    LeftBorder = null;
-        //    Warning = null;
-        //    Style = null;
+            AddBordersProperties();
+            AddStyleTypeProperty();
+            AddStyleProperties();
 
-        //    StyleProperties.Clear();
-        //}
+            FillBorders();
+        }
+        protected override void OnObjectDelete(MarkupCrosswalk crosswalk)
+        {
+            Markup.RemoveCrosswalk(crosswalk);
+            base.OnObjectDelete(crosswalk);
+        }
+        protected override void OnClearPropertiesPanel()
+        {
+            RightBorder = null;
+            LeftBorder = null;
+            Warning = null;
+            Style = null;
+
+            StyleProperties.Clear();
+        }
+        protected override void OnObjectUpdate(MarkupCrosswalk editObject) => FillBorders();
+
+        #endregion
 
         #region PROPERTIES PANELS
 
@@ -144,34 +159,19 @@ namespace NodeMarkup.UI.Editors
         {
             StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+                colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
+        }
+        private void ClearStyleProperties()
+        {
+            foreach (var property in StyleProperties)
+                ComponentPool.Free(property);
+
+            StyleProperties.Clear();
         }
 
         #endregion
 
-        private void SaveTemplate()
-        {
-            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
-                Panel.EditStyleTemplate(template);
-        }
-        private void ApplyStyle(CrosswalkStyle style)
-        {
-            EditObject.Style = style.CopyStyle();
-            Style.SelectedObject = EditObject.Style.Type;
-
-            AfterStyleChanged();
-        }
-        private void SelectTemplate(StyleTemplate template)
-        {
-            if (template.Style is CrosswalkStyle style)
-                ApplyStyle(style);
-        }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
-        private void PasteStyle()
-        {
-            if (Buffer is CrosswalkStyle style)
-                ApplyStyle(style);
-        }
+        #region STYLE CHANGE
 
         private void StyleChanged(Style.StyleType style)
         {
@@ -186,28 +186,41 @@ namespace NodeMarkup.UI.Editors
         }
         private void AfterStyleChanged()
         {
-            RefreshItem();
+            RefreshSelectedItem();
             PropertiesPanel.StopLayout();
             ClearStyleProperties();
             AddStyleProperties();
             PropertiesPanel.StartLayout();
         }
-        private void ClearStyleProperties()
+        private void ApplyStyle(CrosswalkStyle style)
         {
-            foreach (var property in StyleProperties)
-                ComponentPool.Free(property);
+            EditObject.Style = style.CopyStyle();
+            Style.SelectedObject = EditObject.Style.Type;
 
-            StyleProperties.Clear();
+            AfterStyleChanged();
+        }
+
+        #endregion
+
+        #region HANDLERS
+
+        private void SaveTemplate()
+        {
+            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+                Panel.EditStyleTemplate(template);
+        }
+        private void SelectTemplate(StyleTemplate template)
+        {
+            if (template.Style is CrosswalkStyle style)
+                ApplyStyle(style);
+        }
+        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
+        private void PasteStyle()
+        {
+            if (Buffer is CrosswalkStyle style)
+                ApplyStyle(style);
         }
         private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);
-        protected override void OnObjectDelete(MarkupCrosswalk crosswalk)
-        {
-            Markup.RemoveCrosswalk(crosswalk);
-            base.OnObjectDelete(crosswalk);
-        }
-        protected override void OnItemSelect(MarkupCrosswalk crosswalk) { } /*=> FillBorders();*/
-
-        #region EDITOR ACTION
 
         public void HoverBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => HoverBorderPanel = selectPanel;
         public void LeaveBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => HoverBorderPanel = null;
@@ -232,23 +245,21 @@ namespace NodeMarkup.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
-
-            if (IsHoverBorderPanel && HoverBorderPanel.Value is MarkupRegularLine borderLine)
-                borderLine.Render(cameraInfo, Colors.Hover);
+            HoverBorderPanel?.Value?.Render(cameraInfo, Colors.Hover);
         }
 
         public void BorderSetup()
         {
-            //if (!Settings.QuickBorderSetup)
-            //    return;
+            if (!Settings.QuickBorderSetup)
+                return;
 
-            //var hasLeft = LeftBorder.Objects.Any();
-            //var hasRight = RightBorder.Objects.Any();
+            var hasLeft = LeftBorder.Objects.Any();
+            var hasRight = RightBorder.Objects.Any();
 
-            //if (hasLeft)
-            //    SelectBorder(LeftBorder, hasRight ? (_) => SelectBorder(RightBorder) : (Func<Event, bool>)null);
-            //else if (hasRight)
-            //    SelectBorder(RightBorder);
+            if (hasLeft)
+                SelectBorder(LeftBorder, hasRight ? (_) => SelectBorder(RightBorder) : (Func<Event, bool>)null);
+            else if (hasRight)
+                SelectBorder(RightBorder);
         }
 
         #endregion

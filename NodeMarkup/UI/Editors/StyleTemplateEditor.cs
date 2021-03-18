@@ -30,17 +30,23 @@ namespace NodeMarkup.UI.Editors
         private Style EditStyle { get; set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
-        protected override IEnumerable<StyleTemplate> GetTemplates() => TemplateManager.StyleManager.Templates;
+        protected override IEnumerable<StyleTemplate> GetObjects() => TemplateManager.StyleManager.Templates;
         //protected override Style.StyleType SelectGroup(StyleTemplate editableItem)
         //    => Settings.GroupTemplatesType == 0 ? editableItem.Style.Type & Style.StyleType.GroupMask : editableItem.Style.Type;
         //protected override string GroupName(Style.StyleType group)
         //    => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
 
-        //protected override void OnObjectSelect()
-        //{
-        //    CopyStyle();
-        //    base.OnObjectSelect();
-        //}
+        protected override void OnFillPropertiesPanel(StyleTemplate template)
+        {
+            CopyStyle();
+            base.OnFillPropertiesPanel(template);
+        }
+        protected override void OnClearPropertiesPanel()
+        {
+            base.OnClearPropertiesPanel();
+            StyleProperties.Clear();
+        }
+
         private void CopyStyle()
         {
             EditStyle = EditObject.Style.Copy();
@@ -50,7 +56,7 @@ namespace NodeMarkup.UI.Editors
         {
             AddStyleProperties();
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshItem();
+                colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
 
             return StyleProperties;
         }
@@ -61,11 +67,6 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
         }
-        //protected override void OnClear()
-        //{
-        //    base.OnClear();
-        //    StyleProperties.Clear();
-        //}
         private void AddStyleProperties()
         {
             StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, true);
@@ -73,9 +74,9 @@ namespace NodeMarkup.UI.Editors
 
         private void ToggleAsDefault()
         {
-            //TemplateManager.StyleManager.ToggleAsDefaultTemplate(EditObject);
-            //RefreshItems();
-            //HeaderPanel.Init(EditObject);
+            TemplateManager.StyleManager.ToggleAsDefaultTemplate(EditObject);
+            ItemsPanel.RefreshItems();
+            HeaderPanel.Init(EditObject);
         }
         private void Duplicate()
         {
@@ -113,6 +114,7 @@ namespace NodeMarkup.UI.Editors
             base.Refresh();
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style.Color;
+            Label.wordWrap = !Object.IsAsset;
 
             SetColors();
         }

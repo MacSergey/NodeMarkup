@@ -160,7 +160,7 @@ namespace NodeMarkup.UI.Editors
         {
             StyleProperties = Rule.Style.GetUIComponents(Rule.Line, this);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshItem();
+                colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
         }
 
         private void ClearStyleProperties()
@@ -212,7 +212,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AfterStyleChanged()
         {
-            Editor.RefreshItem();
+            Editor.RefreshSelectedItem();
             StopLayout();
             ClearStyleProperties();
             AddStyleProperties();
