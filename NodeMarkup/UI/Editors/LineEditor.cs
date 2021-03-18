@@ -18,6 +18,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class LinesEditor : Editor<LineItemsPanel, MarkupLine>
     {
+        #region PROPERTIES
+
         public static Color HoverAlpha
         {
             get
@@ -43,6 +45,12 @@ namespace NodeMarkup.UI.Editors
         private RulePanel HoverRulePanel { get; set; }
 
         private PartEdgeToolMode PartEdgeToolMode { get; }
+        //protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
+        //protected override string GroupName(MarkupLine.LineType group) => group.Description();
+
+        #endregion
+
+        #region BASIC
 
         public LinesEditor()
         {
@@ -51,8 +59,6 @@ namespace NodeMarkup.UI.Editors
             PartEdgeToolMode.Init(this);
         }
 
-        //protected override MarkupLine.LineType SelectGroup(MarkupLine editableItem) => editableItem.Type;
-        //protected override string GroupName(MarkupLine.LineType group) => group.Description();
         protected override IEnumerable<MarkupLine> GetObjects() => Markup.Lines;
         protected override void OnObjectSelect(MarkupLine editObject)
         {
@@ -67,12 +73,16 @@ namespace NodeMarkup.UI.Editors
             GetRuleEdges(editObject);
             RefreshRulePanels();
         }
+        protected override void OnObjectDelete(MarkupLine line)
+        {
+            Markup.RemoveLine(line);
+            base.OnObjectDelete(line);
+        }
         protected override void OnClear()
         {
             ClearPanel(ContentPanel.Content);
             HoverRulePanel = null;
         }
-
         private void GetRuleEdges(MarkupLine editObject)
         {
             SupportPoints.Clear();
@@ -129,6 +139,41 @@ namespace NodeMarkup.UI.Editors
 
             RefreshSelectedItem();
         }
+        public override void Delete(MarkupLine deleteObject)
+        {
+            base.Delete(deleteObject);
+
+            if (deleteObject != EditObject)
+                Refresh();
+        }
+        public void Refresh()
+        {
+            RefreshSelectedItem();
+            OnObjectUpdate(EditObject);
+            SetAddButton();
+        }
+        private void RefreshRulePanels()
+        {
+            var rulePanels = ContentPanel.Content.components.OfType<RulePanel>().ToArray();
+
+            foreach (var rulePanel in rulePanels)
+            {
+                if (EditObject.ContainsRule(rulePanel.Rule))
+                    rulePanel.Refresh();
+                else
+                    RemoveRulePanel(rulePanel);
+            }
+            foreach (var rule in EditObject.Rules)
+            {
+                if (!rulePanels.Any(r => r.Rule == rule))
+                    AddRulePanel(rule);
+            }
+        }
+
+        #endregion
+
+        #region RULE
+
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (_) => SetStyle(rulePanel)));
         private bool SetStyle(RulePanel rulePanel)
         {
@@ -157,7 +202,6 @@ namespace NodeMarkup.UI.Editors
                 regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
                 RemoveRulePanel(rulePanel);
                 Refresh();
-                SetAddButton();
                 return true;
             }
         }
@@ -191,6 +235,11 @@ namespace NodeMarkup.UI.Editors
             if (eventParam.source == rulePanel || !ruleRect.Contains(mouse) || !contentRect.Contains(mouse))
                 HoverRulePanel = null;
         }
+
+        #endregion
+
+        #region HANDLERS
+
         public override bool OnShortcut(Event e)
         {
             if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable)
@@ -209,33 +258,8 @@ namespace NodeMarkup.UI.Editors
                 HoverPartEdgePanel?.Value?.Render(cameraInfo, Colors.Hover);
             }
         }
-        protected override void OnObjectDelete(MarkupLine line)
-        {
-            Markup.RemoveLine(line);
-            base.OnObjectDelete(line);
-        }
-        public void Refresh()
-        {
-            RefreshSelectedItem();
-            RefreshRulePanels();
-        }
-        private void RefreshRulePanels()
-        {
-            var rulePanels = ContentPanel.Content.components.OfType<RulePanel>().ToArray();
 
-            foreach (var rulePanel in rulePanels)
-            {
-                if (EditObject.ContainsRule(rulePanel.Rule))
-                    rulePanel.Refresh();
-                else
-                    RemoveRulePanel(rulePanel);
-            }
-            foreach (var rule in EditObject.Rules)
-            {
-                if (!rulePanels.Any(r => r.Rule == rule))
-                    AddRulePanel(rule);
-            }
-        }
+        #endregion
     }
     public class PartEdgeToolMode : BasePanelMode<LinesEditor, RuleEdgeSelectPropertyPanel, ILinePartEdge>
     {
