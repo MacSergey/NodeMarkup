@@ -13,6 +13,21 @@ namespace NodeMarkup.UI
 {
     public class IntersectionTemplateInfoProperty : EditorItem, IReusable
     {
+        //private static UIDynamicFont Font { get; } = GetFont();
+        //private static UIDynamicFont GetFont()
+        //{
+        //    var font = new UIDynamicFont
+        //    {
+        //        baseFont = new Font("OpenSans-Semibold"),
+        //        baseline = 18,
+        //        lineHeight = 30,
+        //        size = 16,
+        //    };
+        //    font.baseFont.material = new Material(font.shader);
+        //    font.material = new Material(font.shader);
+        //    return font;
+        //}
+
         private float Size => 200f;
         protected override float DefaultHeight => Size + 10;
 
@@ -22,45 +37,41 @@ namespace NodeMarkup.UI
         private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
         private UILabel NoScreenshot { get; set; }
-        private UIPanel Titles { get; set; }
-        private UIPanel Values { get; set; }
-        private UILabel Roads { get; set; }
-        private UILabel Lines { get; set; }
-        private UILabel Crosswalks { get; set; }
-        private UILabel Fillers { get; set; }
-        private List<UILabel> Temp { get; set; } = new List<UILabel>();
+        private UILabel Titles { get; set; }
+        private UILabel Values { get; set; }
 
         public IntersectionTemplateInfoProperty()
         {
             AddScreenshot();
             AddNoScreenshot();
-            AddTitles();
-            AddValues();
-            AddTitleDatas();
-            AddValueDatas();
+            Titles = AddLabel(UIHorizontalAlignment.Right);
+            Values = AddLabel(UIHorizontalAlignment.Left);
         }
         public void Init(IntersectionTemplate template)
         {
             Screenshot.texture = template.HasPreview ? template.Preview : Empty;
             NoScreenshot.isVisible = !template.HasPreview;
 
-            Roads.text = template.Roads.ToString();
-            Lines.text = template.Lines.ToString();
-            Crosswalks.text = template.Crosswalks.ToString();
-            Fillers.text = template.Fillers.ToString();
+            var titlesText = new List<string>();
+            var valuesText = new List<string>();
+
+            titlesText.Add(NodeMarkup.Localize.PresetInfo_Roads);
+            valuesText.Add(template.Roads.ToString());
+            titlesText.Add(NodeMarkup.Localize.PresetInfo_Lines);
+            valuesText.Add(template.Lines.ToString());
+            titlesText.Add(NodeMarkup.Localize.PresetInfo_Crosswalks);
+            valuesText.Add(template.Crosswalks.ToString());
+            titlesText.Add(NodeMarkup.Localize.PresetInfo_Fillers);
+            valuesText.Add(template.Fillers.ToString());
 
             for (var i = 0; i < template.Enters.Length; i += 1)
             {
-                Temp.Add(AddTitleData(string.Format(NodeMarkup.Localize.PresetInfo_RoadPoints, i + 1)));
-                Temp.Add(AddValueData(template.Enters[i].Points.ToString()));
+                titlesText.Add(string.Format(NodeMarkup.Localize.PresetInfo_RoadPoints, i + 1));
+                valuesText.Add(template.Enters[i].Points.ToString());
             }
 
-            Titles.autoLayout = true;
-            Titles.autoLayout = false;
-            Titles.FitChildrenVertically();
-            Values.autoLayout = true;
-            Values.autoLayout = false;
-            Values.FitChildrenVertically();
+            Titles.text = string.Join("\n", titlesText.ToArray());
+            Values.text = string.Join("\n", valuesText.ToArray());
 
             Init();
         }
@@ -68,10 +79,8 @@ namespace NodeMarkup.UI
         {
             base.DeInit();
 
-            foreach (var item in Temp)
-                ComponentPool.Free(item);
-
-            Temp.Clear();
+            Titles.text = string.Empty;
+            Values.text = string.Empty;
 
             Screenshot.texture = null;
         }
@@ -97,52 +106,16 @@ namespace NodeMarkup.UI
             NoScreenshot.textAlignment = UIHorizontalAlignment.Center;
             NoScreenshot.verticalAlignment = UIVerticalAlignment.Middle;
         }
-        private void AddTitles()
+        private UILabel AddLabel(UIHorizontalAlignment alignment)
         {
-            Titles = AddUIComponent<UIPanel>();
-            Titles.autoLayoutDirection = LayoutDirection.Vertical;
-            Titles.clipChildren = true;
-
-            Titles.eventSizeChanged += (UIComponent component, Vector2 value) => SetPosition();
-        }
-        private void AddValues()
-        {
-            Values = AddUIComponent<UIPanel>();
-            Values.autoLayoutDirection = LayoutDirection.Vertical;
-            Values.clipChildren = true;
-            Values.eventSizeChanged += (UIComponent component, Vector2 value) => SetPosition();
-        }
-        private void AddTitleDatas()
-        {
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Roads);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Lines);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Crosswalks);
-            AddTitleData(NodeMarkup.Localize.PresetInfo_Fillers);
-        }
-        private void AddValueDatas()
-        {
-            Roads = AddValueData(string.Empty);
-            Lines = AddValueData(string.Empty);
-            Crosswalks = AddValueData(string.Empty);
-            Fillers = AddValueData(string.Empty);
-        }
-
-        private UILabel AddTitleData(string text) => AddData(Titles, Values, text, UIHorizontalAlignment.Right);
-        private UILabel AddValueData(string text) => AddData(Values, Titles, text, UIHorizontalAlignment.Left);
-
-        private UILabel AddData(UIPanel parent, UIPanel other, string text, UIHorizontalAlignment alignment)
-        {
-            var label = parent.AddUIComponent<UILabel>();
-            label.autoSize = false;
-            label.autoHeight = false;
+            var label = AddUIComponent<UILabel>();
+            label.autoSize = true;
             label.textScale = 0.65f;
-            label.height = 0;
-            label.eventTextChanged += (UIComponent component, string value) => SetSize(parent, other);
             label.padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
-            label.text = text;
             label.textColor = TextColor;
             label.textAlignment = alignment;
             label.verticalAlignment = UIVerticalAlignment.Bottom;
+            //label.font = Font;
             return label;
         }
 
@@ -150,29 +123,6 @@ namespace NodeMarkup.UI
         {
             base.OnSizeChanged();
             SetPosition();
-        }
-        private void SetSize(UIPanel panel, UIPanel other)
-        {
-            if (panel != null)
-            {
-                var labels = panel.components.OfType<UILabel>().ToArray();
-                var otherLabels = other.components.OfType<UILabel>().ToArray();
-
-                for (var i = 0; i < labels.Length; i += 1)
-                {
-                    labels[i].autoSize = true;
-                    labels[i].autoSize = false;
-
-                    if (i < otherLabels.Length)
-                        labels[i].height = Mathf.Max(labels[i].height, otherLabels[i].height);
-                }
-
-                var width = labels.Max(l => l.width);
-
-                panel.width = width;
-                foreach (var label in labels)
-                    label.width = width;
-            }
         }
         private void SetPosition()
         {
