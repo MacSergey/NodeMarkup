@@ -105,6 +105,8 @@ namespace NodeMarkup.Manager
                 {
                     if (isPart)
                         partsT.Add(new PartT { Start = currentT, End = nextT });
+                    if (partsT.Count > 1000)
+                        break;
 
                     isPart = !isPart;
 
@@ -278,7 +280,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        struct PartT
+        public struct PartT
         {
             public float Start;
             public float End;

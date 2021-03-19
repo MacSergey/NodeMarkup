@@ -128,12 +128,12 @@ namespace NodeMarkup.Manager
         protected abstract IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod);
         protected IEnumerable<StraightTrajectory> GetParts(RailLine rail, float dash, float space)
         {
-            var dashesT = new List<float[]>();
+            var partsT = new List<StyleHelper.PartT>();
 
             var startSpace = space / 2;
             for (var i = 0; i < 3; i += 1)
             {
-                dashesT.Clear();
+                partsT.Clear();
                 var isDash = false;
 
                 var prevT = 0f;
@@ -143,7 +143,9 @@ namespace NodeMarkup.Manager
                 while (nextT < rail.Count)
                 {
                     if (isDash)
-                        dashesT.Add(new float[] { currentT, nextT });
+                        partsT.Add(new StyleHelper.PartT { Start = currentT, End = nextT });
+                    if (partsT.Count > 1000)
+                        break;
 
                     isDash = !isDash;
 
@@ -164,8 +166,8 @@ namespace NodeMarkup.Manager
                     break;
             }
 
-            foreach (var dashT in dashesT)
-                yield return new StraightTrajectory(Position(dashT[0]), Position(dashT[1]));
+            foreach (var partT in partsT)
+                yield return new StraightTrajectory(Position(partT.Start), Position(partT.End));
 
 
             Vector3 Position(float t)
