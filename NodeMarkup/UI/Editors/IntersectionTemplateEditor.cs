@@ -61,12 +61,16 @@ namespace NodeMarkup.UI.Editors
         public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
         {
             int result;
-            if((result = x.Roads.CompareTo(y.Roads)) == 0)
+            if ((result = x.Roads.CompareTo(y.Roads)) == 0)
                 result = x.Name.CompareTo(y.Name);
             return result;
         }
 
-        protected override void ItemHover(IntersectionTemplateItem item) => AddPreview(item);
+        protected override void ItemHover(IntersectionTemplateItem item)
+        {
+            if (Editor.AvailableItems)
+                AddPreview(item);
+        }
         protected override void ItemLeave(IntersectionTemplateItem item) => RemovePreview();
 
         private void AddPreview(IntersectionTemplateItem item)
@@ -77,16 +81,18 @@ namespace NodeMarkup.UI.Editors
             Editor.AvailableContent = false;
 
             var root = GetRootContainer();
+
             Preview = ComponentPool.Get<PreviewPanel>(root);
+            Preview.Init(365f);
+
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview);
             info.Init(item.Object);
-            Preview.Init();
-            Preview.width = 365f;
 
             var x = item.absolutePosition.x + item.width;
             var y = Mathf.Min(item.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
             Preview.absolutePosition = new Vector2(x, y);
         }
+
         public void RemovePreview()
         {
             if (Preview == null)

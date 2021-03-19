@@ -33,8 +33,8 @@ namespace NodeMarkup.UI.Editors
         public abstract Type SupportType { get; }
         public abstract string EmptyMessage { get; }
 
-        public abstract bool AvailableItems { set; }
-        public abstract bool AvailableContent { set; }
+        public abstract bool AvailableItems { get; set; }
+        public abstract bool AvailableContent { get; set; }
 
         public bool Active
         {
@@ -76,8 +76,16 @@ namespace NodeMarkup.UI.Editors
         protected AdvancedScrollablePanel ContentPanel { get; set; }
         protected UILabel EmptyLabel { get; set; }
 
-        public sealed override bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
-        public sealed override bool AvailableContent { set => ContentPanel.SetAvailable(value); }
+        public sealed override bool AvailableItems
+        {
+            get => ItemsPanel.isEnabled;
+            set => ItemsPanel.SetAvailable(value); 
+        }
+        public sealed override bool AvailableContent 
+        {
+            get => ItemsPanel.isEnabled;
+            set => ContentPanel.SetAvailable(value); 
+        }
 
         #endregion
 

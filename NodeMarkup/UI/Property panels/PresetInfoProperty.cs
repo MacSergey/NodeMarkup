@@ -49,10 +49,10 @@ namespace NodeMarkup.UI
             Crosswalks.text = template.Crosswalks.ToString();
             Fillers.text = template.Fillers.ToString();
 
-            for(var i = 0; i < template.Enters.Length; i += 1)
+            for (var i = 0; i < template.Enters.Length; i += 1)
             {
                 Temp.Add(AddTitleData(string.Format(NodeMarkup.Localize.PresetInfo_RoadPoints, i + 1)));
-                Temp.Add(AddValueData( template.Enters[i].Points.ToString()));
+                Temp.Add(AddValueData(template.Enters[i].Points.ToString()));
             }
 
             Titles.autoLayout = true;
@@ -127,7 +127,7 @@ namespace NodeMarkup.UI
             Fillers = AddValueData(string.Empty);
         }
 
-        private UILabel AddTitleData(string text) => AddData(Titles, Values, text,  UIHorizontalAlignment.Right);
+        private UILabel AddTitleData(string text) => AddData(Titles, Values, text, UIHorizontalAlignment.Right);
         private UILabel AddValueData(string text) => AddData(Values, Titles, text, UIHorizontalAlignment.Left);
 
         private UILabel AddData(UIPanel parent, UIPanel other, string text, UIHorizontalAlignment alignment)
@@ -158,7 +158,7 @@ namespace NodeMarkup.UI
                 var labels = panel.components.OfType<UILabel>().ToArray();
                 var otherLabels = other.components.OfType<UILabel>().ToArray();
 
-                for(var i = 0; i < labels.Length; i+=1)
+                for (var i = 0; i < labels.Length; i += 1)
                 {
                     labels[i].autoSize = true;
                     labels[i].autoSize = false;
