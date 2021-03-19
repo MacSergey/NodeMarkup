@@ -33,6 +33,9 @@ namespace NodeMarkup.UI.Editors
         public abstract Type SupportType { get; }
         public abstract string EmptyMessage { get; }
 
+        public abstract bool AvailableItems { set; }
+        public abstract bool AvailableContent { set; }
+
         public bool Active
         {
             get => enabled && isVisible;
@@ -73,8 +76,8 @@ namespace NodeMarkup.UI.Editors
         protected AdvancedScrollablePanel ContentPanel { get; set; }
         protected UILabel EmptyLabel { get; set; }
 
-        public bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
-        public bool AvailableContent { set => ContentPanel.SetAvailable(value); }
+        public sealed override bool AvailableItems { set => ItemsPanel.SetAvailable(value); }
+        public sealed override bool AvailableContent { set => ContentPanel.SetAvailable(value); }
 
         #endregion
 
@@ -89,6 +92,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.atlas = TextureHelper.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
+            ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
             ItemsPanel.OnDeleteClick += OnItemDelete;
 
@@ -131,7 +135,7 @@ namespace NodeMarkup.UI.Editors
                 AvailableContent = true;
 
                 var editObject = EditObject;
-                ItemsPanel.Init(GetObjects());
+                ItemsPanel.SetObjects(GetObjects());
                 ItemsPanel.SelectObject(editObject);
 
                 SwitchEmptyMessage();
@@ -141,7 +145,7 @@ namespace NodeMarkup.UI.Editors
             else
                 NeedUpdate = true;
         }
-        public sealed override void RefreshEditor() 
+        public sealed override void RefreshEditor()
         {
             if (EditObject is ObjectType editObject)
                 OnObjectUpdate(editObject);
@@ -204,7 +208,7 @@ namespace NodeMarkup.UI.Editors
             SwitchEmptyMessage();
             RefreshEditor();
         }
-        protected virtual void OnClear() 
+        protected virtual void OnClear()
         {
             foreach (var component in ContentPanel.Content.components.ToArray())
                 ComponentPool.Free(component);

@@ -24,9 +24,6 @@ namespace NodeMarkup.UI.Editors
         protected override string IsWorkshopWarningMessage => NodeMarkup.Localize.PresetEditor_IsWorkshopWarningMessage;
 
         private PropertyGroupPanel Screenshot { get; set; }
-        //protected override bool GroupingEnabled => false;
-        //protected override bool SelectGroup(IntersectionTemplate editableItem) => true;
-        //protected override string GroupName(bool group) => throw new NotSupportedException();
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => TemplateManager.IntersectionManager.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
@@ -77,12 +74,13 @@ namespace NodeMarkup.UI.Editors
             if (item == SelectItem)
                 return;
 
-            //ContentPanel.opacity = 0.15f;
+            Editor.AvailableContent = false;
 
             var root = GetRootContainer();
             Preview = ComponentPool.Get<PreviewPanel>(root);
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview);
             info.Init(item.Object);
+            Preview.Init();
             Preview.width = 365f;
 
             var x = item.absolutePosition.x + item.width;
@@ -94,7 +92,7 @@ namespace NodeMarkup.UI.Editors
             if (Preview == null)
                 return;
 
-            //ContentPanel.opacity = 1f;
+            Editor.AvailableContent = true;
             ComponentPool.Free(Preview);
             Preview = null;
         }

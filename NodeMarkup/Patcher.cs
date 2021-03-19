@@ -258,7 +258,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"LSM not founded", error);
+                Mod.Logger.Warning($"LSM not founded", error);
                 return true;
             }
         }

@@ -19,7 +19,9 @@ namespace NodeMarkup.UI.Editors
         public ObjectType HoverObject { get; }
         public bool IsEmpty { get; }
 
-        public void Init(IEnumerable<ObjectType> editObjects);
+        public void Init(Editor editor);
+
+        public void SetObjects(IEnumerable<ObjectType> editObjects);
         public void AddObject(ObjectType editObject);
         public void DeleteObject(ObjectType editObject);
         public void EditObject(ObjectType editObject);
@@ -40,6 +42,8 @@ namespace NodeMarkup.UI.Editors
         #region PROPERTIES
 
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        protected Editor Editor { get; private set; }
+
         ItemType _selectItem;
         protected ItemType SelectItem
         {
@@ -65,9 +69,14 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
 
+        public void Init(Editor editor)
+        {
+            Editor = editor;
+        }
+
         #region ADD OBJECT
 
-        public void Init(IEnumerable<ObjectType> editObjects)
+        public void SetObjects(IEnumerable<ObjectType> editObjects)
         {
             StopLayout();
 
