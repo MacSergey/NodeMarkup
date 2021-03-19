@@ -321,7 +321,9 @@ Wszystkie istniejące oznaczenia zostaną zastąpione.</value>
     <value>Skrzyżowanie #{0}
 Kliknij aby edytować oznaczenia</value>
   </data>
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Wybierz skrzyżowanie lub segment aby zmodyfikować oznaczenia</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Wybierz punkt końcowy dla linii zwykłej lub zatrzymania
 Przeciągnij za punkt aby uzyskać linię prostopadłą</value>
@@ -1102,7 +1104,7 @@ Aby, utworzyć preset, kliknij «{0}» na nagłówku panelu.</value>
     <value>Zostanie zastosowane po ponownym uruchomieniu gry</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>Załaduj zasoby oznaczeń</value>
+    <value>Załaduj assety oznaczeń</value>
   </data>
   <data name="Mod_LoaledWithErrors" xml:space="preserve">
     <value>Wystąpiły błędy podczas ładowania moda.
@@ -1177,16 +1179,16 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
     <value>Angielski - Wielka Brytania</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Nadpisywanie zasobu presetu</value>
+    <value>Zmień nazwę asseta zestawu ustawień</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Aby, zmienić nazwę zasobu presetu, zasób musi zostać nadpisany. Czy chcesz kontynuować?</value>
+    <value>Zmiana nazwy wymaga zmiany nazwy pliku assetu. Czy chcesz kontynuować?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Nadpisywanie zasobu szablonu</value>
+    <value>Zmień nazwę asseta szablonu</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Aby, zmienić nazwę zasobu szablonu, zasób musi zostać nadpisany. Czy chcesz kontynuować?</value>
+    <value>Zmiana nazwy i wartości wymaga zmiany nazwy pliku assetu. Czy chcesz kontynuować?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Aby, ustawić obramowanie przejścia dla pieszych, pozostałe linie muszą posiadać punkt wspólny z przejściem dla pieszych</value>
@@ -1204,7 +1206,7 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
     <value>Zapisz zmiany</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
-    <value>Anuluj wprowadzone zmiany</value>
+    <value>Nie zapisuj zmian</value>
   </data>
   <data name="MessageBox_Cancel" xml:space="preserve">
     <value>Anuluj</value>
@@ -1223,19 +1225,19 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
 Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Szablon jest zasobem. Może zostać usunięty tylko z poziomu Menedżera treści gry.</value>
+    <value>Może on jedynie zostać usunięty z menadżera treści gry.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Preset nie może zostać zmodyfikowany. Zasób może zostać jedynie odsubskrybowany lub usunięty z poziomu Menedżera treści.</value>
+    <value>Preset nie może zostać zmodyfikowany. Może on jedynie zostać usunięty z menadżera treści gry lub odsubskrybowany Warsztatu Steam.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
     <value>Ten preset jest zasobem.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Zasób szablonu może zostać usunięty tylko z poziomu Menedżera treści gry.</value>
+    <value>Może on jedynie zostać usunięty z menadżera treści gry.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Szablon nie może zostać zmodyfikowany. Zasób może zostać jedynie odsubskrybowany lub usunięty z poziomu Menedżera treści.</value>
+    <value>Szablon nie może zostać zmodyfikowany. Może on jedynie zostać usunięty z menadżera treści gry lub odsubskrybowany Warsztatu Steam.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>Ten szablon jest zasobem.</value>
@@ -1260,7 +1262,10 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
     <value>- Ulepszono komunikaty o błędach ładowania danych.
 - Naprawiono i zaktualizowano tłumaczenia.</value>
   </data>
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Wystąpiły błędy podczas ładowania danych.
+Nie udało się załadować oznaczeń dla wszystkich skrzyżowań.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia segmentu #{0}</value>
   </data>
@@ -1268,19 +1273,42 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
     <value>Trawa</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Kostka brukowa</value>
+    <value>Chodnik</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Wysokość</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Wysokość</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Trawa</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Chodnik</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Odległość rysowania obiektów</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Kliknij aby edytować oznaczenia</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Podążaj za linią pomocniczą</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Lewa linia pomocnicza</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Prawa linia pomocnicza</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Wybierz pierwszy punkt linii pomocniczej lub istniejącą linię</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Wybierz drugi punkt linii pomocniczej</value>
+  </data>
   
   
   
