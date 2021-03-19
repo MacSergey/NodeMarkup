@@ -85,7 +85,7 @@ namespace NodeMarkup.Tools
             if (markup.NeedSetOrder)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = Localize.Tool_RoadsWasChangedCaption;
+                messageBox.CaptionText = Localize.Tool_RoadsWasChangedCaption;
                 messageBox.MessageText = Localize.Tool_RoadsWasChangedMessage;
                 messageBox.OnButton1Click = OnYes;
                 messageBox.OnButton2Click = OnNo;

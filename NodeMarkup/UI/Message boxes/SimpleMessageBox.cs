@@ -36,7 +36,7 @@ namespace NodeMarkup.UI
     {
         public ErrorLoadedMessageBox()
         {
-            CaprionText = Mod.ShortName;
+            CaptionText = Mod.ShortName;
             Button1Text = NodeMarkupMessageBox.Ok;
             Button2Text = NodeMarkup.Localize.Mod_Support;
             OnButton2Click = Mod.OpenTroubleshooting;

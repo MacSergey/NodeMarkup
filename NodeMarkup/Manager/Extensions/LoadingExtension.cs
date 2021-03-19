@@ -57,7 +57,7 @@ namespace NodeMarkup
             else if (Settings.BetaWarning.value)
             {
                 var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                messageBox.CaprionText = Localize.Mod_BetaWarningCaption;
+                messageBox.CaptionText = Localize.Mod_BetaWarningCaption;
                 messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, Mod.ShortName);
                 messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
                 messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
@@ -82,14 +82,33 @@ namespace NodeMarkup
             if (!messages.Any())
                 return;
 
-            var messageBox = !Mod.IsBeta ? MessageBoxBase.ShowModal<WhatsNewMessageBox>() : MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
-            messageBox.CaprionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.ShortName);
-            messageBox.OnButtonClick = Confirm;
-            messageBox.Init(messages);
+            if(!Mod.IsBeta)
+            {
+                var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.ShortName);
+                messageBox.OnButtonClick = Confirm;
+                messageBox.OkText = NodeMarkupMessageBox.Ok;
+                messageBox.Init(messages, GetVersionString);
+            }
+            else
+            {
+                var messageBox = MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
+                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, Mod.ShortName);
+                messageBox.OnButtonClick = Confirm;
+                messageBox.OnGetStableClick = GetStable;
+                messageBox.OkText = NodeMarkupMessageBox.Ok;
+                messageBox.GetStableText = Localize.Mod_BetaWarningGetStable;
+                messageBox.Init(messages, string.Format(Localize.Mod_BetaWarningMessage, Mod.ShortName), GetVersionString);
+            }
 
             static bool Confirm()
             {
                 Settings.WhatsNewVersion.value = Mod.Version.ToString();
+                return true;
+            }
+            static bool GetStable()
+            {
+                Mod.GetStable();
                 return true;
             }
         }
@@ -116,6 +135,7 @@ namespace NodeMarkup
 
             return messages;
         }
+        private string GetVersionString(Version version) => string.Format(Localize.Mod_WhatsNewVersion, version == Mod.Version ? Mod.VersionString : version.ToString());
         private string GetWhatsNew(Version version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.ToString().Replace('.', '_')}", Localize.Culture);
     }
 }

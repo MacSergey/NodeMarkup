@@ -200,7 +200,7 @@ namespace NodeMarkup.UI.Editors
             if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
                 messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
+                messageBox.CaptionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
                 messageBox.MessageText = string.Format(NameExistMessage, name);
                 messageBox.OnButton1Click = AgreeExistName;
                 messageBox.OnButton2Click = EditName;
@@ -214,7 +214,7 @@ namespace NodeMarkup.UI.Editors
                 if (EditObject.IsAsset)
                 {
                     messageBox ??= MessageBoxBase.ShowModal<YesNoMessageBox>();
-                    messageBox.CaprionText = RewriteCaption;
+                    messageBox.CaptionText = RewriteCaption;
                     messageBox.MessageText = $"{IsAssetMessage} {RewriteMessage}";
                     messageBox.OnButton1Click = Save;
                     return false;
@@ -253,7 +253,7 @@ namespace NodeMarkup.UI.Editors
             if (HasChanges)
             {
                 var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
-                messageBox.CaprionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
+                messageBox.CaptionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
                 messageBox.MessageText = SaveChangesMessage;
                 messageBox.Button1Text = NodeMarkupMessageBox.Yes;
                 messageBox.Button2Text = NodeMarkupMessageBox.No;

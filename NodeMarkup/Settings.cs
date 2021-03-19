@@ -334,7 +334,7 @@ namespace NodeMarkup
             void Click()
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = caption;
+                messageBox.CaptionText = caption;
                 messageBox.MessageText = message;
                 messageBox.OnButton1Click = Сonfirmed;
             }
@@ -356,7 +356,7 @@ namespace NodeMarkup
                 if (result)
                 {
                     var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                    messageBox.CaprionText = caption;
+                    messageBox.CaptionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
                     messageBox.Button2Text = NodeMarkupMessageBox.Ok;
@@ -372,7 +372,7 @@ namespace NodeMarkup
                 else
                 {
                     var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
-                    messageBox.CaprionText = caption;
+                    messageBox.CaptionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageFailed;
                 }
             }
@@ -385,7 +385,7 @@ namespace NodeMarkup
             void Click()
             {
                 var messageBox = MessageBoxBase.ShowModal<Modal>();
-                messageBox.CaprionText = caption;
+                messageBox.CaptionText = caption;
                 messageBox.MessageText = message;
 
             }

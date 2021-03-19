@@ -331,7 +331,7 @@ namespace NodeMarkup.Tools
             Mod.Logger.Debug($"Delete all markings");
 
             var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-            messageBox.CaprionText = Localize.Tool_ClearMarkingsCaption;
+            messageBox.CaptionText = Localize.Tool_ClearMarkingsCaption;
             messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}", Markup.Id);
             messageBox.OnButton1Click = Delete;
 
@@ -349,7 +349,7 @@ namespace NodeMarkup.Tools
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = Localize.Tool_ResetOffsetsCaption;
+                messageBox.CaptionText = Localize.Tool_ResetOffsetsCaption;
                 messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Reset;
             }
@@ -385,7 +385,7 @@ namespace NodeMarkup.Tools
             void ShowModal(string additional)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
+                messageBox.CaptionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
                 messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{NodeMarkupMessageBox.CantUndone}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
                     {
@@ -412,7 +412,7 @@ namespace NodeMarkup.Tools
             if (Settings.DeleteWarnings && !Markup.IsEmpty)
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
-                messageBox.CaprionText = Localize.Tool_PasteMarkingsCaption;
+                messageBox.CaptionText = Localize.Tool_PasteMarkingsCaption;
                 messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Paste;
             }

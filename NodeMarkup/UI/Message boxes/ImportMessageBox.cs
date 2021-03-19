@@ -64,7 +64,7 @@ namespace NodeMarkup.UI
             var result = Import(DropDown.SelectedObject);
 
             var resultMessageBox = ShowModal<OkMessageBox>();
-            resultMessageBox.CaprionText = Caption;
+            resultMessageBox.CaptionText = Caption;
             resultMessageBox.MessageText = result ? SuccessMessage : FailedMessage;
 
             Close();
