@@ -33,11 +33,6 @@ namespace NodeMarkup.Manager
         public abstract string XmlSection { get; }
         public abstract SupportType Type { get; }
 
-        //public SupportPoint(Vector3 position)
-        //{
-        //    Update(position);
-        //}
-
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
 

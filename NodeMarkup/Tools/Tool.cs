@@ -80,7 +80,6 @@ namespace NodeMarkup.Tools
 
         private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
-        //private UIComponent PauseMenu { get; } = UIView.library.Get("PauseMenu");
         public IntersectionTemplate MarkupBuffer { get; private set; }
 
         #endregion
@@ -206,14 +205,6 @@ namespace NodeMarkup.Tools
                 SetModeNow(NextMode);
                 NextMode = null;
             }
-
-            //if (PauseMenu?.isVisible == true)
-            //{
-            //    PrevTool = null;
-            //    Disable();
-            //    UIView.library.Hide("PauseMenu");
-            //    return;
-            //}
             if ((RenderManager.CurrentCameraInfo.m_layerMask & (3 << 24)) == 0)
             {
                 PrevTool = null;

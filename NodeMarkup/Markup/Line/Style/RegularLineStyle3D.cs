@@ -73,13 +73,4 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new PavementLineStyle(Width, Elevation);
     }
-    //public class GrassLineStyle : Line3DStyle
-    //{
-    //    public override StyleType Type { get; } = StyleType.LineGrass;
-    //    protected override MaterialType MaterialType => MaterialType.Grass;
-
-    //    public GrassLineStyle(float width, float elevation) : base(width, elevation) { }
-
-    //    public override RegularLineStyle CopyRegularLineStyle() => new GrassLineStyle(Width, Elevation);
-    //}
 }

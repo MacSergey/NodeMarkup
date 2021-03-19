@@ -276,15 +276,9 @@ namespace NodeMarkup.Tools
         public override IEnumerable<Target<SourcePoint>> GetTargets(BaseOrderToolMode<SourcePoint> toolMode, Target<SourcePoint>[] targets)
         {
             for (var target = From; target != To; target = targets[target.Num.NextIndex(targets.Length)])
-            {
                 yield return target;
-                //if ((!toolMode.IsMirror && target.Num == targets.Length - 1) || (toolMode.IsMirror && target.Num == 0))
-                //    yield break;
-            }
 
             yield return To;
-
-            //int Func(int i) => !toolMode.IsMirror ? i.NextIndex(targets.Length) : i.PrevIndex(targets.Length);
         }
     }
 

@@ -172,7 +172,6 @@ namespace NodeMarkup.Manager
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
-            //{RegularLineType.Grass, new GrassLineStyle(Default3DWidth, Default3DHeigth) },
         };
         public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyLineStyle() : null;
 
@@ -209,14 +208,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             SharkTeeth = StyleType.LineSharkTeeth,
 
-            //[Description("ZigZag")]
-            //ZigZag = StyleType.LineZigZag,
-
             [Description(nameof(Localize.LineStyle_Pavement))]
             Pavement = StyleType.LinePavement,
-
-            //[Description(nameof(Localize.LineStyle_Grass))]
-            //Grass = StyleType.LineGrass,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

@@ -439,22 +439,4 @@ namespace NodeMarkup.Manager
             Invert.Value ^= map.IsMirror ^ invert;
         }
     }
-
-    //public class ZigZagLineStyle : RegularLineStyle
-    //{
-    //    public PropertyValue<float> Offset { get; }
-    //    public PropertyValue<float> Length { get; }
-
-    //    public override StyleType Type => StyleType.LineZigZag;
-
-    //    public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public override RegularLineStyle CopyLineStyle()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }

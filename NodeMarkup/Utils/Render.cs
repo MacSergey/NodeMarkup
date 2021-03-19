@@ -302,8 +302,6 @@ namespace NodeMarkup.Utils
             instance.m_materialBlock.SetMatrix(instance.ID_LeftMatrix, Left);
             instance.m_materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             instance.m_materialBlock.SetVector(instance.ID_MeshScale, Scale);
-            //instance.m_materialBlock.SetVector(instance.ID_ObjectIndex, data.m_dataVector3);
-            //instance.m_materialBlock.SetColor(instance.ID_Color, data.m_dataColor0);
 
             instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceTexture);
 

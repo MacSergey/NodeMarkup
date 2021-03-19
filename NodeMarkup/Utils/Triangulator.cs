@@ -150,21 +150,6 @@ namespace NodeMarkup.Utils
             yield return A;
             yield return B;
             yield return C;
-            //switch (direction)
-            //{
-            //    case PolygonDirection.ClockWise:
-            //        yield return A;
-            //        yield return B;
-            //        yield return C;
-            //        break;
-            //    case PolygonDirection.CounterClockWise:
-            //        yield return C;
-            //        yield return B;
-            //        yield return A;
-            //        break;
-            //    default:
-            //        yield break;
-            //}
         }
 
         public override string ToString() => $"{A}-{B}-{C}";

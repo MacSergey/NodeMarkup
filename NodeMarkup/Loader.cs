@@ -34,27 +34,7 @@ namespace NodeMarkup
     public static class Loader
     {
         public static string Id { get; } = nameof(NodeMarkup);
-
-        //public static XElement Parse(string text, LoadOptions options = LoadOptions.None)
-        //{
-        //    using StringReader input = new StringReader(text);
-        //    XmlReaderSettings xmlReaderSettings = GetXmlReaderSettings(options);
-        //    using XmlReader reader = XmlReader.Create(input, xmlReaderSettings);
-        //    return XElement.Load(reader, options);
-        //}
         public static string GetString(XElement config) => config.ToString(SaveOptions.DisableFormatting);
-
-        //static XmlReaderSettings GetXmlReaderSettings(LoadOptions o)
-        //{
-        //    XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
-        //    if ((o & LoadOptions.PreserveWhitespace) == 0)
-        //    {
-        //        xmlReaderSettings.IgnoreWhitespace = true;
-        //    }
-        //    xmlReaderSettings.ProhibitDtd = false;
-        //    xmlReaderSettings.XmlResolver = null;
-        //    return xmlReaderSettings;
-        //}
 
         public static byte[] Compress(string xml)
         {

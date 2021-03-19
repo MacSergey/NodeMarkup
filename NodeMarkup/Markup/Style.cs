@@ -261,17 +261,11 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
-            //[Description("ZigZag")]
-            //LineZigZag,
-
             [NotVisible]
             Regular3DLine = Markup.Item.RegularLine + 0x80,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
-
-            //[Description(nameof(Localize.LineStyle_Grass))]
-            //LineGrass,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

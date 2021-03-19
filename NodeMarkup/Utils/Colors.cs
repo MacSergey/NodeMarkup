@@ -51,11 +51,5 @@ namespace NodeMarkup.Utils
         public static Vector4 ToX3Vector(this Color32 c) => ToX3Vector((Color)c);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2)/* c.a == 0 ? 0 : ColorChange(c.a) * 0.985f + 0.015f*/);
         static float ColorChange(float c) => Mathf.Pow(c, 4);
-
-        //public static Color32 ToColor(this int colorData, int version)
-        //{
-        //    var color = colorData.ToColor();
-        //    return version != 1 ? VersionMigration.CorrectColor01(color) : color;
-        //}
     }
 }

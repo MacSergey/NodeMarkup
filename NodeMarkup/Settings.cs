@@ -11,7 +11,6 @@ using System.Threading;
 using System.Reflection;
 using System.IO;
 using System.Linq;
-//using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System;
 using System.Globalization;
@@ -247,16 +246,6 @@ namespace NodeMarkup
             MarkupManager.NodeManager.AddAllToUpdate();
             MarkupManager.SegmentManager.AddAllToUpdate();
         }
-
-        #endregion
-
-        #region ACCESS
-        //private static void AddAccess(UIHelperBase helper)
-        //{
-        //    UIHelper group = helper.AddGroup(Localize.Settings_EarlyAccess) as UIHelper;
-        //    if (group.self is UIComponent component)
-        //        component.AddUIComponent<EarlyAccessPanel>();
-        //}
 
         #endregion
 
