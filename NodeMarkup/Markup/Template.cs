@@ -301,7 +301,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Mod.Logger.Error("Could not get template screenshot", error);
+                Mod.Logger.Warning("Could not get template screenshot", error);
                 return null;
             }
         }
