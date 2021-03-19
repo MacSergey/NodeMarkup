@@ -174,7 +174,7 @@ namespace NodeMarkup.Manager
         public void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {
-            Mod.Logger.Debug($"{nameof(MarkupManager)}.{nameof(Clear)}");
+            Mod.Logger.Debug($"{typeof(MarkupType).Name} {nameof(Clear)}");
             NeedUpdate.Clear();
             Markups.Clear();
         }

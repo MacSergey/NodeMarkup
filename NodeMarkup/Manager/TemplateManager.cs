@@ -65,14 +65,14 @@ namespace NodeMarkup.Manager
 
         public static void Reload()
         {
-            Mod.Logger.Debug($"{nameof(TemplateManager)}.{nameof(Reload)}");
+            Mod.Logger.Debug($"{nameof(TemplateManager)} {nameof(Reload)}");
 
             StyleManager.Load();
             IntersectionManager.Load();
         }
         public static void Clear()
         {
-            Mod.Logger.Debug($"{nameof(TemplateManager)}.{nameof(Clear)}");
+            Mod.Logger.Debug($"{nameof(TemplateManager)} {nameof(Clear)}");
 
             StyleManager.Clear(true);
             IntersectionManager.Clear(true);
