@@ -15,7 +15,7 @@ namespace NodeMarkup.UI.Editors
         public event Action<ObjectType> OnSelectClick;
         public event Action<ObjectType> OnDeleteClick;
 
-        public ObjectType SelectObject { get; }
+        public ObjectType SelectedObject { get; }
         public ObjectType HoverObject { get; }
         public bool IsEmpty { get; }
 
@@ -23,6 +23,7 @@ namespace NodeMarkup.UI.Editors
         public void AddObject(ObjectType editObject);
         public void DeleteObject(ObjectType editObject);
         public void EditObject(ObjectType editObject);
+        public void SelectObject(ObjectType editObject);
         public void RefreshSelectedItem();
     }
     public abstract class ItemsPanel<ItemType, ObjectType> : AdvancedScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
@@ -56,7 +57,7 @@ namespace NodeMarkup.UI.Editors
                 OnSelectClick?.Invoke(_selectItem?.Object);
             }
         }
-        public ObjectType SelectObject => SelectItem?.Object;
+        public ObjectType SelectedObject => SelectItem?.Object;
 
         protected ItemType HoverItem { get; set; }
         public ObjectType HoverObject => HoverItem?.Object;
@@ -163,15 +164,16 @@ namespace NodeMarkup.UI.Editors
         public void EditObject(ObjectType editObject)
         {
             if (editObject != null)
-            {
-                var item = FindItem(editObject) ?? AddObjectImpl(editObject);
-                Select(item);
-            }
+                Select(FindItem(editObject) ?? AddObjectImpl(editObject));
             else
-            {
-                var item = FindItem(0);
-                Select(item);
-            }
+                Select(FindItem(0));
+        }
+        public void SelectObject(ObjectType editObject)
+        {
+            if (editObject != null)
+                Select(FindItem(editObject));
+            else
+                Select(FindItem(0));
         }
 
         public virtual void Select(ItemType item)
@@ -230,16 +232,16 @@ namespace NodeMarkup.UI.Editors
         #region ADDITIONAL
 
         protected virtual ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
-        protected virtual ItemType FindItem(int index) => FindItem(index, Content);
-        protected ItemType FindItem(int index, UIComponent parent) => index >= 0 && parent.components.Count > index ? parent.components[index] as ItemType : null;
-        
+        protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, Content);
+        protected T FindItem<T>(int index, UIComponent parent) where T : UIComponent => index >= 0 && parent.components.Count > index ? parent.components[index] as T : null;
+
         protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, Content);
         protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.Object).ToArray(), editObject, this);
 
         public virtual void ScrollTo(ItemType item)
         {
             Content.ScrollToBottom();
-            Content.ScrollIntoView(item);
+            Content.ScrollIntoViewRecursive(item);
         }
         public void RefreshSelectedItem() => SelectItem?.Refresh();
         public virtual void RefreshItems()

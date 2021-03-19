@@ -67,7 +67,7 @@ namespace NodeMarkup.UI.Editors
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected Markup Markup => Panel.Markup;
         protected bool NeedUpdate { get; set; }
-        public ObjectType EditObject => ItemsPanel.SelectObject;
+        public ObjectType EditObject => ItemsPanel.SelectedObject;
 
         protected ItemsPanelType ItemsPanel { get; set; }
         protected AdvancedScrollablePanel ContentPanel { get; set; }
@@ -130,8 +130,9 @@ namespace NodeMarkup.UI.Editors
                 AvailableItems = true;
                 AvailableContent = true;
 
+                var editObject = EditObject;
                 ItemsPanel.Init(GetObjects());
-                ItemsPanel.EditObject(null);
+                ItemsPanel.SelectObject(editObject);
 
                 SwitchEmptyMessage();
 
@@ -144,6 +145,8 @@ namespace NodeMarkup.UI.Editors
         {
             if (EditObject is ObjectType editObject)
                 OnObjectUpdate(editObject);
+            else
+                ItemsPanel.SelectObject(null);
         }
 
         public virtual void Add(ObjectType deleteObject)

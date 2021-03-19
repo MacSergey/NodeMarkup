@@ -195,7 +195,7 @@ namespace NodeMarkup.UI.Panel
             if ((Markup = markup) != null)
             {
                 if (isVisible)
-                    UpdateOnVisible();
+                    UpdatePanelOnVisible();
                 else
                     NeedUpdateOnVisible = true;
             }
@@ -206,7 +206,7 @@ namespace NodeMarkup.UI.Panel
             foreach (var editor in Editors)
                 editor.UpdateEditor();
         }
-        private void UpdateOnVisible()
+        private void UpdatePanelOnVisible()
         {
             NeedUpdateOnVisible = false;
 
@@ -247,7 +247,7 @@ namespace NodeMarkup.UI.Panel
         {
             base.OnVisibilityChanged();
             if (isVisible && NeedUpdateOnVisible)
-                UpdateOnVisible();
+                UpdatePanelOnVisible();
         }
         private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
 

@@ -62,10 +62,12 @@ namespace NodeMarkup.UI.Editors
             Label.padding = new RectOffset(0, 0, 3, 0);
             Label.autoHeight = true;
             Label.wordWrap = true;
+            Label.eventSizeChanged += (c, v) => LabelSizeChanged();
         }
         public virtual void DeInit() 
         {
             IsSelect = false;
+            isVisible = true;
         }
 
         protected virtual void SetColors()
@@ -78,6 +80,7 @@ namespace NodeMarkup.UI.Editors
 
             Label.textColor = TextColor;
         }
+        protected abstract void LabelSizeChanged();
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
         where ObjectType : class, IDeletable
@@ -101,7 +104,6 @@ namespace NodeMarkup.UI.Editors
 
         public EditItem()
         {
-            Label.eventSizeChanged += LabelSizeChanged;
             AddDeleteButton();
         }
 
@@ -132,8 +134,6 @@ namespace NodeMarkup.UI.Editors
             DeleteButton.eventClick += DeleteClick;
         }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
-
-        protected abstract void LabelSizeChanged(UIComponent component, Vector2 value);
 
         public virtual void Refresh()
         {
@@ -181,7 +181,7 @@ namespace NodeMarkup.UI.Editors
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
         }
-        protected override void LabelSizeChanged(UIComponent component, Vector2 value) => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
+        protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
     }
 
     public class ColorIcon : UIButton

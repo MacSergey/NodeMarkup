@@ -116,8 +116,8 @@
     <Compile Include="Tools\Order\PointsOrderMode.cs" />
     <Compile Include="Tools\BasePanelMode.cs" />
     <Compile Include="Tools\SelectMode.cs" />
-    <Compile Include="UI\Editors\Items\ItemsGroupPanel.cs" />
-    <Compile Include="UI\Editors\Items\ItemsPanel.cs" />
+    <Compile Include="UI\Editors\ItemsPanel\ItemsGroupPanel.cs" />
+    <Compile Include="UI\Editors\ItemsPanel\ItemsPanel.cs" />
     <Compile Include="UI\Editors\EnterEditor.cs" />
     <Compile Include="UI\Selectors\LinesSelector.cs" />
     <Compile Include="UI\Panel\TabStrip.cs" />

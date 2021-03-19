@@ -123,8 +123,8 @@ namespace NodeMarkup.UI.Editors
                 ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
             }
 
-            Label.size = new Vector2(size.x - 6, size.y);
-            Label.relativePosition = new Vector3(3, (height - Label.height) / 2);
+            Label.size = new Vector2(size.x - 6, size.y);          
         }
+        protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(3, (height - Label.height) / 2);
     }
 }

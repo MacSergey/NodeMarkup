@@ -24,6 +24,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using ModsCommon.Utilities;
 using ModsCommon.UI;
+using NodeMarkup.UI.Panel;
 
 namespace NodeMarkup
 {
@@ -233,9 +234,11 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
 
-            AddCheckBox(group, Localize.Settings_GroupLines, GroupLines);
-            AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle });
+            AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
+            AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+
+            static void OnChanged() => NodeMarkupPanel.Instance.UpdatePanel();
         }
         private static void AddDistanceSetting(UIHelper group) => AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
         private static void AddLODSetting(UIHelper group) => AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
@@ -432,9 +435,18 @@ namespace NodeMarkup
             }
         }
 
-        private static void AddCheckBox(UIHelper group, string label, SavedBool saved) => group.AddCheckbox(label, saved, (bool value) => saved.value = value);
+        private static void AddCheckBox(UIHelper group, string label, SavedBool saved, Action onChanged = null)
+        {
+            group.AddCheckbox(label, saved, OnValueChanged);
 
-        private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels)
+            void OnValueChanged(bool value)
+            {
+                saved.value = value;
+                onChanged?.Invoke();
+            }
+        }
+
+        private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels, Action onChanged = null)
         {
             var inProcess = false;
             var checkBoxes = new UICheckBox[labels.Length];
@@ -461,6 +473,7 @@ namespace NodeMarkup
             void OnMainChanged(bool value)
             {
                 mainSaved.value = value;
+                onChanged?.Invoke();
                 SetVisible();
             }
             void SetVisible() => optionsPanel.isVisible = mainSaved;
@@ -470,6 +483,7 @@ namespace NodeMarkup
                 {
                     inProcess = true;
                     optionsSaved.value = index;
+                    onChanged?.Invoke();
                     for (var i = 0; i < checkBoxes.Length; i += 1)
                         checkBoxes[i].isChecked = optionsSaved == i;
                     inProcess = false;

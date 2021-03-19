@@ -13,7 +13,7 @@ namespace NodeMarkup.UI.Editors
         where ObjectType : class, IDeletable
         where GroupItemType : EditGroup<GroupType, ItemType, ObjectType>
     {
-        public override bool IsEmpty => !Content.components.Any(c => c is GroupItemType);
+        public override bool IsEmpty => GroupingEnable ? !Content.components.Any(c => c is GroupItemType) : base.IsEmpty;
         public abstract bool GroupingEnable { get; }
         private Dictionary<GroupType, GroupItemType> Groups { get; } = new Dictionary<GroupType, GroupItemType>();
 
@@ -57,11 +57,14 @@ namespace NodeMarkup.UI.Editors
         }
         public override void Select(ItemType item)
         {
-            if (item == null)
-                return;
+            if (GroupingEnable)
+            {
+                if (item == null)
+                    return;
 
-            var group = SelectGroup(item.Object);
-            Groups[group].IsExpand = true;
+                var group = SelectGroup(item.Object);
+                Groups[group].IsExpand = true;
+            }
 
             base.Select(item);
         }
@@ -111,7 +114,7 @@ namespace NodeMarkup.UI.Editors
         protected ItemType FindItem(int index, GroupType group)
         {
             if (Groups.TryGetValue(group, out GroupItemType groupItem))
-                return FindItem(index, groupItem);
+                return FindItem<ItemType>(index, groupItem);
             else
                 return null;
         }
