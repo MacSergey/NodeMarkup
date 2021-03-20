@@ -87,21 +87,58 @@ namespace NodeMarkup.Manager
                     yield return part;
             }
         }
-        private static IEnumerable<PartT> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
+        public static IEnumerable<PartT> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength, uint iterations = 3)
         {
-            var length = bezierTrajectory.Length;
+            var points = GetDashesBezierPoints(bezierTrajectory);
+            var indices = CalculateDashesBezierT(points, dashLength, spaceLength, iterations);
+            var count = points.Length - 1;
+            for (var j = 1; j < indices.Count; j += 2)
+            {
+                var part = new PartT { Start = 1f / count * indices[j - 1], End = 1f / count * indices[j] };
+                yield return part;
+            }
+        }
+        public static IEnumerable<PartT> CalculateDashesBezierT(IEnumerable<ITrajectory> trajectories, float dashLength, float spaceLength, uint iterations = 3)
+        {
+            var pointsList = new List<Vector2[]>();
+            foreach (var trajectory in trajectories)
+                pointsList.Add(GetDashesBezierPoints(trajectory));
+
+            var indices = CalculateDashesBezierT(pointsList.SelectMany(i => i).ToArray(), dashLength, spaceLength, iterations);
+            var counts = pointsList.Select(l => l.Length - 1).ToArray();
+            var sum = 0;
+            var endIndices = pointsList.Select(x => (sum += x.Length) - x.Length).ToArray();
+
+            for (var j = 1; j < indices.Count; j += 2)
+                yield return new PartT { Start = GetT(counts, endIndices, indices[j - 1]), End = GetT(counts, endIndices, indices[j]) };
+
+            static float GetT(int[] counts, int[] endIndices, int index)
+            {
+                var i = endIndices.Length - 1;
+                while (index < endIndices[i])
+                    i -= 1;
+
+                return 1f / counts[i] * (index - endIndices[i]) + i;
+            }
+        }
+        private static Vector2[] GetDashesBezierPoints(ITrajectory trajectory)
+        {
+            var length = trajectory.Length;
             var count = (int)(length * 20);
             var points = new Vector2[count + 1];
             for (var i = 0; i <= count; i += 1)
-                points[i] = bezierTrajectory.Position(1f / count * i).XZ();
+                points[i] = trajectory.Position(1f / count * i).XZ();
 
+            return points;
+        }
+        private static List<int> CalculateDashesBezierT(Vector2[] points, float dashLength, float spaceLength, uint iterations)
+        {
             var startSpace = spaceLength / 2;
             var comparer = new PartsComparer();
-
-            var partsI = new List<int>();
-            for (var i = 0; i < 3; i += 1)
+        
+            for (var i = 0; ;)
             {
-                partsI.Clear();
+                var partsI = new List<int>();
                 var isPart = false;
 
                 var prevI = 0;
@@ -110,7 +147,7 @@ namespace NodeMarkup.Manager
 
                 while (nextI < points.Length)
                 {
-                    var l = (points[nextI] - points[currentI]).magnitude;
+                    //var l = (points[nextI] - points[currentI]).magnitude;
                     if (isPart)
                     {
                         partsI.Add(currentI);
@@ -125,16 +162,11 @@ namespace NodeMarkup.Manager
                 }
 
                 var endSpace = (points.Last() - points[isPart ? prevI : currentI]).magnitude;
-                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
-                    break;
+                i += 1;
+                if (i >= iterations || Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
+                    return partsI;
 
                 startSpace = (startSpace + endSpace) / 2;
-            }
-
-            for (var j = 1; j < partsI.Count; j += 2)
-            {
-                var part = new PartT { Start = 1f / count * partsI[j - 1], End = 1f / count * partsI[j] };
-                yield return part;
             }
 
             int GetI(int startI, float distance)

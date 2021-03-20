@@ -128,78 +128,17 @@ namespace NodeMarkup.Manager
         protected abstract IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod);
         protected IEnumerable<StraightTrajectory> GetParts(RailLine rail, float dash, float space)
         {
-            if (dash < 0.05f || space < 0.05f)
-                yield break;
-
-            var partsT = new List<StyleHelper.PartT>();
-
-            var startSpace = space / 2;
-            for (var i = 0; i < 3; i += 1)
+            foreach (var part in StyleHelper.CalculateDashesBezierT(rail, dash, space, 1))
             {
-                partsT.Clear();
-                var isDash = false;
-
-                var prevT = 0f;
-                var currentT = 0f;
-                var nextT = Travel(currentT, startSpace);
-
-                while (nextT < rail.Count)
-                {
-                    if (isDash)
-                        partsT.Add(new StyleHelper.PartT { Start = currentT, End = nextT });
-                    if (partsT.Count > 1000)
-                        break;
-
-                    isDash = !isDash;
-
-                    prevT = currentT;
-                    currentT = nextT;
-                    nextT = Travel(currentT, isDash ? dash : space);
-                }
-
-                float endSpace;
-                if (isDash || ((Position(rail.Count) - Position(currentT)).magnitude is float tempLength && tempLength < space / 2))
-                    endSpace = (Position(rail.Count) - Position(prevT)).magnitude;
-                else
-                    endSpace = tempLength;
-
-                startSpace = (startSpace + endSpace) / 2;
-
-                if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
-                    break;
+                var startI = GetI(part.Start);
+                var endI = GetI(part.End);
+                yield return new StraightTrajectory(rail[startI].Position(part.Start - startI), rail[endI].Position(part.End - endI));
             }
 
-            foreach (var partT in partsT)
-                yield return new StraightTrajectory(Position(partT.Start), Position(partT.End));
-
-
-            Vector3 Position(float t)
+            static int GetI(float t)
             {
                 var i = (int)t;
-                i = i > 0 && i == t ? i - 1 : i;
-                return rail[i].Position(t - i);
-            }
-            float Travel(float current, float distance)
-            {
-                var i = (int)current;
-                var next = 1f;
-                while (i < rail.Count)
-                {
-                    var line = rail[i];
-                    var start = current - i;
-                    next = line.Travel(start, distance);
-
-                    if (next < 1)
-                        break;
-                    else
-                    {
-                        i += 1;
-                        current = i;
-                        distance -= (line.Position(1f) - line.Position(start)).magnitude;
-                    }
-                }
-
-                return i + next;
+                return i > 0 && i == t ? i - 1 : i;
             }
         }
         protected void GetItemParams(ref float width, float angle, MarkupLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
