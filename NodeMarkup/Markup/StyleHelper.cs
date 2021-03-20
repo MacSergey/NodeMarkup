@@ -90,9 +90,6 @@ namespace NodeMarkup.Manager
         private static IEnumerable<PartT> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
         {
             var length = bezierTrajectory.Length;
-            if (dashLength < length)
-                yield break;
-
             var count = (int)(length * 20);
             var points = new Vector2[count + 1];
             for (var i = 0; i <= count; i += 1)
