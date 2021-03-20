@@ -160,7 +160,7 @@ namespace NodeMarkup.Manager
             for (var i = 0; i < partCount; i += 1)
             {
                 var tStart = startT + (partT + spaceT) * i;
-                var tEnd = tStart + spaceT;
+                var tEnd = tStart + partT;
 
                 yield return new PartT { Start = tStart, End = tEnd };
             }

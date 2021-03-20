@@ -142,31 +142,31 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup makrup, ObjectsMap map, out MarkupLine line, out bool invert)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupLine line, out bool invert)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            if (!MarkupPointPair.FromHash(lineId, makrup, map, out MarkupPointPair pointPair, out invert))
+            if (!MarkupPointPair.FromHash(lineId, markup, map, out MarkupPointPair pointPair, out invert))
             {
                 line = null;
                 return false;
             }
 
-            if (!makrup.TryGetLine(pointPair, out line))
+            if (!markup.TryGetLine(pointPair, out line))
             {
                 var type = (LineType)config.GetAttrValue("T", (int)pointPair.DefaultType);
-                if ((type & makrup.SupportLines) == 0)
+                if ((type & markup.SupportLines) == 0)
                     return false;
 
                 switch (type)
                 {
                     case LineType.Regular:
-                        line = new MarkupRegularLine(makrup, pointPair);
+                        line = pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
                         break;
                     case LineType.Stop:
-                        line = new MarkupStopLine(makrup, pointPair);
+                        line = new MarkupStopLine(markup, pointPair);
                         break;
                     case LineType.Crosswalk:
-                        line = new MarkupCrosswalkLine(makrup, pointPair);
+                        line = new MarkupCrosswalkLine(markup, pointPair);
                         break;
                     default:
                         return false;
