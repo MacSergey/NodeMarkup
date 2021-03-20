@@ -13,20 +13,14 @@ namespace NodeMarkup.UI
 {
     public class IntersectionTemplateInfoProperty : EditorItem, IReusable
     {
-        //private static UIDynamicFont Font { get; } = GetFont();
-        //private static UIDynamicFont GetFont()
-        //{
-        //    var font = new UIDynamicFont
-        //    {
-        //        baseFont = new Font("OpenSans-Semibold"),
-        //        baseline = 18,
-        //        lineHeight = 30,
-        //        size = 16,
-        //    };
-        //    font.baseFont.material = new Material(font.shader);
-        //    font.material = new Material(font.shader);
-        //    return font;
-        //}
+        private static UIDynamicFont Font { get; } = GetFont();
+        private static UIDynamicFont GetFont()
+        {
+            var font = Instantiate(UIView.GetAView().defaultFont as UIDynamicFont);
+            font.baseline = 24;
+            font.lineHeight = 24;
+            return font;
+        }
 
         private float Size => 200f;
         protected override float DefaultHeight => Size + 10;
@@ -109,15 +103,18 @@ namespace NodeMarkup.UI
         private UILabel AddLabel(UIHorizontalAlignment alignment)
         {
             var label = AddUIComponent<UILabel>();
+            label.font = Font;
             label.autoSize = true;
             label.textScale = 0.65f;
             label.padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
             label.textColor = TextColor;
             label.textAlignment = alignment;
             label.verticalAlignment = UIVerticalAlignment.Bottom;
-            //label.font = Font;
+            label.eventTextChanged += LabelTextChanged;
             return label;
         }
+
+        private void LabelTextChanged(UIComponent component, string value) => SetPosition();
 
         protected override void OnSizeChanged()
         {
