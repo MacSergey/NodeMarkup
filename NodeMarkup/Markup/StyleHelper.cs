@@ -33,7 +33,7 @@ namespace NodeMarkup.Manager
             void AddToResult(List<Result> result, ITrajectory trajectory) => result.AddRange(calculateParts(trajectory));
         }
 
-        private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, float? minAngle, float? minLength, float? maxLength,  Action<List<Result>, ITrajectory> addToResult)
+        private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, float? minAngle, float? minLength, float? maxLength, Action<List<Result>, ITrajectory> addToResult)
         {
             var lodScale = LodScale[lod];
             var result = new List<Result>();
@@ -68,14 +68,14 @@ namespace NodeMarkup.Manager
 
         public static IEnumerable<MarkupStylePart> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
         {
-            List<PartT> partsT;
+            PartT[] partsT;
             switch (trajectory)
             {
                 case BezierTrajectory bezierTrajectory:
-                    partsT = CalculateDashesBezierT(bezierTrajectory, dashLength, spaceLength);
+                    partsT = CalculateDashesBezierT(bezierTrajectory, dashLength, spaceLength).ToArray();
                     break;
                 case StraightTrajectory straightTrajectory:
-                    partsT = CalculateDashesStraightT(straightTrajectory, dashLength, spaceLength);
+                    partsT = CalculateDashesStraightT(straightTrajectory, dashLength, spaceLength).ToArray();
                     break;
                 default:
                     yield break;
@@ -87,55 +87,71 @@ namespace NodeMarkup.Manager
                     yield return part;
             }
         }
-        private static List<PartT> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
+        private static IEnumerable<PartT> CalculateDashesBezierT(BezierTrajectory bezierTrajectory, float dashLength, float spaceLength)
         {
-            var partsT = new List<PartT>();
-            var trajectory = bezierTrajectory.Trajectory;
+            var length = bezierTrajectory.Length;
+            if (dashLength < length)
+                yield break;
+
+            var count = (int)(length * 20);
+            var points = new Vector2[count + 1];
+            for (var i = 0; i <= count; i += 1)
+                points[i] = bezierTrajectory.Position(1f / count * i).XZ();
+
             var startSpace = spaceLength / 2;
+            var comparer = new PartsComparer();
+
+            var partsI = new List<int>();
             for (var i = 0; i < 3; i += 1)
             {
-                partsT.Clear();
+                partsI.Clear();
                 var isPart = false;
 
-                var prevT = 0f;
-                var currentT = 0f;
-                var nextT = trajectory.Travel(currentT, startSpace);
+                var prevI = 0;
+                var currentI = 0;
+                var nextI = GetI(currentI, startSpace);
 
-                while (nextT < 1)
+                while (nextI < points.Length)
                 {
+                    var l = (points[nextI] - points[currentI]).magnitude;
                     if (isPart)
-                        partsT.Add(new PartT { Start = currentT, End = nextT });
-                    if (partsT.Count > 1000)
-                        break;
+                    {
+                        partsI.Add(currentI);
+                        partsI.Add(nextI);
+                    }
 
                     isPart = !isPart;
 
-                    prevT = currentT;
-                    currentT = nextT;
-                    nextT = trajectory.Travel(currentT, isPart ? dashLength : spaceLength);
+                    prevI = currentI;
+                    currentI = nextI;
+                    nextI = GetI(currentI, isPart ? dashLength : spaceLength);
                 }
 
-                float endSpace;
-                if (isPart || ((trajectory.Position(1) - trajectory.Position(currentT)).magnitude is float tempLength && tempLength < spaceLength / 2))
-                    endSpace = (trajectory.Position(1) - trajectory.Position(prevT)).magnitude;
-                else
-                    endSpace = tempLength;
-
-                startSpace = (startSpace + endSpace) / 2;
-
+                var endSpace = (points.Last() - points[isPart ? prevI : currentI]).magnitude;
                 if (Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
                     break;
+
+                startSpace = (startSpace + endSpace) / 2;
             }
 
-            return partsT;
+            for (var j = 1; j < partsI.Count; j += 2)
+            {
+                var part = new PartT { Start = 1f / count * partsI[j - 1], End = 1f / count * partsI[j] };
+                yield return part;
+            }
+
+            int GetI(int startI, float distance)
+            {
+                comparer.Distance = distance;
+                var i = Array.BinarySearch(points, startI + 1, points.Length - (startI + 1), points[startI], comparer);
+                return i < 0 ? ~i : i;
+            }
         }
-        private static List<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
+        private static IEnumerable<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
         {
             var length = straightTrajectory.Length;
             var partCount = (int)(length / (dashLength + spaceLength));
             var startSpace = (length + spaceLength - (dashLength + spaceLength) * partCount) / 2;
-
-            var partsT = new List<PartT>(partCount);
 
             var startT = startSpace / length;
             var partT = dashLength / length;
@@ -146,10 +162,8 @@ namespace NodeMarkup.Manager
                 var tStart = startT + (partT + spaceT) * i;
                 var tEnd = tStart + spaceT;
 
-                partsT.Add(new PartT { Start = tStart, End = tEnd });
+                yield return new PartT { Start = tStart, End = tEnd };
             }
-
-            return partsT;
         }
         public static bool CalculateDashedParts(LineBorders borders, ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkupStylePart part)
         {
@@ -284,6 +298,11 @@ namespace NodeMarkup.Manager
         {
             public float Start;
             public float End;
+        }
+        private class PartsComparer : IComparer<Vector2>
+        {
+            public float Distance { get; set; }
+            public int Compare(Vector2 x, Vector2 y) => (int)Mathf.Sign(Distance - (y - x).magnitude);
         }
     }
 }

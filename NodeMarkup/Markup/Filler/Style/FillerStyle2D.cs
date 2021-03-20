@@ -128,6 +128,9 @@ namespace NodeMarkup.Manager
         protected abstract IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod);
         protected IEnumerable<StraightTrajectory> GetParts(RailLine rail, float dash, float space)
         {
+            if (dash < 0.05f || space < 0.05f)
+                yield break;
+
             var partsT = new List<StyleHelper.PartT>();
 
             var startSpace = space / 2;
