@@ -110,9 +110,9 @@ namespace NodeMarkup.Manager
             var endIndices = pointsList.Select(x => (sum += x.Length) - x.Length).ToArray();
 
             for (var j = 1; j < indices.Count; j += 2)
-                yield return new PartT { Start = GetT(counts, endIndices, indices[j - 1]), End = GetT(counts, endIndices, indices[j]) };
+                yield return new PartT { Start = GetT(indices[j - 1]), End = GetT(indices[j]) };
 
-            static float GetT(int[] counts, int[] endIndices, int index)
+            float GetT(int index)
             {
                 var i = endIndices.Length - 1;
                 while (index < endIndices[i])
