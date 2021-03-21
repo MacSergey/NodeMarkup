@@ -68,9 +68,9 @@ namespace NodeMarkup.Manager
         {
             var config = new XElement(XmlSection);
 
-            if (From != null)
+            if (From.Value != null)
                 config.Add(From.Value.ToXml());
-            if (To != null)
+            if (To.Value != null)
                 config.Add(To.Value.ToXml());
 
             return config;

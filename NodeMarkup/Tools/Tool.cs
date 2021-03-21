@@ -59,7 +59,7 @@ namespace NodeMarkup.Tools
             }
         }
 
-        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{i.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
+        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
         private static Dictionary<Style.StyleType, Style> StyleBuffer { get; } = EnumExtension.GetEnumValues<Markup.Item>().ToDictionary(i => i.ToInt().ToEnum<Style.StyleType>(), i => (Style)null);
 
         public static Ray MouseRay { get; private set; }
@@ -651,7 +651,8 @@ namespace NodeMarkup.Tools
             }
             return (Style.StyleType)(object)defaultStyle;
         }
-        private static StyleModifier GetDefaultStylesModifier(Style.StyleType style)
+        public static SavedInt GetSavedStylesModifier(Style.StyleType type) => new SavedInt($"{nameof(StylesModifier)}{type.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(type), true);
+        public static StyleModifier GetDefaultStylesModifier(Style.StyleType style)
         {
             return style switch
             {

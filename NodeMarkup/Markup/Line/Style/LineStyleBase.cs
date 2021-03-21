@@ -211,8 +211,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Pavement))]
             Pavement = StyleType.LinePavement,
 
-            [NotVisible]
-            Buffer = StyleType.LineBuffer,
+            //[NotVisible]
+            //Buffer = StyleType.LineBuffer,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
@@ -270,8 +270,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,
 
-            [NotVisible]
-            Buffer = StyleType.StopLineBuffer,
+            //[NotVisible]
+            //Buffer = StyleType.StopLineBuffer,
         }
     }
 }

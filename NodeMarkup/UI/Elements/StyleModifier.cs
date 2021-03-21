@@ -16,8 +16,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class StyleModifierPanel<StyleType> : UICustomControl
-        where StyleType : Enum
+    public abstract class StyleModifierPanel : UICustomControl
     {
         public event Action<Style.StyleType, StyleModifier> OnModifierChanged;
 
@@ -26,21 +25,11 @@ namespace NodeMarkup.UI
 
         private Dictionary<ModifierDropDown, Style.StyleType> Modifiers { get; } = new Dictionary<ModifierDropDown, Style.StyleType>();
 
-        public StyleModifierPanel()
-        {
-            Init();
-        }
-        protected virtual void Init()
-        {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>(v => true))
-                Add((Style.StyleType)(object)style);
-        }
         protected void Add(Style.StyleType style, string label = null)
         {
             var modifier = AddKeymapping((StyleModifier)NodeMarkupTool.StylesModifier[style].value, label ?? style.Description());
             Modifiers[modifier] = style;
         }
-
         public ModifierDropDown AddKeymapping(StyleModifier value, string description)
         {
             UIPanel uiPanel = component.AttachUIComponent(UITemplateManager.GetAsGameObject(keyBindingTemplate)) as UIPanel;
@@ -74,6 +63,16 @@ namespace NodeMarkup.UI
 
             OnModifierChanged?.Invoke(Modifiers[changedModifier], value);
         }
+    }
+    public abstract class StyleModifierPanel<StyleType> : StyleModifierPanel
+        where StyleType : Enum
+    {
+        public StyleModifierPanel()
+        {
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>(v => true))
+                Add((Style.StyleType)(object)style);
+        }
+        
     }
 
     public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }

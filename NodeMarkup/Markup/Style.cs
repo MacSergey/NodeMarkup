@@ -278,8 +278,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
 
-            [NotVisible]
-            LineBuffer = EmptyLine - 1,
+            //[NotVisible]
+            //LineBuffer = EmptyLine - 1,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
@@ -311,8 +311,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,
 
-            [NotVisible]
-            StopLineBuffer = Markup.Item.StopLine * 2 - 1,
+            //[NotVisible]
+            //StopLineBuffer = Markup.Item.StopLine * 2 - 1,
 
             #endregion
 
@@ -343,8 +343,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
 
-            [NotVisible]
-            FillerBuffer = Markup.Item.Filler * 2 - 1,
+            //[NotVisible]
+            //FillerBuffer = Markup.Item.Filler * 2 - 1,
 
             #endregion
 
@@ -378,8 +378,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
 
-            [NotVisible]
-            CrosswalkBuffer = Markup.Item.Crosswalk * 2 - 1,
+            //[NotVisible]
+            //CrosswalkBuffer = Markup.Item.Crosswalk * 2 - 1,
 
             #endregion
         }

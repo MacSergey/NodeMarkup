@@ -272,21 +272,19 @@ namespace NodeMarkup
             foreach (var shortcut in NodeMarkupTool.Shortcuts)
                 keymappings.AddKeymapping(shortcut);
 
-            var regularLinesPanel = (helper.AddGroup(Localize.Settings_RegularLinesModifier) as UIHelper).self as UIPanel;
-            var regularLinesModifier = regularLinesPanel.gameObject.AddComponent<RegularLineModifierPanel>();
-            regularLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+            AddModifier<RegularLineModifierPanel>(helper, Localize.Settings_RegularLinesModifier);
+            AddModifier<StopLineModifierPanel>(helper, Localize.Settings_StopLinesModifier);
+            AddModifier<CrosswalkModifierPanel>(helper, Localize.Settings_CrosswalksModifier);
+            AddModifier<FillerModifierPanel>(helper, Localize.Settings_FillersModifier);
+        }
+        private static void AddModifier<PanelType>(UIHelperBase helper, string title)
+            where PanelType : StyleModifierPanel
+        {
+            var panel = (helper.AddGroup(title) as UIHelper).self as UIPanel;
+            var modifier = panel.gameObject.AddComponent<PanelType>();
+            modifier.OnModifierChanged += ModifierChanged;
 
-            var stopLinesPanel = (helper.AddGroup(Localize.Settings_StopLinesModifier) as UIHelper).self as UIPanel;
-            var stopLinesModifier = stopLinesPanel.gameObject.AddComponent<StopLineModifierPanel>();
-            stopLinesModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
-
-            var crosswalksPanel = (helper.AddGroup(Localize.Settings_CrosswalksModifier) as UIHelper).self as UIPanel;
-            var crosswalksModifier = crosswalksPanel.gameObject.AddComponent<CrosswalkModifierPanel>();
-            crosswalksModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
-
-            var fillersPanel = (helper.AddGroup(Localize.Settings_FillersModifier) as UIHelper).self as UIPanel;
-            var fillersModifier = fillersPanel.gameObject.AddComponent<FillerModifierPanel>();
-            fillersModifier.OnModifierChanged += (Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
+            static void ModifierChanged(Style.StyleType style, StyleModifier value) => NodeMarkupTool.StylesModifier[style].value = (int)value;
         }
 
         #endregion
