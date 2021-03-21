@@ -22,87 +22,70 @@ namespace NodeMarkup.Manager
         public string DeleteMessageDescription => Localize.CrossWalkEditor_DeleteMessageDescription;
 
         public Markup Markup { get; }
-        public MarkupCrosswalkLine Line { get; }
+        public MarkupCrosswalkLine CrosswalkLine { get; }
 
         public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
         public MarkupEnterLine EnterLine { get; private set; }
 
-        MarkupRegularLine _rightBorder;
-        MarkupRegularLine _leftBorder;
-        CrosswalkStyle _style;
+        public PropertyValue<MarkupRegularLine> RightBorder { get; }
+        public PropertyValue<MarkupRegularLine> LeftBorder { get; }
+        public PropertyValue<CrosswalkStyle> Style { get; }
 
-        public MarkupRegularLine RightBorder
-        {
-            get => _rightBorder;
-            set
-            {
-                _rightBorder = value;
-                CrosswalkChanged();
-            }
-        }
-        public MarkupRegularLine LeftBorder
-        {
-            get => _leftBorder;
-            set
-            {
-                _leftBorder = value;
-                CrosswalkChanged();
-            }
-        }
-        public CrosswalkStyle Style
-        {
-            get => _style;
-            set
-            {
-                _style = value;
-                _style.OnStyleChanged = CrosswalkChanged;
-                CrosswalkChanged();
-            }
-        }
         private StraightTrajectory DefaultRightBorderTrajectory => new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
         private StraightTrajectory DefaultLeftBorderTrajectory => new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
         public ITrajectory RightBorderTrajectory { get; private set; }
         public ITrajectory LeftBorderTrajectory { get; private set; }
 
-        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, Line.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
+        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, CrosswalkLine.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
 
-        public float TotalWidth => Style.GetTotalWidth(this);
+        public float TotalWidth => Style.Value.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
         public Vector3 NormalDir => EnterLine.Start.Enter.NormalDir;
         public Vector3 CornerDir => EnterLine.Start.Enter.CornerDir;
 
-
         #endregion
+
         public MarkupCrosswalk(Markup markup, MarkupCrosswalkLine crosswalkLine, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) :
             this(markup, crosswalkLine, TemplateManager.StyleManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType))
         { }
         public MarkupCrosswalk(Markup markup, MarkupCrosswalkLine line, CrosswalkStyle style, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null)
         {
             Markup = markup;
-            Line = line;
-            Line.TrajectoryGetter = GetTrajectory;
-            _style = style;
-            _style.OnStyleChanged = CrosswalkChanged;
-            _rightBorder = rightBorder;
-            _leftBorder = leftBorder;
+            CrosswalkLine = line;
+            CrosswalkLine.TrajectoryGetter = GetTrajectory;
 
-            GetEnterLine();
-        }
-        private void GetEnterLine()
-        {
-            Line.Start.Enter.TryGetPoint(Line.Start.Num, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
-            Line.End.Enter.TryGetPoint(Line.End.Num, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);
+            RightBorder = new PropertyValue<MarkupRegularLine>("RB", CrosswalkChanged, rightBorder);
+            LeftBorder = new PropertyValue<MarkupRegularLine>("LB", CrosswalkChanged, leftBorder);
+            style.OnStyleChanged = CrosswalkChanged;
+            Style = new PropertyValue<CrosswalkStyle>(StyleChanged, style);
+
+            CrosswalkLine.Start.Enter.TryGetPoint(CrosswalkLine.Start.Num, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
+            CrosswalkLine.End.Enter.TryGetPoint(CrosswalkLine.End.Num, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);
             EnterLine = new MarkupEnterLine(Markup, startPoint, endPoint);
         }
-
+        private void StyleChanged()
+        {
+            Style.Value.OnStyleChanged = CrosswalkChanged;
+            CrosswalkChanged();
+        }
         protected void CrosswalkChanged() => Markup.Update(this, true, true);
 
         public void Update(bool onlySelfUpdate = false)
         {
-            EnterLine.Update(true);
-            if(!onlySelfUpdate)
+            EnterLine.Update(GetAlignment(EnterLine.Start, RightBorder), GetAlignment(EnterLine.End, LeftBorder), true);
+
+            if (!onlySelfUpdate)
                 Markup.Update(this);
+
+            static LineAlignment GetAlignment(MarkupPoint point, MarkupRegularLine border)
+            {
+                if (border is MarkupRegularLine line)
+                    return line.Start == point ? line.Alignment : line.Alignment.Value.Invert();
+                else
+                    return LineAlignment.Centre;
+            }
         }
+
         public void RecalculateStyleData()
         {
 #if DEBUG_RECALCULATE
@@ -111,12 +94,7 @@ namespace NodeMarkup.Manager
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
                 RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = new MarkupStyleParts(Style.Calculate(this, lod));
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-        {
-            foreach (var trajectory in BorderTrajectories)
-                trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
-        }
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = new MarkupStyleParts(Style.Value.Calculate(this, lod));
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
 
@@ -157,64 +135,65 @@ namespace NodeMarkup.Manager
             var endT = GetT(trajectory, LeftBorderTrajectory, 1);
 
             return (StraightTrajectory)trajectory.Cut(startT, endT);
+
+            static float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
+            => MarkupIntersect.CalculateSingle(trajectory, lineTrajectory) is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
         }
         public StraightTrajectory GetFullTrajectory(float offset, Vector3 normal)
         {
             var trajectory = GetOffsetTrajectory(offset);
 
-            var startT = GetT(trajectory, normal, new Vector3[] { EnterLine.Start.Position, Line.Trajectory.StartPosition }, 0, MinAggregate);
-            var endT = GetT(trajectory, normal, new Vector3[] { EnterLine.End.Position, Line.Trajectory.EndPosition }, 1, MaxAggregate);
+            var startT = GetT(trajectory, normal, new Vector3[] { EnterLine.Start.Position, CrosswalkLine.Trajectory.StartPosition }, 0, MinAggregate);
+            var endT = GetT(trajectory, normal, new Vector3[] { EnterLine.End.Position, CrosswalkLine.Trajectory.EndPosition }, 1, MaxAggregate);
 
             return (StraightTrajectory)trajectory.Cut(startT, endT);
-        }
-        private float MinAggregate(MarkupIntersect[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
-        private float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
 
-        private float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
-            => MarkupIntersect.CalculateSingle(trajectory, lineTrajectory) is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
-
-        private float GetT(StraightTrajectory trajectory, Vector3 normal, IEnumerable<Vector3> positions, float defaultT, Func<MarkupIntersect[], float> aggregate)
-        {
-            var intersects = positions.SelectMany(p => MarkupIntersect.Calculate(trajectory, new StraightTrajectory(p, p + normal, false))).ToArray();
-            return intersects.Any() ? aggregate(intersects) : defaultT;
+            static float MinAggregate(MarkupIntersect[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
+            static float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
+            static float GetT(StraightTrajectory trajectory, Vector3 normal, Vector3[] positions, float defaultT, Func<MarkupIntersect[], float> aggregate)
+            {
+                var intersects = positions.SelectMany(p => MarkupIntersect.Calculate(trajectory, new StraightTrajectory(p, p + normal, false))).ToArray();
+                return intersects.Any() ? aggregate(intersects) : defaultT;
+            }
         }
 
-
-        public bool IsBorder(MarkupLine line) => line != null && (line == RightBorder || line == LeftBorder);
+        public bool IsBorder(MarkupLine line) => line != null && (line == RightBorder.Value || line == LeftBorder.Value);
         public void RemoveBorder(MarkupLine line)
         {
-            if (line == RightBorder)
-                RightBorder = null;
+            if (line == RightBorder.Value)
+                RightBorder.Value = null;
 
-            if (line == LeftBorder)
-                LeftBorder = null;
+            if (line == LeftBorder.Value)
+                LeftBorder.Value = null;
         }
         public bool ContainsPoint(MarkupPoint point) => EnterLine.ContainsPoint(point);
 
         public Dependences GetDependences() => Markup.GetCrosswalkDependences(this);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        {
+            foreach (var trajectory in BorderTrajectories)
+                trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+        }
 
         #region XML
 
         public XElement ToXml()
         {
             var config = new XElement(XmlName);
-            config.Add(new XAttribute(MarkupLine.XmlName, Line.PointPair.Hash));
+            config.Add(new XAttribute(MarkupLine.XmlName, CrosswalkLine.PointPair.Hash));
             if (RightBorder != null)
-                config.Add(new XAttribute("RB", RightBorder.PointPair.Hash));
+                config.Add(new XAttribute("RB", RightBorder.Value.PointPair.Hash));
             if (LeftBorder != null)
-                config.Add(new XAttribute("LB", LeftBorder.PointPair.Hash));
-            config.Add(Style.ToXml());
+                config.Add(new XAttribute("LB", LeftBorder.Value.PointPair.Hash));
+            config.Add(Style.Value.ToXml());
             return config;
         }
         public void FromXml(XElement config, ObjectsMap map)
         {
-            _rightBorder = GetBorder(map.IsMirror ? "LB" : "RB");
-            _leftBorder = GetBorder(map.IsMirror ? "RB" : "LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Style<CrosswalkStyle>.FromXml(styleConfig, map, false, out CrosswalkStyle style))
-            {
-                _style = style;
-                _style.OnStyleChanged = CrosswalkChanged;
-            }
+            RightBorder.Value = GetBorder(map.IsMirror ? "LB" : "RB");
+            LeftBorder.Value = GetBorder(map.IsMirror ? "RB" : "LB");
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, out CrosswalkStyle style))
+                Style.Value = style;
 
             MarkupRegularLine GetBorder(string key)
             {
@@ -241,6 +220,6 @@ namespace NodeMarkup.Manager
 
         #endregion
 
-        public override string ToString() => Line.ToString();
+        public override string ToString() => CrosswalkLine.ToString();
     }
 }

@@ -208,7 +208,7 @@ namespace NodeMarkup.Manager
         protected PropertyValue<float> GetWidthProperty(float defaultValue) => new PropertyValue<float>("W", StyleChanged, defaultValue);
         protected PropertyValue<float> GetOffsetProperty(float defaultValue) => new PropertyValue<float>("O", StyleChanged, defaultValue);
         protected PropertyValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyValue<float>("MO", StyleChanged, defaultValue);
-        protected PropertyEnumValue<LineStyle.StyleAlignment> GetAlignmentProperty(LineStyle.StyleAlignment defaultValue) => new PropertyEnumValue<LineStyle.StyleAlignment>("A", StyleChanged, defaultValue);
+        protected PropertyEnumValue<LineAlignment> GetAlignmentProperty(LineAlignment defaultValue) => new PropertyEnumValue<LineAlignment>("A", StyleChanged, defaultValue);
         protected PropertyValue<float> GetDashLengthProperty(float defaultValue) => new PropertyValue<float>("DL", StyleChanged, defaultValue);
         protected PropertyValue<float> GetSpaceLengthProperty(float defaultValue) => new PropertyValue<float>("SL", StyleChanged, defaultValue);
         protected PropertyBoolValue GetInvertProperty(bool defaultValue) => new PropertyBoolValue("I", StyleChanged, defaultValue);

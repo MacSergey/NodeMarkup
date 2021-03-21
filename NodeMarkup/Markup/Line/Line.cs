@@ -41,7 +41,7 @@ namespace NodeMarkup.Manager
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
-        public PropertyEnumValue<StyleAlignment> Alignment { get; private set; }
+        public PropertyEnumValue<LineAlignment> Alignment { get; private set; }
 
         protected ITrajectory LineTrajectory { get; private set; }
         public ITrajectory Trajectory => LineTrajectory.Copy();
@@ -55,7 +55,7 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
             PointPair = pointPair;
-            Alignment = new PropertyEnumValue<StyleAlignment>(AlignmentChanged, StyleAlignment.Centre);
+            Alignment = new PropertyEnumValue<LineAlignment>(AlignmentChanged, LineAlignment.Centre);
 
             if (update)
                 Update(true);
@@ -135,17 +135,7 @@ namespace NodeMarkup.Manager
             }
         }
         public Dependences GetDependences() => Markup.GetLineDependences(this);
-        protected Vector3 GetPosition(MarkupPoint point)
-        {
-            if (Alignment != StyleAlignment.Centre && point.IsSplit)
-            {
-                var normal = point.Direction.Turn90(true);
-                var shift = point.SplitShift * (point == Start ^ Alignment == StyleAlignment.Left ? 1 : -1);
-                return point.Position + normal * shift;
-            }
-            else
-                return point.Position;
-        }
+
 
         public virtual XElement ToXml()
         {
@@ -282,8 +272,8 @@ namespace NodeMarkup.Manager
         {
             var trajectory = new Bezier3
             {
-                a = GetPosition(PointPair.First),
-                d = GetPosition(PointPair.Second),
+                a = PointPair.First.GetPosition(this),
+                d = PointPair.Second.GetPosition(this),
             };
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
@@ -393,7 +383,7 @@ namespace NodeMarkup.Manager
     {
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : base(markup, pointPair, lineType) { }
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(GetPosition(PointPair.First), GetPosition(PointPair.Second));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetPosition(this), PointPair.Second.GetPosition(this));
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
     {
@@ -425,10 +415,10 @@ namespace NodeMarkup.Manager
 
                 var lines = IntersectLines.ToDictionary(i => i.PointPair, i => i);
 
-                if (Crosswalk.LeftBorder is MarkupRegularLine leftBorder)
+                if (Crosswalk.LeftBorder.Value is MarkupRegularLine leftBorder)
                     lines[leftBorder.PointPair] = leftBorder;
 
-                if (Crosswalk.RightBorder is MarkupRegularLine rightBorder)
+                if (Crosswalk.RightBorder.Value is MarkupRegularLine rightBorder)
                     lines[rightBorder.PointPair] = rightBorder;
 
                 foreach (var line in lines.Values)
@@ -457,11 +447,21 @@ namespace NodeMarkup.Manager
     }
     public class MarkupEnterLine : MarkupStraightLine<LineStyle, RegularLineStyle.RegularLineType>
     {
+        protected virtual LineAlignment StartAlignment { get; set; } = LineAlignment.Centre;
+        protected virtual LineAlignment EndAlignment { get; set; } = LineAlignment.Centre;
         protected override bool Visible => false;
         public override LineType Type => throw new NotImplementedException();
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
         public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second, RegularLineStyle.RegularLineType.Dashed) { }
         protected override LineStyle GetDefaultStyle(RegularLineStyle.RegularLineType styleType) => throw new NotImplementedException();
+        public void Update(LineAlignment startAlignment, LineAlignment endAlignment, bool onlySelfUpdate = false)
+        {
+            StartAlignment = startAlignment;
+            EndAlignment = endAlignment;
+
+            Update(onlySelfUpdate);
+        }
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetPosition(StartAlignment), PointPair.Second.GetPosition(EndAlignment));
     }
 
     public struct MarkupLinePair
@@ -557,5 +557,16 @@ namespace NodeMarkup.Manager
                 new StraightTrajectory(Center, dash.Position - dirX - dirY),
             };
         }
+    }
+    public enum LineAlignment
+    {
+        [Description(nameof(Localize.StyleOption_AlignmentLeft))]
+        Left,
+
+        [Description(nameof(Localize.StyleOption_AlignmentCenter))]
+        Centre,
+
+        [Description(nameof(Localize.StyleOption_AlignmentRight))]
+        Right
     }
 }

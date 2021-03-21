@@ -303,7 +303,7 @@ namespace NodeMarkup.Manager
             if (recalculate && !UpdateProgress)
                 RecalculateStyleData(filler);
         }
-        public void Update(MarkupCrosswalk crosswalk, bool recalculate = false, bool recalcDependences = false) => Update(crosswalk.Line, recalculate, recalcDependences);
+        public void Update(MarkupCrosswalk crosswalk, bool recalculate = false, bool recalcDependences = false) => Update(crosswalk.CrosswalkLine, recalculate, recalcDependences);
 
         public void Clear()
         {
@@ -478,20 +478,20 @@ namespace NodeMarkup.Manager
 
         public void AddCrosswalk(MarkupCrosswalk crosswalk)
         {
-            CrosswalksDictionary[crosswalk.Line] = crosswalk;
+            CrosswalksDictionary[crosswalk.CrosswalkLine] = crosswalk;
             RecalculateStyleData(crosswalk);
         }
-        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveLine(crosswalk.Line);
+        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveLine(crosswalk.CrosswalkLine);
         public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
         {
-            var dependences = GetLineDependences(crosswalk.Line);
+            var dependences = GetLineDependences(crosswalk.CrosswalkLine);
             dependences.Crosswalks = 0;
             dependences.Lines = 1;
             return dependences;
         }
         public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
         {
-            var enter = crosswalk.Line.Start.Enter;
+            var enter = crosswalk.CrosswalkLine.Start.Enter;
             var lines = Lines.Where(l => l.Type == MarkupLine.LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
 
             foreach (var line in lines)
@@ -499,7 +499,7 @@ namespace NodeMarkup.Manager
                 if (Settings.NotCutBordersByCrosswalk && crosswalk.IsBorder(line))
                     continue;
 
-                var intersect = GetIntersect(line, crosswalk.Line);
+                var intersect = GetIntersect(line, crosswalk.CrosswalkLine);
                 if (!intersect.IsIntersect)
                     continue;
 
@@ -665,7 +665,7 @@ namespace NodeMarkup.Manager
                 foreach (var crosswalkConfig in config.Elements(MarkupCrosswalk.XmlName))
                 {
                     if (MarkupCrosswalk.FromXml(crosswalkConfig, this, map, out MarkupCrosswalk crosswalk))
-                        CrosswalksDictionary[crosswalk.Line] = crosswalk;
+                        CrosswalksDictionary[crosswalk.CrosswalkLine] = crosswalk;
                 }
             }
 

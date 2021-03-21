@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using LineAlignment = NodeMarkup.Manager.LineAlignment;
 
 namespace NodeMarkup.Utils
 {
@@ -56,7 +57,8 @@ namespace NodeMarkup.Utils
                 return modifier.ToString();
         }
            
-        public static LineStyle.StyleAlignment Invert(this LineStyle.StyleAlignment alignment) => (LineStyle.StyleAlignment)(1 - ((int)alignment - 1));
+        public static LineAlignment Invert(this LineAlignment alignment) => (LineAlignment)(1 - alignment.Sign());
+        public static int Sign(this LineAlignment alignment) => (int)alignment - 1;
         public static void Render(this Bounds bounds, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
             => NodeMarkupTool.RenderCircle(cameraInfo, bounds.center, color, width ?? bounds.Magnitude(), alphaBlend);
 

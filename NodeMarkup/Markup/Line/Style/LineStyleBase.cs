@@ -30,7 +30,7 @@ namespace NodeMarkup.Manager
     }
     public interface IDoubleAlignmentLine : IDoubleLine
     {
-        PropertyEnumValue<LineStyle.StyleAlignment> Alignment { get; }
+        PropertyEnumValue<LineAlignment> Alignment { get; }
     }
     public interface IAsymLine
     {
@@ -139,17 +139,17 @@ namespace NodeMarkup.Manager
             alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
             return alignmentProperty;
         }
-        public enum StyleAlignment
-        {
-            [Description(nameof(Localize.StyleOption_AlignmentLeft))]
-            Left,
+        //public enum StyleAlignment
+        //{
+        //    [Description(nameof(Localize.StyleOption_AlignmentLeft))]
+        //    Left,
 
-            [Description(nameof(Localize.StyleOption_AlignmentCenter))]
-            Centre,
+        //    [Description(nameof(Localize.StyleOption_AlignmentCenter))]
+        //    Centre,
 
-            [Description(nameof(Localize.StyleOption_AlignmentRight))]
-            Right
-        }
+        //    [Description(nameof(Localize.StyleOption_AlignmentRight))]
+        //    Right
+        //}
     }
     public abstract class LineStyle<StyleType> : LineStyle
         where StyleType : LineStyle<StyleType>

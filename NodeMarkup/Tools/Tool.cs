@@ -212,13 +212,10 @@ namespace NodeMarkup.Tools
                 Disable();
                 return;
             }
-            var uiView1 = UIView.GetAView();
-            var uiView2 = cursorInfoLabel.GetUIView();
-            var pos1 = uiView1.ScreenPointToGUI(Input.mousePosition / uiView1.inputScale) * uiView1.inputScale;
-            var pos2 = uiView2.ScreenPointToGUI(Input.mousePosition / uiView2.inputScale) * uiView2.inputScale;
 
-            MousePosition = uiView1.ScreenPointToGUI(Input.mousePosition / uiView1.inputScale);
-            MousePositionScaled = MousePosition * uiView1.inputScale;
+            var uiView = UIView.GetAView();
+            MousePosition = uiView.ScreenPointToGUI(Input.mousePosition / uiView.inputScale);
+            MousePositionScaled = MousePosition * uiView.inputScale;
             MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             MouseRayLength = Camera.main.farClipPlane;
             MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;

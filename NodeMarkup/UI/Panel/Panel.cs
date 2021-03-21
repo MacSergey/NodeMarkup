@@ -312,7 +312,7 @@ namespace NodeMarkup.UI.Panel
         public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
         public void DeleteCrosswalk(MarkupCrosswalk crosswalk)
         {
-            DeleteLine(crosswalk.Line);
+            DeleteLine(crosswalk.CrosswalkLine);
             DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
         }
 
@@ -336,7 +336,7 @@ namespace NodeMarkup.UI.Panel
         public void EditLine(MarkupLine line) => EditObject<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
-            AddLine(crosswalk.Line);
+            AddLine(crosswalk.CrosswalkLine);
             var editor = EditObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
             editor?.BorderSetup();
         }

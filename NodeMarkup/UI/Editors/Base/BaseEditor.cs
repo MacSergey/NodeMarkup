@@ -257,5 +257,10 @@ namespace NodeMarkup.UI.Editors
             PropertiesPanel.Init();
         }
         protected abstract void OnFillPropertiesPanel(ObjectType editObject);
+        protected override void OnClear()
+        {
+            base.OnClear();
+            PropertiesPanel = null;
+        }
     }
 }

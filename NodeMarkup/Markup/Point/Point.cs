@@ -22,6 +22,7 @@ namespace NodeMarkup.Manager
         public static PointType GetType(int id) => (PointType)(id >> 24 == 0 ? (int)PointType.Enter : id >> 24 << 1);
         public static string XmlName { get; } = "P";
         private static Vector3 MarkerSize => Vector3.one;
+        protected static float DefaultWidth => 1f;
 
         public static bool FromId(int id, Markup markup, ObjectsMap map, out MarkupPoint point)
         {
@@ -109,6 +110,28 @@ namespace NodeMarkup.Manager
         public override string ToString() => $"{Enter}:{Num}";
         public override int GetHashCode() => Id;
         protected void PointChanged() => Markup.Update(this, true, true);
+
+        public Vector3 GetPosition(MarkupLine line) => GetPosition(line.Start == this ? line.Alignment : line.Alignment.Value.Invert());
+        public Vector3 GetPosition(LineAlignment alignment)
+        {
+            if (IsSplit && alignment != LineAlignment.Centre)
+            {
+                var normal = Direction.Turn90(true);
+                var shift = SplitShift * alignment.Sign();
+                return Position + normal * shift;
+            }
+            else
+                return Position;
+        }
+        public Dependences GetDependences() => throw new NotSupportedException();
+        public virtual bool GetBorder(out ITrajectory line)
+        {
+            line = null;
+            return false;
+        }
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color ?? Color, width ?? DefaultWidth, alphaBlend);
+
         public XElement ToXml()
         {
             var config = new XElement(XmlSection, new XAttribute(nameof(Id), Id));
@@ -126,17 +149,6 @@ namespace NodeMarkup.Manager
             Offset.FromXml(config, 0);
             Offset.Value *= (map.IsMirror ? -1 : 1);
         }
-
-        public Dependences GetDependences() => throw new NotSupportedException();
-        public virtual bool GetBorder(out ITrajectory line)
-        {
-            line = null;
-            return false;
-        }
-
-        protected static float DefaultWidth => 1f;
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color ?? Color, width ?? DefaultWidth, alphaBlend);
 
         public enum PointType
         {

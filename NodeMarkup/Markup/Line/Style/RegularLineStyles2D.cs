@@ -44,12 +44,12 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineDoubleSolid;
 
         public PropertyValue<float> Offset { get; }
-        public PropertyEnumValue<StyleAlignment> Alignment { get; }
+        public PropertyEnumValue<LineAlignment> Alignment { get; }
 
         public DoubleSolidLineStyle(Color32 color, float width, float offset) : base(color, width)
         {
             Offset = GetOffsetProperty(offset);
-            Alignment = GetAlignmentProperty(StyleAlignment.Centre);
+            Alignment = GetAlignmentProperty(LineAlignment.Centre);
         }
 
         public override RegularLineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
@@ -66,16 +66,16 @@ namespace NodeMarkup.Manager
         {
             var firstOffset = Alignment.Value switch
             {
-                StyleAlignment.Left => 2 * Offset,
-                StyleAlignment.Centre => Offset,
-                StyleAlignment.Right => 0,
+                LineAlignment.Left => 2 * Offset,
+                LineAlignment.Centre => Offset,
+                LineAlignment.Right => 0,
                 _ => 0,
             };
             var secondOffset = Alignment.Value switch
             {
-                StyleAlignment.Left => 0,
-                StyleAlignment.Centre => -Offset,
-                StyleAlignment.Right => -2 * Offset,
+                LineAlignment.Left => 0,
+                LineAlignment.Centre => -Offset,
+                LineAlignment.Right => -2 * Offset,
                 _ => 0,
             };
 
@@ -103,7 +103,7 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map, invert);
             Offset.FromXml(config, DefaultDoubleOffset);
-            Alignment.FromXml(config, StyleAlignment.Centre);
+            Alignment.FromXml(config, LineAlignment.Centre);
             if (invert)
                 Alignment.Value = Alignment.Value.Invert();
         }
@@ -176,12 +176,12 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineDoubleDashed;
 
         public PropertyValue<float> Offset { get; }
-        public PropertyEnumValue<StyleAlignment> Alignment { get; }
+        public PropertyEnumValue<LineAlignment> Alignment { get; }
 
         public DoubleDashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
             Offset = GetOffsetProperty(offset);
-            Alignment = GetAlignmentProperty(StyleAlignment.Centre);
+            Alignment = GetAlignmentProperty(LineAlignment.Centre);
         }
 
         public override RegularLineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
@@ -198,16 +198,16 @@ namespace NodeMarkup.Manager
         {
             var firstOffset = Alignment.Value switch
             {
-                StyleAlignment.Left => 2 * Offset,
-                StyleAlignment.Centre => Offset,
-                StyleAlignment.Right => 0,
+                LineAlignment.Left => 2 * Offset,
+                LineAlignment.Centre => Offset,
+                LineAlignment.Right => 0,
                 _ => 0,
             };
             var secondOffset = Alignment.Value switch
             {
-                StyleAlignment.Left => 0,
-                StyleAlignment.Centre => -Offset,
-                StyleAlignment.Right => -2 * Offset,
+                LineAlignment.Left => 0,
+                LineAlignment.Centre => -Offset,
+                LineAlignment.Right => -2 * Offset,
                 _ => 0,
             };
 
@@ -235,7 +235,7 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map, invert);
             Offset.FromXml(config, DefaultDoubleOffset);
-            Alignment.FromXml(config, StyleAlignment.Centre);
+            Alignment.FromXml(config, LineAlignment.Centre);
             if (invert)
                 Alignment.Value = Alignment.Value.Invert();
         }
@@ -250,7 +250,7 @@ namespace NodeMarkup.Manager
         public PropertyBoolValue Invert { get; }
         public PropertyBoolValue CenterSolid { get; }
         private FakeAligmentProperty FakeAligment { get; }
-        public PropertyEnumValue<StyleAlignment> Alignment => FakeAligment;
+        public PropertyEnumValue<LineAlignment> Alignment => FakeAligment;
 
         public SolidAndDashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
@@ -259,13 +259,13 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
             Invert = GetInvertProperty(false);
             CenterSolid = GetCenterSolidProperty(false);
-            FakeAligment = new FakeAligmentProperty(string.Empty, StyleChanged, GetAlignment, SetAlignment, StyleAlignment.Centre);
+            FakeAligment = new FakeAligmentProperty(string.Empty, StyleChanged, GetAlignment, SetAlignment, LineAlignment.Centre);
         }
-        private StyleAlignment GetAlignment() => CenterSolid ? (Invert ? StyleAlignment.Right : StyleAlignment.Left) : StyleAlignment.Centre;
-        private void SetAlignment(StyleAlignment value)
+        private LineAlignment GetAlignment() => CenterSolid ? (Invert ? LineAlignment.Right : LineAlignment.Left) : LineAlignment.Centre;
+        private void SetAlignment(LineAlignment value)
         {
-            CenterSolid.Value = value != StyleAlignment.Centre;
-            Invert.Value = value == StyleAlignment.Right;
+            CenterSolid.Value = value != LineAlignment.Centre;
+            Invert.Value = value == LineAlignment.Right;
         }
 
         public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
@@ -350,14 +350,14 @@ namespace NodeMarkup.Manager
             CenterSolid.FromXml(config, false);
         }
 
-        private class FakeAligmentProperty : PropertyEnumValue<StyleAlignment>
+        private class FakeAligmentProperty : PropertyEnumValue<LineAlignment>
         {
-            Func<StyleAlignment> OnGet { get; }
-            Action<StyleAlignment> OnSet { get; }
+            Func<LineAlignment> OnGet { get; }
+            Action<LineAlignment> OnSet { get; }
 
-            public override StyleAlignment Value { get => OnGet(); set => OnSet(value); }
+            public override LineAlignment Value { get => OnGet(); set => OnSet(value); }
 
-            public FakeAligmentProperty(string label, Action onChanged, Func<StyleAlignment> onGet, Action<StyleAlignment> onSet, StyleAlignment value = default) : base(label, onChanged, value)
+            public FakeAligmentProperty(string label, Action onChanged, Func<LineAlignment> onGet, Action<LineAlignment> onSet, LineAlignment value = default) : base(label, onChanged, value)
             {
                 OnGet = onGet;
                 OnSet = onSet;

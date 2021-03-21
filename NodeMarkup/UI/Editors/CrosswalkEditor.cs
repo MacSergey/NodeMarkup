@@ -79,7 +79,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel);
-            header.Init(EditObject.Style.Type, SelectTemplate, false);
+            header.Init(EditObject.Style.Value.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
@@ -107,7 +107,7 @@ namespace NodeMarkup.UI.Editors
         }
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {
-            var point = border == BorderPosition.Right ? EditObject.Line.Start : EditObject.Line.End;
+            var point = border == BorderPosition.Right ? EditObject.CrosswalkLine.Start : EditObject.CrosswalkLine.End;
             if (point.Enter.TryGetPoint(point.Num, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
                 return enterPoint.Markup.GetPointLines(enterPoint).OfType<MarkupRegularLine>().ToArray();
             else
@@ -146,20 +146,20 @@ namespace NodeMarkup.UI.Editors
             return border;
         }
 
-        private void RightBorgerChanged(MarkupRegularLine line) => EditObject.RightBorder = line;
-        private void LeftBorgerChanged(MarkupRegularLine line) => EditObject.LeftBorder = line;
+        private void RightBorgerChanged(MarkupRegularLine line) => EditObject.RightBorder.Value = line;
+        private void LeftBorgerChanged(MarkupRegularLine line) => EditObject.LeftBorder.Value = line;
 
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
-            Style.SelectedObject = EditObject.Style.Type;
+            Style.SelectedObject = EditObject.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
         private void AddStyleProperties()
         {
-            StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
+            StyleProperties = EditObject.Style.Value.GetUIComponents(EditObject, PropertiesPanel);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
         }
@@ -177,12 +177,12 @@ namespace NodeMarkup.UI.Editors
 
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == EditObject.Style.Type)
+            if (style == EditObject.Style.Value.Type)
                 return;
 
             var newStyle = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(style);
-            EditObject.Style.CopyTo(newStyle);
-            EditObject.Style = newStyle;
+            EditObject.Style.Value.CopyTo(newStyle);
+            EditObject.Style.Value = newStyle;
 
             AfterStyleChanged();
         }
@@ -196,8 +196,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(CrosswalkStyle style)
         {
-            EditObject.Style = style.CopyStyle();
-            Style.SelectedObject = EditObject.Style.Type;
+            EditObject.Style.Value = style.CopyStyle();
+            Style.SelectedObject = EditObject.Style.Value.Type;
 
             AfterStyleChanged();
         }
@@ -216,7 +216,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
+        private void CopyStyle() => Buffer = EditObject.Style.Value.CopyStyle();
         private void PasteStyle()
         {
             if (Buffer is CrosswalkStyle style)
@@ -271,8 +271,8 @@ namespace NodeMarkup.UI.Editors
         public override int Compare(MarkupCrosswalk x, MarkupCrosswalk y)
         {
             int result;
-            if ((result = x.Line.Start.Enter.CompareTo(y.Line.Start.Enter)) == 0)
-                result = x.Line.Start.Num.CompareTo(y.Line.Start.Num);
+            if ((result = x.CrosswalkLine.Start.Enter.CompareTo(y.CrosswalkLine.Start.Enter)) == 0)
+                result = x.CrosswalkLine.Start.Num.CompareTo(y.CrosswalkLine.Start.Num);
             return result;
         }
     }
@@ -282,8 +282,8 @@ namespace NodeMarkup.UI.Editors
         {
             base.Refresh();
 
-            Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style.Color;
+            Icon.Type = Object.Style.Value.Type;
+            Icon.StyleColor = Object.Style.Value.Color;
         }
     }
 
