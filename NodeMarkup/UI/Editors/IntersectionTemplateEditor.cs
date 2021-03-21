@@ -56,7 +56,7 @@ namespace NodeMarkup.UI.Editors
 
     public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate>
     {
-        PropertyGroupPanel Preview { get; set; }
+        PreviewPanel Preview { get; set; }
 
         public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
         {
