@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -97,7 +98,7 @@ namespace NodeMarkup.Manager
             baseProperty.Init();
             baseProperty.Value = sharkTeethStyle.Base;
             baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base.Value = value;
- 
+
             return baseProperty;
         }
         protected FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent)
@@ -182,7 +183,7 @@ namespace NodeMarkup.Manager
             var components = base.GetUIComponents(editObject, parent, isTemplate);
             if (editObject is MarkupRegularLine line)
                 GetUIComponents(line, components, parent, isTemplate);
-            else if(isTemplate)
+            else if (isTemplate)
                 GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
@@ -210,6 +211,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             Pavement = StyleType.LinePavement,
+
+            [NotVisible]
+            Buffer = StyleType.LineBuffer,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
@@ -268,6 +272,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,
+
+            [NotVisible]
+            Buffer = StyleType.StopLineBuffer,
         }
     }
 }

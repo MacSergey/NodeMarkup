@@ -64,5 +64,14 @@ namespace NodeMarkup.Utils
 
         public static LinkedListNode<T> GetPrevious<T>(this LinkedListNode<T> item) => item.Previous ?? item.List.Last;
         public static LinkedListNode<T> GetNext<T>(this LinkedListNode<T> item) => item.Next ?? item.List.First;
+
+        public static Style.StyleType GetGroup(this Style.StyleType type) => type & Style.StyleType.GroupMask;
+        public static Style.StyleType GetItem(this Style.StyleType type) => type & Style.StyleType.ItemMask;
+        public static T ToEnum<T,Q>(this Q item)
+            where T : Enum
+            where Q : Enum
+        {
+            return item.ToInt().ToEnum<T>();
+        }
     }
 }

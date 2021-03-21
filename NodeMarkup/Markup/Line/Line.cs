@@ -119,7 +119,7 @@ namespace NodeMarkup.Manager
 
         public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
         {
-            switch (style & Style.StyleType.GroupMask)
+            switch (style.GetGroup())
             {
                 case Style.StyleType.StopLine:
                     return new MarkupStopLine(markup, pointPair, (StopLineStyle.StopLineType)(int)style);

@@ -23,17 +23,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public FillerContour Contour { get; }
 
-        FillerStyle _style;
-        public FillerStyle Style
-        {
-            get => _style;
-            set
-            {
-                _style = value;
-                _style.OnStyleChanged = OnStyleChanged;
-                OnStyleChanged();
-            }
-        }
+        public PropertyValue<FillerStyle> Style { get; }
         public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
         public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine line && line.IsEnterLine);
 
@@ -42,12 +32,18 @@ namespace NodeMarkup.Manager
         public MarkupFiller(FillerContour contour, FillerStyle style)
         {
             Contour = contour;
-            Style = style;
             Markup = Contour.Markup;
+            style.OnStyleChanged = FillerChanged;
+            Style = new PropertyValue<FillerStyle>(StyleChanged, style);
         }
         public MarkupFiller(FillerContour contour, Style.StyleType fillerType) : this(contour, TemplateManager.StyleManager.GetDefault<FillerStyle>(fillerType)) { }
 
-        private void OnStyleChanged() => Markup?.Update(this, true);
+        private void StyleChanged()
+        {
+            Style.Value.OnStyleChanged = FillerChanged;
+            FillerChanged();
+        }
+        private void FillerChanged() => Markup?.Update(this, true);
         public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => Contour.Vertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
@@ -60,13 +56,13 @@ namespace NodeMarkup.Manager
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
                 RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = Style.Calculate(this, lod);
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = Style.Value.Calculate(this, lod);
 
         public Dependences GetDependences() => new Dependences();
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlSection, Style.ToXml());
+            var config = new XElement(XmlSection, Style.Value.ToXml());
             foreach (var supportPoint in Contour.Vertices)
             {
                 config.Add(supportPoint.ToXml());
@@ -93,7 +89,7 @@ namespace NodeMarkup.Manager
                     return false;
                 }
             }
-            if(contour.First == null)
+            if (contour.First == null)
             {
                 filler = default;
                 return false;
@@ -108,7 +104,7 @@ namespace NodeMarkup.Manager
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
         {
             Contour.Render(cameraInfo, color, width, alphaBlend);
-            Style.Render(this, cameraInfo, color, width, alphaBlend, cut);
+            Style.Value.Render(this, cameraInfo, color, width, alphaBlend, cut);
         }
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();

@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -146,6 +148,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             ChessBoard = StyleType.CrosswalkChessBoard,
+
+            [NotVisible]
+            Buffer = StyleType.CrosswalkBuffer,
         }
     }
 }

@@ -60,6 +60,7 @@ namespace NodeMarkup.Tools
         }
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{i.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
+        private static Dictionary<Style.StyleType, Style> StyleBuffer { get; } = EnumExtension.GetEnumValues<Markup.Item>().ToDictionary(i => i.ToInt().ToEnum<Style.StyleType>(), i => (Style)null);
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -640,7 +641,7 @@ namespace NodeMarkup.Tools
         public static Style.StyleType GetStyle<StyleType>(StyleType defaultStyle)
            where StyleType : Enum
         {
-            var modifier = EnumExtension.GetEnumValues<StyleModifier>().FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.Control == InputExtension.CtrlIsPressed && ik.Shift == InputExtension.ShiftIsPressed && ik.Alt == InputExtension.AltIsPressed);
+            var modifier = EnumExtension.GetEnumValues<StyleModifier>().FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.IsPressed);
 
             foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
             {
@@ -756,6 +757,22 @@ namespace NodeMarkup.Tools
             }
 
             return true;
+        }
+
+        public static void ToStyleBuffer(Style.StyleType type, Style style) => StyleBuffer[type] = style.Copy();
+        public static bool FromStyleBuffer<T>(Style.StyleType type, out T style)
+            where T : Style
+        {
+            if (StyleBuffer[type] is T tStyle)
+            {
+                style = (T)tStyle.Copy();
+                return true;
+            }
+            else
+            {
+                style = null;
+                return false;
+            }
         }
     }
     public class ThreadingExtension : ThreadingExtensionBase

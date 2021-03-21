@@ -95,9 +95,9 @@ namespace NodeMarkup.UI.Editors
         public override int Compare(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
         public override int Compare(Style.StyleType x, Style.StyleType y) => x.CompareTo(y);
 
-        protected override string GroupName(Style.StyleType group) => Settings.GroupTemplatesType == 0 ? group.Description() : $"{(group & Style.StyleType.GroupMask).Description()}\n{group.Description()}";
+        protected override string GroupName(Style.StyleType group) => Settings.GroupTemplatesType == 0 ? group.Description() : $"{group.GetGroup().Description()}\n{group.Description()}";
 
-        protected override Style.StyleType SelectGroup(StyleTemplate editObject) => Settings.GroupTemplatesType == 0 ? editObject.Style.Type & Style.StyleType.GroupMask : editObject.Style.Type;
+        protected override Style.StyleType SelectGroup(StyleTemplate editObject) => Settings.GroupTemplatesType == 0 ? editObject.Style.Type.GetGroup() : editObject.Style.Type;
     }
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {

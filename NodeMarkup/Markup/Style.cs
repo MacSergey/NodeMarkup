@@ -76,12 +76,12 @@ namespace NodeMarkup.Manager
 
         public static T GetDefault<T>(StyleType type) where T : Style
         {
-            return (type & StyleType.GroupMask) switch
+            return type.GetGroup() switch
             {
-                StyleType.RegularLine when RegularLineStyle.GetDefault((RegularLineStyle.RegularLineType)(int)type) is T tStyle => tStyle,
-                StyleType.StopLine when StopLineStyle.GetDefault((StopLineStyle.StopLineType)(int)type) is T tStyle => tStyle,
-                StyleType.Filler when FillerStyle.GetDefault((FillerStyle.FillerType)(int)type) is T tStyle => tStyle,
-                StyleType.Crosswalk when CrosswalkStyle.GetDefault((CrosswalkStyle.CrosswalkType)(int)type) is T tStyle => tStyle,
+                StyleType.RegularLine when RegularLineStyle.GetDefault(type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) is T tStyle => tStyle,
+                StyleType.StopLine when StopLineStyle.GetDefault(type.ToEnum<StopLineStyle.StopLineType, StyleType>()) is T tStyle => tStyle,
+                StyleType.Filler when FillerStyle.GetDefault(type.ToEnum<FillerStyle.FillerType, StyleType>()) is T tStyle => tStyle,
+                StyleType.Crosswalk when CrosswalkStyle.GetDefault(type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) is T tStyle => tStyle,
                 _ => null,
             };
         }
@@ -242,6 +242,7 @@ namespace NodeMarkup.Manager
             [NotItem]
             GroupMask = ~ItemMask,
 
+            #region REGULAR
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
@@ -271,10 +272,16 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
 
+            [NotVisible]
+            LineBuffer = EmptyLine - 1,
+
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
-            EmptyLine = Markup.Item.StopLine - 1,
+            EmptyLine = Markup.Item.RegularLine * 2 - 1,
 
+            #endregion
+
+            #region STOP
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
@@ -298,6 +305,12 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,
 
+            [NotVisible]
+            StopLineBuffer = Markup.Item.StopLine * 2 - 1,
+
+            #endregion
+
+            #region FILLER
 
             [NotItem]
             [Description(nameof(Localize.FillerStyle_Group))]
@@ -324,6 +337,12 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
 
+            [NotVisible]
+            FillerBuffer = Markup.Item.Filler * 2 - 1,
+
+            #endregion
+
+            #region CROSSWALK
 
             [NotItem]
             [Description(nameof(Localize.CrosswalkStyle_Group))]
@@ -352,6 +371,11 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
+
+            [NotVisible]
+            CrosswalkBuffer = Markup.Item.Crosswalk * 2 - 1,
+
+            #endregion
         }
     }
     public abstract class Style<StyleType> : Style

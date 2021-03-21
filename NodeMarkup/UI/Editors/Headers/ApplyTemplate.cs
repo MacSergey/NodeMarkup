@@ -19,7 +19,7 @@ namespace NodeMarkup.UI.Editors
         private Style.StyleType StyleGroup { get; set; }
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate)
         {
-            StyleGroup = styleGroup & Style.StyleType.GroupMask;
+            StyleGroup = styleGroup.GetGroup();
             OnSelect = onSelectTemplate;
         }
         public void DeInit() => OnSelect = null;

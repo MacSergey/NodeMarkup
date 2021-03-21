@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,6 @@ namespace NodeMarkup.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnHover;
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
 
-        private static LineStyle Buffer { get; set; }
         private LinesEditor Editor { get; set; }
         private MarkupLine Line => Editor.EditObject;
         public MarkupLineRawRule Rule { get; private set; }
@@ -178,9 +178,6 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(LineStyle style)
         {
-            if ((Rule.Style.Value.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
-                return;
-
             Rule.Style.Value = style.CopyStyle();
             Style.SelectedObject = Rule.Style.Value.Type;
 
@@ -191,10 +188,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = Rule.Style.Value.CopyStyle();
+        private void CopyStyle() => NodeMarkupTool.ToStyleBuffer(Rule.Style.Value.Type.GetGroup(), Rule.Style.Value);
         private void PasteStyle()
         {
-            if (Buffer is LineStyle style)
+            if (NodeMarkupTool.FromStyleBuffer<LineStyle>(Rule.Style.Value.Type.GetGroup(), out var style))
                 ApplyStyle(style);
         }
         private void FromChanged(ILinePartEdge from) => Rule.From = from;

@@ -14,8 +14,6 @@ namespace NodeMarkup.UI.Editors
     {
         #region PROPERTIES
 
-        private static FillerStyle Buffer { get; set; }
-
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, NodeMarkupTool.AddFillerShortcut.ToString());
         public override Type SupportType { get; } = typeof(ISupportFillers);
@@ -70,12 +68,12 @@ namespace NodeMarkup.UI.Editors
             Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel);
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
-            Style.SelectedObject = EditObject.Style.Type;
+            Style.SelectedObject = EditObject.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
         private void AddStyleProperties()
         {
-            StyleProperties = EditObject.Style.GetUIComponents(EditObject, PropertiesPanel);
+            StyleProperties = EditObject.Style.Value.GetUIComponents(EditObject, PropertiesPanel);
 
             foreach (var property in StyleProperties)
             {
@@ -103,12 +101,12 @@ namespace NodeMarkup.UI.Editors
 
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == EditObject.Style.Type)
+            if (style == EditObject.Style.Value.Type)
                 return;
 
             var newStyle = TemplateManager.StyleManager.GetDefault<FillerStyle>(style);
-            EditObject.Style.CopyTo(newStyle);
-            EditObject.Style = newStyle;
+            EditObject.Style.Value.CopyTo(newStyle);
+            EditObject.Style.Value = newStyle;
 
             AfterStyleChanged();
         }
@@ -123,14 +121,8 @@ namespace NodeMarkup.UI.Editors
 
         private void ApplyStyle(FillerStyle style)
         {
-            var newStyle = style.CopyStyle();
-
-            newStyle.MedianOffset.Value = EditObject.Style.MedianOffset;
-            if (newStyle is IRotateFiller newSimple && EditObject.Style is IRotateFiller oldSimple)
-                newSimple.Angle.Value = oldSimple.Angle;
-
-            EditObject.Style = newStyle;
-            Style.SelectedObject = EditObject.Style.Type;
+            EditObject.Style.Value = style.CopyStyle();
+            Style.SelectedObject = EditObject.Style.Value.Type;
 
             AfterStyleChanged();
         }
@@ -149,10 +141,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.CopyStyle();
+        private void CopyStyle() => NodeMarkupTool.ToStyleBuffer(Manager.Style.StyleType.Filler, EditObject.Style.Value);
         private void PasteStyle()
         {
-            if (Buffer is FillerStyle style)
+            if (NodeMarkupTool.FromStyleBuffer<FillerStyle>(Manager.Style.StyleType.Filler, out var style))
                 ApplyStyle(style);
         }
 
@@ -200,8 +192,8 @@ namespace NodeMarkup.UI.Editors
         {
             base.Refresh();
 
-            Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style.Color;
+            Icon.Type = Object.Style.Value.Type;
+            Icon.StyleColor = Object.Style.Value.Color;
         }
     }
 

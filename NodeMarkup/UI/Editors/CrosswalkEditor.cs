@@ -16,8 +16,6 @@ namespace NodeMarkup.UI.Editors
     {
         #region PROPERTIES
 
-        private static CrosswalkStyle Buffer { get; set; }
-
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => NodeMarkup.Localize.CrosswalkEditor_EmptyMessage;
         public override Type SupportType { get; } = typeof(ISupportCrosswalks);
@@ -217,10 +215,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = EditObject.Style.Value.CopyStyle();
+        private void CopyStyle() => NodeMarkupTool.ToStyleBuffer(Manager.Style.StyleType.Crosswalk, EditObject.Style.Value);
         private void PasteStyle()
         {
-            if (Buffer is CrosswalkStyle style)
+            if (NodeMarkupTool.FromStyleBuffer<CrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
                 ApplyStyle(style);
         }
         private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);

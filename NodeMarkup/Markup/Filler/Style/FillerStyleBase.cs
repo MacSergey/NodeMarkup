@@ -3,6 +3,7 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utils;
@@ -214,6 +215,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Grass))]
             Grass = StyleType.FillerGrass,
+
+            [NotVisible]
+            Buffer = StyleType.FillerBuffer,
         }
     }
 }

@@ -40,6 +40,7 @@ namespace NodeMarkup.Manager
 
         public MarkupLineRawRule(MarkupLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
         {
+            style.OnStyleChanged = RuleChanged;
             Style = new PropertyValue<LineStyle>(StyleChanged, style);
         }
         private void StyleChanged()
