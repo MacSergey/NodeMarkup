@@ -23,7 +23,7 @@ namespace NodeMarkup.Manager
     }
     public interface ISupport { }
     public interface ISupport<Type> where Type : ISupport { }
-    public interface ISupportPoints : ISupport<MarkupPoint> { }
+    public interface ISupportPoints : ISupport<MarkupEnterPoint> { }
     public interface ISupportEnters : ISupport<Enter> { }
     public interface ISupportLines : ISupport<MarkupLine> { }
     public interface ISupportFillers : ISupport<MarkupFiller> { }
@@ -317,7 +317,7 @@ namespace NodeMarkup.Manager
         public void ResetOffsets()
         {
             foreach (var enter in Enters)
-                enter.ResetOffsets();
+                enter.ResetPoints();
         }
 
         #endregion

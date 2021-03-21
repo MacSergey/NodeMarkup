@@ -65,6 +65,7 @@ namespace NodeMarkup.Tools
         public static float MouseRayLength { get; private set; }
         public static bool MouseRayValid { get; private set; }
         public static Vector3 MousePosition { get; private set; }
+        public static Vector3 MousePositionScaled { get; private set; }
         public static Vector3 MouseWorldPosition { get; private set; }
         public static Vector3 CameraDirection { get; private set; }
 
@@ -78,7 +79,7 @@ namespace NodeMarkup.Tools
 
         public static RenderManager RenderManager => Singleton<RenderManager>.instance;
 
-        private NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
+        public NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         public IntersectionTemplate MarkupBuffer { get; private set; }
 
@@ -211,9 +212,14 @@ namespace NodeMarkup.Tools
                 Disable();
                 return;
             }
+            var uiView1 = UIView.GetAView();
+            var uiView2 = cursorInfoLabel.GetUIView();
+            var pos1 = uiView1.ScreenPointToGUI(Input.mousePosition / uiView1.inputScale) * uiView1.inputScale;
+            var pos2 = uiView2.ScreenPointToGUI(Input.mousePosition / uiView2.inputScale) * uiView2.inputScale;
 
-            MousePosition = Input.mousePosition;
-            MouseRay = Camera.main.ScreenPointToRay(MousePosition);
+            MousePosition = uiView1.ScreenPointToGUI(Input.mousePosition / uiView1.inputScale);
+            MousePositionScaled = MousePosition * uiView1.inputScale;
+            MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             MouseRayLength = Camera.main.farClipPlane;
             MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
             RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
@@ -229,23 +235,22 @@ namespace NodeMarkup.Tools
             base.OnToolUpdate();
         }
 
+        #endregion
+
         #region INFO
 
         private void Info()
         {
-            var position = GetInfoPosition();
-
             var isModalShown = UIView.HasModalInput();
             var isToolTipEnable = Settings.ShowToolTip || Mode.Type == ToolModeType.Select;
-            var isPanelHover = Panel.isVisible && new Rect(Panel.relativePosition, Panel.size).Contains(position);
             var isHasText = Mode.GetToolInfo() is string info && !string.IsNullOrEmpty(info);
 
-            if (!isModalShown && isToolTipEnable && !isPanelHover && isHasText)
-                ShowToolInfo(Mode.GetToolInfo(), position);
+            if (!isModalShown && isToolTipEnable && !Panel.IsHover && isHasText)
+                ShowToolInfo(Mode.GetToolInfo());
             else
                 cursorInfoLabel.isVisible = false;
         }
-        private void ShowToolInfo(string text, Vector3 relativePosition)
+        private void ShowToolInfo(string text)
         {
             if (cursorInfoLabel == null)
                 return;
@@ -255,7 +260,7 @@ namespace NodeMarkup.Tools
 
             UIView uIView = cursorInfoLabel.GetUIView();
 
-            relativePosition += new Vector3(25, 25);
+            var relativePosition = MousePosition + new Vector3(25, 25);
 
             var screenSize = fullscreenContainer?.size ?? uIView.GetScreenResolution();
             relativePosition.x = MathPos(relativePosition.x, cursorInfoLabel.width, screenSize.x);
@@ -265,15 +270,6 @@ namespace NodeMarkup.Tools
 
             static float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
         }
-        private Vector3 GetInfoPosition()
-        {
-            var uiView = cursorInfoLabel.GetUIView();
-            var mouse = uiView.ScreenPointToGUI(MousePosition / uiView.inputScale);
-
-            return mouse;
-        }
-
-        #endregion
 
         #endregion
 
@@ -354,7 +350,8 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
-        public void DeleteItem(IDeletable item, Action onDelete)
+        public void DeleteItem<T>(T item, Action<T> onDelete)
+            where T : IDeletable
         {
             if (Settings.DeleteWarnings)
             {
@@ -371,7 +368,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            onDelete();
+            onDelete(item);
 
             void ShowModal(string additional)
             {
@@ -380,7 +377,7 @@ namespace NodeMarkup.Tools
                 messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{NodeMarkupMessageBox.CantUndone}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
                     {
-                        onDelete();
+                        onDelete(item);
                         return true;
                     };
             }

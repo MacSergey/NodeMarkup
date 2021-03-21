@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.LineStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -40,6 +41,7 @@ namespace NodeMarkup.Manager
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
+        public PropertyEnumValue<StyleAlignment> Alignment { get; private set; }
 
         protected ITrajectory LineTrajectory { get; private set; }
         public ITrajectory Trajectory => LineTrajectory.Copy();
@@ -53,12 +55,13 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
             PointPair = pointPair;
+            Alignment = new PropertyEnumValue<StyleAlignment>(AlignmentChanged, StyleAlignment.Centre);
 
             if (update)
                 Update(true);
         }
-        protected MarkupLine(NodeMarkup markup, MarkupPoint first, MarkupPoint second, bool update = true) : this(markup, new MarkupPointPair(first, second), update) { }
         protected virtual void RuleChanged() => Markup.Update(this, true);
+        private void AlignmentChanged() => Markup.Update(this, true, true);
 
         public void Update(bool onlySelfUpdate = false)
         {
@@ -132,6 +135,17 @@ namespace NodeMarkup.Manager
             }
         }
         public Dependences GetDependences() => Markup.GetLineDependences(this);
+        protected Vector3 GetPosition(MarkupPoint point)
+        {
+            if (Alignment != StyleAlignment.Centre && point.IsSplit)
+            {
+                var normal = point.Direction.Turn90(true);
+                var shift = point.SplitShift * (point == Start ^ Alignment == StyleAlignment.Left ? 1 : -1);
+                return point.Position + normal * shift;
+            }
+            else
+                return point.Position;
+        }
 
         public virtual XElement ToXml()
         {
@@ -256,27 +270,20 @@ namespace NodeMarkup.Manager
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) 
-        {
-            RecalculateStyleData();
-        }
-        protected MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) 
-        {
-            RecalculateStyleData();
-        }
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) :
-            base(markup, pointPair)
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : this(markup, pointPair)
         {
             var lineStyle = TemplateManager.StyleManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
             AddRule(lineStyle, false, false);
             RecalculateStyleData();
         }
+
         protected override ITrajectory CalculateTrajectory()
         {
             var trajectory = new Bezier3
             {
-                a = PointPair.First.Position,
-                d = PointPair.Second.Position,
+                a = GetPosition(PointPair.First),
+                d = GetPosition(PointPair.Second),
             };
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
@@ -386,8 +393,7 @@ namespace NodeMarkup.Manager
     {
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : base(markup, pointPair, lineType) { }
-
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(GetPosition(PointPair.First), GetPosition(PointPair.Second));
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
     {

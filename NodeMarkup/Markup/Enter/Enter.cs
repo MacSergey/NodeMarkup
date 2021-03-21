@@ -179,10 +179,10 @@ namespace NodeMarkup.Manager
                 point.Update();
         }
 
-        public void ResetOffsets()
+        public void ResetPoints()
         {
             foreach (var point in Points)
-                point.Offset = 0;
+                point.Reset();
         }
         public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)

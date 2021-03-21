@@ -45,7 +45,7 @@ namespace NodeMarkup.Tools
                 if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = true;
             }
-            else if (InputExtension.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
+            else if (InputExtension.OnlyShiftIsPressed && !Tool.Panel.IsHover && Markup is ISupportCrosswalks)
                 Tool.SetMode(ToolModeType.MakeCrosswalk);
         }
 
@@ -66,11 +66,7 @@ namespace NodeMarkup.Tools
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
-                    Tool.DeleteItem(line, () =>
-                    {
-                        Tool.Markup.RemoveLine(line);
-                        Panel.DeleteLine(line);
-                    });
+                    Tool.DeleteItem(line, OnDelete);
                 else
                 {
                     var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
@@ -81,6 +77,11 @@ namespace NodeMarkup.Tools
                 SelectPoint = null;
                 SetTarget();
             }
+        }
+        private void OnDelete(MarkupLine line)
+        {
+            Tool.Markup.RemoveLine(line);
+            Panel.DeleteLine(line);
         }
         protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
         {

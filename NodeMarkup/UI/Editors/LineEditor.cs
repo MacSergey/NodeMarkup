@@ -33,12 +33,14 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
         public override Type SupportType { get; } = typeof(ISupportLines);
 
+        private PropertyGroupPanel LineProperties { get; set; }
         private AddRuleButton AddButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkupRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
+        public bool IsSplit => SupportRules && EditObject.PointPair.IsSplit;
 
         private RuleEdgeSelectPropertyPanel HoverPartEdgePanel { get; set; }
         private RulePanel HoverRulePanel { get; set; }
@@ -61,6 +63,8 @@ namespace NodeMarkup.UI.Editors
         {
             ContentPanel.StopLayout();
             GetRuleEdges(editObject);
+
+            AddLineProperties(EditObject);
             AddRulePanels(editObject);
             AddAddButton();
             ContentPanel.StartLayout();
@@ -69,8 +73,9 @@ namespace NodeMarkup.UI.Editors
         {
             RefreshSelectedItem();
             GetRuleEdges(editObject);
+            SetLinePropertiesVisible();
             RefreshRulePanels();
-            SetAddButton();
+            SetAddButtonVisible();
         }
         protected override void OnObjectDelete(MarkupLine line)
         {
@@ -81,11 +86,30 @@ namespace NodeMarkup.UI.Editors
         {
             base.OnClear();
             HoverRulePanel = null;
+            LineProperties = null;
+            AddButton = null;
         }
         private void GetRuleEdges(MarkupLine editObject)
         {
             SupportPoints.Clear();
             SupportPoints.AddRange(editObject.RulesEdges);
+        }
+        private void AddLineProperties(MarkupLine editObject)
+        {
+
+            LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            LineProperties.Init();
+
+            if (editObject is MarkupRegularLine line)
+            {
+                var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties);
+                alignmentProperty.Text = "Line alignment";
+                alignmentProperty.Init();
+                alignmentProperty.SelectedObject = line.Alignment;
+                alignmentProperty.OnSelectObjectChanged += (value) => line.Alignment.Value = value;
+            }
+
+            SetLinePropertiesVisible();
         }
         private void AddRulePanels(MarkupLine editObject)
         {
@@ -114,9 +138,10 @@ namespace NodeMarkup.UI.Editors
             AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
             AddButton.Init();
             AddButton.OnButtonClick += AddRule;
-            SetAddButton();
+            SetAddButtonVisible();
         }
-        private void SetAddButton()
+        private void SetLinePropertiesVisible() => LineProperties.isVisible = IsSplit;
+        private void SetAddButtonVisible()
         {
             AddButton.zOrder = -1;
             AddButton.isVisible = AddRuleAvailable;
@@ -129,7 +154,7 @@ namespace NodeMarkup.UI.Editors
 
             var newRule = regularLine.AddRule(CanDivide);
             var rulePanel = AddRulePanel(newRule);
-            SetAddButton();
+            SetAddButtonVisible();
 
             ContentPanel.Content.ScrollToBottom();
 

@@ -47,9 +47,9 @@ namespace NodeMarkup.UI.Panel
 
         private float Width => 550f;
 
-        protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         public Markup Markup { get; private set; }
         private bool NeedUpdateOnVisible { get; set; }
+        public bool IsHover => isVisible && new Rect(relativePosition, size).Contains(NodeMarkupTool.MousePosition);
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
@@ -332,7 +332,7 @@ namespace NodeMarkup.UI.Panel
             editor?.Edit(item);
             return editor;
         }
-        public void EditPoint(MarkupPoint point) => EditObject<PointsEditor, MarkupPoint>(point);
+        public void EditPoint(MarkupEnterPoint point) => EditObject<PointsEditor, MarkupEnterPoint>(point);
         public void EditLine(MarkupLine line) => EditObject<LinesEditor, MarkupLine>(line);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {

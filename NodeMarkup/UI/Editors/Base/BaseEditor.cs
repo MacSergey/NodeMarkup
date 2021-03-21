@@ -203,10 +203,7 @@ namespace NodeMarkup.UI.Editors
             if (editObject != null)
                 OnObjectSelect(editObject);
         }
-        private void OnItemDelete(ObjectType editObject)
-        {
-            Tool.DeleteItem(editObject, () => OnObjectDelete(editObject));
-        }
+        private void OnItemDelete(ObjectType editObject) => Tool.DeleteItem(editObject, OnObjectDelete);
 
         protected virtual void OnObjectSelect(ObjectType editObject) { }
         protected virtual void OnObjectUpdate(ObjectType editObject) { }

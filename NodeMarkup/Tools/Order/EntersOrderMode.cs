@@ -103,7 +103,7 @@ namespace NodeMarkup.Tools
         {
             if (!IsSelectedSource)
             {
-                var mouse = GetMouse();
+                var mouse = NodeMarkupTool.MousePositionScaled;
 
                 if (TurnLeftButton.CheckHover(mouse))
                     return Localize.Tool_InfoTurnСounterClockwise;
@@ -130,7 +130,7 @@ namespace NodeMarkup.Tools
                 Tool.SetMode(ToolModeType.PointsOrder);
             else
             {
-                var mouse = GetMouse();
+                var mouse = NodeMarkupTool.MousePositionScaled;
 
                 TurnLeftButton.CheckClick(mouse);
                 FlipButton.CheckClick(mouse);
@@ -200,11 +200,6 @@ namespace NodeMarkup.Tools
         protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo)
             => NodeMarkupTool.RenderCircle(cameraInfo, Centre, width: Radius * 2);
 
-        private Vector2 GetMouse()
-        {
-            var uiView = UIView.GetAView();
-            return uiView.ScreenPointToGUI(NodeMarkupTool.MousePosition / uiView.inputScale) * uiView.inputScale;
-        }
         protected override Target<SourceEnter>[] GetAvailableTargets(SourceEnter source)
         {
             var borders = new EntersBorders(this, source);
