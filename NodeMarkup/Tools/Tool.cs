@@ -59,7 +59,7 @@ namespace NodeMarkup.Tools
             }
         }
 
-        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>().ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{(int)(object)i}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
+        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => new SavedInt($"{nameof(StylesModifier)}{i.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(i), true));
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -430,6 +430,9 @@ namespace NodeMarkup.Tools
             Mod.Logger.Debug($"Create edge lines");
 
             var lines = Markup.Enters.Select(e => Markup.AddLine(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
+            foreach (var line in lines)
+                Panel.AddLine(line);
+
             Panel.EditLine(lines.Last());
         }
         private void SaveAsIntersectionTemplate()
@@ -639,7 +642,7 @@ namespace NodeMarkup.Tools
         {
             var modifier = EnumExtension.GetEnumValues<StyleModifier>().FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.Control == InputExtension.CtrlIsPressed && ik.Shift == InputExtension.ShiftIsPressed && ik.Alt == InputExtension.AltIsPressed);
 
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
             {
                 var general = (Style.StyleType)(object)style;
                 if (StylesModifier.TryGetValue(general, out SavedInt saved) && (StyleModifier)saved.value == modifier)
@@ -670,7 +673,7 @@ namespace NodeMarkup.Tools
         public static IEnumerable<string> GetStylesModifier<StyleType>()
             where StyleType : Enum
         {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
             {
                 var general = (Style.StyleType)(object)style;
                 var modifier = (StyleModifier)StylesModifier[general].value;

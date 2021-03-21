@@ -292,7 +292,7 @@ namespace NodeMarkup.UI.Panel
                 CurrentEditor?.RefreshEditor();
             }
         }
-        private void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
+        public void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
 
         #endregion
 
@@ -310,11 +310,7 @@ namespace NodeMarkup.UI.Panel
         }
 
         public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
-        public void DeleteCrosswalk(MarkupCrosswalk crosswalk)
-        {
-            DeleteLine(crosswalk.CrosswalkLine);
-            DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
-        }
+        public void DeleteCrosswalk(MarkupCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
 
         #endregion
 

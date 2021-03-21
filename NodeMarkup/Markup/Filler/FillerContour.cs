@@ -153,9 +153,9 @@ namespace NodeMarkup.Manager
 
             foreach (var linePart in LineParts)
             {
-                if (linePart.From is EnterSupportPoint fromVertex && fromVertex.Point.Enter == vertex.Enter)
+                if (linePart.From.Value is EnterSupportPoint fromVertex && fromVertex.Point.Enter == vertex.Enter)
                     Set(fromVertex.Point.Num);
-                if (linePart.To is EnterSupportPoint toVertex && toVertex.Point.Enter == vertex.Enter)
+                if (linePart.To.Value is EnterSupportPoint toVertex && toVertex.Point.Enter == vertex.Enter)
                     Set(toVertex.Point.Num);
             }
 

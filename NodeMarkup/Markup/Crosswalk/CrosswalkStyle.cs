@@ -208,20 +208,20 @@ namespace NodeMarkup.Manager
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
         protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
 
-        public ZebraCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel) : base(color, width, offsetBefore, offsetAfter)
+        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel) : base(color, width, offsetBefore, offsetAfter)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
             Parallel = GetParallelProperty(parallel);
-            UseSecondColor = GetUseSecondColorProperty(false);
-            SecondColor = GetSecondColorProperty(color);
+            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel);
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
 
-            if( target is ZebraCrosswalkStyle zebraTarget)
+            if (target is ZebraCrosswalkStyle zebraTarget)
             {
                 zebraTarget.UseSecondColor.Value = UseSecondColor;
                 zebraTarget.SecondColor.Value = SecondColor;
@@ -327,13 +327,13 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> Offset { get; }
 
-        public DoubleZebraCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel, float offset) :
-            base(color, width, offsetBefore, offsetAfter, dashLength, spaceLength, parallel)
+        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel, float offset) :
+            base(color, secondColor, useSecondColor, width, offsetBefore, offsetAfter, dashLength, spaceLength, parallel)
         {
             Offset = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
-        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
+        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);

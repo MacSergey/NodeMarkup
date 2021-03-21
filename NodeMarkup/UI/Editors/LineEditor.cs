@@ -81,6 +81,8 @@ namespace NodeMarkup.UI.Editors
         {
             Markup.RemoveLine(line);
             base.OnObjectDelete(line);
+            if (line is MarkupCrosswalkLine crosswalkLine)
+                Panel.DeleteCrosswalk(crosswalkLine.Crosswalk);
         }
         protected override void OnClear()
         {
@@ -343,8 +345,8 @@ namespace NodeMarkup.UI.Editors
             Icon.Count = rules.Length;
             if (rules.Length == 1)
             {
-                Icon.Type = rules[0].Style.Type;
-                Icon.StyleColor = rules[0].Style.Color;
+                Icon.Type = rules[0].Style.Value.Type;
+                Icon.StyleColor = rules[0].Style.Value.Color;
             }
         }
     }

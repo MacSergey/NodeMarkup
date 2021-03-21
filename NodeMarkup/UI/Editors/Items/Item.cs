@@ -121,6 +121,7 @@ namespace NodeMarkup.UI.Editors
 
             Text = string.Empty;
             Object = null;
+            OnDelete = null;
         }
 
         private void AddDeleteButton()

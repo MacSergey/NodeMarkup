@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Utils;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,27 +12,16 @@ namespace NodeMarkup.Manager
 {
     public abstract class MarkupLineRawRule : MarkupLinePart
     {
-        LineStyle _style;
-
-        public LineStyle Style
-        {
-            get => _style;
-            set
-            {
-                _style = value;
-                _style.OnStyleChanged = RuleChanged;
-                RuleChanged();
-            }
-        }
+        public PropertyValue<LineStyle> Style { get; }
         public new ILinePartEdge From
         {
-            get => base.From as ILinePartEdge;
-            set => base.From = value;
+            get => base.From.Value as ILinePartEdge;
+            set => base.From.Value = value;
         }
         public new ILinePartEdge To
         {
-            get => base.To as ILinePartEdge;
-            set => base.To = value;
+            get => base.To.Value as ILinePartEdge;
+            set => base.To.Value = value;
         }
         public bool IsOverlapped
         {
@@ -50,7 +40,12 @@ namespace NodeMarkup.Manager
 
         public MarkupLineRawRule(MarkupLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
         {
-            Style = style;
+            Style = new PropertyValue<LineStyle>(StyleChanged, style);
+        }
+        private void StyleChanged()
+        {
+            Style.Value.OnStyleChanged = RuleChanged;
+            RuleChanged();
         }
     }
     public class MarkupLineRawRule<StyleType> : MarkupLineRawRule
@@ -60,8 +55,8 @@ namespace NodeMarkup.Manager
 
         public new StyleType Style
         {
-            get => base.Style as StyleType;
-            set => base.Style = value;
+            get => base.Style.Value as StyleType;
+            set => base.Style.Value = value;
         }
         public override string XmlSection => XmlName;
 

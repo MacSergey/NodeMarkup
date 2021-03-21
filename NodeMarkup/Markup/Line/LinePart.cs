@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Tools;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Tools;
 using NodeMarkup.Utils;
 using System;
 using System.Collections.Generic;
@@ -13,39 +14,22 @@ namespace NodeMarkup.Manager
     {
         public Action OnRuleChanged { private get; set; }
 
-        ISupportPoint _from;
-        ISupportPoint _to;
-        public ISupportPoint From
-        {
-            get => _from;
-            set
-            {
-                _from = value;
-                RuleChanged();
-            }
-        }
-        public ISupportPoint To
-        {
-            get => _to;
-            set
-            {
-                _to = value;
-                RuleChanged();
-            }
-        }
+        public PropertyValue<ISupportPoint> From { get; }
+        public PropertyValue<ISupportPoint> To { get; }
+
         public MarkupLine Line { get; }
         public abstract string XmlSection { get; }
 
         public MarkupLinePart(MarkupLine line, ISupportPoint from = null, ISupportPoint to = null)
         {
             Line = line;
-            From = from;
-            To = to;
+            From = new PropertyValue<ISupportPoint>(RuleChanged, from);
+            To = new PropertyValue<ISupportPoint>(RuleChanged, to);
         }
 
         protected void RuleChanged() => OnRuleChanged?.Invoke();
-        public bool GetFromT(out float t) => GetT(From, out t);
-        public bool GetToT(out float t) => GetT(To, out t);
+        public bool GetFromT(out float t) => GetT(From.Value, out t);
+        public bool GetToT(out float t) => GetT(To.Value, out t);
         private bool GetT(ISupportPoint partEdge, out float t)
         {
             if (partEdge != null)
@@ -85,9 +69,9 @@ namespace NodeMarkup.Manager
             var config = new XElement(XmlSection);
 
             if (From != null)
-                config.Add(From.ToXml());
+                config.Add(From.Value.ToXml());
             if (To != null)
-                config.Add(To.ToXml());
+                config.Add(To.Value.ToXml());
 
             return config;
         }

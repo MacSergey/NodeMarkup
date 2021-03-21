@@ -75,7 +75,7 @@ namespace NodeMarkup.UI.Editors
         private void AddHeader()
         {
             Header = ComponentPool.Get<StyleHeaderPanel>(this);
-            Header.Init(Rule.Style.Type, OnSelectTemplate, Line.IsSupportRules);
+            Header.Init(Rule.Style.Value.Type, OnSelectTemplate, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
@@ -153,12 +153,12 @@ namespace NodeMarkup.UI.Editors
 
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
-            Style.SelectedObject = Rule.Style.Type;
+            Style.SelectedObject = Rule.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
         private void AddStyleProperties()
         {
-            StyleProperties = Rule.Style.GetUIComponents(Rule.Line, this);
+            StyleProperties = Rule.Style.Value.GetUIComponents(Rule.Line, this);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
         }
@@ -178,11 +178,11 @@ namespace NodeMarkup.UI.Editors
         }
         private void ApplyStyle(LineStyle style)
         {
-            if ((Rule.Style.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
+            if ((Rule.Style.Value.Type & Manager.Style.StyleType.GroupMask) != (style.Type & Manager.Style.StyleType.GroupMask))
                 return;
 
-            Rule.Style = style.CopyStyle();
-            Style.SelectedObject = Rule.Style.Type;
+            Rule.Style.Value = style.CopyStyle();
+            Style.SelectedObject = Rule.Style.Value.Type;
 
             AfterStyleChanged();
         }
@@ -191,7 +191,7 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => Buffer = Rule.Style.CopyStyle();
+        private void CopyStyle() => Buffer = Rule.Style.Value.CopyStyle();
         private void PasteStyle()
         {
             if (Buffer is LineStyle style)
@@ -201,12 +201,12 @@ namespace NodeMarkup.UI.Editors
         private void ToChanged(ILinePartEdge to) => Rule.To = to;
         private void StyleChanged(Style.StyleType style)
         {
-            if (style == Rule.Style.Type)
+            if (style == Rule.Style.Value.Type)
                 return;
 
             var newStyle = TemplateManager.StyleManager.GetDefault<LineStyle>(style);
-            Rule.Style.CopyTo(newStyle);
-            Rule.Style = newStyle;
+            Rule.Style.Value.CopyTo(newStyle);
+            Rule.Style.Value = newStyle;
 
             AfterStyleChanged();
         }

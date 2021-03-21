@@ -116,13 +116,15 @@ namespace NodeMarkup.Manager
 
         #region UPDATE
 
-        private bool UpdateProgress { get; set; } = false;
+        private bool UpdateInProgress { get; set; } = false;
+        private bool LoadInProgress { get; set; } = false;
+
         public void Update()
         {
-            if (UpdateProgress)
+            if (UpdateInProgress)
                 return;
 
-            UpdateProgress = true;
+            UpdateInProgress = true;
 
             UpdateEnters();
             UpdateLines();
@@ -131,7 +133,7 @@ namespace NodeMarkup.Manager
 
             RecalculateAllStyleData();
 
-            UpdateProgress = false;
+            UpdateInProgress = false;
         }
         protected void UpdateEnters()
         {
@@ -247,6 +249,9 @@ namespace NodeMarkup.Manager
 
         public void Update(MarkupPoint point, bool recalculate = false, bool recalcDependences = false)
         {
+            if (LoadInProgress)
+                return;
+
             point.Update();
 
             foreach (var line in GetPointLines(point))
@@ -258,11 +263,14 @@ namespace NodeMarkup.Manager
             foreach (var crosswalk in GetPointCrosswalks(point))
                 crosswalk.Update();
 
-            if (recalculate && !UpdateProgress)
+            if (recalculate && !UpdateInProgress)
                 RecalculateAllStyleData();
         }
         public void Update(MarkupLine line, bool recalculate = false, bool recalcDependences = false)
         {
+            if (LoadInProgress)
+                return;
+
             var toRecalculate = new HashSet<IStyleItem>();
             toRecalculate.Add(line);
 
@@ -294,13 +302,16 @@ namespace NodeMarkup.Manager
                     toRecalculate.Add(crosswalkLine.Crosswalk);
             }
 
-            if (recalculate && !UpdateProgress)
+            if (recalculate && !UpdateInProgress)
                 RecalculateStyleData(toRecalculate);
         }
         public void Update(MarkupFiller filler, bool recalculate = false, bool recalcDependences = false)
         {
+            if (LoadInProgress)
+                return;
+
             filler.Update();
-            if (recalculate && !UpdateProgress)
+            if (recalculate && !UpdateInProgress)
                 RecalculateStyleData(filler);
         }
         public void Update(MarkupCrosswalk crosswalk, bool recalculate = false, bool recalcDependences = false) => Update(crosswalk.CrosswalkLine, recalculate, recalcDependences);
@@ -486,7 +497,7 @@ namespace NodeMarkup.Manager
         {
             var dependences = GetLineDependences(crosswalk.CrosswalkLine);
             dependences.Crosswalks = 0;
-            dependences.Lines = 1;
+            dependences.Lines = crosswalk.CrosswalkLine.Rules.Any() ? 1 : 0;
             return dependences;
         }
         public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
@@ -632,6 +643,8 @@ namespace NodeMarkup.Manager
 
         public virtual void FromXml(Version version, XElement config, ObjectsMap map)
         {
+            LoadInProgress = true;
+
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
                 MarkupPoint.FromXml(pointConfig, this, map);
 
@@ -668,6 +681,8 @@ namespace NodeMarkup.Manager
                         CrosswalksDictionary[crosswalk.CrosswalkLine] = crosswalk;
                 }
             }
+
+            LoadInProgress = false;
 
             Update();
         }

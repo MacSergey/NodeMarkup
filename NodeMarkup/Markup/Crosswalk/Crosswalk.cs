@@ -73,6 +73,7 @@ namespace NodeMarkup.Manager
         public void Update(bool onlySelfUpdate = false)
         {
             EnterLine.Update(GetAlignment(EnterLine.Start, RightBorder), GetAlignment(EnterLine.End, LeftBorder), true);
+            CrosswalkLine.Update(true);
 
             if (!onlySelfUpdate)
                 Markup.Update(this);
@@ -104,7 +105,7 @@ namespace NodeMarkup.Manager
             var end = EnterLine.End.Position + NormalDir * offset;
             return new StraightTrajectory(start, end, false);
         }
-        public StraightTrajectory GetTrajectory()
+        private StraightTrajectory GetTrajectory()
         {
             var trajectory = GetOffsetTrajectory(TotalWidth);
 
@@ -181,9 +182,9 @@ namespace NodeMarkup.Manager
         {
             var config = new XElement(XmlName);
             config.Add(new XAttribute(MarkupLine.XmlName, CrosswalkLine.PointPair.Hash));
-            if (RightBorder != null)
+            if (RightBorder.Value != null)
                 config.Add(new XAttribute("RB", RightBorder.Value.PointPair.Hash));
-            if (LeftBorder != null)
+            if (LeftBorder.Value != null)
                 config.Add(new XAttribute("LB", LeftBorder.Value.PointPair.Hash));
             config.Add(Style.Value.ToXml());
             return config;

@@ -118,13 +118,13 @@ namespace NodeMarkup.Manager
         public override string XmlSection => throw new NotImplementedException();
         public new IFillerVertex From
         {
-            get => base.From as IFillerVertex;
-            set => base.From = value;
+            get => base.From.Value as IFillerVertex;
+            set => base.From.Value = value;
         }
         public new IFillerVertex To
         {
-            get => base.To as IFillerVertex;
-            set => base.To = value;
+            get => base.To.Value as IFillerVertex;
+            set => base.To.Value = value;
         }
         public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
     }

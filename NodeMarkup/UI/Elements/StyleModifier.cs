@@ -32,7 +32,7 @@ namespace NodeMarkup.UI
         }
         protected virtual void Init()
         {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>(v => true))
                 Add((Style.StyleType)(object)style);
         }
         protected void Add(Style.StyleType style, string label = null)

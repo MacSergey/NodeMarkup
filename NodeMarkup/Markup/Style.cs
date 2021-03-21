@@ -237,9 +237,13 @@ namespace NodeMarkup.Manager
 
         public enum StyleType
         {
+            [NotItem]
             ItemMask = 0xFF,
+            [NotItem]
             GroupMask = ~ItemMask,
 
+
+            [NotItem]
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             RegularLine = Markup.Item.RegularLine,
 
@@ -261,7 +265,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             LineSharkTeeth,
 
-            [NotVisible]
+            [NotItem]
             Regular3DLine = Markup.Item.RegularLine + 0x80,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
@@ -272,6 +276,7 @@ namespace NodeMarkup.Manager
             EmptyLine = Markup.Item.StopLine - 1,
 
 
+            [NotItem]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             StopLine = Markup.Item.StopLine,
 
@@ -294,6 +299,7 @@ namespace NodeMarkup.Manager
             StopLineSharkTeeth,
 
 
+            [NotItem]
             [Description(nameof(Localize.FillerStyle_Group))]
             Filler = Markup.Item.Filler,
 
@@ -309,7 +315,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Chevron))]
             FillerChevron,
 
-
+            [NotItem]
             Filler3D = Filler | 0x80,
 
             [Description(nameof(Localize.FillerStyle_Pavement))]
@@ -319,6 +325,7 @@ namespace NodeMarkup.Manager
             FillerGrass,
 
 
+            [NotItem]
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = Markup.Item.Crosswalk,
 

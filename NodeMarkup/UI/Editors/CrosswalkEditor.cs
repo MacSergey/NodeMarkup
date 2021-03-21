@@ -58,6 +58,7 @@ namespace NodeMarkup.UI.Editors
         {
             Markup.RemoveCrosswalk(crosswalk);
             base.OnObjectDelete(crosswalk);
+            Panel.DeleteLine(crosswalk.CrosswalkLine);
         }
         protected override void OnClear()
         {

@@ -56,6 +56,7 @@ namespace NodeMarkup.Tools
         {
             Tool.Markup.RemoveLine(line);
             Panel.DeleteCrosswalk((line as MarkupCrosswalkLine).Crosswalk);
+            Panel.DeleteLine(line);
         }
         protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
         {
