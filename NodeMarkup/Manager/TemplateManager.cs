@@ -321,8 +321,8 @@ namespace NodeMarkup.Manager
 
         public T GetDefault<T>(Style.StyleType type) where T : Style
         {
-            if (DefaultTemplates.TryGetValue(type, out Guid id) && TemplatesDictionary.TryGetValue(id, out StyleTemplate template) && template.Style.Copy() is T tStyle)
-                return tStyle;
+            if (DefaultTemplates.TryGetValue(type, out Guid id) && TemplatesDictionary.TryGetValue(id, out StyleTemplate template) && template.Style is T style)
+                return (T)style.Copy();
             else
                 return Style.GetDefault<T>(type);
         }

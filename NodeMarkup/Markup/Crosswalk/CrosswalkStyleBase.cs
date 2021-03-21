@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
         public static float DefaultCrosswalkSquareSide { get; } = 1f;
         public static int DefaultCrosswalkLineCount { get; } = 2;
 
-        static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
+        public static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
             {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, true) },
@@ -38,8 +38,6 @@ namespace NodeMarkup.Manager
 
         protected override float WidthWheelStep => 0.1f;
         protected override float WidthMinValue => 0.1f;
-
-        public static Style GetDefault(CrosswalkType type) => Defaults.TryGetValue(type, out CrosswalkStyle style) ? style.CopyStyle() : null;
 
         public abstract float GetTotalWidth(MarkupCrosswalk crosswalk);
 

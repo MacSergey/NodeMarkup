@@ -164,7 +164,7 @@ namespace NodeMarkup.Manager
 
     public abstract class RegularLineStyle : LineStyle<RegularLineStyle>
     {
-        static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
+        public static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
         {
             {RegularLineType.Solid, new SolidLineStyle(DefaultColor, DefaultWidth)},
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
@@ -174,7 +174,6 @@ namespace NodeMarkup.Manager
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
         };
-        public static LineStyle GetDefault(RegularLineType type) => Defaults.TryGetValue(type, out RegularLineStyle style) ? style.CopyLineStyle() : null;
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -225,7 +224,7 @@ namespace NodeMarkup.Manager
         public static float DefaultStopWidth { get; } = 0.3f;
         public static float DefaultStopOffset { get; } = 0.3f;
 
-        static Dictionary<StopLineType, StopLineStyle> Defaults { get; } = new Dictionary<StopLineType, StopLineStyle>()
+        public static Dictionary<StopLineType, StopLineStyle> Defaults { get; } = new Dictionary<StopLineType, StopLineStyle>()
         {
             {StopLineType.Solid, new SolidStopLineStyle(DefaultColor, DefaultStopWidth)},
             {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength)},
@@ -234,8 +233,6 @@ namespace NodeMarkup.Manager
             {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
         };
-
-        public static LineStyle GetDefault(StopLineType type) => Defaults.TryGetValue(type, out StopLineStyle style) ? style.CopyLineStyle() : null;
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 

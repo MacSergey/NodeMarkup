@@ -78,12 +78,18 @@ namespace NodeMarkup.Manager
         {
             return type.GetGroup() switch
             {
-                StyleType.RegularLine when RegularLineStyle.GetDefault(type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) is T tStyle => tStyle,
-                StyleType.StopLine when StopLineStyle.GetDefault(type.ToEnum<StopLineStyle.StopLineType, StyleType>()) is T tStyle => tStyle,
-                StyleType.Filler when FillerStyle.GetDefault(type.ToEnum<FillerStyle.FillerType, StyleType>()) is T tStyle => tStyle,
-                StyleType.Crosswalk when CrosswalkStyle.GetDefault(type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) is T tStyle => tStyle,
+                StyleType.RegularLine => GetDefault(RegularLineStyle.Defaults, type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) as T,
+                StyleType.StopLine => GetDefault(StopLineStyle.Defaults, type.ToEnum<StopLineStyle.StopLineType, StyleType>()) as T,
+                StyleType.Filler => GetDefault(FillerStyle.Defaults, type.ToEnum<FillerStyle.FillerType, StyleType>()) as T,
+                StyleType.Crosswalk => GetDefault(CrosswalkStyle.Defaults, type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) as T,
                 _ => null,
             };
+        }
+        private static TypeStyle GetDefault<TypeEnum, TypeStyle>(Dictionary<TypeEnum, TypeStyle> dic, TypeEnum type)
+            where TypeEnum : Enum
+            where TypeStyle : Style
+        {
+            return dic.TryGetValue(type, out var style) ? (TypeStyle)style.Copy() : null;
         }
 
         public static string XmlName { get; } = "S";
