@@ -26,6 +26,12 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnFillPropertiesPanel(MarkupEnterPoint point)
         {
+            AddOffset(point);
+            AddSplit(point);
+            AddShift(point);
+        }
+        private void AddOffset(MarkupEnterPoint point)
+        {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
@@ -34,13 +40,17 @@ namespace NodeMarkup.UI.Editors
             Offset.Init();
             Offset.Value = point.Offset;
             Offset.OnValueChanged += OffsetChanged;
-
+        }
+        private void AddSplit(MarkupEnterPoint point)
+        {
             Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel);
             Split.Text = NodeMarkup.Localize.PointEditor_SplitIntoTwo;
             Split.Init(NodeMarkup.Localize.StyleOption_No, NodeMarkup.Localize.StyleOption_Yes);
             Split.SelectedObject = point.Split;
             Split.OnSelectObjectChanged += SplitChanged;
-
+        }
+        private void AddShift(MarkupEnterPoint point)
+        {
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
             Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
             Shift.UseWheel = true;
@@ -52,12 +62,6 @@ namespace NodeMarkup.UI.Editors
             Shift.Value = point.Shift;
             Shift.OnValueChanged += (value) => point.Shift.Value = value;
             Shift.isVisible = point.Split;
-
-            void SplitChanged(bool value)
-            {
-                point.Split.Value = value;
-                Shift.isVisible = value;
-            }
         }
         protected override void OnClear()
         {
@@ -74,6 +78,11 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void OffsetChanged(float value) => EditObject.Offset.Value = value;
+        void SplitChanged(bool value)
+        {
+            EditObject.Split.Value = value;
+            Shift.isVisible = value;
+        }
 
         public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
     }
