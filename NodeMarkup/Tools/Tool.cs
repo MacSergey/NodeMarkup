@@ -617,7 +617,7 @@ namespace NodeMarkup.Tools
         public static void RenderBezier(Bezier3 bezier, OverlayData data)
         {
             var cutValue = (data.Width ?? DefaultWidth) / 2;
-            RenderManager.OverlayEffect.DrawBezier(data.CameraInfo, data.Color ?? Colors.White, bezier, data.Width ?? DefaultWidth, data.CutStart==true ? cutValue : 0f, data.CutStart == true ? cutValue : 0f, -1f, 1280f, false, data.AlphaBlend ?? DefaultBlend);
+            RenderManager.OverlayEffect.DrawBezier(data.CameraInfo, data.Color ?? Colors.White, bezier, data.Width ?? DefaultWidth, data.CutStart==true ? cutValue : 0f, data.CutEnd == true ? cutValue : 0f, -1f, 1280f, false, data.AlphaBlend ?? DefaultBlend);
         }
 
         public static void RenderCircle(Vector3 position, OverlayData data) =>

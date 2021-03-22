@@ -227,7 +227,7 @@ namespace NodeMarkup.Manager
                 var normal = Direction.Turn90(true);
                 var bezier = new Line3(Position - normal * Shift, Position + normal * Shift).GetBezier();
                 data.Width ??= DefaultWidth;
-                data.Color ??= Color;
+                data.Color ??= Color;           
                 NodeMarkupTool.RenderBezier(bezier, data);
             }
         }
