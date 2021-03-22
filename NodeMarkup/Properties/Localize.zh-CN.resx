@@ -1322,4 +1322,25 @@ Shift x10，Ctrl x0.1</value>
 - 修复了用滚轮修改数据时滚动窗口的冲突问题
 - 填写数字时既可使用逗号或句号为小数点</value>
   </data>
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>颜色数量：</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>一个</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>两个</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>从剪贴板创建</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>线段对齐</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>拆分成两个点</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>拆分偏移</value>
+  </data>
 </root>

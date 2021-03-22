@@ -1310,4 +1310,25 @@ Haga clic para editar las marcas</value>
   
   
   
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Numero de colores</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Uno</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Dos</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Desde el portapapeles</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Alineamento de línea</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Dividir en dos</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Desplazamiento del puntos divididos</value>
+  </data>
 </root>

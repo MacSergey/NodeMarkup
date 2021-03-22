@@ -1413,4 +1413,25 @@ Shift X10, Ctrl X0.1</value>
 - Исправлен конфликт между прокруткой панели и изменением значения свойств с помощью колесика мыши.
 - Теперь нет разницы между точкой и запятой при вводе значения свойства.</value>
   </data>
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Количество цветов</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Один</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Два</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Из буфера</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Выравнивание линии</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Разделить на две</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Сдвиг разделенных точек</value>
+  </data>
 </root>
