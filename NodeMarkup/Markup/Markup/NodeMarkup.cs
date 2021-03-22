@@ -84,7 +84,7 @@ namespace NodeMarkup.Manager
                 get => this[GetId(i, j)];
                 set => this[GetId(i, j)] = value;
             }
-            private int GetId(int i, int j) => (i + 1) * 10 + j + 1; /*Math.Max(i, j) * 10 + Math.Min(i, j);*/
+            private int GetId(int i, int j) => (i + 1) * 10 + j + 1;
 
             public bool TryGetValue(int i, int j, out T value) => TryGetValue(GetId(i, j), out value);
         }
