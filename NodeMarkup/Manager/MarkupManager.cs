@@ -203,21 +203,20 @@ namespace NodeMarkup.Manager
                 var id = markupConfig.GetAttrValue<ushort>(nameof(Markup.Id));
                 if (id == 0)
                     continue;
-
-                while (tryGet(id, out var targetId))
-                    id = targetId;
-
-                var markup = Get(id);
-
                 try
                 {
+                    while (tryGet(id, out var targetId))
+                        id = targetId;
+
+                    var markup = Get(id);
+
                     markup.FromXml(version, markupConfig, map);
                     NeedUpdate.Add(markup.Id);
                     Mod.Logger.Debug($"{ItemName} #{markup.Id} markup loaded");
                 }
                 catch (Exception error)
                 {
-                    Mod.Logger.Error($"Could not load {ItemName} #{markup.Id} markup", error);
+                    Mod.Logger.Error($"Could not load {ItemName} #{id} markup", error);
                     MarkupManager.Errors += 1;
                 }
             }
