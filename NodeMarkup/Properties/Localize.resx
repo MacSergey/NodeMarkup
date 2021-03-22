@@ -1421,7 +1421,7 @@ Click to edit markings</value>
     <value>Two</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
-    <value>From buffer</value>
+    <value>From clipboard</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
     <value>Line alignment</value>

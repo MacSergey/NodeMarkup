@@ -2690,7 +2690,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на From buffer.
+        ///   Ищет локализованную строку, похожую на From clipboard.
         /// </summary>
         public static string Style_FromClipboard {
             get {
