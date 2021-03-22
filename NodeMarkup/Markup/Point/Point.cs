@@ -179,6 +179,7 @@ namespace NodeMarkup.Manager
         public override PointType Type => PointType.Enter;
         public override bool IsSplit => Split;
         public override float SplitShift => Shift;
+        public Color32 SplitColor => Colors.GetOverlayColor(Num - 1, byte.MaxValue, 128);
 
         public PropertyBoolValue Split { get; }
         public PropertyValue<float> Shift { get; }
@@ -220,15 +221,20 @@ namespace NodeMarkup.Manager
         }
         public override void Render(OverlayData data)
         {
-            if (!Split)
-                base.Render(data);
-            else
-            {
+            base.Render(data);
+
+            if(Split && data.SplitPoint)
+            {              
                 var normal = Direction.Turn90(true);
-                var bezier = new Line3(Position - normal * Shift, Position + normal * Shift).GetBezier();
-                data.Width ??= DefaultWidth;
-                data.Color ??= Color;           
-                NodeMarkupTool.RenderBezier(bezier, data);
+
+                var dataWhite = new OverlayData(data.CameraInfo);
+                NodeMarkupTool.RenderCircle(Position - normal * Shift, dataWhite);
+                NodeMarkupTool.RenderCircle(Position + normal * Shift, dataWhite);
+
+                data.Color ??= Color;
+                data.Width = 0.1f;
+                NodeMarkupTool.RenderCircle(Position - normal * Shift, data);
+                NodeMarkupTool.RenderCircle(Position + normal * Shift, data);
             }
         }
     }

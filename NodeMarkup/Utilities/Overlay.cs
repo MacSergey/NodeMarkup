@@ -14,6 +14,7 @@ namespace NodeMarkup.Utilities
         public bool? AlphaBlend;
         public bool? CutStart;
         public bool? CutEnd;
+        public bool SplitPoint;
 
         public bool Cut
         {
@@ -32,6 +33,7 @@ namespace NodeMarkup.Utilities
             AlphaBlend = null;
             CutStart = null;
             CutEnd = null;
+            SplitPoint = false;
         }
     }
 }
