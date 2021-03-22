@@ -214,6 +214,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Grass))]
             Grass = StyleType.FillerGrass,
 
+            [Description(nameof(Localize.Style_FromBuffer))]
             [NotVisible]
             Buffer = StyleType.FillerBuffer,
         }

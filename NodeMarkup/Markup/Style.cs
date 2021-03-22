@@ -282,6 +282,7 @@ namespace NodeMarkup.Manager
             [NotVisible]
             EmptyLine = LineBuffer - 1,
 
+            [Description(nameof(Localize.Style_FromBuffer))]
             [NotVisible]
             LineBuffer = Markup.Item.RegularLine + Markup.Item.Group - 1,
 
@@ -311,6 +312,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,
 
+            [Description(nameof(Localize.Style_FromBuffer))]
             [NotVisible]
             StopLineBuffer = Markup.Item.StopLine + Markup.Item.Group - 1,
 
@@ -343,6 +345,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
 
+            [Description(nameof(Localize.Style_FromBuffer))]
             [NotVisible]
             FillerBuffer = Markup.Item.Filler + Markup.Item.Group - 1,
 
@@ -378,6 +381,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
 
+            [Description(nameof(Localize.Style_FromBuffer))]
             [NotVisible]
             CrosswalkBuffer = Markup.Item.Crosswalk + Markup.Item.Group - 1,
 

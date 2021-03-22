@@ -543,7 +543,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a rail&apos;s first point or line as rail.
+        ///   Ищет локализованную строку, похожую на Select a guide&apos;s first point or line as guide.
         /// </summary>
         public static string FillerEditor_InfoSelectRailFirst {
             get {
@@ -552,7 +552,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select a rail&apos;s second point.
+        ///   Ищет локализованную строку, похожую на Select a guide&apos;s second point.
         /// </summary>
         public static string FillerEditor_InfoSelectRailSecond {
             get {
@@ -2663,6 +2663,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на From buffer.
+        /// </summary>
+        public static string Style_FromBuffer {
+            get {
+                return ResourceManager.GetString("Style_FromBuffer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Alignment.
         /// </summary>
         public static string StyleOption_Alignment {
@@ -2726,6 +2735,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Color count.
+        /// </summary>
+        public static string StyleOption_ColorCount {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на One.
+        /// </summary>
+        public static string StyleOption_ColorCountOne {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorCountOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Two.
+        /// </summary>
+        public static string StyleOption_ColorCountTwo {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorCountTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Dash length.
         /// </summary>
         public static string StyleOption_DashedLength {
@@ -2744,7 +2780,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Follow rails.
+        ///   Ищет локализованную строку, похожую на Follow guide.
         /// </summary>
         public static string StyleOption_FollowRails {
             get {
@@ -2762,7 +2798,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Left rail.
+        ///   Ищет локализованную строку, похожую на Left guide.
         /// </summary>
         public static string StyleOption_LeftRail {
             get {
@@ -2861,7 +2897,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Right rail.
+        ///   Ищет локализованную строку, похожую на Right guide.
         /// </summary>
         public static string StyleOption_RightRail {
             get {

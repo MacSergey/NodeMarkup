@@ -282,8 +282,8 @@ namespace NodeMarkup.Manager
         protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent)
         {
             var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(UseSecondColor));
-            useSecondColorProperty.Text = "Color count";
-            useSecondColorProperty.Init("One", "Two", false);
+            useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
+            useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
             useSecondColorProperty.SelectedObject = UseSecondColor;
             useSecondColorProperty.OnSelectObjectChanged += (value) => UseSecondColor.Value = value;
 

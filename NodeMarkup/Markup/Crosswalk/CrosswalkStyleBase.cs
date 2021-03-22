@@ -147,6 +147,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             ChessBoard = StyleType.CrosswalkChessBoard,
 
+            [Description(nameof(Localize.Style_FromBuffer))]
             [NotVisible]
             Buffer = StyleType.CrosswalkBuffer,
         }
