@@ -1420,7 +1420,16 @@ Click to edit markings</value>
   <data name="StyleOption_ColorCountTwo" xml:space="preserve">
     <value>Two</value>
   </data>
-  <data name="Style_FromBuffer" xml:space="preserve">
+  <data name="Style_FromClipboard" xml:space="preserve">
     <value>From buffer</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Line alignment</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Split into two</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Split offset</value>
   </data>
 </root>

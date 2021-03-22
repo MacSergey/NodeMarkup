@@ -105,7 +105,7 @@ namespace NodeMarkup.UI.Editors
             if (editObject is MarkupRegularLine line)
             {
                 var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties);
-                alignmentProperty.Text = "Line alignment";
+                alignmentProperty.Text = NodeMarkup.Localize.LineEditor_LineAlignment;
                 alignmentProperty.Init();
                 alignmentProperty.SelectedObject = line.Alignment;
                 alignmentProperty.OnSelectObjectChanged += (value) => line.Alignment.Value = value;

@@ -204,7 +204,7 @@ namespace NodeMarkup.Manager
             [NotVisible]
             Empty = StyleType.EmptyLine,
 
-            [Description(nameof(Localize.Style_FromBuffer))]
+            [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
             Buffer = StyleType.LineBuffer,
         }
@@ -260,7 +260,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,
 
-            [Description(nameof(Localize.Style_FromBuffer))]
+            [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
             Buffer = StyleType.StopLineBuffer,
         }

@@ -36,13 +36,13 @@ namespace NodeMarkup.UI.Editors
             Offset.OnValueChanged += OffsetChanged;
 
             Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel);
-            Split.Text = "Split";
+            Split.Text = NodeMarkup.Localize.PointEditor_SplitIntoTwo;
             Split.Init(NodeMarkup.Localize.StyleOption_No, NodeMarkup.Localize.StyleOption_Yes);
             Split.SelectedObject = point.Split;
             Split.OnSelectObjectChanged += SplitChanged;
 
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
-            Shift.Text = "Split shift";
+            Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
             Shift.UseWheel = true;
             Shift.WheelStep = 0.1f;
             Shift.WheelTip = WheelTip;

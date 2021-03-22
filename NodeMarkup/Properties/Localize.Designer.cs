@@ -832,6 +832,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Line alignment.
+        /// </summary>
+        public static string LineEditor_LineAlignment {
+            get {
+                return ResourceManager.GetString("LineEditor_LineAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Lines.
         /// </summary>
         public static string LineEditor_Lines {
@@ -1664,6 +1673,24 @@ namespace NodeMarkup {
         public static string PointEditor_Points {
             get {
                 return ResourceManager.GetString("PointEditor_Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Split into two.
+        /// </summary>
+        public static string PointEditor_SplitIntoTwo {
+            get {
+                return ResourceManager.GetString("PointEditor_SplitIntoTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Split offset.
+        /// </summary>
+        public static string PointEditor_SplitOffset {
+            get {
+                return ResourceManager.GetString("PointEditor_SplitOffset", resourceCulture);
             }
         }
         
@@ -2665,9 +2692,9 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на From buffer.
         /// </summary>
-        public static string Style_FromBuffer {
+        public static string Style_FromClipboard {
             get {
-                return ResourceManager.GetString("Style_FromBuffer", resourceCulture);
+                return ResourceManager.GetString("Style_FromClipboard", resourceCulture);
             }
         }
         
