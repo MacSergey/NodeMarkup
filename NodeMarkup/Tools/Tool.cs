@@ -60,7 +60,7 @@ namespace NodeMarkup.Tools
         }
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
-        private static Dictionary<Style.StyleType, Style> StyleBuffer { get; } = EnumExtension.GetEnumValues<Markup.Item>().ToDictionary(i => i.ToInt().ToEnum<Style.StyleType>(), i => (Style)null);
+        private static Dictionary<Style.StyleType, Style> StyleBuffer { get; } = EnumExtension.GetEnumValues<Markup.Item>(i => i.IsItem()).ToDictionary(i => i.ToInt().ToEnum<Style.StyleType>(), i => (Style)null);
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -430,7 +430,7 @@ namespace NodeMarkup.Tools
         {
             Mod.Logger.Debug($"Create edge lines");
 
-            var lines = Markup.Enters.Select(e => Markup.AddLine(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), Style.StyleType.EmptyLine)).ToArray();
+            var lines = Markup.Enters.Select(e => Markup.AddRegularLine(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), null)).ToArray();
             foreach (var line in lines)
                 Panel.AddLine(line);
 
@@ -625,6 +625,8 @@ namespace NodeMarkup.Tools
 
         #endregion
 
+        #region UTILITIES
+
         public static bool PatchGameKeyShortcutsEscapePrefix()
         {
             if (Instance.enabled)
@@ -638,21 +640,35 @@ namespace NodeMarkup.Tools
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
 
-        public static Style.StyleType GetStyle<StyleType>(StyleType defaultStyle)
-           where StyleType : Enum
+        public static TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
+            where TStyleType : Enum
+            where TStyle : Style
         {
             var modifier = EnumExtension.GetEnumValues<StyleModifier>().FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.IsPressed);
 
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
+            foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
             {
-                var general = (Style.StyleType)(object)style;
-                if (StylesModifier.TryGetValue(general, out SavedInt saved) && (StyleModifier)saved.value == modifier)
-                    return general;
+                if (StylesModifier.TryGetValue(style, out SavedInt saved) && (StyleModifier)saved.value == modifier)
+                {
+                    if ((style + 1).GetItem() == 0)
+                    {
+                        if (FromStyleBuffer<TStyle>(style.GetGroup(), out var bufferStyle))
+                            return bufferStyle;
+                    }
+                    else if (TemplateManager.StyleManager.GetDefault<TStyle>(style) is TStyle defaultStyle)
+                        return defaultStyle;
+                    else if (allowNull)
+                        return null;
+
+                    break;
+                }
             }
-            return (Style.StyleType)(object)defaultStyle;
+
+            return TemplateManager.StyleManager.GetDefault<TStyle>(ifNotFound.ToEnum<Style.StyleType, TStyleType>());
         }
-        public static SavedInt GetSavedStylesModifier(Style.StyleType type) => new SavedInt($"{nameof(StylesModifier)}{type.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(type), true);
-        public static StyleModifier GetDefaultStylesModifier(Style.StyleType style)
+
+        private static SavedInt GetSavedStylesModifier(Style.StyleType type) => new SavedInt($"{nameof(StylesModifier)}{type.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(type), true);
+        private static StyleModifier GetDefaultStylesModifier(Style.StyleType style)
         {
             return style switch
             {
@@ -660,9 +676,18 @@ namespace NodeMarkup.Tools
                 Style.StyleType.LineSolid => StyleModifier.Shift,
                 Style.StyleType.LineDoubleDashed => StyleModifier.Ctrl,
                 Style.StyleType.LineDoubleSolid => StyleModifier.CtrlShift,
+                Style.StyleType.EmptyLine => StyleModifier.Alt,
+                Style.StyleType.LineBuffer => StyleModifier.CtrlAlt,
+
                 Style.StyleType.StopLineSolid => StyleModifier.Without,
+                Style.StyleType.StopLineBuffer => StyleModifier.CtrlAlt,
+
                 Style.StyleType.CrosswalkZebra => StyleModifier.Without,
+                Style.StyleType.CrosswalkBuffer => StyleModifier.CtrlAlt,
+
                 Style.StyleType.FillerStripe => StyleModifier.Without,
+                Style.StyleType.FillerBuffer => StyleModifier.CtrlAlt,
+
                 _ => StyleModifier.NotSet,
             };
         }
@@ -672,7 +697,7 @@ namespace NodeMarkup.Tools
             var modifiers = GetStylesModifier<StyleType>().ToArray();
             return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
         }
-        public static IEnumerable<string> GetStylesModifier<StyleType>()
+        private static IEnumerable<string> GetStylesModifier<StyleType>()
             where StyleType : Enum
         {
             foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
@@ -688,7 +713,7 @@ namespace NodeMarkup.Tools
         public static bool FromStyleBuffer<T>(Style.StyleType type, out T style)
             where T : Style
         {
-            if (StyleBuffer[type] is T tStyle)
+            if (StyleBuffer.TryGetValue(type, out var bufferStyle) && bufferStyle is T tStyle)
             {
                 style = (T)tStyle.Copy();
                 return true;
@@ -699,6 +724,8 @@ namespace NodeMarkup.Tools
                 return false;
             }
         }
+
+        #endregion
     }
     public class ThreadingExtension : ThreadingExtensionBase
     {

@@ -45,9 +45,9 @@ namespace NodeMarkup.Manager
 
         #endregion
 
-        public MarkupCrosswalk(Markup markup, MarkupCrosswalkLine crosswalkLine, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) :
-            this(markup, crosswalkLine, TemplateManager.StyleManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType))
-        { }
+        //public MarkupCrosswalk(Markup markup, MarkupCrosswalkLine crosswalkLine, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) :
+        //    this(markup, crosswalkLine, TemplateManager.StyleManager.GetDefault<CrosswalkStyle>((Style.StyleType)(int)crosswalkType))
+        //{ }
         public MarkupCrosswalk(Markup markup, MarkupCrosswalkLine line, CrosswalkStyle style, MarkupRegularLine rightBorder = null, MarkupRegularLine leftBorder = null)
         {
             Markup = markup;

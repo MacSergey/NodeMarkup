@@ -45,7 +45,7 @@ namespace NodeMarkup.Manager
 
         protected ITrajectory LineTrajectory { get; private set; }
         public ITrajectory Trajectory => LineTrajectory.Copy();
-        public LodDictionaryArray<IStyleData> StyleData { get;} = new LodDictionaryArray<IStyleData>();
+        public LodDictionaryArray<IStyleData> StyleData { get; } = new LodDictionaryArray<IStyleData>();
 
         public LineBorders Borders => new LineBorders(this);
 
@@ -112,28 +112,29 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null) 
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
             => Trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
         public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
 
-        public static MarkupLine FromStyle(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
-        {
-            switch (style.GetGroup())
-            {
-                case Style.StyleType.StopLine:
-                    return new MarkupStopLine(markup, pointPair, (StopLineStyle.StopLineType)(int)style);
-                case Style.StyleType.Crosswalk:
-                    return new MarkupCrosswalkLine(markup, pointPair, (CrosswalkStyle.CrosswalkType)(int)style);
-                case Style.StyleType.RegularLine:
-                default:
-                    var regularStyle = (RegularLineStyle.RegularLineType)(int)style;
-                    if (regularStyle == RegularLineStyle.RegularLineType.Empty)
-                        return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
-                    else
-                        return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair, regularStyle) : new MarkupRegularLine(markup, pointPair, regularStyle);
-            }
-        }
+        //public static MarkupLine FromStyleType(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
+        //{
+        //    switch (style.GetGroup())
+        //    {
+        //        case Style.StyleType.StopLine:
+        //            return new MarkupStopLine(markup, pointPair, (StopLineStyle.StopLineType)(int)style);
+        //        case Style.StyleType.Crosswalk:
+        //            return new MarkupCrosswalkLine(markup, pointPair, (CrosswalkStyle.CrosswalkType)(int)style);
+        //        case Style.StyleType.RegularLine:
+        //        default:
+        //            var regularStyle = (RegularLineStyle.RegularLineType)(int)style;
+        //            if (regularStyle == RegularLineStyle.RegularLineType.Empty)
+        //                return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
+        //            else
+        //                return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair, regularStyle) : new MarkupRegularLine(markup, pointPair, regularStyle);
+        //    }
+        //}
+
         public Dependences GetDependences() => Markup.GetLineDependences(this);
 
 
@@ -212,12 +213,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second, StyleType styleType) : this(markup, new MarkupPointPair(first, second), styleType) { }
-        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, StyleType styleType) : base(markup, pointPair, false)
+        protected MarkupStraightLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style) : this(markup, new MarkupPointPair(first, second), style) { }
+        protected MarkupStraightLine(Markup markup, MarkupPointPair pointPair, Style style) : base(markup, pointPair, false)
         {
             if (Visible)
             {
-                var style = GetDefaultStyle(styleType);
                 var rule = new MarkupLineRawRule<Style>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End));
                 SetRule(rule);
             }
@@ -237,7 +237,6 @@ namespace NodeMarkup.Manager
             rule.OnRuleChanged = RuleChanged;
             Rule = rule;
         }
-        protected abstract Style GetDefaultStyle(StyleType styleType);
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && rule == Rule;
 
         public override XElement ToXml()
@@ -260,12 +259,13 @@ namespace NodeMarkup.Manager
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, bool update = true) : base(markup, pointPair, update) { }
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : this(markup, pointPair)
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, bool update = true) : base(markup, pointPair, update)
         {
-            var lineStyle = TemplateManager.StyleManager.GetDefault<RegularLineStyle>((Style.StyleType)(int)lineType);
-            AddRule(lineStyle, false, false);
-            RecalculateStyleData();
+            if (style != null)
+            {
+                AddRule(style, false, false);
+                RecalculateStyleData();
+            }
         }
 
         protected override ITrajectory CalculateTrajectory()
@@ -313,7 +313,7 @@ namespace NodeMarkup.Manager
             return new LinesIntersectEdge(intersect.Pair);
         }
 
-        public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true) 
+        public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true)
             => AddRule(TemplateManager.StyleManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
@@ -381,8 +381,7 @@ namespace NodeMarkup.Manager
     }
     public class MarkupNormalLine : MarkupRegularLine
     {
-        public MarkupNormalLine(Markup markup, MarkupPointPair pointPair) : base(markup, pointPair) { }
-        public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle.RegularLineType lineType) : base(markup, pointPair, lineType) { }
+        public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetPosition(this), PointPair.Second.GetPosition(this));
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
@@ -391,9 +390,12 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalk Crosswalk { get; set; }
         public Func<StraightTrajectory> TrajectoryGetter { get; set; }
 
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle.CrosswalkType crosswalkType = CrosswalkStyle.CrosswalkType.Existent) : base(markup, pointPair, false)
+        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, null, false)
         {
-            Crosswalk = new MarkupCrosswalk(Markup, this, crosswalkType);
+            if (style == null)
+                style = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
+
+            Crosswalk = new MarkupCrosswalk(Markup, this, style);
             Update(true);
             Markup.AddCrosswalk(Crosswalk);
         }
@@ -431,10 +433,7 @@ namespace NodeMarkup.Manager
         protected override bool Visible => true;
         public override LineType Type => LineType.Stop;
 
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle.StopLineType lineType = StopLineStyle.StopLineType.Solid) : base(markup, pointPair, lineType) { }
-
-        protected override StopLineStyle GetDefaultStyle(StopLineStyle.StopLineType lineType)
-            => TemplateManager.StyleManager.GetDefault<StopLineStyle>((Style.StyleType)(int)lineType);
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null) : base(markup, pointPair, style ?? TemplateManager.StyleManager.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid)) { }
 
         public override IEnumerable<ILinePartEdge> RulesEdges
         {
@@ -452,8 +451,7 @@ namespace NodeMarkup.Manager
         protected override bool Visible => false;
         public override LineType Type => throw new NotImplementedException();
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
-        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second, RegularLineStyle.RegularLineType.Dashed) { }
-        protected override LineStyle GetDefaultStyle(RegularLineStyle.RegularLineType styleType) => throw new NotImplementedException();
+        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second) : base(markup, first, second, null) { }
         public void Update(LineAlignment startAlignment, LineAlignment endAlignment, bool onlySelfUpdate = false)
         {
             StartAlignment = startAlignment;

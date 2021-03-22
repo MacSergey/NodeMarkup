@@ -273,17 +273,17 @@ namespace NodeMarkup.Manager
             LineSharkTeeth,
 
             [NotItem]
-            Regular3DLine = Markup.Item.RegularLine + 0x80,
+            Regular3DLine = Markup.Item.RegularLine + Markup.Item.HalfGroup,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
 
-            //[NotVisible]
-            //LineBuffer = EmptyLine - 1,
-
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
-            EmptyLine = Markup.Item.RegularLine * 2 - 1,
+            EmptyLine = LineBuffer - 1,
+
+            [NotVisible]
+            LineBuffer = Markup.Item.RegularLine + Markup.Item.Group - 1,
 
             #endregion
 
@@ -311,8 +311,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,
 
-            //[NotVisible]
-            //StopLineBuffer = Markup.Item.StopLine * 2 - 1,
+            [NotVisible]
+            StopLineBuffer = Markup.Item.StopLine + Markup.Item.Group - 1,
 
             #endregion
 
@@ -343,8 +343,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
 
-            //[NotVisible]
-            //FillerBuffer = Markup.Item.Filler * 2 - 1,
+            [NotVisible]
+            FillerBuffer = Markup.Item.Filler + Markup.Item.Group - 1,
 
             #endregion
 
@@ -378,8 +378,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             CrosswalkChessBoard,
 
-            //[NotVisible]
-            //CrosswalkBuffer = Markup.Item.Crosswalk * 2 - 1,
+            [NotVisible]
+            CrosswalkBuffer = Markup.Item.Crosswalk + Markup.Item.Group - 1,
 
             #endregion
         }

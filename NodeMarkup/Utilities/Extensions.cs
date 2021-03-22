@@ -67,12 +67,6 @@ namespace NodeMarkup.Utilities
 
         public static Style.StyleType GetGroup(this Style.StyleType type) => type & Style.StyleType.GroupMask;
         public static Style.StyleType GetItem(this Style.StyleType type) => type & Style.StyleType.ItemMask;
-        public static T ToEnum<T,Q>(this Q item)
-            where T : Enum
-            where Q : Enum
-        {
-            return item.ToInt().ToEnum<T>();
-        }
     }
     public class NotExistEnterException : Exception 
     {

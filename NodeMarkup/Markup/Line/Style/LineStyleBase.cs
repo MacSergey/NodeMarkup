@@ -140,17 +140,6 @@ namespace NodeMarkup.Manager
             alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
             return alignmentProperty;
         }
-        //public enum StyleAlignment
-        //{
-        //    [Description(nameof(Localize.StyleOption_AlignmentLeft))]
-        //    Left,
-
-        //    [Description(nameof(Localize.StyleOption_AlignmentCenter))]
-        //    Centre,
-
-        //    [Description(nameof(Localize.StyleOption_AlignmentRight))]
-        //    Right
-        //}
     }
     public abstract class LineStyle<StyleType> : LineStyle
         where StyleType : LineStyle<StyleType>
@@ -211,8 +200,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Pavement))]
             Pavement = StyleType.LinePavement,
 
-            //[NotVisible]
-            //Buffer = StyleType.LineBuffer,
+            [NotVisible]
+            Buffer = StyleType.LineBuffer,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
@@ -270,8 +259,8 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,
 
-            //[NotVisible]
-            //Buffer = StyleType.StopLineBuffer,
+            [NotVisible]
+            Buffer = StyleType.StopLineBuffer,
         }
     }
 }

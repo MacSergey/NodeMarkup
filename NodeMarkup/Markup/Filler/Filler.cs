@@ -36,7 +36,6 @@ namespace NodeMarkup.Manager
             style.OnStyleChanged = FillerChanged;
             Style = new PropertyValue<FillerStyle>(StyleChanged, style);
         }
-        public MarkupFiller(FillerContour contour, Style.StyleType fillerType) : this(contour, TemplateManager.StyleManager.GetDefault<FillerStyle>(fillerType)) { }
 
         private void StyleChanged()
         {

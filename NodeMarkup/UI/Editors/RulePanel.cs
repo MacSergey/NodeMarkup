@@ -176,7 +176,7 @@ namespace NodeMarkup.UI.Editors
             if (TemplateManager.StyleManager.AddTemplate(Rule.Style, out StyleTemplate template))
                 Editor.Panel.EditStyleTemplate(template);
         }
-        private void ApplyStyle(LineStyle style)
+        public void ApplyStyle(LineStyle style)
         {
             Rule.Style.Value = style.CopyStyle();
             Style.SelectedObject = Rule.Style.Value.Type;

@@ -190,9 +190,10 @@ namespace NodeMarkup.UI.Editors
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (_) => SetStyle(rulePanel)));
         private bool SetStyle(RulePanel rulePanel)
         {
-            var style = NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
-            rulePanel.Style.SelectedObject = style != Style.StyleType.EmptyLine ? style : (Style.StyleType)(int)RegularLineStyle.RegularLineType.Dashed;
+            var style = NodeMarkupTool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed);
+            rulePanel.ApplyStyle(style);
             ContentPanel.Content.ScrollToBottom();
+            ContentPanel.Content.ScrollIntoViewRecursive(rulePanel);
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)

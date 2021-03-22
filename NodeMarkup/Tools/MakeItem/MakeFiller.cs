@@ -61,7 +61,8 @@ namespace NodeMarkup.Tools
             {
                 if (Contour.Add(Hover))
                 {
-                    var filler = new MarkupFiller(Contour, NodeMarkupTool.GetStyle(FillerStyle.FillerType.Stripe));
+                    var style = NodeMarkupTool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
+                    var filler = new MarkupFiller(Contour, style);
                     Tool.Markup.AddFiller(filler);
                     Panel.EditFiller(filler);
                     Tool.SetDefaultMode();

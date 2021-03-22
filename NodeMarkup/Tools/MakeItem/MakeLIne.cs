@@ -39,14 +39,18 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint)
                 return;
-            else if (InputExtension.OnlyAltIsPressed && Markup is ISupportFillers)
+
+            if (!Tool.Panel.IsHover)
             {
-                Tool.SetMode(ToolModeType.MakeFiller);
-                if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
-                    fillerToolMode.DisableByAlt = true;
+                if (InputExtension.OnlyAltIsPressed && Markup is ISupportFillers)
+                {
+                    Tool.SetMode(ToolModeType.MakeFiller);
+                    if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
+                        fillerToolMode.DisableByAlt = true;
+                }
+                else if (InputExtension.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
+                    Tool.SetMode(ToolModeType.MakeCrosswalk);
             }
-            else if (InputExtension.OnlyShiftIsPressed && !Tool.Panel.IsHover && Markup is ISupportCrosswalks)
-                Tool.SetMode(ToolModeType.MakeCrosswalk);
         }
 
         public override void OnMouseDown(Event e)
@@ -67,10 +71,16 @@ namespace NodeMarkup.Tools
 
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
                     Tool.DeleteItem(line, OnDelete);
+                else if (pointPair.IsStopLine)
+                {
+                    var style = NodeMarkupTool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(StopLineStyle.StopLineType.Solid);
+                    var newLine = Tool.Markup.AddStopLine(pointPair, style);
+                    Panel.EditLine(newLine);
+                }
                 else
                 {
-                    var lineType = pointPair.IsStopLine ? NodeMarkupTool.GetStyle(StopLineStyle.StopLineType.Solid) : NodeMarkupTool.GetStyle(RegularLineStyle.RegularLineType.Dashed);
-                    var newLine = Tool.Markup.AddLine(pointPair, lineType);
+                    var style = NodeMarkupTool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed, true);
+                    var newLine = Tool.Markup.AddRegularLine(pointPair, style);
                     Panel.EditLine(newLine);
                 }
 
