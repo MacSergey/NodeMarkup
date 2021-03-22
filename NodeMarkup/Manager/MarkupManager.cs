@@ -17,8 +17,8 @@ namespace NodeMarkup.Manager
     {
         public static NodeMarkupManager NodeManager { get; }
         public static SegmentMarkupManager SegmentManager { get; }
-        public static int LoadErrors { get; set; } = 0;
-        public static bool HasLoadErrors => LoadErrors != 0;
+        public static int Errors { get; set; } = 0;
+        public static bool HasErrors => Errors != 0;
 
         static MarkupManager()
         {
@@ -78,11 +78,10 @@ namespace NodeMarkup.Manager
         {
             var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", Mod.Version));
 
-            foreach(var markupConfig in NodeManager.ToXml())
-                confix.Add(markupConfig);
+            Errors = 0;
 
-            foreach (var markupConfig in SegmentManager.ToXml())
-                confix.Add(markupConfig);
+            NodeManager.ToXml(confix);
+            SegmentManager.ToXml(confix);
 
             return confix;
         }
@@ -91,7 +90,7 @@ namespace NodeMarkup.Manager
             if (clear)
                 Clear();
 
-            LoadErrors = 0;
+            Errors = 0;
 
             var version = GetVersion(config);
 
@@ -106,7 +105,7 @@ namespace NodeMarkup.Manager
         public static void SetFiled()
         {
             Clear();
-            LoadErrors = -1;
+            Errors = -1;
         }
     }
     public abstract class MarkupManager<MarkupType>
@@ -114,6 +113,9 @@ namespace NodeMarkup.Manager
     {
         protected Dictionary<ushort, MarkupType> Markups { get; } = new Dictionary<ushort, MarkupType>();
         protected HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
+        protected abstract string ItemName { get; }
+        protected abstract string XmlName { get; }
+        protected abstract ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map);
 
         static PropManager PropManager => Singleton<PropManager>.instance;
 
@@ -178,38 +180,62 @@ namespace NodeMarkup.Manager
             NeedUpdate.Clear();
             Markups.Clear();
         }
-        public IEnumerable<XElement> ToXml() => Markups.Values.Select(m => m.ToXml());
-        public abstract void FromXml(XElement config, ObjectsMap map, Version version);
+        public void ToXml(XElement config)
+        {
+            foreach (var markup in Markups.Values)
+            {
+                try
+                {
+                    config.Add(markup.ToXml());
+                }
+                catch (Exception error)
+                {
+                    Mod.Logger.Error($"Could not save {ItemName} #{markup.Id} markup", error);
+                    MarkupManager.Errors += 1;
+                }
+            }
+        }
+        public void FromXml(XElement config, ObjectsMap map, Version version)
+        {
+            var tryGet = MapTryGet(map);
+            foreach (var markupConfig in config.Elements(XmlName))
+            {
+                var id = markupConfig.GetAttrValue<ushort>(nameof(Markup.Id));
+                if (id == 0)
+                    continue;
+
+                while (tryGet(id, out var targetId))
+                    id = targetId;
+
+                var markup = Get(id);
+
+                try
+                {
+                    markup.FromXml(version, markupConfig, map);
+                    NeedUpdate.Add(markup.Id);
+                    Mod.Logger.Debug($"{ItemName} #{markup.Id} markup loaded");
+                }
+                catch (Exception error)
+                {
+                    Mod.Logger.Error($"Could not load {ItemName} #{markup.Id} markup", error);
+                    MarkupManager.Errors += 1;
+                }
+            }
+        }
     }
     public class NodeMarkupManager : MarkupManager<NodeMarkup>
     {
         protected override NodeMarkup NewMarkup(ushort id) => new NodeMarkup(id);
-
-        public override void FromXml(XElement config, ObjectsMap map, Version version)
-        {
-            foreach (var markupConfig in config.Elements(NodeMarkup.XmlName))
-            {
-                if (NodeMarkup.FromXml(version, markupConfig, map, out NodeMarkup markup))
-                    NeedUpdate.Add(markup.Id);
-                else
-                    MarkupManager.LoadErrors += 1;
-            }
-        }
+        protected override string ItemName => "Node";
+        protected override string XmlName => NodeMarkup.XmlName;
+        protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetNode;
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
         protected override SegmentMarkup NewMarkup(ushort id) => new SegmentMarkup(id);
-
-        public override void FromXml(XElement config, ObjectsMap map, Version version)
-        {
-            foreach (var markupConfig in config.Elements(SegmentMarkup.XmlName))
-            {
-                if (SegmentMarkup.FromXml(version, markupConfig, map, out SegmentMarkup markup))
-                    NeedUpdate.Add(markup.Id);
-                else
-                    MarkupManager.LoadErrors += 1;
-            }
-        }
+        protected override string ItemName => "Segment";
+        protected override string XmlName => SegmentMarkup.XmlName;
+        protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
     }
 
     public enum MaterialType

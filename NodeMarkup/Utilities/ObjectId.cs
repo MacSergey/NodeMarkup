@@ -67,6 +67,32 @@ namespace NodeMarkup.Utils
             IsMirror = isMirror;
         }
         public bool TryGetValue(ObjectId key, out ObjectId value) => Map.TryGetValue(key, out value);
+        public bool TryGetNode(ushort nodeIdKey, out ushort nodeIdValue)
+        {
+            if (Map.TryGetValue(new ObjectId() { Node = nodeIdKey }, out ObjectId value))
+            {
+                nodeIdValue = value.Node;
+                return true;
+            }
+            else
+            {
+                nodeIdValue = default;
+                return false;
+            }
+        }
+        public bool TryGetSegment(ushort segmentIdKey, out ushort segmentIdValue)
+        {
+            if (Map.TryGetValue(new ObjectId() { Segment = segmentIdKey }, out ObjectId value))
+            {
+                segmentIdValue = value.Node;
+                return true;
+            }
+            else
+            {
+                segmentIdValue = default;
+                return false;
+            }
+        }
 
         public IEnumerator<KeyValuePair<ObjectId, ObjectId>> GetEnumerator() => Map.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -86,6 +112,8 @@ namespace NodeMarkup.Utils
         public void AddNode(ushort source, ushort target) => this[new ObjectId() { Node = source }] = new ObjectId() { Node = target };
 
         public void Remove(ObjectId key) => Map.Remove(key);
+
+        public delegate bool TryGetDelegate<T>(T key, out T value);
     }
     public enum ObjectType : long
     {

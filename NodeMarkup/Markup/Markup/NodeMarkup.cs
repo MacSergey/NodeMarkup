@@ -66,27 +66,7 @@ namespace NodeMarkup.Manager
         {
             var i = EntersList.IndexOf(first);
             var j = EntersList.IndexOf(second);
-            return BetweenEnters.TryGetValue(i,j, out line);
-        }
-
-        public static bool FromXml(Version version, XElement config, ObjectsMap map, out NodeMarkup markup)
-        {
-            var nodeId = config.GetAttrValue<ushort>(nameof(Id));
-            while (map.TryGetValue(new ObjectId() { Node = nodeId }, out ObjectId targetNode))
-                nodeId = targetNode.Node;
-
-            try
-            {
-                markup = MarkupManager.NodeManager.Get(nodeId);
-                markup.FromXml(version, config, map);
-                return true;
-            }
-            catch (Exception error)
-            {
-                Mod.Logger.Error($"Could not load node #{nodeId} markup", error);
-                markup = null;
-                return false;
-            }
+            return BetweenEnters.TryGetValue(i, j, out line);
         }
         public override void FromXml(Version version, XElement config, ObjectsMap map)
         {

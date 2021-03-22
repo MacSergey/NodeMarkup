@@ -44,10 +44,10 @@ namespace NodeMarkup
 
         private void ShowLoadError()
         {
-            if (MarkupManager.HasLoadErrors)
+            if (MarkupManager.HasErrors)
             {
                 var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = MarkupManager.LoadErrors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.LoadErrors) : Localize.Mod_LoadFailedAll;
+                messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
             }
         }
         private void ShowBetaWarning()
