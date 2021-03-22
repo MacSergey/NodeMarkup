@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>, IRender
+    public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>, IOverlay
     {
         Vector3 Position { get; }
         bool GetT(MarkupLine line, out float t);
@@ -36,8 +36,11 @@ namespace NodeMarkup.Manager
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
-            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color, width ?? DefaultWidth, alphaBlend);
+        public void Render(OverlayData data)
+        {
+            data.Width ??= DefaultWidth;
+            NodeMarkupTool.RenderCircle(Position, data);
+        }
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
         public abstract void Update();
@@ -115,10 +118,10 @@ namespace NodeMarkup.Manager
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
         public override void Update() => Init(LinePair.Markup.GetIntersect(LinePair).Position);
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public new void Render(OverlayData data)
         {
-            First.Render(cameraInfo, color, width, alphaBlend);
-            Second.Render(cameraInfo, color, width, alphaBlend);
+            First.Render(data);
+            Second.Render(data);
         }
     }
 }

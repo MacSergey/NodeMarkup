@@ -128,7 +128,7 @@ namespace NodeMarkup.Tools
         protected void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
         {
             foreach (var point in TargetPoints)
-                point.Render(cameraInfo);
+                point.Render(new OverlayData(cameraInfo));
         }
     }
 }

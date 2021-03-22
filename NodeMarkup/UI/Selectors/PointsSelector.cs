@@ -119,22 +119,22 @@ namespace NodeMarkup.UI
                 {
                     RenderGroupBG(cameraInfo);
                     if (IsHoverPoint)
-                        HoverPoint.Render(cameraInfo, Color);
+                        HoverPoint.Render(new OverlayData(cameraInfo) { Color = Color });
                     RenderGroupFG(cameraInfo);
                 }
 
                 foreach (var bound in PointsBounds.Values)
                 {
-                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Colors.White, PointSize + 0.1f);
-                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Colors.White, PointSize - 0.05f);
-                    NodeMarkupTool.RenderCircle(cameraInfo, bound.center, Color, PointSize);
+                    NodeMarkupTool.RenderCircle(bound.center, new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize + 0.1f });
+                    NodeMarkupTool.RenderCircle(bound.center, new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize - 0.05f });
+                    NodeMarkupTool.RenderCircle(bound.center, new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
                 }
 
                 if (IsHoverPoint)
-                    NodeMarkupTool.RenderCircle(cameraInfo, PointsBounds[HoverPoint].center, Colors.Hover, PointSize + Space);
+                    NodeMarkupTool.RenderCircle(PointsBounds[HoverPoint].center, new OverlayData(cameraInfo) { Color = Colors.Hover, Width = PointSize + Space });
             }
             else
-                NodeMarkupTool.RenderCircle(cameraInfo, Position, Color, PointSize);
+                NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
         }
         protected abstract void RenderGroupBG(RenderManager.CameraInfo cameraInfo);
         protected abstract void RenderGroupFG(RenderManager.CameraInfo cameraInfo);
@@ -165,14 +165,14 @@ namespace NodeMarkup.UI
                 PointsBounds.Add(point, pointBounds);
             }
         }
-        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => RenderGroup(cameraInfo, Colors.White, Width - 0.43f, false);
-        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => RenderGroup(cameraInfo, Colors.Blue, Width);
-        private void RenderGroup(RenderManager.CameraInfo cameraInfo, Color color, float width, bool? alphaBlend = null)
+        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => RenderGroup(new OverlayData(cameraInfo) { Color = Colors.White, Width = Width - 0.43f, AlphaBlend = false });
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => RenderGroup(new OverlayData(cameraInfo) { Color = Colors.Blue, Width = Width });
+        private void RenderGroup(OverlayData data)
         {
             if (Points.Count > 2)
-                NodeMarkupTool.RenderCircle(cameraInfo, Position, color, width, alphaBlend);
+                NodeMarkupTool.RenderCircle(Position, data);
             else
-                LineLeaveBounds.Render(cameraInfo, color, width, alphaBlend);
+                LineLeaveBounds.Render(data);
         }
 
         protected override bool OnLeave(Ray ray) => Points.Count != 2 ? CircleLeaveBounds.IntersectRay(ray) : LineLeaveBounds.IntersectRay(ray);
@@ -196,8 +196,8 @@ namespace NodeMarkup.UI
             }
         }
 
-        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.White, LeaveBounds.Size - 0.43f, false);
-        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(cameraInfo, Colors.Blue, LeaveBounds.Size);
+        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = LeaveBounds.Size - 0.43f, AlphaBlend = false });
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(new OverlayData(cameraInfo) { Color = Colors.Blue, Width = LeaveBounds.Size });
 
         protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
     }

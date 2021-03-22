@@ -15,7 +15,7 @@ using UnityEngine;
 namespace NodeMarkup.Manager
 {
 
-    public abstract class Enter : IRender, IDeletable, ISupport, IComparable<Enter>
+    public abstract class Enter : IOverlay, IDeletable, ISupport, IComparable<Enter>
     {
         byte _pointNum;
         public static string XmlName { get; } = "E";
@@ -191,13 +191,13 @@ namespace NodeMarkup.Manager
                 point.Reset();
         }
         public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public void Render(OverlayData data)
         {
             if (Position == null)
                 return;
 
             var bezier = new Line3(GetPosition(-RoadHalfWidth), GetPosition(RoadHalfWidth)).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend);
+            NodeMarkupTool.RenderBezier(bezier, data);
 #if DEBUG_ENTER
             var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);

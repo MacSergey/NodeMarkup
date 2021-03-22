@@ -144,7 +144,7 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                HoverPoint.Render(cameraInfo, Colors.Hover, 0.5f);
+                HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.5f });
 
             RenderPointsOverlay(cameraInfo);
 
@@ -181,7 +181,7 @@ namespace NodeMarkup.Tools
             var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color);
+            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -195,7 +195,7 @@ namespace NodeMarkup.Tools
                 c = SelectPoint.Position,
                 d = HoverPoint.Position,
             };
-            NodeMarkupTool.RenderBezier(cameraInfo, lineBezier, color);
+            NodeMarkupTool.RenderBezier(lineBezier, new OverlayData(cameraInfo) { Color = color });
 
             var normal = SelectPoint.Direction.Turn90(false);
 
@@ -206,7 +206,7 @@ namespace NodeMarkup.Tools
             };
             normalBezier.b = normalBezier.a + normal / 2;
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
-            NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, color, 2f, cut: true);
+            NodeMarkupTool.RenderBezier(normalBezier, new OverlayData(cameraInfo) { Color = color, Width = 2f, Cut = true });
         }
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -222,7 +222,7 @@ namespace NodeMarkup.Tools
             bezier.c = v >= 0 ? bezier.c : -bezier.c;
 
             NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Hover);
+            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
     }
 }

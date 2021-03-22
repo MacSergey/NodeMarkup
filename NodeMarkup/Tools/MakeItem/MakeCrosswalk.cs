@@ -111,7 +111,7 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                HoverPoint.Render(cameraInfo, Colors.Hover, 0.5f);
+                HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.5f });
 
             RenderPointsOverlay(cameraInfo);
 
@@ -130,7 +130,7 @@ namespace NodeMarkup.Tools
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
 
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, MarkupCrosswalkPoint.Shift * 2, cut: true);
+            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = color, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -139,7 +139,7 @@ namespace NodeMarkup.Tools
             dir.Normalize();
             var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.White, MarkupCrosswalkPoint.Shift * 2, cut: true);
+            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
         }
     }
 }

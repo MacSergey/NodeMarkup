@@ -113,7 +113,7 @@ namespace NodeMarkup.Tools
             if (IsHoverNode)
             {
                 var node = HoverNodeId.GetNode();
-                NodeMarkupTool.RenderCircle(cameraInfo, node.m_position, Colors.Orange, Mathf.Max(6f, node.Info.m_halfWidth * 2f));
+                NodeMarkupTool.RenderCircle(node.m_position, new OverlayData(cameraInfo) { Color = Colors.Orange, Width = Mathf.Max(6f, node.Info.m_halfWidth * 2f) });
             }
             else if (IsHoverSegment)
             {
@@ -124,7 +124,7 @@ namespace NodeMarkup.Tools
                     d = segment.m_endNode.GetNode().m_position,
                 };
                 NetSegment.CalculateMiddlePoints(bezier.a, segment.m_startDirection, bezier.d, segment.m_endDirection, true, true, out bezier.b, out bezier.c);
-                NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Orange, segment.Info.m_halfWidth * 2);
+                NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Orange, Width = segment.Info.m_halfWidth * 2 });
             }
         }
     }

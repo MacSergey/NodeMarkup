@@ -84,7 +84,7 @@ namespace NodeMarkup.UI.Editors
             Shift.isVisible = value;
         }
 
-        public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(cameraInfo, Colors.White, 2f);
+        public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
     }
     public class PointsItemsPanel : ItemsPanel<PointItem, MarkupEnterPoint>
     {

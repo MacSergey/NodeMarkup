@@ -100,10 +100,10 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public void Render(OverlayData data)
         {
-            Contour.Render(cameraInfo, color, width, alphaBlend);
-            Style.Value.Render(this, cameraInfo, color, width, alphaBlend);
+            Contour.Render(data);
+            Style.Value.Render(this, data);
         }
 
         public override string ToString() => Math.Abs(GetHashCode()).ToString();

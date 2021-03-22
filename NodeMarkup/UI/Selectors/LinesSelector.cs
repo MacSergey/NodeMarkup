@@ -38,10 +38,10 @@ namespace NodeMarkup.UI
         public void Render(RenderManager.CameraInfo cameraInfo, bool renderHover = true)
         {
             foreach (var line in Lines)
-                line.Render(cameraInfo, Color, LineSize);
+                line.Render(new OverlayData(cameraInfo) { Color = Color, Width = LineSize });
 
             if (renderHover && IsHoverLine)
-                HoverLine.Render(cameraInfo, Colors.Hover, LineSize + Space);
+                HoverLine.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = LineSize + Space });
         }
     }
 }

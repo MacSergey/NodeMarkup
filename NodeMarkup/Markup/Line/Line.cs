@@ -112,28 +112,9 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
-            => Trajectory.Render(cameraInfo, color, width, alphaBlend);
+        public virtual void Render(OverlayData data) => Trajectory.Render(data);
         public abstract bool ContainsRule(MarkupLineRawRule rule);
         public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
-
-        //public static MarkupLine FromStyleType(Markup markup, MarkupPointPair pointPair, Style.StyleType style)
-        //{
-        //    switch (style.GetGroup())
-        //    {
-        //        case Style.StyleType.StopLine:
-        //            return new MarkupStopLine(markup, pointPair, (StopLineStyle.StopLineType)(int)style);
-        //        case Style.StyleType.Crosswalk:
-        //            return new MarkupCrosswalkLine(markup, pointPair, (CrosswalkStyle.CrosswalkType)(int)style);
-        //        case Style.StyleType.RegularLine:
-        //        default:
-        //            var regularStyle = (RegularLineStyle.RegularLineType)(int)style;
-        //            if (regularStyle == RegularLineStyle.RegularLineType.Empty)
-        //                return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
-        //            else
-        //                return pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair, regularStyle) : new MarkupRegularLine(markup, pointPair, regularStyle);
-        //    }
-        //}
 
         public Dependences GetDependences() => Markup.GetLineDependences(this);
 

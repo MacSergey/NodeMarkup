@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
     public class CrosswalkBorderEdge : SupportPoint, ILinePartEdge
     {
         public static bool FromXml(XElement config, MarkupLine line, ObjectsMap map, out CrosswalkBorderEdge borderPoint)
-        {            
+        {
             if (line is MarkupCrosswalkLine crosswalkLine)
             {
                 var border = (config.GetAttrValue("B", (int)BorderPosition.Right) == (int)BorderPosition.Left) ^ map.IsMirror ? BorderPosition.Left : BorderPosition.Right;
@@ -149,18 +149,18 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public new void Render(OverlayData data)
         {
-            Crosswalk.Render(cameraInfo, Colors.Hover);
-            CrosswalkLine.Render(cameraInfo, color, width, alphaBlend);
+            Crosswalk.Render(new OverlayData(data.CameraInfo) { Color = Colors.Hover });
+            CrosswalkLine.Render(data);
 
-            switch(Border)
+            switch (Border)
             {
                 case BorderPosition.Left:
-                    Crosswalk.LeftBorderTrajectory.Render(cameraInfo, color, width, alphaBlend);
+                    Crosswalk.LeftBorderTrajectory.Render(data);
                     break;
                 case BorderPosition.Right:
-                    Crosswalk.RightBorderTrajectory.Render(cameraInfo, color, width, alphaBlend);
+                    Crosswalk.RightBorderTrajectory.Render(data);
                     break;
             }
         }

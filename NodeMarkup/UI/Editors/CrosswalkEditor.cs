@@ -245,8 +245,8 @@ namespace NodeMarkup.UI.Editors
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
-            HoverBorderPanel?.Value?.Render(cameraInfo, Colors.Hover);
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            HoverBorderPanel?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
 
         public void BorderSetup()

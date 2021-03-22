@@ -129,8 +129,12 @@ namespace NodeMarkup.Manager
             line = null;
             return false;
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
-            => NodeMarkupTool.RenderCircle(cameraInfo, Position, color ?? Color, width ?? DefaultWidth, alphaBlend);
+        public virtual void Render(OverlayData data)
+        {
+            data.Width ??= DefaultWidth;
+            data.Color ??= Color;
+            NodeMarkupTool.RenderCircle(Position, data);
+        }
 
         public XElement ToXml()
         {
@@ -214,15 +218,17 @@ namespace NodeMarkup.Manager
             Split.Value = false;
             Shift.Value = 0f;
         }
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public override void Render(OverlayData data)
         {
             if (!Split)
-                base.Render(cameraInfo, color, width, alphaBlend);
+                base.Render(data);
             else
             {
                 var normal = Direction.Turn90(true);
-                var bezierA = new Line3(Position - normal * Shift, Position + normal * Shift).GetBezier();
-                NodeMarkupTool.RenderBezier(cameraInfo, bezierA, color ?? Color, width ?? DefaultWidth, alphaBlend);
+                var bezier = new Line3(Position - normal * Shift, Position + normal * Shift).GetBezier();
+                data.Width ??= DefaultWidth;
+                data.Color ??= Color;
+                NodeMarkupTool.RenderBezier(bezier, data);
             }
         }
     }
@@ -249,11 +255,13 @@ namespace NodeMarkup.Manager
             Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Enter.TranformCoef);
             Direction = SourcePoint.Direction;
         }
-        public override void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public override void Render(OverlayData data)
         {
             var shift = Enter.CornerDir.Turn90(true) * Shift;
             var bezier = new Line3(Position - shift, Position + shift).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color ?? Color, width ?? DefaultWidth, alphaBlend);
+            data.Width ??= DefaultWidth;
+            data.Color ??= Color;
+            NodeMarkupTool.RenderBezier(bezier, data);
         }
         public override string ToString() => $"{base.ToString()}C";
     }

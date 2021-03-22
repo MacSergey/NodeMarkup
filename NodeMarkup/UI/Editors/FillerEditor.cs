@@ -171,12 +171,12 @@ namespace NodeMarkup.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverObject?.Render(cameraInfo, Colors.Hover);
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
 
             if (HoverRailPanel != null)
             {
                 var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B);
-                rail.Render(cameraInfo, Colors.Hover);
+                rail.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
 

@@ -15,7 +15,7 @@ namespace NodeMarkup.Manager
         Line,
         Bezier
     }
-    public interface ITrajectory : ICutRender
+    public interface ITrajectory : IOverlay
     {
         TrajectoryType TrajectoryType { get; }
         float Length { get; }
@@ -85,8 +85,7 @@ namespace NodeMarkup.Manager
         public ITrajectory Invert() => new BezierTrajectory(Trajectory.Invert());
         public ITrajectory Copy() => new BezierTrajectory(Trajectory);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory, color, width, alphaBlend, cut);
+        public void Render(OverlayData data) => NodeMarkupTool.RenderBezier(Trajectory, data);
 
         public static implicit operator Bezier3(BezierTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator BezierTrajectory(Bezier3 bezier) => new BezierTrajectory(bezier);
@@ -129,13 +128,12 @@ namespace NodeMarkup.Manager
         public ITrajectory Invert() => new StraightTrajectory(Trajectory.b, Trajectory.a, IsSection);
         public ITrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend);
+        public void Render(OverlayData data) => NodeMarkupTool.RenderBezier(Trajectory.GetBezier(), data);
 
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);
     }
-    public class TrajectoryBound : IRender
+    public class TrajectoryBound : IOverlay
     {
         private static float Coef { get; } = Mathf.Sin(45 * Mathf.Deg2Rad);
         public ITrajectory Trajectory { get; }
@@ -165,7 +163,6 @@ namespace NodeMarkup.Manager
         public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
         public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
-            => Trajectory.Render(cameraInfo, color, width, alphaBlend);
+        public void Render(OverlayData data) => Trajectory.Render(data);
     }
 }

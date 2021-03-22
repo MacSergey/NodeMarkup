@@ -102,6 +102,7 @@
     <Compile Include="Markup\Enter\Sources.cs" />
     <Compile Include="Markup\Filler\Style\FillerStyle3D.cs" />
     <Compile Include="Markup\Line\Style\RegularLineStyle3D.cs" />
+    <Compile Include="Markup\Markup\Interfaces.cs" />
     <Compile Include="Markup\Markup\Markup.cs" />
     <Compile Include="Markup\Markup\SegmentMarkup.cs" />
     <Compile Include="Markup\Template.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\MoveItIntegration.cs" />
     <Compile Include="Utilities\ObjectId.cs" />
+    <Compile Include="Utilities\Overlay.cs" />
     <Compile Include="Utilities\Render.cs" />
     <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
     <Compile Include="Utilities\Triangulator.cs" />

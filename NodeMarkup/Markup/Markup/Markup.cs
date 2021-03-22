@@ -10,55 +10,7 @@ using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
-{
-    public interface IRender
-    {
-        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null);
-    }
-    public interface ICutRender
-    {
-        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null);
-    }
-    public interface IDeletable
-    {
-        string DeleteCaptionDescription { get; }
-        string DeleteMessageDescription { get; }
-        Dependences GetDependences();
-    }
-    public interface ISupport { }
-    public interface ISupport<Type> where Type : ISupport { }
-    public interface ISupportPoints : ISupport<MarkupEnterPoint> { }
-    public interface ISupportEnters : ISupport<Enter> { }
-    public interface ISupportLines : ISupport<MarkupLine> { }
-    public interface ISupportFillers : ISupport<MarkupFiller> { }
-    public interface ISupportCrosswalks : ISupport<MarkupCrosswalk> { }
-    public interface ISupportStyleTemplate : ISupport<StyleTemplate> { }
-    public interface ISupportIntersectionTemplate : ISupport<IntersectionTemplate> { }
-
-    public interface IUpdate : ISupport
-    {
-        void Update(bool onlySelfUpdate = false);
-    }
-    public interface IUpdate<Type>
-        where Type : IUpdate
-    {
-        void Update(Type item, bool recalculate = false, bool recalcDependences = false);
-    }
-    public interface IUpdatePoints : IUpdate<MarkupPoint> { }
-    public interface IUpdateLines : IUpdate<MarkupLine> { }
-    public interface IUpdateFillers : IUpdate<MarkupFiller> { }
-    public interface IUpdateCrosswalks : IUpdate<MarkupCrosswalk> { }
-
-    public interface IItem : IUpdate, IDeletable, IRender { }
-    public interface IStyleItem : IItem
-    {
-        void RecalculateStyleData();
-    }
-
-    public interface IStyleData
-    {
-        IEnumerable<IDrawData> GetDrawData();
-    }
+{    
     public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportEnters, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, ISupportIntersectionTemplate, IToXml
     {
         #region PROPERTIES

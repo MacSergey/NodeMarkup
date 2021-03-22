@@ -116,7 +116,7 @@ namespace NodeMarkup.Manager
             return sin != 0 ? offset / sin : 1000f;
         }
 
-        public virtual void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null) { }
+        public virtual void Render(MarkupFiller filler, OverlayData data) { }
 
         public override XElement ToXml()
         {

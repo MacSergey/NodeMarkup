@@ -40,8 +40,8 @@ namespace NodeMarkup.Tools
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            DragPoint.Enter.Render(cameraInfo, Colors.Hover, 2f);
-            DragPoint.Render(cameraInfo);
+            DragPoint.Enter.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f });
+            DragPoint.Render(new OverlayData(cameraInfo));
         }
     }
 }

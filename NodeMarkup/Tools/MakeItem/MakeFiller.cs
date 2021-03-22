@@ -97,7 +97,7 @@ namespace NodeMarkup.Tools
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
             var color = IsHover && Hover.Equals(Contour.First) ? Colors.Green : Colors.Hover;
-            Contour.Render(cameraInfo, color);
+            Contour.Render(new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -108,12 +108,12 @@ namespace NodeMarkup.Tools
             {
                 var linePart = Contour.GetFillerLine(Contour.Last, Hover);
                 if (linePart.GetTrajectory(out ITrajectory trajectory))
-                    trajectory.Render(cameraInfo, Colors.Green);
+                    trajectory.Render(new OverlayData(cameraInfo) { Color = Colors.Green });
             }
             else
             {
                 var bezier = new Line3(Contour.Last.Position, NodeMarkupTool.MouseWorldPosition).GetBezier();
-                NodeMarkupTool.RenderBezier(cameraInfo, bezier, Colors.Hover);
+                NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
 

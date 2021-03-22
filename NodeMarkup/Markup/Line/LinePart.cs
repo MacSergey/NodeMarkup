@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLinePart : IToXml, IRender
+    public abstract class MarkupLinePart : IToXml, IOverlay
     {
         public Action OnRuleChanged { private get; set; }
 
@@ -58,10 +58,10 @@ namespace NodeMarkup.Manager
             }
 
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+        public virtual void Render(OverlayData data)
         {
             if (GetTrajectory(out ITrajectory trajectory))
-                trajectory.Render(cameraInfo, color, width, alphaBlend);
+                trajectory.Render(data);
         }
 
         public virtual XElement ToXml()
