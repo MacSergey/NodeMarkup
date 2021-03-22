@@ -191,13 +191,13 @@ namespace NodeMarkup.Manager
                 point.Reset();
         }
         public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             if (Position == null)
                 return;
 
             var bezier = new Line3(GetPosition(-RoadHalfWidth), GetPosition(RoadHalfWidth)).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend, cut);
+            NodeMarkupTool.RenderBezier(cameraInfo, bezier, color, width, alphaBlend);
 #if DEBUG_ENTER
             var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);

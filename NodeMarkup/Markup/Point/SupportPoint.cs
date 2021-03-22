@@ -36,7 +36,7 @@ namespace NodeMarkup.Manager
         public abstract bool Equals(ISupportPoint other);
         public abstract bool GetT(MarkupLine line, out float t);
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
             => NodeMarkupTool.RenderCircle(cameraInfo, Position, color, width ?? DefaultWidth, alphaBlend);
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);
@@ -115,10 +115,10 @@ namespace NodeMarkup.Manager
         }
         public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
         public override void Update() => Init(LinePair.Markup.GetIntersect(LinePair).Position);
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
-            First.Render(cameraInfo, color, width, alphaBlend, cut);
-            Second.Render(cameraInfo, color, width, alphaBlend, cut);
+            First.Render(cameraInfo, color, width, alphaBlend);
+            Second.Render(cameraInfo, color, width, alphaBlend);
         }
     }
 }

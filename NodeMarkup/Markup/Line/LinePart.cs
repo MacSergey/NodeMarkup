@@ -58,10 +58,10 @@ namespace NodeMarkup.Manager
             }
 
         }
-        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public virtual void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             if (GetTrajectory(out ITrajectory trajectory))
-                trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+                trajectory.Render(cameraInfo, color, width, alphaBlend);
         }
 
         public virtual XElement ToXml()

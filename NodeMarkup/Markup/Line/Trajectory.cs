@@ -15,7 +15,7 @@ namespace NodeMarkup.Manager
         Line,
         Bezier
     }
-    public interface ITrajectory : IRender
+    public interface ITrajectory : ICutRender
     {
         TrajectoryType TrajectoryType { get; }
         float Length { get; }
@@ -130,7 +130,7 @@ namespace NodeMarkup.Manager
         public ITrajectory Copy() => new StraightTrajectory(Trajectory, IsSection);
 
         public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend, cut);
+            => NodeMarkupTool.RenderBezier(cameraInfo, Trajectory.GetBezier(), color, width, alphaBlend);
 
         public static implicit operator Line3(StraightTrajectory trajectory) => trajectory.Trajectory;
         public static explicit operator StraightTrajectory(Line3 line) => new StraightTrajectory(line);
@@ -165,7 +165,7 @@ namespace NodeMarkup.Manager
         public bool IntersectRay(Ray ray) => BoundsList.Any(b => b.IntersectRay(ray));
         public bool Intersects(Bounds bounds) => BoundsList.Any(b => b.Intersects(bounds));
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
-            => Trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
+            => Trajectory.Render(cameraInfo, color, width, alphaBlend);
     }
 }

@@ -170,10 +170,10 @@ namespace NodeMarkup.Manager
         public bool ContainsPoint(MarkupPoint point) => EnterLine.ContainsPoint(point);
 
         public Dependences GetDependences() => Markup.GetCrosswalkDependences(this);
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             foreach (var trajectory in BorderTrajectories)
-                trajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+                trajectory.Render(cameraInfo, color, width, alphaBlend);
         }
 
         #region XML

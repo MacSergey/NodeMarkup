@@ -149,18 +149,18 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public new void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             Crosswalk.Render(cameraInfo, Colors.Hover);
-            CrosswalkLine.Render(cameraInfo, color, width, alphaBlend, cut);
+            CrosswalkLine.Render(cameraInfo, color, width, alphaBlend);
 
             switch(Border)
             {
                 case BorderPosition.Left:
-                    Crosswalk.LeftBorderTrajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+                    Crosswalk.LeftBorderTrajectory.Render(cameraInfo, color, width, alphaBlend);
                     break;
                 case BorderPosition.Right:
-                    Crosswalk.RightBorderTrajectory.Render(cameraInfo, color, width, alphaBlend, cut);
+                    Crosswalk.RightBorderTrajectory.Render(cameraInfo, color, width, alphaBlend);
                     break;
             }
         }

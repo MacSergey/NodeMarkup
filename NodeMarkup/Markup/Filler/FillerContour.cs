@@ -242,7 +242,7 @@ namespace NodeMarkup.Manager
                 supportPoint.Update();
         }
 
-        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             foreach (var trajectory in Trajectories)
                 trajectory.Render(cameraInfo, color, width, alphaBlend);

@@ -397,11 +397,11 @@ namespace NodeMarkup.Manager
             return border;
         }
 
-        public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             GetRails(filler.Contour, out ITrajectory left, out ITrajectory right);
-            left.Render(cameraInfo, Colors.Green, width, alphaBlend, cut);
-            right.Render(cameraInfo, Colors.Red, width, alphaBlend, cut);
+            left.Render(cameraInfo, Colors.Green, width, alphaBlend);
+            right.Render(cameraInfo, Colors.Red, width, alphaBlend);
         }
 
         public override XElement ToXml()
@@ -626,10 +626,10 @@ namespace NodeMarkup.Manager
 
         protected override float GetAngle() => 90f - Angle;
 
-        public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null)
+        public override void Render(MarkupFiller filler, RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null)
         {
             if (FollowRails)
-                base.Render(filler, cameraInfo, color, width, alphaBlend, cut);
+                base.Render(filler, cameraInfo, color, width, alphaBlend);
         }
 
         public override XElement ToXml()

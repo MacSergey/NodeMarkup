@@ -13,6 +13,10 @@ namespace NodeMarkup.Manager
 {
     public interface IRender
     {
+        void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null);
+    }
+    public interface ICutRender
+    {
         void Render(RenderManager.CameraInfo cameraInfo, Color? color = null, float? width = null, bool? alphaBlend = null, bool? cut = null);
     }
     public interface IDeletable
