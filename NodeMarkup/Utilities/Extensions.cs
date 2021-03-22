@@ -74,4 +74,26 @@ namespace NodeMarkup.Utils
             return item.ToInt().ToEnum<T>();
         }
     }
+    public class NotExistEnterException : Exception 
+    {
+        public EnterType Type { get; }
+        public ushort Id { get; }
+
+        public NotExistEnterException(EnterType type, ushort id) : base(string.Empty)
+        {
+            Type = type;
+            Id = id;
+        }
+    }
+    public class NotExistItemException : Exception
+    {
+        public MarkupType Type { get; }
+        public ushort Id { get; }
+
+        public NotExistItemException(MarkupType type, ushort id) : base(string.Empty)
+        {
+            Type = type;
+            Id = id;
+        }
+    }
 }

@@ -22,7 +22,10 @@ namespace NodeMarkup.Manager
 
         public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;
         public Markup Markup { get; private set; }
+        public abstract EnterType Type { get; }
         public ushort Id { get; }
+        protected abstract bool IsExist { get; }
+
         private uint FirstLane { get; set; }
         public bool IsStartSide { get; private set; }
         public abstract int SideSign { get; }
@@ -75,10 +78,13 @@ namespace NodeMarkup.Manager
         public string DeleteCaptionDescription => throw new NotImplementedException();
         public string DeleteMessageDescription => throw new NotImplementedException();
 
-        public Enter(Markup markup, ushort segmentId)
+        public Enter(Markup markup, ushort id)
         {
             Markup = markup;
-            Id = segmentId;
+            Id = id;
+
+            if (!IsExist)
+                throw new NotExistEnterException(Type, Id);
 
             Init();
             Update();
@@ -210,7 +216,7 @@ namespace NodeMarkup.Manager
     {
         public new MarkupType Markup => (MarkupType)base.Markup;
 
-        public Enter(MarkupType markup, ushort segmentId) : base(markup, segmentId) { }
+        public Enter(MarkupType markup, ushort id) : base(markup, id) { }
     }
     public class EnterData : IToXml
     {
@@ -248,5 +254,10 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute("A", NormalAngle));
             return config;
         }
+    }
+    public enum EnterType
+    {
+        Node,
+        Segment
     }
 }

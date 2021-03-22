@@ -62,6 +62,8 @@ namespace NodeMarkup.Manager
         public virtual MarkupLine.LineType SupportLines => MarkupLine.LineType.Regular;
 
         public ushort Id { get; }
+        protected abstract bool IsExist { get; }
+
         public Vector3 Position { get; private set; }
         public float Radius { get; private set; }
         public float Height => Position.y;
@@ -112,6 +114,9 @@ namespace NodeMarkup.Manager
         public Markup(ushort id)
         {
             Id = id;
+
+            if (!IsExist)
+                throw new NotExistItemException(Type, id);
         }
 
         #region UPDATE
@@ -705,11 +710,6 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = 0x800,
         }
-        public enum MarkupType
-        {
-            NodeMarkup,
-            SegmentMarkup
-        }
     }
     public abstract class Markup<EnterType> : Markup
         where EnterType : Enter
@@ -720,5 +720,10 @@ namespace NodeMarkup.Manager
         {
             Update();
         }
+    }
+    public enum MarkupType
+    {
+        Node,
+        Segment
     }
 }

@@ -108,21 +108,21 @@ namespace NodeMarkup.Manager
             Errors = -1;
         }
     }
-    public abstract class MarkupManager<MarkupType>
-        where MarkupType : Markup
+    public abstract class MarkupManager<TypeMarkup>
+        where TypeMarkup : Markup
     {
-        protected Dictionary<ushort, MarkupType> Markups { get; } = new Dictionary<ushort, MarkupType>();
+        protected Dictionary<ushort, TypeMarkup> Markups { get; } = new Dictionary<ushort, TypeMarkup>();
         protected HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
-        protected abstract string ItemName { get; }
+        protected abstract MarkupType Type { get; }
         protected abstract string XmlName { get; }
         protected abstract ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map);
 
         static PropManager PropManager => Singleton<PropManager>.instance;
 
-        public bool TryGetMarkup(ushort id, out MarkupType markup) => Markups.TryGetValue(id, out markup);
-        public MarkupType Get(ushort id)
+        public bool TryGetMarkup(ushort id, out TypeMarkup markup) => Markups.TryGetValue(id, out markup);
+        public TypeMarkup Get(ushort id)
         {
-            if (!Markups.TryGetValue(id, out MarkupType markup))
+            if (!Markups.TryGetValue(id, out TypeMarkup markup))
             {
                 markup = NewMarkup(id);
                 Markups[id] = markup;
@@ -130,7 +130,7 @@ namespace NodeMarkup.Manager
 
             return markup;
         }
-        protected abstract MarkupType NewMarkup(ushort id);
+        protected abstract TypeMarkup NewMarkup(ushort id);
 
         public void Update()
         {
@@ -138,7 +138,7 @@ namespace NodeMarkup.Manager
             NeedUpdate.Clear();
             foreach (var nodeId in needUpdate)
             {
-                if (Markups.TryGetValue(nodeId, out MarkupType markup))
+                if (Markups.TryGetValue(nodeId, out TypeMarkup markup))
                     markup.Update();
             }
         }
@@ -147,7 +147,7 @@ namespace NodeMarkup.Manager
             if (data.m_nextInstance != ushort.MaxValue)
                 return;
 
-            if (!TryGetMarkup(id, out MarkupType markup))
+            if (!TryGetMarkup(id, out TypeMarkup markup))
                 return;
 
             if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
@@ -161,7 +161,7 @@ namespace NodeMarkup.Manager
             else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
                 Render(markup, data, MarkupLOD.LOD1);
         }
-        private void Render(MarkupType markup, RenderManager.Instance data, MarkupLOD lod)
+        private void Render(TypeMarkup markup, RenderManager.Instance data, MarkupLOD lod)
         {
             foreach (var item in markup.DrawData[lod])
                 item.Draw(data);
@@ -176,7 +176,7 @@ namespace NodeMarkup.Manager
         public void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {
-            Mod.Logger.Debug($"{typeof(MarkupType).Name} {nameof(Clear)}");
+            Mod.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
             NeedUpdate.Clear();
             Markups.Clear();
         }
@@ -190,7 +190,7 @@ namespace NodeMarkup.Manager
                 }
                 catch (Exception error)
                 {
-                    Mod.Logger.Error($"Could not save {ItemName} #{markup.Id} markup", error);
+                    Mod.Logger.Error($"Could not save {Type} #{markup.Id} markup", error);
                     MarkupManager.Errors += 1;
                 }
             }
@@ -212,11 +212,21 @@ namespace NodeMarkup.Manager
 
                     markup.FromXml(version, markupConfig, map);
                     NeedUpdate.Add(markup.Id);
-                    Mod.Logger.Debug($"{ItemName} #{markup.Id} markup loaded");
+                    //Mod.Logger.Debug($"{Type} #{markup.Id} markup loaded");
+                }
+                catch (NotExistItemException error)
+                {
+                    Mod.Logger.Error($"Could not load {error.Type} #{error.Id} markup: {error.Type} not exist");
+                    MarkupManager.Errors += 1;
+                }
+                catch (NotExistEnterException error)
+                {
+                    Mod.Logger.Error($"Could not load {Type} #{id} markup: {error.Type} enter #{error.Id} not exist");
+                    MarkupManager.Errors += 1;
                 }
                 catch (Exception error)
                 {
-                    Mod.Logger.Error($"Could not load {ItemName} #{id} markup", error);
+                    Mod.Logger.Error($"Could not load {Type} #{id} markup", error);
                     MarkupManager.Errors += 1;
                 }
             }
@@ -225,14 +235,14 @@ namespace NodeMarkup.Manager
     public class NodeMarkupManager : MarkupManager<NodeMarkup>
     {
         protected override NodeMarkup NewMarkup(ushort id) => new NodeMarkup(id);
-        protected override string ItemName => "Node";
+        protected override MarkupType Type => MarkupType.Node;
         protected override string XmlName => NodeMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetNode;
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
         protected override SegmentMarkup NewMarkup(ushort id) => new SegmentMarkup(id);
-        protected override string ItemName => "Segment";
+        protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
     }

@@ -15,11 +15,12 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class NodeMarkup : Markup<NodeEnter>, ISupportCrosswalks
+    public class NodeMarkup : Markup<SegmentEnter>, ISupportCrosswalks
     {
         public static string XmlName { get; } = "M";
 
-        public override MarkupType Type => MarkupType.NodeMarkup;
+        public override MarkupType Type => MarkupType.Node;
+        protected override bool IsExist => Id.ExistNode();
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_NodeCaption, Id);
         public override MarkupLine.LineType SupportLines => MarkupLine.LineType.All;
@@ -39,7 +40,7 @@ namespace NodeMarkup.Manager
 
         protected override Vector3 GetPosition() => Id.GetNode().m_position;
         protected override IEnumerable<ushort> GetEnters() => Id.GetNode().SegmentsId();
-        protected override Enter NewEnter(ushort id) => new NodeEnter(this, id);
+        protected override Enter NewEnter(ushort id) => new SegmentEnter(this, id);
 
         protected override void UpdateEntersProcess() => UpdateСontour();
         private void UpdateСontour()

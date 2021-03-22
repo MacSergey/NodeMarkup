@@ -34,10 +34,10 @@ namespace NodeMarkup.Manager
 
             switch (markup.Type)
             {
-                case Markup.MarkupType.NodeMarkup when map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment):
+                case MarkupType.Node when map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment):
                     enterId = targetSegment.Segment;
                     break;
-                case Markup.MarkupType.SegmentMarkup when map.TryGetValue(new ObjectId() { Node = enterId }, out ObjectId targetNode):
+                case MarkupType.Segment when map.TryGetValue(new ObjectId() { Node = enterId }, out ObjectId targetNode):
                     enterId = targetNode.Node;
                     break;
             }
@@ -200,7 +200,7 @@ namespace NodeMarkup.Manager
         }
         public override bool GetBorder(out ITrajectory line)
         {
-            if (Enter is NodeEnter nodeEnter)
+            if (Enter is SegmentEnter nodeEnter)
                 return nodeEnter.GetBorder(this, out line);
             else
             {
