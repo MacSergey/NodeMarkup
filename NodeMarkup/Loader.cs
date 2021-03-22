@@ -5,7 +5,7 @@ using ColossalFramework.Packaging;
 using HarmonyLib;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

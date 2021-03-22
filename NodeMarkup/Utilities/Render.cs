@@ -12,7 +12,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-namespace NodeMarkup.Utils
+namespace NodeMarkup.Utilities
 {
     public static class RenderHelper
     {
@@ -196,6 +196,14 @@ namespace NodeMarkup.Utils
             texture.Apply();
             return texture;
         }
+    }
+    public enum MaterialType
+    {
+        RectangleLines,
+        RectangleFillers,
+        Triangle,
+        Pavement,
+        Grass,
     }
 
     public interface IDrawData

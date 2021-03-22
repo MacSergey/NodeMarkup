@@ -18,7 +18,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using LineAlignment = NodeMarkup.Manager.LineAlignment;
 
-namespace NodeMarkup.Utils
+namespace NodeMarkup.Utilities
 {
     public static class Utilities
     {

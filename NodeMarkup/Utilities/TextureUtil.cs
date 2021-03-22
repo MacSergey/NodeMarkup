@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace NodeMarkup.Utils
+namespace NodeMarkup.Utilities
 {
     public static class TextureUtil
     {

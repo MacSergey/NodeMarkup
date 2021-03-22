@@ -2,7 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.UI;
 using NodeMarkup.UI;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;

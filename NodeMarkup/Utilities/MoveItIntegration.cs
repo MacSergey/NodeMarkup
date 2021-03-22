@@ -7,7 +7,7 @@ using System.Xml;
 using System.IO;
 using System.Linq;
 
-namespace NodeMarkup.Utils
+namespace NodeMarkup.Utilities
 {
     public class MoveItIntegrationFactory : IMoveItIntegrationFactory
     {

@@ -5,7 +5,7 @@ using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

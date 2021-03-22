@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Utils
+namespace NodeMarkup.Utilities
 {
     public class NodeMarkupShortcut : Shortcut
     {

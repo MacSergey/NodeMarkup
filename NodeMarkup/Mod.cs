@@ -11,7 +11,7 @@ using ColossalFramework.Globalization;
 using ColossalFramework;
 using ColossalFramework.UI;
 using ColossalFramework.PlatformServices;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using NodeMarkup.Tools;
 using UnityEngine.SceneManagement;
 using ModsCommon;
@@ -74,12 +74,12 @@ namespace NodeMarkup
 
         public static bool OpenTroubleshooting()
         {
-            Utilities.OpenUrl(TroubleshootingUrl);
+            Utilities.Utilities.OpenUrl(TroubleshootingUrl);
             return true;
         }
         public static bool GetStable()
         {
-            Utilities.OpenUrl(StableURL);
+            Utilities.Utilities.OpenUrl(StableURL);
             return true;
         }
 

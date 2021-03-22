@@ -2,7 +2,7 @@
 using ColossalFramework.UI;
 using ICities;
 using NodeMarkup.Manager;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
@@ -393,9 +393,9 @@ namespace NodeMarkup
             AddTroubleshooting(group);
             AddDiscord(group);
         }
-        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.OpenUrl(Mod.WikiUrl));
-        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.OpenUrl(Mod.DiscordURL));
-        private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.OpenUrl(Mod.TroubleshootingUrl));
+        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.Utilities.OpenUrl(Mod.WikiUrl));
+        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
+        private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
 
         #endregion
 

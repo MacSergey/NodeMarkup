@@ -16,7 +16,7 @@ using HarmonyLib;
 using ColossalFramework.Globalization;
 using ModsCommon.Utilities;
 
-namespace NodeMarkup.Utils
+namespace NodeMarkup.Utilities
 {
     public class SerializableDataExtension : SerializableDataExtensionBase
     {

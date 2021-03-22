@@ -2,7 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
-using NodeMarkup.Utils;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -245,14 +245,5 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
-    }
-
-    public enum MaterialType
-    {
-        RectangleLines,
-        RectangleFillers,
-        Triangle,
-        Pavement,
-        Grass,
     }
 }
