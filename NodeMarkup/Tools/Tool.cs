@@ -161,6 +161,7 @@ namespace NodeMarkup.Tools
         }
         private void Reset()
         {
+            NextMode = null;
             SetModeNow(ToolModeType.Select);
             cursorInfoLabel.isVisible = false;
             cursorInfoLabel.text = string.Empty;
@@ -204,8 +205,9 @@ namespace NodeMarkup.Tools
         {
             if (NextMode != null)
             {
-                SetModeNow(NextMode);
+                var nextMode = NextMode;
                 NextMode = null;
+                SetModeNow(nextMode);
             }
             if ((RenderManager.CurrentCameraInfo.m_layerMask & (3 << 24)) == 0)
             {
@@ -394,6 +396,9 @@ namespace NodeMarkup.Tools
         private void PasteMarkup()
         {
             Mod.Logger.Debug($"Paste marking");
+
+            if (MarkupBuffer == null)
+                return;
 
             if (Settings.DeleteWarnings && !Markup.IsEmpty)
             {
