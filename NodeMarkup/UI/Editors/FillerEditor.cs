@@ -141,10 +141,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is FillerStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => NodeMarkupTool.ToStyleBuffer(Manager.Style.StyleType.Filler, EditObject.Style.Value);
+        private void CopyStyle() => Tool.ToStyleBuffer(Manager.Style.StyleType.Filler, EditObject.Style.Value);
         private void PasteStyle()
         {
-            if (NodeMarkupTool.FromStyleBuffer<FillerStyle>(Manager.Style.StyleType.Filler, out var style))
+            if (Tool.FromStyleBuffer<FillerStyle>(Manager.Style.StyleType.Filler, out var style))
                 ApplyStyle(style);
         }
 

@@ -60,7 +60,7 @@ namespace NodeMarkup.Tools
         }
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
-        private static Dictionary<Style.StyleType, Style> StyleBuffer { get; } = EnumExtension.GetEnumValues<Markup.Item>(i => i.IsItem()).ToDictionary(i => i.ToInt().ToEnum<Style.StyleType>(), i => (Style)null);
+        private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
@@ -646,7 +646,7 @@ namespace NodeMarkup.Tools
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
 
-        public static TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
+        public TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum
             where TStyle : Style
         {
@@ -697,13 +697,13 @@ namespace NodeMarkup.Tools
                 _ => StyleModifier.NotSet,
             };
         }
-        public static string GetModifierToolTip<StyleType>(string text)
+        public string GetModifierToolTip<StyleType>(string text)
             where StyleType : Enum
         {
             var modifiers = GetStylesModifier<StyleType>().ToArray();
             return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
         }
-        private static IEnumerable<string> GetStylesModifier<StyleType>()
+        private IEnumerable<string> GetStylesModifier<StyleType>()
             where StyleType : Enum
         {
             foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
@@ -715,11 +715,17 @@ namespace NodeMarkup.Tools
             }
         }
 
-        public static void ToStyleBuffer(Style.StyleType type, Style style) => StyleBuffer[type] = style.Copy();
-        public static bool FromStyleBuffer<T>(Style.StyleType type, out T style)
+        public event Action<Style.StyleType> OnStyleToBuffer;
+        public void ToStyleBuffer(Style.StyleType type, Style style)
+        {
+            var group = type.GetGroup();
+            StyleBuffer[group] = style.Copy();
+            OnStyleToBuffer?.Invoke(group);
+        }
+        public bool FromStyleBuffer<T>(Style.StyleType type, out T style)
             where T : Style
         {
-            if (StyleBuffer.TryGetValue(type, out var bufferStyle) && bufferStyle is T tStyle)
+            if (StyleBuffer.TryGetValue(type.GetGroup(), out var bufferStyle) && bufferStyle is T tStyle)
             {
                 style = (T)tStyle.Copy();
                 return true;
@@ -730,6 +736,7 @@ namespace NodeMarkup.Tools
                 return false;
             }
         }
+        public bool IsStyleInBuffer(Style.StyleType type) => StyleBuffer.ContainsKey(type.GetGroup());
 
         #endregion
     }

@@ -660,12 +660,6 @@ namespace NodeMarkup.Manager
 
         public enum Item
         {
-            [NotItem]
-            HalfGroup = 0x80,
-
-            [NotItem]
-            Group = 0x100,
-
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             RegularLine = 0x100,
 

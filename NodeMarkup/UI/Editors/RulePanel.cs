@@ -188,10 +188,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is LineStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => NodeMarkupTool.ToStyleBuffer(Rule.Style.Value.Type.GetGroup(), Rule.Style.Value);
+        private void CopyStyle() => Editor.Tool.ToStyleBuffer(Rule.Style.Value.Type.GetGroup(), Rule.Style.Value);
         private void PasteStyle()
         {
-            if (NodeMarkupTool.FromStyleBuffer<LineStyle>(Rule.Style.Value.Type.GetGroup(), out var style))
+            if (Editor.Tool.FromStyleBuffer<LineStyle>(Rule.Style.Value.Type.GetGroup(), out var style))
                 ApplyStyle(style);
         }
         private void FromChanged(ILinePartEdge from) => Rule.From = from;

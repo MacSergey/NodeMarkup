@@ -50,7 +50,7 @@ namespace NodeMarkup.Tools
             if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerClickStart;
             else if (Hover.Equals(Contour.First))
-                return NodeMarkupTool.GetModifierToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
+                return Tool.GetModifierToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd);
             else
                 return Localize.Tool_InfoFillerClickNext;
         }
@@ -61,7 +61,7 @@ namespace NodeMarkup.Tools
             {
                 if (Contour.Add(Hover))
                 {
-                    var style = NodeMarkupTool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
+                    var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
                     var filler = new MarkupFiller(Contour, style);
                     Tool.Markup.AddFiller(filler);
                     Panel.EditFiller(filler);

@@ -273,7 +273,7 @@ namespace NodeMarkup.Manager
             LineSharkTeeth,
 
             [NotItem]
-            Regular3DLine = Markup.Item.RegularLine + Markup.Item.HalfGroup,
+            Regular3DLine = Markup.Item.RegularLine + 0x80,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
@@ -284,7 +284,7 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
-            LineBuffer = Markup.Item.RegularLine + Markup.Item.Group - 1,
+            LineBuffer = Markup.Item.RegularLine + 0x100 - 1,
 
             #endregion
 
@@ -314,7 +314,7 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
-            StopLineBuffer = Markup.Item.StopLine + Markup.Item.Group - 1,
+            StopLineBuffer = Markup.Item.StopLine + 0x100 - 1,
 
             #endregion
 
@@ -337,7 +337,7 @@ namespace NodeMarkup.Manager
             FillerChevron,
 
             [NotItem]
-            Filler3D = Filler | 0x80,
+            Filler3D = Filler + 0x80,
 
             [Description(nameof(Localize.FillerStyle_Pavement))]
             FillerPavement,
@@ -347,7 +347,7 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
-            FillerBuffer = Markup.Item.Filler + Markup.Item.Group - 1,
+            FillerBuffer = Markup.Item.Filler + 0x100 - 1,
 
             #endregion
 
@@ -383,7 +383,7 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
-            CrosswalkBuffer = Markup.Item.Crosswalk + Markup.Item.Group - 1,
+            CrosswalkBuffer = Markup.Item.Crosswalk + 0x100 - 1,
 
             #endregion
         }

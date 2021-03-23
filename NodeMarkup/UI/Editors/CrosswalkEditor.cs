@@ -215,10 +215,10 @@ namespace NodeMarkup.UI.Editors
             if (template.Style is CrosswalkStyle style)
                 ApplyStyle(style);
         }
-        private void CopyStyle() => NodeMarkupTool.ToStyleBuffer(Manager.Style.StyleType.Crosswalk, EditObject.Style.Value);
+        private void CopyStyle() => Tool.ToStyleBuffer(Manager.Style.StyleType.Crosswalk, EditObject.Style.Value);
         private void PasteStyle()
         {
-            if (NodeMarkupTool.FromStyleBuffer<CrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
+            if (Tool.FromStyleBuffer<CrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
                 ApplyStyle(style);
         }
         private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);

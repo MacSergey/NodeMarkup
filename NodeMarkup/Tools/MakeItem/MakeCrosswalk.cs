@@ -44,7 +44,7 @@ namespace NodeMarkup.Tools
                     Tool.DeleteItem(line, OnDelete);
                 else
                 {
-                    var style = NodeMarkupTool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(CrosswalkStyle.CrosswalkType.Zebra);
+                    var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(CrosswalkStyle.CrosswalkType.Zebra);
                     var newCrosswalkLine = Tool.Markup.AddCrosswalkLine(pointPair, style);
                     Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
                 }

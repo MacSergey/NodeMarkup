@@ -67,7 +67,7 @@ namespace NodeMarkup.UI.Editors
         protected static float ItemsRatio => 0.3f;
         protected static float ContentRatio => 1f - ItemsRatio;
 
-        protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        public NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected Markup Markup => Panel.Markup;
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;

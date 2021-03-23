@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utilities;
 using System;
@@ -17,6 +18,8 @@ namespace NodeMarkup.UI.Editors
         public event Action OnCopy;
         public event Action OnPaste;
 
+        private Style.StyleType StyleGroup { get; set; }
+        SimpleHeaderButton PasteButton { get; set; }
         ApplyTemplateHeaderButton ApplyTemplate { get; }
 
         public StyleHeaderPanel()
@@ -24,14 +27,26 @@ namespace NodeMarkup.UI.Editors
             Content.AddButton<SimpleHeaderButton>(TextureUtil.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
             ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(TextureUtil.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
             Content.AddButton<SimpleHeaderButton>(TextureUtil.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
-            Content.AddButton<SimpleHeaderButton>(TextureUtil.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
+            PasteButton = Content.AddButton<SimpleHeaderButton>(TextureUtil.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
         {
             base.Init(isDeletable: isDeletable);
-            ApplyTemplate.Init(styleGroup, onSelectTemplate);
+            StyleGroup = styleGroup.GetGroup();
+            ApplyTemplate.Init(StyleGroup, onSelectTemplate);
+
+            SetPasteEnabled();
+            NodeMarkupTool.Instance.OnStyleToBuffer += StyleToBuffer;
         }
+
+        private void StyleToBuffer(Style.StyleType group)
+        {
+            if (group == StyleGroup)
+                SetPasteEnabled();
+        }
+        private void SetPasteEnabled() => PasteButton.isEnabled = NodeMarkupTool.Instance.IsStyleInBuffer(StyleGroup);
+
         public override void DeInit()
         {
             base.DeInit();
@@ -39,6 +54,8 @@ namespace NodeMarkup.UI.Editors
             OnSaveTemplate = null;
             OnCopy = null;
             OnPaste = null;
+
+            NodeMarkupTool.Instance.OnStyleToBuffer -= StyleToBuffer;
 
             ApplyTemplate.DeInit();
         }

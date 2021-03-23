@@ -73,13 +73,13 @@ namespace NodeMarkup.Tools
                     Tool.DeleteItem(line, OnDelete);
                 else if (pointPair.IsStopLine)
                 {
-                    var style = NodeMarkupTool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(StopLineStyle.StopLineType.Solid);
+                    var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(StopLineStyle.StopLineType.Solid);
                     var newLine = Tool.Markup.AddStopLine(pointPair, style);
                     Panel.EditLine(newLine);
                 }
                 else
                 {
-                    var style = NodeMarkupTool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed, true);
+                    var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed, true);
                     var newLine = Tool.Markup.AddRegularLine(pointPair, style);
                     Panel.EditLine(newLine);
                 }
