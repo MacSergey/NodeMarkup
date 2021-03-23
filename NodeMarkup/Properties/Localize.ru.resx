@@ -901,7 +901,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Группировка</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
-    <value>Горячие клавиши</value>
+    <value>Назначение клавиш</value>
   </data>
   <data name="Settings_SupportTab" xml:space="preserve">
     <value>Поддержка</value>
@@ -1433,5 +1433,8 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Сдвиг разделенных точек</value>
+  </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Список изменений</value>
   </data>
 </root>

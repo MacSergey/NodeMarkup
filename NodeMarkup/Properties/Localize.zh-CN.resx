@@ -1343,4 +1343,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>拆分偏移</value>
   </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
 </root>
