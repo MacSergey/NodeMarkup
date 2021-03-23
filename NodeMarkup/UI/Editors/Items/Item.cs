@@ -81,6 +81,7 @@ namespace NodeMarkup.UI.Editors
             Label.textColor = TextColor;
         }
         protected abstract void LabelSizeChanged();
+        public override void PerformLayout() { }
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
         where ObjectType : class, IDeletable

@@ -111,6 +111,7 @@ namespace NodeMarkup.UI.Panel
             CheckPosition();
             UpdatePanel();
         }
+        public override void PerformLayout() { }
         public static void RemovePanel()
         {
             Mod.Logger.Debug($"Remove panel");
@@ -172,18 +173,9 @@ namespace NodeMarkup.UI.Panel
         }
         private void CreateSizeChanger()
         {
-            SizeChanger = AddUIComponent<UIPanel>();
-            SizeChanger.size = new Vector2(9, 9);
-            SizeChanger.atlas = TextureHelper.CommonAtlas;
-            SizeChanger.backgroundSprite = TextureHelper.ResizeSprite;
-            SizeChanger.color = new Color32(255, 255, 255, 160);
+            SizeChanger = AddUIComponent<SizeChanger>();
             SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
             SizeChanger.eventDoubleClick += SizeChangerDoubleClick;
-
-            var handle = SizeChanger.AddUIComponent<UIDragHandle>();
-            handle.size = SizeChanger.size;
-            handle.relativePosition = Vector2.zero;
-            handle.target = SizeChanger;
         }
 
         #endregion
@@ -229,6 +221,8 @@ namespace NodeMarkup.UI.Panel
         private void SizeChangerDoubleClick(UIComponent component, UIMouseEventParameter eventParam) => SetDefaulSize();
         protected override void OnSizeChanged()
         {
+            var swAll = Stopwatch.StartNew();
+
             base.OnSizeChanged();
 
             if (Header != null)
@@ -242,6 +236,10 @@ namespace NodeMarkup.UI.Panel
             }
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
+
+            MakePixelPerfect(false);
+
+            Mod.Logger.Debug($"Panel size changed: {swAll.ElapsedTicks}");
         }
         protected override void OnVisibilityChanged()
         {
@@ -360,5 +358,31 @@ namespace NodeMarkup.UI.Panel
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
 
         #endregion
+    }
+    public class SizeChanger : UIPanel
+    {
+        private bool InProgress { get; set; }
+        public SizeChanger()
+        {
+            size = new Vector2(9, 9);
+            atlas = TextureHelper.CommonAtlas;
+            backgroundSprite = TextureHelper.ResizeSprite;
+            color = new Color32(255, 255, 255, 160);
+
+            var handle = AddUIComponent<UIDragHandle>();
+            handle.size = size;
+            handle.relativePosition = Vector2.zero;
+            handle.target = this; ;
+        }
+
+        protected override void OnPositionChanged()
+        {
+            if (!InProgress)
+            {
+                InProgress = true;
+                base.OnPositionChanged();
+                InProgress = false;
+            }
+        }
     }
 }

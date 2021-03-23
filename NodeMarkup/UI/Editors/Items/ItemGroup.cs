@@ -80,7 +80,7 @@ namespace NodeMarkup.UI.Editors
             foreach (var component in components)
                 ComponentPool.Free(component);
 
-            StartLayout();
+            StartLayout(false);
         }
     }
 

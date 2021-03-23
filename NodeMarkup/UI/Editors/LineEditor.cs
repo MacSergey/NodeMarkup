@@ -104,11 +104,11 @@ namespace NodeMarkup.UI.Editors
 
             if (editObject is MarkupRegularLine line)
             {
-                var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties);
-                alignmentProperty.Text = NodeMarkup.Localize.LineEditor_LineAlignment;
-                alignmentProperty.Init();
-                alignmentProperty.SelectedObject = line.Alignment;
-                alignmentProperty.OnSelectObjectChanged += (value) => line.Alignment.Value = value;
+                var lineAlignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
+                lineAlignment.Text = NodeMarkup.Localize.LineEditor_LineAlignment;
+                lineAlignment.Init();
+                lineAlignment.SelectedObject = line.Alignment;
+                lineAlignment.OnSelectObjectChanged += (value) => line.Alignment.Value = value;
             }
 
             SetLinePropertiesVisible();

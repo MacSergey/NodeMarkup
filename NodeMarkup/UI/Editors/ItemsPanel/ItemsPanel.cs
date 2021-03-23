@@ -179,8 +179,8 @@ namespace NodeMarkup.UI.Editors
         }
         public void SelectObject(ObjectType editObject)
         {
-            if (editObject != null)
-                Select(FindItem(editObject));
+            if (editObject != null && FindItem(editObject) is ItemType item)
+                Select(item);
             else
                 Select(FindItem(0));
         }

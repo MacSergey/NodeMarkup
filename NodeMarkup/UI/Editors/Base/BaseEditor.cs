@@ -57,6 +57,7 @@ namespace NodeMarkup.UI.Editors
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
         public virtual bool OnShortcut(Event e) => false;
         public virtual bool OnEscape() => false;
+        public override void PerformLayout() { }
     }
     public abstract class Editor<ItemsPanelType, ObjectType> : Editor, IEditor<ObjectType>
         where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
@@ -100,6 +101,7 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.atlas = TextureHelper.InGameAtlas;
             ItemsPanel.backgroundSprite = "ScrollbarTrack";
+            ItemsPanel.name = nameof(ItemsPanel);
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
             ItemsPanel.OnDeleteClick += OnItemDelete;
@@ -108,6 +110,7 @@ namespace NodeMarkup.UI.Editors
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.atlas = TextureHelper.InGameAtlas;
             ContentPanel.backgroundSprite = "UnlockingItemBackground";
+            ContentPanel.name = nameof(ContentPanel);
 
             AddEmptyLabel();
         }

@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddOffset(MarkupEnterPoint point)
         {
-            Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
+            Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Offset));
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
@@ -43,7 +43,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddSplit(MarkupEnterPoint point)
         {
-            Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel);
+            Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel, nameof(Split));
             Split.Text = NodeMarkup.Localize.PointEditor_SplitIntoTwo;
             Split.Init(NodeMarkup.Localize.StyleOption_No, NodeMarkup.Localize.StyleOption_Yes);
             Split.SelectedObject = point.Split;
@@ -51,7 +51,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddShift(MarkupEnterPoint point)
         {
-            Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel);
+            Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Shift));
             Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
             Shift.UseWheel = true;
             Shift.WheelStep = 0.1f;
