@@ -1311,7 +1311,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Laden mit Fehlern beendet.
-Die Markierungen von alle Kreuzungen konnten nicht geladen werden.</value>
+Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Markierungen von Segment #{0} bearbeiten</value>
@@ -1372,5 +1372,26 @@ Klicken um die Markierungen zu bearbeiten</value>
 - Konflikt mit anderen Mods behoben, der dafür sorgen knnte, dass der Button nicht sichtbar war.
 - Konflikt zwischen Scrollbalken und Mausscroll behoben.
 - Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden</value>
+  </data>
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Anzahl der Farben</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Eine</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Zwei</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Aus der Zwischenablage</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Linien-Ausrichtung</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>In zwei aufteilen</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Versatz aufteilen</value>
   </data>
 </root>

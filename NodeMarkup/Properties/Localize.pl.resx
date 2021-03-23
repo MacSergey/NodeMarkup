@@ -1312,4 +1312,25 @@ Kliknij aby edytować oznaczenia</value>
   
   
   
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Liczba kolorów</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Jeden</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Dwa</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Ze schowka</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Wyrównanie linii</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Podziel na dwa</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Przesunięcie podziału</value>
+  </data>
 </root>

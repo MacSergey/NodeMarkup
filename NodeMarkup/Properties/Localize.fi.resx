@@ -1319,4 +1319,17 @@ Napauta muokataksesi merkintöjä</value>
 - Korjattu ristiriita arvojen muuttamisen hiiren rullalla ja valikon rullaamisen välillä.
 - Nyt työkalun valikossa toimivat sekä pilkku että piste</value>
   </data>
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Värien määrä</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Yksi</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Kaksi</value>
+  </data>
+  
+  
+  
+  
 </root>

@@ -1268,7 +1268,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>マーキングが正常に描画されず、ロードエラーがありました。
-全ての交差点（ノード）で、マーキングの描画に失敗しました。</value>
+全てのマーキングで描画に失敗しました。</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} のセグメントを編集中</value>
@@ -1316,4 +1316,25 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   
   
   
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>カラーの色数</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>1色</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>2色</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>クリップボードから追加する</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>ラインの位置合わせ</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>ポイントを拡大する</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>拡大する大きさ</value>
+  </data>
 </root>
