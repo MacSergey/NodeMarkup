@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
 using System;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class NodeMarkupButton : UIButton
+    public class NodeMarkupButton : CustomUIButton
     {
         private static string RoadsOptionPanel => nameof(RoadsOptionPanel);
         private static int ButtonSize => 31;

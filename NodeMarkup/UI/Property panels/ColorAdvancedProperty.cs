@@ -20,7 +20,7 @@ namespace NodeMarkup.UI
             AddPasteButton();
             AddSetDefaultButton();
         }
-        private UIButton CreateButton(UIComponent parent, string text, int count, int of)
+        private CustomUIButton CreateButton(UIComponent parent, string text, int count, int of)
         {
             var width = (parent.width - (10 * (of + 1))) / of;
 

@@ -16,8 +16,8 @@ namespace NodeMarkup.UI
         protected abstract string SuccessMessage { get; }
         protected abstract string FailedMessage { get; }
 
-        private UIButton ImportButton { get; set; }
-        private UIButton CancelButton { get; set; }
+        private CustomUIButton ImportButton { get; set; }
+        private CustomUIButton CancelButton { get; set; }
         protected FileDropDown DropDown { get; set; }
         public ImportMessageBox()
         {

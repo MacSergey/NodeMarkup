@@ -30,9 +30,9 @@ namespace NodeMarkup.UI
         private static Material Material { get; } = new Material(Shader.Find("UI/Default UI Shader"));
         private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
-        private UILabel NoScreenshot { get; set; }
-        private UILabel Titles { get; set; }
-        private UILabel Values { get; set; }
+        private CustomUILabel NoScreenshot { get; set; }
+        private CustomUILabel Titles { get; set; }
+        private CustomUILabel Values { get; set; }
 
         public IntersectionTemplateInfoProperty()
         {
@@ -88,7 +88,7 @@ namespace NodeMarkup.UI
         }
         private void AddNoScreenshot()
         {
-            NoScreenshot = Screenshot.AddUIComponent<UILabel>();
+            NoScreenshot = Screenshot.AddUIComponent<CustomUILabel>();
             NoScreenshot.autoSize = false;
             NoScreenshot.size = new Vector2(Size, Size);
             NoScreenshot.position = new Vector2(0, 0);
@@ -100,9 +100,9 @@ namespace NodeMarkup.UI
             NoScreenshot.textAlignment = UIHorizontalAlignment.Center;
             NoScreenshot.verticalAlignment = UIVerticalAlignment.Middle;
         }
-        private UILabel AddLabel(UIHorizontalAlignment alignment)
+        private CustomUILabel AddLabel(UIHorizontalAlignment alignment)
         {
-            var label = AddUIComponent<UILabel>();
+            var label = AddUIComponent<CustomUILabel>();
             label.font = Font;
             label.autoSize = true;
             label.textScale = 0.65f;

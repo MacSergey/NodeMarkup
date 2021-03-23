@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
@@ -14,7 +15,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
 {
-    public class NodeMarkupPanel : UIPanel
+    public class NodeMarkupPanel : CustomUIPanel
     {
         #region PROPERTIES
 
@@ -53,10 +54,11 @@ namespace NodeMarkup.UI.Panel
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
-        private UIPanel SizeChanger { get; set; }
+        private CustomUIPanel SizeChanger { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
 
+        private float HeaderHeight => 42f;
         private Vector2 EditorSize => size - new Vector2(0, Header.height + TabStrip.height);
         private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
@@ -111,7 +113,6 @@ namespace NodeMarkup.UI.Panel
             CheckPosition();
             UpdatePanel();
         }
-        public override void PerformLayout() { }
         public static void RemovePanel()
         {
             Mod.Logger.Debug($"Remove panel");
@@ -135,21 +136,20 @@ namespace NodeMarkup.UI.Panel
         }
         private void SetDefaulSize() => size = new Vector2(Width, Header.height + TabStrip.height + 400);
 
-        #endregion
+#endregion
 
-        #region COMPONENTS
+#region COMPONENTS
 
         private void CreateHeader()
         {
             Header = AddUIComponent<PanelHeader>();
-            Header.size = new Vector2(Width, 42);
+            Header.size = new Vector2(Width, HeaderHeight);
             Header.relativePosition = new Vector2(0, 0);
             Header.target = parent;
         }
         private void CreateTabStrip()
         {
             TabStrip = AddUIComponent<PanelTabStrip>();
-            TabStrip.relativePosition = new Vector3(0, Header.height);
             TabStrip.SelectedTabChanged += OnSelectedTabChanged;
             TabStrip.SelectedTab = -1;
         }
@@ -178,9 +178,9 @@ namespace NodeMarkup.UI.Panel
             SizeChanger.eventDoubleClick += SizeChangerDoubleClick;
         }
 
-        #endregion
+#endregion
 
-        #region UPDATE
+#region UPDATE
 
         public void SetMarkup(Markup markup)
         {
@@ -209,9 +209,9 @@ namespace NodeMarkup.UI.Panel
             SelectEditor<LinesEditor>();
         }
 
-        #endregion
+#endregion
 
-        #region ONEVENTS
+#region ONEVENTS
 
         private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
         {
@@ -222,13 +222,15 @@ namespace NodeMarkup.UI.Panel
         protected override void OnSizeChanged()
         {
             var swAll = Stopwatch.StartNew();
-
             base.OnSizeChanged();
 
             if (Header != null)
-                Header.size = new Vector2(width, Header.height);
+                Header.width = width;
             if (TabStrip != null)
+            {
                 TabStrip.width = width;
+                TabStrip.relativePosition = new Vector3(0, HeaderHeight);
+            }
             if (CurrentEditor != null)
             {
                 CurrentEditor.size = EditorSize;
@@ -239,7 +241,7 @@ namespace NodeMarkup.UI.Panel
 
             MakePixelPerfect(false);
 
-            Mod.Logger.Debug($"Panel size changed: {swAll.ElapsedTicks}");
+            Mod.Logger.Debug($"Panel size changed: {swAll.ElapsedTicks};");
         }
         protected override void OnVisibilityChanged()
         {
@@ -249,9 +251,9 @@ namespace NodeMarkup.UI.Panel
         }
         private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
 
-        #endregion
+#endregion
 
-        #region GET SELECT
+#region GET SELECT
 
         private Editor SelectEditor(int index)
         {
@@ -276,9 +278,9 @@ namespace NodeMarkup.UI.Panel
             return Editors[editorIndex] as EditorType;
         }
 
-        #endregion
+#endregion
 
-        #region ADD OBJECT
+#region ADD OBJECT
 
         private void AddObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -292,9 +294,9 @@ namespace NodeMarkup.UI.Panel
         }
         public void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
 
-        #endregion
+#endregion
 
-        #region DELETE OBJECT
+#region DELETE OBJECT
 
         private void DeleteObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -310,9 +312,9 @@ namespace NodeMarkup.UI.Panel
         public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
         public void DeleteCrosswalk(MarkupCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
 
-        #endregion
+#endregion
 
-        #region EDIT OBJECT
+#region EDIT OBJECT
 
         private EditorType EditObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -348,18 +350,18 @@ namespace NodeMarkup.UI.Panel
         public void EditStyleTemplate(StyleTemplate template, bool editName = true) => EditTemplate<StyleTemplateEditor, StyleTemplate>(template, editName);
         public void EditIntersectionTemplate(IntersectionTemplate template, bool editName = true) => EditTemplate<IntersectionTemplateEditor, IntersectionTemplate>(template, editName);
 
-        #endregion
+#endregion
 
-        #region ADDITIONAL
+#region ADDITIONAL
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public bool OnEscape() => CurrentEditor?.OnEscape() == true;
 
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
 
-        #endregion
+#endregion
     }
-    public class SizeChanger : UIPanel
+    public class SizeChanger : CustomUIPanel
     {
         private bool InProgress { get; set; }
         public SizeChanger()
@@ -369,7 +371,7 @@ namespace NodeMarkup.UI.Panel
             backgroundSprite = TextureHelper.ResizeSprite;
             color = new Color32(255, 255, 255, 160);
 
-            var handle = AddUIComponent<UIDragHandle>();
+            var handle = AddUIComponent<CustomUIDragHandle>();
             handle.size = size;
             handle.relativePosition = Vector2.zero;
             handle.target = this; ;

@@ -116,11 +116,11 @@ namespace NodeMarkup.UI.Editors
     }
     public class IntersectionTemplateIcon : ColorIcon
     {
-        protected UILabel CountLabel { get; }
+        protected CustomUILabel CountLabel { get; }
         public int Count { set => CountLabel.text = value.ToString(); }
         public IntersectionTemplateIcon()
         {
-            CountLabel = AddUIComponent<UILabel>();
+            CountLabel = AddUIComponent<CustomUILabel>();
             CountLabel.textColor = Color.white;
             CountLabel.textScale = 0.7f;
             CountLabel.relativePosition = new Vector3(0, 0);

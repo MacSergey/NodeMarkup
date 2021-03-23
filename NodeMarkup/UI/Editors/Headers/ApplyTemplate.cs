@@ -43,7 +43,7 @@ namespace NodeMarkup.UI.Editors
             var templates = TemplateManager.StyleManager.GetTemplates(group).OrderByDescending(t => t.IsDefault).ThenBy(t => t.Style.Type).ThenBy(t => t.Name).ToArray();
             if (!templates.Any())
             {
-                var emptyLabel = Content.AddUIComponent<UILabel>();
+                var emptyLabel = Content.AddUIComponent<CustomUILabel>();
                 emptyLabel.text = NodeMarkup.Localize.HeaderPanel_NoTemplates;
                 emptyLabel.textScale = 0.8f;
                 emptyLabel.autoSize = false;

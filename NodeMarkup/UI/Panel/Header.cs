@@ -14,10 +14,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
 {
-    public class PanelHeader : UIDragHandle
+    public class PanelHeader : CustomUIDragHandle
     {
         private bool CanMove { get; set; }
-        private UILabel Caption { get; set; }
+        private CustomUILabel Caption { get; set; }
         public PanelHeaderContent Buttons { get; private set; }
 
         public string Text
@@ -35,7 +35,7 @@ namespace NodeMarkup.UI.Panel
 
         private void CreateCaption()
         {
-            Caption = AddUIComponent<UILabel>();
+            Caption = AddUIComponent<CustomUILabel>();
             Caption.autoSize = false;
             Caption.text = nameof(NodeMarkupPanel);
             Caption.textAlignment = UIHorizontalAlignment.Center;

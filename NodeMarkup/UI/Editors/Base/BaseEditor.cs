@@ -23,7 +23,7 @@ namespace NodeMarkup.UI.Editors
         void Edit(ObjectType editObject);
         void RefreshEditor();
     }
-    public abstract class Editor : UIPanel
+    public abstract class Editor : CustomUIPanel
     {
         public static string WheelTip => Settings.ShowToolTip ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
 
@@ -57,7 +57,6 @@ namespace NodeMarkup.UI.Editors
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
         public virtual bool OnShortcut(Event e) => false;
         public virtual bool OnEscape() => false;
-        public override void PerformLayout() { }
     }
     public abstract class Editor<ItemsPanelType, ObjectType> : Editor, IEditor<ObjectType>
         where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
@@ -75,7 +74,7 @@ namespace NodeMarkup.UI.Editors
 
         protected ItemsPanelType ItemsPanel { get; set; }
         protected AdvancedScrollablePanel ContentPanel { get; set; }
-        protected UILabel EmptyLabel { get; set; }
+        protected CustomUILabel EmptyLabel { get; set; }
 
         public sealed override bool AvailableItems
         {
@@ -117,7 +116,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddEmptyLabel()
         {
-            EmptyLabel = AddUIComponent<UILabel>();
+            EmptyLabel = AddUIComponent<CustomUILabel>();
             EmptyLabel.textAlignment = UIHorizontalAlignment.Center;
             EmptyLabel.verticalAlignment = UIVerticalAlignment.Middle;
             EmptyLabel.padding = new RectOffset(10, 10, 0, 0);

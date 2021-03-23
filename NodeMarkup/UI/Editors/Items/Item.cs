@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public abstract class EditItemBase : UIButton
+    public abstract class EditItemBase : CustomUIButton
     {
         public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
         public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
@@ -35,7 +35,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        protected UILabel Label { get; set; }
+        protected CustomUILabel Label { get; set; }
         public string Text
         {
             get => Label.text;
@@ -54,7 +54,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddLable()
         {
-            Label = AddUIComponent<UILabel>();
+            Label = AddUIComponent<CustomUILabel>();
             Label.textAlignment = UIHorizontalAlignment.Left;
             Label.verticalAlignment = UIVerticalAlignment.Middle;
             Label.autoSize = false;
@@ -81,7 +81,6 @@ namespace NodeMarkup.UI.Editors
             Label.textColor = TextColor;
         }
         protected abstract void LabelSizeChanged();
-        public override void PerformLayout() { }
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
         where ObjectType : class, IDeletable
@@ -100,7 +99,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
         protected bool Inited => Object != null;
-        protected UIButton DeleteButton { get; set; }
+        protected CustomUIButton DeleteButton { get; set; }
         public virtual bool ShowDelete => true;
 
         public EditItem()
@@ -127,7 +126,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddDeleteButton()
         {
-            DeleteButton = AddUIComponent<UIButton>();
+            DeleteButton = AddUIComponent<CustomUIButton>();
             DeleteButton.atlas = TextureHelper.CommonAtlas;
             DeleteButton.normalBgSprite = TextureHelper.DeleteNormal;
             DeleteButton.hoveredBgSprite = TextureHelper.DeleteHover;
@@ -186,10 +185,10 @@ namespace NodeMarkup.UI.Editors
         protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
     }
 
-    public class ColorIcon : UIButton
+    public class ColorIcon : CustomUIButton
     {
         private static float Border => 1f;
-        protected UIButton InnerCircule { get; set; }
+        protected CustomUIButton InnerCircule { get; set; }
         public Color32 InnerColor { set => InnerCircule.color = value; }
         public Color32 BorderColor { set => color = value; }
         public ColorIcon()
@@ -199,7 +198,7 @@ namespace NodeMarkup.UI.Editors
             isInteractive = false;
             color = Color.white;
 
-            InnerCircule = AddUIComponent<UIButton>();
+            InnerCircule = AddUIComponent<CustomUIButton>();
             InnerCircule.atlas = TextureHelper.InGameAtlas;
             InnerCircule.normalBgSprite = InnerCircule.normalFgSprite = "PieChartWhiteBg";
             InnerCircule.disabledBgSprite = InnerCircule.disabledFgSprite = "PieChartWhiteBg";
@@ -219,14 +218,14 @@ namespace NodeMarkup.UI.Editors
     }
     public class StyleIcon : ColorIcon
     {
-        protected UIButton Thumbnail { get; set; }
+        protected CustomUIButton Thumbnail { get; set; }
 
         public Color32 StyleColor { set => Thumbnail.color = Thumbnail.disabledColor = value.GetStyleIconColor(); }
         public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = value.ToString(); }
 
         public StyleIcon()
         {
-            Thumbnail = AddUIComponent<UIButton>();
+            Thumbnail = AddUIComponent<CustomUIButton>();
             Thumbnail.atlas = TextureUtil.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;
@@ -241,7 +240,7 @@ namespace NodeMarkup.UI.Editors
     }
     public class LineIcon : StyleIcon
     {
-        protected UILabel CountLabel { get; }
+        protected CustomUILabel CountLabel { get; }
         public int Count
         {
             set
@@ -254,7 +253,7 @@ namespace NodeMarkup.UI.Editors
 
         public LineIcon()
         {
-            CountLabel = AddUIComponent<UILabel>();
+            CountLabel = AddUIComponent<CustomUILabel>();
             CountLabel.textColor = Color.white;
             CountLabel.textScale = 0.7f;
             CountLabel.relativePosition = new Vector3(0, 0);

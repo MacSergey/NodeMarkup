@@ -57,7 +57,7 @@ namespace NodeMarkup
         public static SavedInt GroupPointsType { get; } = new SavedInt(nameof(GroupPointsType), SettingsFile, 0, true);
 
         private static TabStrip TabStrip { get; set; }
-        private static List<UIPanel> TabPanels { get; set; }
+        private static List<CustomUIPanel> TabPanels { get; set; }
 
         static Settings()
         {
@@ -94,7 +94,7 @@ namespace NodeMarkup
         }
         private static void CreateTabStrip(UIScrollablePanel mainPanel)
         {
-            TabPanels = new List<UIPanel>();
+            TabPanels = new List<CustomUIPanel>();
 
             TabStrip = mainPanel.AddUIComponent<TabStrip>();
             TabStrip.SelectedTabChanged += OnSelectedTabChanged;
@@ -113,7 +113,7 @@ namespace NodeMarkup
         {
             TabStrip.AddTab(name, 1.25f);
 
-            var tabPanel = mainPanel.AddUIComponent<UIPanel>();
+            var tabPanel = mainPanel.AddUIComponent<CustomUIPanel>();
             SetTabSize(tabPanel, mainPanel);
             tabPanel.isVisible = false;
             TabPanels.Add(tabPanel);
@@ -437,11 +437,11 @@ namespace NodeMarkup
         {
             var inProcess = false;
             var checkBoxes = new UICheckBox[labels.Length];
-            var optionsPanel = default(UIPanel);
+            var optionsPanel = default(CustomUIPanel);
 
             var mainCheckBox = group.AddCheckbox(mainLabel, mainSaved, OnMainChanged) as UICheckBox;
 
-            optionsPanel = (group.self as UIComponent).AddUIComponent<UIPanel>();
+            optionsPanel = (group.self as UIComponent).AddUIComponent<CustomUIPanel>();
             optionsPanel.autoLayout = true;
             optionsPanel.autoLayoutDirection = LayoutDirection.Vertical;
             optionsPanel.autoFitChildrenHorizontally = true;
@@ -490,7 +490,7 @@ namespace NodeMarkup
         {
             var component = helper.self as UIComponent;
 
-            var label = component.AddUIComponent<UILabel>();
+            var label = component.AddUIComponent<CustomUILabel>();
             label.text = text;
             label.textScale = size;
             label.textColor = color ?? Color.white;

@@ -93,7 +93,7 @@ namespace NodeMarkup.UI.Editors
 
         public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? TextureUtil.ArrowDown : TextureUtil.ArrowRight; }
 
-        private UIPanel ExpandIcon { get; set; }
+        private CustomUIPanel ExpandIcon { get; set; }
 
         public GroupItem()
         {
@@ -108,7 +108,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddExpandIcon()
         {
-            ExpandIcon = AddUIComponent<UIPanel>();
+            ExpandIcon = AddUIComponent<CustomUIPanel>();
             ExpandIcon.atlas = TextureUtil.Atlas;
             ExpandIcon.size = new Vector2(20, 20);
             IsExpand = true;
