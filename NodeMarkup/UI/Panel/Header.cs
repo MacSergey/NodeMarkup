@@ -16,6 +16,7 @@ namespace NodeMarkup.UI.Panel
 {
     public class PanelHeader : UIDragHandle
     {
+        private bool CanMove { get; set; }
         private UILabel Caption { get; set; }
         public PanelHeaderContent Buttons { get; private set; }
 
@@ -61,31 +62,44 @@ namespace NodeMarkup.UI.Panel
 
             Buttons.relativePosition = new Vector2(Caption.width - 5 + 20, (height - Buttons.height) / 2);
         }
+        protected override void OnMouseDown(UIMouseEventParameter p)
+        {
+            CanMove = !new Rect(Buttons.absolutePosition, Buttons.size).Contains(NodeMarkupTool.MousePosition);
+            base.OnMouseDown(p);
+        }
+        protected override void OnMouseMove(UIMouseEventParameter p)
+        {
+            if (CanMove)
+                base.OnMouseMove(p);
+        }
     }
     public class PanelHeaderContent : HeaderContent
     {
         private AdditionallyHeaderButton Additionally { get; }
+        private PanelHeaderButton PasteButton { get; }
 
         public PanelHeaderContent()
         {
             AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
 
-            AddButton(TextureUtil.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
-            AddButton(TextureUtil.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            AddButton(TextureUtil.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut, CopyClick);
+            PasteButton = AddButton(TextureUtil.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
             AddButton(TextureUtil.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
 
             Additionally = AddButton<AdditionallyHeaderButton>(TextureUtil.Additionally, NodeMarkup.Localize.Panel_Additional);
             Additionally.OpenPopupEvent += OnAdditionallyPopup;
+
+            SetPasteEnabled();
         }
 
         private void OnAdditionallyPopup(AdditionallyPopup popup)
         {
             var buttons = new List<PanelHeaderButton>
             {
-                AddButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
-                AddButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
-                AddButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
-                AddButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
+                AddPopupButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
+                AddPopupButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
+                AddPopupButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
+                AddPopupButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
             };
 
             foreach (var button in buttons)
@@ -96,9 +110,9 @@ namespace NodeMarkup.UI.Panel
 
             popup.Width = buttons.Max(b => b.width);
         }
-        private PanelHeaderButton AddButton(string sprite, string text, NodeMarkupShortcut shortcut) 
-            => AddButton<PanelHeaderButton>(sprite, GetText(text, shortcut), onClick: (UIComponent _, UIMouseEventParameter __) => shortcut.Press());
-        private PanelHeaderButton AddButton(UIComponent parent, string sprite, string text, NodeMarkupShortcut shortcut)
+        private PanelHeaderButton AddButton(string sprite, string text, NodeMarkupShortcut shortcut, MouseEventHandler onClick = null)
+            => AddButton<PanelHeaderButton>(sprite, GetText(text, shortcut), onClick: onClick ?? ((UIComponent _, UIMouseEventParameter __) => shortcut.Press()));
+        private PanelHeaderButton AddPopupButton(UIComponent parent, string sprite, string text, NodeMarkupShortcut shortcut)
         {
             return AddButton<PanelHeaderButton>(parent, sprite, GetText(text, shortcut), true, action);
 
@@ -108,11 +122,17 @@ namespace NodeMarkup.UI.Panel
                 shortcut.Press();
             }
         }
+        private void CopyClick(UIComponent copyButton, UIMouseEventParameter e)
+        {
+            NodeMarkupTool.CopyMarkingShortcut.Press();
+            SetPasteEnabled();
+        }
+        private void SetPasteEnabled() => PasteButton.isEnabled = !NodeMarkupTool.Instance.IsMarkupBufferEmpty;
 
 
         private string GetText(string text, NodeMarkupShortcut shortcut) => $"{text} ({shortcut})";
     }
-    public class SimpleHeaderButton : HeaderButton 
+    public class SimpleHeaderButton : HeaderButton
     {
         protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
     }
@@ -135,6 +155,6 @@ namespace NodeMarkup.UI.Panel
     }
     public class AdditionallyPopup : PopupPanel
     {
-        protected override Color32 Background => new Color32(64,64,64,255);
+        protected override Color32 Background => new Color32(64, 64, 64, 255);
     }
 }

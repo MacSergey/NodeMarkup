@@ -83,6 +83,7 @@ namespace NodeMarkup.Tools
         public NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         public IntersectionTemplate MarkupBuffer { get; private set; }
+        public bool IsMarkupBufferEmpty => MarkupBuffer == null;
 
         #endregion
 
