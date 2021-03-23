@@ -14,6 +14,7 @@ namespace NodeMarkup.UI.Panel
     {
         private static Color32 NormalColor { get; } = new Color32(107, 113, 115, 255);
         private static Color32 HoverColor { get; } = new Color32(143, 149, 150, 255);
+        private static Color32 PressedColor { get; } = new Color32(153, 159, 160, 255);
         private static Color32 FocusColor { get; } = new Color32(177, 195, 94, 255);
 
         public PanelTabStrip() => isLocalized = true;
@@ -37,7 +38,7 @@ namespace NodeMarkup.UI.Panel
 
             tabButton.color = NormalColor;
             tabButton.hoveredColor = HoverColor;
-            tabButton.pressedColor = FocusColor;
+            tabButton.pressedColor = PressedColor;
             tabButton.focusedColor = FocusColor;
         }
         public void SetVisible(Markup markup)
