@@ -1317,7 +1317,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   
   
   <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>カラーの色数</value>
+    <value>横断歩道の色数</value>
   </data>
   <data name="StyleOption_ColorCountOne" xml:space="preserve">
     <value>1色</value>
@@ -1336,5 +1336,8 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>拡大する大きさ</value>
+  </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>更新履歴</value>
   </data>
 </root>

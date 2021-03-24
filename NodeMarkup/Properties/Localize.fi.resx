@@ -1328,6 +1328,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="StyleOption_ColorCountTwo" xml:space="preserve">
     <value>Kaksi</value>
   </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Liitä leikepöydältä</value>
+  </data>
   
   
   

@@ -1394,4 +1394,7 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Versatz aufteilen</value>
   </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Änderungsprotokoll</value>
+  </data>
 </root>
