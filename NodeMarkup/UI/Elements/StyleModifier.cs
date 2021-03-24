@@ -29,23 +29,24 @@ namespace NodeMarkup.UI
         }
         public ModifierDropDown AddKeymapping(StyleModifier value, string description)
         {
-            UIPanel uiPanel = component.AttachUIComponent(UITemplateManager.GetAsGameObject(keyBindingTemplate)) as UIPanel;
+            var panel = component.AttachUIComponent(UITemplateManager.GetAsGameObject("KeyBindingTemplate")) as UIPanel;
 
-            int num = count;
-            count = num + 1;
-            if (num % 2 == 1)
-                uiPanel.backgroundSprite = null;
+            if (count % 2 == 1)
+                panel.backgroundSprite = null;
 
-            UILabel uilabel = uiPanel.Find<UILabel>("Name");
-            UIButton uibutton = uiPanel.Find<UIButton>("Binding");
-            uiPanel.RemoveUIComponent(uibutton);
-            Destroy(uibutton);
-            var modifier = uiPanel.AddUIComponent<ModifierDropDown>();
+            count += 1;
+
+            var button = panel.Find<UIButton>("Binding");
+            panel.RemoveUIComponent(button);
+            Destroy(button);
+
+            var modifier = panel.AddUIComponent<ModifierDropDown>();
             modifier.relativePosition = new Vector2(380, 6);
             modifier.SelectedObject = value;
             modifier.OnSelectObjectChanged += ModifierChanged;
 
-            uilabel.text = description;
+            var label = panel.Find<UILabel>("Name");
+            label.text = description;
 
             return modifier;
         }
