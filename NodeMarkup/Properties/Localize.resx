@@ -1432,4 +1432,7 @@ Click to edit markings</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Split offset</value>
   </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Change log</value>
+  </data>
 </root>

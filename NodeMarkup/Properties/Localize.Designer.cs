@@ -1931,6 +1931,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Change log.
+        /// </summary>
+        public static string Settings_ChangeLog {
+            get {
+                return ResourceManager.GetString("Settings_ChangeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy path to clipboard.
         /// </summary>
         public static string Settings_CopyPathToClipboard {

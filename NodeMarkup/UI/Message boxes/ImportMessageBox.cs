@@ -21,17 +21,17 @@ namespace NodeMarkup.UI
         protected FileDropDown DropDown { get; set; }
         public ImportMessageBox()
         {
-            ImportButton = AddButton(1, 2, ImportClick);
+            ImportButton = AddButton(ImportClick);
             ImportButton.text = NodeMarkup.Localize.Settings_Restore;
             ImportButton.Disable();
-            CancelButton = AddButton(2, 2, CancelClick);
+            CancelButton = AddButton(CancelClick);
             CancelButton.text = NodeMarkup.Localize.Settings_Cancel;
 
             AddFileList();
         }
         private void AddFileList()
         {
-            DropDown = ScrollableContent.AddUIComponent<FileDropDown>();
+            DropDown = Panel.Content.AddUIComponent<FileDropDown>();
             DropDown.SetSettingsStyle(new Vector2(DefaultWidth - 2 * Padding, 38));
 
             DropDown.listWidth = (int)DropDown.width;

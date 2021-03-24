@@ -88,5 +88,103 @@ namespace NodeMarkup
             var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
             messageBox.MessageText = Localize.Mod_LoaledWithErrors;
         }
+
+        public static void ShowWhatsNew(Version fromVersion = null, bool forceShow = false)
+        {
+            fromVersion ??= new Version(Settings.WhatsNewVersion);
+
+            if ((!Settings.ShowWhatsNew || Version <= fromVersion) && !forceShow)
+                return;
+
+            var messages = GetWhatsNewMessages(fromVersion);
+            if (!messages.Any())
+                return;
+
+            if (!IsBeta)
+            {
+                var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, ShortName);
+                messageBox.OnButtonClick = Confirm;
+                messageBox.OkText = NodeMarkupMessageBox.Ok;
+                messageBox.Init(messages, GetVersionString);
+            }
+            else
+            {
+                var messageBox = MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
+                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, ShortName);
+                if (!forceShow)
+                    messageBox.OnButtonClick = Confirm;
+                messageBox.OnGetStableClick = GetStable;
+                messageBox.OkText = NodeMarkupMessageBox.Ok;
+                messageBox.GetStableText = Localize.Mod_BetaWarningGetStable;
+                messageBox.Init(messages, string.Format(Localize.Mod_BetaWarningMessage, ShortName), GetVersionString);
+            }
+
+            static bool Confirm()
+            {
+                Settings.WhatsNewVersion.value = Version.ToString();
+                return true;
+            }
+            static bool GetStable()
+            {
+                Mod.GetStable();
+                return true;
+            }
+        }
+        private static Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
+        {
+            var messages = new Dictionary<Version, string>(Versions.Count);
+#if BETA
+            messages[Version] = Localize.Mod_WhatsNewMessageBeta;
+#endif
+            foreach (var version in Versions)
+            {
+                if (Version < version)
+                    continue;
+
+                if (version <= whatNewVersion)
+                    break;
+
+                if (Settings.ShowOnlyMajor && !version.IsMinor())
+                    continue;
+
+                if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
+                    messages[version] = message;
+            }
+
+            return messages;
+        }
+        private static string GetVersionString(Version version) => string.Format(Localize.Mod_WhatsNewVersion, version == Version ? VersionString : version.ToString());
+        private static string GetWhatsNew(Version version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.ToString().Replace('.', '_')}", Localize.Culture);
+
+        public static void ShowBetaWarning()
+        {
+            if (!IsBeta)
+                Settings.BetaWarning.value = true;
+            else if (Settings.BetaWarning.value)
+            {
+                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+                messageBox.CaptionText = Localize.Mod_BetaWarningCaption;
+                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, ShortName);
+                messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
+                messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
+                messageBox.OnButton1Click = AgreeClick;
+                messageBox.OnButton2Click = GetStable;
+
+                static bool AgreeClick()
+                {
+                    Settings.BetaWarning.value = false;
+                    return true;
+                }
+            }
+        }
+        public static void ShowLoadError()
+        {
+            if (MarkupManager.HasErrors)
+            {
+                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+                messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
+            }
+        }
     }
 }
