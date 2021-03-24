@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
             try { return new Version(config.Attribute("V").Value); }
             catch { return Mod.Version; }
         }
-        public static void SetFiled()
+        public static void SetFailed()
         {
             Clear();
             Errors = -1;

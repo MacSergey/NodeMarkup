@@ -17,7 +17,6 @@ namespace NodeMarkup.UI
     {
         public event Action<Style.StyleType, StyleModifier> OnModifierChanged;
 
-        private static readonly string keyBindingTemplate = "KeyBindingTemplate";
         private int count;
 
         private Dictionary<ModifierDropDown, Style.StyleType> Modifiers { get; } = new Dictionary<ModifierDropDown, Style.StyleType>();

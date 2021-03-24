@@ -31,7 +31,7 @@ namespace NodeMarkup.Utilities
                 catch (Exception error)
                 {
                     Mod.Logger.Error("Could not load map data", error);
-                    MarkupManager.SetFiled();
+                    MarkupManager.SetFailed();
                 }
             }
             else
