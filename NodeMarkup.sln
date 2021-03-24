@@ -17,8 +17,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta Debug|Any CPU = Beta Debug|Any CPU
 		Beta Release|Any CPU = Beta Release|Any CPU
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
 		Stable Debug|Any CPU = Stable Debug|Any CPU
 		Stable Release|Any CPU = Stable Release|Any CPU
 	EndGlobalSection
@@ -27,10 +25,6 @@ Global
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Debug|Any CPU.Build.0 = Beta Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Release|Any CPU.ActiveCfg = Beta Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Release|Any CPU.Build.0 = Beta Release|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.Build.0 = Stable Debug|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.ActiveCfg = Stable Release|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.Build.0 = Stable Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Debug|Any CPU.Build.0 = Stable Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Release|Any CPU.ActiveCfg = Stable Release|Any CPU
@@ -39,10 +33,6 @@ Global
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Release|Any CPU.Build.0 = Release|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,11 +42,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
-		RESX_ExcelExportMode = MultipleSheets
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_RemoveEmptyEntries = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ExcelExportMode = MultipleSheets
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal
