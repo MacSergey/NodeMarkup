@@ -324,10 +324,7 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Valitse risteys tai jaoke muokataksesi merkintöjä</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Valitse päätepiste viivalle tai pysäytysviivalle
-Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
@@ -801,8 +798,7 @@ poistaaksesi suojatien</value>
     <value>Liitä tiemerkinnät</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Haluatko varmasti liittää tiemerkinnät?
-Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
+    <value>Haluatko varmasti liittää tiemerkinnät?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Suojateiden pikanäppäimet</value>
@@ -1334,6 +1330,27 @@ Napauta muokataksesi merkintöjä</value>
   
   
   
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Muutosloki</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Ryhmittele pisteet</value>
+  </data>
   
   
+  
+  
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
+  </data>
+  
+  
+  
+  
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Valitse päätepiste viivalle tai pysäytysviivalle</value>
+  </data>
 </root>

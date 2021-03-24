@@ -322,10 +322,7 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
 Clicca per modificare il marcatore</value>
   </data>
   
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleziona il punto di fine per uno stop oppure una linea di stop
-Trascina dietro il punto per una linea perpendicolare</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleziona un punto per creare o cancellare una linea</value>
   </data>
@@ -824,8 +821,7 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
     <value>Incolla la marcatura</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Sei sicuro di voler incollare la marcatura?
-Questa rimpiazzerà quella già esistente.</value>
+    <value>Sei sicuro di voler incollare la marcatura?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Modificatore attraversamento pedonale</value>
@@ -1255,4 +1251,21 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
+  
+  
+  
+  
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Questa rimpiazzerà quella già esistente.</value>
+  </data>
+  
+  
+  
+  
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Trascina dietro il punto per una linea perpendicolare</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Seleziona il punto di fine per uno stop oppure una linea di stop</value>
+  </data>
 </root>

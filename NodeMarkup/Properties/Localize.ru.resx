@@ -326,8 +326,7 @@ Shift X10, Ctrl X0.1</value>
 для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку для обычной или стоп линии
-Потяните из перекрестка для перпендикулярной линии</value>
+    <value>Выберите конечную точку для обычной линии</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
@@ -843,8 +842,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Вставить разметку</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Вы действительно хотите вставить разметку?
-Она заменит существующую разметку.</value>
+    <value>Вы действительно хотите вставить разметку?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Модификаторы для выбора стиля переходов</value>
@@ -1439,5 +1437,38 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Группировать точки</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Применить между перекрестками</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Применить между перекрестками</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Применить ко всей улице</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Применить ко всей улице</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Она заменит существующую разметку.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Применить разметку ко всей улице</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Вы действительно хотите применить разметку между перекрестками?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Применить разметку ко всей улице</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Вы действительно хотите применить разметку ко всей "{0}"?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Потяните из перекрестка для перпендикулярной линии</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Выберите конечную точку для обычной или стоп линии</value>
   </data>
 </root>

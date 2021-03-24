@@ -324,10 +324,7 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>选择节点或段落以编辑地标线</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>点选终点来创建普通停止线
-拖选到端点后来创建垂直线</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点来创建/擦除线段</value>
   </data>
@@ -801,8 +798,7 @@ Shift x10，Ctrl x0.1</value>
     <value>粘贴标记</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>确定要粘贴标记吗?
-粘贴后会清除既存的地标线。</value>
+    <value>确定要粘贴标记吗?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>人行横道修饰键</value>
@@ -1346,5 +1342,40 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>更新日志</value>
   </data>
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>端点整合成组</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>应用在两个路口之间</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>应用在两个路口之间</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>应用到整条街</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>应用到整条街</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>粘贴后会清除既存的地标线。</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>将标线应用在两个路口之间的所有道路上</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>确定要在路口之间应用标线吗？</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>将标线应用到整条街道</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>确定要在 "{0}" 整条路上应用标线吗?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>拖选到端点后来创建垂直线</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>点选终点来创建普通停止线</value>
+  </data>
 </root>

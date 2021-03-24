@@ -324,10 +324,7 @@ Haga clic para editar las marcas</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Seleccione un nodo o un segmento para editar las marcas</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccionar punto final para línea normal o transversal
-Arrastre detrás del punto para línea perpendicular</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione el punto para crear o eliminar la línea</value>
   </data>
@@ -800,8 +797,7 @@ crear o eliminar el paso de peatones</value>
     <value>Pegar marcas</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>¿De verdad quieres pegar las marcas?
-Reemplazará las marcas existentes.</value>
+    <value>¿De verdad quieres pegar las marcas?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Modificador de pasos de peatones</value>
@@ -1331,6 +1327,43 @@ Haga clic para editar las marcas</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Desplazamiento del puntos divididos</value>
   </data>
-  
-  
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Registro de cambios</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Agrupar puntos</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Aplicar entre intersecciones</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Aplicar entre intersecciones</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Aplicar a toda la calle</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Aplicar a toda la calle</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Reemplazará las marcas existentes.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Aplicar marcas entre intersecciones</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>¿De verdad quieres applicar marcas entre intersecciones?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Aplicar marcas a toda la calle</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>¿De verdad quieres applicar marcas a toda "{0}"?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Arrastre detrás del punto para línea perpendicular</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Seleccionar punto final para línea normal o transversal</value>
+  </data>
 </root>

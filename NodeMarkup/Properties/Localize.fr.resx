@@ -324,10 +324,7 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Sélectionnez un nœud ou segment pour changer les marquages</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop
-Glissez derrière le point pour une ligne perpendiculaire</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
 créer ou supprimer une ligne</value>
@@ -804,8 +801,7 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
     <value>Coller le marquage</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment coller le marquage ?
-Cela va remplacer le marquage existant.</value>
+    <value>Voulez-vous vraiment coller le marquage ?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Raccourcis pour les passages piétons</value>
@@ -1311,13 +1307,64 @@ Cliquez pour modifier le marquage</value>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Nombre de couleurs</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Une</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Deux</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Depuis le presse-papiers</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Alignement de la ligne</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Diviser en deux</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Décalage de la division</value>
+  </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Notes de mise à jour</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Grouper les points</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Appliquer entre les deux intersections</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Appliquer entre les deux intersections</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Appliquer à toute la rue</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Appliquer à toute la rue</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Cela va remplacer le marquage existant.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Appliquer le marquage entre les intersections</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment appliquer le marquage entre les intersections ?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Appliquer le marquage sur toute la rue</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment appliquer le marquage sur tout "{0}" ?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Glissez derrière le point pour une ligne perpendiculaire</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop</value>
+  </data>
 </root>

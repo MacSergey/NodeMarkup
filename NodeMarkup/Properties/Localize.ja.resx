@@ -325,10 +325,7 @@
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>マーキングを編集する、ノード・セグメントを選択します</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>ライン・停止線の終点を選択
-垂直線は道路の後方へ移動</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して、ラインを作成・削除する</value>
   </data>
@@ -804,8 +801,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>マーキングの貼り付け</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>本当にマーキングを貼り付けますか？
-既存であるノード内のマーキングは、全て置き換えます。</value>
+    <value>本当にマーキングを貼り付けますか？</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>横断歩道のキー設定</value>
@@ -1326,7 +1322,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>2色</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
-    <value>クリップボードから追加する</value>
+    <value>クリップボードから追加</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
     <value>ラインの位置合わせ</value>
@@ -1340,5 +1336,28 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>更新履歴</value>
   </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>ポイントをタブで折り畳む</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>交差点間でマーキングを一括適用</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>交差点間でマーキングを一括適用</value>
+  </data>
   
+  
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>既存であるノード内のマーキングは、全て置き換えます。</value>
+  </data>
+  
+  
+  
+  
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>垂直線は道路の後方へ移動</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>ライン・停止線の終点を選択</value>
+  </data>
 </root>

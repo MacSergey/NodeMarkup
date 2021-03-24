@@ -325,8 +325,7 @@ Klikněte pro změnu značení</value>
     <value>Vyberte křižovatku nebo silnici pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření čáry
-Táhněte za bod pro vytvoření kolmé čáry</value>
+    <value>Vyberte bod pro vytvoření čáry</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
@@ -801,8 +800,7 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
     <value>Vložit značení</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Opravdu si přejete vložit značení?
-Původní značení bude odstraněno.</value>
+    <value>Opravdu si přejete vložit značení?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Klávesové zkratky přechodů</value>
@@ -1343,6 +1341,21 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>Seznam změn</value>
+  </data>
+  
+  
+  
+  
+  
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Původní značení bude odstraněno.</value>
+  </data>
+  
+  
+  
+  
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Táhněte za bod pro vytvoření kolmé čáry</value>
   </data>
   
 </root>

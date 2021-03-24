@@ -324,10 +324,7 @@ Clique para editar marcações</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Selecione um nó ou segmento para editar marcações</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selecione um ponto próprio para uma linha normal ou de paragem
-Arraste para trás do ponto para uma linha perpendicular</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
@@ -812,8 +809,7 @@ O carregamento de {0} marcações falhou.</value>
     <value>Colar marcação</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo colar a marcação?
-Vai substituir todos as marcações existente.</value>
+    <value>Tem a certeza que quer mesmo colar a marcação?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Modificadores da passadeira</value>
@@ -1330,4 +1326,21 @@ Clique para editar marcações</value>
   
   
   
+  
+  
+  
+  
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Vai substituir todos as marcações existente.</value>
+  </data>
+  
+  
+  
+  
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Arraste para trás do ponto para uma linha perpendicular</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Selecione um ponto próprio para uma linha normal ou de paragem</value>
+  </data>
 </root>

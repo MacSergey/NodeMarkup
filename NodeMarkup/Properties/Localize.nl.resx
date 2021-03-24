@@ -324,10 +324,7 @@ Klik om de markering te wijzigen</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Selecteer een knooppunt of segment om markeringen te wijzigen</value>
   </data>
-  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selecteer een eindpunt voor een normale lijn of stoplijn
-Sleep achter het punt voor een loodrechte lijn</value>
-  </data>
+  
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
 een lijn te creëren of te verwijderen</value>
@@ -802,8 +799,7 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
     <value>Plak markering</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Weet je zeker dat je de markering wilt plakken?
-Het zal de huidige markering vervangen.</value>
+    <value>Weet je zeker dat je de markering wilt plakken?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Zebrapad sneltoetsen</value>
@@ -1333,4 +1329,21 @@ Klik om de markering te wijzigen</value>
   </data>
   
   
+  
+  
+  
+  
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Het zal de huidige markering vervangen.</value>
+  </data>
+  
+  
+  
+  
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Sleep achter het punt voor een loodrechte lijn</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Selecteer een eindpunt voor een normale lijn of stoplijn</value>
+  </data>
 </root>
