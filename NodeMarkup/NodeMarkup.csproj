@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>NOPERFORMLAYOUT</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Debug|AnyCPU'">
     <OutputPath>bin\Stable Debug\</OutputPath>
@@ -32,7 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;NOPERFORMLAYOUT</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Release|AnyCPU'">
     <OutputPath>bin\Beta Release\</OutputPath>
@@ -42,7 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>BETA</DefineConstants>
+    <DefineConstants>BETA, NOPERFORMLAYOUT</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Debug|AnyCPU'">
     <OutputPath>bin\Beta Debug\</OutputPath>
@@ -53,7 +54,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>BETA, DEBUG</DefineConstants>
+    <DefineConstants>BETA, DEBUG, NOPERFORMLAYOUT</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
