@@ -20,6 +20,8 @@ namespace NodeMarkup
 {
     public static class Settings
     {
+        #region PROPERTIES
+
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor(Mod.Versions).ToString(), true);
@@ -41,14 +43,20 @@ namespace NodeMarkup
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
         public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
+
+        public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
         public static SavedBool GroupTemplates { get; } = new SavedBool(nameof(GroupTemplates), SettingsFile, true, true);
         public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
-        public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
-        public static SavedInt GroupPointsType { get; } = new SavedInt(nameof(GroupPointsType), SettingsFile, 0, true);
+        public static SavedBool GroupPointsOverlay { get; } = new SavedBool(nameof(GroupPointsOverlay), SettingsFile, true, true);
+        public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
 
         private static TabStrip TabStrip { get; set; }
         private static List<CustomUIPanel> TabPanels { get; set; }
+
+        #endregion
+
+        #region BASIC
 
         static Settings()
         {
@@ -143,6 +151,8 @@ namespace NodeMarkup
             }
         }
 
+        #endregion
+
         #region GENERAL
 
         #region LANGUAGE
@@ -224,9 +234,10 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
 
+            AddCheckBox(group, Localize.Settings_GroupPoints, GroupPoints, OnChanged);
             AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_GroupPoints, GroupPoints, GroupPointsType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+            AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
             static void OnChanged() => NodeMarkupPanel.Instance.UpdatePanel();
         }
@@ -392,6 +403,8 @@ namespace NodeMarkup
 
         #endregion
 
+        #region UTILITY
+
         private static void AddFloatField(UIHelper group, string label, SavedFloat saved, float? defaultValue, float? min = null, float? max = null, Action onSubmit = null)
         {
             UITextField field = null;
@@ -489,13 +502,15 @@ namespace NodeMarkup
             label.textColor = color ?? Color.white;
             label.padding = new RectOffset(padding, 0, 0, 0);
         }
-    }
 
-    public class LanguageDropDown : UIDropDown<string>
-    {
-        public LanguageDropDown()
+        private class LanguageDropDown : UIDropDown<string>
         {
-            SetSettingsStyle(new Vector2(300, 31));
+            public LanguageDropDown()
+            {
+                SetSettingsStyle(new Vector2(300, 31));
+            }
         }
+
+        #endregion
     }
 }

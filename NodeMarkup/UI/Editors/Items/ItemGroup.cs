@@ -27,7 +27,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        private GroupItem Item { get; set; }
+        public GroupItem Item { get; private set; }
         public GroupType Selector { get; private set; }
         public bool IsEmpty => components.Count <= 1;
 

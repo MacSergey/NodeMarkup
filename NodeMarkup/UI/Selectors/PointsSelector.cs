@@ -23,7 +23,7 @@ namespace NodeMarkup.UI
             {
                 if (!(Groups.FirstOrDefault(g => g.Intersect(point)) is PointsGroup<PointType> group))
                 {
-                    group = Settings.GroupPointsType != 1 ? new RoundPointsGroup<PointType>(color, pointSize) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, pointSize);
+                    group = Settings.GroupPointsOverlayType != 1 ? new RoundPointsGroup<PointType>(color, pointSize) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, pointSize);
                     Groups.Add(group);
                 }
 
@@ -76,7 +76,7 @@ namespace NodeMarkup.UI
         {
             Color = color;
             PointSize = pointSize;
-            IntersectSize = Settings.GroupPoints ? 1.5f * PointSize : 0f;
+            IntersectSize = Settings.GroupPointsOverlay ? 1.5f * PointSize : 0f;
         }
 
         public void Add(PointType point) => Points.Add(point);

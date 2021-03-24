@@ -80,11 +80,23 @@ namespace NodeMarkup.UI.Editors
             Shift.isVisible = value;
         }
 
-        public override void Render(RenderManager.CameraInfo cameraInfo) => ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
+        public override void Render(RenderManager.CameraInfo cameraInfo)
+        {
+            ItemsPanel.HoverGroupObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
+        }
     }
-    public class PointsItemsPanel : ItemsPanel<PointItem, MarkupEnterPoint>
+    public class PointsItemsPanel : ItemsGroupPanel<PointItem, MarkupEnterPoint, PointGroup, Enter>
     {
+        public override bool GroupingEnable => Settings.GroupPoints.value;
+
         public override int Compare(MarkupEnterPoint x, MarkupEnterPoint y) => 0;
+
+        public override int Compare(Enter x, Enter y) => 0;
+
+        protected override string GroupName(Enter group) => group.ToString();
+
+        protected override Enter SelectGroup(MarkupEnterPoint point) => point.Enter;
     }
     public class PointItem : EditItem<MarkupEnterPoint, ColorIcon>
     {
@@ -95,4 +107,5 @@ namespace NodeMarkup.UI.Editors
             Icon.InnerColor = Object.Color;
         }
     }
+    public class PointGroup : EditGroup<Enter, PointItem, MarkupEnterPoint> { }
 }

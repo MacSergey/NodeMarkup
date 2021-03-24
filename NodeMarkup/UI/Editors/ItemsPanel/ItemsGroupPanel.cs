@@ -15,6 +15,8 @@ namespace NodeMarkup.UI.Editors
         public override bool IsEmpty => GroupingEnable ? !Content.components.Any(c => c is GroupItemType) : base.IsEmpty;
         public abstract bool GroupingEnable { get; }
         private Dictionary<GroupType, GroupItemType> Groups { get; } = new Dictionary<GroupType, GroupItemType>();
+        protected GroupItemType HoverGroup { get; set; }
+        public GroupType HoverGroupObject => HoverGroup != null ? HoverGroup.Selector : default;
 
         protected override ItemType AddObjectImpl(ObjectType editObject)
         {
@@ -50,6 +52,8 @@ namespace NodeMarkup.UI.Editors
 
             if (group?.IsEmpty == true)
             {
+                group.Item.eventMouseEnter -= GroupHover;
+                group.Item.eventMouseLeave -= GroupLeave;
                 Groups.Remove(group.Selector);
                 ComponentPool.Free(group);
             }
@@ -88,10 +92,15 @@ namespace NodeMarkup.UI.Editors
                 group = ComponentPool.Get<GroupItemType>(Content, zOrder: index >= 0 ? index : ~index);
                 group.Init(groupType, GroupName(groupType));
                 group.width = Content.width;
+                group.Item.eventMouseEnter += GroupHover;
+                group.Item.eventMouseLeave += GroupLeave;
                 Groups[groupType] = group;
             }
             return group;
         }
+
+        private void GroupHover(UIComponent component, UIMouseEventParameter eventParam) => HoverGroup = component.parent as GroupItemType;
+        private void GroupLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverGroup = null;
 
         #endregion
 

@@ -2183,7 +2183,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Group points overlay.
+        ///   Ищет локализованную строку, похожую на Group points.
         /// </summary>
         public static string Settings_GroupPoints {
             get {
@@ -2206,6 +2206,15 @@ namespace NodeMarkup {
         public static string Settings_GroupPointsArrangeLine {
             get {
                 return ResourceManager.GetString("Settings_GroupPointsArrangeLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Group points overlay.
+        /// </summary>
+        public static string Settings_GroupPointsOverlay {
+            get {
+                return ResourceManager.GetString("Settings_GroupPointsOverlay", resourceCulture);
             }
         }
         
