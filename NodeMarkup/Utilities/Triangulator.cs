@@ -1,8 +1,6 @@
 ﻿using ModsCommon.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
@@ -109,7 +107,8 @@ namespace NodeMarkup.Utilities
         ClockWise,
         CounterClockWise
     }
-    class Vertex
+
+    internal class Vertex
     {
         public Vector2 Position { get; }
         public int Index { get; }
@@ -132,11 +131,12 @@ namespace NodeMarkup.Utilities
 
         public override string ToString() => $"{Index}:{Position} ({(IsConvex ? "Conver" : "Reflex")})";
     }
-    class Triangle
+
+    internal class Triangle
     {
-        int A { get; }
-        int B { get; }
-        int C { get; }
+        private int A { get; }
+        private int B { get; }
+        private int C { get; }
 
         public Triangle(int a, int b, int c)
         {

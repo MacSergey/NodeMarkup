@@ -1,16 +1,12 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
-using ColossalFramework.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 namespace NodeMarkup.Utilities
 {
@@ -32,7 +28,7 @@ namespace NodeMarkup.Utilities
         public static Texture SurfaceTexture { get; } = TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127));
 
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
-        static int[] VerticesIdxs { get; } = new int[]
+        private static int[] VerticesIdxs { get; } = new int[]
 {
             1,3,2,0,// Bottom
             5,7,4,6,// Top
@@ -41,7 +37,7 @@ namespace NodeMarkup.Utilities
             3,6,2,7,// Back
             2,5,1,6, // Right
 };
-        static int[] TrianglesIdxs { get; } = new int[]
+        private static int[] TrianglesIdxs { get; } = new int[]
         {
                 0,1,2,      1,0,3,      // Bottom
                 4,5,6,      5,4,7,      // Top
@@ -50,8 +46,8 @@ namespace NodeMarkup.Utilities
                 16,17,18,   17,16,19,   // Back
                 20,21,22,   21,20,23,    // Right
         };
-        static int VCount { get; } = 24;
-        static int TCount { get; } = 36;
+        private static int VCount { get; } = 24;
+        private static int TCount { get; } = 36;
 
         public static Mesh CreateMesh(int count, Vector3 size)
         {

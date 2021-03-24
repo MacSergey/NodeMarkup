@@ -1,12 +1,11 @@
-﻿using ColossalFramework.UI;
-using ModsCommon.UI;
+﻿using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System;
 
 namespace NodeMarkup.UI.Editors
 {

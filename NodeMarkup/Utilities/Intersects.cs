@@ -1,12 +1,9 @@
 ﻿using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
@@ -60,7 +57,7 @@ namespace NodeMarkup.Utilities
 
             return new List<MarkupIntersect>();
         }
-        public static List<MarkupIntersect> Calculate(ITrajectory trajectory, IEnumerable<ITrajectory> otherTrajectories, bool onlyIntersect = false) 
+        public static List<MarkupIntersect> Calculate(ITrajectory trajectory, IEnumerable<ITrajectory> otherTrajectories, bool onlyIntersect = false)
             => otherTrajectories.SelectMany(t => Calculate(trajectory, t)).Where(i => !onlyIntersect || i.IsIntersect).ToList();
 
         #region BEZIER - BEZIER
@@ -140,14 +137,14 @@ namespace NodeMarkup.Utilities
         {
             CalcParts(bezier, out int parts, out float[] points, out Vector3[] pos);
 
-            if(parts > 1)
+            if (parts > 1)
             {
                 for (var i = 0; i < parts; i += 1)
                 {
                     if (IntersectSectionAndRay(line, pos[i], pos[i + 1], out _, out _))
                     {
                         var cut = bezier.Cut(points[i], points[i + 1]) as BezierTrajectory;
-                        Intersect(results, line, cut,  invert, idx * parts + i, of * parts);
+                        Intersect(results, line, cut, invert, idx * parts + i, of * parts);
                     }
                 }
             }
@@ -230,7 +227,7 @@ namespace NodeMarkup.Utilities
                 var secondTrajectory = GetTrajectory(pair.Second, mustIntersect);
 
                 var intersect = CalculateSingle(firstTrajectory, secondTrajectory);
-                if(intersect.IsIntersect)
+                if (intersect.IsIntersect)
                     return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT, intersect.Angle);
             }
 
@@ -245,7 +242,7 @@ namespace NodeMarkup.Utilities
 
     public class MarkupIntersectComparer : IComparer<MarkupIntersect>
     {
-        bool _isFirst;
+        private readonly bool _isFirst;
         public MarkupIntersectComparer(bool isFirst = true)
         {
             _isFirst = isFirst;

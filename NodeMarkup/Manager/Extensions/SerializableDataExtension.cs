@@ -1,20 +1,8 @@
 ﻿using ICities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NodeMarkup.Manager;
-using System.Xml.Linq;
-using System.Diagnostics;
-using System.IO;
-using System.Xml;
-using System.IO.Compression;
-using ColossalFramework.IO;
-using System.Linq.Expressions;
-using NodeMarkup.UI;
-using HarmonyLib;
-using ColossalFramework.Globalization;
 using ModsCommon.Utilities;
+using NodeMarkup.Manager;
+using System;
+using System.Diagnostics;
 
 namespace NodeMarkup.Utilities
 {
@@ -40,7 +28,7 @@ namespace NodeMarkup.Utilities
                     sw.Stop();
                     Mod.Logger.Debug($"Map data was loaded in {sw.ElapsedMilliseconds}ms; Size = {data.Length} bytes");
                 }
-                catch(Exception error)
+                catch (Exception error)
                 {
                     Mod.Logger.Error("Could not load map data", error);
                     MarkupManager.SetFiled();
@@ -67,7 +55,7 @@ namespace NodeMarkup.Utilities
                 sw.Stop();
                 Mod.Logger.Debug($"Map data saved in {sw.ElapsedMilliseconds}ms; Size = {compress.Length} bytes");
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 Mod.Logger.Error("Save map data failed", error);
                 Loader.SaveToFile(Loader.MarkingName, config, out _);

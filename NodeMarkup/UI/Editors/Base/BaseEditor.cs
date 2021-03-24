@@ -4,13 +4,9 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
@@ -79,12 +75,12 @@ namespace NodeMarkup.UI.Editors
         public sealed override bool AvailableItems
         {
             get => ItemsPanel.isEnabled;
-            set => ItemsPanel.SetAvailable(value); 
+            set => ItemsPanel.SetAvailable(value);
         }
-        public sealed override bool AvailableContent 
+        public sealed override bool AvailableContent
         {
             get => ItemsPanel.isEnabled;
-            set => ContentPanel.SetAvailable(value); 
+            set => ContentPanel.SetAvailable(value);
         }
 
         #endregion

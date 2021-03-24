@@ -1,17 +1,11 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -19,7 +13,7 @@ namespace NodeMarkup.Manager
 {
     public interface IFillerStyle : IStyle
     {
-        PropertyValue<float> MedianOffset { get;}
+        PropertyValue<float> MedianOffset { get; }
     }
     public abstract class FillerStyle : Style<FillerStyle>, IFillerStyle
     {

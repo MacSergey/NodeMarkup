@@ -2,10 +2,8 @@
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.Manager

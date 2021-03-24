@@ -4,10 +4,6 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using static ToolBase;
 
@@ -18,11 +14,13 @@ namespace NodeMarkup.Tools
         public override ToolModeType Type => ToolModeType.Select;
         public override bool ShowPanel => false;
 
-        ushort HoverNodeId { get; set; } = 0;
-        bool IsHoverNode => HoverNodeId != 0;
+        private ushort HoverNodeId { get; set; } = 0;
 
-        ushort HoverSegmentId { get; set; } = 0;
-        bool IsHoverSegment => HoverSegmentId != 0;
+        private bool IsHoverNode => HoverNodeId != 0;
+
+        private ushort HoverSegmentId { get; set; } = 0;
+
+        private bool IsHoverSegment => HoverSegmentId != 0;
 
         protected override void Reset(BaseToolMode prevMode)
         {

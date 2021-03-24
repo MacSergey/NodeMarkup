@@ -1,11 +1,6 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
-using NodeMarkup.UI.Editors;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace NodeMarkup.UI
@@ -89,7 +84,7 @@ namespace NodeMarkup.UI
         protected override string SuccessMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageSuccess;
         protected override string FailedMessage => NodeMarkup.Localize.Settings_RestoreTemplatesMessageFailed;
         protected override Dictionary<string, string> GetList() => Loader.GetStyleTemplatesRestoreList();
-        protected override bool Import(string file) =>  Loader.ImportStylesData(file);
+        protected override bool Import(string file) => Loader.ImportStylesData(file);
     }
     public class ImportIntersectionTemplatesMessageBox : ImportMessageBox
     {

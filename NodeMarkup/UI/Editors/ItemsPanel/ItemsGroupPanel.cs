@@ -4,7 +4,6 @@ using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NodeMarkup.UI.Editors
 {

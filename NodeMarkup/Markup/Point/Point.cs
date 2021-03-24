@@ -1,13 +1,10 @@
 ﻿using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -223,8 +220,8 @@ namespace NodeMarkup.Manager
         {
             base.Render(data);
 
-            if(Split && data.SplitPoint)
-            {              
+            if (Split && data.SplitPoint)
+            {
                 var normal = Direction.Turn90(true);
 
                 var dataWhite = new OverlayData(data.CameraInfo);

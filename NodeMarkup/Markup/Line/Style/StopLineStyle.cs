@@ -1,14 +1,8 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -291,7 +285,8 @@ namespace NodeMarkup.Manager
 
             return styleData;
         }
-        IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory lineTrajectory, float startT, float endT)
+
+        private IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory lineTrajectory, float startT, float endT)
         {
             yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, Base, Height / -2, Height, Color);
         }

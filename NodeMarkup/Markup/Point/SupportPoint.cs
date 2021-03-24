@@ -1,9 +1,6 @@
 ﻿using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -27,7 +24,7 @@ namespace NodeMarkup.Manager
     {
         protected static float DefaultWidth => 0.5f;
         protected static Vector3 MarkerSize { get; } = Vector3.one * DefaultWidth;
-        Bounds Bounds { get; set; }
+        private Bounds Bounds { get; set; }
         public Vector3 Position => Bounds.center;
 
         public abstract string XmlSection { get; }

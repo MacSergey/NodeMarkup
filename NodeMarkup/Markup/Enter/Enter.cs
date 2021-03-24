@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.Math;
-using HarmonyLib;
 using ModsBridge;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
@@ -7,8 +6,6 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -17,7 +14,7 @@ namespace NodeMarkup.Manager
 
     public abstract class Enter : IOverlay, IDeletable, ISupport, IComparable<Enter>
     {
-        byte _pointNum;
+        private byte _pointNum;
         public static string XmlName { get; } = "E";
 
         public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;

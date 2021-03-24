@@ -3,10 +3,8 @@ using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -44,7 +42,7 @@ namespace NodeMarkup.UI.Editors
         protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected Editor Editor { get; private set; }
 
-        ItemType _selectItem;
+        private ItemType _selectItem;
         protected ItemType SelectItem
         {
             get => _selectItem;

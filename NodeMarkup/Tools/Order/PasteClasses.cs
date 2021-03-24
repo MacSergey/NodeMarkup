@@ -5,9 +5,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 namespace NodeMarkup.Tools
 {
@@ -306,13 +304,15 @@ namespace NodeMarkup.Tools
     }
     public class EntersBasket : Basket<SourceEnter>
     {
-        float FromAngle { get; }
-        float ToAngle { get; }
-        Vector3 Centre { get; }
-        float Radius { get; }
-        float HalfWidthAngle { get; }
-        float MiddleAngle => (FromAngle + ToAngle) / 2;
-        float DeltaAngle => FromAngle - ToAngle;
+        private float FromAngle { get; }
+        private float ToAngle { get; }
+        private Vector3 Centre { get; }
+        private float Radius { get; }
+        private float HalfWidthAngle { get; }
+
+        private float MiddleAngle => (FromAngle + ToAngle) / 2;
+
+        private float DeltaAngle => FromAngle - ToAngle;
         public EntersBasket(BaseEntersOrderToolMode toolMode, EntersBorders borders, IEnumerable<SourceEnter> items) : base(items)
         {
             Centre = toolMode.Centre;
@@ -388,12 +388,14 @@ namespace NodeMarkup.Tools
     }
     public class PointsBasket : Basket<SourcePoint>
     {
-        Vector3 Direction { get; }
-        Vector3 Position { get; }
-        StraightTrajectory Line { get; }
-        StraightTrajectory Connect { get; }
-        float Shift => 3 * TargetPoint.Size;
-        float Width { get; }
+        private Vector3 Direction { get; }
+        private Vector3 Position { get; }
+        private StraightTrajectory Line { get; }
+        private StraightTrajectory Connect { get; }
+
+        private float Shift => 3 * TargetPoint.Size;
+
+        private float Width { get; }
         public PointsBasket(PointsOrderToolMode toolMode, PointsBorders borders, IEnumerable<SourcePoint> items) : base(items)
         {
             Direction = toolMode.TargetEnter.Enter.CornerAngle.Direction().Turn90(false);

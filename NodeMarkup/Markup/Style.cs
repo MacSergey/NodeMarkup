@@ -5,11 +5,8 @@ using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -394,7 +391,7 @@ namespace NodeMarkup.Manager
         public Style(Color32 color, float width) : base(color, width) { }
 
         public virtual void CopyTo(StyleType target) => base.CopyTo(target);
-        public override sealed Style Copy() => CopyStyle();
+        public sealed override Style Copy() => CopyStyle();
         public abstract StyleType CopyStyle();
     }
 }

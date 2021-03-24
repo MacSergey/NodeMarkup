@@ -1,22 +1,14 @@
 ﻿using ICities;
+using ModsCommon;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
+using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using NodeMarkup.UI;
-using System.Globalization;
-using ColossalFramework.Globalization;
-using ColossalFramework;
-using ColossalFramework.UI;
-using ColossalFramework.PlatformServices;
-using NodeMarkup.Utilities;
-using NodeMarkup.Tools;
-using UnityEngine.SceneManagement;
-using ModsCommon;
-using ModsCommon.Utilities;
-using ModsCommon.UI;
 
 namespace NodeMarkup
 {

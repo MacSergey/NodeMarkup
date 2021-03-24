@@ -1,28 +1,19 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Importers;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
+using ICities;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using NodeMarkup.UI;
+using NodeMarkup.UI.Panel;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using UnityEngine;
-using NodeMarkup.Manager;
-using ICities;
-using ColossalFramework.PlatformServices;
-using System.Xml.Linq;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.UI.Panel;
-using System.Diagnostics;
-using ColossalFramework.Packaging;
-using ColossalFramework.IO;
-using System.IO;
-using ColossalFramework.Importers;
-using ModsCommon.Utilities;
-using ModsCommon.UI;
 
 namespace NodeMarkup.Tools
 {
@@ -623,7 +614,7 @@ namespace NodeMarkup.Tools
         public static void RenderBezier(Bezier3 bezier, OverlayData data)
         {
             var cutValue = (data.Width ?? DefaultWidth) / 2;
-            RenderManager.OverlayEffect.DrawBezier(data.CameraInfo, data.Color ?? Colors.White, bezier, data.Width ?? DefaultWidth, data.CutStart==true ? cutValue : 0f, data.CutEnd == true ? cutValue : 0f, -1f, 1280f, false, data.AlphaBlend ?? DefaultBlend);
+            RenderManager.OverlayEffect.DrawBezier(data.CameraInfo, data.Color ?? Colors.White, bezier, data.Width ?? DefaultWidth, data.CutStart == true ? cutValue : 0f, data.CutEnd == true ? cutValue : 0f, -1f, 1280f, false, data.AlphaBlend ?? DefaultBlend);
         }
 
         public static void RenderCircle(Vector3 position, OverlayData data) =>

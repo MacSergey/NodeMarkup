@@ -1,14 +1,9 @@
-﻿using ColossalFramework.UI;
-using ModsCommon.UI;
+﻿using ModsCommon.UI;
 using NodeMarkup.Manager;
-using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -78,7 +73,8 @@ namespace NodeMarkup.UI.Editors
         }
 
         private void OffsetChanged(float value) => EditObject.Offset.Value = value;
-        void SplitChanged(bool value)
+
+        private void SplitChanged(bool value)
         {
             EditObject.Split.Value = value;
             Shift.isVisible = value;

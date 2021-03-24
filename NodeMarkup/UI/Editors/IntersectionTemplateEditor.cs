@@ -1,11 +1,8 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
@@ -56,7 +53,7 @@ namespace NodeMarkup.UI.Editors
 
     public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate>
     {
-        PreviewPanel Preview { get; set; }
+        private PreviewPanel Preview { get; set; }
 
         public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
         {

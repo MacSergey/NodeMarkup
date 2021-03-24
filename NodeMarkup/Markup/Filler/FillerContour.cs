@@ -1,9 +1,7 @@
-﻿using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
+﻿using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -27,7 +25,7 @@ namespace NodeMarkup.Manager
 
         public Markup Markup { get; }
 
-        List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
+        private List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
         public IFillerVertex First => SupportPoints.FirstOrDefault();
         public IFillerVertex Last => SupportPoints.LastOrDefault();
         public IFillerVertex Prev => VertexCount >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
@@ -36,7 +34,7 @@ namespace NodeMarkup.Manager
         public int VertexCount => SupportPoints.Count;
         public bool IsEmpty => VertexCount == 0;
 
-        List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
+        private List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
         public IEnumerable<MarkupLinePart> Parts => LineParts;
 
         public IEnumerable<ITrajectory> TrajectoriesRaw

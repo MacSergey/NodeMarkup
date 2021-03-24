@@ -1,8 +1,6 @@
 ﻿using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -15,8 +13,8 @@ namespace NodeMarkup.Manager
     public class NetInfoPointSource : IPointSource
     {
         public Enter Enter { get; }
-        DriveLane LeftLane { get; }
-        DriveLane RightLane { get; }
+        private DriveLane LeftLane { get; }
+        private DriveLane RightLane { get; }
         public MarkupPoint.LocationType Location { get; private set; }
 
         public bool IsEdge => GetIsEdge(LeftLane, RightLane);

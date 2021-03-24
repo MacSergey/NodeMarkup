@@ -1,15 +1,9 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
+﻿using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static ToolBase;
 
 namespace NodeMarkup.Tools
 {

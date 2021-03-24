@@ -1,8 +1,6 @@
 ﻿using ModsCommon.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NodeMarkup.Manager
 {
@@ -11,8 +9,8 @@ namespace NodeMarkup.Manager
         public override EnterType Type => EnterType.Segment;
         public override MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.All;
 
-        Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; set; } = new Dictionary<byte, MarkupCrosswalkPoint>();
-        Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; set; } = new Dictionary<byte, MarkupNormalPoint>();
+        private Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; set; } = new Dictionary<byte, MarkupCrosswalkPoint>();
+        private Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; set; } = new Dictionary<byte, MarkupNormalPoint>();
 
         public int CrosswalkCount => CrosswalkPointsDic.Count;
         public int NormalCount => NormalPointsDic.Count;

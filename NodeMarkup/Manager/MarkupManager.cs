@@ -1,14 +1,10 @@
 ﻿using ColossalFramework;
-using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using UnityEngine;
 using static NetInfo;
 
 namespace NodeMarkup.Manager
@@ -117,7 +113,7 @@ namespace NodeMarkup.Manager
         protected abstract string XmlName { get; }
         protected abstract ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map);
 
-        static PropManager PropManager => Singleton<PropManager>.instance;
+        private static PropManager PropManager => Singleton<PropManager>.instance;
 
         public bool TryGetMarkup(ushort id, out TypeMarkup markup) => Markups.TryGetValue(id, out markup);
         public TypeMarkup Get(ushort id)

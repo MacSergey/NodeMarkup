@@ -1,16 +1,14 @@
-﻿using ColossalFramework.Math;
-using ModsCommon.Utilities;
+﻿using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
-{    
+{
     public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportEnters, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, ISupportIntersectionTemplate, IToXml
     {
         #region PROPERTIES
@@ -351,7 +349,7 @@ namespace NodeMarkup.Manager
                     {
                         if (styleData is IEnumerable<MarkupStylePart> styleDashes)
                             dashes.AddRange(styleDashes);
-                        else if(styleData != null)
+                        else if (styleData != null)
                             drawData.AddRange(styleData.GetDrawData());
                     }
                 }

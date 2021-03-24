@@ -181,9 +181,9 @@ namespace NodeMarkup
             var elseIndex = instructionList.FindLastIndex(i => i.opcode == OpCodes.Brfalse);
             var elseLabel = (Label)instructionList[elseIndex].operand;
 
-            for(var i = elseIndex + 1; i < instructionList.Count; i+= 1)
+            for (var i = elseIndex + 1; i < instructionList.Count; i += 1)
             {
-                if(instructionList[i].labels.Contains(elseLabel))
+                if (instructionList[i].labels.Contains(elseLabel))
                 {
                     var elseInstruction = instructionList[i];
                     var oldElseLabels = elseInstruction.labels;

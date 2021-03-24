@@ -1,18 +1,12 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Importers;
-using ColossalFramework.IO;
-using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
@@ -285,7 +279,7 @@ namespace NodeMarkup.Manager
 
         private Dictionary<Style.StyleType, Guid> DefaultTemplates { get; } = new Dictionary<Style.StyleType, Guid>();
         public bool IsDefault(StyleTemplate template) => DefaultTemplates.TryGetValue(template.Style.Type, out Guid id) && template.Id == id;
-        public IEnumerable<StyleTemplate> GetTemplates(Style.StyleType group) => Templates.Where(t => t.Style.Type.GetGroup() ==  group);
+        public IEnumerable<StyleTemplate> GetTemplates(Style.StyleType group) => Templates.Where(t => t.Style.Type.GetGroup() == group);
 
         protected override StyleTemplate CreateInstance(string name, Style style) => new StyleTemplate(name, style);
 

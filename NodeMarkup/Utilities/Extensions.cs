@@ -1,20 +1,12 @@
-﻿using ColossalFramework;
-using ColossalFramework.Globalization;
-using ColossalFramework.Math;
+﻿using ColossalFramework.Globalization;
 using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
-using ICities;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using UnityEngine;
 using LineAlignment = NodeMarkup.Manager.LineAlignment;
 
@@ -29,7 +21,7 @@ namespace NodeMarkup.Utilities
             else
                 Process.Start(url);
         }
-        
+
         public static string Description<T>(this T value)
             where T : Enum
         {
@@ -56,7 +48,7 @@ namespace NodeMarkup.Utilities
             else
                 return modifier.ToString();
         }
-           
+
         public static LineAlignment Invert(this LineAlignment alignment) => (LineAlignment)(1 - alignment.Sign());
         public static int Sign(this LineAlignment alignment) => (int)alignment - 1;
 
@@ -66,7 +58,7 @@ namespace NodeMarkup.Utilities
         public static Style.StyleType GetGroup(this Style.StyleType type) => type & Style.StyleType.GroupMask;
         public static Style.StyleType GetItem(this Style.StyleType type) => type & Style.StyleType.ItemMask;
     }
-    public class NotExistEnterException : Exception 
+    public class NotExistEnterException : Exception
     {
         public EnterType Type { get; }
         public ushort Id { get; }

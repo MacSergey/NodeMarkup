@@ -1,29 +1,20 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Globalization;
 using ColossalFramework.UI;
 using ICities;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Diagnostics;
-using ColossalFramework.Threading;
-using System.Threading;
-using System.Reflection;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-using System;
-using System.Globalization;
-using NodeMarkup.UI.Editors;
-using UnityEngine.SocialPlatforms;
-using static ColossalFramework.UI.UIDropDown;
-using ColossalFramework.Globalization;
-using ColossalFramework.PlatformServices;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
-using ModsCommon.Utilities;
-using ModsCommon.UI;
 using NodeMarkup.UI.Panel;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace NodeMarkup
 {
@@ -136,7 +127,7 @@ namespace NodeMarkup
                 panel.width = tabPanel.width - (panel.verticalScrollbar.isVisible ? panel.verticalScrollbar.width : 0);
             }
         }
-        private  static void SetTabSize(UIPanel panel, UIScrollablePanel mainPanel)
+        private static void SetTabSize(UIPanel panel, UIScrollablePanel mainPanel)
         {
             panel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
         }
@@ -397,7 +388,7 @@ namespace NodeMarkup
         private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.Utilities.OpenUrl(Mod.WikiUrl));
         private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
         private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
-        private static void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, () => Mod.ShowWhatsNew(new Version(1,0), true));
+        private static void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, () => Mod.ShowWhatsNew(new Version(1, 0), true));
 
         #endregion
 
@@ -500,8 +491,8 @@ namespace NodeMarkup
         }
     }
 
-    public class LanguageDropDown : UIDropDown<string> 
-    { 
+    public class LanguageDropDown : UIDropDown<string>
+    {
         public LanguageDropDown()
         {
             SetSettingsStyle(new Vector2(300, 31));

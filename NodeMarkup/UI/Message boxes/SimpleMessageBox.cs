@@ -1,10 +1,4 @@
-﻿using ColossalFramework.UI;
-using ModsCommon.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using ModsCommon.UI;
 
 namespace NodeMarkup.UI
 {

@@ -3,10 +3,8 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -20,9 +18,9 @@ namespace NodeMarkup.Manager
     {
         protected abstract MaterialType MaterialType { get; }
 
-        public float MinAngle => /*Settings.ApproximationMinAngle; */10f;
-        public float MinLength => /*Settings.ApproximationMinLength;*/2f;
-        public float MaxLength => /*Settings.ApproximationMaxLength;*/10f;
+        public float MinAngle => 10f;
+        public float MinLength => 2f;
+        public float MaxLength => 10f;
         public PropertyValue<float> Elevation { get; }
 
         public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset)

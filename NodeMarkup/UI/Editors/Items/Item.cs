@@ -1,15 +1,9 @@
-﻿using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
-using ICities;
+﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
@@ -64,7 +58,7 @@ namespace NodeMarkup.UI.Editors
             Label.wordWrap = true;
             Label.eventSizeChanged += (c, v) => LabelSizeChanged();
         }
-        public virtual void DeInit() 
+        public virtual void DeInit()
         {
             IsSelect = false;
             isVisible = true;
@@ -87,7 +81,7 @@ namespace NodeMarkup.UI.Editors
     {
         public event Action<EditItem<ObjectType>> OnDelete;
 
-        ObjectType _object;
+        private ObjectType _object;
         public ObjectType Object
         {
             get => _object;

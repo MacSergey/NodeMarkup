@@ -5,10 +5,6 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -19,8 +15,8 @@ namespace NodeMarkup.UI.Editors
         public event Action OnPaste;
 
         private Style.StyleType StyleGroup { get; set; }
-        SimpleHeaderButton PasteButton { get; set; }
-        ApplyTemplateHeaderButton ApplyTemplate { get; }
+        private SimpleHeaderButton PasteButton { get; set; }
+        private ApplyTemplateHeaderButton ApplyTemplate { get; }
 
         public StyleHeaderPanel()
         {
@@ -88,10 +84,11 @@ namespace NodeMarkup.UI.Editors
         public event Action OnEdit;
         public event Action OnSave;
         public event Action OnNotSave;
-        HeaderButton SaveAsAsset { get; set; }
-        HeaderButton Edit { get; set; }
-        HeaderButton Save { get; set; }
-        HeaderButton NotSave { get; set; }
+
+        private HeaderButton SaveAsAsset { get; set; }
+        private HeaderButton Edit { get; set; }
+        private HeaderButton Save { get; set; }
+        private HeaderButton NotSave { get; set; }
 
         private bool IsAsset { get; set; }
         private bool CanEdit { get; set; }
@@ -143,10 +140,10 @@ namespace NodeMarkup.UI.Editors
         public event Action OnSetAsDefault;
         public event Action OnDuplicate;
 
-        HeaderButton SetAsDefaultButton { get; set; }
-        HeaderButton Duplicate { get; set; }
+        private HeaderButton SetAsDefaultButton { get; set; }
+        private HeaderButton Duplicate { get; set; }
 
-        public override bool EditMode 
+        public override bool EditMode
         {
             set
             {
@@ -180,11 +177,11 @@ namespace NodeMarkup.UI.Editors
         private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
         private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
     }
-    public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate> 
+    public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate>
     {
         public event Action OnApply;
 
-        HeaderButton Apply { get; set; }
+        private HeaderButton Apply { get; set; }
         public override bool EditMode
         {
             set

@@ -1,15 +1,8 @@
-﻿using ColossalFramework.Math;
-using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
+﻿using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using UnityEngine;
 
 namespace NodeMarkup.Manager
 {

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Xml.Linq;
 
 namespace NodeMarkup
@@ -21,7 +20,7 @@ namespace NodeMarkup
 
         public static AssetDataExtension Instance { get; private set; }
 
-        static Dictionary<BuildingInfo, AssetMarking> AssetMarkings { get; } = new Dictionary<BuildingInfo, AssetMarking>();
+        private static Dictionary<BuildingInfo, AssetMarking> AssetMarkings { get; } = new Dictionary<BuildingInfo, AssetMarking>();
         public override void OnCreated(IAssetData assetData)
         {
             base.OnCreated(assetData);
@@ -55,7 +54,7 @@ namespace NodeMarkup
 
                 Mod.Logger.Debug($"Prefab data was loaded; Size = {data.Length} bytes");
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 Mod.Logger.Error("Could not load prefab data", error);
             }

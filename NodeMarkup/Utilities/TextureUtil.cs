@@ -1,11 +1,8 @@
-﻿using ColossalFramework.Importers;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -17,7 +14,7 @@ namespace NodeMarkup.Utilities
         public static UITextureAtlas Atlas;
         public static Texture2D Texture => Atlas.texture;
 
-        static Dictionary<string, Action<int, int, Rect>> Files { get; } = new Dictionary<string, Action<int, int, Rect>>
+        private static Dictionary<string, Action<int, int, Rect>> Files { get; } = new Dictionary<string, Action<int, int, Rect>>
         {
             {nameof(OrderButtons), OrderButtons},
             {nameof(Styles), Styles},
@@ -38,21 +35,21 @@ namespace NodeMarkup.Utilities
                 actions[i](textures[i].width, textures[i].height, rects[i]);
         }
 
-        static void OrderButtons(int texWidth, int texHeight, Rect rect)
+        private static void OrderButtons(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton);
 
-        static void Styles(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
+        private static void Styles(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
 
-        static void HeaderButtons(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4,4,4,4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
+        private static void HeaderButtons(int texWidth, int texHeight, Rect rect)
+            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
 
-        static void ListItem(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
+        private static void ListItem(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
 
-        static void Button(int texWidth, int texHeight, Rect rect)
+        private static void Button(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
 
 
-        static void Arrows(int texWidth, int texHeight, Rect rect)
+        private static void Arrows(int texWidth, int texHeight, Rect rect)
             => Atlas.AddSprites(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight);
 
         public static string TurnLeftButton => nameof(TurnLeftButton);

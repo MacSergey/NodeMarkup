@@ -2,10 +2,7 @@
 using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
@@ -14,7 +11,7 @@ namespace NodeMarkup.UI.Editors
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
-        bool _isExpand = true;
+        private bool _isExpand = true;
         public bool IsExpand
         {
             get => _isExpand;
@@ -123,7 +120,7 @@ namespace NodeMarkup.UI.Editors
                 ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
             }
 
-            Label.size = new Vector2(size.x - 6, size.y);          
+            Label.size = new Vector2(size.x - 6, size.y);
         }
         protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(3, (height - Label.height) / 2);
     }

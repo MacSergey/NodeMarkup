@@ -4,13 +4,8 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
-using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
@@ -136,9 +131,9 @@ namespace NodeMarkup.UI.Panel
         }
         private void SetDefaulSize() => size = new Vector2(Width, Header.height + TabStrip.height + 400);
 
-#endregion
+        #endregion
 
-#region COMPONENTS
+        #region COMPONENTS
 
         private void CreateHeader()
         {
@@ -179,9 +174,9 @@ namespace NodeMarkup.UI.Panel
             SizeChanger.eventDoubleClick += SizeChangerDoubleClick;
         }
 
-#endregion
+        #endregion
 
-#region UPDATE
+        #region UPDATE
 
         public void SetMarkup(Markup markup)
         {
@@ -210,9 +205,9 @@ namespace NodeMarkup.UI.Panel
             SelectEditor<LinesEditor>();
         }
 
-#endregion
+        #endregion
 
-#region ONEVENTS
+        #region ONEVENTS
 
         private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
         {
@@ -249,9 +244,9 @@ namespace NodeMarkup.UI.Panel
         }
         private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
 
-#endregion
+        #endregion
 
-#region GET SELECT
+        #region GET SELECT
 
         private Editor SelectEditor(int index)
         {
@@ -276,9 +271,9 @@ namespace NodeMarkup.UI.Panel
             return Editors[editorIndex] as EditorType;
         }
 
-#endregion
+        #endregion
 
-#region ADD OBJECT
+        #region ADD OBJECT
 
         private void AddObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -292,9 +287,9 @@ namespace NodeMarkup.UI.Panel
         }
         public void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
 
-#endregion
+        #endregion
 
-#region DELETE OBJECT
+        #region DELETE OBJECT
 
         private void DeleteObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -310,9 +305,9 @@ namespace NodeMarkup.UI.Panel
         public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
         public void DeleteCrosswalk(MarkupCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
 
-#endregion
+        #endregion
 
-#region EDIT OBJECT
+        #region EDIT OBJECT
 
         private EditorType EditObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
@@ -348,16 +343,16 @@ namespace NodeMarkup.UI.Panel
         public void EditStyleTemplate(StyleTemplate template, bool editName = true) => EditTemplate<StyleTemplateEditor, StyleTemplate>(template, editName);
         public void EditIntersectionTemplate(IntersectionTemplate template, bool editName = true) => EditTemplate<IntersectionTemplateEditor, IntersectionTemplate>(template, editName);
 
-#endregion
+        #endregion
 
-#region ADDITIONAL
+        #region ADDITIONAL
 
         public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public bool OnEscape() => CurrentEditor?.OnEscape() == true;
 
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
 
-#endregion
+        #endregion
     }
     public class SizeChanger : CustomUIPanel
     {

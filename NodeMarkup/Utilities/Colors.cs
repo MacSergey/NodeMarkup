@@ -1,8 +1,4 @@
-﻿using ColossalFramework.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
@@ -50,6 +46,6 @@ namespace NodeMarkup.Utilities
         }
         public static Vector4 ToX3Vector(this Color32 c) => ToX3Vector((Color)c);
         public static Vector4 ToX3Vector(this Color c) => new Vector4(ColorChange(c.r), ColorChange(c.g), ColorChange(c.b), Mathf.Pow(c.a, 2)/* c.a == 0 ? 0 : ColorChange(c.a) * 0.985f + 0.015f*/);
-        static float ColorChange(float c) => Mathf.Pow(c, 4);
+        private static float ColorChange(float c) => Mathf.Pow(c, 4);
     }
 }

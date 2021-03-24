@@ -1,18 +1,9 @@
-﻿using ColossalFramework;
-using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -352,8 +343,8 @@ namespace NodeMarkup.Manager
 
         private class FakeAligmentProperty : PropertyEnumValue<LineAlignment>
         {
-            Func<LineAlignment> OnGet { get; }
-            Action<LineAlignment> OnSet { get; }
+            private Func<LineAlignment> OnGet { get; }
+            private Action<LineAlignment> OnSet { get; }
 
             public override LineAlignment Value { get => OnGet(); set => OnSet(value); }
 

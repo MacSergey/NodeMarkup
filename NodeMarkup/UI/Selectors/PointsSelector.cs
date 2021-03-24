@@ -1,12 +1,9 @@
-﻿using ColossalFramework.Math;
-using ModsCommon.Utilities;
+﻿using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NodeMarkup.UI
@@ -26,7 +23,7 @@ namespace NodeMarkup.UI
             {
                 if (!(Groups.FirstOrDefault(g => g.Intersect(point)) is PointsGroup<PointType> group))
                 {
-                    group = Settings.GroupPointsType != 1 ? (PointsGroup<PointType>)new RoundPointsGroup<PointType>(color, pointSize) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, pointSize);
+                    group = Settings.GroupPointsType != 1 ? new RoundPointsGroup<PointType>(color, pointSize) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, pointSize);
                     Groups.Add(group);
                 }
 
