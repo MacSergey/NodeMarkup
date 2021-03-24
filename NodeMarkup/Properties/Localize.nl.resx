@@ -692,7 +692,7 @@ Houd Shift ingedrukt om een zebrapad te maken.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Selecteer de rechter zebrapad grens</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Groepeer punten overlay</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1331,5 +1331,6 @@ Klik om de markering te wijzigen</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Splits offset</value>
   </data>
+  
   
 </root>

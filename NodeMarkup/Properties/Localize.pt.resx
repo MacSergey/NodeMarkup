@@ -703,7 +703,7 @@ Para criar uma passadeira pressione Shift.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleccionar a borda direita da passadeira</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Destaque de grupo de pontos</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1318,6 +1318,7 @@ Clique para editar marcações</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecione o segundo ponto do carril</value>
   </data>
+  
   
   
   

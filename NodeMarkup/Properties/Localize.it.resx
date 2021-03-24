@@ -714,7 +714,7 @@ Per crearli tieni premuto Shift.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleziona il bordo destro dell'attraversamento</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Gruppo di punti sovrapposto</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1232,6 +1232,7 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Pavimentazione</value>
   </data>
+  
   
   
   

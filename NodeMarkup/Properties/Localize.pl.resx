@@ -691,7 +691,7 @@ Aby utworzyć przejście dla pieszych przytrzymaj klawisz Shift.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Wybierz prawy obrys przejścia dla pieszych</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Grupuj punkty nakładki</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1333,5 +1333,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Przesunięcie podziału</value>
   </data>
+  
   
 </root>
