@@ -694,7 +694,7 @@ Pour créer un passage piéton, maintenez Maj.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Sélectionnez la bordure droite du trottoir</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Grouper l'onglet des points</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1308,6 +1308,7 @@ Cliquez pour modifier le marquage</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Sélectionnez le second point du rail</value>
   </data>
+  
   
   
   

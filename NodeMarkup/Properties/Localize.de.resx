@@ -716,7 +716,7 @@ Zum Erstellen einer Fußgängerüberweg-Markierung Shift gedrückt halten.</valu
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Wähle den rechten Rand der Fußgängerüberweg-Markierung</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Punkte-Gruppen Einblendung</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1397,4 +1397,5 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>Änderungsprotokoll</value>
   </data>
+  
 </root>

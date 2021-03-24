@@ -718,7 +718,7 @@ Shift X10, Ctrl X0.1</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Выберите правую границу перехода</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Группировать подсветку точек</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1436,5 +1436,8 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>Список изменений</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Группировать точки</value>
   </data>
 </root>

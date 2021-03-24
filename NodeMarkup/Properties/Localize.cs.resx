@@ -691,7 +691,7 @@ Pro vytvoření přechodu podržte Shift.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Vyber pravý roh přechodu</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Seskupovat body</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1344,4 +1344,5 @@ Klikněte pro změnu značení</value>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>Seznam změn</value>
   </data>
+  
 </root>

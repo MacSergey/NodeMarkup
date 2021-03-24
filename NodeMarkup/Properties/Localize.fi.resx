@@ -691,7 +691,7 @@ Pidä Shif-näppäintä pohjassa luodaksesi suojatien.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Valitse suojatien oikea reuna</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Pisteiden ryhmitys peittokuvaan</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1331,6 +1331,7 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Liitä leikepöydältä</value>
   </data>
+  
   
   
   

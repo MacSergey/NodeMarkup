@@ -691,7 +691,7 @@ Para crear un paso de peatones, mantenga Mayús.</value>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Seleccione el borde derecho del paso de peatones</value>
   </data>
-  <data name="Settings_GroupPoints" xml:space="preserve">
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
     <value>Agrupar el resaltado de puntos</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
@@ -1331,5 +1331,6 @@ Haga clic para editar las marcas</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Desplazamiento del puntos divididos</value>
   </data>
+  
   
 </root>
