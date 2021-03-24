@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Tools
@@ -32,7 +33,8 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
         public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
-        public static NodeMarkupShortcut CutLinesByCrosswalks { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
+        public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
+        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
@@ -46,7 +48,7 @@ namespace NodeMarkup.Tools
                 yield return EditMarkingShortcut;
                 yield return CreateEdgeLinesShortcut;
                 yield return SaveAsIntersectionTemplateShortcut;
-                yield return CutLinesByCrosswalks;
+                yield return CutLinesByCrosswalksShortcut;
             }
         }
 
@@ -452,6 +454,77 @@ namespace NodeMarkup.Tools
             foreach (var crosswalk in Markup.Crosswalks)
                 Markup.CutLinesByCrosswalk(crosswalk);
         }
+        private void ApplyBetweenIntersections()
+        {
+            Mod.Logger.Debug($"Apply between intersections");
+
+            if (Markup.Type != MarkupType.Segment)
+                return;
+
+            var segment = Markup.Id.GetSegment();
+            var config = Markup.ToXml();
+            Apply(Markup.Id, segment.m_startNode, segment.m_endNode, segment.Info, config);
+            Apply(Markup.Id, segment.m_endNode, segment.m_startNode, segment.Info, config);
+        }
+        void Apply(ushort startSegmentId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config)
+        {
+            var nodeId = (ushort?)nearNodeId;
+            var segmentId = (ushort?)startSegmentId;
+            while (true)
+            {
+                segmentId = ApplyToNode(nodeId.Value, segmentId.Value, nearNodeId, farNodeId, info, config);
+                if (segmentId == null)
+                    return;
+
+                nodeId = ApplyToSegment(segmentId.Value, nodeId.Value, nearNodeId, farNodeId, info, config);
+                if (nodeId == null)
+                    return;
+            }
+        }
+
+        ushort? ApplyToNode(ushort nodeId, ushort beforeSegmentId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config)
+        {
+            var node = nodeId.GetNode();
+
+            var nodeSegmentIds = node.SegmentsId().ToArray();
+            if (nodeSegmentIds.Length != 2)
+                return null;
+
+            var nextSegmentId = nodeSegmentIds[nodeSegmentIds[0] == beforeSegmentId ? 1 : 0];
+            var nextSegment = nextSegmentId.GetSegment();
+            if (nextSegment.Info != info)
+                return null;
+
+            if ((node.m_flags & NetNode.Flags.Bend) != 0)
+            {
+                var map = new ObjectsMap();
+                map.AddSegment(nearNodeId, beforeSegmentId);
+                map.AddSegment(farNodeId, nextSegmentId);
+                var markup = MarkupManager.NodeManager.Get(nodeId);
+                markup.FromXml(Mod.Version, config, map);
+            }
+
+            return nextSegmentId;
+        }
+
+        ushort? ApplyToSegment(ushort segmentId, ushort beforeNodeId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config)
+        {
+            var segment = segmentId.GetSegment();
+            if (segment.Info != info)
+                return null;
+
+            var nextNodeId = segment.m_startNode == beforeNodeId ? segment.m_endNode : segment.m_startNode;
+
+            var map = new ObjectsMap();
+            map.AddNode(farNodeId, beforeNodeId);
+            map.AddNode(nearNodeId, nextNodeId);
+            var markup = MarkupManager.SegmentManager.Get(segmentId);
+            markup.FromXml(Mod.Version, config, map);
+
+            return nextNodeId;
+        }
+
+
         private int ScreenshotSize => 400;
         private IEnumerator MakeScreenshot(Action<Image> callback)
         {

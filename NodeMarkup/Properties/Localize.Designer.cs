@@ -1886,6 +1886,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply between intersections.
+        /// </summary>
+        public static string Settings_ApplyBetweenIntersections {
+            get {
+                return ResourceManager.GetString("Settings_ApplyBetweenIntersections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup markings.
         /// </summary>
         public static string Settings_BackupMarking {

@@ -95,7 +95,8 @@ namespace NodeMarkup.UI.Panel
                 AddPopupButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
                 AddPopupButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
                 AddPopupButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
-                AddPopupButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalks),
+                AddPopupButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalksShortcut),
+                AddPopupButton(popup.Content, string.Empty, "Apply between intersections",NodeMarkupTool.ApplyBetweenIntersectionsShortcut),
             };
 
             foreach (var button in buttons)
