@@ -7,9 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeMarkup", "NodeMarkup\No
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsBridge", "ModsCommon\ModsBridge\ModsBridge.csproj", "{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsCommon", "ModsCommon\ModsCommon\ModsCommon.csproj", "{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ModsCommonShared", "ModsCommon\ModsCommonShared\ModsCommonShared.shproj", "{24615A21-AFA6-42C0-8B7A-4FB3329B056F}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ModsCommon\ModsCommonShared\ModsCommonShared.projitems*{24615a21-afa6-42c0-8b7a-4fb3329b056f}*SharedItemsImports = 13
+		ModsCommon\ModsCommonShared\ModsCommonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta Debug|Any CPU = Beta Debug|Any CPU
 		Beta Release|Any CPU = Beta Release|Any CPU
@@ -43,28 +47,16 @@ Global
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Release|Any CPU.Build.0 = Release|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Beta Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Beta Release|Any CPU.Build.0 = Release|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Stable Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ExcelExportMode = MultipleSheets
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		RESX_ExcelExportMode = MultipleSheets
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 EndGlobal

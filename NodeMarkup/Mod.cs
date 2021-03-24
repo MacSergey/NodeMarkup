@@ -20,7 +20,7 @@ using ModsCommon.UI;
 
 namespace NodeMarkup
 {
-    public class Mod : BasePatcherMod<Mod, Patcher>
+    public class Mod : BasePatcherMod
     {
         public static string StableURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403";
         public static string BetaURL { get; } = "https://steamcommunity.com/sharedfiles/filedetails/?id=2159934925";
@@ -62,7 +62,7 @@ namespace NodeMarkup
             base.OnDisabled();
             NodeMarkupTool.Remove();
         }
-        protected override Patcher CreatePatcher() => new Patcher(this);
+        protected override BasePatcher CreatePatcher() => new Patcher(this);
 
         protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
 

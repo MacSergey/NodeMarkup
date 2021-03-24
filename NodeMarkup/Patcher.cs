@@ -11,9 +11,9 @@ using System.Reflection.Emit;
 
 namespace NodeMarkup
 {
-    public class Patcher : Patcher<Mod>
+    public class Patcher : BasePatcher
     {
-        public Patcher(BaseMod<Mod> mod) : base(mod) { }
+        public Patcher(BaseMod mod) : base(mod) { }
 
         protected override bool PatchProcess()
         {

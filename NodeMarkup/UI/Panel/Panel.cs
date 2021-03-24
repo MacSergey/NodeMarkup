@@ -150,6 +150,7 @@ namespace NodeMarkup.UI.Panel
         private void CreateTabStrip()
         {
             TabStrip = AddUIComponent<PanelTabStrip>();
+            TabStrip.relativePosition = new Vector3(0, HeaderHeight);
             TabStrip.SelectedTabChanged += OnSelectedTabChanged;
             TabStrip.SelectedTab = -1;
         }
@@ -227,10 +228,7 @@ namespace NodeMarkup.UI.Panel
             if (Header != null)
                 Header.width = width;
             if (TabStrip != null)
-            {
                 TabStrip.width = width;
-                TabStrip.relativePosition = new Vector3(0, HeaderHeight);
-            }
             if (CurrentEditor != null)
             {
                 CurrentEditor.size = EditorSize;
