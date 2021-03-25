@@ -113,6 +113,7 @@ namespace NodeMarkup.Manager
         public StraightTrajectory(ITrajectory trajectory, bool isSection = true) : this(new Line3(trajectory.StartPosition, trajectory.EndPosition), isSection) { }
 
         public ITrajectory Cut(float t0, float t1) => new StraightTrajectory(Position(t0), Position(t1));
+        public StraightTrajectory Cut(float t0, float t1, bool isSection) => new StraightTrajectory(Position(t0), Position(t1), isSection);
 
         public void Divide(out ITrajectory trajectory1, out ITrajectory trajectory2)
         {

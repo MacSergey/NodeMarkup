@@ -4,10 +4,12 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static ToolBase;
+using ColossalFramework.UI;
 
 namespace NodeMarkup.Tools
 {
@@ -83,7 +85,7 @@ namespace NodeMarkup.Tools
         }
         private bool CheckNodeHover(ushort nodeId, Vector3 hitPos)
         {
-            if(Borders.NodeId != nodeId)
+            if (Borders.NodeId != nodeId)
                 Borders = new NodeBorder(nodeId);
 
             return Borders.Contains(hitPos);
@@ -155,7 +157,7 @@ namespace NodeMarkup.Tools
                 d = segment.m_endNode.GetNode().m_position,
             };
             NetSegment.CalculateMiddlePoints(bezier.a, segment.m_startDirection, bezier.d, segment.m_endDirection, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Orange, Width = segment.Info.m_halfWidth * 2 });
+            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Orange, Width = segment.Info.m_halfWidth * 2, Cut = true });
         }
     }
 
@@ -167,7 +169,7 @@ namespace NodeMarkup.Tools
         {
             get
             {
-                for(var i = 0; i < SegmentDatas.Length; i += 1)
+                for (var i = 0; i < SegmentDatas.Length; i += 1)
                 {
                     yield return new StraightTrajectory(SegmentDatas[i].leftPos, SegmentDatas[i].rightPos);
                     var j = (i + 1) % SegmentDatas.Length;
@@ -191,12 +193,18 @@ namespace NodeMarkup.Tools
                 {
                     id = segmentId,
                     isStart = segment.m_startNode == NodeId,
-                    width = segment.Info.m_halfWidth * 2,
+                    halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
                 };
-                data.angle = (data.isStart ? segment.m_startDirection : segment.m_endDirection).AbsoluteAngle();
+                data.dir = (data.isStart ? segment.m_startDirection : segment.m_endDirection).normalized;
+                data.angle = data.dir.AbsoluteAngle();
 
                 segment.CalculateCorner(segmentId, true, data.isStart, true, out data.leftPos, out data.leftDir, out _);
                 segment.CalculateCorner(segmentId, true, data.isStart, false, out data.rightPos, out data.rightDir, out _);
+
+                //var t = (segment.Info.m_pavementWidth / segment.Info.m_halfWidth) / 2;
+                //var line = new StraightTrajectory(leftPos, rightPos).Cut(t, 1 - t);
+                //data.leftPos = line.StartPosition;
+                //data.rightPos = line.EndPosition;
 
                 yield return data;
             }
@@ -212,8 +220,95 @@ namespace NodeMarkup.Tools
 
         public void Render(OverlayData data)
         {
-            foreach (var borderLine in BorderLines)
-                borderLine.Render(data);
+            data.Cut = true;
+            //data.AlphaBlend = false;
+
+            for (var i = 0; i < SegmentDatas.Length; i += 1)
+                RenderCurve(data, i);
+
+            //if (SegmentDatas.Length > 2)
+            //{
+            //    for (var i = 0; i < SegmentDatas.Length; i += 1)
+            //        RenderStraight(data, i);
+            //}
+        }
+        private void RenderCurve(OverlayData overlayData, int i)
+        {
+            var data1 = SegmentDatas[i];
+            var data2 = SegmentDatas[(i + 1) % SegmentDatas.Length];
+            var width1 = (data1.rightPos - data1.leftPos).XZ().magnitude * 0.5f;
+            var width2 = (data2.leftPos - data2.rightPos).XZ().magnitude * 0.5f;
+            var cornerDir1 = (data1.rightPos - data1.leftPos).normalized;
+            var cornerDir2 = (data2.leftPos - data2.rightPos).normalized;
+
+            var bezierWidth = Mathf.Min(width1, width2);
+            var count = Math.Max(Mathf.CeilToInt(width1 / bezierWidth), Mathf.CeilToInt(width2 / bezierWidth));
+            var step1 = (width1 - bezierWidth) / (count - 1);
+            var step2 = (width2 - bezierWidth) / (count - 1);
+
+
+            for (var l = 0; l < count; l += 1)
+            {
+                var bezier = new Bezier3()
+                {
+                    a = data1.leftPos + cornerDir1 * (bezierWidth / 2 + l * step1),
+                    b = cornerDir1.Turn90(true).normalized,
+                    c = cornerDir2.Turn90(false).normalized,
+                    d = data2.rightPos + cornerDir2 * (bezierWidth / 2 + l * step2),
+                };
+
+                NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+
+                overlayData.Width = bezierWidth;
+                NodeMarkupTool.RenderBezier(bezier, overlayData);
+            }
+        }
+        private void RenderStraight(OverlayData overlayData, int i)
+        {
+            var dataR = SegmentDatas[(i + SegmentDatas.Length - 1) % SegmentDatas.Length];
+            var data = SegmentDatas[i];
+            var dataL = SegmentDatas[(i + 1) % SegmentDatas.Length];
+
+            var posR = (dataR.leftPos + dataR.rightPos) / 2;
+            var posL = (dataL.leftPos + dataL.rightPos) / 2;
+
+            var cornerLine = new StraightTrajectory(data.leftPos, data.rightPos, false);
+            var dir = cornerLine.Direction.Turn90(true).normalized;
+
+            var leftNormal = new StraightTrajectory(posL, posL - dir, false);
+            var rightNormal = new StraightTrajectory(posR, posR - dir, false);
+            var intersectLeftNormal = MarkupIntersect.CalculateSingle(cornerLine, leftNormal);
+            var intersectRightNormal = MarkupIntersect.CalculateSingle(cornerLine, rightNormal);
+
+            var leftT = Mathf.Clamp(intersectLeftNormal.FirstT, 0f, 1f);
+            var rightT = Mathf.Clamp(intersectRightNormal.FirstT, 0f, 1f);
+
+            cornerLine = cornerLine.Cut(leftT, rightT, false);
+
+
+            var leftLine = new StraightTrajectory(posL, posL - dataL.dir, false);
+            var rigthLine = new StraightTrajectory(posR, posR - dataR.dir, false);
+            var intersectLeft = MarkupIntersect.CalculateSingle(new StraightTrajectory(cornerLine.StartPosition, cornerLine.StartPosition + dir, false), leftLine);
+            var intersectRight = MarkupIntersect.CalculateSingle(new StraightTrajectory(cornerLine.EndPosition, cornerLine.EndPosition + dir, false), rigthLine);
+
+            var length = Mathf.Min(intersectLeft.FirstT, intersectRight.FirstT);
+            if (length > 0)
+            {
+                var pos = (cornerLine.StartPosition + cornerLine.EndPosition) / 2;
+                overlayData.Width = cornerLine.Length;
+                new StraightTrajectory(pos, pos + dir * length).Render(overlayData);
+            }
+
+            //{
+            //    var pos = (data.leftPos + data.rightPos) / 2;
+            //    new StraightTrajectory(pos, pos + dir * 3).Render(new OverlayData(overlayData.CameraInfo) { Color = overlayData.Color });
+
+            //    leftNormal.Cut(0, intersectLeftNormal.SecondT).Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Red });
+            //    rightNormal.Cut(0, intersectRightNormal.SecondT).Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Blue });
+
+            //    NodeMarkupTool.RenderCircle(data.leftPos, new OverlayData(overlayData.CameraInfo) { Color = Colors.Red, Width = 1f });
+            //    NodeMarkupTool.RenderCircle(data.rightPos, new OverlayData(overlayData.CameraInfo) { Color = Colors.Blue, Width = 1f });
+            //}
         }
 
         private struct SegmentData
@@ -225,7 +320,8 @@ namespace NodeMarkup.Tools
             public Vector3 leftPos;
             public Vector3 rightDir;
             public Vector3 leftDir;
-            public float width;
+            public Vector3 dir;
+            public float halfWidth;
         }
     }
 }
