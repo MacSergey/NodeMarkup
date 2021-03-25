@@ -30,7 +30,7 @@ namespace NodeMarkup
         public override void OnReleased() => Instance = null;
         public override void OnAssetLoaded(string name, object asset, Dictionary<string, byte[]> userData)
         {
-            if (!(asset is BuildingInfo prefab) || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
+            if (asset is not BuildingInfo prefab || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
                 return;
 
             Mod.Logger.Debug($"Start load prefab data \"{prefab.name}\"");
@@ -62,7 +62,7 @@ namespace NodeMarkup
         public override void OnAssetSaved(string name, object asset, out Dictionary<string, byte[]> userData)
         {
             userData = new Dictionary<string, byte[]>();
-            if (!(asset is BuildingInfo prefab) || !prefab.m_paths.Any())
+            if (asset is not BuildingInfo prefab || !prefab.m_paths.Any())
                 return;
 
             Mod.Logger.Debug($"Start save prefab data \"{prefab.name}\"");
@@ -113,7 +113,7 @@ namespace NodeMarkup
 
         public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList)
         {
-            if (!(AccessTools.Method(typeof(LoadSavePanelBase<CustomAssetMetaData>), "GetListingMetaData") is MethodInfo method))
+            if (AccessTools.Method(typeof(LoadSavePanelBase<CustomAssetMetaData>), "GetListingMetaData") is not MethodInfo method)
                 return;
 
             var listingMetaData = (CustomAssetMetaData)method.Invoke(__instance, new object[] { ___m_SaveList.selectedIndex });

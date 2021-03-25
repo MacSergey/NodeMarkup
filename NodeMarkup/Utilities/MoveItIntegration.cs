@@ -70,7 +70,7 @@ namespace NodeMarkup.Utilities
 
         private void Paste(InstanceID targetInstanceID, object record, bool isMirror, Dictionary<InstanceID, InstanceID> sourceMap, Action<Markup, ObjectsMap, Dictionary<InstanceID, InstanceID>> mapFiller)
         {
-            if (!(record is XElement config))
+            if (record is not XElement config)
                 return;
 
             Markup markup;

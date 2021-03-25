@@ -145,7 +145,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddRule()
         {
-            if (!(EditObject is MarkupRegularLine regularLine))
+            if (EditObject is not MarkupRegularLine regularLine)
                 return;
 
             var newRule = regularLine.AddRule(CanDivide);
@@ -192,7 +192,7 @@ namespace NodeMarkup.UI.Editors
         }
         public void DeleteRule(RulePanel rulePanel)
         {
-            if (!(EditObject is MarkupRegularLine regularLine))
+            if (EditObject is not MarkupRegularLine regularLine)
                 return;
 
             if (Settings.DeleteWarnings && Settings.DeleteWarningsType == 0)

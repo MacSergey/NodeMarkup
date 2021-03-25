@@ -120,7 +120,7 @@ namespace NodeMarkup.UI.Editors
 
         public virtual void DeleteObject(ObjectType editObject)
         {
-            if (!(FindItem(editObject) is ItemType item))
+            if (FindItem(editObject) is not ItemType item)
                 return;
 
             if (HoverItem == item)

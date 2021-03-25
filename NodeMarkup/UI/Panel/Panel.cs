@@ -313,7 +313,7 @@ namespace NodeMarkup.UI.Panel
             where EditorType : Editor, IEditor<ItemType>
             where ItemType : class, ISupport, IDeletable
         {
-            if (!(Markup is ISupport<ItemType>))
+            if (Markup is not ISupport<ItemType>)
                 return null;
 
             Available = true;

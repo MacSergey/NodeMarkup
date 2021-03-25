@@ -21,7 +21,7 @@ namespace NodeMarkup.UI
         {
             foreach (var point in points)
             {
-                if (!(Groups.FirstOrDefault(g => g.Intersect(point)) is PointsGroup<PointType> group))
+                if (Groups.FirstOrDefault(g => g.Intersect(point)) is not PointsGroup<PointType> group)
                 {
                     group = Settings.GroupPointsOverlayType != 1 ? new RoundPointsGroup<PointType>(color, pointSize) : (PointsGroup<PointType>)new LinePointsGroup<PointType>(color, pointSize);
                     Groups.Add(group);
