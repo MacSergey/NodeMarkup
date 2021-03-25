@@ -18,36 +18,33 @@ namespace NodeMarkup.Tools
         public override ToolModeType Type => ToolModeType.Select;
         public override bool ShowPanel => false;
 
-        private ushort HoverNodeId { get; set; } = 0;
-        private bool IsHoverNode => HoverNodeId != 0;
+        private NodeSelection HoverNode { get; set; } = null;
+        private bool IsHoverNode => HoverNode != null;
 
-        private ushort HoverSegmentId { get; set; } = 0;
-        private bool IsHoverSegment => HoverSegmentId != 0;
-
-        private NodeBorder Borders { get; set; }
+        private SegmentSelection HoverSegment { get; set; } = null;
+        private bool IsHoverSegment => HoverSegment != null;
 
         protected override void Reset(BaseToolMode prevMode)
         {
-            HoverNodeId = 0;
-            HoverSegmentId = 0;
-            Borders = new NodeBorder(0);
+            HoverNode = null;
+            HoverSegment = null;
         }
 
         public override void OnToolUpdate()
         {
-            ushort nodeId = 0;
-            ushort segmentId = 0;
+            NodeSelection nodeSelection = HoverNode;
+            SegmentSelection segmentSelection = HoverSegment;
 
             if (NodeMarkupTool.MouseRayValid)
             {
-                if (!GetRayCast(ItemClass.Service.Road, ItemClass.SubService.None, ref nodeId, ref segmentId))
-                    GetRayCast(ItemClass.Service.PublicTransport, ItemClass.SubService.PublicTransportPlane, ref nodeId, ref segmentId);
+                if (!GetRayCast(ItemClass.Service.Road, ItemClass.SubService.None, ref nodeSelection, ref segmentSelection))
+                    GetRayCast(ItemClass.Service.PublicTransport, ItemClass.SubService.PublicTransportPlane, ref nodeSelection, ref segmentSelection);
             }
 
-            HoverNodeId = nodeId;
-            HoverSegmentId = segmentId;
+            HoverNode = nodeSelection;
+            HoverSegment = segmentSelection;
         }
-        private bool GetRayCast(ItemClass.Service service, ItemClass.SubService subService, ref ushort nodeId, ref ushort segmentId)
+        private bool GetRayCast(ItemClass.Service service, ItemClass.SubService subService, ref NodeSelection nodeSelection, ref SegmentSelection segmentSelection)
         {
             RaycastInput input = new RaycastInput(NodeMarkupTool.MouseRay, Camera.main.farClipPlane)
             {
@@ -65,43 +62,55 @@ namespace NodeMarkup.Tools
                 {
                     var segment = output.m_netSegment.GetSegment();
 
-                    if (CheckNodeHover(segment.m_startNode, output.m_hitPos))
+                    if (CheckNodeHover(segment.m_startNode, output.m_hitPos, ref nodeSelection))
                     {
-                        nodeId = segment.m_startNode;
+                        segmentSelection = null;
                         return true;
                     }
-                    else if (CheckNodeHover(segment.m_endNode, output.m_hitPos))
+                    else if (CheckNodeHover(segment.m_endNode, output.m_hitPos, ref nodeSelection))
                     {
-                        nodeId = segment.m_endNode;
+                        segmentSelection = null;
                         return true;
                     }
                 }
 
-                segmentId = output.m_netSegment;
+                nodeSelection = null;
+                segmentSelection = new SegmentSelection(output.m_netSegment);
+                return true;
+            }
+            else
+            {
+                nodeSelection = null;
+                segmentSelection = null;
+                return false;
+            }
+        }
+        private bool CheckNodeHover(ushort nodeId, Vector3 hitPos, ref NodeSelection nodeSelection)
+        {
+            var selection = nodeSelection;
+            if (selection?.Id != nodeId)
+                selection = new NodeSelection(nodeId);
+
+            if (selection.Contains(hitPos))
+            {
+                nodeSelection = selection;
                 return true;
             }
             else
                 return false;
         }
-        private bool CheckNodeHover(ushort nodeId, Vector3 hitPos)
-        {
-            if (Borders.NodeId != nodeId)
-                Borders = new NodeBorder(nodeId);
-
-            return Borders.Contains(hitPos);
-        }
 
 
-        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNodeId) : (IsHoverSegment ? string.Format(Localize.Tool_InfoHoverSegment, HoverSegmentId) : Localize.Tool_SelectInfo);
+        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNode.Id) : (IsHoverSegment ? string.Format(Localize.Tool_InfoHoverSegment, HoverSegment.Id) : Localize.Tool_SelectInfo);
 
         public override void OnMouseUp(Event e) => OnPrimaryMouseClicked(e);
         public override void OnPrimaryMouseClicked(Event e)
         {
             var markup = default(Markup);
             if (IsHoverNode)
-                markup = MarkupManager.NodeManager.Get(HoverNodeId);
+                markup = MarkupManager.NodeManager.Get(HoverNode.Id);
             else if (IsHoverSegment)
-                markup = MarkupManager.SegmentManager.Get(HoverSegmentId);
+                markup = MarkupManager.SegmentManager.Get(HoverSegment.Id);
             else
                 return;
 
@@ -137,184 +146,88 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverNode)
-                RenderNodeOverlay(cameraInfo);
+                HoverNode.Render(new OverlayData(cameraInfo) { Color = Colors.Orange });
             else if (IsHoverSegment)
-                RenderSegmentOverlay(cameraInfo);
-        }
-        private void RenderNodeOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            //var node = HoverNodeId.GetNode();
-            //NodeMarkupTool.RenderCircle(node.m_position, new OverlayData(cameraInfo) { Color = Colors.Orange, Width = Mathf.Max(6f, node.Info.m_halfWidth * 2f) });
-
-            Borders.Render(new OverlayData(cameraInfo) { Color = Colors.Orange });
-        }
-        private void RenderSegmentOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            var segment = HoverSegmentId.GetSegment();
-            var bezier = new Bezier3()
-            {
-                a = segment.m_startNode.GetNode().m_position,
-                d = segment.m_endNode.GetNode().m_position,
-            };
-            NetSegment.CalculateMiddlePoints(bezier.a, segment.m_startDirection, bezier.d, segment.m_endDirection, true, true, out bezier.b, out bezier.c);
-            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Orange, Width = segment.Info.m_halfWidth * 2, Cut = true });
+                HoverSegment.Render(new OverlayData(cameraInfo) { Color = Colors.Purple });
         }
     }
 
-    public class NodeBorder : IOverlay
+    public abstract class Selection : IOverlay
     {
-        public ushort NodeId { get; }
-        private SegmentData[] SegmentDatas { get; }
+        protected static float OverlayWidth => 2f;
+
+        public ushort Id { get; }
+        protected Data[] Datas { get; }
         private IEnumerable<ITrajectory> BorderLines
         {
             get
             {
-                for (var i = 0; i < SegmentDatas.Length; i += 1)
+                for (var i = 0; i < Datas.Length; i += 1)
                 {
-                    yield return new StraightTrajectory(SegmentDatas[i].leftPos, SegmentDatas[i].rightPos);
-                    var j = (i + 1) % SegmentDatas.Length;
-                    yield return new BezierTrajectory(SegmentDatas[i].leftPos, -SegmentDatas[i].leftDir, SegmentDatas[j].rightPos, -SegmentDatas[j].rightDir);
+                    yield return new StraightTrajectory(Datas[i].leftPos, Datas[i].rightPos);
+                    var j = (i + 1) % Datas.Length;
+                    yield return new BezierTrajectory(Datas[i].leftPos, Datas[i].leftDir, Datas[j].rightPos, Datas[j].rightDir);
                 }
             }
         }
-        public NodeBorder(ushort nodeId)
+        public Selection(ushort id)
         {
-            NodeId = nodeId;
-            SegmentDatas = CalculateSegment().OrderBy(s => s.angle).ToArray();
+            Id = id;
+            Datas = Calculate().OrderBy(s => s.angle).ToArray();
         }
-        private IEnumerable<SegmentData> CalculateSegment()
-        {
-            var node = NodeId.GetNode();
-
-            foreach (var segmentId in node.SegmentsId())
-            {
-                var segment = segmentId.GetSegment();
-                var data = new SegmentData()
-                {
-                    id = segmentId,
-                    isStart = segment.m_startNode == NodeId,
-                    halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
-                };
-                data.dir = (data.isStart ? segment.m_startDirection : segment.m_endDirection).normalized;
-                data.angle = data.dir.AbsoluteAngle();
-
-                segment.CalculateCorner(segmentId, true, data.isStart, true, out data.leftPos, out data.leftDir, out _);
-                segment.CalculateCorner(segmentId, true, data.isStart, false, out data.rightPos, out data.rightDir, out _);
-
-                //var t = (segment.Info.m_pavementWidth / segment.Info.m_halfWidth) / 2;
-                //var line = new StraightTrajectory(leftPos, rightPos).Cut(t, 1 - t);
-                //data.leftPos = line.StartPosition;
-                //data.rightPos = line.EndPosition;
-
-                yield return data;
-            }
-        }
+        protected abstract IEnumerable<Data> Calculate();
         public bool Contains(Vector3 position)
         {
-            var node = NodeId.GetNode();
-            var line = new StraightTrajectory(position, node.m_position);
+            var node = Id.GetNode();
 
-            var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
-            return contains;
+            if ((node.m_flags & NetNode.Flags.Middle) != 0 && (position - node.m_position).magnitude < node.Info.m_halfWidth)
+                return true;
+            else
+            {
+                var line = new StraightTrajectory(position, node.m_position);
+                var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
+                return contains;
+            }
         }
 
-        public void Render(OverlayData data)
+        public abstract void Render(OverlayData overlayData);
+
+        protected void Render(OverlayData overlayData, Data data1, Data data2)
         {
-            data.Cut = true;
-            //data.AlphaBlend = false;
+            var count = Math.Max(Mathf.CeilToInt(2 * data1.halfWidth / OverlayWidth), Mathf.CeilToInt(2 * data2.halfWidth / OverlayWidth));
 
-            for (var i = 0; i < SegmentDatas.Length; i += 1)
-                RenderCurve(data, i);
+            var step1 = data1.GetStep(count);
+            var step2 = data2.GetStep(count);
 
-            //if (SegmentDatas.Length > 2)
-            //{
-            //    for (var i = 0; i < SegmentDatas.Length; i += 1)
-            //        RenderStraight(data, i);
-            //}
-        }
-        private void RenderCurve(OverlayData overlayData, int i)
-        {
-            var data1 = SegmentDatas[i];
-            var data2 = SegmentDatas[(i + 1) % SegmentDatas.Length];
-            var width1 = (data1.rightPos - data1.leftPos).XZ().magnitude * 0.5f;
-            var width2 = (data2.leftPos - data2.rightPos).XZ().magnitude * 0.5f;
-            var cornerDir1 = (data1.rightPos - data1.leftPos).normalized;
-            var cornerDir2 = (data2.leftPos - data2.rightPos).normalized;
+            var ratio1 = data1.Ratio;
+            var ratio2 = data2.Ratio;
 
-            var bezierWidth = Mathf.Min(width1, width2);
-            var count = Math.Max(Mathf.CeilToInt(width1 / bezierWidth), Mathf.CeilToInt(width2 / bezierWidth));
-            var step1 = (width1 - bezierWidth) / (count - 1);
-            var step2 = (width2 - bezierWidth) / (count - 1);
-
+            var cornerDir1 = data1.CornerDir;
+            var cornerDir2 = data2.CornerDir;
 
             for (var l = 0; l < count; l += 1)
             {
                 var bezier = new Bezier3()
                 {
-                    a = data1.leftPos + cornerDir1 * (bezierWidth / 2 + l * step1),
-                    b = cornerDir1.Turn90(true).normalized,
-                    c = cornerDir2.Turn90(false).normalized,
-                    d = data2.rightPos + cornerDir2 * (bezierWidth / 2 + l * step2),
+                    a = data1.leftPos + cornerDir1 * (OverlayWidth / 2 + l * step1) * ratio1,
+                    b = data1.dir,
+                    c = data2.dir,
+                    d = data2.rightPos - cornerDir2 * (OverlayWidth / 2 + l * step2) * ratio2,
                 };
 
                 NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-
-                overlayData.Width = bezierWidth;
                 NodeMarkupTool.RenderBezier(bezier, overlayData);
             }
         }
-        private void RenderStraight(OverlayData overlayData, int i)
+        protected void Render(OverlayData overlayData, Data data)
         {
-            var dataR = SegmentDatas[(i + SegmentDatas.Length - 1) % SegmentDatas.Length];
-            var data = SegmentDatas[i];
-            var dataL = SegmentDatas[(i + 1) % SegmentDatas.Length];
-
-            var posR = (dataR.leftPos + dataR.rightPos) / 2;
-            var posL = (dataL.leftPos + dataL.rightPos) / 2;
-
-            var cornerLine = new StraightTrajectory(data.leftPos, data.rightPos, false);
-            var dir = cornerLine.Direction.Turn90(true).normalized;
-
-            var leftNormal = new StraightTrajectory(posL, posL - dir, false);
-            var rightNormal = new StraightTrajectory(posR, posR - dir, false);
-            var intersectLeftNormal = MarkupIntersect.CalculateSingle(cornerLine, leftNormal);
-            var intersectRightNormal = MarkupIntersect.CalculateSingle(cornerLine, rightNormal);
-
-            var leftT = Mathf.Clamp(intersectLeftNormal.FirstT, 0f, 1f);
-            var rightT = Mathf.Clamp(intersectRightNormal.FirstT, 0f, 1f);
-
-            cornerLine = cornerLine.Cut(leftT, rightT, false);
-
-
-            var leftLine = new StraightTrajectory(posL, posL - dataL.dir, false);
-            var rigthLine = new StraightTrajectory(posR, posR - dataR.dir, false);
-            var intersectLeft = MarkupIntersect.CalculateSingle(new StraightTrajectory(cornerLine.StartPosition, cornerLine.StartPosition + dir, false), leftLine);
-            var intersectRight = MarkupIntersect.CalculateSingle(new StraightTrajectory(cornerLine.EndPosition, cornerLine.EndPosition + dir, false), rigthLine);
-
-            var length = Mathf.Min(intersectLeft.FirstT, intersectRight.FirstT);
-            if (length > 0)
-            {
-                var pos = (cornerLine.StartPosition + cornerLine.EndPosition) / 2;
-                overlayData.Width = cornerLine.Length;
-                new StraightTrajectory(pos, pos + dir * length).Render(overlayData);
-            }
-
-            //{
-            //    var pos = (data.leftPos + data.rightPos) / 2;
-            //    new StraightTrajectory(pos, pos + dir * 3).Render(new OverlayData(overlayData.CameraInfo) { Color = overlayData.Color });
-
-            //    leftNormal.Cut(0, intersectLeftNormal.SecondT).Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Red });
-            //    rightNormal.Cut(0, intersectRightNormal.SecondT).Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Blue });
-
-            //    NodeMarkupTool.RenderCircle(data.leftPos, new OverlayData(overlayData.CameraInfo) { Color = Colors.Red, Width = 1f });
-            //    NodeMarkupTool.RenderCircle(data.rightPos, new OverlayData(overlayData.CameraInfo) { Color = Colors.Blue, Width = 1f });
-            //}
+            var cornerDir = data.CornerDir * data.Ratio * (OverlayWidth / 2);
+            var line = new StraightTrajectory(data.leftPos + cornerDir, data.rightPos - cornerDir);
+            line.Render(overlayData);
         }
 
-        private struct SegmentData
+        protected struct Data
         {
-            public ushort id;
-            public bool isStart;
             public float angle;
             public Vector3 rightPos;
             public Vector3 leftPos;
@@ -322,6 +235,108 @@ namespace NodeMarkup.Tools
             public Vector3 leftDir;
             public Vector3 dir;
             public float halfWidth;
+
+            public float Ratio => (rightPos - leftPos).XZ().magnitude / (2 * halfWidth);
+            public Vector3 CornerDir => (rightPos - leftPos).normalized;
+
+            public float GetStep(int count) => (2 * halfWidth - OverlayWidth) / (count - 1);
+        }
+    }
+    public class NodeSelection : Selection
+    {
+        public NodeSelection(ushort id) : base(id) { }
+
+        protected override IEnumerable<Data> Calculate()
+        {
+            var node = Id.GetNode();
+
+            foreach (var segmentId in node.SegmentsId())
+            {
+                var segment = segmentId.GetSegment();
+                var isStart = segment.m_startNode == Id;
+                var data = new Data()
+                {
+                    halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
+                    dir = (isStart ? -segment.m_startDirection : -segment.m_endDirection).normalized,
+                };
+                data.angle = (-data.dir).AbsoluteAngle();
+
+                segment.CalculateCorner(segmentId, true, isStart, true, out data.leftPos, out data.leftDir, out _);
+                segment.CalculateCorner(segmentId, true, isStart, false, out data.rightPos, out data.rightDir, out _);
+
+                data.leftDir *= -1;
+                data.rightDir *= -1;
+
+                yield return data;
+            }
+        }
+
+        public override void Render(OverlayData overlayData)
+        {
+            var node = Id.GetNode();
+
+            if ((node.m_flags & NetNode.Flags.Middle) != 0)
+            {
+                overlayData.Width = node.Info.m_halfWidth * 2f;
+                NodeMarkupTool.RenderCircle(node.m_position, overlayData);
+            }
+            else
+            {
+                overlayData.Width = OverlayWidth;
+                overlayData.AlphaBlend = false;
+
+                for (var i = 0; i < Datas.Length; i += 1)
+                {
+                    var data1 = Datas[i];
+                    var data2 = Datas[(i + 1) % Datas.Length];
+
+                    Render(overlayData, data1, data2);
+                    Render(overlayData, data1);
+                }
+            }
+        }
+    }
+    public class SegmentSelection : Selection
+    {
+        public SegmentSelection(ushort id) : base(id) { }
+
+        protected override IEnumerable<Data> Calculate()
+        {
+            var segment = Id.GetSegment();
+
+            var startData = new Data()
+            {
+                halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
+                dir = segment.m_startDirection.normalized,
+                angle = segment.m_startDirection.AbsoluteAngle(),
+            };
+
+            segment.CalculateCorner(Id, true, true, true, out startData.leftPos, out startData.leftDir, out _);
+            segment.CalculateCorner(Id, true, true, false, out startData.rightPos, out startData.rightDir, out _);
+
+            yield return startData;
+
+            var endData = new Data()
+            {
+                halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
+                dir = segment.m_endDirection.normalized,
+                angle = segment.m_endDirection.AbsoluteAngle(),
+            };
+
+            segment.CalculateCorner(Id, true, false, true, out endData.leftPos, out endData.leftDir, out _);
+            segment.CalculateCorner(Id, true, false, false, out endData.rightPos, out endData.rightDir, out _);
+
+            yield return endData;
+        }
+
+        public override void Render(OverlayData overlayData)
+        {
+            overlayData.Width = OverlayWidth;
+            overlayData.AlphaBlend = false;
+
+            Render(overlayData, Datas[0], Datas[1]);
+            Render(overlayData, Datas[0]);
+            Render(overlayData, Datas[1]);
         }
     }
 }
