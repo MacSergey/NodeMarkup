@@ -1551,6 +1551,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply between intersections.
+        /// </summary>
+        public static string Panel_ApplyBetweenIntersections {
+            get {
+                return ResourceManager.GetString("Panel_ApplyBetweenIntersections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Clear markings.
         /// </summary>
         public static string Panel_ClearMarking {
@@ -1882,15 +1891,6 @@ namespace NodeMarkup {
         public static string Settings_ApplyAfterRestart {
             get {
                 return ResourceManager.GetString("Settings_ApplyAfterRestart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Apply between intersections.
-        /// </summary>
-        public static string Settings_ApplyBetweenIntersections {
-            get {
-                return ResourceManager.GetString("Settings_ApplyBetweenIntersections", resourceCulture);
             }
         }
         
@@ -2515,6 +2515,15 @@ namespace NodeMarkup {
         public static string Settings_ShortcutAddNewLineRule {
             get {
                 return ResourceManager.GetString("Settings_ShortcutAddNewLineRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply between intersections.
+        /// </summary>
+        public static string Settings_ShortcutApplyBetweenIntersections {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutApplyBetweenIntersections", resourceCulture);
             }
         }
         

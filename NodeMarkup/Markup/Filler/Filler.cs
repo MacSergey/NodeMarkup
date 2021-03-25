@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
             Contour = contour;
             Markup = Contour.Markup;
             style.OnStyleChanged = FillerChanged;
-            Style = new PropertyValue<FillerStyle>(StyleChanged, style);
+            Style = new PropertyClassValue<FillerStyle>(StyleChanged, style);
         }
 
         private void StyleChanged()

@@ -36,7 +36,6 @@ namespace NodeMarkup.Manager
 
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
-        public PropertyEnumValue<LineAlignment> Alignment { get; private set; }
 
         protected ITrajectory LineTrajectory { get; private set; }
         public ITrajectory Trajectory => LineTrajectory.Copy();
@@ -50,13 +49,11 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
             PointPair = pointPair;
-            Alignment = new PropertyEnumValue<LineAlignment>(AlignmentChanged, LineAlignment.Centre);
 
             if (update)
                 Update(true);
         }
         protected virtual void RuleChanged() => Markup.Update(this, true);
-        private void AlignmentChanged() => Markup.Update(this, true, true);
 
         public void Update(bool onlySelfUpdate = false)
         {
@@ -230,13 +227,19 @@ namespace NodeMarkup.Manager
     public class MarkupRegularLine : MarkupLine
     {
         public override LineType Type => LineType.Regular;
+        public PropertyEnumValue<LineAlignment> Alignment { get; private set; }
 
         public override bool IsSupportRules => true;
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, bool update = true) : base(markup, pointPair, update)
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, bool update = true) : base(markup, pointPair, false)
         {
+            Alignment = new PropertyEnumValue<LineAlignment>("A", AlignmentChanged, LineAlignment.Centre);
+
+            if (update)
+                Update(true);
+
             if (style != null)
             {
                 AddRule(style, false, false);
@@ -248,13 +251,14 @@ namespace NodeMarkup.Manager
         {
             var trajectory = new Bezier3
             {
-                a = PointPair.First.GetPosition(this),
-                d = PointPair.Second.GetPosition(this),
+                a = PointPair.First.GetPosition(Alignment),
+                d = PointPair.Second.GetPosition(Alignment.Value.Invert()),
             };
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
             return new BezierTrajectory(trajectory);
         }
+        private void AlignmentChanged() => Markup.Update(this, true, true);
 
         private void AddRule(MarkupLineRawRule<RegularLineStyle> rule, bool update = true)
         {
@@ -338,6 +342,7 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
 
+            Alignment.ToXml(config);
             foreach (var rule in RawRules)
             {
                 var ruleConfig = rule.ToXml();
@@ -348,6 +353,7 @@ namespace NodeMarkup.Manager
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
+            Alignment.FromXml(config);
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {
                 if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<RegularLineStyle> rule))
@@ -358,7 +364,7 @@ namespace NodeMarkup.Manager
     public class MarkupNormalLine : MarkupRegularLine
     {
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetPosition(this), PointPair.Second.GetPosition(this));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(Alignment), End.GetPosition(Alignment.Value.Invert()));
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
     {

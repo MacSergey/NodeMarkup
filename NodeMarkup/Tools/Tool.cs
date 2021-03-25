@@ -34,7 +34,7 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
         public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
         public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
-        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
+        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
@@ -473,7 +473,7 @@ namespace NodeMarkup.Tools
             while (true)
             {
                 segmentId = ApplyToNode(nodeId.Value, segmentId.Value, nearNodeId, farNodeId, info, config);
-                if (segmentId == null)
+                if (segmentId == null || segmentId == startSegmentId)
                     return;
 
                 nodeId = ApplyToSegment(segmentId.Value, nodeId.Value, nearNodeId, farNodeId, info, config);

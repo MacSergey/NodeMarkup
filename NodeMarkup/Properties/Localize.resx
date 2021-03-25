@@ -1438,7 +1438,10 @@ Click to edit markings</value>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Group points</value>
   </data>
-  <data name="Settings_ApplyBetweenIntersections" xml:space="preserve">
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Apply between intersections</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
     <value>Apply between intersections</value>
   </data>
 </root>

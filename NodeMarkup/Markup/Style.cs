@@ -19,7 +19,7 @@ namespace NodeMarkup.Manager
     }
     public interface IWidthStyle : IStyle
     {
-        PropertyValue<float> Width { get; }
+        PropertyStructValue<float> Width { get; }
     }
     public abstract class Style : IToXml
     {
@@ -98,7 +98,7 @@ namespace NodeMarkup.Manager
         protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
 
         public PropertyColorValue Color { get; }
-        public PropertyValue<float> Width { get; }
+        public PropertyStructValue<float> Width { get; }
         public Style(Color32 color, float width)
         {
             Color = GetColorProperty(color);
@@ -208,34 +208,34 @@ namespace NodeMarkup.Manager
 
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);
         protected PropertyColorValue GetSecondColorProperty(Color32 defaultValue) => new PropertyColorValue("SC", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetWidthProperty(float defaultValue) => new PropertyValue<float>("W", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetOffsetProperty(float defaultValue) => new PropertyValue<float>("O", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyValue<float>("MO", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetWidthProperty(float defaultValue) => new PropertyStructValue<float>("W", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetOffsetProperty(float defaultValue) => new PropertyStructValue<float>("O", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyStructValue<float>("MO", StyleChanged, defaultValue);
         protected PropertyEnumValue<LineAlignment> GetAlignmentProperty(LineAlignment defaultValue) => new PropertyEnumValue<LineAlignment>("A", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetDashLengthProperty(float defaultValue) => new PropertyValue<float>("DL", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetSpaceLengthProperty(float defaultValue) => new PropertyValue<float>("SL", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetDashLengthProperty(float defaultValue) => new PropertyStructValue<float>("DL", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetSpaceLengthProperty(float defaultValue) => new PropertyStructValue<float>("SL", StyleChanged, defaultValue);
         protected PropertyBoolValue GetInvertProperty(bool defaultValue) => new PropertyBoolValue("I", StyleChanged, defaultValue);
         protected PropertyBoolValue GetCenterSolidProperty(bool defaultValue) => new PropertyBoolValue("CS", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetBaseProperty(float defaultValue) => new PropertyValue<float>("B", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetHeightProperty(float defaultValue) => new PropertyValue<float>("H", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetSpaceProperty(float defaultValue) => new PropertyValue<float>("S", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetOffsetBeforeProperty(float defaultValue) => new PropertyValue<float>("OB", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetOffsetAfterProperty(float defaultValue) => new PropertyValue<float>("OA", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetLineWidthProperty(float defaultValue) => new PropertyValue<float>("LW", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetBaseProperty(float defaultValue) => new PropertyStructValue<float>("B", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetHeightProperty(float defaultValue) => new PropertyStructValue<float>("H", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetSpaceProperty(float defaultValue) => new PropertyStructValue<float>("S", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetOffsetBeforeProperty(float defaultValue) => new PropertyStructValue<float>("OB", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetOffsetAfterProperty(float defaultValue) => new PropertyStructValue<float>("OA", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetLineWidthProperty(float defaultValue) => new PropertyStructValue<float>("LW", StyleChanged, defaultValue);
         protected PropertyBoolValue GetParallelProperty(bool defaultValue) => new PropertyBoolValue("P", StyleChanged, defaultValue);
         protected PropertyBoolValue GetUseSecondColorProperty(bool defaultValue) => new PropertyBoolValue("USC", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetSquareSideProperty(float defaultValue) => new PropertyValue<float>("SS", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetLineCountProperty(int defaultValue) => new PropertyValue<int>("LC", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetAngleProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetStepProperty(float defaultValue) => new PropertyValue<float>("S", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetOutputProperty(int defaultValue) => new PropertyValue<int>("O", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyValue<float>("A", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetSquareSideProperty(float defaultValue) => new PropertyStructValue<float>("SS", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetLineCountProperty(int defaultValue) => new PropertyStructValue<int>("LC", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetAngleProperty(float defaultValue) => new PropertyStructValue<float>("A", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetStepProperty(float defaultValue) => new PropertyStructValue<float>("S", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetOutputProperty(int defaultValue) => new PropertyStructValue<int>("O", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyStructValue<float>("A", StyleChanged, defaultValue);
         protected PropertyEnumValue<ChevronFillerStyle.From> GetStartingFromProperty(ChevronFillerStyle.From defaultValue) => new PropertyEnumValue<ChevronFillerStyle.From>("SF", StyleChanged, defaultValue);
-        protected PropertyValue<float> GetElevationProperty(float defaultValue) => new PropertyValue<float>("E", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyValue<int>("LRA", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyValue<int>("LRB", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetRightRailAProperty(int defaultValue) => new PropertyValue<int>("RRA", StyleChanged, defaultValue);
-        protected PropertyValue<int> GetRightRailBProperty(int defaultValue) => new PropertyValue<int>("RRB", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetElevationProperty(float defaultValue) => new PropertyStructValue<float>("E", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyStructValue<int>("LRA", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyStructValue<int>("LRB", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetRightRailAProperty(int defaultValue) => new PropertyStructValue<int>("RRA", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetRightRailBProperty(int defaultValue) => new PropertyStructValue<int>("RRB", StyleChanged, defaultValue);
         protected PropertyBoolValue GetFollowRailsProperty(bool defaultValue) => new PropertyBoolValue("FR", StyleChanged, defaultValue);
 
         public enum StyleType

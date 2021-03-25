@@ -72,7 +72,7 @@ namespace NodeMarkup.Manager
         public bool IsLast => Num == Enter.PointCount;
         public bool IsEdge => IsFirst || IsLast;
         public virtual bool IsSplit => false;
-        public virtual float SplitShift => 0f;
+        public virtual float SplitOffsetValue => 0f;
 
 
         public string XmlSection => XmlName;
@@ -80,7 +80,7 @@ namespace NodeMarkup.Manager
 
         protected MarkupPoint(byte num, Enter enter, IPointSource source, bool update = true)
         {
-            Offset = new PropertyValue<float>("O", PointChanged, 0);
+            Offset = new PropertyStructValue<float>("O", PointChanged, 0);
             Enter = enter;
             Source = source;
 
@@ -108,13 +108,12 @@ namespace NodeMarkup.Manager
         public override int GetHashCode() => Id;
         protected void PointChanged() => Markup.Update(this, true, true);
 
-        public Vector3 GetPosition(MarkupLine line) => GetPosition(line.Start == this ? line.Alignment : line.Alignment.Value.Invert());
         public Vector3 GetPosition(LineAlignment alignment)
         {
             if (IsSplit && alignment != LineAlignment.Centre)
             {
                 var normal = Direction.Turn90(true);
-                var shift = SplitShift * alignment.Sign();
+                var shift = SplitOffsetValue * alignment.Sign();
                 return Position + normal * shift;
             }
             else
@@ -133,7 +132,7 @@ namespace NodeMarkup.Manager
             NodeMarkupTool.RenderCircle(Position, data);
         }
 
-        public XElement ToXml()
+        public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection, new XAttribute(nameof(Id), Id));
             Offset.ToXml(config);
@@ -145,7 +144,7 @@ namespace NodeMarkup.Manager
             if (FromId(id, markup, map, out MarkupPoint point))
                 point.FromXml(config, map);
         }
-        public void FromXml(XElement config, ObjectsMap map)
+        public virtual void FromXml(XElement config, ObjectsMap map)
         {
             Offset.FromXml(config, 0);
             Offset.Value *= (map.IsMirror ? -1 : 1);
@@ -175,16 +174,16 @@ namespace NodeMarkup.Manager
     {
         public override PointType Type => PointType.Enter;
         public override bool IsSplit => Split;
-        public override float SplitShift => Shift;
+        public override float SplitOffsetValue => SplitOffset;
         public Color32 SplitColor => Colors.GetOverlayColor(Num - 1, byte.MaxValue, 128);
 
         public PropertyBoolValue Split { get; }
-        public PropertyValue<float> Shift { get; }
+        public PropertyValue<float> SplitOffset { get; }
 
         public MarkupEnterPoint(Enter enter, IPointSource source) : base(enter, source)
         {
             Split = new PropertyBoolValue("S", PointChanged, false);
-            Shift = new PropertyValue<float>("S", PointChanged, 0f);
+            SplitOffset = new PropertyStructValue<float>("SO", PointChanged, 0f);
         }
         public override void UpdateProcess()
         {
@@ -214,7 +213,7 @@ namespace NodeMarkup.Manager
         {
             base.Reset();
             Split.Value = false;
-            Shift.Value = 0f;
+            SplitOffset.Value = 0f;
         }
         public override void Render(OverlayData data)
         {
@@ -225,14 +224,27 @@ namespace NodeMarkup.Manager
                 var normal = Direction.Turn90(true);
 
                 var dataWhite = new OverlayData(data.CameraInfo);
-                NodeMarkupTool.RenderCircle(Position - normal * Shift, dataWhite);
-                NodeMarkupTool.RenderCircle(Position + normal * Shift, dataWhite);
+                NodeMarkupTool.RenderCircle(Position - normal * SplitOffset - Direction, dataWhite);
+                NodeMarkupTool.RenderCircle(Position + normal * SplitOffset - Direction, dataWhite);
 
                 data.Color ??= Color;
                 data.Width = 0.1f;
-                NodeMarkupTool.RenderCircle(Position - normal * Shift, data);
-                NodeMarkupTool.RenderCircle(Position + normal * Shift, data);
+                NodeMarkupTool.RenderCircle(Position - normal * SplitOffset - Direction, data);
+                NodeMarkupTool.RenderCircle(Position + normal * SplitOffset - Direction, data);
             }
+        }
+        public override void FromXml(XElement config, ObjectsMap map)
+        {
+            base.FromXml(config, map);
+            Split.FromXml(config, false);
+            SplitOffset.FromXml(config, 0);
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            Split.ToXml(config);
+            SplitOffset.ToXml(config);
+            return config;
         }
     }
     public class MarkupCrosswalkPoint : MarkupPoint
@@ -274,7 +286,7 @@ namespace NodeMarkup.Manager
         public new NodeMarkup Markup => (NodeMarkup)base.Markup;
         public MarkupEnterPoint SourcePoint { get; }
         public override bool IsSplit => SourcePoint.IsSplit;
-        public override float SplitShift => SourcePoint.SplitShift;
+        public override float SplitOffsetValue => SourcePoint.SplitOffsetValue;
 
         public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Num, sourcePoint.Enter, sourcePoint.Source, false)
         {

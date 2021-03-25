@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
 using System;
@@ -20,6 +21,11 @@ namespace NodeMarkup.UI.Panel
         {
             get => Caption.text;
             set => Caption.text = value;
+        }
+        public MarkupType Type
+        {
+            get => Buttons.Type;
+            set => Buttons.Type = value;
         }
         public bool Available { set => Buttons.SetAvailable(value); }
 
@@ -73,6 +79,7 @@ namespace NodeMarkup.UI.Panel
     {
         private AdditionallyHeaderButton Additionally { get; }
         private PanelHeaderButton PasteButton { get; }
+        public MarkupType Type { get; set; }
 
         public PanelHeaderContent()
         {
@@ -96,8 +103,9 @@ namespace NodeMarkup.UI.Panel
                 AddPopupButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
                 AddPopupButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
                 AddPopupButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalksShortcut),
-                AddPopupButton(popup.Content, string.Empty, "Apply between intersections",NodeMarkupTool.ApplyBetweenIntersectionsShortcut),
             };
+            if (Type == MarkupType.Segment)
+                buttons.Add(AddPopupButton(popup.Content, string.Empty, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
 
             foreach (var button in buttons)
             {
