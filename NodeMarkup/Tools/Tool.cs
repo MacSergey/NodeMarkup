@@ -58,6 +58,7 @@ namespace NodeMarkup.Tools
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
+        public static Segment3 Ray { get; set; }
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
         public static bool MouseRayValid { get; private set; }
@@ -219,9 +220,10 @@ namespace NodeMarkup.Tools
             MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             MouseRayLength = Camera.main.farClipPlane;
             MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
-            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
-            RayCast(input, out RaycastOutput output);
+            Ray = new Segment3(MouseRay.origin, MouseRay.origin + MouseRay.direction.normalized * MouseRayLength);
+            RayCast(new RaycastInput(MouseRay, MouseRayLength), out RaycastOutput output);
             MouseWorldPosition = output.m_hitPos;
+
             var cameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
             cameraDirection.y = 0;
             CameraDirection = cameraDirection.normalized;
@@ -773,6 +775,11 @@ namespace NodeMarkup.Tools
         }
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
+        public static Vector3 GetRayPosition(float height, out float t)
+        {
+            Segment1.Intersect(Ray.a.y, Ray.b.y, height, out t);
+            return Ray.Position(t);
+        }
 
         public TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum

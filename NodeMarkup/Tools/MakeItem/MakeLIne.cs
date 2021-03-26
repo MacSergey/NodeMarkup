@@ -214,7 +214,7 @@ namespace NodeMarkup.Tools
                 a = SelectPoint.Position,
                 b = SelectPoint.Direction,
                 c = SelectPoint.Direction.Turn90(true),
-                d = NodeMarkupTool.MouseWorldPosition,
+                d = NodeMarkupTool.GetRayPosition(Markup.Position.y, out _),
             };
 
             Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
