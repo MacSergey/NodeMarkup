@@ -12,7 +12,7 @@ namespace NodeMarkup.Utilities
         public static Color32 Blue { get; } = new Color32(2, 117, 216, 255);
         public static Color32 Orange { get; } = new Color32(255, 136, 0, 255);
         public static Color32 Gray { get; } = new Color32(192, 192, 192, 255);
-        public static Color32 Purple { get; } = new Color32(122, 71, 209, 255);
+        public static Color32 Purple { get; } = new Color32(148, 87, 255, 255);
         public static Color32 Hover { get; } = new Color32(217, 251, 255, 255);
 
         public static Color32[] OverlayColors { get; } = new Color32[]

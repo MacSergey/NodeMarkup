@@ -234,11 +234,10 @@ namespace NodeMarkup.Tools
             CalculateCenter();
         }
         protected abstract IEnumerable<Data> Calculate();
-        public abstract void Render(OverlayData overlayData);
         private void CalculateCenter()
         {
             if (Datas.Length == 1)
-                Center = Position + Datas[0].dir;
+                Center = Position + Datas[0].Direction;
             else
             {
                 Vector3 center = new();
@@ -246,7 +245,7 @@ namespace NodeMarkup.Tools
                 {
                     var j = (i + 1) % Datas.Length;
 
-                    var bezier = GetBezier(Datas[i].Position, Datas[i].dir, Datas[j].Position, Datas[j].dir);
+                    var bezier = GetBezier(Datas[i].Position, Datas[i].Direction, Datas[j].Position, Datas[j].Direction);
                     center += bezier.Position(0.5f);
                 }
                 Center = center / Datas.Length;
@@ -276,15 +275,22 @@ namespace NodeMarkup.Tools
 
             for (var l = 0; l < count; l += 1)
             {
-                var pos1 = data1.leftPos + cornerDir1 * (OverlayWidth / 2 + l * step1) * ratio1;
-                var pos2 = data2.rightPos - cornerDir2 * (OverlayWidth / 2 + l * step2) * ratio2;
+                var tPos1 = (OverlayWidth / 2 + l * step1);
+                var tPos2 = (OverlayWidth / 2 + l * step2);
+
+                var pos1 = data1.leftPos + cornerDir1 * tPos1 * ratio1;
+                var pos2 = data2.rightPos - cornerDir2 * tPos2 * ratio2;
+
+                var dir1 = data1.GetDir(tPos1 / (2 * data1.halfWidth));
+                var dir2 = data2.GetDir(tPos2 / (2 * data2.halfWidth));
+
                 Bezier3 bezier;
                 if (!isEndBezier)
-                    bezier = GetBezier(pos1, data1.dir, pos2, data2.dir);
+                    bezier = GetBezier(pos1, dir1, pos2, dir2);
                 else
                 {
                     var ratio = Mathf.Abs(count - 2 * l) / (float)count;
-                    bezier = GetEndBezier(pos1, data1.dir, pos2, data2.dir, OverlayWidth / 2, ratio);
+                    bezier = GetEndBezier(pos1, dir1, pos2, dir2, OverlayWidth / 2, ratio);
                 }
                 NodeMarkupTool.RenderBezier(bezier, overlayData);
             }
@@ -302,7 +308,7 @@ namespace NodeMarkup.Tools
         }
         private Bezier3 GetEndBezier(Vector3 leftPos, Vector3 leftDir, Vector3 rightPos, Vector3 rightDir, float halfWidth = 0f, float ratio = 1f)
         {
-            var length = Mathf.Min((leftPos - rightPos).XZ().magnitude, 8f - halfWidth) * ratio / 0.75f;
+            var length = (Mathf.Min((leftPos - rightPos).XZ().magnitude / 2, 8f) - halfWidth) * ratio / 0.75f;
             var bezier = new Bezier3()
             {
                 a = leftPos,
@@ -318,6 +324,12 @@ namespace NodeMarkup.Tools
             var line = new StraightTrajectory(data.leftPos + cornerDir, data.rightPos - cornerDir);
             line.Render(overlayData);
         }
+        public virtual void Render(OverlayData overlayData)
+        {
+            foreach (var border in BorderLines)
+                border.Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Green });
+            NodeMarkupTool.RenderCircle(Center, new OverlayData(overlayData.CameraInfo) { Color = Colors.Red });
+        }
 
         protected struct Data
         {
@@ -326,15 +338,20 @@ namespace NodeMarkup.Tools
             public Vector3 leftPos;
             public Vector3 rightDir;
             public Vector3 leftDir;
-            public Vector3 dir;
             public float halfWidth;
 
             public float Ratio => (rightPos - leftPos).XZ().magnitude / (2 * halfWidth);
             public Vector3 CornerDir => (rightPos - leftPos).normalized;
             public StraightTrajectory Line => new StraightTrajectory(leftPos, rightPos);
             public Vector3 Position => (rightPos + leftPos) / 2;
+            public Vector3 Direction => (leftDir + rightDir).normalized;
 
             public float GetStep(int count) => (2 * halfWidth - OverlayWidth) / (count - 1);
+            public Vector3 GetDir(float t)
+            {
+                t = Mathf.Clamp01(t);
+                return (leftDir * t + rightDir * (1 - t)).normalized;
+            }
         }
     }
     public class NodeSelection : Selection
@@ -354,9 +371,8 @@ namespace NodeMarkup.Tools
                 var data = new Data()
                 {
                     halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
-                    dir = (isStart ? -segment.m_startDirection : -segment.m_endDirection).normalized,
+                    angle = (isStart ? segment.m_startDirection : segment.m_endDirection).AbsoluteAngle(),
                 };
-                data.angle = (-data.dir).AbsoluteAngle();
 
                 segment.CalculateCorner(segmentId, true, isStart, true, out data.leftPos, out data.leftDir, out _);
                 segment.CalculateCorner(segmentId, true, isStart, false, out data.rightPos, out data.rightDir, out _);
@@ -394,9 +410,7 @@ namespace NodeMarkup.Tools
                 Render(overlayData, data1);
             }
 
-            //foreach (var border in BorderLines)
-            //    border.Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Green });
-            //NodeMarkupTool.RenderCircle(Center, new OverlayData(overlayData.CameraInfo) { Color = Colors.Red });
+            //base.Render(overlayData);
         }
     }
     public class SegmentSelection : Selection
@@ -412,7 +426,6 @@ namespace NodeMarkup.Tools
             var startData = new Data()
             {
                 halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
-                dir = segment.m_startDirection.normalized,
                 angle = segment.m_startDirection.AbsoluteAngle(),
             };
 
@@ -424,7 +437,6 @@ namespace NodeMarkup.Tools
             var endData = new Data()
             {
                 halfWidth = segment.Info.m_halfWidth.RoundToNearest(0.1f),
-                dir = segment.m_endDirection.normalized,
                 angle = segment.m_endDirection.AbsoluteAngle(),
             };
 
@@ -442,6 +454,8 @@ namespace NodeMarkup.Tools
             Render(overlayData, Datas[0], Datas[1]);
             Render(overlayData, Datas[0]);
             Render(overlayData, Datas[1]);
+
+            //base.Render(overlayData);
         }
     }
 }
