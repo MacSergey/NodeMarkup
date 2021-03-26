@@ -841,8 +841,7 @@ Failed to load markings for {0} intersections.</value>
     <value>Paste markings</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Do you really want to paste markings?
-It will replace the existing markings.</value>
+    <value>Do you really want to paste markings?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Crosswalks modifier</value>
@@ -1443,5 +1442,26 @@ Click to edit markings</value>
   </data>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
     <value>Apply between intersections</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Apply to whole street</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Apply to whole street</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>It will replace the existing markings.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Apply marking between intersections</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Do you really want to apply marking between intersections?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Apply marking to whole street</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Do you really want to apply marking to whole "{0}"?</value>
   </data>
 </root>

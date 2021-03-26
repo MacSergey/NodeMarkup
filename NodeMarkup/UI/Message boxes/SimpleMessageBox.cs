@@ -9,6 +9,7 @@ namespace NodeMarkup.UI
         public static string Ok => Localize.MessageBox_OK;
         public static string Cancel => Localize.MessageBox_Cancel;
         public static string CantUndone => Localize.MessageBox_CantUndone;
+        public static string ItWillReplace => Localize.MessageBox_ItWillReplace;
     }
     public class OkMessageBox : OneButtonMessageBox
     {

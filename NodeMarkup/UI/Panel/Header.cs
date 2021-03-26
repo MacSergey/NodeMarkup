@@ -105,7 +105,10 @@ namespace NodeMarkup.UI.Panel
                 AddPopupButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalksShortcut),
             };
             if (Type == MarkupType.Segment)
+            {
                 buttons.Add(AddPopupButton(popup.Content, string.Empty, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
+                buttons.Add(AddPopupButton(popup.Content, string.Empty, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut));
+            }
 
             foreach (var button in buttons)
             {
