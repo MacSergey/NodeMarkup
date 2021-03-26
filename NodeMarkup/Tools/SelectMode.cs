@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEngine;
 using static ToolBase;
 using ColossalFramework.UI;
+using ColossalFramework;
 
 namespace NodeMarkup.Tools
 {
@@ -32,72 +33,109 @@ namespace NodeMarkup.Tools
 
         public override void OnToolUpdate()
         {
-            NodeSelection nodeSelection = HoverNode;
-            SegmentSelection segmentSelection = HoverSegment;
+            NodeSelection nodeSelection = null;
+            SegmentSelection segmentSelection = null;
 
             if (NodeMarkupTool.MouseRayValid)
             {
-                if (!GetRayCast(ItemClass.Service.Road, ItemClass.SubService.None, ref nodeSelection, ref segmentSelection))
-                    GetRayCast(ItemClass.Service.PublicTransport, ItemClass.SubService.PublicTransportPlane, ref nodeSelection, ref segmentSelection);
+                if (IsHoverNode && HoverNode.Contains(NodeMarkupTool.MouseWorldPosition))
+                    nodeSelection = HoverNode;
+                else if (IsHoverSegment && HoverSegment.Contains(NodeMarkupTool.MouseWorldPosition))
+                    segmentSelection = HoverSegment;
+                else
+                    RayCast(out nodeSelection, out segmentSelection);
             }
 
             HoverNode = nodeSelection;
             HoverSegment = segmentSelection;
         }
-        private bool GetRayCast(ItemClass.Service service, ItemClass.SubService subService, ref NodeSelection nodeSelection, ref SegmentSelection segmentSelection)
+
+        private void RayCast(out NodeSelection nodeSelection, out SegmentSelection segmentSelection)
         {
-            RaycastInput input = new RaycastInput(NodeMarkupTool.MouseRay, Camera.main.farClipPlane)
-            {
-                m_ignoreTerrain = true,
-                m_ignoreNodeFlags = NetNode.Flags.All,
-                m_ignoreSegmentFlags = NetSegment.Flags.None,
-            };
-            input.m_netService.m_itemLayers = (ItemClass.Layer.Default | ItemClass.Layer.MetroTunnels);
-            input.m_netService.m_service = service;
-            input.m_netService.m_subService = subService;
+            var hitPos = NodeMarkupTool.MouseWorldPosition;
+            var gridMinX = Max(hitPos.x);
+            var gridMinZ = Max(hitPos.z);
+            var gridMaxX = Min(hitPos.x);
+            var gridMaxZ = Min(hitPos.z);
+            var segmentBuffer = Singleton<NetManager>.instance.m_segments.m_buffer;
+            var checkedNodes = new HashSet<ushort>();
 
-            if (NodeMarkupTool.RayCast(input, out RaycastOutput output))
+            for (int i = gridMinZ; i <= gridMaxZ; i++)
             {
-                if (!InputExtension.ShiftIsPressed)
+                for (int j = gridMinX; j <= gridMaxX; j++)
                 {
-                    var segment = output.m_netSegment.GetSegment();
+                    var segmentId = NetManager.instance.m_segmentGrid[i * 270 + j];
+                    int count = 0;
 
-                    if (CheckNodeHover(segment.m_startNode, output.m_hitPos, ref nodeSelection))
+                    while (segmentId != 0u && count < 36864)
                     {
-                        segmentSelection = null;
-                        return true;
-                    }
-                    else if (CheckNodeHover(segment.m_endNode, output.m_hitPos, ref nodeSelection))
-                    {
-                        segmentSelection = null;
-                        return true;
+                        if (CheckSegment(segmentId))
+                        {
+                            var segment = segmentId.GetSegment();
+
+                            if (!checkedNodes.Contains(segment.m_startNode))
+                            {
+                                if (RayCastNode(segment.m_startNode, hitPos, out nodeSelection))
+                                {
+                                    segmentSelection = null;
+                                    return;
+                                }
+                                else
+                                    checkedNodes.Add(segment.m_startNode);
+                            }
+                            if (!checkedNodes.Contains(segment.m_endNode))
+                            {
+                                if (RayCastNode(segment.m_endNode, hitPos, out nodeSelection))
+                                {
+                                    segmentSelection = null;
+                                    return;
+                                }
+                                else
+                                    checkedNodes.Add(segment.m_endNode);
+                            }
+                            if (RayCastSegments(segmentId, hitPos, out segmentSelection))
+                            {
+                                nodeSelection = null;
+                                return;
+                            }
+                        }
+
+                        segmentId = segmentBuffer[segmentId].m_nextGridSegment;
                     }
                 }
+            }
 
-                nodeSelection = null;
-                segmentSelection = new SegmentSelection(output.m_netSegment);
-                return true;
-            }
-            else
+            nodeSelection = null;
+            segmentSelection = null;
+
+            static bool RayCastNode(ushort nodeId, Vector3 hitPos, out NodeSelection selection)
             {
-                nodeSelection = null;
-                segmentSelection = null;
-                return false;
-            }
-        }
-        private bool CheckNodeHover(ushort nodeId, Vector3 hitPos, ref NodeSelection nodeSelection)
-        {
-            var selection = nodeSelection;
-            if (selection?.Id != nodeId)
                 selection = new NodeSelection(nodeId);
-
-            if (selection.Contains(hitPos))
-            {
-                nodeSelection = selection;
-                return true;
+                return selection.Contains(hitPos);
             }
-            else
+            static bool RayCastSegments(ushort segmentId, Vector3 hitPos, out SegmentSelection selection)
+            {
+                selection = new SegmentSelection(segmentId);
+                return selection.Contains(hitPos);
+            }
+            static int Max(float value) => Mathf.Max((int)((value - 16f) / 64f + 135f) - 1, 0);
+            static int Min(float value) => Mathf.Min((int)((value + 16f) / 64f + 135f) + 1, 269);
+        }
+        private bool CheckSegment(ushort segmentId)
+        {
+            var segment = segmentId.GetSegment();
+            var connect = segment.Info.GetConnectionClass();
+
+            if ((segment.m_flags & NetSegment.Flags.Created) == 0)
                 return false;
+
+            if ((connect.m_layer & ItemClass.Layer.Default) == 0)
+                return false;
+
+            if (connect.m_service != ItemClass.Service.Road && (connect.m_service != ItemClass.Service.PublicTransport || connect.m_subService != ItemClass.SubService.PublicTransportPlane))
+                return false;
+
+            return true;
         }
 
 
@@ -201,6 +239,12 @@ namespace NodeMarkup.Tools
                 }
                 Center = center / Datas.Length;
             }
+        }
+        public virtual bool Contains(Vector3 hitPos)
+        {
+            var line = new StraightTrajectory(hitPos, Center);
+            var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
+            return contains;
         }
 
         protected void Render(OverlayData overlayData, Data data1, Data data2, bool isEndBezier = false)
@@ -309,18 +353,10 @@ namespace NodeMarkup.Tools
                 yield return data;
             }
         }
-        public bool Contains(Vector3 hitPos)
+        public override bool Contains(Vector3 hitPos)
         {
             var node = Id.GetNode();
-
-            if ((node.m_flags & NetNode.Flags.Middle) != 0)
-                return false;
-            else
-            {
-                var line = new StraightTrajectory(hitPos, Center);
-                var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
-                return contains;
-            }
+            return (node.m_flags & NetNode.Flags.Middle) == 0 && base.Contains(hitPos);
         }
         public override void Render(OverlayData overlayData)
         {
