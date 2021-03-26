@@ -35,7 +35,6 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
         public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
         public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
-
         public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => Instance.ApplyWholeStreet());
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
@@ -51,6 +50,8 @@ namespace NodeMarkup.Tools
                 yield return CreateEdgeLinesShortcut;
                 yield return SaveAsIntersectionTemplateShortcut;
                 yield return CutLinesByCrosswalksShortcut;
+                yield return ApplyBetweenIntersectionsShortcut;
+                yield return ApplyWholeStreetShortcut;
             }
         }
 
