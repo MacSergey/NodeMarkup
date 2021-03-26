@@ -160,6 +160,7 @@ namespace NodeMarkup.Tools
         protected Data[] Datas { get; }
         protected Vector3 Center { get; set; }
         protected abstract Vector3 Position { get; }
+        protected abstract float HalfWidth { get; }
         protected IEnumerable<ITrajectory> BorderLines
         {
             get
@@ -167,8 +168,12 @@ namespace NodeMarkup.Tools
                 for (var i = 0; i < Datas.Length; i += 1)
                 {
                     yield return new StraightTrajectory(Datas[i].leftPos, Datas[i].rightPos);
+
                     var j = (i + 1) % Datas.Length;
-                    yield return new BezierTrajectory(Datas[i].leftPos, Datas[i].leftDir, Datas[j].rightPos, Datas[j].rightDir);
+                    if (Datas.Length != 1)
+                        yield return new BezierTrajectory(GetBezier(Datas[i].leftPos, Datas[i].leftDir, Datas[j].rightPos, Datas[j].rightDir));
+                    else
+                        yield return new BezierTrajectory(GetEndBezier(Datas[i].leftPos, Datas[i].leftDir, Datas[j].rightPos, Datas[j].rightDir));
                 }
             }
         }
@@ -190,22 +195,15 @@ namespace NodeMarkup.Tools
                 for (var i = 0; i < Datas.Length; i += 1)
                 {
                     var j = (i + 1) % Datas.Length;
-                    var bezier = new Bezier3
-                    {
-                        a = Datas[i].Position,
-                        b = Datas[i].dir,
-                        c = Datas[j].dir,
-                        d = Datas[j].Position
-                    };
-                    NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
 
+                    var bezier = GetBezier(Datas[i].Position, Datas[i].dir, Datas[j].Position, Datas[j].dir);
                     center += bezier.Position(0.5f);
                 }
                 Center = center / Datas.Length;
             }
         }
 
-        protected void Render(OverlayData overlayData, Data data1, Data data2)
+        protected void Render(OverlayData overlayData, Data data1, Data data2, bool isEndBezier = false)
         {
             var count = Math.Max(Mathf.CeilToInt(2 * data1.halfWidth / (OverlayWidth * 0.75f)), Mathf.CeilToInt(2 * data2.halfWidth / (OverlayWidth * 0.75f)));
 
@@ -220,17 +218,41 @@ namespace NodeMarkup.Tools
 
             for (var l = 0; l < count; l += 1)
             {
-                var bezier = new Bezier3()
+                var pos1 = data1.leftPos + cornerDir1 * (OverlayWidth / 2 + l * step1) * ratio1;
+                var pos2 = data2.rightPos - cornerDir2 * (OverlayWidth / 2 + l * step2) * ratio2;
+                Bezier3 bezier;
+                if (!isEndBezier)
+                    bezier = GetBezier(pos1, data1.dir, pos2, data2.dir);
+                else
                 {
-                    a = data1.leftPos + cornerDir1 * (OverlayWidth / 2 + l * step1) * ratio1,
-                    b = data1.dir,
-                    c = data2.dir,
-                    d = data2.rightPos - cornerDir2 * (OverlayWidth / 2 + l * step2) * ratio2,
-                };
-
-                NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+                    var ratio = Mathf.Abs(count - 2 * l) / (float)count;
+                    bezier = GetEndBezier(pos1, data1.dir, pos2, data2.dir, OverlayWidth / 2, ratio);
+                }
                 NodeMarkupTool.RenderBezier(bezier, overlayData);
             }
+        }
+        private Bezier3 GetBezier(Vector3 leftPos, Vector3 leftDir, Vector3 rightPos, Vector3 rightDir)
+        {
+            var bezier = new Bezier3()
+            {
+                a = leftPos,
+                d = rightPos,
+            };
+
+            NetSegment.CalculateMiddlePoints(bezier.a, leftDir, bezier.d, rightDir, true, true, out bezier.b, out bezier.c);
+            return bezier;
+        }
+        private Bezier3 GetEndBezier(Vector3 leftPos, Vector3 leftDir, Vector3 rightPos, Vector3 rightDir, float halfWidth = 0f, float ratio = 1f)
+        {
+            var length = Mathf.Min((leftPos - rightPos).XZ().magnitude, 8f - halfWidth) * ratio / 0.75f;
+            var bezier = new Bezier3()
+            {
+                a = leftPos,
+                b = leftPos + leftDir * length,
+                c = rightPos + rightDir * length,
+                d = rightPos,
+            };
+            return bezier;
         }
         protected void Render(OverlayData overlayData, Data data)
         {
@@ -260,6 +282,7 @@ namespace NodeMarkup.Tools
     public class NodeSelection : Selection
     {
         protected override Vector3 Position => Id.GetNode().m_position;
+        protected override float HalfWidth => Id.GetNode().Info.m_halfWidth;
         public NodeSelection(ushort id) : base(id) { }
 
         protected override IEnumerable<Data> Calculate()
@@ -280,8 +303,8 @@ namespace NodeMarkup.Tools
                 segment.CalculateCorner(segmentId, true, isStart, true, out data.leftPos, out data.leftDir, out _);
                 segment.CalculateCorner(segmentId, true, isStart, false, out data.rightPos, out data.rightDir, out _);
 
-                data.leftDir *= -1;
-                data.rightDir *= -1;
+                data.leftDir = (-data.leftDir).normalized;
+                data.rightDir = (-data.rightDir).normalized;
 
                 yield return data;
             }
@@ -309,7 +332,7 @@ namespace NodeMarkup.Tools
                 var data1 = Datas[i];
                 var data2 = Datas[(i + 1) % Datas.Length];
 
-                Render(overlayData, data1, data2);
+                Render(overlayData, data1, data2, Datas.Length == 1);
                 Render(overlayData, data1);
             }
 
@@ -321,6 +344,7 @@ namespace NodeMarkup.Tools
     public class SegmentSelection : Selection
     {
         protected override Vector3 Position => Id.GetSegment().m_middlePosition;
+        protected override float HalfWidth => Id.GetSegment().Info.m_halfWidth;
         public SegmentSelection(ushort id) : base(id) { }
 
         protected override IEnumerable<Data> Calculate()
