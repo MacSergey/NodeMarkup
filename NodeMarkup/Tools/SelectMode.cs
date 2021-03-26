@@ -158,7 +158,9 @@ namespace NodeMarkup.Tools
 
         public ushort Id { get; }
         protected Data[] Datas { get; }
-        private IEnumerable<ITrajectory> BorderLines
+        protected Vector3 Center { get; set; }
+        protected abstract Vector3 Position { get; }
+        protected IEnumerable<ITrajectory> BorderLines
         {
             get
             {
@@ -174,27 +176,38 @@ namespace NodeMarkup.Tools
         {
             Id = id;
             Datas = Calculate().OrderBy(s => s.angle).ToArray();
+            CalculateCenter();
         }
         protected abstract IEnumerable<Data> Calculate();
-        public bool Contains(Vector3 position)
+        public abstract void Render(OverlayData overlayData);
+        private void CalculateCenter()
         {
-            var node = Id.GetNode();
-
-            if ((node.m_flags & NetNode.Flags.Middle) != 0 && (position - node.m_position).magnitude < node.Info.m_halfWidth)
-                return true;
+            if (Datas.Length == 1)
+                Center = Position + Datas[0].dir;
             else
             {
-                var line = new StraightTrajectory(position, node.m_position);
-                var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
-                return contains;
+                Vector3 center = new();
+                for (var i = 0; i < Datas.Length; i += 1)
+                {
+                    var j = (i + 1) % Datas.Length;
+                    var bezier = new Bezier3
+                    {
+                        a = Datas[i].Position,
+                        b = Datas[i].dir,
+                        c = Datas[j].dir,
+                        d = Datas[j].Position
+                    };
+                    NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+
+                    center += bezier.Position(0.5f);
+                }
+                Center = center / Datas.Length;
             }
         }
 
-        public abstract void Render(OverlayData overlayData);
-
         protected void Render(OverlayData overlayData, Data data1, Data data2)
         {
-            var count = Math.Max(Mathf.CeilToInt(2 * data1.halfWidth / OverlayWidth), Mathf.CeilToInt(2 * data2.halfWidth / OverlayWidth));
+            var count = Math.Max(Mathf.CeilToInt(2 * data1.halfWidth / (OverlayWidth * 0.75f)), Mathf.CeilToInt(2 * data2.halfWidth / (OverlayWidth * 0.75f)));
 
             var step1 = data1.GetStep(count);
             var step2 = data2.GetStep(count);
@@ -238,12 +251,15 @@ namespace NodeMarkup.Tools
 
             public float Ratio => (rightPos - leftPos).XZ().magnitude / (2 * halfWidth);
             public Vector3 CornerDir => (rightPos - leftPos).normalized;
+            public StraightTrajectory Line => new StraightTrajectory(leftPos, rightPos);
+            public Vector3 Position => (rightPos + leftPos) / 2;
 
             public float GetStep(int count) => (2 * halfWidth - OverlayWidth) / (count - 1);
         }
     }
     public class NodeSelection : Selection
     {
+        protected override Vector3 Position => Id.GetNode().m_position;
         public NodeSelection(ushort id) : base(id) { }
 
         protected override IEnumerable<Data> Calculate()
@@ -270,34 +286,41 @@ namespace NodeMarkup.Tools
                 yield return data;
             }
         }
-
-        public override void Render(OverlayData overlayData)
+        public bool Contains(Vector3 hitPos)
         {
             var node = Id.GetNode();
 
             if ((node.m_flags & NetNode.Flags.Middle) != 0)
-            {
-                overlayData.Width = node.Info.m_halfWidth * 2f;
-                NodeMarkupTool.RenderCircle(node.m_position, overlayData);
-            }
+                return false;
             else
             {
-                overlayData.Width = OverlayWidth;
-                overlayData.AlphaBlend = false;
-
-                for (var i = 0; i < Datas.Length; i += 1)
-                {
-                    var data1 = Datas[i];
-                    var data2 = Datas[(i + 1) % Datas.Length];
-
-                    Render(overlayData, data1, data2);
-                    Render(overlayData, data1);
-                }
+                var line = new StraightTrajectory(hitPos, Center);
+                var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
+                return contains;
             }
+        }
+        public override void Render(OverlayData overlayData)
+        {
+            overlayData.Width = OverlayWidth;
+            overlayData.AlphaBlend = false;
+
+            for (var i = 0; i < Datas.Length; i += 1)
+            {
+                var data1 = Datas[i];
+                var data2 = Datas[(i + 1) % Datas.Length];
+
+                Render(overlayData, data1, data2);
+                Render(overlayData, data1);
+            }
+
+            //foreach (var border in BorderLines)
+            //    border.Render(new OverlayData(overlayData.CameraInfo) { Color = Colors.Green });
+            //NodeMarkupTool.RenderCircle(Center, new OverlayData(overlayData.CameraInfo) { Color = Colors.Red });
         }
     }
     public class SegmentSelection : Selection
     {
+        protected override Vector3 Position => Id.GetSegment().m_middlePosition;
         public SegmentSelection(ushort id) : base(id) { }
 
         protected override IEnumerable<Data> Calculate()
