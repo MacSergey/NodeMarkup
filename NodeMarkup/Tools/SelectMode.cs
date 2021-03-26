@@ -38,19 +38,23 @@ namespace NodeMarkup.Tools
 
             if (NodeMarkupTool.MouseRayValid)
             {
-                if (IsHoverNode && HoverNode.Contains(NodeMarkupTool.MouseWorldPosition))
+                var start = NodeMarkupTool.MouseRay.origin;
+                var end = start + NodeMarkupTool.MouseRay.direction.normalized * NodeMarkupTool.MouseRayLength;
+                var ray = new Segment3(start, end);
+
+                if (IsHoverNode && HoverNode.Contains(ray, out _))
                     nodeSelection = HoverNode;
-                else if (IsHoverSegment && HoverSegment.Contains(NodeMarkupTool.MouseWorldPosition))
+                else if (IsHoverSegment && HoverSegment.Contains(ray, out _))
                     segmentSelection = HoverSegment;
                 else
-                    RayCast(out nodeSelection, out segmentSelection);
+                    RayCast(ray, out nodeSelection, out segmentSelection);
             }
 
             HoverNode = nodeSelection;
             HoverSegment = segmentSelection;
         }
 
-        private void RayCast(out NodeSelection nodeSelection, out SegmentSelection segmentSelection)
+        private void RayCast(Segment3 ray, out NodeSelection nodeSelection, out SegmentSelection segmentSelection)
         {
             var hitPos = NodeMarkupTool.MouseWorldPosition;
             var gridMinX = Max(hitPos.x);
@@ -59,6 +63,11 @@ namespace NodeMarkup.Tools
             var gridMaxZ = Min(hitPos.z);
             var segmentBuffer = Singleton<NetManager>.instance.m_segments.m_buffer;
             var checkedNodes = new HashSet<ushort>();
+
+            var priority = 1f;
+
+            nodeSelection = null;
+            segmentSelection = null;
 
             for (int i = gridMinZ; i <= gridMaxZ; i++)
             {
@@ -72,31 +81,25 @@ namespace NodeMarkup.Tools
                         if (CheckSegment(segmentId))
                         {
                             var segment = segmentId.GetSegment();
+                            float t;
 
-                            if (!checkedNodes.Contains(segment.m_startNode))
+                            if (RayCastNode(checkedNodes, segment.m_startNode, ray, out NodeSelection startSelection, out t) && t < priority)
                             {
-                                if (RayCastNode(segment.m_startNode, hitPos, out nodeSelection))
-                                {
-                                    segmentSelection = null;
-                                    return;
-                                }
-                                else
-                                    checkedNodes.Add(segment.m_startNode);
+                                nodeSelection = startSelection;
+                                segmentSelection = null;
+                                priority = t;
                             }
-                            if (!checkedNodes.Contains(segment.m_endNode))
+                            else if (RayCastNode(checkedNodes, segment.m_endNode, ray, out NodeSelection endSelection, out t) && t < priority)
                             {
-                                if (RayCastNode(segment.m_endNode, hitPos, out nodeSelection))
-                                {
-                                    segmentSelection = null;
-                                    return;
-                                }
-                                else
-                                    checkedNodes.Add(segment.m_endNode);
+                                nodeSelection = endSelection;
+                                segmentSelection = null;
+                                priority = t;
                             }
-                            if (RayCastSegments(segmentId, hitPos, out segmentSelection))
+                            else if (RayCastSegments(segmentId, ray, out SegmentSelection selection, out t) && t < priority)
                             {
+                                segmentSelection = selection;
                                 nodeSelection = null;
-                                return;
+                                priority = t;
                             }
                         }
 
@@ -105,22 +108,31 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            nodeSelection = null;
-            segmentSelection = null;
-
-            static bool RayCastNode(ushort nodeId, Vector3 hitPos, out NodeSelection selection)
-            {
-                selection = new NodeSelection(nodeId);
-                return selection.Contains(hitPos);
-            }
-            static bool RayCastSegments(ushort segmentId, Vector3 hitPos, out SegmentSelection selection)
-            {
-                selection = new SegmentSelection(segmentId);
-                return selection.Contains(hitPos);
-            }
             static int Max(float value) => Mathf.Max((int)((value - 16f) / 64f + 135f) - 1, 0);
             static int Min(float value) => Mathf.Min((int)((value + 16f) / 64f + 135f) + 1, 269);
         }
+        bool RayCastNode(HashSet<ushort> checkedNodes, ushort nodeId, Segment3 ray, out NodeSelection selection, out float t)
+        {
+            if (!checkedNodes.Contains(nodeId))
+            {
+                checkedNodes.Add(nodeId);
+                selection = new NodeSelection(nodeId);
+                return selection.Contains(ray, out t);
+            }
+            else
+            {
+                selection = null;
+                t = 0f;
+                return false;
+            }
+        }
+        bool RayCastSegments(ushort segmentId, Segment3 ray, out SegmentSelection selection, out float t)
+        {
+            selection = new SegmentSelection(segmentId);
+            return selection.Contains(ray, out t);
+        }
+
+
         private bool CheckSegment(ushort segmentId)
         {
             var segment = segmentId.GetSegment();
@@ -240,8 +252,10 @@ namespace NodeMarkup.Tools
                 Center = center / Datas.Length;
             }
         }
-        public virtual bool Contains(Vector3 hitPos)
+        public virtual bool Contains(Segment3 ray, out float t)
         {
+            Segment1.Intersect(ray.a.y, ray.b.y, Center.y, out t);
+            var hitPos = ray.Position(t);
             var line = new StraightTrajectory(hitPos, Center);
             var contains = !BorderLines.Any(b => MarkupIntersect.CalculateSingle(line, b).IsIntersect);
             return contains;
@@ -353,11 +367,19 @@ namespace NodeMarkup.Tools
                 yield return data;
             }
         }
-        public override bool Contains(Vector3 hitPos)
+        public override bool Contains(Segment3 ray, out float t)
         {
             var node = Id.GetNode();
-            return (node.m_flags & NetNode.Flags.Middle) == 0 && base.Contains(hitPos);
+
+            if ((node.m_flags & NetNode.Flags.Middle) == 0)
+                return base.Contains(ray, out t);
+            else
+            {
+                t = 0;
+                return false;
+            }
         }
+
         public override void Render(OverlayData overlayData)
         {
             overlayData.Width = OverlayWidth;
