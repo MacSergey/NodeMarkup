@@ -54,8 +54,8 @@ namespace NodeMarkup.UI.Editors
             Shift.CheckMin = true;
             Shift.MinValue = 0f;
             Shift.Init();
-            Shift.Value = point.Shift;
-            Shift.OnValueChanged += (value) => point.Shift.Value = value;
+            Shift.Value = point.SplitOffset;
+            Shift.OnValueChanged += (value) => point.SplitOffset.Value = value;
             Shift.isVisible = point.Split;
         }
         protected override void OnClear()

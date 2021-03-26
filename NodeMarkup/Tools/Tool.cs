@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Tools
@@ -32,7 +33,9 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
         public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
-        public static NodeMarkupShortcut CutLinesByCrosswalks { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalks), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
+        public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
+        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
+        public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => Instance.ApplyWholeStreet());
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
@@ -46,13 +49,16 @@ namespace NodeMarkup.Tools
                 yield return EditMarkingShortcut;
                 yield return CreateEdgeLinesShortcut;
                 yield return SaveAsIntersectionTemplateShortcut;
-                yield return CutLinesByCrosswalks;
+                yield return CutLinesByCrosswalksShortcut;
+                yield return ApplyBetweenIntersectionsShortcut;
+                yield return ApplyWholeStreetShortcut;
             }
         }
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
+        public static Segment3 Ray { get; set; }
         public static Ray MouseRay { get; private set; }
         public static float MouseRayLength { get; private set; }
         public static bool MouseRayValid { get; private set; }
@@ -214,9 +220,10 @@ namespace NodeMarkup.Tools
             MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             MouseRayLength = Camera.main.farClipPlane;
             MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
-            RaycastInput input = new RaycastInput(MouseRay, MouseRayLength);
-            RayCast(input, out RaycastOutput output);
+            Ray = new Segment3(MouseRay.origin, MouseRay.origin + MouseRay.direction.normalized * MouseRayLength);
+            RayCast(new RaycastInput(MouseRay, MouseRayLength), out RaycastOutput output);
             MouseWorldPosition = output.m_hitPos;
+
             var cameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
             cameraDirection.y = 0;
             CameraDirection = cameraDirection.normalized;
@@ -396,7 +403,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_PasteMarkingsCaption;
-                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Paste;
             }
             else
@@ -452,6 +459,138 @@ namespace NodeMarkup.Tools
             foreach (var crosswalk in Markup.Crosswalks)
                 Markup.CutLinesByCrosswalk(crosswalk);
         }
+        private delegate ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId);
+        private void ApplyBetweenIntersections()
+        {
+            Mod.Logger.Debug($"Apply between intersections");
+
+            if (Markup.Type != MarkupType.Segment)
+                return;
+
+            var segment = Markup.Id.GetSegment();
+            if (Settings.DeleteWarnings)
+            {
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaptionText = Localize.Tool_ApplyBetweenIntersectionsCaption;
+                messageBox.MessageText = $"{Localize.Tool_ApplyBetweenIntersectionsMessage}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.OnButton1Click = Apply;
+            }
+            else
+                Apply();
+
+
+            bool Apply()
+            {
+                var config = Markup.ToXml();
+                this.Apply(Markup.Id, segment.m_startNode, segment.m_endNode, segment.Info, config, SegmentGetter);
+                this.Apply(Markup.Id, segment.m_endNode, segment.m_startNode, segment.Info, config, SegmentGetter);
+                return true;
+            }
+
+            ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId)
+            {
+                var id = segmentIds[segmentIds[0] == beforeSegmentId ? 1 : 0];
+                var nextSegment = id.GetSegment();
+                return nextSegment.Info == segment.Info ? id : null;
+            }
+        }
+        private void ApplyWholeStreet()
+        {
+            Mod.Logger.Debug($"Apply to whole street");
+
+            if (Markup.Type != MarkupType.Segment)
+                return;
+
+            var segment = Markup.Id.GetSegment();
+            if (Settings.DeleteWarnings)
+            {
+                var streetName = Singleton<NetManager>.instance.GetSegmentName(Markup.Id);
+                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                messageBox.CaptionText = Localize.Tool_ApplyWholeStreetCaption;
+                messageBox.MessageText = $"{string.Format(Localize.Tool_ApplyWholeStreetMessage, streetName)}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.OnButton1Click = Apply;
+            }
+            else
+                Apply();
+
+            bool Apply()
+            {
+                var config = Markup.ToXml();
+                this.Apply(Markup.Id, segment.m_startNode, segment.m_endNode, segment.Info, config, SegmentGetter);
+                this.Apply(Markup.Id, segment.m_endNode, segment.m_startNode, segment.Info, config, SegmentGetter);
+                return true;
+            }
+
+            ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId)
+            {
+                foreach (var id in segmentIds)
+                {
+                    if (id == beforeSegmentId)
+                        continue;
+
+                    var nextSegment = id.GetSegment();
+                    if (nextSegment.Info == segment.Info && nextSegment.m_nameSeed == segment.m_nameSeed)
+                        return id;
+                }
+                return null;
+            }
+        }
+
+        void Apply(ushort startSegmentId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config, SegmentGetter segmentGetter)
+        {
+            var nodeId = (ushort?)nearNodeId;
+            var segmentId = (ushort?)startSegmentId;
+            while (true)
+            {
+                segmentId = ApplyToNode(nodeId.Value, segmentId.Value, nearNodeId, farNodeId, info, config, segmentGetter);
+                if (segmentId == null || segmentId == startSegmentId)
+                    return;
+
+                nodeId = ApplyToSegment(segmentId.Value, nodeId.Value, nearNodeId, farNodeId, info, config);
+                if (nodeId == null)
+                    return;
+            }
+        }
+
+        ushort? ApplyToNode(ushort nodeId, ushort beforeSegmentId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config, SegmentGetter nextGetter)
+        {
+            var node = nodeId.GetNode();
+
+            var nodeSegmentIds = node.SegmentsId().ToArray();
+            var nextSegmentId = nextGetter(nodeSegmentIds, beforeSegmentId);
+
+            if (nextSegmentId != null && nodeSegmentIds.Length == 2 && (node.m_flags & NetNode.Flags.Bend) != 0)
+            {
+                var map = new ObjectsMap();
+                map.AddSegment(nearNodeId, beforeSegmentId);
+                map.AddSegment(farNodeId, nextSegmentId.Value);
+                var markup = MarkupManager.NodeManager.Get(nodeId);
+                markup.Clear();
+                markup.FromXml(Mod.Version, config, map);
+            }
+
+            return nextSegmentId;
+        }
+
+        ushort? ApplyToSegment(ushort segmentId, ushort beforeNodeId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config)
+        {
+            var segment = segmentId.GetSegment();
+            if (segment.Info != info)
+                return null;
+
+            var nextNodeId = segment.m_startNode == beforeNodeId ? segment.m_endNode : segment.m_startNode;
+
+            var map = new ObjectsMap();
+            map.AddNode(farNodeId, beforeNodeId);
+            map.AddNode(nearNodeId, nextNodeId);
+            var markup = MarkupManager.SegmentManager.Get(segmentId);
+            markup.Clear();
+            markup.FromXml(Mod.Version, config, map);
+
+            return nextNodeId;
+        }
+
+
         private int ScreenshotSize => 400;
         private IEnumerator MakeScreenshot(Action<Image> callback)
         {
@@ -636,6 +775,11 @@ namespace NodeMarkup.Tools
         }
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
+        public static Vector3 GetRayPosition(float height, out float t)
+        {
+            Segment1.Intersect(Ray.a.y, Ray.b.y, height, out t);
+            return Ray.Position(t);
+        }
 
         public TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum

@@ -230,7 +230,7 @@ namespace NodeMarkup
 
         public static void LoadTemplateAsset(GameObject gameObject, Package.Asset asset)
         {
-            if (!(gameObject.GetComponent<MarkingInfo>() is MarkingInfo markingInfo))
+            if (gameObject.GetComponent<MarkingInfo>() is not MarkingInfo markingInfo)
                 return;
 
             Mod.Logger.Debug($"Start load template asset \"{asset.fullName}\" from {asset.package.packagePath}");

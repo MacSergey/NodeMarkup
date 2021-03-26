@@ -133,7 +133,7 @@ namespace NodeMarkup.Tools
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = NodeMarkupTool.MouseWorldPosition - SelectPoint.Position;
+            var dir = NodeMarkupTool.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
             var lenght = dir.magnitude;
             dir.Normalize();
             var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();

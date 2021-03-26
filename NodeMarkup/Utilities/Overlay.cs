@@ -4,7 +4,7 @@ namespace NodeMarkup.Utilities
 {
     public struct OverlayData
     {
-        public RenderManager.CameraInfo CameraInfo;
+        public RenderManager.CameraInfo CameraInfo { get; }
         public Color? Color;
         public float? Width;
         public bool? AlphaBlend;

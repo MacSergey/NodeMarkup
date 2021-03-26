@@ -47,10 +47,10 @@ namespace NodeMarkup.Manager
             CrosswalkLine = line;
             CrosswalkLine.TrajectoryGetter = GetTrajectory;
 
-            RightBorder = new PropertyValue<MarkupRegularLine>("RB", CrosswalkChanged, rightBorder);
-            LeftBorder = new PropertyValue<MarkupRegularLine>("LB", CrosswalkChanged, leftBorder);
+            RightBorder = new PropertyClassValue<MarkupRegularLine>("RB", CrosswalkChanged, rightBorder);
+            LeftBorder = new PropertyClassValue<MarkupRegularLine>("LB", CrosswalkChanged, leftBorder);
             style.OnStyleChanged = CrosswalkChanged;
-            Style = new PropertyValue<CrosswalkStyle>(StyleChanged, style);
+            Style = new PropertyClassValue<CrosswalkStyle>(StyleChanged, style);
 
             CrosswalkLine.Start.Enter.TryGetPoint(CrosswalkLine.Start.Num, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
             CrosswalkLine.End.Enter.TryGetPoint(CrosswalkLine.End.Num, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);

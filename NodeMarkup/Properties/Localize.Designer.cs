@@ -1121,6 +1121,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на It will replace the existing markings..
+        /// </summary>
+        public static string MessageBox_ItWillReplace {
+            get {
+                return ResourceManager.GetString("MessageBox_ItWillReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No.
         /// </summary>
         public static string MessageBox_No {
@@ -1547,6 +1556,24 @@ namespace NodeMarkup {
         public static string Panel_Additional {
             get {
                 return ResourceManager.GetString("Panel_Additional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply between intersections.
+        /// </summary>
+        public static string Panel_ApplyBetweenIntersections {
+            get {
+                return ResourceManager.GetString("Panel_ApplyBetweenIntersections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply to whole street.
+        /// </summary>
+        public static string Panel_ApplyWholeStreet {
+            get {
+                return ResourceManager.GetString("Panel_ApplyWholeStreet", resourceCulture);
             }
         }
         
@@ -2510,6 +2537,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply between intersections.
+        /// </summary>
+        public static string Settings_ShortcutApplyBetweenIntersections {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutApplyBetweenIntersections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply to whole street.
+        /// </summary>
+        public static string Settings_ShortcutApplyWholeStreet {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutApplyWholeStreet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy markings.
         /// </summary>
         public static string Settings_ShortcutCopyMarking {
@@ -3251,6 +3296,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply marking between intersections.
+        /// </summary>
+        public static string Tool_ApplyBetweenIntersectionsCaption {
+            get {
+                return ResourceManager.GetString("Tool_ApplyBetweenIntersectionsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to apply marking between intersections?.
+        /// </summary>
+        public static string Tool_ApplyBetweenIntersectionsMessage {
+            get {
+                return ResourceManager.GetString("Tool_ApplyBetweenIntersectionsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply marking to whole street.
+        /// </summary>
+        public static string Tool_ApplyWholeStreetCaption {
+            get {
+                return ResourceManager.GetString("Tool_ApplyWholeStreetCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you really want to apply marking to whole &quot;{0}&quot;?.
+        /// </summary>
+        public static string Tool_ApplyWholeStreetMessage {
+            get {
+                return ResourceManager.GetString("Tool_ApplyWholeStreetMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Clear node markings.
         /// </summary>
         public static string Tool_ClearMarkingsCaption {
@@ -3633,12 +3714,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select endpoint for regular or stop line
-        ///Drag behind point for perpendicular line.
+        ///   Ищет локализованную строку, похожую на Select endpoint for regular line.
         /// </summary>
         public static string Tool_InfoSelectLineEndPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectLineEndPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag behind point for perpendicular line.
+        /// </summary>
+        public static string Tool_InfoSelectLineEndPointNormal {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectLineEndPointNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select endpoint for regular or stop line.
+        /// </summary>
+        public static string Tool_InfoSelectLineEndPointStop {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectLineEndPointStop", resourceCulture);
             }
         }
         
@@ -3715,8 +3813,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do you really want to paste markings?
-        ///It will replace the existing markings..
+        ///   Ищет локализованную строку, похожую на Do you really want to paste markings?.
         /// </summary>
         public static string Tool_PasteMarkingsMessage {
             get {

@@ -19,8 +19,8 @@ namespace NodeMarkup.Manager
         public MarkupLinePart(MarkupLine line, ISupportPoint from = null, ISupportPoint to = null)
         {
             Line = line;
-            From = new PropertyValue<ISupportPoint>(RuleChanged, from);
-            To = new PropertyValue<ISupportPoint>(RuleChanged, to);
+            From = new PropertyClassValue<ISupportPoint>(RuleChanged, from);
+            To = new PropertyClassValue<ISupportPoint>(RuleChanged, to);
         }
 
         protected void RuleChanged() => OnRuleChanged?.Invoke();

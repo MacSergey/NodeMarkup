@@ -34,7 +34,7 @@ namespace NodeMarkup.Utilities
 
             while (true)
             {
-                if (!(Ears.LastOrDefault() is LinkedListNode<Vertex> vertex))
+                if (Ears.LastOrDefault() is not LinkedListNode<Vertex> vertex)
                     return null;
 
                 var prev = vertex.GetPrevious();

@@ -68,7 +68,7 @@ namespace NodeMarkup.Manager
 
         public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
-            if (!(prev is EnterFillerVertex prevE && Enter == prevE.Point.Enter))
+            if (prev is not EnterFillerVertex prevE || Enter != prevE.Point.Enter)
                 foreach (var vertex in GetEnterOtherPoints(contour))
                     yield return vertex;
 

@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
             Contour = contour;
             Markup = Contour.Markup;
             style.OnStyleChanged = FillerChanged;
-            Style = new PropertyValue<FillerStyle>(StyleChanged, style);
+            Style = new PropertyClassValue<FillerStyle>(StyleChanged, style);
         }
 
         private void StyleChanged()
@@ -63,7 +63,7 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
         {
-            if (!(config.Element(Manager.Style.XmlName) is XElement styleConfig) || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
+            if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
             {
                 filler = default;
                 return false;

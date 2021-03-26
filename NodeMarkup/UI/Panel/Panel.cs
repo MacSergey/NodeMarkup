@@ -199,6 +199,7 @@ namespace NodeMarkup.UI.Panel
             NeedUpdateOnVisible = false;
 
             Header.Text = Markup.PanelCaption;
+            Header.Type = Markup.Type;
             TabStrip.SetVisible(Markup);
             TabStrip.ArrangeTabs();
             TabStrip.SelectedTab = -1;
@@ -313,7 +314,7 @@ namespace NodeMarkup.UI.Panel
             where EditorType : Editor, IEditor<ItemType>
             where ItemType : class, ISupport, IDeletable
         {
-            if (!(Markup is ISupport<ItemType>))
+            if (Markup is not ISupport<ItemType>)
                 return null;
 
             Available = true;

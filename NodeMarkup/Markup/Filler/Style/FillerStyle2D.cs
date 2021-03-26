@@ -491,10 +491,10 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            LeftRailA.FromXml(config, LeftRailA);
-            LeftRailB.FromXml(config, LeftRailB);
-            RightRailA.FromXml(config, RightRailA);
-            RightRailB.FromXml(config, RightRailB);
+            LeftRailA.FromXml(config);
+            LeftRailB.FromXml(config);
+            RightRailA.FromXml(config);
+            RightRailB.FromXml(config);
         }
     }
 

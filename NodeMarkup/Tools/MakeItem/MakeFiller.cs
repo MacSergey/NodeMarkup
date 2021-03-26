@@ -108,7 +108,7 @@ namespace NodeMarkup.Tools
             }
             else
             {
-                var bezier = new Line3(Contour.Last.Position, NodeMarkupTool.MouseWorldPosition).GetBezier();
+                var bezier = new Line3(Contour.Last.Position, NodeMarkupTool.GetRayPosition(Markup.Position.y, out _)).GetBezier();
                 NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
