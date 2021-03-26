@@ -3714,12 +3714,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select endpoint for regular or stop line
-        ///Drag behind point for perpendicular line.
+        ///   Ищет локализованную строку, похожую на Select endpoint for regular line.
         /// </summary>
         public static string Tool_InfoSelectLineEndPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectLineEndPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Drag behind point for perpendicular line.
+        /// </summary>
+        public static string Tool_InfoSelectLineEndPointNormal {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectLineEndPointNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select endpoint for regular or stop line.
+        /// </summary>
+        public static string Tool_InfoSelectLineEndPointStop {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectLineEndPointStop", resourceCulture);
             }
         }
         

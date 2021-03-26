@@ -325,8 +325,7 @@ Click to edit markings</value>
     <value>Select a node or segment to change markings</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Select endpoint for regular or stop line
-Drag behind point for perpendicular line</value>
+    <value>Select endpoint for regular line</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Select a point to create or delete a line</value>
@@ -1463,5 +1462,11 @@ Click to edit markings</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
     <value>Do you really want to apply marking to whole "{0}"?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Drag behind point for perpendicular line</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Select endpoint for regular or stop line</value>
   </data>
 </root>

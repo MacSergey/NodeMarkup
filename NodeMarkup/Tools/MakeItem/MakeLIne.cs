@@ -15,22 +15,31 @@ namespace NodeMarkup.Tools
 
         public override string GetToolInfo()
         {
-            if (IsSelectPoint)
-                return IsHoverPoint ? base.GetToolInfo() : Localize.Tool_InfoSelectLineEndPoint;
-            else
+            var tips = new List<string>();
+
+            if (!IsSelectPoint)
             {
-                var tips = new List<string>()
-                {
-                    Localize.Tool_InfoSelectLineStartPoint,
-                    Localize.Tool_InfoStartDragPointMode
-                };
+                tips.Add(Localize.Tool_InfoSelectLineStartPoint);
+                tips.Add(Localize.Tool_InfoStartDragPointMode);
                 if (Markup is ISupportFillers)
                     tips.Add(Localize.Tool_InfoStartCreateFiller);
                 if (Markup is ISupportCrosswalks)
                     tips.Add(Localize.Tool_InfoStartCreateCrosswalk);
-
-                return string.Join("\n", tips.ToArray());
             }
+            else if (IsHoverPoint)
+                tips.Add(base.GetToolInfo());
+            else
+            {
+                if ((SelectPoint.Markup.SupportLines & MarkupLine.LineType.Stop) == 0)
+                    tips.Add(Localize.Tool_InfoSelectLineEndPoint);
+                else
+                    tips.Add(Localize.Tool_InfoSelectLineEndPointStop);
+
+                if ((SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
+                    tips.Add(Localize.Tool_InfoSelectLineEndPointNormal);
+            }
+
+            return string.Join("\n", tips.ToArray());
         }
         public override void OnToolUpdate()
         {
