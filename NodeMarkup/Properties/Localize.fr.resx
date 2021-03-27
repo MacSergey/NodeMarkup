@@ -324,7 +324,9 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Sélectionnez un nœud ou segment pour changer les marquages</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Sélectionnez un point de fin pour une ligne normal</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
 créer ou supprimer une ligne</value>
@@ -1365,6 +1367,7 @@ Cliquez pour modifier le marquage</value>
     <value>Glissez derrière le point pour une ligne perpendiculaire</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Sélectionnez un point de fin pour une ligne normal ou ligne de stop</value>
+    <value>Sélectionnez un point de fin pour une ligne ou ligne de stop</value>
   </data>
+  
 </root>

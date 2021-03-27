@@ -324,7 +324,9 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Node oder Segment zum Ändern der Markierungen auswählen</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Endpunkt für eine reguläre Linie auswählen</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
   </data>
@@ -823,7 +825,7 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
     <value>Markierung einfügen</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Möchtest Du wirklich die Markierung einfügen?</value>
+    <value>Möchtest Du wirklich die Markierungen einfügen?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Tastenkombinationen für Fußgängerüberwege</value>
@@ -1402,19 +1404,32 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
     <value>Zwischen Kreuzungen anwenden</value>
   </data>
-  
-  
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Auf die ganz Straße anwenden</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Auf die ganz Straße anwenden</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Dies wird alle vorhandenen Markierungen ersetzen.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Markierung zwischen Kreuzungen anwenden</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Möchtest du wirklich die Markierung zwischen den Kreuzungen anwenden?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Markierung auf die ganz Straße anwenden</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Möchtest du wirklich die Markierung auf die komplette Straße "{0}" anwenden?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Hinter den Punkt zurückziehen um eine orthogonale Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen</value>
   </data>
+  
 </root>

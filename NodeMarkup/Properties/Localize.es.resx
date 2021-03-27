@@ -158,10 +158,10 @@ Mayús x10, Ctrl x0.1</value>
     <value>Desde</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Seleccionar el punto "Desde" de la regla</value>
+    <value>Seleccione el punto "Desde" de la regla</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Seleccionar el punto "Hasta" de la regla</value>
+    <value>Seleccione el punto "Hasta" de la regla</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>línea</value>
@@ -324,7 +324,9 @@ Haga clic para editar las marcas</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Seleccione un nodo o un segmento para editar las marcas</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Seleccione punto final para línea normal</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione el punto para crear o eliminar la línea</value>
   </data>
@@ -393,10 +395,10 @@ Haga clic para editar las marcas</value>
     <value>Haga clic para seleccionar el siguiente punto en el contorno</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Seleccionar un punto para comenzar a crear el relleno</value>
+    <value>Seleccione un punto para comenzar a crear el relleno</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Seleccionar el siguiente punto en el contorno</value>
+    <value>Seleccione el siguiente punto en el contorno</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
     <value>Desplazamiento desde la mediana</value>
@@ -1364,6 +1366,7 @@ Haga clic para editar las marcas</value>
     <value>Arrastre detrás del punto para línea perpendicular</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Seleccionar punto final para línea normal o transversal</value>
+    <value>Seleccione punto final para línea normal o transversal</value>
   </data>
+  
 </root>

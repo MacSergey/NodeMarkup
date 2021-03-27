@@ -1342,7 +1342,9 @@ Klikněte pro změnu značení</value>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>Seznam změn</value>
   </data>
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Seskupovat body</value>
+  </data>
   
   
   
@@ -1357,5 +1359,6 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Táhněte za bod pro vytvoření kolmé čáry</value>
   </data>
+  
   
 </root>

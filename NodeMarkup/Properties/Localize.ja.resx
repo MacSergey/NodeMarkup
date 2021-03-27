@@ -325,7 +325,9 @@
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>マーキングを編集する、ノード・セグメントを選択します</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>ラインの終点を選択</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して、ラインを作成・削除する</value>
   </data>
@@ -1345,19 +1347,32 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
     <value>交差点間でマーキングを一括適用</value>
   </data>
-  
-  
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>通り全体にマーキングを一括適用</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>通り全体にマーキングを一括適用</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>既存であるノード内のマーキングは、全て置き換えます。</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>交差点間でマーキングを一括で適用します</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>交差点間を繋ぐ道路で、マーキングを一括で適用しますか？</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>通り全体にマーキングを一括で適用します</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>{0} で設定された通り全体に、マーキングを一括で適用しますか？</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>垂直線は道路の後方へ移動</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>ライン・停止線の終点を選択</value>
   </data>
+  
 </root>

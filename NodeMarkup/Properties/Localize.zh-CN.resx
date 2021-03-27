@@ -324,7 +324,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>选择节点或段落以编辑地标线</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>点选终点来创建线</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点来创建/擦除线段</value>
   </data>
@@ -1376,6 +1378,7 @@ Shift x10，Ctrl x0.1</value>
     <value>拖选到端点后来创建垂直线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>点选终点来创建普通停止线</value>
+    <value>点选终点来创建一般线或停止线</value>
   </data>
+  
 </root>
