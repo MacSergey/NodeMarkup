@@ -33,17 +33,8 @@ namespace NodeMarkup.Manager
         public int VertexCount => SupportPoints.Count;
         public bool IsEmpty => VertexCount == 0;
 
-        //private List<MarkupLinePart> LineParts { get; } = new List<MarkupLinePart>();
-        //public IEnumerable<MarkupLinePart> Parts => LineParts;
-        public IEnumerable<FillerLinePart> Parts
-        {
-            get
-            {
-                var count = IsComplite ? VertexCount : VertexCount - 1;
-                for (var i = 0; i < count; i += 1)
-                    yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount]);
-            }
-        }
+        public FillerLinePart[] Parts { get; private set; } = new FillerLinePart[0];
+
         public IEnumerable<ITrajectory> TrajectoriesRaw
         {
             get
@@ -77,7 +68,6 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
         }
-
         public bool Add(IFillerVertex supportPoint)
         {
             if (supportPoint.Equals(First))
@@ -85,6 +75,7 @@ namespace NodeMarkup.Manager
             else
             {
                 SupportPoints.Add(supportPoint);
+                Update();
                 return false;
             }
         }
@@ -92,6 +83,8 @@ namespace NodeMarkup.Manager
         {
             if (SupportPoints.Any())
                 SupportPoints.RemoveAt(SupportPoints.Count - 1);
+
+            Update();
         }
 
         public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
@@ -222,7 +215,6 @@ namespace NodeMarkup.Manager
             else
                 return GetRail(max1, min1);
         }
-
         private ITrajectory GetRail(int a, int b)
         {
             var trajectories = Trajectories.ToArray();
@@ -245,7 +237,16 @@ namespace NodeMarkup.Manager
         {
             foreach (var supportPoint in SupportPoints)
                 supportPoint.Update();
+
+            Parts = GetParts().ToArray();
         }
+        private IEnumerable<FillerLinePart> GetParts()
+        {
+            var count = IsComplite ? VertexCount : VertexCount - 1;
+            for (var i = 0; i < count; i += 1)
+                yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount]);
+        }
+
 
         public void Render(OverlayData data)
         {

@@ -53,7 +53,7 @@ namespace NodeMarkup.Manager
         public byte Num { get; }
         public int Id { get; }
         public abstract PointType Type { get; }
-        public Color32 Color => Colors.GetOverlayColor(Num - 1);
+        public Color32 Color => Colors.GetOverlayColor(Num - 1, byte.MaxValue);
         public virtual Vector3 Position
         {
             get => Bounds.center;
@@ -127,8 +127,8 @@ namespace NodeMarkup.Manager
         }
         public virtual void Render(OverlayData data)
         {
-            data.Width ??= DefaultWidth;
             data.Color ??= Color;
+            data.Width ??= DefaultWidth;
             NodeMarkupTool.RenderCircle(Position, data);
         }
 
@@ -274,6 +274,7 @@ namespace NodeMarkup.Manager
         {
             var shift = Enter.CornerDir.Turn90(true) * Shift;
             var bezier = new Line3(Position - shift, Position + shift).GetBezier();
+
             data.Width ??= DefaultWidth;
             data.Color ??= Color;
             NodeMarkupTool.RenderBezier(bezier, data);
