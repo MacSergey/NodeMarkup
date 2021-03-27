@@ -108,9 +108,9 @@ namespace NodeMarkup.Manager
         public override int GetHashCode() => Id;
         protected void PointChanged() => Markup.Update(this, true, true);
 
-        public Vector3 GetPosition(LineAlignment alignment)
+        public Vector3 GetPosition(Alignment alignment)
         {
-            if (IsSplit && alignment != LineAlignment.Centre)
+            if (IsSplit && alignment != Alignment.Centre)
             {
                 var normal = Direction.Turn90(true);
                 var shift = SplitOffsetValue * alignment.Sign();

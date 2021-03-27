@@ -56,7 +56,7 @@ namespace NodeMarkup.Manager
             switch (other)
             {
                 case EnterSupportPoint otherE:
-                    if (Enter == otherE.Enter || !(Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line))
+                    if (Enter == otherE.Enter || Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is not MarkupLine line)
                         line = new MarkupEnterLine(Point.Markup, Point, otherE.Point);
                     return line;
                 case IntersectSupportPoint otherI:
@@ -86,7 +86,7 @@ namespace NodeMarkup.Manager
             var otherEnterPoint = Point.IsFirst ? Enter.Prev.LastPoint : Enter.Next.FirstPoint;
             var vertex = new EnterFillerVertex(otherEnterPoint);
             var isCanEnd = vertex.Equals(contour.First) && contour.VertexCount >= 3;
-            var isUsed = contour.Vertices.Any(v => vertex.Equals(v));
+            var isUsed = contour.RawVertices.Any(v => vertex.Equals(v));
             var isEdgeLine = Point.Lines.Any(l => l.ContainsPoint(otherEnterPoint));
             if ((isCanEnd || !isUsed) && !isEdgeLine)
                 yield return vertex;
@@ -103,12 +103,10 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IFillerVertex> GetPointLinesPoints(FillerContour contour)
         {
-            foreach (var line in Point.Lines.Where(l => l.Type != MarkupLine.LineType.Stop))
+            foreach (var line in Point.Lines.OfType<MarkupRegularLine>())
             {
                 foreach (var vertex in contour.GetLinePoints(this, line))
-                {
                     yield return vertex;
-                }
             }
         }
     }

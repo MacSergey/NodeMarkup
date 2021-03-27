@@ -101,8 +101,8 @@ namespace NodeMarkup.UI.Editors
                 var lineAlignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
                 lineAlignment.Text = NodeMarkup.Localize.LineEditor_LineAlignment;
                 lineAlignment.Init();
-                lineAlignment.SelectedObject = line.Alignment;
-                lineAlignment.OnSelectObjectChanged += (value) => line.Alignment.Value = value;
+                lineAlignment.SelectedObject = line.RawAlignment;
+                lineAlignment.OnSelectObjectChanged += (value) => line.RawAlignment.Value = value;
             }
 
             SetLinePropertiesVisible();

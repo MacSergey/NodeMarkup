@@ -18,7 +18,7 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<FillerStyle> Style { get; }
         public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
-        public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine line && line.IsEnterLine);
+        public bool IsMedian => Contour.IsMedian;
 
         public string XmlSection => XmlName;
 
@@ -36,8 +36,8 @@ namespace NodeMarkup.Manager
             FillerChanged();
         }
         private void FillerChanged() => Markup?.Update(this, true);
-        public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
-        public bool ContainsPoint(MarkupPoint point) => Contour.Vertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
+        public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => p.Line is not MarkupEnterLine && p.Line.PointPair == line.PointPair);
+        public bool ContainsPoint(MarkupPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
         public void RecalculateStyleData()
@@ -55,10 +55,10 @@ namespace NodeMarkup.Manager
         public XElement ToXml()
         {
             var config = new XElement(XmlSection, Style.Value.ToXml());
-            foreach (var supportPoint in Contour.Vertices)
-            {
+
+            foreach (var supportPoint in Contour.RawVertices)
                 config.Add(supportPoint.ToXml());
-            }
+
             return config;
         }
         public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)

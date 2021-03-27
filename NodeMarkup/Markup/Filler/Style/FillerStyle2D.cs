@@ -397,7 +397,11 @@ namespace NodeMarkup.Manager
         public override void Render(MarkupFiller filler, OverlayData data)
         {
             GetRails(filler.Contour, out ITrajectory left, out ITrajectory right);
+
+            data.Color = Colors.Green;
             left.Render(data);
+
+            data.Color = Colors.Red;
             right.Render(data);
         }
 

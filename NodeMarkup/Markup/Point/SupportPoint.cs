@@ -65,16 +65,21 @@ namespace NodeMarkup.Manager
         }
         public override bool GetT(MarkupLine line, out float t)
         {
-            if (line.ContainsPoint(Point))
+            if (line.IsStart(Point))
             {
-                t = line.Start == Point ? 0 : 1;
+                t = 0;
+                return true;
+            }
+            else if (line.IsEnd(Point))
+            {
+                t = 1;
                 return true;
             }
             else
             {
                 t = -1;
                 return false;
-            }
+            }  
         }
         public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
         public override void Update() => Init(Point.Position);

@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Utilities;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace NodeMarkup.Manager
         public IFillerVertex Last => SupportPoints.LastOrDefault();
         public IFillerVertex Prev => VertexCount >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
 
-        public IEnumerable<IFillerVertex> Vertices => SupportPoints;
+        public IEnumerable<IFillerVertex> RawVertices => SupportPoints;
         public int VertexCount => SupportPoints.Count;
         public bool IsEmpty => VertexCount == 0;
 
@@ -52,6 +53,19 @@ namespace NodeMarkup.Manager
         }
 
         public IEnumerable<ITrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null);
+        public bool IsMedian
+        {
+            get
+            {
+                for (var i = 0; i < VertexCount; i += 1)
+                {
+                    if (SupportPoints[i] is EnterFillerVertex enterVertex1 && (enterVertex1.Point.IsSplit || (SupportPoints[(i + 1) % VertexCount] is EnterFillerVertex enterVertex2 && enterVertex1.Enter == enterVertex2.Enter)))
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         public FillerContour(Markup markup)
         {
@@ -137,7 +151,7 @@ namespace NodeMarkup.Manager
                     maxT = tt;
             }
 
-            static bool CheckEnter(byte num, byte start, byte end) => (start <= num && num <= end) || (end <= num && num <= start);
+            static bool CheckEnter(byte num, byte start, byte end) => Math.Min(start, end) <= num && num <= Math.Max(end, start);
 
             resultT = t;
             resultMinT = minT;
@@ -183,7 +197,7 @@ namespace NodeMarkup.Manager
 
             switch (First)
             {
-                case EnterFillerVertex firstE when line.ContainsPoint(firstE.Point) && ((line.Start == firstE.Point && minT == 0) || (line.End == firstE.Point && maxT == 1)):
+                case EnterFillerVertex firstE when line.ContainsPoint(firstE.Point) && ((line.IsStart(firstE.Point) && minT == 0) || (line.IsEnd(firstE.Point) && maxT == 1)):
                     yield return firstE;
                     break;
                 case IntersectFillerVertex firstI when firstI.LinePair.ContainLine(line) && firstI.GetT(line, out float firstT) && (firstT == minT || firstT == maxT):

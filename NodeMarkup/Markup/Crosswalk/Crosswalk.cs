@@ -65,19 +65,13 @@ namespace NodeMarkup.Manager
 
         public void Update(bool onlySelfUpdate = false)
         {
-            EnterLine.Update(GetAlignment(EnterLine.Start, RightBorder), GetAlignment(EnterLine.End, LeftBorder), true);
+            EnterLine.Update(GetAlignment(RightBorder.Value, EnterLine.Start), GetAlignment(LeftBorder.Value, EnterLine.End), true);
             CrosswalkLine.Update(true);
 
             if (!onlySelfUpdate)
                 Markup.Update(this);
 
-            static LineAlignment GetAlignment(MarkupPoint point, MarkupRegularLine border)
-            {
-                if (border is MarkupRegularLine line)
-                    return line.Start == point ? line.Alignment : line.Alignment.Value.Invert();
-                else
-                    return LineAlignment.Centre;
-            }
+            static Alignment GetAlignment(MarkupRegularLine line, MarkupPoint point) => line?.GetAlignment(point) ?? Alignment.Centre;
         }
 
         public void RecalculateStyleData()

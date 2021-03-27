@@ -152,9 +152,14 @@ namespace NodeMarkup.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.5f });
+            {
+                if (InputExtension.CtrlIsPressed)
+                    HoverPoint.Render(new OverlayData(cameraInfo) { Width = 0.5f });
+                else
+                    HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.5f });
+            }
 
-            RenderPointsOverlay(cameraInfo);
+            RenderPointsOverlay(cameraInfo, !InputExtension.CtrlIsPressed);
 
             if (IsSelectPoint)
             {

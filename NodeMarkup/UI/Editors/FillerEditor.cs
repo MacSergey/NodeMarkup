@@ -235,7 +235,7 @@ namespace NodeMarkup.UI.Editors
             }
             else if (PointsSelector.IsHoverPoint)
             {
-                var vertices = Contour.Vertices.ToList();
+                var vertices = Contour.RawVertices.ToList();
                 SetValue(e, vertices.IndexOf(FirstPoint), vertices.IndexOf(PointsSelector.HoverPoint));
             }
         }
@@ -257,7 +257,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override string GetToolInfo() => !IsFirstSelected ? Localize.FillerEditor_InfoSelectRailFirst : Localize.FillerEditor_InfoSelectRailSecond;
 
-        private PointsSelector<IFillerVertex> GetPointsSelector(object ignore = null) => new PointsSelector<IFillerVertex>(Contour.Vertices.Where(v => v != ignore), Colors.Purple);
+        private PointsSelector<IFillerVertex> GetPointsSelector(object ignore = null) => new PointsSelector<IFillerVertex>(Contour.RawVertices.Where(v => v != ignore), Colors.Purple);
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {

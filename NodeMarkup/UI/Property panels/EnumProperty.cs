@@ -43,10 +43,10 @@ namespace NodeMarkup.UI
         public class ChevronFromSegmented : UIOnceSegmented<ChevronFillerStyle.From> { }
         protected override string GetDescription(ChevronFillerStyle.From value) => value.Description();
     }
-    public class LineAlignmentPropertyPanel : EnumOncePropertyPanel<LineAlignment, LineAlignmentPropertyPanel.AlignmentSegmented>
+    public class LineAlignmentPropertyPanel : EnumOncePropertyPanel<Alignment, LineAlignmentPropertyPanel.AlignmentSegmented>
     {
-        protected override bool IsEqual(LineAlignment first, LineAlignment second) => first == second;
-        public class AlignmentSegmented : UIOnceSegmented<LineAlignment> { }
-        protected override string GetDescription(LineAlignment value) => value.Description();
+        protected override bool IsEqual(Alignment first, Alignment second) => first == second;
+        public class AlignmentSegmented : UIOnceSegmented<Alignment> { }
+        protected override string GetDescription(Alignment value) => value.Description();
     }
 }

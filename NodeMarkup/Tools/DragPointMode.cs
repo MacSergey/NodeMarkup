@@ -39,6 +39,7 @@ namespace NodeMarkup.Tools
         {
             DragPoint.Enter.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f });
             DragPoint.Render(new OverlayData(cameraInfo));
+            DragPoint.Render(new OverlayData(cameraInfo) { Width = 0.5f });
         }
     }
 }
