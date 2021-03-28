@@ -64,11 +64,10 @@ namespace NodeMarkup.Manager
         }
         public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
         {
+            filler = default;
+
             if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
-            {
-                filler = default;
                 return false;
-            }
 
             var contour = new FillerContour(markup);
 
@@ -77,21 +76,15 @@ namespace NodeMarkup.Manager
                 if (FillerVertex.FromXml(supportConfig, markup, map, out IFillerVertex vertex))
                     contour.Add(vertex);
                 else
-                {
-                    filler = default;
                     return false;
-                }
-            }
-            if (contour.First == null)
-            {
-                filler = default;
-                return false;
             }
 
-            contour.Add(contour.First);
+            if (contour.IsEmpty)
+                return false;
 
             filler = new MarkupFiller(contour, style);
             return true;
+
         }
 
         public void Render(OverlayData data)
@@ -116,7 +109,7 @@ namespace NodeMarkup.Manager
             set => base.To.Value = value;
         }
         public bool IsPoint { get; }
-        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) 
+        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to)
         {
             IsPoint = from is EnterFillerVertexBase first && to is EnterFillerVertexBase second && first.Point == second.Point;
         }

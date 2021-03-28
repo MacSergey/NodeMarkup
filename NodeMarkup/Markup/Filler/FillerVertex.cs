@@ -19,7 +19,7 @@ namespace NodeMarkup.Manager
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
             {
-                case SupportType.EnterPoint when EnterFillerVertex.FromXml(config, markup, map, out EnterFillerVertex enterPoint):
+                case SupportType.EnterPoint when EnterFillerVertexBase.FromXml(config, markup, map, out EnterFillerVertex enterPoint):
                     fillerVertex = enterPoint;
                     return true;
                 case SupportType.LinesIntersect when IntersectFillerVertex.FromXml(config, markup, map, out IntersectFillerVertex linePoint):
