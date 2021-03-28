@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public abstract class EnterSupportPoint : SupportPoint
+    public abstract class EnterSupportPoint : SupportPoint, IEquatable<EnterSupportPoint>
     {
         public override SupportType Type { get; } = SupportType.EnterPoint;
         public MarkupPoint Point { get; }
@@ -81,7 +81,8 @@ namespace NodeMarkup.Manager
                 return false;
             }  
         }
-        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
+        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && Equals(otherEnterPoint);
+        public virtual bool Equals(EnterSupportPoint other) => other.Point == Point;
         public override void Update() => Init(Point.Position);
 
         public override XElement ToXml()
@@ -90,6 +91,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute(MarkupPoint.XmlName, Point.Id));
             return config;
         }
+        public override string ToString() => Point.ToString();
     }
     public abstract class IntersectSupportPoint : SupportPoint
     {
@@ -125,5 +127,6 @@ namespace NodeMarkup.Manager
             First.Render(data);
             Second.Render(data);
         }
+        public override string ToString() => LinePair.ToString();
     }
 }

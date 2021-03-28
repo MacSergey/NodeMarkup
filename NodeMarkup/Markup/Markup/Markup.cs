@@ -500,6 +500,7 @@ namespace NodeMarkup.Manager
         #region GET & CONTAINS
 
         public bool TryGetLine(MarkupPointPair pointPair, out MarkupLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
+        public bool TryGetLine<LineType>(MarkupPoint first, MarkupPoint second, out LineType line) where LineType : MarkupLine => TryGetLine(new MarkupPointPair(first, second), out line);
         public bool TryGetLine<LineType>(MarkupPointPair pointPair, out LineType line)
             where LineType : MarkupLine
         {

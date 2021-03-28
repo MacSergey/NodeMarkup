@@ -16,8 +16,17 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in markup.Enters)
             {
-                foreach (var point in enter.Points.Where(p => p.IsEdge || p.Lines.Any()))
-                    yield return new EnterFillerVertex(point);
+                foreach (var point in enter.Points)
+                {
+                    var alingments = point.Lines.OfType<MarkupRegularLine>().Select(l => l.GetAlignment(point)).Distinct().ToArray();
+                    if (alingments.Any())
+                    {
+                        foreach (var alingment in alingments)
+                            yield return new EnterFillerVertex(point, alingment);
+                    }
+                    else if (point.IsEdge)
+                        yield return new EnterFillerVertex(point);
+                }
             }
         }
 
@@ -28,18 +37,19 @@ namespace NodeMarkup.Manager
         public IFillerVertex First => SupportPoints.FirstOrDefault();
         public IFillerVertex Last => SupportPoints.LastOrDefault();
         public IFillerVertex Prev => VertexCount >= 2 ? SupportPoints[SupportPoints.Count - 2] : null;
+        public IFillerVertex PrePrev => VertexCount >= 3 ? SupportPoints[SupportPoints.Count - 3] : null;
 
         public IEnumerable<IFillerVertex> RawVertices => SupportPoints;
         public int VertexCount => SupportPoints.Count;
         public bool IsEmpty => VertexCount == 0;
 
-        public FillerLinePart[] Parts { get; private set; } = new FillerLinePart[0];
+        public FillerLinePart[] RawParts { get; private set; } = new FillerLinePart[0];
 
         public IEnumerable<ITrajectory> TrajectoriesRaw
         {
             get
             {
-                foreach (var part in Parts)
+                foreach (var part in RawParts)
                 {
                     if (part.GetTrajectory(out ITrajectory trajectory))
                         yield return trajectory;
@@ -68,38 +78,79 @@ namespace NodeMarkup.Manager
         {
             Markup = markup;
         }
-        public bool Add(IFillerVertex supportPoint)
+        public bool Add(IFillerVertex newPoint)
         {
-            if (supportPoint.Equals(First))
+            if (newPoint.Equals(First))
                 return true;
             else
             {
-                SupportPoints.Add(supportPoint);
+                if (newPoint is IntersectFillerVertex newIntersectVertex)
+                {
+                    if (Last is EnterFillerVertex lastEnterVertex)
+                    {
+                        SupportPoints.Remove(lastEnterVertex);
+                        SupportPoints.Add(FixPoint(lastEnterVertex, newIntersectVertex));
+                    }
+                    else if (Last is LineEndFillerVertex lastLineEndVertex)
+                        SupportPoints.Add(FixPoint(lastLineEndVertex, newIntersectVertex));
+                }
+                else if (newPoint is EnterFillerVertex newEnterVertex)
+                {
+                    if (Last is EnterFillerVertex lastEnterVertex)
+                    {
+                        if (lastEnterVertex.Point.Enter != newEnterVertex.Point.Enter && Markup.TryGetLine(lastEnterVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
+                        {
+                            SupportPoints.Remove(lastEnterVertex);
+                            SupportPoints.Add(FixPointByLine(lastEnterVertex, line));
+                            newPoint = FixPointByLine(newEnterVertex, line);
+                        }
+                    }
+                    else if (Last is IntersectFillerVertex lastIntersectVertex)
+                        newPoint = FixPoint(newEnterVertex, lastIntersectVertex);
+                }
+
+                SupportPoints.Add(newPoint);
                 Update();
                 return false;
             }
+
+            static LineEndFillerVertex FixPoint(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex)
+            {
+                return FixPointByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkupRegularLine);
+            }
+            static LineEndFillerVertex FixPointByLine(EnterFillerVertexBase enterVertex, MarkupRegularLine line) => new LineEndFillerVertex(enterVertex.Point, line);
         }
         public void Remove()
         {
-            if (SupportPoints.Any())
-                SupportPoints.RemoveAt(SupportPoints.Count - 1);
+            var last = Last;
 
+            if (Prev is LineEndFillerVertex endLineVertex)
+            {
+                if (last is IntersectFillerVertex lastIntersectVertex)
+                    FixPoint(endLineVertex, lastIntersectVertex.LinePair.GetLine(endLineVertex.Point).GetAlignment(endLineVertex.Point));
+                else if (last is LineEndFillerVertex lastEndLineVertex)
+                    FixPoint(endLineVertex, lastEndLineVertex.Line.GetAlignment(endLineVertex.Point));
+            }
+
+            SupportPoints.Remove(last);
             Update();
+
+            void FixPoint(EnterFillerVertexBase enterVertex, Alignment alignment)
+            {
+                SupportPoints.Remove(enterVertex);
+                if (PrePrev == null || PrePrev is IntersectFillerVertex)
+                    SupportPoints.Add(new EnterFillerVertex(enterVertex.Point, alignment));
+                
+            }
         }
 
-        public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
+        public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second, bool isFake = false)
         {
             var line = first.GetCommonLine(second);
-            var linePart = new FillerLinePart(line, first, second);
+            var linePart = new FillerLinePart(line, first, second, isFake);
             return linePart;
         }
-        public IEnumerable<IFillerVertex> GetNextСandidates()
-        {
-            if (Last is IFillerVertex last)
-                return last.GetNextCandidates(this, Prev);
-            else
-                return GetBeginCandidates(Markup);
-        }
+        public IEnumerable<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
 
         public void GetMinMaxT(IFillerVertex fillerVertex, MarkupLine line, out float resultT, out float resultMinT, out float resultMaxT)
         {
@@ -107,7 +158,7 @@ namespace NodeMarkup.Manager
             var minT = -1f;
             var maxT = 2f;
 
-            foreach (var part in Parts)
+            foreach (var part in RawParts)
             {
                 part.GetFromT(out float fromT);
                 part.GetToT(out float toT);
@@ -148,13 +199,13 @@ namespace NodeMarkup.Manager
             resultMinT = minT;
             resultMaxT = maxT;
         }
-        public void GetMinMaxNum(EnterFillerVertex vertex, out byte resultNum, out byte resultMinNum, out byte resultMaxNum)
+        public void GetMinMaxNum(EnterFillerVertexBase vertex, out byte resultNum, out byte resultMinNum, out byte resultMaxNum)
         {
             var num = vertex.Point.Num;
             var minNum = (byte)0;
             var maxNum = (byte)(vertex.Enter.PointCount + 1);
 
-            foreach (var part in Parts)
+            foreach (var part in RawParts)
             {
                 if (part.From is EnterSupportPoint fromVertex && fromVertex.Point.Enter == vertex.Enter)
                     Set(fromVertex.Point.Num);
@@ -197,10 +248,10 @@ namespace NodeMarkup.Manager
             }
 
             if (line.Start.Type == MarkupPoint.PointType.Enter && t != 0 && minT < 0 && 0 < maxT)
-                yield return new EnterFillerVertex(line.Start);
+                yield return new EnterFillerVertex(line.Start, line.GetAlignment(line.Start));
 
             if (line.End.Type == MarkupPoint.PointType.Enter && t != 1 && minT < 1 && 1 < maxT)
-                yield return new EnterFillerVertex(line.End);
+                yield return new EnterFillerVertex(line.End, line.GetAlignment(line.End));
         }
 
         public ITrajectory GetRail(int a1, int b1, int a2, int b2)
@@ -238,13 +289,15 @@ namespace NodeMarkup.Manager
             foreach (var supportPoint in SupportPoints)
                 supportPoint.Update();
 
-            Parts = GetParts().ToArray();
+            RawParts = GetParts().ToArray();
         }
         private IEnumerable<FillerLinePart> GetParts()
         {
             var count = IsComplite ? VertexCount : VertexCount - 1;
             for (var i = 0; i < count; i += 1)
-                yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount]);
+            {
+                yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount], false);
+            }
         }
 
 

@@ -37,7 +37,7 @@ namespace NodeMarkup.Manager
             FillerChanged();
         }
         private void FillerChanged() => Markup?.Update(this, true);
-        public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => p.Line is not MarkupEnterLine && p.Line.PointPair == line.PointPair);
+        public bool ContainsLine(MarkupLine line) => Contour.RawParts.Any(p => p.Line is not MarkupEnterLine && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkupPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
@@ -115,7 +115,11 @@ namespace NodeMarkup.Manager
             get => base.To.Value as IFillerVertex;
             set => base.To.Value = value;
         }
-        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
+        public bool IsFake { get; }
+        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to, bool isFake) : base(line, from, to) 
+        {
+            IsFake = isFake;
+        }
     }
 }
 

@@ -368,24 +368,38 @@ namespace NodeMarkup.Manager
     where Style : LineStyle
     where StyleType : Enum
     {
+        public virtual Alignment StartAlignment { get; private set; } = Alignment.Centre;
+        public virtual Alignment EndAlignment { get; private set; } = Alignment.Centre;
+
         protected abstract bool Visible { get; }
         public MarkupLineRawRule<Style> Rule { get; set; }
         public override IEnumerable<MarkupLineRawRule> Rules { get { yield return Rule; } }
 
-        protected MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style) : this(markup, new MarkupPointPair(first, second), style) { }
-        protected MarkupEnterLine(Markup markup, MarkupPointPair pointPair, Style style) : base(markup, pointPair, false)
+        protected MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style, Alignment firstAlignment, Alignment secondAlignment) : this(markup, new MarkupPointPair(first, second), style, firstAlignment, secondAlignment) { }
+        protected MarkupEnterLine(Markup markup, MarkupPointPair pointPair, Style style, Alignment firstAlignment, Alignment secondAlignment) : base(markup, pointPair, false)
         {
             if (Visible)
             {
                 var rule = new MarkupLineRawRule<Style>(this, style, new EnterPointEdge(Start), new EnterPointEdge(End));
                 SetRule(rule);
             }
+
+            StartAlignment = firstAlignment;
+            EndAlignment = secondAlignment;
+
             Update(true);
             if (Visible)
                 RecalculateStyleData();
         }
 
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.Position, PointPair.Second.Position);
+        public void Update(Alignment startAlignment, Alignment endAlignment, bool onlySelfUpdate = false)
+        {
+            StartAlignment = startAlignment;
+            EndAlignment = endAlignment;
+
+            Update(onlySelfUpdate);
+        }
 
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
@@ -415,30 +429,21 @@ namespace NodeMarkup.Manager
         protected override bool Visible => true;
         public override LineType Type => LineType.Stop;
 
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null) : base(markup, pointPair, style ?? TemplateManager.StyleManager.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid)) { }
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, style ?? TemplateManager.StyleManager.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid), firstAlignment, secondAlignment) { }
 
         public override IEnumerable<ILinePartEdge> RulesEdges => RulesEnterPointEdge;
     }
     public class MarkupEnterLine : MarkupEnterLine<LineStyle, RegularLineStyle.RegularLineType>
     {
-        public virtual Alignment StartAlignment { get; protected set; } = Alignment.Centre;
-        public virtual Alignment EndAlignment { get; protected set; } = Alignment.Centre;
         protected override bool Visible => false;
         public override LineType Type => throw new NotImplementedException();
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
-        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment startAlignment = Alignment.Centre, Alignment endAlignment = Alignment.Centre) : base(markup, first, second, null)
+        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, first, second, null, firstAlignment, secondAlignment)
         {
-            if (IsStart(first))
-                Update(startAlignment, endAlignment);
-            else
-                Update(endAlignment, startAlignment);
-        }
-        public void Update(Alignment startAlignment, Alignment endAlignment, bool onlySelfUpdate = false)
-        {
-            StartAlignment = startAlignment;
-            EndAlignment = endAlignment;
-
-            Update(onlySelfUpdate);
+            //if (IsStart(first))
+            //    Update(startAlignment, endAlignment);
+            //else
+            //    Update(endAlignment, startAlignment);
         }
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(StartAlignment), End.GetPosition(EndAlignment));
     }
@@ -482,16 +487,24 @@ namespace NodeMarkup.Manager
             Second = second;
         }
         public bool ContainLine(MarkupLine line) => First == line || Second == line;
-
         public MarkupLine GetOther(MarkupLine line)
         {
-            if (!ContainLine(line))
-                return null;
-            else
+            if (ContainLine(line))
                 return line == First ? Second : First;
+            else
+                return null;
+        }
+        public MarkupLine GetLine(MarkupPoint point)
+        {
+            if (First.ContainsPoint(point))
+                return First;
+            else if (Second.ContainsPoint(point))
+                return Second;
+            else
+                return null;
         }
 
-        public override string ToString() => $"{First}—{Second}";
+        public override string ToString() => $"{First} × {Second}";
 
         public class MarkupLinePairComparer : IEqualityComparer<MarkupLinePair>
         {
