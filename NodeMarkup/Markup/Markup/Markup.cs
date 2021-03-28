@@ -581,6 +581,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
         public bool HaveLines(Enter enter) => Lines.Any(l => l.ContainsEnter(enter));
+        public bool HaveLines(MarkupPoint point) => Lines.Any(l => l.ContainsPoint(point));
 
         #endregion
 

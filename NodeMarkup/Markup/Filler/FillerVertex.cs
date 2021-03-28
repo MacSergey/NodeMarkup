@@ -72,7 +72,7 @@ namespace NodeMarkup.Manager
 
         public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
-            if (prev is not EnterFillerVertex prevE || Enter != prevE.Point.Enter)
+            if (prev is not EnterFillerVertexBase prevE || Enter != prevE.Point.Enter)
             {
                 foreach (var vertex in GetEnterOtherPoints(contour))
                     yield return vertex;
@@ -101,10 +101,25 @@ namespace NodeMarkup.Manager
         {
             contour.GetMinMaxNum(this, out byte num, out byte minNum, out byte maxNum);
 
-            foreach (var point in Enter.Points.Where(p => p.Num != num && minNum < p.Num && p.Num < maxNum && (p.IsEdge || p.Lines.Any())))
-                yield return new EnterFillerVertex(point);
+            foreach (var point in Enter.Points)
+            {
+                if (point.Num != num && minNum < point.Num && point.Num < maxNum)
+                {
+                    if (point.HaveLines)
+                    {
+                        yield return new EnterFillerVertex(point);
+                        if(point.IsSplit)
+                        {
+                            yield return new EnterFillerVertex(point, Alignment.Left);
+                            yield return new EnterFillerVertex(point, Alignment.Right);
+                        }
+                    }
+                    else if(point.IsEdge)
+                        yield return new EnterFillerVertex(point);
+                }
+            }
 
-            if (contour.First is EnterFillerVertex first && first.Enter == Enter && (minNum == first.Point.Num || first.Point.Num == maxNum))
+            if (contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Num == minNum || first.Point.Num == maxNum))
                 yield return first;
         }
         private IEnumerable<IFillerVertex> GetPointLinesPoints(FillerContour contour)

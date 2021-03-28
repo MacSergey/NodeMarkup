@@ -138,9 +138,8 @@ namespace NodeMarkup.Manager
             void FixPoint(EnterFillerVertexBase enterVertex, Alignment alignment)
             {
                 SupportPoints.Remove(enterVertex);
-                if (PrePrev == null || PrePrev is IntersectFillerVertex)
-                    SupportPoints.Add(new EnterFillerVertex(enterVertex.Point, alignment));
-                
+                SupportPoints.Add(new EnterFillerVertex(enterVertex.Point, alignment));
+
             }
         }
 
@@ -199,32 +198,53 @@ namespace NodeMarkup.Manager
             resultMinT = minT;
             resultMaxT = maxT;
         }
-        public void GetMinMaxNum(EnterFillerVertexBase vertex, out byte resultNum, out byte resultMinNum, out byte resultMaxNum)
+        public void GetMinMaxNum(EnterFillerVertexBase vertex, out byte num, out byte minNum, out byte maxNum)
         {
-            var num = vertex.Point.Num;
-            var minNum = (byte)0;
-            var maxNum = (byte)(vertex.Enter.PointCount + 1);
+            num = vertex.Point.Num;
 
-            foreach (var part in RawParts)
+            if (VertexCount > 2 && First is EnterFillerVertexBase firstVertex && firstVertex.Point == vertex.Point)
             {
-                if (part.From is EnterSupportPoint fromVertex && fromVertex.Point.Enter == vertex.Enter)
-                    Set(fromVertex.Point.Num);
-                if (part.To is EnterSupportPoint toVertex && toVertex.Point.Enter == vertex.Enter)
-                    Set(toVertex.Point.Num);
+                minNum = vertex.Point.Num;
+                maxNum = vertex.Point.Num;
             }
-
-            void Set(byte n)
+            else
             {
-                if (minNum < n && n < num)
-                    minNum = n;
+                minNum = 0;
+                maxNum = (byte)(vertex.Enter.PointCount + 1);
 
-                if (maxNum > n && n > num)
-                    maxNum = n;
+                foreach (var point in SupportPoints)
+                {
+                    if (point is EnterFillerVertexBase enterVertex && enterVertex.Point.Enter == vertex.Enter)
+                    {
+                        var n = enterVertex.Point.Num;
+
+                        if (minNum < n && n < num)
+                            minNum = n;
+
+                        if (maxNum > n && n > num)
+                            maxNum = n;
+                    }
+                }
             }
+            //foreach (var part in RawParts)
+            //{
+            //    if (part.From is EnterSupportPoint fromVertex && fromVertex.Point.Enter == vertex.Enter)
+            //        Set(fromVertex.Point.Num);
+            //    if (part.To is EnterSupportPoint toVertex && toVertex.Point.Enter == vertex.Enter)
+            //        Set(toVertex.Point.Num);
+            //}
 
-            resultNum = num;
-            resultMinNum = minNum;
-            resultMaxNum = maxNum;
+            //void Set(byte n)
+            //{
+            //    if (minNum < n && n < count)
+            //        minNum = n;
+
+            //    if (maxNum > n && n > count)
+            //        maxNum = n;
+            //}
+
+            //resultMinNum = minNum;
+            //resultMaxNum = maxNum;
         }
         public IEnumerable<IFillerVertex> GetLinePoints(IFillerVertex fillerVertex, MarkupLine line)
         {

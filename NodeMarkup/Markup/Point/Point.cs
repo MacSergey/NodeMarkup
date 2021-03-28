@@ -66,6 +66,7 @@ namespace NodeMarkup.Manager
         public IPointSource Source { get; }
         public Enter Enter { get; }
         public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
+        public bool HaveLines => Markup.HaveLines(this);
         public Markup Markup => Enter.Markup;
 
         public bool IsFirst => Num == 1;
