@@ -55,6 +55,29 @@ namespace NodeMarkup.Manager
         public override void Update() => Init(Point.GetPosition(Alignment));
         public override bool Equals(EnterSupportPoint other) => base.Equals(other) && (other is not EnterFillerVertexBase otherVertex || otherVertex.Alignment == Alignment);
 
+        public override bool GetT(MarkupLine line, out float t)
+        {
+            if (line is MarkupEnterLine enterLine && line.Start == line.End)
+            {
+                if(enterLine.StartAlignment == Alignment)
+                {
+                    t = 0f;
+                    return true;
+                }
+                else if(enterLine.EndAlignment == Alignment)
+                {
+                    t = 1f;
+                    return true;
+                }
+                else
+                {
+                    t = -1f;
+                    return false;
+                }
+            }
+            else
+                return base.GetT(line, out t);
+        }
         public MarkupLine GetCommonLine(IFillerVertex other)
         {
             switch (other)
@@ -108,13 +131,13 @@ namespace NodeMarkup.Manager
                     if (point.HaveLines)
                     {
                         yield return new EnterFillerVertex(point);
-                        if(point.IsSplit)
+                        if (point.IsSplit)
                         {
                             yield return new EnterFillerVertex(point, Alignment.Left);
                             yield return new EnterFillerVertex(point, Alignment.Right);
                         }
                     }
-                    else if(point.IsEdge)
+                    else if (point.IsEdge)
                         yield return new EnterFillerVertex(point);
                 }
             }

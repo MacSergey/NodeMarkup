@@ -111,7 +111,7 @@ namespace NodeMarkup.Manager
             var intersect = line.Markup.GetIntersect(LinePair);
             if (intersect.IsIntersect)
             {
-                t = Mathf.Clamp(intersect[line], 0f, 1f);
+                t = Mathf.Clamp01(intersect[line]);
                 return true;
             }
             else

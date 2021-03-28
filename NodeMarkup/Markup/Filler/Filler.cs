@@ -115,10 +115,10 @@ namespace NodeMarkup.Manager
             get => base.To.Value as IFillerVertex;
             set => base.To.Value = value;
         }
-        public bool IsFake { get; }
-        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to, bool isFake) : base(line, from, to) 
+        public bool IsPoint { get; }
+        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) 
         {
-            IsFake = isFake;
+            IsPoint = from is EnterFillerVertexBase first && to is EnterFillerVertexBase second && first.Point == second.Point;
         }
     }
 }

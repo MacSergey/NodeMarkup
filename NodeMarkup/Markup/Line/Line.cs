@@ -375,7 +375,13 @@ namespace NodeMarkup.Manager
         public MarkupLineRawRule<Style> Rule { get; set; }
         public override IEnumerable<MarkupLineRawRule> Rules { get { yield return Rule; } }
 
-        protected MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style, Alignment firstAlignment, Alignment secondAlignment) : this(markup, new MarkupPointPair(first, second), style, firstAlignment, secondAlignment) { }
+        protected MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style, Alignment firstAlignment, Alignment secondAlignment) : this(markup, new MarkupPointPair(first, second), style, firstAlignment, secondAlignment)
+        {
+            if (IsStart(first))
+                Update(firstAlignment, secondAlignment);
+            else
+                Update(secondAlignment, firstAlignment);
+        }
         protected MarkupEnterLine(Markup markup, MarkupPointPair pointPair, Style style, Alignment firstAlignment, Alignment secondAlignment) : base(markup, pointPair, false)
         {
             if (Visible)
@@ -403,7 +409,8 @@ namespace NodeMarkup.Manager
 
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
-            yield return Rule.Style.Calculate(this, LineTrajectory, lod);
+            if (Visible)
+                yield return Rule.Style.Calculate(this, LineTrajectory, lod);
         }
         private void SetRule(MarkupLineRawRule<Style> rule)
         {
@@ -438,13 +445,7 @@ namespace NodeMarkup.Manager
         protected override bool Visible => false;
         public override LineType Type => throw new NotImplementedException();
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
-        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, first, second, null, firstAlignment, secondAlignment)
-        {
-            //if (IsStart(first))
-            //    Update(startAlignment, endAlignment);
-            //else
-            //    Update(endAlignment, startAlignment);
-        }
+        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, first, second, null, firstAlignment, secondAlignment) { }
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(StartAlignment), End.GetPosition(EndAlignment));
     }
 

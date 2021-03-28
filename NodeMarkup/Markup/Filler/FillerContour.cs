@@ -143,10 +143,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second, bool isFake = false)
+        public FillerLinePart GetFillerLine(IFillerVertex first, IFillerVertex second)
         {
             var line = first.GetCommonLine(second);
-            var linePart = new FillerLinePart(line, first, second, isFake);
+            var linePart = new FillerLinePart(line, first, second);
             return linePart;
         }
         public IEnumerable<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
@@ -316,7 +316,7 @@ namespace NodeMarkup.Manager
             var count = IsComplite ? VertexCount : VertexCount - 1;
             for (var i = 0; i < count; i += 1)
             {
-                yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount], false);
+                yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount]);
             }
         }
 
