@@ -84,20 +84,14 @@ namespace NodeMarkup.Manager
             else
                 return base.GetT(line, out t);
         }
-        public MarkupLine GetCommonLine(IFillerVertex other)
+        public MarkupLine GetCommonLine(IFillerVertex other) => other switch
         {
-            switch (other)
-            {
-                case EnterFillerVertexBase otherE:
-                    if (Enter == otherE.Enter || Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is not MarkupLine line)
-                        line = new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment);
-                    return line;
-                case IntersectFillerVertex otherI:
-                    return otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second;
-                default:
-                    return null;
-            }
-        }
+            EnterFillerVertexBase otherE when Enter == otherE.Enter => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
+            EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line => line,
+            EnterFillerVertexBase otherE => new MarkupRegularLine(Point.Markup, Point, otherE.Point, alignment: Alignment),
+            IntersectFillerVertex otherI => otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second,
+            _ => null,
+        };
 
         public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
@@ -107,23 +101,7 @@ namespace NodeMarkup.Manager
                     yield return vertex;
             }
 
-            if (Point.IsEdge)
-            {
-                foreach (var vertex in GetOtherEnterPoint(contour))
-                    yield return vertex;
-            }
-
             foreach (var vertex in GetPointLinesPoints(contour))
-                yield return vertex;
-        }
-        private IEnumerable<IFillerVertex> GetOtherEnterPoint(FillerContour contour)
-        {
-            var otherEnterPoint = Point.IsFirst ? Enter.Prev.LastPoint : Enter.Next.FirstPoint;
-            var vertex = new EnterFillerVertex(otherEnterPoint);
-            var isCanEnd = vertex.Equals(contour.First) && contour.RawCount >= 3;
-            var isUsed = contour.RawVertices.Any(v => vertex.Equals(v));
-            var isEdgeLine = Point.Lines.Any(l => l.ContainsPoint(otherEnterPoint));
-            if ((isCanEnd || !isUsed) && !isEdgeLine)
                 yield return vertex;
         }
         private IEnumerable<IFillerVertex> GetEnterOtherPoints(FillerContour contour)
@@ -134,18 +112,7 @@ namespace NodeMarkup.Manager
             {
                 if (minNum < point.Num && point.Num < maxNum)
                 {
-                    if (point == Point)
-                    {
-                        if (Point.IsSplit)
-                        {
-                            foreach (var alingment in point.Lines.OfType<MarkupRegularLine>().Select(l => l.GetAlignment(point)).Distinct())
-                            {
-                                if (alingment != Alignment)
-                                    yield return new EnterFillerVertex(point, alingment);
-                            }
-                        }
-                    }
-                    else if (point.HaveLines)
+                    if (point != Point)
                     {
                         yield return new EnterFillerVertex(point);
                         if (point.IsSplit)
@@ -154,8 +121,14 @@ namespace NodeMarkup.Manager
                             yield return new EnterFillerVertex(point, Alignment.Right);
                         }
                     }
-                    else if (point.IsEdge)
-                        yield return new EnterFillerVertex(point);
+                    else if (Point.IsSplit)
+                    {
+                        foreach (var alingment in EnumExtension.GetEnumValues<Alignment>())
+                        {
+                            if (alingment != Alignment)
+                                yield return new EnterFillerVertex(point, alingment);
+                        }
+                    }
                 }
             }
 
@@ -164,10 +137,26 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IFillerVertex> GetPointLinesPoints(FillerContour contour)
         {
-            foreach (var line in Point.Lines.OfType<MarkupRegularLine>())
+            foreach (var enter in Point.Markup.Enters)
             {
-                foreach (var vertex in contour.GetLinePoints(this, line))
-                    yield return vertex;
+                if (enter == Point.Enter)
+                    continue;
+
+                foreach (var point in enter.Points)
+                {
+                    if (point.Markup.TryGetLine(Point, point, out MarkupRegularLine line))
+                    {
+                        foreach (var vertex in contour.GetLinePoints(this, line))
+                            yield return vertex;
+                    }
+                    else
+                    {
+                        line = new MarkupRegularLine(point.Markup, point, Point);
+                        contour.GetMinMaxT(this, line, out float t, out float minT, out float maxT);
+                        if ((t == 0f && maxT >= 1f) || (t == 1f && minT <= 0f))
+                            yield return new EnterFillerVertex(point, Alignment.Invert());
+                    }
+                }
             }
         }
         public override int GetHashCode() => Point.GetHashCode();
@@ -188,8 +177,8 @@ namespace NodeMarkup.Manager
     {
         public override Alignment Alignment => Line?.GetAlignment(Point) ?? Alignment.Centre;
         public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
-        public MarkupRegularLine Line { get; private set; }
-        public LineEndFillerVertex(MarkupPoint point, MarkupRegularLine line = null) : base(point)
+        public MarkupRegularLine Line { get; }
+        public LineEndFillerVertex(MarkupPoint point, MarkupRegularLine line) : base(point)
         {
             Line = line;
             Update();
@@ -199,7 +188,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute(MarkupLine.XmlName, Line.Id));
+            config.Add(new XAttribute(MarkupLine.XmlName, Line.PointPair.Hash));
             return config;
         }
     }

@@ -19,14 +19,12 @@ namespace NodeMarkup.Manager
             {
                 foreach (var point in enter.Points)
                 {
-                    var alingments = point.Lines.OfType<MarkupRegularLine>().Select(l => l.GetAlignment(point)).Distinct().ToArray();
-                    if (alingments.Any())
+                    yield return new EnterFillerVertex(point, Alignment.Centre);
+                    if (point.IsSplit)
                     {
-                        foreach (var alingment in alingments)
-                            yield return new EnterFillerVertex(point, alingment);
+                        yield return new EnterFillerVertex(point, Alignment.Left);
+                        yield return new EnterFillerVertex(point, Alignment.Right);
                     }
-                    else if (point.IsEdge)
-                        yield return new EnterFillerVertex(point);
                 }
             }
         }
@@ -67,56 +65,82 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public FillerContour(Markup markup)
+        public FillerContour(Markup markup, IEnumerable<IFillerVertex> vertices = null)
         {
             Markup = markup;
+            if (vertices != null)
+            {
+                foreach (var vertex in vertices)
+                    AddImpl(vertex);
+
+                IsComplite = true;
+                Update();
+            }
         }
         public bool Add(IFillerVertex newPoint)
         {
             if (!IsComplite)
             {
-                if (newPoint.Equals(First))
-                    IsComplite = true;
-                else
-                {
-                    switch (newPoint)
-                    {
-                        case IntersectFillerVertex newIntersectVertex when Last is EnterFillerVertex lastEnterVertex:
-                            SupportPoints.Remove(lastEnterVertex);
-                            SupportPoints.Add(FixPoint(lastEnterVertex, newIntersectVertex));
-                            break;
-
-                        case IntersectFillerVertex newIntersectVertex when Last is LineEndFillerVertex lastLineEndVertex:
-                            SupportPoints.Add(FixPoint(lastLineEndVertex, newIntersectVertex));
-                            break;
-
-                        case EnterFillerVertex newEnterVertex when Last is EnterFillerVertex lastEnterVertex:
-                            if (lastEnterVertex.Point.Enter != newEnterVertex.Point.Enter && Markup.TryGetLine(lastEnterVertex.Point, newEnterVertex.Point, out MarkupRegularLine line1))
-                            {
-                                SupportPoints.Remove(lastEnterVertex);
-                                SupportPoints.Add(FixPointByLine(lastEnterVertex, line1));
-                                newPoint = FixPointByLine(newEnterVertex, line1);
-                            }
-                            break;
-
-                        case EnterFillerVertex newEnterVertex when Last is LineEndFillerVertex lastLineEndVertex:
-                            if (!lastLineEndVertex.Line.ContainsPoint(newEnterVertex.Point) && Markup.TryGetLine(lastLineEndVertex.Point, newEnterVertex.Point, out MarkupRegularLine line2))
-                            {
-                                SupportPoints.Add(FixPointByLine(lastLineEndVertex, line2));
-                                newPoint = FixPointByLine(newEnterVertex, line2);
-                            }
-                            break;
-
-                        case EnterFillerVertex newEnterVertex when Last is IntersectFillerVertex lastIntersectVertex:
-                            newPoint = FixPoint(newEnterVertex, lastIntersectVertex);
-                            break;
-                    }
-
-                    SupportPoints.Add(newPoint);
-                }
+                AddImpl(newPoint);
                 Update();
             }
+
             return IsComplite;
+        }
+        private void AddImpl(IFillerVertex newPoint)
+        {
+            if (newPoint.Equals(First))
+                IsComplite = true;
+            else
+            {
+                switch (newPoint)
+                {
+                    case IntersectFillerVertex newIntersectVertex when Last is EnterFillerVertex lastEnterVertex:
+                        SupportPoints.Remove(lastEnterVertex);
+                        SupportPoints.Add(FixPoint(lastEnterVertex, newIntersectVertex));
+                        break;
+
+                    case IntersectFillerVertex newIntersectVertex when Last is LineEndFillerVertex lastLineEndVertex:
+                        SupportPoints.Add(FixPoint(lastLineEndVertex, newIntersectVertex));
+                        break;
+
+                    case EnterFillerVertex newEnterVertex when Last is EnterFillerVertex lastEnterVertex:
+                        if (lastEnterVertex.Enter != newEnterVertex.Enter)
+                        {
+                            if (!Markup.TryGetLine(lastEnterVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
+                                line = new MarkupRegularLine(Markup, lastEnterVertex.Point, newEnterVertex.Point, alignment: lastEnterVertex.Alignment);
+                            SupportPoints.Remove(lastEnterVertex);
+                            SupportPoints.Add(FixPointByLine(lastEnterVertex, line));
+                            newPoint = FixPointByLine(newEnterVertex, line);
+                        }
+                        break;
+
+                    case EnterFillerVertex newEnterVertex when Last is LineEndFillerVertex lastLineEndVertex:
+                        if (newEnterVertex.Enter != lastLineEndVertex.Enter)
+                        {
+                            if (!Markup.TryGetLine(lastLineEndVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
+                                line = new MarkupRegularLine(Markup, lastLineEndVertex.Point, newEnterVertex.Point, alignment: lastLineEndVertex.Alignment);
+                            if (Prev is not LineEndFillerVertex prevLineEndVertex || prevLineEndVertex.Point != lastLineEndVertex.Point)
+                                SupportPoints.Add(FixPointByLine(lastLineEndVertex, line));
+                            newPoint = FixPointByLine(newEnterVertex, line);
+                        }
+
+                        //if (lastLineEndVertex.Line.ContainsPoint(newEnterVertex.Point))
+                        //{
+                        //    if(!Markup.TryGetLine(lastLineEndVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
+                        //        line = new MarkupRegularLine(Markup, lastLineEndVertex.Point, newEnterVertex.Point, alignment: lastLineEndVertex.Alignment);
+                        //    SupportPoints.Add(FixPointByLine(lastLineEndVertex, line));
+                        //    newPoint = FixPointByLine(newEnterVertex, line);
+                        //}
+                        break;
+
+                    case EnterFillerVertex newEnterVertex when Last is IntersectFillerVertex lastIntersectVertex:
+                        newPoint = FixPoint(newEnterVertex, lastIntersectVertex);
+                        break;
+                }
+
+                SupportPoints.Add(newPoint);
+            }
 
             static LineEndFillerVertex FixPoint(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex) =>
                 FixPointByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkupRegularLine);
@@ -162,7 +186,7 @@ namespace NodeMarkup.Manager
 
         public void GetMinMaxT(IFillerVertex fillerVertex, MarkupLine line, out float resultT, out float resultMinT, out float resultMaxT)
         {
-            fillerVertex.GetT(line, out float t);
+            fillerVertex.GetT(line, out float vertexT);
             var minT = -1f;
             var maxT = 2f;
 
@@ -192,18 +216,18 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            void Set(float tt, bool isStrict)
+            void Set(float t, bool isStrict)
             {
-                if (minT < tt && (isStrict ? tt < t : tt <= t))
-                    minT = tt;
+                if (minT < t && (isStrict ? t < vertexT : t <= vertexT))
+                    minT = t;
 
-                if (maxT > tt && (isStrict ? tt > t : tt >= t))
-                    maxT = tt;
+                if (maxT > t && (isStrict ? t > vertexT : t >= vertexT))
+                    maxT = t;
             }
 
             static bool CheckEnter(byte num, byte start, byte end) => Math.Min(start, end) <= num && num <= Math.Max(end, start);
 
-            resultT = t;
+            resultT = vertexT;
             resultMinT = minT;
             resultMaxT = maxT;
         }

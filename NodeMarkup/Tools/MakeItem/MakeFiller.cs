@@ -57,9 +57,18 @@ namespace NodeMarkup.Tools
             {
                 if (Contour.Add(Hover))
                 {
+                    foreach(var part in Contour.RawParts)
+                    {
+                        if(part.Line is MarkupRegularLine line && !Markup.ContainsLine(line.PointPair))
+                        {
+                            var newLine = Markup.AddRegularLine(part.Line.PointPair, null, line.Alignment);
+                            Panel.AddLine(newLine);
+                        }    
+                    }
+
                     var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
                     var filler = new MarkupFiller(Contour, style);
-                    Tool.Markup.AddFiller(filler);
+                    Markup.AddFiller(filler);
                     Panel.EditFiller(filler);
                     Tool.SetDefaultMode();
                     return;

@@ -339,6 +339,12 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
+        public static MarkupPointPair FromPoints(MarkupPoint first, MarkupPoint second, out bool invert)
+        {
+            var pair = new MarkupPointPair(first, second);
+            invert = second.Id <= first.Id;
+            return pair;
+        }
 
         public ulong Hash { get; }
         public MarkupPoint First { get; }
@@ -359,9 +365,9 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        public bool ContainPoint(MarkupPoint point) => First == point || Second == point;
+        public bool ContainsPoint(MarkupPoint point) => First == point || Second == point;
         public bool ContainsEnter(Enter enter) => First.Enter == enter || Second.Enter == enter;
-        public MarkupPoint GetOther(MarkupPoint point) => ContainPoint(point) ? (point == First ? Second : First) : null;
+        public MarkupPoint GetOther(MarkupPoint point) => ContainsPoint(point) ? (point == First ? Second : First) : null;
         public MarkupLine.LineType DefaultType => IsSomeEnter ? MarkupLine.LineType.Stop : MarkupLine.LineType.Regular;
 
         public override string ToString() => $"{First}—{Second}";

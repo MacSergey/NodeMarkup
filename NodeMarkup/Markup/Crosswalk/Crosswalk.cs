@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
             if (border != null && MarkupIntersect.CalculateSingle(trajectory, border.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
             {
                 t = intersect.FirstT;
-                return EnterLine.PointPair.ContainPoint(border.Start) ? border.Trajectory.Cut(0, intersect.SecondT) : border.Trajectory.Cut(intersect.SecondT, 1);
+                return EnterLine.PointPair.ContainsPoint(border.Start) ? border.Trajectory.Cut(0, intersect.SecondT) : border.Trajectory.Cut(intersect.SecondT, 1);
             }
             else
             {

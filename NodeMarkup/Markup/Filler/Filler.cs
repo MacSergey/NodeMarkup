@@ -68,20 +68,14 @@ namespace NodeMarkup.Manager
             if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
                 return false;
 
-            var contour = new FillerContour(markup);
+            var vertixes = config.Elements(FillerVertex.XmlName).Select(e => FillerVertex.FromXml(e, markup, map, out IFillerVertex vertex) ? vertex : null).ToArray();
+            if (vertixes.Any(v => v == null))
+                return false;
 
-            foreach (var supportConfig in config.Elements(FillerVertex.XmlName))
-            {
-                if (FillerVertex.FromXml(supportConfig, markup, map, out IFillerVertex vertex))
-                    contour.Add(vertex);
-                else
-                    return false;
-            }
+            var contour = new FillerContour(markup, vertixes);
 
             if (contour.IsEmpty)
                 return false;
-            else
-                contour.Add(contour.First);
 
             filler = new MarkupFiller(contour, style);
             return true;

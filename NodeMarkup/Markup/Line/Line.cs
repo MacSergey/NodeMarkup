@@ -75,7 +75,7 @@ namespace NodeMarkup.Manager
         private void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = GetStyleData(lod).ToArray();
         protected abstract IEnumerable<IStyleData> GetStyleData(MarkupLOD lod);
 
-        public bool ContainsPoint(MarkupPoint point) => PointPair.ContainPoint(point);
+        public bool ContainsPoint(MarkupPoint point) => PointPair.ContainsPoint(point);
 
         protected IEnumerable<ILinePartEdge> RulesEnterPointEdge
         {
@@ -112,7 +112,7 @@ namespace NodeMarkup.Manager
         public Dependences GetDependences() => Markup.GetLineDependences(this);
         public bool IsStart(MarkupPoint point) => Start == point;
         public bool IsEnd(MarkupPoint point) => End == point;
-        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainPoint(point) ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
+        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainsPoint(point) ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
 
 
         public virtual XElement ToXml()
@@ -186,9 +186,10 @@ namespace NodeMarkup.Manager
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, bool update = true) : base(markup, pointPair, false)
+        public MarkupRegularLine(Markup markup, MarkupPoint first, MarkupPoint second, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : this(markup, MarkupPointPair.FromPoints(first, second, out bool invert), style, !invert ? alignment : alignment.Invert(), update) { }
+        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : base(markup, pointPair, false)
         {
-            RawAlignment = new PropertyEnumValue<Alignment>("A", AlignmentChanged, Alignment.Centre);
+            RawAlignment = new PropertyEnumValue<Alignment>("A", AlignmentChanged, alignment);
 
             if (update)
                 Update(true);
@@ -316,7 +317,7 @@ namespace NodeMarkup.Manager
     }
     public class MarkupNormalLine : MarkupRegularLine
     {
-        public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
+        public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre) : base(markup, pointPair, style, alignment) { }
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(RawAlignment), End.GetPosition(RawAlignment.Value.Invert()));
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
@@ -325,7 +326,7 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalk Crosswalk { get; set; }
         public Func<StraightTrajectory> TrajectoryGetter { get; set; }
 
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, null, false)
+        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, update: false)
         {
             if (style == null)
                 style = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
@@ -375,13 +376,7 @@ namespace NodeMarkup.Manager
         public MarkupLineRawRule<Style> Rule { get; set; }
         public override IEnumerable<MarkupLineRawRule> Rules { get { yield return Rule; } }
 
-        protected MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style, Alignment firstAlignment, Alignment secondAlignment) : this(markup, new MarkupPointPair(first, second), style, firstAlignment, secondAlignment)
-        {
-            if (IsStart(first))
-                Update(firstAlignment, secondAlignment);
-            else
-                Update(secondAlignment, firstAlignment);
-        }
+        protected MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Style style, Alignment firstAlignment, Alignment secondAlignment) : this(markup, MarkupPointPair.FromPoints(first, second, out bool invert), style, !invert ? firstAlignment : secondAlignment, !invert ? secondAlignment : firstAlignment) { }
         protected MarkupEnterLine(Markup markup, MarkupPointPair pointPair, Style style, Alignment firstAlignment, Alignment secondAlignment) : base(markup, pointPair, false)
         {
             if (Visible)
