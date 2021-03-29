@@ -348,7 +348,7 @@ namespace NodeMarkup.Manager
                 return new BezierTrajectory(first.StartPosition, first.StartDirection, second.EndPosition, second.EndDirection);
             }
         }
-        public int GetCorrectIndex(int value) => value >= 0 ? value % VertexCount : value % VertexCount + VertexCount;
+        public int GetCorrectIndex(int value) => value >= 0 ? value % ProcessedCount : value % ProcessedCount + ProcessedCount;
 
         public int IndexOfRaw(IFillerVertex vertex) => IndexOf(SupportPoints, vertex);
         public int IndexOfProcessed(IFillerVertex vertex) => IndexOf(ProcessedVertex, vertex.ProcessedVertex);
