@@ -95,43 +95,43 @@ namespace NodeMarkup.Manager
 
         public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
-            if (prev is not EnterFillerVertexBase prevE || Enter != prevE.Point.Enter)
-            {
-                foreach (var vertex in GetEnterOtherPoints(contour))
-                    yield return vertex;
-            }
+            foreach (var vertex in GetEnterOtherPoints(contour, prev))
+                yield return vertex;
 
             foreach (var vertex in GetPointLinesPoints(contour))
                 yield return vertex;
         }
-        private IEnumerable<IFillerVertex> GetEnterOtherPoints(FillerContour contour)
+        private IEnumerable<IFillerVertex> GetEnterOtherPoints(FillerContour contour, IFillerVertex prev)
         {
             contour.GetMinMaxNum(Point, out byte minNum, out byte maxNum);
 
-            foreach (var point in Enter.Points)
+            if (prev is not EnterFillerVertexBase prevE || Enter != prevE.Point.Enter)
             {
-                if (minNum < point.Num && point.Num < maxNum)
+                foreach (var point in Enter.Points)
                 {
-                    if (point != Point)
+                    if (minNum < point.Num && point.Num < maxNum)
                     {
-                        yield return new EnterFillerVertex(point);
-                        if (point.IsSplit)
+                        if (point != Point)
                         {
-                            yield return new EnterFillerVertex(point, Alignment.Left);
-                            yield return new EnterFillerVertex(point, Alignment.Right);
+                            yield return new EnterFillerVertex(point);
+                            if (point.IsSplit)
+                            {
+                                yield return new EnterFillerVertex(point, Alignment.Left);
+                                yield return new EnterFillerVertex(point, Alignment.Right);
+                            }
                         }
-                    }
-                    else if (Point.IsSplit)
-                    {
-                        foreach (var alingment in EnumExtension.GetEnumValues<Alignment>())
+                        else if (Point.IsSplit)
                         {
-                            if (alingment != Alignment)
-                                yield return new EnterFillerVertex(point, alingment);
+                            foreach (var alingment in EnumExtension.GetEnumValues<Alignment>())
+                            {
+                                if (alingment != Alignment)
+                                    yield return new EnterFillerVertex(point, alingment);
+                            }
                         }
                     }
                 }
             }
-
+            
             if (contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Num == minNum || first.Point.Num == maxNum))
                 yield return first;
         }
