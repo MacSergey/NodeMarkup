@@ -25,7 +25,6 @@ namespace NodeMarkup.Manager
         public MarkupFiller(FillerContour contour, FillerStyle style)
         {
             Contour = contour;
-            Contour.IsComplite = true;
             Markup = Contour.Markup;
             style.OnStyleChanged = FillerChanged;
             Style = new PropertyClassValue<FillerStyle>(StyleChanged, style);

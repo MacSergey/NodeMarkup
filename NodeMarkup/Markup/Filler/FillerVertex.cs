@@ -126,9 +126,20 @@ namespace NodeMarkup.Manager
 
             foreach (var point in Enter.Points)
             {
-                if (point.Num != num && minNum < point.Num && point.Num < maxNum)
+                if (minNum < point.Num && point.Num < maxNum)
                 {
-                    if (point.HaveLines)
+                    if(point == Point)
+                    {
+                        if(Point.IsSplit)
+                        {
+                            foreach(var alingment in point.Lines.OfType<MarkupRegularLine>().Select(l => l.GetAlignment(point)).Distinct())
+                            {
+                                if(alingment != Alignment)
+                                    yield return new EnterFillerVertex(point, alingment);
+                            }
+                        }
+                    }
+                    else if (point.HaveLines)
                     {
                         yield return new EnterFillerVertex(point);
                         if (point.IsSplit)
