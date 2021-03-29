@@ -88,7 +88,7 @@ namespace NodeMarkup.Manager
         {
             EnterFillerVertexBase otherE when Enter == otherE.Enter => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
             EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line => line,
-            EnterFillerVertexBase otherE => new MarkupRegularLine(Point.Markup, Point, otherE.Point, alignment: Alignment),
+            EnterFillerVertexBase otherE => new MarkupRegularLine(Point.Markup, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
             IntersectFillerVertex otherI => otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second,
             _ => null,
         };
@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IFillerVertex> GetEnterOtherPoints(FillerContour contour)
         {
-            contour.GetMinMaxNum(this, out byte num, out byte minNum, out byte maxNum);
+            contour.GetMinMaxNum(Point, out byte minNum, out byte maxNum);
 
             foreach (var point in Enter.Points)
             {
@@ -151,10 +151,32 @@ namespace NodeMarkup.Manager
                     }
                     else
                     {
-                        line = new MarkupRegularLine(point.Markup, point, Point);
-                        contour.GetMinMaxT(this, line, out float t, out float minT, out float maxT);
-                        if ((t == 0f && maxT >= 1f) || (t == 1f && minT <= 0f))
-                            yield return new EnterFillerVertex(point, Alignment.Invert());
+                        var alignments = new List<Alignment>();
+
+                        if (contour.First is EnterFillerVertexBase lastEnter && lastEnter.Point == point)
+                        {
+                            if (lastEnter.Point.IsSplit)
+                                alignments.Add(lastEnter.Alignment.Invert());
+                            else
+                                alignments.AddRange(EnumExtension.GetEnumValues<Alignment>());
+                        }
+                        else if (contour.IsAvailable(point))
+                            alignments.AddRange(EnumExtension.GetEnumValues<Alignment>());
+                        else
+                            continue;
+
+                        if (Point.IsSplit)
+                            alignments.RemoveAll(a => a != Alignment);
+                        else if (!point.IsSplit)
+                            alignments.RemoveAll(a => a != Alignment.Centre);
+
+                        foreach (var alignment in alignments)
+                        {
+                            line = new MarkupRegularLine(point.Markup, Point, point, alignment: alignment);
+                            contour.GetMinMaxT(this, line, out float t, out float minT, out float maxT);
+                            if ((t == 0f && maxT >= 1f) || (t == 1f && minT <= 0f))
+                                yield return new EnterFillerVertex(point, alignment.Invert());
+                        }
                     }
                 }
             }
