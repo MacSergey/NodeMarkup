@@ -338,7 +338,6 @@ namespace NodeMarkup.Manager
             }
         }
 
-
         public void Render(OverlayData data)
         {
             foreach (var trajectory in TrajectoriesRaw)

@@ -80,6 +80,8 @@ namespace NodeMarkup.Manager
 
             if (contour.IsEmpty)
                 return false;
+            else
+                contour.Add(contour.First);
 
             filler = new MarkupFiller(contour, style);
             return true;
