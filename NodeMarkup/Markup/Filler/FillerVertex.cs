@@ -10,6 +10,7 @@ namespace NodeMarkup.Manager
     {
         MarkupLine GetCommonLine(IFillerVertex other);
         IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
+        IFillerVertex ProcessedVertex { get; }
     }
     public static class FillerVertex
     {
@@ -19,7 +20,7 @@ namespace NodeMarkup.Manager
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
             {
-                case SupportType.EnterPoint when EnterFillerVertexBase.FromXml(config, markup, map, out EnterFillerVertex enterPoint):
+                case SupportType.EnterPoint when EnterFillerVertexBase.FromXml(config, markup, map, out EnterFillerVertexBase enterPoint):
                     fillerVertex = enterPoint;
                     return true;
                 case SupportType.LinesIntersect when IntersectFillerVertex.FromXml(config, markup, map, out IntersectFillerVertex linePoint):
@@ -33,12 +34,16 @@ namespace NodeMarkup.Manager
     }
     public abstract class EnterFillerVertexBase : EnterSupportPoint, IFillerVertex
     {
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterFillerVertex enterPoint)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterFillerVertexBase enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
             {
-                enterPoint = new EnterFillerVertex(point);
+                var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
+                if (markup.TryGetLine(lineId, map, out MarkupRegularLine line))
+                    enterPoint = new LineEndFillerVertex(point, line);
+                else
+                    enterPoint = new EnterFillerVertex(point);
                 return true;
             }
             else
@@ -50,6 +55,7 @@ namespace NodeMarkup.Manager
 
         public override string XmlSection => FillerVertex.XmlName;
         public abstract Alignment Alignment { get; }
+        public abstract IFillerVertex ProcessedVertex { get; }
 
         public EnterFillerVertexBase(MarkupPoint point) : base(point) { }
         public override void Update() => Init(Point.GetPosition(Alignment));
@@ -59,12 +65,12 @@ namespace NodeMarkup.Manager
         {
             if (line is MarkupEnterLine enterLine && line.Start == line.End)
             {
-                if(enterLine.StartAlignment == Alignment)
+                if (enterLine.StartAlignment == Alignment)
                 {
                     t = 0f;
                     return true;
                 }
-                else if(enterLine.EndAlignment == Alignment)
+                else if (enterLine.EndAlignment == Alignment)
                 {
                     t = 1f;
                     return true;
@@ -114,7 +120,7 @@ namespace NodeMarkup.Manager
         {
             var otherEnterPoint = Point.IsFirst ? Enter.Prev.LastPoint : Enter.Next.FirstPoint;
             var vertex = new EnterFillerVertex(otherEnterPoint);
-            var isCanEnd = vertex.Equals(contour.First) && contour.VertexCount >= 3;
+            var isCanEnd = vertex.Equals(contour.First) && contour.RawCount >= 3;
             var isUsed = contour.RawVertices.Any(v => vertex.Equals(v));
             var isEdgeLine = Point.Lines.Any(l => l.ContainsPoint(otherEnterPoint));
             if ((isCanEnd || !isUsed) && !isEdgeLine)
@@ -128,13 +134,13 @@ namespace NodeMarkup.Manager
             {
                 if (minNum < point.Num && point.Num < maxNum)
                 {
-                    if(point == Point)
+                    if (point == Point)
                     {
-                        if(Point.IsSplit)
+                        if (Point.IsSplit)
                         {
-                            foreach(var alingment in point.Lines.OfType<MarkupRegularLine>().Select(l => l.GetAlignment(point)).Distinct())
+                            foreach (var alingment in point.Lines.OfType<MarkupRegularLine>().Select(l => l.GetAlignment(point)).Distinct())
                             {
-                                if(alingment != Alignment)
+                                if (alingment != Alignment)
                                     yield return new EnterFillerVertex(point, alingment);
                             }
                         }
@@ -164,12 +170,14 @@ namespace NodeMarkup.Manager
                     yield return vertex;
             }
         }
+        public override int GetHashCode() => Point.GetHashCode();
         public override string ToString() => $"{Point} - {Alignment}";
     }
     public class EnterFillerVertex : EnterFillerVertexBase
     {
         public override Alignment Alignment => RawAlignment;
         public Alignment RawAlignment { get; }
+        public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
         public EnterFillerVertex(MarkupPoint point, Alignment alignment = Alignment.Centre) : base(point)
         {
             RawAlignment = alignment;
@@ -179,6 +187,7 @@ namespace NodeMarkup.Manager
     public class LineEndFillerVertex : EnterFillerVertexBase
     {
         public override Alignment Alignment => Line?.GetAlignment(Point) ?? Alignment.Centre;
+        public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
         public MarkupRegularLine Line { get; private set; }
         public LineEndFillerVertex(MarkupPoint point, MarkupRegularLine line = null) : base(point)
         {
@@ -186,6 +195,13 @@ namespace NodeMarkup.Manager
             Update();
         }
         public override string ToString() => $"{Point} ({Line}) - {Alignment}";
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            config.Add(new XAttribute(MarkupLine.XmlName, Line.Id));
+            return config;
+        }
     }
 
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex
@@ -207,6 +223,7 @@ namespace NodeMarkup.Manager
             }
         }
         public override string XmlSection => FillerVertex.XmlName;
+        public IFillerVertex ProcessedVertex => this;
 
         public IntersectFillerVertex(MarkupLinePair linePair) : base(linePair) { }
         public IntersectFillerVertex(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
@@ -246,5 +263,6 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute(MarkupPointPair.XmlName2, Second.Id));
             return config;
         }
+        public override int GetHashCode() => LinePair.GetHashCode();
     }
 }

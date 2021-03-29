@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         }
         private List<ITrajectory> GetTrajectories(MarkupFiller filler)
         {
-            var contour = filler.IsMedian ? SetMedianOffset(filler).ToList() : filler.Contour.Trajectories.ToList();
+            var contour = filler.IsMedian ? SetMedianOffset(filler).ToList() : filler.Contour.TrajectoriesProcessed.ToList();
 
             if (contour.Count > 3)
             {

@@ -44,7 +44,7 @@ namespace NodeMarkup.Manager
         public sealed override IStyleData Calculate(MarkupFiller filler, MarkupLOD lod) => new MarkupStyleParts(CalculateProcess(filler, lod));
         protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, MarkupLOD lod)
         {
-            var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.Trajectories.ToArray();
+            var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.TrajectoriesProcessed.ToArray();
             var rails = GetRails(filler, contour).ToArray();
 
             foreach (var rail in rails)
@@ -541,7 +541,7 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                var vertexCount = filler.Contour.VertexCount;
+                var vertexCount = filler.Contour.ProcessedCount;
 
                 var followRails = AddFollowRailsProperty(parent);
                 AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
@@ -694,7 +694,7 @@ namespace NodeMarkup.Manager
                 components.Add(rightRail);
                 components.Add(turnAndInvert);
 
-                var vertexCount = filler.Contour.VertexCount;
+                var vertexCount = filler.Contour.ProcessedCount;
                 turnAndInvert.OnButtonClick += OnButtonClick;
 
                 void OnButtonClick(int buttonIndex)

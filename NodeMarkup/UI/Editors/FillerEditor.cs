@@ -212,7 +212,7 @@ namespace NodeMarkup.UI.Editors
         {
             FirstPoint = null;
             PointsSelector = GetPointsSelector();
-            LineSelector = new LinesSelector<RailBound>(Contour.Trajectories.Select((t, i) => new RailBound(t, 0.5f, i)), Colors.Orange);
+            LineSelector = new LinesSelector<RailBound>(Contour.TrajectoriesProcessed.Select((t, i) => new RailBound(t, 0.5f, i)), Colors.Orange);
         }
         public override void OnToolUpdate()
         {
@@ -234,10 +234,7 @@ namespace NodeMarkup.UI.Editors
                     SetValue(e, LineSelector.HoverLine.Index, LineSelector.HoverLine.Index + 1);
             }
             else if (PointsSelector.IsHoverPoint)
-            {
-                var vertices = Contour.RawVertices.ToList();
-                SetValue(e, vertices.IndexOf(FirstPoint), vertices.IndexOf(PointsSelector.HoverPoint));
-            }
+                SetValue(e, Contour.IndexOfProcessed(FirstPoint), Contour.IndexOfProcessed(PointsSelector.HoverPoint));
         }
         public override void OnSecondaryMouseClicked()
         {
@@ -251,18 +248,32 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetValue(Event e, int a, int b)
         {
-            SelectPanel.Value = new FillerRail(a % Contour.VertexCount, b % Contour.VertexCount);
+            SelectPanel.Value = new FillerRail(a % Contour.ProcessedCount, b % Contour.ProcessedCount);
             if (AfterSelectPanel?.Invoke(e) ?? true)
                 Tool.SetDefaultMode();
         }
         public override string GetToolInfo() => !IsFirstSelected ? Localize.FillerEditor_InfoSelectRailFirst : Localize.FillerEditor_InfoSelectRailSecond;
 
-        private PointsSelector<IFillerVertex> GetPointsSelector(object ignore = null) => new PointsSelector<IFillerVertex>(Contour.RawVertices.Where(v => v != ignore), Colors.Purple);
+        private PointsSelector<IFillerVertex> GetPointsSelector(IFillerVertex ignore = null)
+        {
+            if (ignore != null)
+                ignore = ignore.ProcessedVertex;
+
+            return new PointsSelector<IFillerVertex>(Contour.RawVertices.Where(v => ignore == null || !v.ProcessedVertex.Equals(ignore)), Colors.Purple);
+        }
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (!IsFirstSelected)
+            {
+                var overlayData = new OverlayData(cameraInfo) { Color = Colors.Hover };
+                foreach (var part in Contour.RawParts)
+                {
+                    if (part.IsPoint)
+                        part.Render(overlayData);
+                }
                 LineSelector.Render(cameraInfo, !(PointsSelector.IsHoverGroup || PointsSelector.IsHoverPoint));
+            }
             PointsSelector.Render(cameraInfo);
         }
 

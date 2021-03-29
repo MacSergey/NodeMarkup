@@ -107,10 +107,15 @@ namespace NodeMarkup.Manager
             get => base.To.Value as IFillerVertex;
             set => base.To.Value = value;
         }
-        public bool IsPoint { get; }
+        public bool IsPoint { get; } = false;
+        public bool IsMedian { get; } = false;
         public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to)
         {
-            IsPoint = from is EnterFillerVertexBase first && to is EnterFillerVertexBase second && first.Point == second.Point;
+            if (from is EnterFillerVertexBase first && to is EnterFillerVertexBase second)
+            {
+                IsPoint = first.Point == second.Point;
+                IsMedian = first.Enter == second.Enter;
+            }
         }
     }
 }

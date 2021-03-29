@@ -9,6 +9,7 @@ namespace NodeMarkup.Manager
 {
     public class FillerContour : IOverlay
     {
+        private static Comparer VertexComparer { get; } = new Comparer();
         public static IEnumerable<IFillerVertex> GetBeginCandidates(Markup markup)
         {
             foreach (var intersect in markup.Intersects)
@@ -40,26 +41,18 @@ namespace NodeMarkup.Manager
         public IFillerVertex PrePrev => VertexCount >= 3 ? SupportPoints[SupportPoints.Count - 3] : null;
 
         public IEnumerable<IFillerVertex> RawVertices => SupportPoints;
-        public int VertexCount => SupportPoints.Count;
+        public IFillerVertex[] ProcessedVertex { get; private set; } = new IFillerVertex[0];
+        private int VertexCount => SupportPoints.Count;
         public bool IsEmpty => VertexCount == 0;
 
         public FillerLinePart[] RawParts { get; private set; } = new FillerLinePart[0];
+        public FillerLinePart[] ProcessedParts { get; private set; } = new FillerLinePart[0];
+        public int RawCount => RawParts.Length;
+        public int ProcessedCount => ProcessedParts.Length;
 
-        public IEnumerable<ITrajectory> TrajectoriesRaw
-        {
-            get
-            {
-                foreach (var part in RawParts)
-                {
-                    if (part.GetTrajectory(out ITrajectory trajectory))
-                        yield return trajectory;
-                    else
-                        yield return null;
-                }
-            }
-        }
+        public IEnumerable<ITrajectory> TrajectoriesRaw => GetTrajectories(RawParts);
+        public IEnumerable<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
 
-        public IEnumerable<ITrajectory> Trajectories => TrajectoriesRaw.Where(t => t != null);
         public bool IsMedian
         {
             get
@@ -271,6 +264,16 @@ namespace NodeMarkup.Manager
                 yield return new EnterFillerVertex(line.End, line.GetAlignment(line.End));
         }
 
+        private IEnumerable<ITrajectory> GetTrajectories(FillerLinePart[] parts)
+        {
+            foreach (var part in parts)
+            {
+                if (part.GetTrajectory(out ITrajectory trajectory))
+                    yield return trajectory;
+                else
+                    yield return null;
+            }
+        }
         public ITrajectory GetRail(int a1, int b1, int a2, int b2)
         {
             var min1 = GetCorrectIndex(Math.Min(a1, b1));
@@ -285,7 +288,7 @@ namespace NodeMarkup.Manager
         }
         private ITrajectory GetRail(int a, int b)
         {
-            var trajectories = Trajectories.ToArray();
+            var trajectories = TrajectoriesProcessed.ToArray();
 
             if (Mathf.Abs(b - a) == 1)
                 return trajectories[Math.Min(a, b)];
@@ -300,28 +303,52 @@ namespace NodeMarkup.Manager
         }
         public int GetCorrectIndex(int value) => value >= 0 ? value % VertexCount : value % VertexCount + VertexCount;
 
+        public int IndexOfRaw(IFillerVertex vertex) => IndexOf(SupportPoints, vertex);
+        public int IndexOfProcessed(IFillerVertex vertex) => IndexOf(ProcessedVertex, vertex.ProcessedVertex);
+        private int IndexOf(IEnumerable<IFillerVertex> vertices, IFillerVertex vertex)
+        {
+            var i = 0;
+            foreach (var v in vertices)
+            {
+                if (VertexComparer.Equals(vertex, v))
+                    return i;
+                i += 1;
+            }
+            return -1;
+        }
 
         public void Update()
         {
             foreach (var supportPoint in SupportPoints)
                 supportPoint.Update();
 
-            RawParts = GetParts().ToArray();
+            ProcessedVertex = SupportPoints.Select(p => p.ProcessedVertex).Distinct(VertexComparer).ToArray();
+            RawParts = GetParts(true).ToArray();
+            ProcessedParts = GetParts(false).ToArray();
         }
-        private IEnumerable<FillerLinePart> GetParts()
+        private IEnumerable<FillerLinePart> GetParts(bool isRaw)
         {
             var count = IsComplite ? VertexCount : VertexCount - 1;
             for (var i = 0; i < count; i += 1)
             {
-                yield return GetFillerLine(SupportPoints[i], SupportPoints[(i + 1) % VertexCount]);
+                var vertex1 = SupportPoints[i];
+                var vertex2 = SupportPoints[(i + 1) % VertexCount];
+                if (vertex1 is not LineEndFillerVertex lineEnd1 || vertex2 is not LineEndFillerVertex lineEnd2 || lineEnd1.Point != lineEnd2.Point || (isRaw && lineEnd1.Alignment != lineEnd2.Alignment))
+                    yield return GetFillerLine(vertex1, vertex2);
             }
         }
 
 
         public void Render(OverlayData data)
         {
-            foreach (var trajectory in Trajectories)
+            foreach (var trajectory in TrajectoriesRaw)
                 trajectory.Render(data);
+        }
+
+        private class Comparer : IEqualityComparer<IFillerVertex>
+        {
+            public bool Equals(IFillerVertex x, IFillerVertex y) => x.Equals(y);
+            public int GetHashCode(IFillerVertex vertex) => vertex.GetHashCode();
         }
     }
 
@@ -332,8 +359,8 @@ namespace NodeMarkup.Manager
 
         public FillerRail(int a, int b)
         {
-            A = a;
-            B = b;
+            A = Math.Max(a, 0);
+            B = Math.Max(b, 0);
         }
         public static FillerRail operator +(FillerRail rail, int delta) => new FillerRail(rail.A + delta, rail.B + delta);
         public static FillerRail operator %(FillerRail rail, int max) => new FillerRail(rail.A % max, rail.B % max);

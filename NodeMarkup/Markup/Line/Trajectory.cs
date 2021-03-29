@@ -148,6 +148,9 @@ namespace NodeMarkup.Manager
 
         private void CalculateBounds()
         {
+            if (Trajectory == null)
+                return;
+
             var size = Size * Coef;
             var t = 0f;
             while (t < 1f)
