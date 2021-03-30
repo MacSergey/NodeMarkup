@@ -39,8 +39,8 @@ namespace NodeMarkup.UI.Editors
             AddError();
             AddWarning();
 
-            From = AddEdgeProperty(EdgePosition.Start, NodeMarkup.Localize.LineRule_From);
-            To = AddEdgeProperty(EdgePosition.End, NodeMarkup.Localize.LineRule_To);
+            From = AddEdgeProperty(EdgePosition.Start, nameof(From), NodeMarkup.Localize.LineRule_From);
+            To = AddEdgeProperty(EdgePosition.End, nameof(To), NodeMarkup.Localize.LineRule_To);
 
             Refresh();
 
@@ -71,7 +71,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddHeader()
         {
-            Header = ComponentPool.Get<StyleHeaderPanel>(this);
+            Header = ComponentPool.Get<StyleHeaderPanel>(this, nameof(Header));
             Header.Init(Rule.Style.Value.Type, OnSelectTemplate, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
@@ -81,20 +81,20 @@ namespace NodeMarkup.UI.Editors
 
         private void AddError()
         {
-            Error = ComponentPool.Get<ErrorTextProperty>(this);
+            Error = ComponentPool.Get<ErrorTextProperty>(this, nameof(Error));
             Error.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
             Error.Init();
         }
         private void AddWarning()
         {
-            Warning = ComponentPool.Get<WarningTextProperty>(this);
+            Warning = ComponentPool.Get<WarningTextProperty>(this, nameof(Warning));
             Warning.Text = Line.IsSupportRules ? NodeMarkup.Localize.LineEditor_RulesWarning : NodeMarkup.Localize.LineEditor_NotSupportRules;
             Warning.Init();
         }
 
-        private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string text)
+        private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string name, string text)
         {
-            var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this);
+            var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
             edgeProperty.Text = text;
             edgeProperty.Position = position;
             edgeProperty.Init();
@@ -139,10 +139,10 @@ namespace NodeMarkup.UI.Editors
             switch (Line)
             {
                 case MarkupRegularLine regularLine:
-                    Style = ComponentPool.Get<RegularStylePropertyPanel>(this);
+                    Style = ComponentPool.Get<RegularStylePropertyPanel>(this, nameof(Style));
                     break;
                 case MarkupStopLine stopLine:
-                    Style = ComponentPool.Get<StopStylePropertyPanel>(this);
+                    Style = ComponentPool.Get<StopStylePropertyPanel>(this, nameof(Style));
                     break;
                 default:
                     return;

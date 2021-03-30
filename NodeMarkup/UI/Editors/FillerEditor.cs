@@ -56,7 +56,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel);
+            var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel, "Header");
             header.Init(Manager.Style.StyleType.Filler, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
@@ -64,7 +64,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddStyleTypeProperty()
         {
-            Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel);
+            Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel, nameof(Style));
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Value.Type;

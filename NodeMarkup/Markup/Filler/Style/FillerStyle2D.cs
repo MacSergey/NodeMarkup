@@ -453,17 +453,17 @@ namespace NodeMarkup.Manager
 
         protected void AddRailProperty(FillerContour contour, UIComponent parent, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
         {
-            leftRailProperty = AddRailProperty(contour, parent, LeftRailA, LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
-            rightRailProperty = AddRailProperty(contour, parent, RightRailA, RightRailB, RailType.Right, Localize.StyleOption_RightRail);
+            leftRailProperty = AddRailProperty(contour, parent, "LeftRail", LeftRailA, LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
+            rightRailProperty = AddRailProperty(contour, parent, "RightRail", RightRailA, RightRailB, RailType.Right, Localize.StyleOption_RightRail);
 
             leftRailProperty.OtherRail = rightRailProperty;
             rightRailProperty.OtherRail = leftRailProperty;
         }
 
-        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
+        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, string name, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
         {
             var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
-            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, "Rail");
+            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, name);
             railProperty.Text = label;
             railProperty.Init(railType);
             railProperty.Value = rail;
@@ -583,7 +583,7 @@ namespace NodeMarkup.Manager
         }
         protected static ButtonPanel AddTurnProperty(UIComponent parent)
         {
-            var buttonPanel = ComponentPool.Get<ButtonPanel>(parent);
+            var buttonPanel = ComponentPool.Get<ButtonPanel>(parent, "Turn");
             buttonPanel.Text = Localize.StyleOption_Turn;
             buttonPanel.Init();
 
@@ -711,7 +711,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleBetween));
+            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(MedianOffset), nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -728,7 +728,7 @@ namespace NodeMarkup.Manager
         }
         protected static ButtonsPanel AddInvertAndTurnProperty(UIComponent parent, out int invertIndex, out int turnIndex)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent);
+            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent, "TurnAndInvert");
             invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
             turnIndex = buttonsPanel.AddButton(Localize.StyleOption_Turn);
             buttonsPanel.Init();
@@ -840,9 +840,9 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
+            components.Add(AddStepProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddAngleProperty(this, parent));
-            components.Add(AddStepProperty(this, parent));
             components.Add(AddOffsetProperty(this, parent));
         }
 

@@ -83,7 +83,7 @@ namespace NodeMarkup.UI.Editors
 
         protected virtual void AddHeader()
         {
-            HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel);
+            HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel, nameof(HeaderPanel));
             HeaderPanel.Init(EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
             HeaderPanel.OnEdit += StartEditTemplate;
@@ -92,7 +92,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddWarning()
         {
-            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
+            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel, nameof(Warning));
             Warning.Text = $"{IsAssetMessage} {(EditObject.IsAsset && EditObject.Asset.CanEdit ? IsAssetWarningMessage : IsWorkshopWarningMessage)}";
             Warning.Init();
         }
@@ -100,7 +100,7 @@ namespace NodeMarkup.UI.Editors
         {
             if (EditObject.IsAsset)
             {
-                var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
+                var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Author");
                 authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.EnableControl = false;
@@ -110,7 +110,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddTemplateName()
         {
-            NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel);
+            NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Name");
             NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.SubmitOnFocusLost = true;

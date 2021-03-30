@@ -29,8 +29,8 @@ namespace NodeMarkup.UI.Editors
 
             ItemsPanel.RemovePreview();
 
-            Screenshot = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
-            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(Screenshot);
+            Screenshot = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(Screenshot));
+            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(Screenshot, "Info");
             info.Init(EditObject);
         }
         protected override void OnClear()
@@ -79,10 +79,10 @@ namespace NodeMarkup.UI.Editors
 
             var root = GetRootContainer();
 
-            Preview = ComponentPool.Get<PreviewPanel>(root);
+            Preview = ComponentPool.Get<PreviewPanel>(root, nameof(Preview));
             Preview.Init(365f);
 
-            var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview);
+            var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
             info.Init(item.Object);
 
             var x = item.absolutePosition.x + item.width;

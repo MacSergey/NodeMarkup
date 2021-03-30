@@ -74,7 +74,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddHeader()
         {
-            var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel);
+            var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel, "Header");
             header.Init(EditObject.Style.Value.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
@@ -83,14 +83,14 @@ namespace NodeMarkup.UI.Editors
         }
         private void AddWarning()
         {
-            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel);
+            Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel, nameof(Warning));
             Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
             Warning.Init();
         }
         private void AddBordersProperties()
         {
-            LeftBorder = AddBorderProperty(BorderPosition.Left, NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
-            RightBorder = AddBorderProperty(BorderPosition.Right, NodeMarkup.Localize.CrosswalkEditor_RightBorder);
+            LeftBorder = AddBorderProperty(BorderPosition.Left, nameof(LeftBorder), NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
+            RightBorder = AddBorderProperty(BorderPosition.Right, nameof(RightBorder), NodeMarkup.Localize.CrosswalkEditor_RightBorder);
 
             FillBorders();
         }
@@ -129,9 +129,9 @@ namespace NodeMarkup.UI.Editors
 
             panel.OnValueChanged += action;
         }
-        private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string text)
+        private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string name, string text)
         {
-            var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel);
+            var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel, name);
             border.Text = text;
             border.Position = position;
             border.Init();
@@ -147,7 +147,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddStyleTypeProperty()
         {
-            Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel);
+            Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel, nameof(Style));
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
             Style.SelectedObject = EditObject.Style.Value.Type;

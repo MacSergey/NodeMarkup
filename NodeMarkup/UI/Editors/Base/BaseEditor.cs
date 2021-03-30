@@ -248,7 +248,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void OnObjectSelect(ObjectType editObject)
         {
-            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(ContentPanel));
             PropertiesPanel.StopLayout();
             OnFillPropertiesPanel(editObject);
             PropertiesPanel.StartLayout();
