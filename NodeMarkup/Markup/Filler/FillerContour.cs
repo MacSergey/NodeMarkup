@@ -58,7 +58,7 @@ namespace NodeMarkup.Manager
             {
                 for (var i = 0; i < VertexCount; i += 1)
                 {
-                    if (SupportPoints[i] is EnterFillerVertex enterVertex1 && (enterVertex1.Point.IsSplit || (SupportPoints[(i + 1) % VertexCount] is EnterFillerVertex enterVertex2 && enterVertex1.Enter == enterVertex2.Enter)))
+                    if (SupportPoints[i] is EnterFillerVertexBase enterVertex1 && SupportPoints[(i + 1) % VertexCount] is EnterFillerVertexBase enterVertex2 && enterVertex1.Enter == enterVertex2.Enter)
                         return true;
                 }
 
