@@ -324,7 +324,9 @@ Klik om de markering te wijzigen</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Selecteer een knooppunt of segment om markeringen te wijzigen</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Selecteer een eindpunt voor een standaard lijn</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecteer een punt om
 een lijn te creëren of te verwijderen</value>
@@ -1327,19 +1329,39 @@ Klik om de markering te wijzigen</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Splits offset</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Wijzigingenlogboek</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Groepeer punten</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Toepassen tussen kruisingen</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Toepassen tussen kruisingen</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Toepassen op gehele straat</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Toepassen op gehele straat</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Het zal de huidige markering vervangen.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Markering toepassen tussen kruisingen</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Weet je zeker dat je de markeringen wilt toepassen tussen kruisingen?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Markering toepassen op gehele straat</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Weet je zeker dat je de markeringen wilt toepassen op de gehele "{0}"?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Sleep achter het punt voor een loodrechte lijn</value>
   </data>
