@@ -8,7 +8,7 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseMakeItemToolMode : BaseToolMode
     {
-        private List<MarkupPoint> TargetPoints { get; set; } = new List<MarkupPoint>();
+        protected List<MarkupPoint> TargetPoints { get; set; } = new List<MarkupPoint>();
 
         public MarkupPoint HoverPoint { get; protected set; } = null;
         public MarkupPoint SelectPoint { get; protected set; } = null;
@@ -122,10 +122,10 @@ namespace NodeMarkup.Tools
 
         #endregion
 
-        protected void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo)
+        protected void RenderPointsOverlay(RenderManager.CameraInfo cameraInfo, bool splitPoint = true)
         {
             foreach (var point in TargetPoints)
-                point.Render(new OverlayData(cameraInfo) { SplitPoint = true });
+                point.Render(new OverlayData(cameraInfo) { SplitPoint = splitPoint });
         }
     }
 }

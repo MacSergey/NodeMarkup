@@ -41,7 +41,7 @@ namespace NodeMarkup.Utilities
         private static void Styles(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
 
         private static void HeaderButtons(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut);
+            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut, BeetwenIntersections, WholeStreet);
 
         private static void ListItem(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
 
@@ -110,6 +110,8 @@ namespace NodeMarkup.Utilities
         public static string EdgeLines => nameof(EdgeLines);
         public static string Additionally => nameof(Additionally);
         public static string Cut => nameof(Cut);
+        public static string BeetwenIntersections => nameof(BeetwenIntersections);
+        public static string WholeStreet => nameof(WholeStreet);
 
         public static string ListItemSprite { get; } = nameof(ListItemSprite);
 

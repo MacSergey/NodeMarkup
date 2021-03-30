@@ -18,7 +18,7 @@ namespace NodeMarkup
                 case LoadMode.LoadAsset:
                 case LoadMode.NewMap:
                 case LoadMode.LoadMap:
-                    NodeMarkupTool.Create();
+                    NodeMarkupTool.Instance.Init();
                     TemplateManager.Reload();
 
                     Mod.ShowWhatsNew();
@@ -26,12 +26,6 @@ namespace NodeMarkup
                     Mod.ShowLoadError();
                     break;
             }
-        }
-
-        public override void OnLevelUnloading()
-        {
-            Mod.Logger.Debug($"On level unloading");
-            NodeMarkupTool.Remove();
         }
     }
 }

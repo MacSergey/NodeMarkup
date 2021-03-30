@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine.SceneManagement;
 
 namespace NodeMarkup
 {
@@ -49,11 +50,6 @@ namespace NodeMarkup
 #else
         protected override bool ModIsBeta => false;
 #endif
-        public override void OnDisabled()
-        {
-            base.OnDisabled();
-            NodeMarkupTool.Remove();
-        }
         protected override BasePatcher CreatePatcher() => new Patcher(this);
 
         protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);

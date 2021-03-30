@@ -25,7 +25,7 @@ namespace NodeMarkup.Manager
     }
     public interface IDoubleAlignmentLine : IDoubleLine
     {
-        PropertyEnumValue<LineAlignment> Alignment { get; }
+        PropertyEnumValue<Alignment> Alignment { get; }
     }
     public interface IAsymLine
     {

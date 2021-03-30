@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using UnityEngine;
-using LineAlignment = NodeMarkup.Manager.LineAlignment;
+using Alignment = NodeMarkup.Manager.Alignment;
 
 namespace NodeMarkup.Utilities
 {
@@ -49,8 +49,8 @@ namespace NodeMarkup.Utilities
                 return modifier.ToString();
         }
 
-        public static LineAlignment Invert(this LineAlignment alignment) => (LineAlignment)(1 - alignment.Sign());
-        public static int Sign(this LineAlignment alignment) => (int)alignment - 1;
+        public static Alignment Invert(this Alignment alignment) => (Alignment)(1 - alignment.Sign());
+        public static int Sign(this Alignment alignment) => (int)alignment - 1;
 
         public static LinkedListNode<T> GetPrevious<T>(this LinkedListNode<T> item) => item.Previous ?? item.List.Last;
         public static LinkedListNode<T> GetNext<T>(this LinkedListNode<T> item) => item.Next ?? item.List.First;

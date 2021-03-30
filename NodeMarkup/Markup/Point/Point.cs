@@ -53,7 +53,7 @@ namespace NodeMarkup.Manager
         public byte Num { get; }
         public int Id { get; }
         public abstract PointType Type { get; }
-        public Color32 Color => Colors.GetOverlayColor(Num - 1);
+        public Color32 Color => Colors.GetOverlayColor(Num - 1, byte.MaxValue);
         public virtual Vector3 Position
         {
             get => Bounds.center;
@@ -66,6 +66,7 @@ namespace NodeMarkup.Manager
         public IPointSource Source { get; }
         public Enter Enter { get; }
         public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
+        public bool HaveLines => Markup.HaveLines(this);
         public Markup Markup => Enter.Markup;
 
         public bool IsFirst => Num == 1;
@@ -108,9 +109,9 @@ namespace NodeMarkup.Manager
         public override int GetHashCode() => Id;
         protected void PointChanged() => Markup.Update(this, true, true);
 
-        public Vector3 GetPosition(LineAlignment alignment)
+        public Vector3 GetPosition(Alignment alignment)
         {
-            if (IsSplit && alignment != LineAlignment.Centre)
+            if (IsSplit && alignment != Alignment.Centre)
             {
                 var normal = Direction.Turn90(true);
                 var shift = SplitOffsetValue * alignment.Sign();
@@ -127,8 +128,8 @@ namespace NodeMarkup.Manager
         }
         public virtual void Render(OverlayData data)
         {
-            data.Width ??= DefaultWidth;
             data.Color ??= Color;
+            data.Width ??= DefaultWidth;
             NodeMarkupTool.RenderCircle(Position, data);
         }
 
@@ -274,6 +275,7 @@ namespace NodeMarkup.Manager
         {
             var shift = Enter.CornerDir.Turn90(true) * Shift;
             var bezier = new Line3(Position - shift, Position + shift).GetBezier();
+
             data.Width ??= DefaultWidth;
             data.Color ??= Color;
             NodeMarkupTool.RenderBezier(bezier, data);
@@ -337,6 +339,12 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
+        public static MarkupPointPair FromPoints(MarkupPoint first, MarkupPoint second, out bool invert)
+        {
+            var pair = new MarkupPointPair(first, second);
+            invert = second.Id <= first.Id;
+            return pair;
+        }
 
         public ulong Hash { get; }
         public MarkupPoint First { get; }
@@ -357,9 +365,9 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        public bool ContainPoint(MarkupPoint point) => First == point || Second == point;
+        public bool ContainsPoint(MarkupPoint point) => First == point || Second == point;
         public bool ContainsEnter(Enter enter) => First.Enter == enter || Second.Enter == enter;
-        public MarkupPoint GetOther(MarkupPoint point) => ContainPoint(point) ? (point == First ? Second : First) : null;
+        public MarkupPoint GetOther(MarkupPoint point) => ContainsPoint(point) ? (point == First ? Second : First) : null;
         public MarkupLine.LineType DefaultType => IsSomeEnter ? MarkupLine.LineType.Stop : MarkupLine.LineType.Regular;
 
         public override string ToString() => $"{First}—{Second}";

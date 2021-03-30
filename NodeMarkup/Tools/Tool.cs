@@ -2,6 +2,7 @@
 using ColossalFramework.Importers;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
+using HarmonyLib;
 using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -69,6 +70,7 @@ namespace NodeMarkup.Tools
 
         #endregion
 
+        private bool IsInit { get; set; } = false;
         public BaseToolMode Mode { get; private set; }
         public BaseToolMode NextMode { get; private set; }
         public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
@@ -86,37 +88,45 @@ namespace NodeMarkup.Tools
 
         #region BASIC
         public static NodeMarkupTool Instance { get; set; }
-        protected override void Awake()
+        public static void Create()
         {
-            Mod.Logger.Debug($"Awake tool");
-            base.Awake();
+            if (ToolsModifierControl.toolController.gameObject.GetComponent<NodeMarkupTool>() is not NodeMarkupTool)
+            {
+                Mod.Logger.Debug($"Create tool");
+                Instance = ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
+            }
+        }
+        public NodeMarkupTool()
+        {
+            enabled = false;
+        }
+        public void Init()
+        {
+            if (IsInit)
+                return;
 
-            Instance = this;
-            Mod.Logger.Debug($"Tool Created");
+            Mod.Logger.Debug($"Init tool");
 
             ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
-                { ToolModeType.Select, Instance.CreateToolMode<SelectToolMode>() },
-                { ToolModeType.MakeLine, Instance.CreateToolMode<MakeLineToolMode>() },
-                { ToolModeType.MakeCrosswalk, Instance.CreateToolMode<MakeCrosswalkToolMode>() },
-                { ToolModeType.MakeFiller, Instance.CreateToolMode<MakeFillerToolMode>() },
-                { ToolModeType.DragPoint, Instance.CreateToolMode<DragPointToolMode>() },
-                { ToolModeType.PasteEntersOrder, Instance.CreateToolMode<PasteEntersOrderToolMode>()},
-                { ToolModeType.EditEntersOrder, Instance.CreateToolMode<EditEntersOrderToolMode>()},
-                { ToolModeType.ApplyIntersectionTemplateOrder, Instance.CreateToolMode<ApplyIntersectionTemplateOrderToolMode>()},
-                { ToolModeType.PointsOrder, Instance.CreateToolMode<PointsOrderToolMode>()},
+                { ToolModeType.Select, CreateToolMode<SelectToolMode>() },
+                { ToolModeType.MakeLine, CreateToolMode<MakeLineToolMode>() },
+                { ToolModeType.MakeCrosswalk, CreateToolMode<MakeCrosswalkToolMode>() },
+                { ToolModeType.MakeFiller, CreateToolMode<MakeFillerToolMode>() },
+                { ToolModeType.DragPoint, CreateToolMode<DragPointToolMode>() },
+                { ToolModeType.PasteEntersOrder, CreateToolMode<PasteEntersOrderToolMode>()},
+                { ToolModeType.EditEntersOrder, CreateToolMode<EditEntersOrderToolMode>()},
+                { ToolModeType.ApplyIntersectionTemplateOrder, CreateToolMode<ApplyIntersectionTemplateOrderToolMode>()},
+                { ToolModeType.PointsOrder, CreateToolMode<PointsOrderToolMode>()},
             };
 
             NodeMarkupPanel.CreatePanel();
 
-            enabled = false;
+            IsInit = true;
+
+            Mod.Logger.Debug($"Tool inited");
         }
         public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
-        public static void Create()
-        {
-            Mod.Logger.Debug($"Create tool");
-            ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
-        }
         public static void Remove()
         {
             Mod.Logger.Debug($"Remove tool");
@@ -132,15 +142,13 @@ namespace NodeMarkup.Tools
             Mod.Logger.Debug($"Destroy tool");
             NodeMarkupPanel.RemovePanel();
             ComponentPool.Clear();
+            Instance = null;
             base.OnDestroy();
         }
         protected override void OnEnable()
         {
             Mod.Logger.Debug($"Enable tool");
             Reset();
-
-            PrevTool = m_toolController.CurrentTool;
-
             base.OnEnable();
 
             Singleton<InfoManager>.instance.SetCurrentMode(InfoManager.InfoMode.None, InfoManager.SubInfoMode.Default);
@@ -149,13 +157,6 @@ namespace NodeMarkup.Tools
         {
             Mod.Logger.Debug($"Disable tool");
             Reset();
-
-            if (m_toolController?.NextTool == null && PrevTool != null)
-                PrevTool.enabled = true;
-            else
-                ToolsModifierControl.SetTool<DefaultTool>();
-
-            PrevTool = null;
         }
         private void Reset()
         {
@@ -165,8 +166,27 @@ namespace NodeMarkup.Tools
             cursorInfoLabel.text = string.Empty;
         }
 
-        public void ToggleTool() => enabled = !enabled;
-        public void Disable() => enabled = false;
+        public void ToggleTool()
+        {
+            if (ToolsModifierControl.toolController.CurrentTool == this)
+                Disable();
+            else
+                Enable();
+        }
+        public void Enable()
+        {
+            PrevTool = ToolsModifierControl.toolController.CurrentTool;
+            ToolsModifierControl.SetTool<NodeMarkupTool>();
+        }
+        public void Disable(bool setPrev = true)
+        {
+            if (setPrev && PrevTool != null)
+                ToolsModifierControl.toolController.CurrentTool = PrevTool;
+            else
+                ToolsModifierControl.SetTool<DefaultTool>();
+
+            PrevTool = null;
+        }
         public void Escape()
         {
             if (!Mode.OnEscape() && !Panel.OnEscape())
@@ -207,10 +227,9 @@ namespace NodeMarkup.Tools
                 NextMode = null;
                 SetModeNow(nextMode);
             }
-            if ((RenderManager.CurrentCameraInfo.m_layerMask & (3 << 24)) == 0)
+            if (Singleton<InfoManager>.instance.NextMode != InfoManager.InfoMode.None)
             {
-                PrevTool = null;
-                Disable();
+                Disable(false);
                 return;
             }
 

@@ -31,5 +31,20 @@ namespace NodeMarkup.Utilities
             CutEnd = null;
             SplitPoint = false;
         }
+
+        public OverlayData Copy()
+        {
+            var copy = new OverlayData(CameraInfo)
+            {
+                Color = Color,
+                Width = Width,
+                AlphaBlend = AlphaBlend,
+                CutStart = CutStart,
+                CutEnd = CutEnd,
+                SplitPoint = SplitPoint,
+            };
+
+            return copy;
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public abstract class EnterSupportPoint : SupportPoint
+    public abstract class EnterSupportPoint : SupportPoint, IEquatable<EnterSupportPoint>
     {
         public override SupportType Type { get; } = SupportType.EnterPoint;
         public MarkupPoint Point { get; }
@@ -65,18 +65,24 @@ namespace NodeMarkup.Manager
         }
         public override bool GetT(MarkupLine line, out float t)
         {
-            if (line.ContainsPoint(Point))
+            if (line.IsStart(Point))
             {
-                t = line.Start == Point ? 0 : 1;
+                t = 0;
+                return true;
+            }
+            else if (line.IsEnd(Point))
+            {
+                t = 1;
                 return true;
             }
             else
             {
                 t = -1;
                 return false;
-            }
+            }  
         }
-        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && otherEnterPoint.Point == Point;
+        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && Equals(otherEnterPoint);
+        public virtual bool Equals(EnterSupportPoint other) => other.Point == Point;
         public override void Update() => Init(Point.Position);
 
         public override XElement ToXml()
@@ -85,6 +91,7 @@ namespace NodeMarkup.Manager
             config.Add(new XAttribute(MarkupPoint.XmlName, Point.Id));
             return config;
         }
+        public override string ToString() => Point.ToString();
     }
     public abstract class IntersectSupportPoint : SupportPoint
     {
@@ -104,7 +111,7 @@ namespace NodeMarkup.Manager
             var intersect = line.Markup.GetIntersect(LinePair);
             if (intersect.IsIntersect)
             {
-                t = Mathf.Clamp(intersect[line], 0f, 1f);
+                t = Mathf.Clamp01(intersect[line]);
                 return true;
             }
             else
@@ -120,5 +127,6 @@ namespace NodeMarkup.Manager
             First.Render(data);
             Second.Render(data);
         }
+        public override string ToString() => LinePair.ToString();
     }
 }

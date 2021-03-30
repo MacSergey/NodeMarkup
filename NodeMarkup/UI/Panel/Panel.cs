@@ -45,7 +45,7 @@ namespace NodeMarkup.UI.Panel
 
         public Markup Markup { get; private set; }
         private bool NeedUpdateOnVisible { get; set; }
-        public bool IsHover => isVisible && new Rect(relativePosition, size).Contains(NodeMarkupTool.MousePosition);
+        public bool IsHover => isVisible && (this.IsHover(NodeMarkupTool.MousePosition) || Header.Buttons.PopupIsHover);
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
@@ -218,7 +218,6 @@ namespace NodeMarkup.UI.Panel
         private void SizeChangerDoubleClick(UIComponent component, UIMouseEventParameter eventParam) => SetDefaulSize();
         protected override void OnSizeChanged()
         {
-            var swAll = Stopwatch.StartNew();
             base.OnSizeChanged();
 
             if (Header != null)
@@ -233,9 +232,7 @@ namespace NodeMarkup.UI.Panel
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
 
-            MakePixelPerfect(false);
-
-            Mod.Logger.Debug($"Panel size changed: {swAll.ElapsedTicks};");
+            MakePixelPerfect();
         }
         protected override void OnVisibilityChanged()
         {

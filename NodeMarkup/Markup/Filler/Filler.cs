@@ -18,7 +18,7 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<FillerStyle> Style { get; }
         public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
-        public bool IsMedian => Contour.Parts.Any(p => p.Line is MarkupEnterLine line && line.IsEnterLine);
+        public bool IsMedian => Contour.IsMedian;
 
         public string XmlSection => XmlName;
 
@@ -36,8 +36,8 @@ namespace NodeMarkup.Manager
             FillerChanged();
         }
         private void FillerChanged() => Markup?.Update(this, true);
-        public bool ContainsLine(MarkupLine line) => Contour.Parts.Any(p => !(p.Line is MarkupEnterLine) && p.Line.PointPair == line.PointPair);
-        public bool ContainsPoint(MarkupPoint point) => Contour.Vertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
+        public bool ContainsLine(MarkupLine line) => Contour.RawParts.Any(p => p.Line is not MarkupEnterLine && p.Line.PointPair == line.PointPair);
+        public bool ContainsPoint(MarkupPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
 
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
         public void RecalculateStyleData()
@@ -55,42 +55,31 @@ namespace NodeMarkup.Manager
         public XElement ToXml()
         {
             var config = new XElement(XmlSection, Style.Value.ToXml());
-            foreach (var supportPoint in Contour.Vertices)
-            {
+
+            foreach (var supportPoint in Contour.RawVertices)
                 config.Add(supportPoint.ToXml());
-            }
+
             return config;
         }
         public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
         {
+            filler = default;
+
             if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
-            {
-                filler = default;
                 return false;
-            }
 
-            var contour = new FillerContour(markup);
-
-            foreach (var supportConfig in config.Elements(FillerVertex.XmlName))
-            {
-                if (FillerVertex.FromXml(supportConfig, markup, map, out IFillerVertex vertex))
-                    contour.Add(vertex);
-                else
-                {
-                    filler = default;
-                    return false;
-                }
-            }
-            if (contour.First == null)
-            {
-                filler = default;
+            var vertixes = config.Elements(FillerVertex.XmlName).Select(e => FillerVertex.FromXml(e, markup, map, out IFillerVertex vertex) ? vertex : null).ToArray();
+            if (vertixes.Any(v => v == null))
                 return false;
-            }
 
-            contour.Add(contour.First);
+            var contour = new FillerContour(markup, vertixes);
+
+            if (contour.IsEmpty)
+                return false;
 
             filler = new MarkupFiller(contour, style);
             return true;
+
         }
 
         public void Render(OverlayData data)
@@ -114,7 +103,16 @@ namespace NodeMarkup.Manager
             get => base.To.Value as IFillerVertex;
             set => base.To.Value = value;
         }
-        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to) { }
+        public bool IsPoint { get; } = false;
+        public bool IsMedian { get; } = false;
+        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to)
+        {
+            if (from is EnterFillerVertexBase first && to is EnterFillerVertexBase second)
+            {
+                IsPoint = first.Point == second.Point;
+                IsMedian = first.Enter == second.Enter;
+            }
+        }
     }
 }
 

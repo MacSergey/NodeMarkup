@@ -364,9 +364,10 @@ namespace NodeMarkup.Manager
 
         public bool ExistLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        private MarkupLine AddLine(MarkupPointPair pointPair, Func<MarkupLine> newLine)
+        private LineType AddLine<LineType>(MarkupPointPair pointPair, Func<LineType> newLine)
+            where LineType : MarkupLine
         {
-            if (!TryGetLine(pointPair, out MarkupLine line))
+            if (!TryGetLine(pointPair, out LineType line))
             {
                 line = newLine();
                 LinesDictionary[pointPair.Hash] = line;
@@ -375,10 +376,10 @@ namespace NodeMarkup.Manager
 
             return line;
         }
-        public MarkupRegularLine AddRegularLine(MarkupPointPair pointPair, RegularLineStyle style)
-            => AddLine(pointPair, () => pointPair.IsNormal ? new MarkupNormalLine(this, pointPair, style) : new MarkupRegularLine(this, pointPair, style)) as MarkupRegularLine;
-        public MarkupStopLine AddStopLine(MarkupPointPair pointPair, StopLineStyle style) => AddLine(pointPair, () => new MarkupStopLine(this, pointPair, style)) as MarkupStopLine;
-        public MarkupCrosswalkLine AddCrosswalkLine(MarkupPointPair pointPair, CrosswalkStyle style) => AddLine(pointPair, () => new MarkupCrosswalkLine(this, pointPair, style)) as MarkupCrosswalkLine;
+        public MarkupRegularLine AddRegularLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+            => AddLine(pointPair, () => pointPair.IsNormal ? new MarkupNormalLine(this, pointPair, style, alignment) : new MarkupRegularLine(this, pointPair, style, alignment));
+        public MarkupStopLine AddStopLine(MarkupPointPair pointPair, StopLineStyle style) => AddLine(pointPair, () => new MarkupStopLine(this, pointPair, style));
+        public MarkupCrosswalkLine AddCrosswalkLine(MarkupPointPair pointPair, CrosswalkStyle style) => AddLine(pointPair, () => new MarkupCrosswalkLine(this, pointPair, style));
 
 
         public void RemoveLine(MarkupLine line) => RemoveLine(line, true);
@@ -500,6 +501,7 @@ namespace NodeMarkup.Manager
         #region GET & CONTAINS
 
         public bool TryGetLine(MarkupPointPair pointPair, out MarkupLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
+        public bool TryGetLine<LineType>(MarkupPoint first, MarkupPoint second, out LineType line) where LineType : MarkupLine => TryGetLine(new MarkupPointPair(first, second), out line);
         public bool TryGetLine<LineType>(MarkupPointPair pointPair, out LineType line)
             where LineType : MarkupLine
         {
@@ -580,6 +582,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
         public bool HaveLines(Enter enter) => Lines.Any(l => l.ContainsEnter(enter));
+        public bool HaveLines(MarkupPoint point) => Lines.Any(l => l.ContainsPoint(point));
 
         #endregion
 
