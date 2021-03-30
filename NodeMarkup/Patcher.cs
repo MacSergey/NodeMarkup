@@ -19,6 +19,8 @@ namespace NodeMarkup
         {
             var success = true;
 
+            success &= PatchToolControllerAwake();
+
             success &= PatchNetNodeRenderInstance();
             success &= PatchNetSegmentRenderInstance();
 
@@ -53,6 +55,12 @@ namespace NodeMarkup
             return success;
         }
 
+        private bool PatchToolControllerAwake()
+        {
+            var prefix = AccessTools.Method(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Create));
+
+            return AddPrefix(prefix, typeof(ToolController), "Awake");
+        }
         private bool PatchNetNodeRenderInstance()
         {
             static MethodInfo OriginalGetter(Type type, string method) => AccessTools.Method(type, method, new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() });

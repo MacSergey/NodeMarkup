@@ -218,7 +218,6 @@ namespace NodeMarkup.UI.Panel
         private void SizeChangerDoubleClick(UIComponent component, UIMouseEventParameter eventParam) => SetDefaulSize();
         protected override void OnSizeChanged()
         {
-            var swAll = Stopwatch.StartNew();
             base.OnSizeChanged();
 
             if (Header != null)
@@ -233,9 +232,7 @@ namespace NodeMarkup.UI.Panel
             if (SizeChanger != null)
                 SizeChanger.relativePosition = size - SizeChanger.size;
 
-            MakePixelPerfect(false);
-
-            Mod.Logger.Debug($"Panel size changed: {swAll.ElapsedTicks};");
+            MakePixelPerfect();
         }
         protected override void OnVisibilityChanged()
         {

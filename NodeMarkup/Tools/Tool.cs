@@ -70,6 +70,7 @@ namespace NodeMarkup.Tools
 
         #endregion
 
+        private bool IsInit { get; set; } = false;
         public BaseToolMode Mode { get; private set; }
         public BaseToolMode NextMode { get; private set; }
         public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
@@ -87,13 +88,24 @@ namespace NodeMarkup.Tools
 
         #region BASIC
         public static NodeMarkupTool Instance { get; set; }
-        protected override void Awake()
+        public static void Create()
         {
-            Mod.Logger.Debug($"Awake tool");
-            base.Awake();
+            if (ToolsModifierControl.toolController.gameObject.GetComponent<NodeMarkupTool>() is not NodeMarkupTool)
+            {
+                Mod.Logger.Debug($"Create tool");
+                Instance = ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
+            }
+        }
+        public NodeMarkupTool()
+        {
+            enabled = false;
+        }
+        public void Init()
+        {
+            if (IsInit)
+                return;
 
-            Instance = this;
-            Mod.Logger.Debug($"Tool Created");
+            Mod.Logger.Debug($"Init tool");
 
             ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
             {
@@ -110,28 +122,11 @@ namespace NodeMarkup.Tools
 
             NodeMarkupPanel.CreatePanel();
 
-            enabled = false;
+            IsInit = true;
+
+            Mod.Logger.Debug($"Tool inited");
         }
         public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
-        public static void Create()
-        {
-            Mod.Logger.Debug($"Create tool");
-            var gameObject = ToolsModifierControl.toolController.gameObject;
-            if (gameObject.GetComponent<NodeMarkupTool>() is not NodeMarkupTool)
-            {
-                var instance = ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
-
-                var toolsField = AccessTools.DeclaredField(typeof(ToolController), "m_tools");
-                var toolsArray = toolsField.GetValue(ToolsModifierControl.toolController) as ToolBase[];
-                var arrayLength = toolsArray.Length;
-                Array.Resize(ref toolsArray, arrayLength + 1);
-                toolsArray[arrayLength] = instance;
-                toolsField.SetValue(ToolsModifierControl.toolController, toolsArray);
-
-                var toolDic = AccessTools.DeclaredField(typeof(ToolsModifierControl), "m_Tools").GetValue(null) as Dictionary<Type, ToolBase>;
-                toolDic.Add(instance.GetType(), instance);
-            }
-        }
         public static void Remove()
         {
             Mod.Logger.Debug($"Remove tool");
