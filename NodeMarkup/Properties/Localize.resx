@@ -1469,4 +1469,20 @@ Click to edit markings</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Select endpoint for regular or stop line</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
+    <value>- New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too small parts.
+- Added automatic line creation when create filler. No more need add lines before create filler.
+- Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
+- Added style modifier "From clipboard". Hold Ctrl+Alt to apply style from clipboard to new line, rule, crosswalk or filler.
+- Added the ability to apply segment marking between two intersections and apply to whole street.
+- Added the ability set second color for "Zebra" and "Double zebra" crosswalk styles.
+- Changed press escape key behavior. Now it's like default game tool behavior. If something is being edited, then press escape will suggest an exit, rather than closing the tool with the loss of changes.
+- Added point grouping by road in list (can be disable in settings).
+- Fix line connector overlay position on elevated roads.
+- Fix 3D filler styles calculation.
+- Fix error in copy/paste marking mode that made it impossible to use the tool.
+- Fix reset panel scroll position when resize panel.
+- Crosswalk mode no more activate by hold shift when change value by scroll wheel.
+- Set panel default size by double click on panel resizer.</value>
+  </data>
 </root>
