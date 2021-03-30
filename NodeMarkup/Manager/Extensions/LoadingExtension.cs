@@ -28,10 +28,10 @@ namespace NodeMarkup
             }
         }
 
-        public override void OnLevelUnloading()
-        {
-            Mod.Logger.Debug($"On level unloading");
-            NodeMarkupTool.Remove();
-        }
+        //public override void OnLevelUnloading()
+        //{
+        //    Mod.Logger.Debug($"On level unloading");
+        //    NodeMarkupTool.Remove();
+        //}
     }
 }

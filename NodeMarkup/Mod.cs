@@ -49,11 +49,16 @@ namespace NodeMarkup
 #else
         protected override bool ModIsBeta => false;
 #endif
-        public override void OnDisabled()
-        {
-            base.OnDisabled();
-            NodeMarkupTool.Remove();
-        }
+        //public override void OnEnabled()
+        //{
+        //    //NodeMarkupTool.Create();
+        //    base.OnEnabled();
+        //}
+        //public override void OnDisabled()
+        //{
+        //    NodeMarkupTool.Remove();
+        //    base.OnDisabled();
+        //}
         protected override BasePatcher CreatePatcher() => new Patcher(this);
 
         protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
