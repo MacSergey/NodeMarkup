@@ -65,6 +65,9 @@ namespace NodeMarkup.Tools
             nodeSelection = null;
             segmentSelection = null;
 
+            var onlyNodes = InputExtension.OnlyCtrlIsPressed;
+            var onlySegments = InputExtension.OnlyShiftIsPressed;
+
             for (int i = gridMinZ; i <= gridMaxZ; i++)
             {
                 for (int j = gridMinX; j <= gridMaxX; j++)
@@ -79,19 +82,19 @@ namespace NodeMarkup.Tools
                             var segment = segmentId.GetSegment();
                             float t;
 
-                            if (RayCastNode(checkedNodes, segment.m_startNode, out NodeSelection startSelection, out t) && t < priority)
+                            if (!onlySegments && RayCastNode(checkedNodes, segment.m_startNode, out NodeSelection startSelection, out t) && t < priority)
                             {
                                 nodeSelection = startSelection;
                                 segmentSelection = null;
                                 priority = t;
                             }
-                            else if (RayCastNode(checkedNodes, segment.m_endNode, out NodeSelection endSelection, out t) && t < priority)
+                            else if (!onlySegments && RayCastNode(checkedNodes, segment.m_endNode, out NodeSelection endSelection, out t) && t < priority)
                             {
                                 nodeSelection = endSelection;
                                 segmentSelection = null;
                                 priority = t;
                             }
-                            else if (RayCastSegments(segmentId, out SegmentSelection selection, out t) && t < priority)
+                            else if (!onlyNodes && RayCastSegments(segmentId, out SegmentSelection selection, out t) && t < priority)
                             {
                                 segmentSelection = selection;
                                 nodeSelection = null;
