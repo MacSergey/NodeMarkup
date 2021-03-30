@@ -45,7 +45,7 @@ namespace NodeMarkup.UI.Panel
 
         public Markup Markup { get; private set; }
         private bool NeedUpdateOnVisible { get; set; }
-        public bool IsHover => isVisible && new Rect(relativePosition, size).Contains(NodeMarkupTool.MousePosition);
+        public bool IsHover => isVisible && (this.IsHover(NodeMarkupTool.MousePosition) || Header.Buttons.PopupIsHover);
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }

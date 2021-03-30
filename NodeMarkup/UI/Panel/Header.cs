@@ -80,6 +80,7 @@ namespace NodeMarkup.UI.Panel
         private AdditionallyHeaderButton Additionally { get; }
         private PanelHeaderButton PasteButton { get; }
         public MarkupType Type { get; set; }
+        public bool PopupIsHover => Additionally.Popup?.IsHover(NodeMarkupTool.MousePosition) == true;
 
         public PanelHeaderContent()
         {
@@ -106,8 +107,8 @@ namespace NodeMarkup.UI.Panel
             };
             if (Type == MarkupType.Segment)
             {
-                buttons.Add(AddPopupButton(popup.Content, string.Empty, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
-                buttons.Add(AddPopupButton(popup.Content, string.Empty, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut));
+                buttons.Add(AddPopupButton(popup.Content, TextureUtil.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
+                buttons.Add(AddPopupButton(popup.Content, TextureUtil.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut));
             }
 
             foreach (var button in buttons)
