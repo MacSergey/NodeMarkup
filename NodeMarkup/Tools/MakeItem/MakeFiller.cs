@@ -20,7 +20,7 @@ namespace NodeMarkup.Tools
         private bool IsHover => FillerPointsSelector.IsHoverPoint;
         private IFillerVertex Hover => FillerPointsSelector.HoverPoint;
 
-        protected override void Reset(BaseToolMode prevMode)
+        protected override void Reset(IToolMode prevMode)
         {
             Contour = new FillerContour(Tool.Markup);
             GetFillerPoints();

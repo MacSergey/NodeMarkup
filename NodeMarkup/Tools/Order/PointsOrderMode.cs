@@ -14,7 +14,7 @@ namespace NodeMarkup.Tools
         protected override string InfoDrag => Localize.Tool_InfoPointsDrag;
         protected override string InfoDrop => Localize.Tool_InfoPointsDrop;
 
-        protected override void Reset(BaseToolMode prevMode)
+        protected override void Reset(IToolMode prevMode)
         {
             PrevMode = prevMode as BaseEntersOrderToolMode;
             SourceEnter = PrevMode != null && PrevMode.IsHoverSource && PrevMode.HoverSource.HasTarget ? PrevMode.HoverSource : null;
@@ -23,8 +23,8 @@ namespace NodeMarkup.Tools
             base.Reset(prevMode);
         }
 
-        protected override Target<SourcePoint>[] GetTargets(BaseToolMode prevMode) => TargetEnter?.Points ?? new TargetPoint[0];
-        protected override SourcePoint[] GetSources(BaseToolMode prevMode) => SourceEnter?.Points ?? new SourcePoint[0];
+        protected override Target<SourcePoint>[] GetTargets(IToolMode prevMode) => TargetEnter?.Points ?? new TargetPoint[0];
+        protected override SourcePoint[] GetSources(IToolMode prevMode) => SourceEnter?.Points ?? new SourcePoint[0];
 
         public override void OnSecondaryMouseClicked() => Exit();
         public override bool OnEscape()

@@ -22,7 +22,7 @@ namespace NodeMarkup.Tools
         public SourceEnter[] SourceEnters { get; set; } = new SourceEnter[0];
         public TargetEnter[] TargetEnters { get; set; } = new TargetEnter[0];
 
-        protected override void Reset(BaseToolMode prevMode)
+        protected override void Reset(IToolMode prevMode)
         {
             if (prevMode is BaseOrderToolMode pasteMarkupTool)
             {
@@ -95,7 +95,7 @@ namespace NodeMarkup.Tools
 
         protected Basket<SourceType>[] Baskets { get; set; } = new Basket<SourceType>[0];
 
-        protected override void Reset(BaseToolMode prevMode)
+        protected override void Reset(IToolMode prevMode)
         {
             base.Reset(prevMode);
 
@@ -113,8 +113,8 @@ namespace NodeMarkup.Tools
             SetBaskets();
         }
 
-        protected abstract SourceType[] GetSources(BaseToolMode prevMode);
-        protected abstract Target<SourceType>[] GetTargets(BaseToolMode prevMode);
+        protected abstract SourceType[] GetSources(IToolMode prevMode);
+        protected abstract Target<SourceType>[] GetTargets(IToolMode prevMode);
 
         public void GetHoverSource() => HoverSource = NodeMarkupTool.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(NodeMarkupTool.MouseRay)) : null;
         public void GetHoverTarget() => HoverTarget = NodeMarkupTool.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(NodeMarkupTool.MouseRay)) : null;

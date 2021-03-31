@@ -20,7 +20,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class NodeMarkupTool : BaseTool
+    public class NodeMarkupTool : BaseTool<NodeMarkupTool, ToolModeType>
     {
         #region STATIC
 
@@ -37,8 +37,6 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
         public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
         public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => Instance.ApplyWholeStreet());
-
-        public static void Create() => Create<NodeMarkupTool>();
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
@@ -64,10 +62,7 @@ namespace NodeMarkup.Tools
 
         #region PROPERTIES
 
-        protected Dictionary<ToolModeType, NodeMarkupToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, NodeMarkupToolMode>();
-        public new NodeMarkupToolMode Mode => base.Mode as NodeMarkupToolMode;
-        public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
-        protected override BaseToolMode DefaultMode => ToolModes[ToolModeType.Select];
+        protected override IToolMode DefaultMode => ToolModes[ToolModeType.Select];
         protected override bool ShowToolTip => (Settings.ShowToolTip || Mode.Type == ToolModeType.Select) && !Panel.IsHover;
 
         public Markup Markup { get; private set; }
@@ -87,22 +82,21 @@ namespace NodeMarkup.Tools
         }
         protected override void InitProcess()
         {
-            ToolModes = new Dictionary<ToolModeType, NodeMarkupToolMode>()
-            {
-                { ToolModeType.Select, CreateToolMode<SelectToolMode>() },
-                { ToolModeType.MakeLine, CreateToolMode<MakeLineToolMode>() },
-                { ToolModeType.MakeCrosswalk, CreateToolMode<MakeCrosswalkToolMode>() },
-                { ToolModeType.MakeFiller, CreateToolMode<MakeFillerToolMode>() },
-                { ToolModeType.DragPoint, CreateToolMode<DragPointToolMode>() },
-                { ToolModeType.PasteEntersOrder, CreateToolMode<PasteEntersOrderToolMode>()},
-                { ToolModeType.EditEntersOrder, CreateToolMode<EditEntersOrderToolMode>()},
-                { ToolModeType.ApplyIntersectionTemplateOrder, CreateToolMode<ApplyIntersectionTemplateOrderToolMode>()},
-                { ToolModeType.PointsOrder, CreateToolMode<PointsOrderToolMode>()},
-            };
-
+            base.InitProcess();
             NodeMarkupPanel.CreatePanel();
         }
-        public override void Enable() => Enable<NodeMarkupTool>();
+        protected override IEnumerable<IToolMode<ToolModeType>> GetModes()
+        {
+            yield return CreateToolMode<SelectToolMode>();
+            yield return CreateToolMode<MakeLineToolMode>();
+            yield return CreateToolMode<MakeCrosswalkToolMode>();
+            yield return CreateToolMode<MakeFillerToolMode>();
+            yield return CreateToolMode<DragPointToolMode>();
+            yield return CreateToolMode<PasteEntersOrderToolMode>();
+            yield return CreateToolMode<EditEntersOrderToolMode>();
+            yield return CreateToolMode<ApplyIntersectionTemplateOrderToolMode>();
+            yield return CreateToolMode<PointsOrderToolMode>();
+        }
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -115,10 +109,10 @@ namespace NodeMarkup.Tools
         }
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
         public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
-        protected override void SetModeNow(BaseToolMode mode)
+        protected override void SetModeNow(IToolMode mode)
         {
             base.SetModeNow(mode);
-            Panel.Active = Mode?.ShowPanel == true;
+            Panel.Active = (Mode as NodeMarkupToolMode)?.ShowPanel == true;
         }
         public void SetMarkup(Markup markup)
         {
@@ -691,9 +685,10 @@ namespace NodeMarkup.Tools
 
         #endregion
     }
-    public abstract class NodeMarkupToolMode : BaseToolMode
+    public abstract class NodeMarkupToolMode : BaseToolMode, IToolMode<ToolModeType>, IToolModePanel
     {
         public abstract ToolModeType Type { get; }
+        public virtual bool ShowPanel => true;
         protected new NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         public Markup Markup => Tool.Markup;

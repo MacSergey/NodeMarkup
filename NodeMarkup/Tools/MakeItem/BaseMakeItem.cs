@@ -17,7 +17,7 @@ namespace NodeMarkup.Tools
         protected bool IsHoverPoint => HoverPoint != null;
         protected bool IsSelectPoint => SelectPoint != null;
 
-        protected override void Reset(BaseToolMode prevMode)
+        protected override void Reset(IToolMode prevMode)
         {
             HoverPoint = null;
             SelectPoint = null;

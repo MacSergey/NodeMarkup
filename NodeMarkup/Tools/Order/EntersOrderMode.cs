@@ -87,7 +87,7 @@ namespace NodeMarkup.Tools
             }
         }
 
-        protected override void Reset(BaseToolMode prevMode)
+        protected override void Reset(IToolMode prevMode)
         {
             GetCentreAndRadius(out Vector3 centre, out float radius);
             Centre = centre;
@@ -95,8 +95,8 @@ namespace NodeMarkup.Tools
 
             base.Reset(prevMode);
         }
-        protected override Target<SourceEnter>[] GetTargets(BaseToolMode prevMode) => TargetEnters;
-        protected override SourceEnter[] GetSources(BaseToolMode prevMode) => SourceEnters;
+        protected override Target<SourceEnter>[] GetTargets(IToolMode prevMode) => TargetEnters;
+        protected override SourceEnter[] GetSources(IToolMode prevMode) => SourceEnters;
 
         public override string GetToolInfo()
         {
