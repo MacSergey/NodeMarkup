@@ -24,6 +24,8 @@ namespace NodeMarkup.Tools
     {
         #region STATIC
 
+        public static void Create() => Create<NodeMarkupTool>();
+
         public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
         public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
         public static NodeMarkupShortcut AddFillerShortcut { get; } = new NodeMarkupShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => Instance.StartCreateFiller());
@@ -97,6 +99,7 @@ namespace NodeMarkup.Tools
             yield return CreateToolMode<ApplyIntersectionTemplateOrderToolMode>();
             yield return CreateToolMode<PointsOrderToolMode>();
         }
+        public override void Enable() => Enable<NodeMarkupTool>();
         protected override void OnEnable()
         {
             base.OnEnable();
