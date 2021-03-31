@@ -22,7 +22,6 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
-        protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
         protected override string ModId => nameof(NodeMarkup);
         protected override List<Version> ModVersions { get; } = new List<Version>
         {
