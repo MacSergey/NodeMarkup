@@ -236,7 +236,7 @@ namespace NodeMarkup.Tools
         private void CalculateCenter()
         {
             if (Datas.Length == 1)
-                Center = Position + Datas[0].Direction;
+                Center = Datas[0].Position + Datas[0].Direction;
             else
             {
                 Vector3 center = new();
