@@ -130,7 +130,7 @@ namespace NodeMarkup.Manager
         {
             data.Color ??= Color;
             data.Width ??= DefaultWidth;
-            NodeMarkupTool.RenderCircle(Position, data);
+            Position.RenderCircle(data);
         }
 
         public virtual XElement ToXml()
@@ -224,14 +224,17 @@ namespace NodeMarkup.Manager
             {
                 var normal = Direction.Turn90(true);
 
+                var leftPos = Position - normal * SplitOffset - Direction;
+                var rightPos = Position + normal * SplitOffset - Direction;
+
                 var dataWhite = new OverlayData(data.CameraInfo);
-                NodeMarkupTool.RenderCircle(Position - normal * SplitOffset - Direction, dataWhite);
-                NodeMarkupTool.RenderCircle(Position + normal * SplitOffset - Direction, dataWhite);
+                leftPos.RenderCircle(dataWhite);
+                rightPos.RenderCircle(dataWhite);
 
                 data.Color ??= Color;
                 data.Width = 0.1f;
-                NodeMarkupTool.RenderCircle(Position - normal * SplitOffset - Direction, data);
-                NodeMarkupTool.RenderCircle(Position + normal * SplitOffset - Direction, data);
+                leftPos.RenderCircle(data);
+                rightPos.RenderCircle(data);
             }
         }
         public override void FromXml(XElement config, ObjectsMap map)
@@ -278,7 +281,7 @@ namespace NodeMarkup.Manager
 
             data.Width ??= DefaultWidth;
             data.Color ??= Color;
-            NodeMarkupTool.RenderBezier(bezier, data);
+            bezier.RenderBezier(data);
         }
         public override string ToString() => $"{base.ToString()}C";
     }
@@ -304,7 +307,7 @@ namespace NodeMarkup.Manager
 
             var line = new StraightTrajectory(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction, false);
             foreach (var contour in Markup.Contour)
-                tSet.AddRange(MarkupIntersect.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.FirstT));
+                tSet.AddRange(Intersection.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.FirstT));
 
             var tSetSort = tSet.OrderBy(i => i).ToArray();
 

@@ -1,12 +1,9 @@
-﻿using NodeMarkup.Utilities;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Utilities;
 using System.Collections.Generic;
 
 namespace NodeMarkup.Manager
 {
-    public interface IOverlay
-    {
-        void Render(OverlayData data);
-    }
     public interface IDeletable
     {
         string DeleteCaptionDescription { get; }

@@ -62,7 +62,7 @@ namespace NodeMarkup.Manager
                     {
                         var x = i;
                         var y = (i + j) % contour.Count;
-                        var intersect = MarkupIntersect.CalculateSingle(contour[x], contour[y]);
+                        var intersect = Intersection.CalculateSingle(contour[x], contour[y]);
                         if (intersect.IsIntersect && (intersect.FirstT > 0.5f || intersect.SecondT < 0.5f))
                         {
                             contour[x] = contour[x].Cut(0f, intersect.FirstT);
@@ -127,7 +127,7 @@ namespace NodeMarkup.Manager
                 for (var y = isClockWise ? skip : B.Count - 1 - skip; isClockWise ? y < B.Count : y >= 0; y += isClockWise ? 1 : -1)
                 {
                     var yPart = new StraightTrajectory(B[y]);
-                    var intersect = MarkupIntersect.CalculateSingle(xPart, yPart);
+                    var intersect = Intersection.CalculateSingle(xPart, yPart);
                     if (intersect.IsIntersect)
                     {
                         if (isClockWise)

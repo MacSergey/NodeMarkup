@@ -201,7 +201,7 @@ namespace NodeMarkup.Manager
                 return true;
 
             var vertex = borders.GetVertex(part);
-            return !borders.Any(c => vertex.Any(v => MarkupIntersect.CalculateSingle(c, v).IsIntersect));
+            return !borders.Any(c => vertex.Any(v => Intersection.CalculateSingle(c, v).IsIntersect));
 
         }
         public static MarkupStylePart CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
@@ -244,8 +244,8 @@ namespace NodeMarkup.Manager
             {
                 for (var i = 0; i < vertex.Length; i += 2)
                 {
-                    var start = MarkupIntersect.CalculateSingle(border, vertex[i]);
-                    var end = MarkupIntersect.CalculateSingle(border, vertex[i + 1]);
+                    var start = Intersection.CalculateSingle(border, vertex[i]);
+                    var end = Intersection.CalculateSingle(border, vertex[i + 1]);
 
                     if (start.IsIntersect && end.IsIntersect)
                         return false;
@@ -253,7 +253,7 @@ namespace NodeMarkup.Manager
                     if (!start.IsIntersect && !end.IsIntersect)
                         continue;
 
-                    var intersect = MarkupIntersect.CalculateSingle(border, new StraightTrajectory(vertex[i].EndPosition, vertex[i + 1].EndPosition));
+                    var intersect = Intersection.CalculateSingle(border, new StraightTrajectory(vertex[i].EndPosition, vertex[i + 1].EndPosition));
                     if (intersect.IsIntersect)
                     {
                         if (start.IsIntersect)

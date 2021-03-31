@@ -194,7 +194,7 @@ namespace NodeMarkup.Manager
                 return;
 
             var bezier = new Line3(GetPosition(-RoadHalfWidth), GetPosition(RoadHalfWidth)).GetBezier();
-            NodeMarkupTool.RenderBezier(bezier, data);
+            bezier.RenderBezier(data);
 #if DEBUG_ENTER
             var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
             NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);

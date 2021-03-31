@@ -103,7 +103,7 @@ namespace NodeMarkup.Manager
         }
         private ITrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
         {
-            if (border != null && MarkupIntersect.CalculateSingle(trajectory, border.Trajectory) is MarkupIntersect intersect && intersect.IsIntersect)
+            if (border != null && Intersection.CalculateSingle(trajectory, border.Trajectory) is Intersection intersect && intersect.IsIntersect)
             {
                 t = intersect.FirstT;
                 return EnterLine.PointPair.ContainsPoint(border.Start) ? border.Trajectory.Cut(0, intersect.SecondT) : border.Trajectory.Cut(intersect.SecondT, 1);
@@ -125,7 +125,7 @@ namespace NodeMarkup.Manager
             return (StraightTrajectory)trajectory.Cut(startT, endT);
 
             static float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
-            => MarkupIntersect.CalculateSingle(trajectory, lineTrajectory) is MarkupIntersect intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
+            => Intersection.CalculateSingle(trajectory, lineTrajectory) is Intersection intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
         }
         public StraightTrajectory GetFullTrajectory(float offset, Vector3 normal)
         {
@@ -136,11 +136,11 @@ namespace NodeMarkup.Manager
 
             return (StraightTrajectory)trajectory.Cut(startT, endT);
 
-            static float MinAggregate(MarkupIntersect[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
-            static float MaxAggregate(MarkupIntersect[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
-            static float GetT(StraightTrajectory trajectory, Vector3 normal, Vector3[] positions, float defaultT, Func<MarkupIntersect[], float> aggregate)
+            static float MinAggregate(Intersection[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
+            static float MaxAggregate(Intersection[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
+            static float GetT(StraightTrajectory trajectory, Vector3 normal, Vector3[] positions, float defaultT, Func<Intersection[], float> aggregate)
             {
-                var intersects = positions.SelectMany(p => MarkupIntersect.Calculate(trajectory, new StraightTrajectory(p, p + normal, false))).ToArray();
+                var intersects = positions.SelectMany(p => Intersection.Calculate(trajectory, new StraightTrajectory(p, p + normal, false))).ToArray();
                 return intersects.Any() ? aggregate(intersects) : defaultT;
             }
         }

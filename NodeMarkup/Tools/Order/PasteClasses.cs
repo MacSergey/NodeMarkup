@@ -65,7 +65,7 @@ namespace NodeMarkup.Tools
             var color = Colors.GetOverlayColor(Num, 255, hue);
             while (size > 0)
             {
-                NodeMarkupTool.RenderCircle(position, new OverlayData(cameraInfo) { Color = color, Width = size });
+                position.RenderCircle(new OverlayData(cameraInfo) { Color = color, Width = size });
                 size -= 0.43f;
             }
         }
@@ -131,17 +131,17 @@ namespace NodeMarkup.Tools
         {
             if (toolMode.AvailableTargets.Contains(this))
             {
-                NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Width = BoundsSize, AlphaBlend = false });
+                Position.RenderCircle(new OverlayData(cameraInfo) { Width = BoundsSize, AlphaBlend = false });
                 if (toolMode.IsSelectedSource)
                 {
                     if (toolMode.HoverTarget == this && toolMode.SelectedSource.Target != this)
-                        NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Color = Colors.Green, Width = BoundsSize + 0.43f });
+                        Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Green, Width = BoundsSize + 0.43f });
                     else if (toolMode.HoverTarget != this && toolMode.SelectedSource.Target == this)
-                        NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Color = Colors.Red, Width = BoundsSize + 0.43f });
+                        Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Red, Width = BoundsSize + 0.43f });
                 }
             }
             else
-                NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Color = Colors.Gray, Width = BoundsSize, AlphaBlend = false });
+                Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Gray, Width = BoundsSize, AlphaBlend = false });
         }
         public abstract Vector3 GetSourcePosition(SourceType source);
     }
@@ -334,7 +334,7 @@ namespace NodeMarkup.Tools
             for (var i = 0; i < n; i += 1)
             {
                 var bezier = GetBezier(ToAngle + deltaAngle * i, ToAngle + deltaAngle * (i + 1));
-                NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Color, Cut = true });
+                bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Color, Cut = true });
             }
 
             var fromDir = FromAngle.Direction();
@@ -345,12 +345,12 @@ namespace NodeMarkup.Tools
             if (Count <= 1)
             {
                 var position = Centre + MiddleAngle.Direction() * Radius;
-                NodeMarkupTool.RenderCircle(position, new OverlayData(cameraInfo) { Width = TargetEnter.Size, AlphaBlend = false });
+                position.RenderCircle(new OverlayData(cameraInfo) { Width = TargetEnter.Size, AlphaBlend = false });
             }
             else
             {
                 var bezier = GetBezier(MiddleAngle - HalfWidthAngle, MiddleAngle + HalfWidthAngle);
-                NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Width = TargetEnter.Size, AlphaBlend = false });
+                bezier.RenderBezier(new OverlayData(cameraInfo) { Width = TargetEnter.Size, AlphaBlend = false });
             }
         }
         private Bezier3 GetBezier(float aAngle, float dAngle)
@@ -411,7 +411,7 @@ namespace NodeMarkup.Tools
             Connect.Render(new OverlayData(cameraInfo) { Color = Color, Width = Width, Cut = true });
 
             if (Count <= 0)
-                NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Width = TargetPoint.Size, AlphaBlend = false });
+                Position.RenderCircle(new OverlayData(cameraInfo) { Width = TargetPoint.Size, AlphaBlend = false });
             else
                 Line.Render(new OverlayData(cameraInfo) { Width = TargetPoint.Size, AlphaBlend = false });
 

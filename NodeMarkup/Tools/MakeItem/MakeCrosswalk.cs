@@ -129,16 +129,16 @@ namespace NodeMarkup.Tools
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
 
-            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = color, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
+            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = NodeMarkupTool.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
+            var dir = NodeMarkupTool.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
             var lenght = dir.magnitude;
             dir.Normalize();
             var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            NodeMarkupTool.RenderBezier(bezier, new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
+            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
         }
     }
 }

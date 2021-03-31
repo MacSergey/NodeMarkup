@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Tools;
+﻿using ModsCommon.Utilities;
+using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
 using System;
 using System.Xml.Linq;
@@ -36,7 +37,7 @@ namespace NodeMarkup.Manager
         public void Render(OverlayData data)
         {
             data.Width ??= DefaultWidth;
-            NodeMarkupTool.RenderCircle(Position, data);
+            Position.RenderCircle(data);
         }
 
         public bool IsIntersect(Ray ray) => Bounds.IntersectRay(ray);

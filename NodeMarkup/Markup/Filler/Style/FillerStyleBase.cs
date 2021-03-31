@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
 
             return trajectories.Where(t => t != null).ToArray();
         }
-        protected float GetOffset(MarkupIntersect intersect, float offset)
+        protected float GetOffset(Intersection intersect, float offset)
         {
             var sin = Mathf.Sin(intersect.Angle);
             return sin != 0 ? offset / sin : 1000f;

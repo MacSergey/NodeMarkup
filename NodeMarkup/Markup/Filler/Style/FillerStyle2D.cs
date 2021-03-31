@@ -161,14 +161,14 @@ namespace NodeMarkup.Manager
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
 
-            var intersectSet = new HashSet<MarkupIntersect>();
+            var intersectSet = new HashSet<Intersection>();
             foreach (var trajectory in contour)
-                intersectSet.AddRange(MarkupIntersect.Calculate(straight, trajectory));
+                intersectSet.AddRange(Intersection.Calculate(straight, trajectory));
 
-            var intersects = intersectSet.OrderBy(i => i, MarkupIntersect.FirstComparer).ToArray();
+            var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
 
-            var beforeIntersect = MarkupIntersect.CalculateSingle(straight, item.Before);
-            var afterIntersect = MarkupIntersect.CalculateSingle(straight, item.After);
+            var beforeIntersect = Intersection.CalculateSingle(straight, item.Before);
+            var afterIntersect = Intersection.CalculateSingle(straight, item.After);
 
             var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.FirstT : float.MaxValue;
             var afterT = afterIntersect.IsIntersect ? afterIntersect.FirstT : float.MinValue;
@@ -185,7 +185,7 @@ namespace NodeMarkup.Manager
                 yield return new MarkupStylePart(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
             }
         }
-        private bool GetDashesT(PartItem item, MarkupIntersect[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, bool afterIsPriority, out float input, out float output)
+        private bool GetDashesT(PartItem item, Intersection[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, bool afterIsPriority, out float input, out float output)
         {
             input = intersects[i - 1].FirstT;
             output = intersects[i].FirstT;
@@ -225,7 +225,7 @@ namespace NodeMarkup.Manager
             }
             static bool Skip(float t, bool isPriority, float input, float output) => isPriority && ((t < 0f && input < t) || (t > 0f && output > t));
         }
-        private bool GetStylePartParams(PartItem item, MarkupIntersect[] intersects, int i, float input, float output, out Vector3 start, out Vector3 end)
+        private bool GetStylePartParams(PartItem item, Intersection[] intersects, int i, float input, float output, out Vector3 start, out Vector3 end)
         {
             start = item.Position + item.Direction * input;
             end = item.Position + item.Direction * output;
@@ -379,7 +379,7 @@ namespace NodeMarkup.Manager
 
             for (var i = index + step; isIncrement ? i < borders.Length : i >= 0; i += step)
             {
-                var intersection = MarkupIntersect.CalculateSingle(part, borders[i]);
+                var intersection = Intersection.CalculateSingle(part, borders[i]);
                 if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 1000f && Math.Abs(intersection.SecondT) < 1000f)
                 {
                     if (Mathf.Abs(intersection.FirstT) < Mathf.Abs(t))

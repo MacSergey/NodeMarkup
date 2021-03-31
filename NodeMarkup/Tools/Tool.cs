@@ -77,8 +77,6 @@ namespace NodeMarkup.Tools
         private Dictionary<ToolModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, BaseToolMode>();
         public Markup Markup { get; private set; }
 
-        public static RenderManager RenderManager => Singleton<RenderManager>.instance;
-
         public NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         private ToolBase PrevTool { get; set; }
         public IntersectionTemplate MarkupBuffer { get; private set; }
@@ -767,17 +765,6 @@ namespace NodeMarkup.Tools
             base.RenderOverlay(cameraInfo);
         }
 
-        private static float DefaultWidth => 0.2f;
-        private static bool DefaultBlend => true;
-        public static void RenderBezier(Bezier3 bezier, OverlayData data)
-        {
-            var cutValue = (data.Width ?? DefaultWidth) / 2;
-            RenderManager.OverlayEffect.DrawBezier(data.CameraInfo, data.Color ?? Colors.White, bezier, data.Width ?? DefaultWidth, data.CutStart == true ? cutValue : 0f, data.CutEnd == true ? cutValue : 0f, -1f, 1280f, false, data.AlphaBlend ?? DefaultBlend);
-        }
-
-        public static void RenderCircle(Vector3 position, OverlayData data) =>
-            RenderManager.OverlayEffect.DrawCircle(data.CameraInfo, data.Color ?? Colors.White, position, data.Width ?? DefaultWidth, -1f, 1280f, false, data.AlphaBlend ?? DefaultBlend);
-
         #endregion
 
         #region UTILITIES
@@ -794,11 +781,11 @@ namespace NodeMarkup.Tools
         }
 
         public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
-        public static Vector3 GetRayPosition(float height, out float t)
-        {
-            Segment1.Intersect(Ray.a.y, Ray.b.y, height, out t);
-            return Ray.Position(t);
-        }
+        //public static Vector3 GetRayPosition(float height, out float t)
+        //{
+        //    Segment1.Intersect(Ray.a.y, Ray.b.y, height, out t);
+        //    return Ray.Position(t);
+        //}
 
         public TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum

@@ -195,7 +195,7 @@ namespace NodeMarkup.Tools
             ResetButton.OnGUI(e);
 
         }
-        protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo) => NodeMarkupTool.RenderCircle(Centre, new OverlayData(cameraInfo) { Width = Radius * 2 });
+        protected override void RenderOverlayAfterBaskets(RenderManager.CameraInfo cameraInfo) => Centre.RenderCircle(new OverlayData(cameraInfo) { Width = Radius * 2 });
 
         protected override Target<SourceEnter>[] GetAvailableTargets(SourceEnter source)
         {

@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
 
         public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
-        protected float GetOffset(MarkupIntersect intersect, float offset)
+        protected float GetOffset(Intersection intersect, float offset)
         {
             var tan = Mathf.Tan(intersect.Angle);
             return tan != 0 ? offset / tan : 1000f;
@@ -93,7 +93,7 @@ namespace NodeMarkup.Manager
         {
             var position = trajectory.Position((startT + endT) / 2);
             var partTrajectory = new StraightTrajectory(position, position + direction, false);
-            var intersects = MarkupIntersect.Calculate(partTrajectory, borders, true);
+            var intersects = Intersection.Calculate(partTrajectory, borders, true);
             intersects = intersects.OrderBy(i => i.FirstT).ToList();
 
             var halfLength = length / 2;

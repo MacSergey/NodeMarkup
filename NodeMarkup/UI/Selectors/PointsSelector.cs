@@ -122,16 +122,16 @@ namespace NodeMarkup.UI
 
                 foreach (var bound in PointsBounds.Values)
                 {
-                    NodeMarkupTool.RenderCircle(bound.center, new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize + 0.1f });
-                    NodeMarkupTool.RenderCircle(bound.center, new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize - 0.05f });
-                    NodeMarkupTool.RenderCircle(bound.center, new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
+                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize + 0.1f });
+                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize - 0.05f });
+                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
                 }
 
                 if (IsHoverPoint)
-                    NodeMarkupTool.RenderCircle(PointsBounds[HoverPoint].center, new OverlayData(cameraInfo) { Color = Colors.Hover, Width = PointSize + Space });
+                    PointsBounds[HoverPoint].center.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = PointSize + Space });
             }
             else
-                NodeMarkupTool.RenderCircle(Position, new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
+                Position.RenderCircle(new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
         }
         protected abstract void RenderGroupBG(RenderManager.CameraInfo cameraInfo);
         protected abstract void RenderGroupFG(RenderManager.CameraInfo cameraInfo);
@@ -167,7 +167,7 @@ namespace NodeMarkup.UI
         private void RenderGroup(OverlayData data)
         {
             if (Points.Count > 2)
-                NodeMarkupTool.RenderCircle(Position, data);
+                Position.RenderCircle(data);
             else
                 LineLeaveBounds.Render(data);
         }
