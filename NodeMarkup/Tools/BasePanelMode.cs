@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : BaseToolMode
+    public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : NodeMarkupToolMode
         where EditorType : Editor
         where PanelType : SelectPropertyPanel<ObjectType, PanelType>
     {

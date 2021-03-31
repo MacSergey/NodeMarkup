@@ -275,7 +275,7 @@ namespace NodeMarkup.UI.Editors
         #endregion
     }
 
-    public abstract class EditTemplateMode<TemplateType> : BaseToolMode
+    public abstract class EditTemplateMode<TemplateType> : NodeMarkupToolMode
         where TemplateType : Template
     {
         public override ToolModeType Type => ToolModeType.PanelAction;

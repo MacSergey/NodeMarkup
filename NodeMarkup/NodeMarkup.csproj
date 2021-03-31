@@ -107,7 +107,6 @@
     <Compile Include="Markup\Markup\Markup.cs" />
     <Compile Include="Markup\Markup\SegmentMarkup.cs" />
     <Compile Include="Markup\Template.cs" />
-    <Compile Include="Tools\BaseMode.cs" />
     <Compile Include="Tools\DragPointMode.cs" />
     <Compile Include="Tools\MakeItem\MakeCrosswalk.cs" />
     <Compile Include="Tools\MakeItem\MakeFiller.cs" />

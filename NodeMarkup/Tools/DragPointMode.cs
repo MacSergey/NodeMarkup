@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class DragPointToolMode : BaseToolMode
+    public class DragPointToolMode : NodeMarkupToolMode
     {
         public override ToolModeType Type => ToolModeType.DragPoint;
         public MarkupEnterPoint DragPoint { get; set; } = null;

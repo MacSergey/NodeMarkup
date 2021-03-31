@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ModsCommon;
+using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BaseOrderToolMode : BaseToolMode
+    public abstract class BaseOrderToolMode : NodeMarkupToolMode
     {
         public override bool ShowPanel => false;
         public Vector3 Centre { get; protected set; }

@@ -1,4 +1,5 @@
-﻿using ModsCommon.Utilities;
+﻿using ModsCommon;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BaseMakeItemToolMode : BaseToolMode
+    public abstract class BaseMakeItemToolMode : NodeMarkupToolMode
     {
         protected List<MarkupPoint> TargetPoints { get; set; } = new List<MarkupPoint>();
 

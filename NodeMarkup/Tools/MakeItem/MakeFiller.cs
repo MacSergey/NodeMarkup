@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class MakeFillerToolMode : BaseToolMode
+    public class MakeFillerToolMode : NodeMarkupToolMode
     {
         public override ToolModeType Type => ToolModeType.MakeFiller;
 

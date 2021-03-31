@@ -11,10 +11,11 @@ using UnityEngine;
 using static ToolBase;
 using ColossalFramework.UI;
 using ColossalFramework;
+using ModsCommon;
 
 namespace NodeMarkup.Tools
 {
-    public class SelectToolMode : BaseToolMode
+    public class SelectToolMode : NodeMarkupToolMode
     {
         public override ToolModeType Type => ToolModeType.Select;
         public override bool ShowPanel => false;

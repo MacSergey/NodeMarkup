@@ -4,6 +4,7 @@ using ColossalFramework.Math;
 using ColossalFramework.UI;
 using HarmonyLib;
 using ICities;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
@@ -19,11 +20,10 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class NodeMarkupTool : ToolBase
+    public class NodeMarkupTool : BaseTool
     {
-        #region PROPERTIES
-
         #region STATIC
+
         public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
         public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
         public static NodeMarkupShortcut AddFillerShortcut { get; } = new NodeMarkupShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => Instance.StartCreateFiller());
@@ -37,6 +37,8 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
         public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
         public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => Instance.ApplyWholeStreet());
+
+        public static void Create() => Create<NodeMarkupTool>();
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
@@ -57,55 +59,35 @@ namespace NodeMarkup.Tools
         }
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
-        private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
-
-        public static Segment3 Ray { get; set; }
-        public static Ray MouseRay { get; private set; }
-        public static float MouseRayLength { get; private set; }
-        public static bool MouseRayValid { get; private set; }
-        public static Vector3 MousePosition { get; private set; }
-        public static Vector3 MousePositionScaled { get; private set; }
-        public static Vector3 MouseWorldPosition { get; private set; }
-        public static Vector3 CameraDirection { get; private set; }
 
         #endregion
 
-        private bool IsInit { get; set; } = false;
-        public BaseToolMode Mode { get; private set; }
-        public BaseToolMode NextMode { get; private set; }
+        #region PROPERTIES
+
+        protected Dictionary<ToolModeType, NodeMarkupToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, NodeMarkupToolMode>();
+        public new NodeMarkupToolMode Mode => base.Mode as NodeMarkupToolMode;
         public ToolModeType ModeType => Mode?.Type ?? ToolModeType.None;
-        private Dictionary<ToolModeType, BaseToolMode> ToolModes { get; set; } = new Dictionary<ToolModeType, BaseToolMode>();
+        protected override BaseToolMode DefaultMode => ToolModes[ToolModeType.Select];
+        protected override bool ShowToolTip => (Settings.ShowToolTip || Mode.Type == ToolModeType.Select) && !Panel.IsHover;
+
         public Markup Markup { get; private set; }
 
         public NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
-        private ToolBase PrevTool { get; set; }
         public IntersectionTemplate MarkupBuffer { get; private set; }
         public bool IsMarkupBufferEmpty => MarkupBuffer == null;
+        private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
         #endregion
 
         #region BASIC
-        public static NodeMarkupTool Instance { get; set; }
-        public static void Create()
+        public new static NodeMarkupTool Instance
         {
-            if (ToolsModifierControl.toolController.gameObject.GetComponent<NodeMarkupTool>() is not NodeMarkupTool)
-            {
-                Mod.Logger.Debug($"Create tool");
-                Instance = ToolsModifierControl.toolController.gameObject.AddComponent<NodeMarkupTool>();
-            }
+            get => BaseTool.Instance as NodeMarkupTool;
+            set => BaseTool.Instance = value;
         }
-        public NodeMarkupTool()
+        protected override void InitProcess()
         {
-            enabled = false;
-        }
-        public void Init()
-        {
-            if (IsInit)
-                return;
-
-            Mod.Logger.Debug($"Init tool");
-
-            ToolModes = new Dictionary<ToolModeType, BaseToolMode>()
+            ToolModes = new Dictionary<ToolModeType, NodeMarkupToolMode>()
             {
                 { ToolModeType.Select, CreateToolMode<SelectToolMode>() },
                 { ToolModeType.MakeLine, CreateToolMode<MakeLineToolMode>() },
@@ -119,174 +101,30 @@ namespace NodeMarkup.Tools
             };
 
             NodeMarkupPanel.CreatePanel();
-
-            IsInit = true;
-
-            Mod.Logger.Debug($"Tool inited");
         }
-        public Mode CreateToolMode<Mode>() where Mode : BaseToolMode => gameObject.AddComponent<Mode>();
-        public static void Remove()
-        {
-            Mod.Logger.Debug($"Remove tool");
-            if (Instance != null)
-            {
-                Destroy(Instance);
-                Instance = null;
-                Mod.Logger.Debug($"Tool removed");
-            }
-        }
-        protected override void OnDestroy()
-        {
-            Mod.Logger.Debug($"Destroy tool");
-            NodeMarkupPanel.RemovePanel();
-            ComponentPool.Clear();
-            Instance = null;
-            base.OnDestroy();
-        }
+        public override void Enable() => Enable<NodeMarkupTool>();
         protected override void OnEnable()
         {
-            Mod.Logger.Debug($"Enable tool");
-            Reset();
             base.OnEnable();
-
             Singleton<InfoManager>.instance.SetCurrentMode(InfoManager.InfoMode.None, InfoManager.SubInfoMode.Default);
         }
-        protected override void OnDisable()
-        {
-            Mod.Logger.Debug($"Disable tool");
-            Reset();
-        }
-        private void Reset()
-        {
-            NextMode = null;
-            SetModeNow(ToolModeType.Select);
-            cursorInfoLabel.isVisible = false;
-            cursorInfoLabel.text = string.Empty;
-        }
-
-        public void ToggleTool()
-        {
-            if (ToolsModifierControl.toolController.CurrentTool == this)
-                Disable();
-            else
-                Enable();
-        }
-        public void Enable()
-        {
-            PrevTool = ToolsModifierControl.toolController.CurrentTool;
-            ToolsModifierControl.SetTool<NodeMarkupTool>();
-        }
-        public void Disable(bool setPrev = true)
-        {
-            if (setPrev && PrevTool != null)
-                ToolsModifierControl.toolController.CurrentTool = PrevTool;
-            else
-                ToolsModifierControl.SetTool<DefaultTool>();
-
-            PrevTool = null;
-        }
-        public void Escape()
+        public override void Escape()
         {
             if (!Mode.OnEscape() && !Panel.OnEscape())
                 Disable();
         }
-
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
         public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
-        public void SetMode(BaseToolMode mode)
+        protected override void SetModeNow(BaseToolMode mode)
         {
-            if (Mode != mode)
-                NextMode = mode;
-        }
-        private void SetModeNow(ToolModeType mode) => SetModeNow(ToolModes[mode]);
-        private void SetModeNow(BaseToolMode mode)
-        {
-            Mode?.Deactivate();
-            var prevMode = Mode;
-            Mode = mode;
-            Mode?.Activate(prevMode);
-
+            base.SetModeNow(mode);
             Panel.Active = Mode?.ShowPanel == true;
         }
-
         public void SetMarkup(Markup markup)
         {
             Markup = markup;
             Panel.SetMarkup(Markup);
         }
-        #endregion
-
-        #region UPDATE
-        protected override void OnToolUpdate()
-        {
-            if (NextMode != null)
-            {
-                var nextMode = NextMode;
-                NextMode = null;
-                SetModeNow(nextMode);
-            }
-            if (Singleton<InfoManager>.instance.NextMode != InfoManager.InfoMode.None)
-            {
-                Disable(false);
-                return;
-            }
-
-            var uiView = UIView.GetAView();
-            MousePosition = uiView.ScreenPointToGUI(Input.mousePosition / uiView.inputScale);
-            MousePositionScaled = MousePosition * uiView.inputScale;
-            MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            MouseRayLength = Camera.main.farClipPlane;
-            MouseRayValid = !UIView.IsInsideUI() && Cursor.visible;
-            Ray = new Segment3(MouseRay.origin, MouseRay.origin + MouseRay.direction.normalized * MouseRayLength);
-            RayCast(new RaycastInput(MouseRay, MouseRayLength), out RaycastOutput output);
-            MouseWorldPosition = output.m_hitPos;
-
-            var cameraDirection = Vector3.forward.TurnDeg(Camera.main.transform.eulerAngles.y, true);
-            cameraDirection.y = 0;
-            CameraDirection = cameraDirection.normalized;
-
-            Mode.OnToolUpdate();
-            Info();
-
-            base.OnToolUpdate();
-        }
-
-        #endregion
-
-        #region INFO
-
-        private void Info()
-        {
-            var isModalShown = UIView.HasModalInput();
-            var isToolTipEnable = Settings.ShowToolTip || Mode.Type == ToolModeType.Select;
-            var isHasText = Mode.GetToolInfo() is string info && !string.IsNullOrEmpty(info);
-
-            if (!isModalShown && isToolTipEnable && !Panel.IsHover && isHasText)
-                ShowToolInfo(Mode.GetToolInfo());
-            else
-                cursorInfoLabel.isVisible = false;
-        }
-        private void ShowToolInfo(string text)
-        {
-            if (cursorInfoLabel == null)
-                return;
-
-            cursorInfoLabel.isVisible = true;
-            cursorInfoLabel.text = text ?? string.Empty;
-
-            UIView uIView = cursorInfoLabel.GetUIView();
-
-            var relativePosition = MousePosition + new Vector3(25, 25);
-
-            var screenSize = fullscreenContainer?.size ?? uIView.GetScreenResolution();
-            relativePosition.x = MathPos(relativePosition.x, cursorInfoLabel.width, screenSize.x);
-            relativePosition.y = MathPos(relativePosition.y, cursorInfoLabel.height, screenSize.y);
-
-            cursorInfoLabel.relativePosition = relativePosition;
-
-            static float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
-        }
-
         #endregion
 
         #region GUI
@@ -757,35 +595,7 @@ namespace NodeMarkup.Tools
 
         #endregion
 
-        #region OVERLAY
-
-        public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
-        {
-            Mode.RenderOverlay(cameraInfo);
-            base.RenderOverlay(cameraInfo);
-        }
-
-        #endregion
-
         #region UTILITIES
-
-        public static bool PatchGameKeyShortcutsEscapePrefix()
-        {
-            if (Instance.enabled)
-            {
-                Instance.Disable();
-                return false;
-            }
-            else
-                return true;
-        }
-
-        public static new bool RayCast(RaycastInput input, out RaycastOutput output) => ToolBase.RayCast(input, out output);
-        //public static Vector3 GetRayPosition(float height, out float t)
-        //{
-        //    Segment1.Intersect(Ray.a.y, Ray.b.y, height, out t);
-        //    return Ray.Position(t);
-        //}
 
         public TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum
@@ -880,6 +690,29 @@ namespace NodeMarkup.Tools
         public bool IsStyleInBuffer(Style.StyleType type) => StyleBuffer.ContainsKey(type.GetGroup());
 
         #endregion
+    }
+    public abstract class NodeMarkupToolMode : BaseToolMode
+    {
+        public abstract ToolModeType Type { get; }
+        protected new NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        public Markup Markup => Tool.Markup;
+    }
+    public enum ToolModeType
+    {
+        None = 0,
+
+        Select = 1,
+        MakeLine = 2,
+        MakeCrosswalk = 4,
+        MakeFiller = 8,
+        PanelAction = 16,
+        PasteEntersOrder = 32,
+        EditEntersOrder = 64,
+        ApplyIntersectionTemplateOrder = 128,
+        PointsOrder = 256,
+        DragPoint = 512,
+
+        MakeItem = MakeLine | MakeCrosswalk
     }
     public class ThreadingExtension : ThreadingExtensionBase
     {
