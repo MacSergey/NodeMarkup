@@ -695,6 +695,7 @@ namespace NodeMarkup.Tools
     {
         public abstract ToolModeType Type { get; }
         protected new NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         public Markup Markup => Tool.Markup;
     }
     public enum ToolModeType
