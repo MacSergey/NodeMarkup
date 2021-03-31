@@ -20,11 +20,9 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class NodeMarkupTool : BaseTool<NodeMarkupTool, ToolModeType>
+    public class NodeMarkupTool : BaseTool<ToolModeType>
     {
         #region STATIC
-
-        public static void Create() => Create<NodeMarkupTool>();
 
         public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
         public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
@@ -66,6 +64,7 @@ namespace NodeMarkup.Tools
 
         protected override IToolMode DefaultMode => ToolModes[ToolModeType.Select];
         protected override bool ShowToolTip => (Settings.ShowToolTip || Mode.Type == ToolModeType.Select) && !Panel.IsHover;
+        public override bool IsActivationPressed => ActivationShortcut.InputKey.IsKeyUp();
 
         public Markup Markup { get; private set; }
 
@@ -77,6 +76,7 @@ namespace NodeMarkup.Tools
         #endregion
 
         #region BASIC
+        public static void Create() => Create<NodeMarkupTool>();
         public new static NodeMarkupTool Instance
         {
             get => BaseTool.Instance as NodeMarkupTool;
@@ -99,7 +99,6 @@ namespace NodeMarkup.Tools
             yield return CreateToolMode<ApplyIntersectionTemplateOrderToolMode>();
             yield return CreateToolMode<PointsOrderToolMode>();
         }
-        public override void Enable() => Enable<NodeMarkupTool>();
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -713,15 +712,7 @@ namespace NodeMarkup.Tools
 
         MakeItem = MakeLine | MakeCrosswalk
     }
-    public class ThreadingExtension : ThreadingExtensionBase
-    {
-        public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
-        {
-            if (!UIView.HasModalInput() && !UIView.HasInputFocus() && NodeMarkupTool.ActivationShortcut.InputKey.IsKeyUp())
-            {
-                Mod.Logger.Debug($"On press shortcut");
-                NodeMarkupTool.Instance.ToggleTool();
-            }
-        }
-    }
+    public class NodeMarkupToolThreadingExtension : BaseThreadingExtension { }
+    public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension { }
+
 }

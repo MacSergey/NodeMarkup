@@ -57,7 +57,7 @@ namespace NodeMarkup
 
         private bool PatchToolControllerAwake()
         {
-            var prefix = AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Create));
+            var prefix = AccessTools.Method(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Create));
 
             return AddPrefix(prefix, typeof(ToolController), "Awake");
         }

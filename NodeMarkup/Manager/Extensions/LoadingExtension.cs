@@ -18,7 +18,6 @@ namespace NodeMarkup
                 case LoadMode.LoadAsset:
                 case LoadMode.NewMap:
                 case LoadMode.LoadMap:
-                    NodeMarkupTool.Instance.Init();
                     TemplateManager.Reload();
 
                     Mod.ShowWhatsNew();

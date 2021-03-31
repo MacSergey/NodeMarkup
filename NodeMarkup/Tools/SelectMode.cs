@@ -22,10 +22,6 @@ namespace NodeMarkup.Tools
 
         protected new NodeMarkupTool Tool => NodeMarkupTool.Instance;
 
-        protected override Segment3 Ray => NodeMarkupTool.Ray;
-        protected override bool RayValid => NodeMarkupTool.MouseRayValid;
-        protected override Vector3 MouseWorldPosition => NodeMarkupTool.MouseWorldPosition;
-
         public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNode.Id) : (IsHoverSegment ? string.Format(Localize.Tool_InfoHoverSegment, HoverSegment.Id) : Localize.Tool_SelectInfo);
 
         public override void OnPrimaryMouseClicked(Event e)
