@@ -125,34 +125,10 @@ namespace NodeMarkup.Tools
 
         #region GUI
 
-        private bool IsMouseMove { get; set; }
         protected override void OnToolGUI(Event e)
         {
-            Mode.OnToolGUI(e);
-
-            if (Shortcuts.Any(s => s.IsPressed(e)) || Panel?.OnShortcut(e) == true)
-                return;
-
-            switch (e.type)
-            {
-                case EventType.MouseDown when MouseRayValid && e.button == 0:
-                    IsMouseMove = false;
-                    Mode.OnMouseDown(e);
-                    break;
-                case EventType.MouseDrag when MouseRayValid:
-                    IsMouseMove = true;
-                    Mode.OnMouseDrag(e);
-                    break;
-                case EventType.MouseUp when MouseRayValid && e.button == 0:
-                    if (IsMouseMove)
-                        Mode.OnMouseUp(e);
-                    else
-                        Mode.OnPrimaryMouseClicked(e);
-                    break;
-                case EventType.MouseUp when MouseRayValid && e.button == 1:
-                    Mode.OnSecondaryMouseClicked();
-                    break;
-            }
+            if (!Shortcuts.Any(s => s.IsPressed(e)) && Panel?.OnShortcut(e) != true)
+                base.OnToolGUI(e);
         }
         private void StartCreateFiller()
         {
