@@ -19,211 +19,144 @@ namespace NodeMarkup
         {
             var success = true;
 
-            success &= PatchToolControllerAwake();
+            success &= Patch_ToolController_Awake();
 
-            success &= PatchNetNodeRenderInstance();
-            success &= PatchNetSegmentRenderInstance();
+            PatchNetManager(ref success);
+            PatchNetNode(ref success);
+            PatchNetSegment(ref success);
+            PatchNetInfo(ref success);
+            PatchLoading(ref success);
 
-            success &= PatchNetManagerReleaseNodeImplementation();
-            success &= PatchNetManagerReleaseSegmentImplementation();
-
-            success &= PatchNetManagerUpdateNode();
-            success &= PatchNetManagerUpdateSegment();
-            success &= PatchNetSegmentUpdateLanes();
-
-            success &= PatchNetManagerSimulationStepImpl();
-
-            success &= PatchBuildingDecorationLoadPaths();
-
+            success &= Patch_BuildingDecoration_LoadPaths();
             success &= PatchLoadAssetPanelOnLoad();
-
             success &= PatchGeneratedScrollPanelCreateOptionPanel();
             success &= PatchGameKeyShortcutsEscape();
-
-            if (Settings.RailUnderMarking)
-            {
-                success &= PatchNetInfoNodeInitNodeInfo();
-                success &= PatchNetInfoInitSegmentInfo();
-            }
-
-            if (Settings.LoadMarkingAssets)
-            {
-                success &= PatchLoadingManagerLoadCustomContent();
-                success &= PatchLoadingScreenModLoadImpl();
-            }
 
             return success;
         }
 
-        private bool PatchToolControllerAwake()
+        private bool Patch_ToolController_Awake()
         {
             var prefix = AccessTools.Method(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Create));
             return AddPrefix(prefix, typeof(ToolController), "Awake");
         }
-        private bool PatchNetNodeRenderInstance()
+
+        #region NETMANAGER
+
+        private void PatchNetManager(ref bool success)
+        {
+            success &= Patch_NetManagerRelease_NodeImplementation();
+            success &= Patch_NetManagerReleas_SegmentImplementation();
+            success &= Patch_NetManager_UpdateNode();
+            success &= Patch_NetManager_UpdateSegment();
+            success &= Patch_NetManager_SimulationStepImpl();
+        }
+
+        private bool Patch_NetManagerRelease_NodeImplementation()
+        {
+            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix));
+            var parameters = new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() };
+            return AddPrefix(prefix, typeof(NetManager), "ReleaseNodeImplementation", parameters);
+        }
+        private bool Patch_NetManagerReleas_SegmentImplementation()
+        {
+            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix));
+            var parameters = new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) };
+            return AddPrefix(prefix, typeof(NetManager), "ReleaseSegmentImplementation", parameters);
+        }
+        private bool Patch_NetManager_UpdateNode()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix));
+            var parameters = new Type[] { typeof(ushort), typeof(ushort), typeof(int) };
+            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateNode), parameters);
+        }
+        private bool Patch_NetManager_UpdateSegment()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateSegmentPostfix));
+            var parameters = new Type[] { typeof(ushort), typeof(ushort), typeof(int) };
+            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateSegment), parameters);
+        }
+        private bool Patch_NetManager_SimulationStepImpl()
+        {
+            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix));
+            return AddPostfix(postfix, typeof(NetManager), "SimulationStepImpl");
+        }
+
+        #endregion
+
+        #region NETNODE
+
+        private void PatchNetNode(ref bool success)
+        {
+            success &= Patch_NetNode_RenderInstance();
+        }
+        private bool Patch_NetNode_RenderInstance()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix));
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() };
             return AddPostfix(postfix, typeof(NetNode), nameof(NetNode.RenderInstance), parameters);
         }
 
-        private bool PatchNetSegmentRenderInstance()
+        #endregion
+
+        #region NETSEGMENT
+
+        private void PatchNetSegment(ref bool success)
+        {
+            success &= Patch_NetSegment_RenderInstance();
+            success &= Patch_NetSegment_UpdateLanes();
+        }
+        private bool Patch_NetSegment_RenderInstance()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentRenderInstancePostfix));
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(int), typeof(NetInfo), typeof(RenderManager.Instance).MakeByRefType() };
             return AddPostfix(postfix, typeof(NetSegment), nameof(NetSegment.RenderInstance), parameters);
         }
-
-        private bool PatchNetManagerUpdateNode()
-        {
-            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix));
-            var parameters = new Type[] { typeof(ushort), typeof(ushort), typeof(int) };
-            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateNode), parameters);
-        }
-
-        private bool PatchNetManagerUpdateSegment()
-        {
-            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateSegmentPostfix));
-            var parameters = new Type[] { typeof(ushort), typeof(ushort), typeof(int) };
-            return AddPostfix(postfix, typeof(NetManager), nameof(NetManager.UpdateSegment), parameters);
-        }
-
-        private bool PatchNetManagerReleaseNodeImplementation()
-        {
-            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix));
-            var parameters = new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() };
-            return AddPrefix(prefix, typeof(NetManager), "ReleaseNodeImplementation", parameters);
-        }
-        private bool PatchNetManagerReleaseSegmentImplementation()
-        {
-            var prefix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix));
-            var parameters = new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) };
-            return AddPrefix(prefix, typeof(NetManager), "ReleaseSegmentImplementation", parameters);
-        }
-
-        private bool PatchNetSegmentUpdateLanes()
+        private bool Patch_NetSegment_UpdateLanes()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetSegmentUpdateLanesPostfix));
             return AddPostfix(postfix, typeof(NetSegment), nameof(NetSegment.UpdateLanes));
         }
 
-        private bool PatchNetManagerSimulationStepImpl()
-        {
-            var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix));
-            return AddPostfix(postfix, typeof(NetManager), "SimulationStepImpl");
-        }
-        private bool PatchBuildingDecorationLoadPaths()
-        {
-            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler));
-            return AddTranspiler(transpiler, typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
-        }
-        private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
-        {
-            var segmentBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempSegmentBuffer));
-            var nodeBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempNodeBuffer));
-            var clearMethod = AccessTools.DeclaredMethod(nodeBufferField.FieldType, nameof(FastList<ushort>.Clear));
+        #endregion
 
-            var matchCount = 0;
-            var inserted = false;
-            var enumerator = instructions.GetEnumerator();
-            var prevInstruction = (CodeInstruction)null;
-            while (enumerator.MoveNext())
+        #region NETINFO
+
+        private void PatchNetInfo(ref bool success)
+        {
+            if (Settings.RailUnderMarking)
             {
-                var instruction = enumerator.Current;
-
-                if (prevInstruction != null && prevInstruction.opcode == OpCodes.Ldfld && prevInstruction.operand == nodeBufferField && instruction.opcode == OpCodes.Callvirt && instruction.operand == clearMethod)
-                    matchCount += 1;
-
-                if (!inserted && matchCount == 2)
-                {
-                    yield return new CodeInstruction(OpCodes.Ldarg_0);
-                    yield return new CodeInstruction(OpCodes.Ldloc_0);
-                    yield return new CodeInstruction(OpCodes.Ldfld, segmentBufferField);
-                    yield return new CodeInstruction(OpCodes.Ldloc_0);
-                    yield return new CodeInstruction(OpCodes.Ldfld, nodeBufferField);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(MarkupManager), nameof(MarkupManager.PlaceIntersection)));
-                    inserted = true;
-                }
-
-                if (prevInstruction != null)
-                    yield return prevInstruction;
-
-                prevInstruction = instruction;
+                success &= Patch_NetInfo_NodeInitNodeInfo();
+                success &= Patch_NetInfo_InitSegmentInfo();
             }
-
-            if (prevInstruction != null)
-                yield return prevInstruction;
         }
-        private bool PatchLoadAssetPanelOnLoad()
-        {
-            var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
-            return AddPostfix(postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
-        }
-        private bool PatchGeneratedScrollPanelCreateOptionPanel()
-        {
-            var postfix = AccessTools.Method(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix));
-            return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
-        }
-        private bool PatchGameKeyShortcutsEscape()
-        {
-            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.GameKeyShortcutsEscapeTranspiler));
-            return AddTranspiler(transpiler, typeof(GameKeyShortcuts), "Escape");
-        }
-        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
-        {
-            var instructionList = instructions.ToList();
-
-            var elseIndex = instructionList.FindLastIndex(i => i.opcode == OpCodes.Brfalse);
-            var elseLabel = (Label)instructionList[elseIndex].operand;
-
-            for (var i = elseIndex + 1; i < instructionList.Count; i += 1)
-            {
-                if (instructionList[i].labels.Contains(elseLabel))
-                {
-                    var elseInstruction = instructionList[i];
-                    var oldElseLabels = elseInstruction.labels;
-                    var newElseLabel = generator.DefineLabel();
-                    elseInstruction.labels = new List<Label>() { newElseLabel };
-                    var returnLabel = generator.DefineLabel();
-
-                    var newInstructions = new List<CodeInstruction>()
-                    {
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.enabled)}")),
-                        new CodeInstruction(OpCodes.Brfalse, newElseLabel),
-
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Escape))),
-                        new CodeInstruction(OpCodes.Br, returnLabel),
-                    };
-
-                    newInstructions[0].labels = oldElseLabels;
-                    instructionList.InsertRange(i, newInstructions);
-                    instructionList.Last().labels.Add(returnLabel);
-
-                    break;
-                }
-            }
-
-            return instructionList;
-        }
-
-
-        private bool PatchNetInfoNodeInitNodeInfo()
+        private bool Patch_NetInfo_NodeInitNodeInfo()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix));
             return AddPostfix(postfix, typeof(NetInfo), "InitNodeInfo");
         }
-        private bool PatchNetInfoInitSegmentInfo()
+        private bool Patch_NetInfo_InitSegmentInfo()
         {
             var postfix = AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitSegmentInfoPostfix));
             return AddPostfix(postfix, typeof(NetInfo), "InitSegmentInfo");
         }
-        private bool PatchLoadingManagerLoadCustomContent()
+
+        #endregion
+
+        #region LOADING
+
+        private void PatchLoading(ref bool success)
+        {
+            if (Settings.LoadMarkingAssets)
+            {
+                success &= Patch_LoadingManager_LoadCustomContent();
+                success &= Patch_LoadingScreenMod_LoadImpl();
+            }
+        }
+        private bool Patch_LoadingManager_LoadCustomContent()
         {
             var nestedType = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
             var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.LoadingManagerLoadCustomContentTranspiler));
-
             return AddTranspiler(transpiler, nestedType, "MoveNext");
         }
 
@@ -241,7 +174,7 @@ namespace NodeMarkup
 
             return LoadingTranspiler(instructions, OpCodes.Ldloc_S, 26, additional);
         }
-        private bool PatchLoadingScreenModLoadImpl()
+        private bool Patch_LoadingScreenMod_LoadImpl()
         {
             try
             {
@@ -314,5 +247,107 @@ namespace NodeMarkup
             while (enumerator.MoveNext())
                 yield return enumerator.Current;
         }
+
+        #endregion
+
+
+        private bool Patch_BuildingDecoration_LoadPaths()
+        {
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler));
+            return AddTranspiler(transpiler, typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
+        }
+        private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            var segmentBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempSegmentBuffer));
+            var nodeBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempNodeBuffer));
+            var clearMethod = AccessTools.DeclaredMethod(nodeBufferField.FieldType, nameof(FastList<ushort>.Clear));
+
+            var matchCount = 0;
+            var inserted = false;
+            var enumerator = instructions.GetEnumerator();
+            var prevInstruction = (CodeInstruction)null;
+            while (enumerator.MoveNext())
+            {
+                var instruction = enumerator.Current;
+
+                if (prevInstruction != null && prevInstruction.opcode == OpCodes.Ldfld && prevInstruction.operand == nodeBufferField && instruction.opcode == OpCodes.Callvirt && instruction.operand == clearMethod)
+                    matchCount += 1;
+
+                if (!inserted && matchCount == 2)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Ldloc_0);
+                    yield return new CodeInstruction(OpCodes.Ldfld, segmentBufferField);
+                    yield return new CodeInstruction(OpCodes.Ldloc_0);
+                    yield return new CodeInstruction(OpCodes.Ldfld, nodeBufferField);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(MarkupManager), nameof(MarkupManager.PlaceIntersection)));
+                    inserted = true;
+                }
+
+                if (prevInstruction != null)
+                    yield return prevInstruction;
+
+                prevInstruction = instruction;
+            }
+
+            if (prevInstruction != null)
+                yield return prevInstruction;
+        }
+
+        private bool PatchLoadAssetPanelOnLoad()
+        {
+            var postfix = AccessTools.Method(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix));
+            return AddPostfix(postfix, typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
+        }
+        private bool PatchGeneratedScrollPanelCreateOptionPanel()
+        {
+            var postfix = AccessTools.Method(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix));
+            return AddPostfix(postfix, typeof(GeneratedScrollPanel), "CreateOptionPanel");
+        }
+        private bool PatchGameKeyShortcutsEscape()
+        {
+            var transpiler = AccessTools.Method(typeof(Patcher), nameof(Patcher.GameKeyShortcutsEscapeTranspiler));
+            return AddTranspiler(transpiler, typeof(GameKeyShortcuts), "Escape");
+        }
+        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            var instructionList = instructions.ToList();
+
+            var elseIndex = instructionList.FindLastIndex(i => i.opcode == OpCodes.Brfalse);
+            var elseLabel = (Label)instructionList[elseIndex].operand;
+
+            for (var i = elseIndex + 1; i < instructionList.Count; i += 1)
+            {
+                if (instructionList[i].labels.Contains(elseLabel))
+                {
+                    var elseInstruction = instructionList[i];
+                    var oldElseLabels = elseInstruction.labels;
+                    var newElseLabel = generator.DefineLabel();
+                    elseInstruction.labels = new List<Label>() { newElseLabel };
+                    var returnLabel = generator.DefineLabel();
+
+                    var newInstructions = new List<CodeInstruction>()
+                    {
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
+                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.enabled)}")),
+                        new CodeInstruction(OpCodes.Brfalse, newElseLabel),
+
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
+                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Escape))),
+                        new CodeInstruction(OpCodes.Br, returnLabel),
+                    };
+
+                    newInstructions[0].labels = oldElseLabels;
+                    instructionList.InsertRange(i, newInstructions);
+                    instructionList.Last().labels.Add(returnLabel);
+
+                    break;
+                }
+            }
+
+            return instructionList;
+        }
+
+        
     }
 }
