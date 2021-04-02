@@ -52,8 +52,9 @@ namespace NodeMarkup
         public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
 #if DEBUG
         public static SavedBool AlphaBlendOverlay { get; } = new SavedBool(nameof(AlphaBlendOverlay), SettingsFile, true, true);
-        public static SavedFloat OverlayWidth { get; } = new SavedFloat(nameof(OverlayWidth), SettingsFile, 3f, true);
-        public static SavedFloat MaxOverlayWidth { get; } = new SavedFloat(nameof(MaxOverlayWidth), SettingsFile, 16f, true);
+        public static SavedFloat BorderOverlayWidth { get; } = new SavedFloat(nameof(BorderOverlayWidth), SettingsFile, 3f, true);
+        public static SavedBool RenderOverlayCentre { get; } = new SavedBool(nameof(RenderOverlayCentre), SettingsFile, false, true);
+        public static SavedBool RenderOverlayBorders { get; } = new SavedBool(nameof(RenderOverlayBorders), SettingsFile, false, true);
 #endif
         private static TabStrip TabStrip { get; set; }
         private static List<CustomUIPanel> TabPanels { get; set; }
@@ -420,8 +421,9 @@ namespace NodeMarkup
             UIHelper group = helper.AddGroup("Debug") as UIHelper;
 
             AddCheckBox(group, "Alpha blend overlay", AlphaBlendOverlay);
-            AddFloatField(group, "Overlay width", OverlayWidth, 3f, 1f);
-            AddFloatField(group, "Max overlay width", MaxOverlayWidth, 16f, 1f);
+            AddCheckBox(group, "Render overlay center", RenderOverlayCentre);
+            AddCheckBox(group, "Render overlay borders", RenderOverlayBorders);
+            AddFloatField(group, "Overlay width", BorderOverlayWidth, 3f, 1f);
         }
 #endif
 
