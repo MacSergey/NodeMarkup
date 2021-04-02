@@ -324,7 +324,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Wybierz skrzyżowanie lub segment aby zmodyfikować oznaczenia</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Wybierz punkt końcowy dla zwykłej linii</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
@@ -1329,19 +1331,39 @@ Kliknij aby edytować oznaczenia</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Przesunięcie podziału</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Dziennik zmian</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Grupuj punkty</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Zastosuj między skrzyżowaniami</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Zastosuj między skrzyżowaniami</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Zastosuj dla całej ulicy</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Zastosuj dla całej ulicy</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Istniejące oznaczenie zostanie zastąpione.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Zastosuj oznaczenia pomiędzy skrzyżowaniami</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz zastosować oznaczenia pomiędzy skrzyżowaniami?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Zastosuj oznaczenia dla całej ulicy</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz zastosować oznaczenia dla całego "{0}"?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Przeciągnij za punkt aby uzyskać linię prostopadłą</value>
   </data>

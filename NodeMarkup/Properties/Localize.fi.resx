@@ -324,7 +324,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Valitse risteys tai jaoke muokataksesi merkintöjä</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Valitse viivan päätepiste</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
@@ -1327,31 +1329,53 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Liitä leikepöydältä</value>
   </data>
-  
-  
-  
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Viivan kohdistus</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Jaa kahdeksi</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Jaon siirtymä</value>
+  </data>
   <data name="Settings_ChangeLog" xml:space="preserve">
     <value>Muutosloki</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Ryhmittele pisteet</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Aseta risteysten välille</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Aseta risteysten välille</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Aseta koko kadulle</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Aseta koko kadulle</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Liitetyt merkinnät poistavat olemassa olevat tiemerkinnät.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Aseta merkinnät risteysten välille</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Haluatko varmasti asettaa merkinnät risteysten välille?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Aseta merkinnät koko kadulle</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Haluatko varmasti asettaa merkinnät kadulle "{0}"?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Raahaa pisteen taakse saadaksesi kohtisuoran viivan</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Valitse päätepiste viivalle tai pysäytysviivalle</value>
+    <value>Valitse viivan tai pysäytysviivan päätepiste</value>
   </data>
   
 </root>
