@@ -44,7 +44,7 @@ namespace NodeMarkup.Manager
         }
 
         public override RegularLineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
-        public override void CopyTo(RegularLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
         }
 
         public override RegularLineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
-        public override void CopyTo(RegularLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -176,7 +176,7 @@ namespace NodeMarkup.Manager
         }
 
         public override RegularLineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(RegularLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -285,7 +285,7 @@ namespace NodeMarkup.Manager
             }
         }
         public override RegularLineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(RegularLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -391,7 +391,7 @@ namespace NodeMarkup.Manager
         }
 
         public override RegularLineStyle CopyLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space);
-        public override void CopyTo(RegularLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is SharkTeethLineStyle sharkTeethTarget)

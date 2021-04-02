@@ -50,7 +50,7 @@ namespace NodeMarkup.Manager
         }
 
         public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, Width, Offset);
-        public override void CopyTo(StopLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
         }
 
         public override StopLineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
-        public override void CopyTo(StopLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -144,7 +144,7 @@ namespace NodeMarkup.Manager
             Offset = GetOffsetProperty(offset);
         }
         public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(StopLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
@@ -224,7 +224,7 @@ namespace NodeMarkup.Manager
         }
 
         public override StopLineStyle CopyLineStyle() => new SolidAndDashedStopLineStyle(Color, Width, DashLength, SpaceLength, Offset);
-        public override void CopyTo(StopLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -292,7 +292,7 @@ namespace NodeMarkup.Manager
         }
 
         public override StopLineStyle CopyLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
-        public override void CopyTo(StopLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is SharkTeethStopLineStyle sharkTeethTarget)

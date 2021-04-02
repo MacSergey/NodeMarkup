@@ -140,7 +140,6 @@ namespace NodeMarkup.Manager
     {
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public virtual void CopyTo(StyleType target) => base.CopyTo(target);
         public override LineStyle CopyStyle() => CopyLineStyle();
         public abstract StyleType CopyLineStyle();
     }

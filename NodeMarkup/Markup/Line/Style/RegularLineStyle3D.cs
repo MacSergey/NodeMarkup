@@ -16,7 +16,7 @@ namespace NodeMarkup.Manager
         {
             Elevation = GetElevationProperty(elevation);
         }
-        public override void CopyTo(RegularLineStyle target)
+        public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is Line3DStyle pavementTarget)
