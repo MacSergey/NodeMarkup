@@ -6,6 +6,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
@@ -45,7 +46,7 @@ namespace NodeMarkup.UI.Panel
 
         public Markup Markup { get; private set; }
         private bool NeedUpdateOnVisible { get; set; }
-        public bool IsHover => isVisible && (this.IsHover(NodeMarkupTool.MousePosition) || Header.Buttons.PopupIsHover);
+        public bool IsHover => (isVisible && this.IsHover(NodeMarkupTool.MousePosition)) || components.Any(c => c.isVisible && c.IsHover(NodeMarkupTool.MousePosition));
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }

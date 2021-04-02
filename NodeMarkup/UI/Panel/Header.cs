@@ -80,7 +80,6 @@ namespace NodeMarkup.UI.Panel
         private AdditionallyHeaderButton Additionally { get; }
         private PanelHeaderButton PasteButton { get; }
         public MarkupType Type { get; set; }
-        public bool PopupIsHover => Additionally.Popup?.IsHover(NodeMarkupTool.MousePosition) == true;
 
         public PanelHeaderContent()
         {
