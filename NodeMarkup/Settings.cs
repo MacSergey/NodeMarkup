@@ -50,7 +50,11 @@ namespace NodeMarkup
         public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
         public static SavedBool GroupPointsOverlay { get; } = new SavedBool(nameof(GroupPointsOverlay), SettingsFile, true, true);
         public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
-
+#if DEBUG
+        public static SavedBool AlphaBlendOverlay { get; } = new SavedBool(nameof(AlphaBlendOverlay), SettingsFile, true, true);
+        public static SavedFloat OverlayWidth { get; } = new SavedFloat(nameof(OverlayWidth), SettingsFile, 3f, true);
+        public static SavedFloat MaxOverlayWidth { get; } = new SavedFloat(nameof(MaxOverlayWidth), SettingsFile, 16f, true);
+#endif
         private static TabStrip TabStrip { get; set; }
         private static List<CustomUIPanel> TabPanels { get; set; }
 
@@ -88,6 +92,11 @@ namespace NodeMarkup
 
             var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
             AddSupport(supportTab);
+
+#if DEBUG
+            var debugTab = CreateTab(mainPanel, "Debug");
+            AddDebug(debugTab);
+#endif
 
             TabStrip.SelectedTab = 0;
         }
@@ -215,8 +224,8 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
-            AddDistanceSetting(group);
-            AddLODSetting(group);
+            AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
+            AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
             AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
             group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
@@ -241,8 +250,6 @@ namespace NodeMarkup
 
             static void OnChanged() => NodeMarkupPanel.Instance.UpdatePanel();
         }
-        private static void AddDistanceSetting(UIHelper group) => AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
-        private static void AddLODSetting(UIHelper group) => AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
         private static void UpdateAllMarkings()
         {
             MarkupManager.NodeManager.AddAllToUpdate();
@@ -252,6 +259,7 @@ namespace NodeMarkup
         #endregion
 
         #region NOTIFICATIONS
+
         private static void AddNotifications(UIHelperBase helper)
         {
             UIHelper group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
@@ -259,6 +267,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_ShowWhatsNew, ShowWhatsNew);
             AddCheckBox(group, Localize.Settings_ShowOnlyMajor, ShowOnlyMajor);
         }
+
         #endregion
 
         #endregion
@@ -400,6 +409,21 @@ namespace NodeMarkup
         private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
         private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
         private static void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, () => Mod.ShowWhatsNew(new Version(1, 0), true));
+
+        #endregion
+
+        #region DEBUG
+
+#if DEBUG
+        private static void AddDebug(UIHelperBase helper)
+        {
+            UIHelper group = helper.AddGroup("Debug") as UIHelper;
+
+            AddCheckBox(group, "Alpha blend overlay", AlphaBlendOverlay);
+            AddFloatField(group, "Overlay width", OverlayWidth, 3f, 1f);
+            AddFloatField(group, "Max overlay width", MaxOverlayWidth, 16f, 1f);
+        }
+#endif
 
         #endregion
 
