@@ -10,7 +10,7 @@ namespace NodeMarkup.UI
     {
         private static string RoadsOptionPanel => nameof(RoadsOptionPanel);
         private static int ButtonSize => 31;
-        private static Vector2 ButtonPosition => new Vector3(64, 38);
+        private static Vector2 ButtonPosition => new Vector3(59, 38);
 
         public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result)
         {
