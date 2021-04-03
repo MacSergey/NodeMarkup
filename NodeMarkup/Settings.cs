@@ -71,8 +71,15 @@ namespace NodeMarkup
 
         public static void OnSettingsUI(UIHelperBase helper)
         {
-            var mainPanel = (helper as UIHelper).self as UIScrollablePanel;
-            mainPanel.autoLayoutPadding = new RectOffset(0, 0, 0, 25);
+            var scrollable = (helper as UIHelper).self as UIScrollablePanel;
+            var mainPanel = scrollable.parent as UIPanel;
+
+            foreach (var components in mainPanel.components)
+                components.isVisible = false;
+
+            mainPanel.autoLayout = true;
+            mainPanel.autoLayoutDirection = LayoutDirection.Vertical;
+            mainPanel.autoLayoutPadding = new RectOffset(0, 0, 0, 15);
             CreateTabStrip(mainPanel);
 
             var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
@@ -86,8 +93,7 @@ namespace NodeMarkup
             AddKeyMapping(shortcutTab);
 
             var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
-            if (SceneManager.GetActiveScene().name is string scene && (scene != "MainMenu" && scene != "IntroScreen"))
-                AddBackupMarking(backupTab);
+            AddBackupMarking(backupTab);
             AddBackupStyleTemplates(backupTab);
             AddBackupIntersectionTemplates(backupTab);
 
@@ -101,53 +107,38 @@ namespace NodeMarkup
 
             TabStrip.SelectedTab = 0;
         }
-        private static void CreateTabStrip(UIScrollablePanel mainPanel)
+        private static void CreateTabStrip(UIPanel mainPanel)
         {
             TabPanels = new List<CustomUIPanel>();
 
             TabStrip = mainPanel.AddUIComponent<TabStrip>();
             TabStrip.SelectedTabChanged += OnSelectedTabChanged;
             TabStrip.SelectedTab = -1;
-            TabStrip.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal - mainPanel.scrollPadding.horizontal;
+            TabStrip.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal;
             TabStrip.eventSizeChanged += (UIComponent component, Vector2 value) => TabStripSizeChanged(mainPanel);
         }
 
-        private static void TabStripSizeChanged(UIScrollablePanel mainPanel)
+        private static void TabStripSizeChanged(UIPanel mainPanel)
         {
             foreach (var tab in TabPanels)
                 SetTabSize(tab, mainPanel);
         }
 
-        private static UIHelper CreateTab(UIScrollablePanel mainPanel, string name)
+        private static UIHelper CreateTab(UIPanel mainPanel, string name)
         {
             TabStrip.AddTab(name, 1.25f);
 
-            var tabPanel = mainPanel.AddUIComponent<CustomUIPanel>();
+            var tabPanel = mainPanel.AddUIComponent<AdvancedScrollablePanel>();
+            tabPanel.Content.autoLayoutPadding = new RectOffset(8, 8, 0, 0);
             SetTabSize(tabPanel, mainPanel);
             tabPanel.isVisible = false;
             TabPanels.Add(tabPanel);
 
-            var panel = tabPanel.AddUIComponent<UIScrollablePanel>();
-            tabPanel.AddScrollbar(panel);
-            panel.verticalScrollbar.eventVisibilityChanged += ScrollbarVisibilityChanged;
-
-            panel.size = tabPanel.size;
-            panel.relativePosition = Vector2.zero;
-            panel.autoLayout = true;
-            panel.autoLayoutDirection = LayoutDirection.Vertical;
-            panel.clipChildren = true;
-            panel.scrollWheelDirection = UIOrientation.Vertical;
-
-            return new UIHelper(panel);
-
-            void ScrollbarVisibilityChanged(UIComponent component, bool value)
-            {
-                panel.width = tabPanel.width - (panel.verticalScrollbar.isVisible ? panel.verticalScrollbar.width : 0);
-            }
+            return new UIHelper(tabPanel.Content);
         }
-        private static void SetTabSize(UIPanel panel, UIScrollablePanel mainPanel)
+        private static void SetTabSize(UIPanel panel, UIPanel mainPanel)
         {
-            panel.size = new Vector2(mainPanel.width - mainPanel.scrollPadding.horizontal, mainPanel.height - mainPanel.scrollPadding.vertical - 2 * mainPanel.autoLayoutPadding.vertical - TabStrip.height);
+            panel.size = new Vector2(mainPanel.width, mainPanel.height - mainPanel.autoLayoutPadding.vertical - TabStrip.height);
         }
 
         private static void OnSelectedTabChanged(int index)
@@ -304,6 +295,9 @@ namespace NodeMarkup
         #region BACKUP
         private static void AddBackupMarking(UIHelperBase helper)
         {
+            if (!ItemsExtension.InGame)
+                return;
+
             UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}", () => MarkupManager.Clear());
