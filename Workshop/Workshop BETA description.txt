@@ -1,0 +1,5 @@
+[HR][/HR] 
+[url=https://github.com/MacSergey/NodeMarkup/wiki][img]https://i.imgur.com/fkaKgIp.png[/img][/url] 
+[code][h1]WARNING![/h1]
+[list][h2]This is BETA version. It is for testing new features and may contain errors that could break or delete your markings. If you subscribed to it by mistake, then switch to the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403]STABLE VERSION[/url][/h2][/list]
+[/code]
