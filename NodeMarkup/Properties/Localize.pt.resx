@@ -324,7 +324,9 @@ Clique para editar marcações</value>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Selecione um nó ou segmento para editar marcações</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Selecione um ponto próprio para uma linha normal</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
@@ -1317,26 +1319,60 @@ Clique para editar marcações</value>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Quantidade de cores</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Uma</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Duas</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Da área de transferência</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Alinhamento da linha</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Dividir em dois</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Dividir deslocamento</value>
+  </data>
+  <data name="Settings_ChangeLog" xml:space="preserve">
+    <value>Registo de alterações</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Agrupar pontos</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Aplicar entre intercessões</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Aplicar entre intercessões</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Aplicar para a rua toda</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Aplicar para a rua toda</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Vai substituir todos as marcações existente.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Aplicar marcações entre intercessões</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Quer mesmo aplicar qualquer marcação entre as intercessões?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Aplicar marcações para a rua toda</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Quer mesmo aplicar a marcação a toda "{0}"?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Arraste para trás do ponto para uma linha perpendicular</value>
   </data>
