@@ -25,6 +25,7 @@ namespace NodeMarkup
         protected override string ModId => nameof(NodeMarkup);
         protected override List<Version> ModVersions { get; } = new List<Version>
         {
+            new Version("1.7"),
             new Version("1.6"),
             new Version("1.5.3"),
             new Version("1.5.2"),
@@ -76,11 +77,11 @@ namespace NodeMarkup
             messageBox.MessageText = Localize.Mod_LoaledWithErrors;
         }
 
-        public static void ShowWhatsNew(Version fromVersion = null, bool forceShow = false)
+        public static void ShowWhatsNew()
         {
-            fromVersion ??= new Version(Settings.WhatsNewVersion);
+            var fromVersion = new Version(Settings.WhatsNewVersion);
 
-            if ((!Settings.ShowWhatsNew || Version <= fromVersion) && !forceShow)
+            if (!Settings.ShowWhatsNew || Version <= fromVersion)
                 return;
 
             var messages = GetWhatsNewMessages(fromVersion);
@@ -99,8 +100,7 @@ namespace NodeMarkup
             {
                 var messageBox = MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
                 messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, ShortName);
-                if (!forceShow)
-                    messageBox.OnButtonClick = Confirm;
+                messageBox.OnButtonClick = Confirm;
                 messageBox.OnGetStableClick = GetStable;
                 messageBox.OkText = NodeMarkupMessageBox.Ok;
                 messageBox.GetStableText = Localize.Mod_BetaWarningGetStable;
@@ -118,7 +118,7 @@ namespace NodeMarkup
                 return true;
             }
         }
-        private static Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
+        public static Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
         {
             var messages = new Dictionary<Version, string>(Versions.Count);
 #if BETA
@@ -141,7 +141,7 @@ namespace NodeMarkup
 
             return messages;
         }
-        private static string GetVersionString(Version version) => string.Format(Localize.Mod_WhatsNewVersion, version == Version ? VersionString : version.ToString());
+        public static string GetVersionString(Version version) => string.Format(Localize.Mod_WhatsNewVersion, version == Version ? VersionString : version.ToString());
         private static string GetWhatsNew(Version version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.ToString().Replace('.', '_')}", Localize.Culture);
 
         public static void ShowBetaWarning()

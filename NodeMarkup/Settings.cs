@@ -409,7 +409,16 @@ namespace NodeMarkup
         private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.Utilities.OpenUrl(Mod.WikiUrl));
         private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
         private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
-        private static void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, () => Mod.ShowWhatsNew(new Version(1, 0), true));
+        private static void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, ShowChangeLog);
+
+        private static void ShowChangeLog()
+        {
+            var messages = Mod.GetWhatsNewMessages(new Version(1, 0));
+            var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+            messageBox.CaptionText = Localize.Settings_ChangeLog;
+            messageBox.OkText = NodeMarkupMessageBox.Ok;
+            messageBox.Init(messages, Mod.GetVersionString, false);
+        }
 
         #endregion
 
