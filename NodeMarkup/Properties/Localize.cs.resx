@@ -1332,7 +1332,9 @@ Klikněte pro změnu značení</value>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Ze schránky</value>
   </data>
-  
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Zarovnání čáry</value>
+  </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
     <value>Rozdělit na dvě</value>
   </data>
@@ -1345,20 +1347,38 @@ Klikněte pro změnu značení</value>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Seskupovat body</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Použít mezi křižovatkami</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Použít mezi křižovatkami</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Použít pro celou ulici</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Použít pro celou ulici</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Původní značení bude odstraněno.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Použít značení mezi křižovatkami</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Určitě chcete použít značení mezi křižovatkami?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Použít značení pro celou ulici</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Určitě chcete použít značení pro celou {0}?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Táhněte za bod pro vytvoření kolmé čáry</value>
   </data>
-  
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Vyberte koncový bod čáry</value>
+  </data>
   
 </root>
