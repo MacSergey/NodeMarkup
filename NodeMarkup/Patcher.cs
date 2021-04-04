@@ -164,16 +164,13 @@ namespace NodeMarkup
         }
         private bool Patch_LoadingScreenMod_LoadImpl()
         {
-            try
+            if ((AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader")) is not Type type)
             {
-                var type = AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader");
-                return AddTranspiler(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler), type, "LoadImpl");
-            }
-            catch (Exception error)
-            {
-                Mod.Logger.Warning($"LSM not founded", error);
+                Mod.Logger.Warning($"LSM not founded, patch skip");
                 return true;
             }
+            else
+                return AddTranspiler(typeof(Patcher), nameof(Patcher.LoadingScreenModLoadImplTranspiler), type, "LoadImpl");
         }
         private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
@@ -331,6 +328,6 @@ namespace NodeMarkup
             return instructionList;
         }
 
-        
+
     }
 }
