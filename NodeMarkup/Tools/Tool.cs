@@ -15,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -76,7 +77,7 @@ namespace NodeMarkup.Tools
         #endregion
 
         #region BASIC
-        public static void Create() => Create<NodeMarkupTool>();
+
         public new static NodeMarkupTool Instance
         {
             get => BaseTool.Instance as NodeMarkupTool;

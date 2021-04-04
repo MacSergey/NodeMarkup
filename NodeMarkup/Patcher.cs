@@ -19,7 +19,9 @@ namespace NodeMarkup
         {
             var success = true;
 
-            success &= Patch_ToolController_Awake();
+
+            success &= Patch_ToolController_Awake<NodeMarkupTool>();
+            success &= Patch_GameKeyShortcuts_Escape<NodeMarkupTool>();
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
@@ -28,16 +30,10 @@ namespace NodeMarkup
             PatchLoading(ref success);
 
             success &= Patch_BuildingDecoration_LoadPaths();
-            success &= PatchLoadAssetPanelOnLoad();
-            success &= PatchGeneratedScrollPanelCreateOptionPanel();
-            success &= PatchGameKeyShortcutsEscape();
+            success &= Patch_LoadAssetPanel_OnLoad();
+            success &= Patch_GeneratedScrollPanel_CreateOptionPanel();
 
             return success;
-        }
-
-        private bool Patch_ToolController_Awake()
-        {
-            return AddPrefix(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Create), typeof(ToolController), "Awake");
         }
 
         #region NETMANAGER
@@ -280,57 +276,13 @@ namespace NodeMarkup
                 yield return prevInstruction;
         }
 
-        private bool PatchLoadAssetPanelOnLoad()
+        private bool Patch_LoadAssetPanel_OnLoad()
         {
             return AddPostfix(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix), typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
-        private bool PatchGeneratedScrollPanelCreateOptionPanel()
+        private bool Patch_GeneratedScrollPanel_CreateOptionPanel()
         {
             return AddPostfix(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix), typeof(GeneratedScrollPanel), "CreateOptionPanel");
         }
-        private bool PatchGameKeyShortcutsEscape()
-        {
-            return AddTranspiler(typeof(Patcher), nameof(Patcher.GameKeyShortcutsEscapeTranspiler), typeof(GameKeyShortcuts), "Escape");
-        }
-        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
-        {
-            var instructionList = instructions.ToList();
-
-            var elseIndex = instructionList.FindLastIndex(i => i.opcode == OpCodes.Brfalse);
-            var elseLabel = (Label)instructionList[elseIndex].operand;
-
-            for (var i = elseIndex + 1; i < instructionList.Count; i += 1)
-            {
-                if (instructionList[i].labels.Contains(elseLabel))
-                {
-                    var elseInstruction = instructionList[i];
-                    var oldElseLabels = elseInstruction.labels;
-                    var newElseLabel = generator.DefineLabel();
-                    elseInstruction.labels = new List<Label>() { newElseLabel };
-                    var returnLabel = generator.DefineLabel();
-
-                    var newInstructions = new List<CodeInstruction>()
-                    {
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.enabled)}")),
-                        new CodeInstruction(OpCodes.Brfalse, newElseLabel),
-
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), $"get_{nameof(NodeMarkupTool.Instance)}")),
-                        new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(NodeMarkupTool), nameof(NodeMarkupTool.Escape))),
-                        new CodeInstruction(OpCodes.Br, returnLabel),
-                    };
-
-                    newInstructions[0].labels = oldElseLabels;
-                    instructionList.InsertRange(i, newInstructions);
-                    instructionList.Last().labels.Add(returnLabel);
-
-                    break;
-                }
-            }
-
-            return instructionList;
-        }
-
-        
     }
 }

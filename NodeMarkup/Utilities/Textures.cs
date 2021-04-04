@@ -102,18 +102,18 @@ namespace NodeMarkup.Utilities
             Atlas = TextureHelper.CreateAtlas(nameof(NodeMarkup), Files);
         }
 
-        private static SpriteParams[] OrderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton).ToArray();
+        private static UITextureAtlas.SpriteInfo[] OrderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton).ToArray();
 
-        private static SpriteParams[] Styles(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 19, 19, StyleNames).ToArray();
+        private static UITextureAtlas.SpriteInfo[] Styles(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 19, 19, StyleNames).ToArray();
 
-        private static SpriteParams[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut, BeetwenIntersections, WholeStreet).ToArray();
+        private static UITextureAtlas.SpriteInfo[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut, BeetwenIntersections, WholeStreet).ToArray();
 
-        private static SpriteParams[] ListItem(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite).ToArray();
+        private static UITextureAtlas.SpriteInfo[] ListItem(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite).ToArray();
 
-        private static SpriteParams[] Button(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover).ToArray();
+        private static UITextureAtlas.SpriteInfo[] Button(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover).ToArray();
 
 
-        private static SpriteParams[] Arrows(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight).ToArray();
+        private static UITextureAtlas.SpriteInfo[] Arrows(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight).ToArray();
 
 
     }
