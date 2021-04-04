@@ -9,48 +9,10 @@ using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public static class TextureUtil
+    public static class NodeMarkupTextures
     {
         public static UITextureAtlas Atlas;
         public static Texture2D Texture => Atlas.texture;
-
-        private static Dictionary<string, Action<int, int, Rect>> Files { get; } = new Dictionary<string, Action<int, int, Rect>>
-        {
-            {nameof(OrderButtons), OrderButtons},
-            {nameof(Styles), Styles},
-            {nameof(HeaderButtons), HeaderButtons},
-            {nameof(ListItem), ListItem},
-            {nameof(Button), Button},
-            {nameof(Arrows), Arrows},
-        };
-
-        static TextureUtil()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var textures = Files.Select(f => assembly.LoadTextureFromAssembly(f.Key)).ToArray();
-            Atlas = TextureHelper.CreateAtlas(textures, nameof(NodeMarkup), out Rect[] rects);
-            var actions = Files.Values.ToArray();
-
-            for (var i = 0; i < actions.Length; i += 1)
-                actions[i](textures[i].width, textures[i].height, rects[i]);
-        }
-
-        private static void OrderButtons(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton);
-
-        private static void Styles(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, 19, 19, StyleNames);
-
-        private static void HeaderButtons(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut, BeetwenIntersections, WholeStreet);
-
-        private static void ListItem(int texWidth, int texHeight, Rect rect) => Atlas.AddSprites(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite);
-
-        private static void Button(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover);
-
-
-        private static void Arrows(int texWidth, int texHeight, Rect rect)
-            => Atlas.AddSprites(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight);
 
         public static string TurnLeftButton => nameof(TurnLeftButton);
         public static string FlipButton => nameof(FlipButton);
@@ -124,5 +86,35 @@ namespace NodeMarkup.Utilities
 
         public static string ArrowDown { get; } = nameof(ArrowDown);
         public static string ArrowRight { get; } = nameof(ArrowRight);
+
+        private static Dictionary<string, TextureHelper.SpriteParamsGetter> Files { get; } = new Dictionary<string, TextureHelper.SpriteParamsGetter>
+        {
+            {nameof(OrderButtons), OrderButtons},
+            {nameof(Styles), Styles},
+            {nameof(HeaderButtons), HeaderButtons},
+            {nameof(ListItem), ListItem},
+            {nameof(Button), Button},
+            {nameof(Arrows), Arrows},
+        };
+
+        static NodeMarkupTextures()
+        {
+            Atlas = TextureHelper.CreateAtlas(nameof(NodeMarkup), Files);
+        }
+
+        private static SpriteParams[] OrderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton).ToArray();
+
+        private static SpriteParams[] Styles(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 19, 19, StyleNames).ToArray();
+
+        private static SpriteParams[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut, BeetwenIntersections, WholeStreet).ToArray();
+
+        private static SpriteParams[] ListItem(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite).ToArray();
+
+        private static SpriteParams[] Button(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover).ToArray();
+
+
+        private static SpriteParams[] Arrows(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesParams(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight).ToArray();
+
+
     }
 }

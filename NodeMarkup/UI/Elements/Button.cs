@@ -24,17 +24,17 @@ namespace NodeMarkup.UI
 
         public override void Start()
         {
-            atlas = TextureUtil.Atlas;
+            atlas = NodeMarkupTextures.Atlas;
 
-            normalBgSprite = TextureUtil.ButtonNormal;
-            hoveredBgSprite = TextureUtil.ButtonHover;
-            pressedBgSprite = TextureUtil.ButtonHover;
-            focusedBgSprite = TextureUtil.ButtonActive;
+            normalBgSprite = NodeMarkupTextures.ButtonNormal;
+            hoveredBgSprite = NodeMarkupTextures.ButtonHover;
+            pressedBgSprite = NodeMarkupTextures.ButtonHover;
+            focusedBgSprite = NodeMarkupTextures.ButtonActive;
 
-            normalFgSprite = TextureUtil.Icon;
-            hoveredFgSprite = TextureUtil.IconHover;
-            pressedFgSprite = TextureUtil.Icon;
-            focusedFgSprite = TextureUtil.Icon;
+            normalFgSprite = NodeMarkupTextures.Icon;
+            hoveredFgSprite = NodeMarkupTextures.IconHover;
+            pressedFgSprite = NodeMarkupTextures.Icon;
+            focusedFgSprite = NodeMarkupTextures.Icon;
 
             relativePosition = ButtonPosition;
             size = new Vector2(ButtonSize, ButtonSize);

@@ -10,7 +10,7 @@ namespace NodeMarkup.UI.Editors
 {
     public class ApplyTemplateHeaderButton : HeaderPopupButton<ApplyTemplatePopupPanel>
     {
-        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
 
         protected Action<StyleTemplate> OnSelect { get; set; }
 

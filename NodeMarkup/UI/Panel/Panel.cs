@@ -359,8 +359,8 @@ namespace NodeMarkup.UI.Panel
         public SizeChanger()
         {
             size = new Vector2(9, 9);
-            atlas = TextureHelper.CommonAtlas;
-            backgroundSprite = TextureHelper.ResizeSprite;
+            atlas = CommonTextures.Atlas;
+            backgroundSprite = CommonTextures.ResizeSprite;
             color = new Color32(255, 255, 255, 160);
 
             var handle = AddUIComponent<CustomUIDragHandle>();

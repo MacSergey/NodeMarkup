@@ -42,11 +42,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ExcelExportMode = MultipleSheets
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		RESX_ExcelExportMode = MultipleSheets
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 EndGlobal

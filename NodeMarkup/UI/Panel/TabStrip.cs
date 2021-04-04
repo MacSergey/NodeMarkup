@@ -25,12 +25,12 @@ namespace NodeMarkup.UI.Panel
 
         protected override void SetStyle(PanelTab tabButton)
         {
-            tabButton.atlas = TextureHelper.CommonAtlas;
+            tabButton.atlas = CommonTextures.Atlas;
 
-            tabButton.normalBgSprite = TextureHelper.Tab;
-            tabButton.focusedBgSprite = TextureHelper.Tab;
-            tabButton.hoveredBgSprite = TextureHelper.Tab;
-            tabButton.disabledBgSprite = TextureHelper.Tab;
+            tabButton.normalBgSprite = CommonTextures.Tab;
+            tabButton.focusedBgSprite = CommonTextures.Tab;
+            tabButton.hoveredBgSprite = CommonTextures.Tab;
+            tabButton.disabledBgSprite = CommonTextures.Tab;
 
             tabButton.color = NormalColor;
             tabButton.hoveredColor = HoverColor;

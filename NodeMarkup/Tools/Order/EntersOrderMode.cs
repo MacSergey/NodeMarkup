@@ -26,22 +26,22 @@ namespace NodeMarkup.Tools
 
         public BaseEntersOrderToolMode()
         {
-            TurnLeftButton = new GUIButton(1, 3, 1, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.TurnLeftButton].region);
+            TurnLeftButton = new GUIButton(1, 3, 1, 2, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnLeftButton].region);
             TurnLeftButton.OnClick += TurnLeftClick;
 
-            FlipButton = new GUIButton(2, 3, 1, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.FlipButton].region);
+            FlipButton = new GUIButton(2, 3, 1, 2, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.FlipButton].region);
             FlipButton.OnClick += FlipClick;
 
-            TurnRightButton = new GUIButton(3, 3, 1, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.TurnRightButton].region);
+            TurnRightButton = new GUIButton(3, 3, 1, 2, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnRightButton].region);
             TurnRightButton.OnClick += TurnRightClick;
 
-            ApplyButton = new GUIButton(1, 3, 2, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.ApplyButton].region);
+            ApplyButton = new GUIButton(1, 3, 2, 2, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ApplyButton].region);
             ApplyButton.OnClick += ApplyClick;
 
-            NotApplyButton = new GUIButton(2, 3, 2, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.NotApplyButton].region);
+            NotApplyButton = new GUIButton(2, 3, 2, 2, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.NotApplyButton].region);
             NotApplyButton.OnClick += NotApplyClick;
 
-            ResetButton = new GUIButton(3, 3, 2, 2, TextureUtil.Texture, TextureUtil.Atlas[TextureUtil.ResetButton].region);
+            ResetButton = new GUIButton(3, 3, 2, 2, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ResetButton].region);
             ResetButton.OnClick += ResetClick;
         }
         private void TurnLeftClick()

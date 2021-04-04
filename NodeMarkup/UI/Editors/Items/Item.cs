@@ -41,8 +41,8 @@ namespace NodeMarkup.UI.Editors
             AddLable();
 
             clipChildren = true;
-            atlas = TextureUtil.Atlas;
-            normalBgSprite = TextureUtil.ListItemSprite;
+            atlas = NodeMarkupTextures.Atlas;
+            normalBgSprite = NodeMarkupTextures.ListItemSprite;
             height = 25;
         }
 
@@ -121,10 +121,10 @@ namespace NodeMarkup.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<CustomUIButton>();
-            DeleteButton.atlas = TextureHelper.CommonAtlas;
-            DeleteButton.normalBgSprite = TextureHelper.DeleteNormal;
-            DeleteButton.hoveredBgSprite = TextureHelper.DeleteHover;
-            DeleteButton.pressedBgSprite = TextureHelper.DeletePressed;
+            DeleteButton.atlas = CommonTextures.Atlas;
+            DeleteButton.normalBgSprite = CommonTextures.DeleteNormal;
+            DeleteButton.hoveredBgSprite = CommonTextures.DeleteHover;
+            DeleteButton.pressedBgSprite = CommonTextures.DeletePressed;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }
@@ -220,7 +220,7 @@ namespace NodeMarkup.UI.Editors
         public StyleIcon()
         {
             Thumbnail = AddUIComponent<CustomUIButton>();
-            Thumbnail.atlas = TextureUtil.Atlas;
+            Thumbnail.atlas = NodeMarkupTextures.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;
         }

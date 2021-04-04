@@ -83,13 +83,13 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeaderContent()
         {
-            AddButton(TextureUtil.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
+            AddButton(NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
 
-            AddButton(TextureUtil.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut, CopyClick);
-            PasteButton = AddButton(TextureUtil.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
-            AddButton(TextureUtil.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
+            AddButton(NodeMarkupTextures.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut, CopyClick);
+            PasteButton = AddButton(NodeMarkupTextures.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            AddButton(NodeMarkupTextures.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
 
-            Additionally = AddButton<AdditionallyHeaderButton>(TextureUtil.Additionally, NodeMarkup.Localize.Panel_Additional);
+            Additionally = AddButton<AdditionallyHeaderButton>(NodeMarkupTextures.Additionally, NodeMarkup.Localize.Panel_Additional);
             Additionally.OpenPopupEvent += OnAdditionallyPopup;
 
             SetPasteEnabled();
@@ -99,15 +99,15 @@ namespace NodeMarkup.UI.Panel
         {
             var buttons = new List<PanelHeaderButton>
             {
-                AddPopupButton(popup.Content, TextureUtil.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
-                AddPopupButton(popup.Content, TextureUtil.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
-                AddPopupButton(popup.Content, TextureUtil.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
-                AddPopupButton(popup.Content, TextureUtil.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalksShortcut),
+                AddPopupButton(popup.Content, NodeMarkupTextures.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
+                AddPopupButton(popup.Content, NodeMarkupTextures.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
+                AddPopupButton(popup.Content, NodeMarkupTextures.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
+                AddPopupButton(popup.Content, NodeMarkupTextures.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalksShortcut),
             };
             if (Type == MarkupType.Segment)
             {
-                buttons.Add(AddPopupButton(popup.Content, TextureUtil.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
-                buttons.Add(AddPopupButton(popup.Content, TextureUtil.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut));
+                buttons.Add(AddPopupButton(popup.Content, NodeMarkupTextures.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
+                buttons.Add(AddPopupButton(popup.Content, NodeMarkupTextures.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut));
             }
 
             foreach (var button in buttons)
@@ -142,7 +142,7 @@ namespace NodeMarkup.UI.Panel
     }
     public class SimpleHeaderButton : HeaderButton
     {
-        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
     }
     public class PanelHeaderButton : SimpleHeaderButton
     {
@@ -152,7 +152,7 @@ namespace NodeMarkup.UI.Panel
     }
     public class AdditionallyHeaderButton : HeaderPopupButton<AdditionallyPopup>
     {
-        protected override UITextureAtlas IconAtlas => TextureUtil.Atlas;
+        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
 
         protected override Color32 HoveredColor => new Color32(112, 112, 112, 255);
         protected override Color32 PressedColor => new Color32(144, 144, 144, 255);

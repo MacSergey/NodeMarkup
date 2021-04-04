@@ -88,7 +88,7 @@ namespace NodeMarkup.UI.Editors
         public override Color32 PressedColor => new Color32(86, 167, 225, 255);
         public override Color32 FocusColor => NormalColor;
 
-        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? TextureUtil.ArrowDown : TextureUtil.ArrowRight; }
+        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? NodeMarkupTextures.ArrowDown : NodeMarkupTextures.ArrowRight; }
 
         private CustomUIPanel ExpandIcon { get; set; }
 
@@ -106,7 +106,7 @@ namespace NodeMarkup.UI.Editors
         private void AddExpandIcon()
         {
             ExpandIcon = AddUIComponent<CustomUIPanel>();
-            ExpandIcon.atlas = TextureUtil.Atlas;
+            ExpandIcon.atlas = NodeMarkupTextures.Atlas;
             ExpandIcon.size = new Vector2(20, 20);
             IsExpand = true;
         }
