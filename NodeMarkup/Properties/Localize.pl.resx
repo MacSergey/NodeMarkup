@@ -121,7 +121,7 @@
     <value>Usuń {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąć {0} "{1}"?</value>
+    <value>Czy na pewno chcesz usunąć {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Użyj kółka myszy aby zmienić wartość
@@ -325,10 +325,16 @@ Kliknij aby edytować oznaczenia</value>
     <value>Wybierz skrzyżowanie lub segment aby zmodyfikować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Wybierz punkt końcowy dla zwykłej linii</value>
+    <value>Wybierz punkt końcowy
++Shift - ciągła
++Ctrl - podwójna</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
+    <value>Wybierz punkt aby
+utworzyć lub usunąć linię
++Ctrl - aby przesunąć punkt
+Przytrzymaj Alt - aby utworzyć wypełnienie
+Przytrzymaj Shift - aby utworzyć przejście dla pieszych</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co nowego w {0}</value>
@@ -461,7 +467,7 @@ Aby utworzyć wypełnienie, przytrzymaj Alt lub naciśnij {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Lista szablonów jest pusta.
-Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii, przejścia dla pieszych lub wypełnienia.</value>
+Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktywuj za pomocą klucza</value>
@@ -570,7 +576,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Niemiecki</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Angielski - USA</value>
+    <value>Angielski</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Hiszpański</value>
@@ -606,7 +612,9 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
     <value>Język</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Kliknij, aby utworzyć prostopadłą linię</value>
+    <value>Kliknij, aby utworzyć prostopadłą linię
++Shift - ciągła
++Ctrl - podwójna</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Kliknij, aby usunąć prostopadłą linię</value>
@@ -800,7 +808,8 @@ Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
     <value>Wklej oznaczenie</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Czy na pewno chcesz wkleić oznaczenie?</value>
+    <value>Czy na pewno chcesz wkleić oznaczenie?
+Istniejące oznaczenie zostanie zastąpione.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Modyfikator przejść dla pieszych</value>
@@ -1054,10 +1063,10 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
     <value>Szybkie tworzenie obramowania przejścia dla pieszych</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Oznaczenia pod torami</value>
+    <value>Oznaczenia pod torami (wymaga restartu)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Ostrzeżenie: Ta opcja zmiena kolejność renderowania obiektów w grze</value>
+    <value>Ostrzeżenie: Ta opcja zmienia kolejność renderowania obiektów w grze</value>
   </data>
   
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
@@ -1177,16 +1186,16 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
     <value>Angielski - Wielka Brytania</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Zmień nazwę asseta zestawu ustawień</value>
+    <value>Nadpisywanie zasobu presetu</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Zmiana nazwy wymaga zmiany nazwy pliku assetu. Czy chcesz kontynuować?</value>
+    <value>Aby, zmienić nazwę zasobu presetu, zasób musi zostać nadpisany. Czy chcesz kontynuować?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Zmień nazwę asseta szablonu</value>
+    <value>Nadpisywanie zasobu szablonu</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Zmiana nazwy i wartości wymaga zmiany nazwy pliku assetu. Czy chcesz kontynuować?</value>
+    <value>Aby, zmienić nazwę zasobu szablonu, zasób musi zostać nadpisany. Czy chcesz kontynuować?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Aby, ustawić obramowanie przejścia dla pieszych, pozostałe linie muszą posiadać punkt wspólny z przejściem dla pieszych</value>
@@ -1256,14 +1265,8 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Nieznany autor</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Ulepszono komunikaty o błędach ładowania danych.
-- Naprawiono i zaktualizowano tłumaczenia.</value>
-  </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>Wystąpiły błędy podczas ładowania danych.
-Nie udało się załadować oznaczeń dla wszystkich skrzyżowań.</value>
-  </data>
+  
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia segmentu #{0}</value>
   </data>
@@ -1335,7 +1338,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Dziennik zmian</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Grupuj punkty</value>
+    <value>Grupuj punkty nakładki</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
     <value>Zastosuj między skrzyżowaniami</value>
