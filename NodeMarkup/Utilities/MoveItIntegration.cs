@@ -23,7 +23,7 @@ namespace NodeMarkup.Utilities
     {
         public override string ID => "CS.macsergey.NodeMarkup";
 
-        public override string Name => SingletonMod<Mod>.Name;
+        public override string Name => SingletonMod<Mod>.NameRaw;
 
         public override string Description => Localize.Mod_Description;
 
