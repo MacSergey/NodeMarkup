@@ -192,8 +192,8 @@ namespace NodeMarkup
         {
             var success = true;
 
-            success &= Patch_ToolController_Awake<NodeMarkupTool>();
-            success &= Patch_GameKeyShortcuts_Escape<NodeMarkupTool>();
+            success &= Patch_ToolController_Awake(ToolControllerAwakeTranspiler);
+            success &= Patch_GameKeyShortcuts_Escape(GameKeyShortcutsEscapeTranspiler);
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
@@ -403,6 +403,9 @@ namespace NodeMarkup
         #endregion
 
         #region OTHERS
+
+        private static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ToolControllerAwakeTranspiler<NodeMarkupTool>(generator, instructions);
+        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => GameKeyShortcutsEscapeTranspiler<NodeMarkupTool>(generator, instructions);
 
         private bool Patch_BuildingDecoration_LoadPaths()
         {
