@@ -121,7 +121,7 @@
     <value>Odstranit {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Opravdu chcete odstranit {0} "{1}"?</value>
+    <value>Opravdu chcete odstranit {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Použijte kolečko myši pro změnu hodnoty
@@ -325,10 +325,16 @@ Klikněte pro změnu značení</value>
     <value>Vyberte křižovatku nebo silnici pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření čáry</value>
+    <value>Vyberte koncový bod
++Shift - plná čára
++Ctrl - dvojitá čára</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
+    <value>Vyberte bod pro vytvoření
+nebo odstranění čáry
++Ctrl pro posunutí bodu
++Alt pro vytvoření výplně
++Shift pro vytvoření přechodu</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Co je nového v {0}</value>
@@ -413,7 +419,7 @@ Klikněte pro změnu značení</value>
     <value>Výchozí</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Plná</value>
+    <value>Nepřerušovná</value>
   </data>
   
   
@@ -461,7 +467,7 @@ Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Nejsou vytvořeny žádné šablony.
-Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry, přechodu nebo výplně.</value>
+Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivujte klávesou</value>
@@ -570,7 +576,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Němčina</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglicky US</value>
+    <value>Angličtina</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Španělština</value>
@@ -606,7 +612,9 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
     <value>Jazyk</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klikněte pro vytvoření kolmé čáry</value>
+    <value>Klikněte pro vytvoření kolmé čáry
++Shift - plná
++Ctrl - dvojitá</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Klikněte pro odstranění kolmé čáry</value>
@@ -800,7 +808,8 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
     <value>Vložit značení</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Opravdu si přejete vložit značení?</value>
+    <value>Opravdu si přejete vložit značení?
+Původní značení bude odstraněno.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Klávesové zkratky přechodů</value>
@@ -1054,7 +1063,7 @@ Chcete nastavit předchozí značení manuálně?</value>
     <value>Rychlé nastavení krajů přechodu</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Značení pod kolejemi</value>
+    <value>Značení pod kolejemi (po restartu)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
@@ -1256,14 +1265,8 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Neznámý autor</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Zlepšení chybových zpráv o načítání dat.
-- Zlepšení lokalizací.</value>
-  </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>Při načítání se vyskytly chyby.
-Nepodařilo se načíst značení pro všechny křižovatky.</value>
-  </data>
+  
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Upravit značení silnice #{0}</value>
   </data>
