@@ -121,7 +121,7 @@
     <value>Удалить {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Вы действительно хотите удалить {0} "{1}"?</value>
+    <value>Вы действительно хотите удалить {0} {1}?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>Крутите колесико для изменения
@@ -326,11 +326,16 @@ Shift X10, Ctrl X0.1</value>
 для редактирования разметки</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Выберите конечную точку для обычной линии</value>
+    <value>Выберите конечную точку
++Shift - Сплошная
++Ctrl - Двойная</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Выберите начальную точку
-для создания или удаления линии</value>
+для создания или удаления линии
++Ctrl для перемещения точки
+Зажмите Alt для создания заполнителя
+Зажмите Shift для создания перехода</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>Что нового в {0}</value>
@@ -488,7 +493,7 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Список шаблонов пуст.
-Для создания шаблона нажмите «{0}» у стиля линии или перехода или заполнителя.</value>
+Для создания шаблона нажмите «{0}» у стиля линии.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Активировать ключом</value>
@@ -597,7 +602,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Немецкий</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Английский США</value>
+    <value>Английский</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>Испанский</value>
@@ -633,7 +638,9 @@ Shift X10, Ctrl X0.1</value>
     <value>Язык</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Нажмите для создания перпендикулярной линии</value>
+    <value>Нажмите для создания перпендикулярной линии
++Shift - Сплошная
++Ctrl - Двойная</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Нажмите для удаления перпендикулярной линии</value>
@@ -842,7 +849,8 @@ Shift X10, Ctrl X0.1</value>
     <value>Вставить разметку</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Вы действительно хотите вставить разметку?</value>
+    <value>Вы действительно хотите вставить разметку?
+Она заменит существующую разметку.</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Модификаторы для выбора стиля переходов</value>
@@ -1118,7 +1126,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Быстрая настройка границ перехода</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Разметка под рельсами</value>
+    <value>Разметка под рельсами (Изменения вступят в силу после перезагрузки)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Предупреждение: Эта опция меняет порядок отрисовки игровых объектов</value>
@@ -1347,8 +1355,7 @@ Shift X10, Ctrl X0.1</value>
 - Исправлены и обновлены переводы.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>Загрузка завершилась с ошибками.
-Не удалось загрузить разметку для всех перекрестков.</value>
+    <value>всех</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Редактирование сегмента #{0}</value>
@@ -1436,7 +1443,7 @@ Shift X10, Ctrl X0.1</value>
     <value>Список изменений</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Группировать точки</value>
+    <value>Группировать подсветку точек</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
     <value>Применить между перекрестками</value>
