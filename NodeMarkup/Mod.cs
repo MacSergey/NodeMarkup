@@ -26,7 +26,7 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
-        protected override string IdRow => nameof(NodeMarkup);
+        protected override string IdRaw => nameof(NodeMarkup);
         public override List<Version> Versions { get; } = new List<Version>
         {
             new Version("1.7"),
@@ -44,7 +44,7 @@ namespace NodeMarkup
             new Version("1.0")
         };
 
-        protected override string NameRow => "Intersection Marking Tool";
+        public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
         public override string WorkshopUrl => StableURL;
         protected override string Locale => Settings.Locale.value;
@@ -101,7 +101,7 @@ namespace NodeMarkup
             if (!IsBeta)
             {
                 var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
-                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
+                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, NameRaw);
                 messageBox.OnButtonClick = Confirm;
                 messageBox.OkText = NodeMarkupMessageBox.Ok;
                 messageBox.Init(messages, GetVersionString);
@@ -109,12 +109,12 @@ namespace NodeMarkup
             else
             {
                 var messageBox = MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
-                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, Name);
+                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, NameRaw);
                 messageBox.OnButtonClick = Confirm;
                 messageBox.OnGetStableClick = GetStable;
                 messageBox.OkText = NodeMarkupMessageBox.Ok;
                 messageBox.GetStableText = Localize.Mod_BetaWarningGetStable;
-                messageBox.Init(messages, string.Format(Localize.Mod_BetaWarningMessage, Name), GetVersionString);
+                messageBox.Init(messages, string.Format(Localize.Mod_BetaWarningMessage, NameRaw), GetVersionString);
             }
 
             static bool Confirm()
@@ -162,7 +162,7 @@ namespace NodeMarkup
             {
                 var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
                 messageBox.CaptionText = Localize.Mod_BetaWarningCaption;
-                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, Name);
+                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, NameRaw);
                 messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
                 messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
                 messageBox.OnButton1Click = AgreeClick;
@@ -194,6 +194,7 @@ namespace NodeMarkup
 
             success &= Patch_ToolController_Awake(ToolControllerAwakeTranspiler);
             success &= Patch_GameKeyShortcuts_Escape(GameKeyShortcutsEscapeTranspiler);
+            success &= Patch_LoadAssetPanel_OnLoad(AssetDataExtension.LoadAssetPanelOnLoadPostfix);
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
@@ -201,8 +202,7 @@ namespace NodeMarkup
             PatchNetInfo(ref success);
             PatchLoading(ref success);
 
-            success &= Patch_BuildingDecoration_LoadPaths();
-            success &= Patch_LoadAssetPanel_OnLoad();
+            success &= Patch_BuildingDecoration_LoadPaths();            
             success &= Patch_GeneratedScrollPanel_CreateOptionPanel();
 
             return success;
@@ -449,10 +449,6 @@ namespace NodeMarkup
                 yield return prevInstruction;
         }
 
-        private bool Patch_LoadAssetPanel_OnLoad()
-        {
-            return AddPostfix(typeof(AssetDataExtension), nameof(AssetDataExtension.LoadAssetPanelOnLoadPostfix), typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
-        }
         private bool Patch_GeneratedScrollPanel_CreateOptionPanel()
         {
             return AddPostfix(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix), typeof(GeneratedScrollPanel), "CreateOptionPanel");
