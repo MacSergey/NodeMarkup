@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
@@ -17,9 +18,9 @@ namespace NodeMarkup.UI
             if (__result == null || templateName != RoadsOptionPanel || __result.component.Find<NodeMarkupButton>(nameof(NodeMarkupButton)) != null)
                 return;
 
-            Mod.Logger.Debug($"Create button");
+            SingletonMod<Mod>.Logger.Debug($"Create button");
             __result.component.AddUIComponent<NodeMarkupButton>();
-            Mod.Logger.Debug($"Button created");
+            SingletonMod<Mod>.Logger.Debug($"Button created");
         }
 
         public override void Start()
@@ -43,7 +44,7 @@ namespace NodeMarkup.UI
         {
             base.Update();
 
-            var enable = NodeMarkupTool.Instance?.enabled == true;
+            var enable = SingletonTool<NodeMarkupTool>.Instance?.enabled == true;
 
             if (enable && state == (ButtonState.Normal | ButtonState.Hovered))
                 state = ButtonState.Focused;
@@ -53,14 +54,14 @@ namespace NodeMarkup.UI
 
         protected override void OnClick(UIMouseEventParameter p)
         {
-            Mod.Logger.Debug($"On button click");
+            SingletonMod<Mod>.Logger.Debug($"On button click");
 
             base.OnClick(p);
-            NodeMarkupTool.Instance.ToggleTool();
+            SingletonTool<NodeMarkupTool>.Instance.Toggle();
         }
         protected override void OnTooltipEnter(UIMouseEventParameter p)
         {
-            tooltip = $"{Mod.ShortName} ({NodeMarkupTool.ActivationShortcut})";
+            tooltip = $"{SingletonMod<Mod>.Instance.Name} ({NodeMarkupTool.ActivationShortcut})";
             base.OnTooltipEnter(p);
         }
     }

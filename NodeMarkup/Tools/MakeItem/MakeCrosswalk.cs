@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -133,7 +134,7 @@ namespace NodeMarkup.Tools
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = NodeMarkupTool.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
+            var dir = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
             var lenght = dir.magnitude;
             dir.Normalize();
             var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();

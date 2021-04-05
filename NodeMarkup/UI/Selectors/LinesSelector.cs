@@ -1,4 +1,5 @@
-﻿using ModsCommon.Utilities;
+﻿using ModsCommon;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
@@ -29,8 +30,8 @@ namespace NodeMarkup.UI
 
         public void OnUpdate()
         {
-            if (NodeMarkupTool.MouseRayValid)
-                HoverLine = Lines.FirstOrDefault(l => l.IntersectRay(NodeMarkupTool.MouseRay));
+            if (SingletonTool<NodeMarkupTool>.Instance.MouseRayValid)
+                HoverLine = Lines.FirstOrDefault(l => l.IntersectRay(SingletonTool<NodeMarkupTool>.Instance.MouseRay));
             else
                 HoverLine = null;
         }

@@ -3,6 +3,7 @@ using ColossalFramework.Importers;
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using HarmonyLib;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
@@ -124,17 +125,17 @@ namespace NodeMarkup
 
         public static bool ImportMarkingData(string file)
         {
-            Mod.Logger.Debug($"Import marking data");
+            SingletonMod<Mod>.Logger.Debug($"Import marking data");
             return ImportData(file, (config) => MarkupManager.Import(config));
         }
         public static bool ImportStylesData(string file)
         {
-            Mod.Logger.Debug($"Import styles data");
+            SingletonMod<Mod>.Logger.Debug($"Import styles data");
             return ImportTemplatesData(file, TemplateManager.StyleManager);
         }
         public static bool ImportIntersectionsData(string file)
         {
-            Mod.Logger.Debug($"Import intersections data");
+            SingletonMod<Mod>.Logger.Debug($"Import intersections data");
             return ImportTemplatesData(file, TemplateManager.IntersectionManager);
         }
         private static bool ImportTemplatesData(string file, TemplateManager manager)
@@ -148,7 +149,7 @@ namespace NodeMarkup
 
         private static bool ImportData(string file, Action<XElement> processData)
         {
-            Mod.Logger.Debug($"Import data");
+            SingletonMod<Mod>.Logger.Debug($"Import data");
 
             try
             {
@@ -159,35 +160,35 @@ namespace NodeMarkup
 
                 processData(config);
 
-                Mod.Logger.Debug($"Data was imported");
+                SingletonMod<Mod>.Logger.Debug($"Data was imported");
 
                 return true;
             }
             catch (Exception error)
             {
-                Mod.Logger.Error("Could not import data", error);
+                SingletonMod<Mod>.Logger.Error("Could not import data", error);
                 return false;
             }
         }
         public static bool DumpMarkingData(out string path)
         {
-            Mod.Logger.Debug($"Dump marking data");
+            SingletonMod<Mod>.Logger.Debug($"Dump marking data");
             return DumpData(GetString(MarkupManager.ToXml()), MarkingName, out path);
         }
         public static bool DumpStyleTemplatesData(out string path)
         {
-            Mod.Logger.Debug($"Dump style templates data");
+            SingletonMod<Mod>.Logger.Debug($"Dump style templates data");
             return DumpData(Settings.Templates, TemplatesRecovery, out path);
         }
         public static bool DumpIntersectionTemplatesData(out string path)
         {
-            Mod.Logger.Debug($"Dump intersection templates data");
+            SingletonMod<Mod>.Logger.Debug($"Dump intersection templates data");
             return DumpData(Settings.Intersections, PresetsRecovery, out path);
         }
 
         private static bool DumpData(string data, string name, out string path)
         {
-            Mod.Logger.Debug($"Dump data");
+            SingletonMod<Mod>.Logger.Debug($"Dump data");
 
             try
             {
@@ -195,7 +196,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Mod.Logger.Error("Save dump failed", error);
+                SingletonMod<Mod>.Logger.Error("Save dump failed", error);
 
                 path = string.Empty;
                 return false;
@@ -204,7 +205,7 @@ namespace NodeMarkup
 
         public static bool SaveToFile(string name, string xml, out string file)
         {
-            Mod.Logger.Debug($"Save to file");
+            SingletonMod<Mod>.Logger.Debug($"Save to file");
             try
             {
                 if (!Directory.Exists(RecoveryDirectory))
@@ -216,12 +217,12 @@ namespace NodeMarkup
                 {
                     writer.Write(xml);
                 }
-                Mod.Logger.Debug($"Dump saved {file}");
+                SingletonMod<Mod>.Logger.Debug($"Dump saved {file}");
                 return true;
             }
             catch (Exception error)
             {
-                Mod.Logger.Error("Save dump failed", error);
+                SingletonMod<Mod>.Logger.Error("Save dump failed", error);
 
                 file = string.Empty;
                 return false;
@@ -233,26 +234,26 @@ namespace NodeMarkup
             if (gameObject.GetComponent<MarkingInfo>() is not MarkingInfo markingInfo)
                 return;
 
-            Mod.Logger.Debug($"Start load template asset \"{asset.fullName}\" from {asset.package.packagePath}");
+            SingletonMod<Mod>.Logger.Debug($"Start load template asset \"{asset.fullName}\" from {asset.package.packagePath}");
             try
             {
                 var templateConfig = XmlExtension.Parse(markingInfo.data);
                 if (TemplateAsset.FromPackage(templateConfig, asset, out TemplateAsset templateAsset))
                 {
                     templateAsset.Template.Manager.AddTemplate(templateAsset.Template);
-                    Mod.Logger.Debug($"Template asset loaded: {templateAsset} ({templateAsset.Flags})");
+                    SingletonMod<Mod>.Logger.Debug($"Template asset loaded: {templateAsset} ({templateAsset.Flags})");
                 }
                 else
-                    Mod.Logger.Error($"Could not load template asset");
+                    SingletonMod<Mod>.Logger.Error($"Could not load template asset");
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"Could not load template asset", error);
+                SingletonMod<Mod>.Logger.Error($"Could not load template asset", error);
             }
         }
         public static bool SaveTemplateAsset(TemplateAsset templateAsset)
         {
-            Mod.Logger.Debug($"Start save template asset {templateAsset}");
+            SingletonMod<Mod>.Logger.Debug($"Start save template asset {templateAsset}");
             try
             {
                 var meta = new CustomAssetMetaData()
@@ -289,13 +290,13 @@ namespace NodeMarkup
                 var path = Path.Combine(DataLocation.assetsPath, PathUtils.AddExtension(PathEscaper.Escape(templateAsset.FileName), PackageManager.packageExtension));
                 package.Save(path);
 
-                Mod.Logger.Debug($"Template asset saved to {path}");
+                SingletonMod<Mod>.Logger.Debug($"Template asset saved to {path}");
 
                 return true;
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"Could not save template asset", error);
+                SingletonMod<Mod>.Logger.Error($"Could not save template asset", error);
                 return false;
             }
         }
@@ -310,7 +311,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"Could not save screenshot {id}", error);
+                SingletonMod<Mod>.Logger.Error($"Could not save screenshot {id}", error);
                 return false;
             }
         }
@@ -328,7 +329,7 @@ namespace NodeMarkup
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"Could not load screenshot {id}", error);
+                SingletonMod<Mod>.Logger.Error($"Could not load screenshot {id}", error);
                 image = null;
                 return false;
             }

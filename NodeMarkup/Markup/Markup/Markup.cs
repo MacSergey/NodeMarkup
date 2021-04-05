@@ -1,4 +1,5 @@
-﻿using ModsCommon.Utilities;
+﻿using ModsCommon;
+using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
@@ -156,7 +157,7 @@ namespace NodeMarkup.Manager
             var currentData = ToXml();
             RowEntersList = newEnters;
             Clear();
-            FromXml(Mod.Version, currentData, map);
+            FromXml(SingletonMod<Mod>.Version, currentData, map);
         }
         private bool UpdateBackup(ushort delete, ushort add, List<Enter> oldEnters, List<Enter> newEnters)
         {

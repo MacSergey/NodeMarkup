@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
@@ -39,7 +40,7 @@ namespace NodeMarkup.UI.Editors
 
         #region PROPERTIES
 
-        protected NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        protected NodeMarkupTool Tool => SingletonTool<NodeMarkupTool>.Instance;
         protected Editor Editor { get; private set; }
 
         private ItemType _selectItem;

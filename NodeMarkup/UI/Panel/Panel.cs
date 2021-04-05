@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
@@ -46,7 +47,7 @@ namespace NodeMarkup.UI.Panel
 
         public Markup Markup { get; private set; }
         private bool NeedUpdateOnVisible { get; set; }
-        public bool IsHover => (isVisible && this.IsHover(NodeMarkupTool.MousePosition)) || components.Any(c => c.isVisible && c.IsHover(NodeMarkupTool.MousePosition));
+        public bool IsHover => (isVisible && this.IsHover(SingletonTool<NodeMarkupTool>.Instance.MousePosition)) || components.Any(c => c.isVisible && c.IsHover(SingletonTool<NodeMarkupTool>.Instance.MousePosition));
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
@@ -73,9 +74,9 @@ namespace NodeMarkup.UI.Panel
 
         public static void CreatePanel()
         {
-            Mod.Logger.Debug($"Create panel");
+            SingletonMod<Mod>.Logger.Debug($"Create panel");
             UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
-            Mod.Logger.Debug($"Panel created");
+            SingletonMod<Mod>.Logger.Debug($"Panel created");
         }
         public override void Awake()
         {
@@ -111,13 +112,13 @@ namespace NodeMarkup.UI.Panel
         }
         public static void RemovePanel()
         {
-            Mod.Logger.Debug($"Remove panel");
+            SingletonMod<Mod>.Logger.Debug($"Remove panel");
             if (Instance != null)
             {
                 Instance.Hide();
                 Destroy(Instance);
                 Instance = null;
-                Mod.Logger.Debug($"Panel removed");
+                SingletonMod<Mod>.Logger.Debug($"Panel removed");
             }
         }
         private void CheckPosition()
@@ -127,7 +128,7 @@ namespace NodeMarkup.UI.Panel
         }
         private void SetDefaultPosition()
         {
-            Mod.Logger.Debug($"Set default panel position");
+            SingletonMod<Mod>.Logger.Debug($"Set default panel position");
             absolutePosition = DefaultPosition;
         }
         private void SetDefaulSize() => size = new Vector2(Width, Header.height + TabStrip.height + 400);

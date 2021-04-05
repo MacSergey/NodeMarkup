@@ -102,7 +102,7 @@ namespace NodeMarkup.Tools
         {
             if (!IsSelectedSource)
             {
-                var mouse = NodeMarkupTool.MousePositionScaled;
+                var mouse = SingletonTool<NodeMarkupTool>.Instance.MousePositionScaled;
 
                 if (TurnLeftButton.CheckHover(mouse))
                     return Localize.Tool_InfoTurnСounterClockwise;
@@ -129,7 +129,7 @@ namespace NodeMarkup.Tools
                 Tool.SetMode(ToolModeType.PointsOrder);
             else
             {
-                var mouse = NodeMarkupTool.MousePositionScaled;
+                var mouse = SingletonTool<NodeMarkupTool>.Instance.MousePositionScaled;
 
                 TurnLeftButton.CheckClick(mouse);
                 FlipButton.CheckClick(mouse);
@@ -173,7 +173,7 @@ namespace NodeMarkup.Tools
         private void SetBackup()
         {
             Markup.Clear();
-            Markup.FromXml(Mod.Version, Backup, new ObjectsMap());
+            Markup.FromXml(SingletonMod<Mod>.Version, Backup, new ObjectsMap());
         }
 
         public override void OnToolGUI(Event e)

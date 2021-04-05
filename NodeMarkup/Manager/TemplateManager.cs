@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Importers;
 using ColossalFramework.PlatformServices;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
@@ -40,7 +41,7 @@ namespace NodeMarkup.Manager
                 }
                 catch (Exception error)
                 {
-                    Mod.Logger.Error("Could not get author name", error);
+                    SingletonMod<Mod>.Logger.Error("Could not get author name", error);
                 }
             }
             return Localize.Template_UnknownAuthor;
@@ -59,14 +60,14 @@ namespace NodeMarkup.Manager
 
         public static void Reload()
         {
-            Mod.Logger.Debug($"{nameof(TemplateManager)} {nameof(Reload)}");
+            SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Reload)}");
 
             StyleManager.Load();
             IntersectionManager.Load();
         }
         public static void Clear()
         {
-            Mod.Logger.Debug($"{nameof(TemplateManager)} {nameof(Clear)}");
+            SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Clear)}");
 
             StyleManager.Clear(true);
             IntersectionManager.Clear(true);
@@ -104,11 +105,11 @@ namespace NodeMarkup.Manager
                     FromXml(config);
                 }
 
-                Mod.Logger.Debug($"{typeof(TemplateType).Name} was loaded: {TemplatesDictionary.Count} items");
+                SingletonMod<Mod>.Logger.Debug($"{typeof(TemplateType).Name} was loaded: {TemplatesDictionary.Count} items");
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"Could not load {typeof(TemplateType).Name}", error);
+                SingletonMod<Mod>.Logger.Error($"Could not load {typeof(TemplateType).Name}", error);
             }
         }
         protected void Save()
@@ -118,11 +119,11 @@ namespace NodeMarkup.Manager
                 var config = Loader.GetString(ToXml());
                 Saved.value = config;
 
-                Mod.Logger.Debug($"{typeof(TemplateType).Name} was saved: {TemplatesDictionary.Count} items");
+                SingletonMod<Mod>.Logger.Debug($"{typeof(TemplateType).Name} was saved: {TemplatesDictionary.Count} items");
             }
             catch (Exception error)
             {
-                Mod.Logger.Error($"Could not save {typeof(TemplateType).Name}", error);
+                SingletonMod<Mod>.Logger.Error($"Could not save {typeof(TemplateType).Name}", error);
             }
         }
 

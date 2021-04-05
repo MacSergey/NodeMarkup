@@ -2,6 +2,7 @@
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
 using ICities;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
@@ -24,7 +25,7 @@ namespace NodeMarkup
 
         public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
 
-        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, Mod.Version.PrevMinor(Mod.Versions).ToString(), true);
+        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, SingletonMod<Mod>.Version.PrevMinor(SingletonMod<Mod>.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 700f, true);
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
@@ -83,7 +84,7 @@ namespace NodeMarkup
             CreateTabStrip(mainPanel);
 
             var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
-            generalTab.AddGroup(Mod.Instance.Name);
+            generalTab.AddGroup(SingletonMod<Mod>.Instance.Name);
             AddLanguage(generalTab);
             AddGeneral(generalTab);
             AddGrouping(generalTab);
@@ -188,7 +189,7 @@ namespace NodeMarkup
             {
                 var locale = dropDown.SelectedObject;
                 Locale.value = locale;
-                Mod.Instance.LocaleChanged();
+                SingletonMod<Mod>.Instance.LocaleChanged();
                 LocaleManager.ForceReload();
             }
         }
@@ -407,11 +408,11 @@ namespace NodeMarkup
 
         private static void ShowChangeLog()
         {
-            var messages = Mod.GetWhatsNewMessages(new Version(1, 0));
+            var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
             var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
             messageBox.CaptionText = Localize.Settings_ChangeLog;
             messageBox.OkText = NodeMarkupMessageBox.Ok;
-            messageBox.Init(messages, Mod.GetVersionString, false);
+            messageBox.Init(messages, SingletonMod<Mod>.Instance.GetVersionString, false);
         }
 
         #endregion

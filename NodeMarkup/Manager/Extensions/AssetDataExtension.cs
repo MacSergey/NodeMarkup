@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using HarmonyLib;
 using ICities;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -33,7 +34,7 @@ namespace NodeMarkup
             if (asset is not BuildingInfo prefab || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
                 return;
 
-            Mod.Logger.Debug($"Start load prefab data \"{prefab.name}\"");
+            SingletonMod<Mod>.Logger.Debug($"Start load prefab data \"{prefab.name}\"");
             try
             {
                 var decompress = Loader.Decompress(data);
@@ -52,11 +53,11 @@ namespace NodeMarkup
 
                 AssetMarkings[prefab] = new AssetMarking(config, segments, nodes);
 
-                Mod.Logger.Debug($"Prefab data was loaded; Size = {data.Length} bytes");
+                SingletonMod<Mod>.Logger.Debug($"Prefab data was loaded; Size = {data.Length} bytes");
             }
             catch (Exception error)
             {
-                Mod.Logger.Error("Could not load prefab data", error);
+                SingletonMod<Mod>.Logger.Error("Could not load prefab data", error);
             }
         }
         public override void OnAssetSaved(string name, object asset, out Dictionary<string, byte[]> userData)
@@ -65,7 +66,7 @@ namespace NodeMarkup
             if (asset is not BuildingInfo prefab || !prefab.m_paths.Any())
                 return;
 
-            Mod.Logger.Debug($"Start save prefab data \"{prefab.name}\"");
+            SingletonMod<Mod>.Logger.Debug($"Start save prefab data \"{prefab.name}\"");
             try
             {
                 var config = Loader.GetString(MarkupManager.ToXml());
@@ -95,11 +96,11 @@ namespace NodeMarkup
 
                 userData[MapId] = map;
 
-                Mod.Logger.Debug($"Prefab data was saved; Size = {data.Length} bytes");
+                SingletonMod<Mod>.Logger.Debug($"Prefab data was saved; Size = {data.Length} bytes");
             }
             catch (Exception error)
             {
-                Mod.Logger.Error("Could not save prefab data", error);
+                SingletonMod<Mod>.Logger.Error("Could not save prefab data", error);
             }
         }
         private void GetBytes(ushort n, out byte b1, out byte b2)

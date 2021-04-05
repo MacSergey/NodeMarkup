@@ -1,4 +1,5 @@
 ﻿using ICities;
+using ModsCommon;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 
@@ -8,7 +9,7 @@ namespace NodeMarkup
     {
         public override void OnLevelLoaded(LoadMode mode)
         {
-            Mod.Logger.Debug($"On level loaded");
+            SingletonMod<Mod>.Instance.Logger.Debug($"On level loaded");
             switch (mode)
             {
                 case LoadMode.NewGame:
@@ -20,9 +21,9 @@ namespace NodeMarkup
                 case LoadMode.LoadMap:
                     TemplateManager.Reload();
 
-                    Mod.ShowWhatsNew();
-                    Mod.ShowBetaWarning();
-                    Mod.ShowLoadError();
+                    SingletonMod<Mod>.Instance.ShowWhatsNew();
+                    SingletonMod<Mod>.Instance.ShowBetaWarning();
+                    SingletonMod<Mod>.Instance.ShowLoadError();
                     break;
             }
         }

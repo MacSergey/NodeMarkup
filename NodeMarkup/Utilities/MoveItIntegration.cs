@@ -1,4 +1,5 @@
-﻿using MoveItIntegration;
+﻿using ModsCommon;
+using MoveItIntegration;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace NodeMarkup.Utilities
     {
         public override string ID => "CS.macsergey.NodeMarkup";
 
-        public override string Name => Mod.ShortName;
+        public override string Name => SingletonMod<Mod>.Name;
 
         public override string Description => Localize.Mod_Description;
 
@@ -88,7 +89,7 @@ namespace NodeMarkup.Utilities
 
             var map = new ObjectsMap(isMirror);
             mapFiller(markup, map, sourceMap);
-            markup.FromXml(Mod.Version, config, map);
+            markup.FromXml(SingletonMod<Mod>.Version, config, map);
         }
 
         public override string Encode64(object record) => record == null ? null : EncodeUtil.BinaryEncode64(record?.ToString());

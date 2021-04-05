@@ -21,23 +21,23 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class NodeMarkupTool : BaseTool<ToolModeType>
+    public class NodeMarkupTool : BaseTool<Mod, NodeMarkupTool, ToolModeType>
     {
         #region STATIC
 
-        public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => Instance.DeleteAllMarking());
-        public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => Instance.ResetAllOffsets());
-        public static NodeMarkupShortcut AddFillerShortcut { get; } = new NodeMarkupShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => Instance.StartCreateFiller());
-        public static NodeMarkupShortcut CopyMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => Instance.CopyMarkup());
-        public static NodeMarkupShortcut PasteMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => Instance.PasteMarkup());
-        public static NodeMarkupShortcut EditMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => Instance.EditMarkup());
-        public static NodeMarkupShortcut CreateEdgeLinesShortcut { get; } = new NodeMarkupShortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => Instance.CreateEdgeLines());
+        public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.DeleteAllMarking());
+        public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ResetAllOffsets());
+        public static NodeMarkupShortcut AddFillerShortcut { get; } = new NodeMarkupShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.StartCreateFiller());
+        public static NodeMarkupShortcut CopyMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.CopyMarkup());
+        public static NodeMarkupShortcut PasteMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.PasteMarkup());
+        public static NodeMarkupShortcut EditMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.EditMarkup());
+        public static NodeMarkupShortcut CreateEdgeLinesShortcut { get; } = new NodeMarkupShortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.CreateEdgeLines());
         public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(Localize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false));
-        public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => Instance.SaveAsIntersectionTemplate());
-        public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => Instance.CutByCrosswalks());
-        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => Instance.ApplyBetweenIntersections());
-        public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => Instance.ApplyWholeStreet());
+        public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.SaveAsIntersectionTemplate());
+        public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.CutByCrosswalks());
+        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ApplyBetweenIntersections());
+        public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ApplyWholeStreet());
 
         public static IEnumerable<NodeMarkupShortcut> Shortcuts
         {
@@ -78,11 +78,6 @@ namespace NodeMarkup.Tools
 
         #region BASIC
 
-        public new static NodeMarkupTool Instance
-        {
-            get => BaseTool.Instance as NodeMarkupTool;
-            set => BaseTool.Instance = value;
-        }
         protected override void InitProcess()
         {
             base.InitProcess();
@@ -142,7 +137,7 @@ namespace NodeMarkup.Tools
         }
         private void DeleteAllMarking()
         {
-            Mod.Logger.Debug($"Delete all markings");
+            SingletonMod<Mod>.Logger.Debug($"Delete all markings");
 
             var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
             messageBox.CaptionText = Localize.Tool_ClearMarkingsCaption;
@@ -158,7 +153,7 @@ namespace NodeMarkup.Tools
         }
         private void ResetAllOffsets()
         {
-            Mod.Logger.Debug($"Reset all points offsets");
+            SingletonMod<Mod>.Logger.Debug($"Reset all points offsets");
 
             if (Settings.DeleteWarnings)
             {
@@ -217,12 +212,12 @@ namespace NodeMarkup.Tools
 
         private void CopyMarkup()
         {
-            Mod.Logger.Debug($"Copy marking");
+            SingletonMod<Mod>.Logger.Debug($"Copy marking");
             MarkupBuffer = new IntersectionTemplate(Markup);
         }
         private void PasteMarkup()
         {
-            Mod.Logger.Debug($"Paste marking");
+            SingletonMod<Mod>.Logger.Debug($"Paste marking");
 
             if (MarkupBuffer == null)
                 return;
@@ -246,21 +241,21 @@ namespace NodeMarkup.Tools
         }
         private void EditMarkup()
         {
-            Mod.Logger.Debug($"Edit marking order");
+            SingletonMod<Mod>.Logger.Debug($"Edit marking order");
 
             BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
         }
         public void ApplyIntersectionTemplate(IntersectionTemplate template)
         {
-            Mod.Logger.Debug($"Apply intersection template");
+            SingletonMod<Mod>.Logger.Debug($"Apply intersection template");
 
             BaseOrderToolMode.IntersectionTemplate = template;
             SetMode(ToolModeType.ApplyIntersectionTemplateOrder);
         }
         private void CreateEdgeLines()
         {
-            Mod.Logger.Debug($"Create edge lines");
+            SingletonMod<Mod>.Logger.Debug($"Create edge lines");
 
             var lines = Markup.Enters.Select(e => Markup.AddRegularLine(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), null)).ToArray();
             foreach (var line in lines)
@@ -270,7 +265,7 @@ namespace NodeMarkup.Tools
         }
         private void SaveAsIntersectionTemplate()
         {
-            Mod.Logger.Debug($"Save as intersection template");
+            SingletonMod<Mod>.Logger.Debug($"Save as intersection template");
 
             StartCoroutine(MakeScreenshot(Callback));
 
@@ -282,7 +277,7 @@ namespace NodeMarkup.Tools
         }
         private void CutByCrosswalks()
         {
-            Mod.Logger.Debug($"Cut by crosswalk");
+            SingletonMod<Mod>.Logger.Debug($"Cut by crosswalk");
 
             foreach (var crosswalk in Markup.Crosswalks)
                 Markup.CutLinesByCrosswalk(crosswalk);
@@ -290,7 +285,7 @@ namespace NodeMarkup.Tools
         private delegate ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId);
         private void ApplyBetweenIntersections()
         {
-            Mod.Logger.Debug($"Apply between intersections");
+            SingletonMod<Mod>.Logger.Debug($"Apply between intersections");
 
             if (Markup.Type != MarkupType.Segment)
                 return;
@@ -324,7 +319,7 @@ namespace NodeMarkup.Tools
         }
         private void ApplyWholeStreet()
         {
-            Mod.Logger.Debug($"Apply to whole street");
+            SingletonMod<Mod>.Logger.Debug($"Apply to whole street");
 
             if (Markup.Type != MarkupType.Segment)
                 return;
@@ -394,7 +389,7 @@ namespace NodeMarkup.Tools
                 map.AddSegment(farNodeId, nextSegmentId.Value);
                 var markup = MarkupManager.NodeManager.Get(nodeId);
                 markup.Clear();
-                markup.FromXml(Mod.Version, config, map);
+                markup.FromXml(SingletonMod<Mod>.Version, config, map);
             }
 
             return nextSegmentId;
@@ -413,7 +408,7 @@ namespace NodeMarkup.Tools
             map.AddNode(nearNodeId, nextNodeId);
             var markup = MarkupManager.SegmentManager.Get(segmentId);
             markup.Clear();
-            markup.FromXml(Mod.Version, config, map);
+            markup.FromXml(SingletonMod<Mod>.Version, config, map);
 
             return nextNodeId;
         }
@@ -425,7 +420,7 @@ namespace NodeMarkup.Tools
             if (callback == null)
                 yield break;
 
-            Mod.Logger.Debug($"Make screenshot");
+            SingletonMod<Mod>.Logger.Debug($"Make screenshot");
 
             var cameraController = ToolsModifierControl.cameraController;
             var camera = Camera.main;
@@ -664,11 +659,10 @@ namespace NodeMarkup.Tools
 
         #endregion
     }
-    public abstract class NodeMarkupToolMode : BaseToolMode, IToolMode<ToolModeType>, IToolModePanel
+    public abstract class NodeMarkupToolMode : BaseToolMode<Mod, NodeMarkupTool>, IToolMode<ToolModeType>, IToolModePanel
     {
         public abstract ToolModeType Type { get; }
         public virtual bool ShowPanel => true;
-        protected new NodeMarkupTool Tool => NodeMarkupTool.Instance;
         protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
         public Markup Markup => Tool.Markup;
     }
@@ -689,7 +683,7 @@ namespace NodeMarkup.Tools
 
         MakeItem = MakeLine | MakeCrosswalk
     }
-    public class NodeMarkupToolThreadingExtension : BaseThreadingExtension { }
-    public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension { }
+    public class NodeMarkupToolThreadingExtension : BaseThreadingExtension<Mod, NodeMarkupTool> { }
+    public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension<Mod, NodeMarkupTool> { }
 
 }

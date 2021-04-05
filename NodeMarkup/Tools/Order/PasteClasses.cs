@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -60,7 +61,7 @@ namespace NodeMarkup.Tools
         public void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourceType> toolMode)
         {
             var hue = (byte)(toolMode.SelectedSource == this || toolMode.HoverSource == this ? 255 : 192);
-            var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : NodeMarkupTool.MouseWorldPosition) : Position;
+            var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : SingletonTool<NodeMarkupTool>.Instance.MouseWorldPosition) : Position;
             var size = BoundsSize;
             var color = Colors.GetOverlayColor(Num, 255, hue);
             while (size > 0)

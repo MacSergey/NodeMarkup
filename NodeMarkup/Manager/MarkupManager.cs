@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
@@ -72,7 +73,7 @@ namespace NodeMarkup.Manager
         public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {
-            var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", Mod.Version));
+            var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", SingletonMod<Mod>.Version));
 
             Errors = 0;
 
@@ -96,7 +97,7 @@ namespace NodeMarkup.Manager
         private static Version GetVersion(XElement config)
         {
             try { return new Version(config.Attribute("V").Value); }
-            catch { return Mod.Version; }
+            catch { return SingletonMod<Mod>.Version; }
         }
         public static void SetFailed()
         {
@@ -172,7 +173,7 @@ namespace NodeMarkup.Manager
         public void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {
-            Mod.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
+            SingletonMod<Mod>.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
             NeedUpdate.Clear();
             Markups.Clear();
         }
@@ -186,7 +187,7 @@ namespace NodeMarkup.Manager
                 }
                 catch (Exception error)
                 {
-                    Mod.Logger.Error($"Could not save {Type} #{markup.Id} markup", error);
+                    SingletonMod<Mod>.Logger.Error($"Could not save {Type} #{markup.Id} markup", error);
                     MarkupManager.Errors += 1;
                 }
             }
@@ -208,21 +209,20 @@ namespace NodeMarkup.Manager
 
                     markup.FromXml(version, markupConfig, map);
                     NeedUpdate.Add(markup.Id);
-                    //Mod.Logger.Debug($"{Type} #{markup.Id} markup loaded");
                 }
                 catch (NotExistItemException error)
                 {
-                    Mod.Logger.Error($"Could not load {error.Type} #{error.Id} markup: {error.Type} not exist");
+                    SingletonMod<Mod>.Logger.Error($"Could not load {error.Type} #{error.Id} markup: {error.Type} not exist");
                     MarkupManager.Errors += 1;
                 }
                 catch (NotExistEnterException error)
                 {
-                    Mod.Logger.Error($"Could not load {Type} #{id} markup: {error.Type} enter #{error.Id} not exist");
+                    SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} markup: {error.Type} enter #{error.Id} not exist");
                     MarkupManager.Errors += 1;
                 }
                 catch (Exception error)
                 {
-                    Mod.Logger.Error($"Could not load {Type} #{id} markup", error);
+                    SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} markup", error);
                     MarkupManager.Errors += 1;
                 }
             }

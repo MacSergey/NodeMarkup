@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
@@ -66,7 +67,7 @@ namespace NodeMarkup.UI.Panel
         }
         protected override void OnMouseDown(UIMouseEventParameter p)
         {
-            CanMove = !new Rect(Buttons.absolutePosition, Buttons.size).Contains(NodeMarkupTool.MousePosition);
+            CanMove = !new Rect(Buttons.absolutePosition, Buttons.size).Contains(SingletonTool<NodeMarkupTool>.Instance.MousePosition);
             base.OnMouseDown(p);
         }
         protected override void OnMouseMove(UIMouseEventParameter p)
@@ -135,7 +136,7 @@ namespace NodeMarkup.UI.Panel
             NodeMarkupTool.CopyMarkingShortcut.Press();
             SetPasteEnabled();
         }
-        private void SetPasteEnabled() => PasteButton.isEnabled = !NodeMarkupTool.Instance.IsMarkupBufferEmpty;
+        private void SetPasteEnabled() => PasteButton.isEnabled = !SingletonTool<NodeMarkupTool>.Instance.IsMarkupBufferEmpty;
 
 
         private string GetText(string text, NodeMarkupShortcut shortcut) => $"{text} ({shortcut})";

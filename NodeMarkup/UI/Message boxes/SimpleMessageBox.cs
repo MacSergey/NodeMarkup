@@ -1,4 +1,5 @@
-﻿using ModsCommon.UI;
+﻿using ModsCommon;
+using ModsCommon.UI;
 
 namespace NodeMarkup.UI
 {
@@ -31,7 +32,7 @@ namespace NodeMarkup.UI
     {
         public ErrorLoadedMessageBox()
         {
-            CaptionText = Mod.ShortName;
+            CaptionText = SingletonMod<Mod>.Instance.Name;
             Button1Text = NodeMarkupMessageBox.Ok;
             Button2Text = NodeMarkup.Localize.Mod_Support;
             OnButton2Click = Mod.OpenTroubleshooting;

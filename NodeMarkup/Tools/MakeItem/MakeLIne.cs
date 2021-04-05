@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -228,7 +229,7 @@ namespace NodeMarkup.Tools
                 a = SelectPoint.Position,
                 b = SelectPoint.Direction,
                 c = SelectPoint.Direction.Turn90(true),
-                d = NodeMarkupTool.Ray.GetRayPosition(Markup.Position.y, out _),
+                d = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _),
             };
 
             Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);

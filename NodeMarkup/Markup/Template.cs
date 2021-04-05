@@ -2,6 +2,7 @@
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
@@ -299,7 +300,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                Mod.Logger.Warning("Could not get template screenshot", error);
+                SingletonMod<Mod>.Logger.Warning("Could not get template screenshot", error);
                 return null;
             }
         }

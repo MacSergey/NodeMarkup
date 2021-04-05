@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using System;
@@ -14,7 +15,7 @@ namespace NodeMarkup.Utilities
         {
             ModeType = modeType;
         }
-        public override bool IsPressed(Event e) => (NodeMarkupTool.Instance.CurrentMode & ModeType) != ToolModeType.None && base.IsPressed(e);
+        public override bool IsPressed(Event e) => (SingletonTool<NodeMarkupTool>.Instance.CurrentMode & ModeType) != ToolModeType.None && base.IsPressed(e);
         public override string ToString() => InputKey.ToLocalizedString("KEYNAME");
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
@@ -63,7 +64,7 @@ namespace NodeMarkup.UI.Editors
         protected static float ItemsRatio => 0.3f;
         protected static float ContentRatio => 1f - ItemsRatio;
 
-        public NodeMarkupTool Tool => NodeMarkupTool.Instance;
+        public NodeMarkupTool Tool => SingletonTool<NodeMarkupTool>.Instance;
         protected Markup Markup => Panel.Markup;
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;

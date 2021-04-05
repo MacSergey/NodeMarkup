@@ -72,7 +72,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            Markup.FromXml(Mod.Version, IntersectionTemplate.Data, map);
+            Markup.FromXml(SingletonMod<Mod>.Version, IntersectionTemplate.Data, map);
             Panel.UpdatePanel();
         }
     }
@@ -116,8 +116,8 @@ namespace NodeMarkup.Tools
         protected abstract SourceType[] GetSources(IToolMode prevMode);
         protected abstract Target<SourceType>[] GetTargets(IToolMode prevMode);
 
-        public void GetHoverSource() => HoverSource = NodeMarkupTool.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(NodeMarkupTool.MouseRay)) : null;
-        public void GetHoverTarget() => HoverTarget = NodeMarkupTool.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(NodeMarkupTool.MouseRay)) : null;
+        public void GetHoverSource() => HoverSource = SingletonTool<NodeMarkupTool>.Instance.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(SingletonTool<NodeMarkupTool>.Instance.MouseRay)) : null;
+        public void GetHoverTarget() => HoverTarget = SingletonTool<NodeMarkupTool>.Instance.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(SingletonTool<NodeMarkupTool>.Instance.MouseRay)) : null;
 
         public override void OnToolUpdate()
         {

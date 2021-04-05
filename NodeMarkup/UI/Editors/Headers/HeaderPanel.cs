@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
@@ -33,7 +34,7 @@ namespace NodeMarkup.UI.Editors
             ApplyTemplate.Init(StyleGroup, onSelectTemplate);
 
             SetPasteEnabled();
-            NodeMarkupTool.Instance.OnStyleToBuffer += StyleToBuffer;
+            SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer += StyleToBuffer;
         }
 
         private void StyleToBuffer(Style.StyleType group)
@@ -41,7 +42,7 @@ namespace NodeMarkup.UI.Editors
             if (group == StyleGroup)
                 SetPasteEnabled();
         }
-        private void SetPasteEnabled() => PasteButton.isEnabled = NodeMarkupTool.Instance.IsStyleInBuffer(StyleGroup);
+        private void SetPasteEnabled() => PasteButton.isEnabled = SingletonTool<NodeMarkupTool>.Instance.IsStyleInBuffer(StyleGroup);
 
         public override void DeInit()
         {
@@ -51,7 +52,7 @@ namespace NodeMarkup.UI.Editors
             OnCopy = null;
             OnPaste = null;
 
-            NodeMarkupTool.Instance.OnStyleToBuffer -= StyleToBuffer;
+            SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
 
             ApplyTemplate.DeInit();
         }

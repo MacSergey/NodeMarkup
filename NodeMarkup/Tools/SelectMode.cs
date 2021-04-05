@@ -15,12 +15,11 @@ using ModsCommon;
 
 namespace NodeMarkup.Tools
 {
-    public class SelectToolMode : BaseSelectToolMode, IToolModePanel, IToolMode<ToolModeType>
+    public class SelectToolMode : BaseSelectToolMode<Mod, NodeMarkupTool>, IToolModePanel, IToolMode<ToolModeType>
     {
         public bool ShowPanel => false;
         public ToolModeType Type => ToolModeType.Select;
 
-        protected new NodeMarkupTool Tool => NodeMarkupTool.Instance;
 
         public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNode.Id) : (IsHoverSegment ? string.Format(Localize.Tool_InfoHoverSegment, HoverSegment.Id) : Localize.Tool_SelectInfo);
 
@@ -34,7 +33,7 @@ namespace NodeMarkup.Tools
             else
                 return;
 
-            Mod.Logger.Debug($"Select marking {markup}");
+            SingletonMod<Mod>.Logger.Debug($"Select marking {markup}");
             Tool.SetMarkup(markup);
 
             if (markup.NeedSetOrder)

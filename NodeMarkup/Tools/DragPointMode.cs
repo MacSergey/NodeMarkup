@@ -20,7 +20,7 @@ namespace NodeMarkup.Tools
         public override void OnMouseDrag(Event e)
         {
             var normal = DragPoint.Enter.CornerDir.Turn90(true);
-            var position = NodeMarkupTool.Ray.GetRayPosition(Markup.Position.y, out _);
+            var position = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
             Line2.Intersect(DragPoint.Position.XZ(), (DragPoint.Position + DragPoint.Enter.CornerDir).XZ(), position.XZ(), (position + normal).XZ(), out float offsetChange, out _);
             DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
             Panel.EditPoint(DragPoint);
