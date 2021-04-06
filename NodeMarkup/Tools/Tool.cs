@@ -69,7 +69,7 @@ namespace NodeMarkup.Tools
 
         public Markup Markup { get; private set; }
 
-        public NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
+        public NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
         public IntersectionTemplate MarkupBuffer { get; private set; }
         public bool IsMarkupBufferEmpty => MarkupBuffer == null;
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
@@ -106,7 +106,6 @@ namespace NodeMarkup.Tools
                 Disable();
         }
         public void SetDefaultMode() => SetMode(ToolModeType.MakeLine);
-        public void SetMode(ToolModeType mode) => SetMode(ToolModes[mode]);
         protected override void SetModeNow(IToolMode mode)
         {
             base.SetModeNow(mode);
@@ -664,7 +663,7 @@ namespace NodeMarkup.Tools
     {
         public abstract ToolModeType Type { get; }
         public virtual bool ShowPanel => true;
-        protected NodeMarkupPanel Panel => NodeMarkupPanel.Instance;
+        protected NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
         public Markup Markup => Tool.Markup;
     }
     public enum ToolModeType

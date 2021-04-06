@@ -241,7 +241,7 @@ namespace NodeMarkup
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
-            static void OnChanged() => NodeMarkupPanel.Instance.UpdatePanel();
+            static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();
         }
         private static void UpdateAllMarkings()
         {

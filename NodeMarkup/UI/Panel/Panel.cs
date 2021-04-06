@@ -14,9 +14,26 @@ namespace NodeMarkup.UI.Panel
 {
     public class NodeMarkupPanel : CustomUIPanel
     {
+        public static void CreatePanel()
+        {
+            SingletonMod<Mod>.Logger.Debug($"Create panel");
+            UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
+            SingletonMod<Mod>.Logger.Debug($"Panel created");
+        }
+        public static void RemovePanel()
+        {
+            SingletonMod<Mod>.Logger.Debug($"Remove panel");
+            if (SingletonItem<NodeMarkupPanel>.Instance is NodeMarkupPanel panel)
+            {
+                panel.Hide();
+                Destroy(panel);
+                SingletonItem<NodeMarkupPanel>.Instance = null;
+                SingletonMod<Mod>.Logger.Debug($"Panel removed");
+            }
+        }
+
         #region PROPERTIES
 
-        public static NodeMarkupPanel Instance { get; private set; }
         private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
 
         public bool Active
@@ -72,17 +89,11 @@ namespace NodeMarkup.UI.Panel
 
         #region BASIC
 
-        public static void CreatePanel()
-        {
-            SingletonMod<Mod>.Logger.Debug($"Create panel");
-            UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
-            SingletonMod<Mod>.Logger.Debug($"Panel created");
-        }
         public override void Awake()
         {
             base.Awake();
 
-            Instance = this;
+            SingletonItem<NodeMarkupPanel>.Instance = this;
 
             atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "MenuPanel2";
@@ -95,7 +106,7 @@ namespace NodeMarkup.UI.Panel
 
             minimumSize = new Vector2(Width, Header.height + TabStrip.height + 200);
 
-            Instance.Active = false;
+            Active = false;
         }
         public override void Start()
         {
@@ -109,17 +120,6 @@ namespace NodeMarkup.UI.Panel
 
             CheckPosition();
             UpdatePanel();
-        }
-        public static void RemovePanel()
-        {
-            SingletonMod<Mod>.Logger.Debug($"Remove panel");
-            if (Instance != null)
-            {
-                Instance.Hide();
-                Destroy(Instance);
-                Instance = null;
-                SingletonMod<Mod>.Logger.Debug($"Panel removed");
-            }
         }
         private void CheckPosition()
         {
