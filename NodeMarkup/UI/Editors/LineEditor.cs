@@ -251,7 +251,7 @@ namespace NodeMarkup.UI.Editors
 
         public override bool OnShortcut(Event e)
         {
-            if (NodeMarkupTool.AddRuleShortcut.IsPressed(e) && AddRuleAvailable)
+            if (NodeMarkupTool.AddRuleShortcut.Press(e) && AddRuleAvailable)
             {
                 AddRule();
                 return true;

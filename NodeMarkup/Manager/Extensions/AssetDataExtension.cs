@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace NodeMarkup
 {
-    public class AssetDataExtension : AssetDataExtensionBase
+    public class AssetDataExtension : BaseAssetDataExtension<AssetDataExtension>
     {
         private static string DataId => $"{Loader.Id}.Data";
         private static string MapId => $"{Loader.Id}.Map";
@@ -22,13 +22,7 @@ namespace NodeMarkup
         public static AssetDataExtension Instance { get; private set; }
 
         private static Dictionary<BuildingInfo, AssetMarking> AssetMarkings { get; } = new Dictionary<BuildingInfo, AssetMarking>();
-        public override void OnCreated(IAssetData assetData)
-        {
-            base.OnCreated(assetData);
-            Instance = this;
-        }
 
-        public override void OnReleased() => Instance = null;
         public override void OnAssetLoaded(string name, object asset, Dictionary<string, byte[]> userData)
         {
             if (asset is not BuildingInfo prefab || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
@@ -111,19 +105,6 @@ namespace NodeMarkup
         private ushort GetUShort(byte b1, byte b2) => (ushort)((b1 << 8) + b2);
 
         public static bool TryGetValue(BuildingInfo buildingInfo, out AssetMarking assetMarking) => AssetMarkings.TryGetValue(buildingInfo, out assetMarking);
-
-        public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList)
-        {
-            if (AccessTools.Method(typeof(LoadSavePanelBase<CustomAssetMetaData>), "GetListingMetaData") is not MethodInfo method)
-                return;
-
-            var listingMetaData = (CustomAssetMetaData)method.Invoke(__instance, new object[] { ___m_SaveList.selectedIndex });
-            if (listingMetaData.userDataRef != null)
-            {
-                var userAssetData = (listingMetaData.userDataRef.Instantiate() as AssetDataWrapper.UserAssetData) ?? new AssetDataWrapper.UserAssetData();
-                Instance.OnAssetLoaded(listingMetaData.name, ToolsModifierControl.toolController.m_editPrefabInfo, userAssetData.Data);
-            }
-        }
     }
     public struct AssetMarking
     {

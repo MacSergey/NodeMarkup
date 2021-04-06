@@ -15,7 +15,7 @@ namespace NodeMarkup.Utilities
         {
             ModeType = modeType;
         }
-        public override bool IsPressed(Event e) => (SingletonTool<NodeMarkupTool>.Instance.CurrentMode & ModeType) != ToolModeType.None && base.IsPressed(e);
+        public override bool Press(Event e) => (SingletonTool<NodeMarkupTool>.Instance.CurrentMode & ModeType) != ToolModeType.None && base.Press(e);
         public override string ToString() => InputKey.ToLocalizedString("KEYNAME");
     }
 }

@@ -7,62 +7,18 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class NodeMarkupButton : CustomUIButton
+    public class NodeMarkupButton : NetToolButton<Mod, NodeMarkupTool>
     {
-        private static string RoadsOptionPanel => nameof(RoadsOptionPanel);
-        private static int ButtonSize => 31;
-        private static Vector2 ButtonPosition => new Vector3(59, 38);
+        protected override Vector2 ButtonPosition => new Vector3(59, 38);
+        protected override UITextureAtlas Atlas => NodeMarkupTextures.Atlas;
 
-        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result)
-        {
-            if (__result == null || templateName != RoadsOptionPanel || __result.component.Find<NodeMarkupButton>(nameof(NodeMarkupButton)) != null)
-                return;
-
-            SingletonMod<Mod>.Logger.Debug($"Create button");
-            __result.component.AddUIComponent<NodeMarkupButton>();
-            SingletonMod<Mod>.Logger.Debug($"Button created");
-        }
-
-        public override void Start()
-        {
-            atlas = NodeMarkupTextures.Atlas;
-
-            normalBgSprite = NodeMarkupTextures.ButtonNormal;
-            hoveredBgSprite = NodeMarkupTextures.ButtonHover;
-            pressedBgSprite = NodeMarkupTextures.ButtonHover;
-            focusedBgSprite = NodeMarkupTextures.ButtonActive;
-
-            normalFgSprite = NodeMarkupTextures.Icon;
-            hoveredFgSprite = NodeMarkupTextures.IconHover;
-            pressedFgSprite = NodeMarkupTextures.Icon;
-            focusedFgSprite = NodeMarkupTextures.Icon;
-
-            relativePosition = ButtonPosition;
-            size = new Vector2(ButtonSize, ButtonSize);
-        }
-        public override void Update()
-        {
-            base.Update();
-
-            var enable = SingletonTool<NodeMarkupTool>.Instance?.enabled == true;
-
-            if (enable && state == (ButtonState.Normal | ButtonState.Hovered))
-                state = ButtonState.Focused;
-            else if (!enable && state == ButtonState.Focused)
-                state = ButtonState.Normal;
-        }
-
-        protected override void OnClick(UIMouseEventParameter p)
-        {
-            SingletonMod<Mod>.Logger.Debug($"On button click");
-
-            base.OnClick(p);
-            SingletonTool<NodeMarkupTool>.Instance.Toggle();
-        }
-        protected override void OnTooltipEnter(UIMouseEventParameter p)
-        {
-            tooltip = $"{SingletonMod<Mod>.Instance.Name} ({NodeMarkupTool.ActivationShortcut})";
-            base.OnTooltipEnter(p);
-        }
+        protected override string NormalBgSprite => NodeMarkupTextures.ButtonNormal;
+        protected override string HoveredBgSprite => NodeMarkupTextures.ButtonHover;
+        protected override string PressedBgSprite => NodeMarkupTextures.ButtonHover;
+        protected override string FocusedBgSprite => NodeMarkupTextures.ButtonActive;
+        protected override string NormalFgSprite => NodeMarkupTextures.Icon;
+        protected override string HoveredFgSprite => NodeMarkupTextures.IconHover;
+        protected override string PressedFgSprite => NodeMarkupTextures.Icon;
+        protected override string FocusedFgSprite => NodeMarkupTextures.Icon;
     }
 }

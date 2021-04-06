@@ -192,9 +192,10 @@ namespace NodeMarkup
         {
             var success = true;
 
-            success &= Patch_ToolController_Awake(ToolControllerAwakeTranspiler);
-            success &= Patch_GameKeyShortcuts_Escape(GameKeyShortcutsEscapeTranspiler);
-            success &= Patch_LoadAssetPanel_OnLoad(AssetDataExtension.LoadAssetPanelOnLoadPostfix);
+            success &= AddTool<NodeMarkupTool>();
+            success &= AddNetToolButton<NodeMarkupButton>();
+            success &= ToolOnEscape<NodeMarkupTool>();
+            success &= AssetDataExtensionFix<AssetDataExtension>();
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
@@ -202,8 +203,7 @@ namespace NodeMarkup
             PatchNetInfo(ref success);
             PatchLoading(ref success);
 
-            success &= Patch_BuildingDecoration_LoadPaths();            
-            success &= Patch_GeneratedScrollPanel_CreateOptionPanel();
+            success &= Patch_BuildingDecoration_LoadPaths();
 
             return success;
         }
@@ -404,9 +404,6 @@ namespace NodeMarkup
 
         #region OTHERS
 
-        private static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ToolControllerAwakeTranspiler<NodeMarkupTool>(generator, instructions);
-        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => GameKeyShortcutsEscapeTranspiler<NodeMarkupTool>(generator, instructions);
-
         private bool Patch_BuildingDecoration_LoadPaths()
         {
             return AddTranspiler(typeof(Mod), nameof(Mod.BuildingDecorationLoadPathsTranspiler), typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
@@ -449,11 +446,7 @@ namespace NodeMarkup
                 yield return prevInstruction;
         }
 
-        private bool Patch_GeneratedScrollPanel_CreateOptionPanel()
-        {
-            return AddPostfix(typeof(NodeMarkupButton), nameof(NodeMarkupButton.GeneratedScrollPanelCreateOptionPanelPostfix), typeof(GeneratedScrollPanel), "CreateOptionPanel");
-        }
-        
+
         #endregion
 
         #endregion

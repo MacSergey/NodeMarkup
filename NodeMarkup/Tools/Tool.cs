@@ -65,7 +65,7 @@ namespace NodeMarkup.Tools
 
         protected override IToolMode DefaultMode => ToolModes[ToolModeType.Select];
         protected override bool ShowToolTip => (Settings.ShowToolTip || Mode.Type == ToolModeType.Select) && !Panel.IsHover;
-        public override bool IsActivationPressed => ActivationShortcut.InputKey.IsKeyUp();
+        public override Shortcut Activation => ActivationShortcut;
 
         public Markup Markup { get; private set; }
 
@@ -123,7 +123,7 @@ namespace NodeMarkup.Tools
 
         protected override void OnToolGUI(Event e)
         {
-            if (!Shortcuts.Any(s => s.IsPressed(e)) && Panel?.OnShortcut(e) != true)
+            if (!Shortcuts.Any(s => s.Press(e)) && Panel?.OnShortcut(e) != true)
                 base.OnToolGUI(e);
         }
         private void StartCreateFiller()
@@ -415,6 +415,7 @@ namespace NodeMarkup.Tools
 
 
         private int ScreenshotSize => 400;
+
         private IEnumerator MakeScreenshot(Action<Image> callback)
         {
             if (callback == null)
