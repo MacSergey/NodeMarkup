@@ -16,11 +16,11 @@ namespace NodeMarkup.UI
     public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
         where StyleType : Enum
     {
-        protected override void FillItems()
+        protected override void FillItems(Func<Style.StyleType, bool> selector)
         {
             foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<Style.StyleType>())
             {
-                if (value.IsVisible())
+                if (selector?.Invoke(value) != false && value.IsVisible())
                     Selector.AddItem(value, GetDescription(value));
             }
         }

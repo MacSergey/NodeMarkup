@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
         public NodeMarkup(ushort nodeId) : base(nodeId) { }
 
         protected override Vector3 GetPosition() => Id.GetNode().m_position;
-        protected override IEnumerable<ushort> GetEnters() => Id.GetNode().SegmentsId();
+        protected override IEnumerable<ushort> GetEnters() => Id.GetNode().SegmentIds();
         protected override Enter NewEnter(ushort id) => new SegmentEnter(this, id);
 
         protected override void UpdateEntersProcess() => UpdateСontour();

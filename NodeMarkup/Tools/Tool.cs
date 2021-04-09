@@ -378,7 +378,7 @@ namespace NodeMarkup.Tools
         {
             var node = nodeId.GetNode();
 
-            var nodeSegmentIds = node.SegmentsId().ToArray();
+            var nodeSegmentIds = node.SegmentIds().ToArray();
             var nextSegmentId = nextGetter(nodeSegmentIds, beforeSegmentId);
 
             if (nextSegmentId != null && nodeSegmentIds.Length == 2 && (node.m_flags & NetNode.Flags.Bend) != 0)
