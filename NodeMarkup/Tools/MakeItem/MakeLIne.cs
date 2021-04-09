@@ -224,18 +224,19 @@ namespace NodeMarkup.Tools
         }
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
+            var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+
+            var startAngle = SelectPoint.Direction.AbsoluteAngle();
+            var strangeAngle = (endPosition - SelectPoint.Position).AbsoluteAngle();
+            var endAngle = strangeAngle + Mathf.PI + (strangeAngle - startAngle);
+
             var bezier = new Bezier3()
             {
                 a = SelectPoint.Position,
-                b = SelectPoint.Direction,
-                c = SelectPoint.Direction.Turn90(true),
-                d = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _),
+                d = endPosition,
             };
 
-            Line2.Intersect(VectorUtils.XZ(bezier.a), VectorUtils.XZ(bezier.a + bezier.b), VectorUtils.XZ(bezier.d), VectorUtils.XZ(bezier.d + bezier.c), out _, out float v);
-            bezier.c = v >= 0 ? bezier.c : -bezier.c;
-
-            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
+            NetSegment.CalculateMiddlePoints(bezier.a, SelectPoint.Direction, bezier.d, endAngle.Direction(), true, true, out bezier.b, out bezier.c);
             bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
     }
