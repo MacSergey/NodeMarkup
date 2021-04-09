@@ -102,9 +102,12 @@ namespace NodeMarkup.UI.Panel
             {
                 AddPopupButton(popup.Content, NodeMarkupTextures.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut),
                 AddPopupButton(popup.Content, NodeMarkupTextures.Offset, NodeMarkup.Localize.Panel_ResetOffset,NodeMarkupTool.ResetOffsetsShortcut),
-                AddPopupButton(popup.Content, NodeMarkupTextures.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines,NodeMarkupTool.CreateEdgeLinesShortcut),
-                AddPopupButton(popup.Content, NodeMarkupTextures.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks,NodeMarkupTool.CutLinesByCrosswalksShortcut),
             };
+            if(Type == MarkupType.Node)
+            {
+                buttons.Add(AddPopupButton(popup.Content, NodeMarkupTextures.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines, NodeMarkupTool.CreateEdgeLinesShortcut));
+                buttons.Add(AddPopupButton(popup.Content, NodeMarkupTextures.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks, NodeMarkupTool.CutLinesByCrosswalksShortcut));
+            }
             if (Type == MarkupType.Segment)
             {
                 buttons.Add(AddPopupButton(popup.Content, NodeMarkupTextures.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut));
