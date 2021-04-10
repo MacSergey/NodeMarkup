@@ -38,7 +38,7 @@ namespace NodeMarkup.UI.Editors
 
         public void Fill(Style.StyleType group)
         {
-            var templates = TemplateManager.StyleManager.GetTemplates(group).OrderByDescending(t => t.IsDefault).ThenBy(t => t.Style.Type).ThenBy(t => t.Name).ToArray();
+            var templates = TemplateManager.StyleManager.GetTemplates(group).OrderByDescending(t => t.IsDefault).ThenBy(t => t.Asset?.Author ?? string.Empty).ThenBy(t => t.Style.Type).ThenBy(t => t.Name).ToArray();
             if (!templates.Any())
             {
                 var emptyLabel = Content.AddUIComponent<CustomUILabel>();

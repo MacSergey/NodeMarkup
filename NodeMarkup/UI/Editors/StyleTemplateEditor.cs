@@ -88,7 +88,16 @@ namespace NodeMarkup.UI.Editors
     public class StyleTemplateItemsPanel : ItemsGroupPanel<StyleTemplateItem, StyleTemplate, StyleTemplateGroup, Style.StyleType>
     {
         public override bool GroupingEnable => Settings.GroupTemplates.value;
-        public override int Compare(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+        public override int Compare(StyleTemplate x, StyleTemplate y)
+        {
+            int result;
+
+            if ((result = (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty)) == 0)
+                if ((result = x.Style.Type.CompareTo(y.Style.Type)) == 0)
+                    result = x.Name.CompareTo(y.Name);
+
+            return result;
+        }
         public override int Compare(Style.StyleType x, Style.StyleType y) => x.CompareTo(y);
 
         protected override string GroupName(Style.StyleType group) => Settings.GroupTemplatesType == 0 ? group.Description() : $"{group.GetGroup().Description()}\n{group.Description()}";
