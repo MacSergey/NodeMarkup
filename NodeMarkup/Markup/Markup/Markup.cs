@@ -100,8 +100,8 @@ namespace NodeMarkup.Manager
             Position = GetPosition();
 
             var oldEnters = RowEntersList;
-            var before = oldEnters.Select(e => e.Id).ToList();
-            var after = GetEnters().ToList();
+            var before = oldEnters.Select(e => e.Id).ToArray();
+            var after = GetEnters().ToArray();
 
             var still = before.Intersect(after).ToArray();
             var delete = before.Except(still).ToArray();
