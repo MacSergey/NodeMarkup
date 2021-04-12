@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using ColossalFramework.UI;
+using HarmonyLib;
 using ICities;
 using ModsCommon;
 using ModsCommon.UI;
@@ -192,10 +193,15 @@ namespace NodeMarkup
         {
             var success = true;
 
-            success &= AddTool<NodeMarkupTool>();
-            success &= AddNetToolButton<NodeMarkupButton>();
-            success &= ToolOnEscape<NodeMarkupTool>();
-            success &= AssetDataExtensionFix<AssetDataExtension>();
+            //success &= AddTool<NodeMarkupTool>();
+            //success &= AddNetToolButton<NodeMarkupButton>();
+            //success &= ToolOnEscape<NodeMarkupTool>();
+            //success &= AssetDataExtensionFix<AssetDataExtension>();
+
+            success &= AddTool();
+            success &= AddNetToolButton();
+            success &= ToolOnEscape();
+            success &= AssetDataExtensionFix();
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
@@ -207,6 +213,34 @@ namespace NodeMarkup
 
             return success;
         }
+
+        #region TEMP
+
+        private bool AddTool()
+        {
+            return AddTranspiler(typeof(Mod), nameof(Mod.ToolControllerAwakeTranspiler), typeof(ToolController), "Awake");
+        }
+        public static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ToolControllerAwakeTranspiler<NodeMarkupTool>(generator, instructions);
+
+        private bool AddNetToolButton()
+        {
+            return AddPostfix(typeof(Mod), nameof(Mod.GeneratedScrollPanelCreateOptionPanelPostfix), typeof(GeneratedScrollPanel), "CreateOptionPanel");
+        }
+        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => GeneratedScrollPanelCreateOptionPanelPostfix<NodeMarkupButton>(templateName, ref __result);
+
+        protected bool ToolOnEscape()
+        {
+            return AddTranspiler(typeof(Mod), nameof(Mod.GameKeyShortcutsEscapeTranspiler), typeof(GameKeyShortcuts), "Escape");
+        }
+        protected static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => GameKeyShortcutsEscapeTranspiler<NodeMarkupTool>(generator, instructions);
+
+        protected bool AssetDataExtensionFix()
+        {
+            return AddPostfix(typeof(Mod), nameof(Mod.LoadAssetPanelOnLoadPostfix), typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
+        }
+        public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => AssetDataExtension.LoadAssetPanelOnLoadPostfix(__instance, ___m_SaveList);
+
+        #endregion
 
         #region NETMANAGER
 
