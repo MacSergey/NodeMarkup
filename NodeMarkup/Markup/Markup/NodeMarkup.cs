@@ -81,5 +81,7 @@ namespace NodeMarkup.Manager
 
             public bool TryGetValue(int i, int j, out T value) => TryGetValue(GetId(i, j), out value);
         }
+
+        public override string ToString() => $"N:{base.ToString()}";
     }
 }
