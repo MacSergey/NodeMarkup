@@ -99,7 +99,7 @@ namespace NodeMarkup.Manager
             RightBorderTrajectory = GetBorderTrajectory(trajectory, RightBorder, 0, DefaultRightBorderTrajectory, out float startT);
             LeftBorderTrajectory = GetBorderTrajectory(trajectory, LeftBorder, 1, DefaultLeftBorderTrajectory, out float endT);
 
-            return (StraightTrajectory)trajectory.Cut(startT, endT);
+            return trajectory.Cut(startT, endT);
         }
         private ITrajectory GetBorderTrajectory(StraightTrajectory trajectory, MarkupLine border, float defaultT, StraightTrajectory defaultTrajectory, out float t)
         {
@@ -122,7 +122,7 @@ namespace NodeMarkup.Manager
             var startT = GetT(trajectory, RightBorderTrajectory, 0);
             var endT = GetT(trajectory, LeftBorderTrajectory, 1);
 
-            return (StraightTrajectory)trajectory.Cut(startT, endT);
+            return trajectory.Cut(startT, endT);
 
             static float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
             => Intersection.CalculateSingle(trajectory, lineTrajectory) is Intersection intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
@@ -134,7 +134,7 @@ namespace NodeMarkup.Manager
             var startT = GetT(trajectory, normal, new Vector3[] { EnterLine.Start.Position, CrosswalkLine.Trajectory.StartPosition }, 0, MinAggregate);
             var endT = GetT(trajectory, normal, new Vector3[] { EnterLine.End.Position, CrosswalkLine.Trajectory.EndPosition }, 1, MaxAggregate);
 
-            return (StraightTrajectory)trajectory.Cut(startT, endT);
+            return trajectory.Cut(startT, endT);
 
             static float MinAggregate(Intersection[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
             static float MaxAggregate(Intersection[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
