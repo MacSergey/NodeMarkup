@@ -17,18 +17,6 @@ using UnityEngine;
 
 namespace NodeMarkup
 {
-    public interface IXml
-    {
-        string XmlSection { get; }
-    }
-    public interface IToXml : IXml
-    {
-        XElement ToXml();
-    }
-    public interface IFromXml : IXml
-    {
-        void FromXml(XElement config);
-    }
     public static class Loader
     {
         public static string Id { get; } = nameof(NodeMarkup);
