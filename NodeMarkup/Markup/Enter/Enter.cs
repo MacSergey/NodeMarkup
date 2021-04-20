@@ -41,7 +41,7 @@ namespace NodeMarkup.Manager
             {
                 var segment = GetSegment();
                 var info = segment.Info;
-                var lanes = segment.GetLanesId().ToArray();
+                var lanes = segment.GetLaneIds().ToArray();
 
                 foreach (var index in (IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse()).Where(s => info.m_lanes[s].IsDriveLane()))
                     yield return new DriveLane(this, lanes[index], info.m_lanes[index]);

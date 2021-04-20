@@ -673,7 +673,7 @@ namespace NodeMarkup.Utilities
 
         public void Draw(RenderManager.Instance data)
         {
-            var instance = ItemsExtension.PropManager;
+            var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
 
