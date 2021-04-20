@@ -127,7 +127,7 @@
     <Compile Include="UI\Property panels\EnumProperty.cs" />
     <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
     <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
-    <Compile Include="UI\Editors\Headers\ApplyTemplate.cs" />
+    <Compile Include="UI\Editors\Headers\ApplyTemplatePopup.cs" />
     <Compile Include="UI\Editors\IntersectionTemplateEditor.cs" />
     <Compile Include="UI\Panel\Header.cs" />
     <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
@@ -180,7 +180,7 @@
     <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
     <Compile Include="UI\Panel\Panel.cs" />
     <Compile Include="UI\Selectors\PointsSelector.cs" />
-    <Compile Include="UI\Editors\Headers\HeaderPanel.cs" />
+    <Compile Include="UI\Editors\Headers\OptionsHeaderPanel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\Elements\StyleModifier.cs" />
     <Compile Include="UI\Property panels\SelectProperty.cs" />
@@ -283,7 +283,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">

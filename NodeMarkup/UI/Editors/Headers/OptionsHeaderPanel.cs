@@ -1,15 +1,64 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utilities;
 using System;
+using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class StyleHeaderPanel : HeaderPanel
+    public abstract class OptionsHeaderPanel : BaseHeaderPanel<BaseHeaderContent>
+    {
+        public event Action OnDelete;
+
+        protected CustomUIButton DeleteButton { get; set; }
+
+        public OptionsHeaderPanel() : base()
+        {
+            AddDeleteButton();
+        }
+
+        public virtual void Init(float? height = null, bool isDeletable = true)
+        {
+            base.Init(height);
+            DeleteButton.isVisible = isDeletable;
+            SetSize();
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnDelete = null;
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            SetSize();
+        }
+        private void SetSize()
+        {
+            Content.size = new Vector2((DeleteButton.isVisible ? width - DeleteButton.width - 10 : width) - ItemsPadding, height);
+            Content.relativePosition = new Vector2(ItemsPadding, 0f);
+            DeleteButton.relativePosition = new Vector2(width - DeleteButton.width - 5, (height - DeleteButton.height) / 2);
+        }
+
+        private void AddDeleteButton()
+        {
+            DeleteButton = AddUIComponent<CustomUIButton>();
+            DeleteButton.zOrder = 0;
+            DeleteButton.atlas = CommonTextures.Atlas;
+            DeleteButton.normalBgSprite = CommonTextures.DeleteNormal;
+            DeleteButton.hoveredBgSprite = CommonTextures.DeleteHover;
+            DeleteButton.pressedBgSprite = CommonTextures.DeletePressed;
+            DeleteButton.size = new Vector2(20, 20);
+            DeleteButton.eventClick += DeleteClick;
+        }
+        private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke();
+    }
+    public class StyleHeaderPanel : OptionsHeaderPanel
     {
         public event Action OnSaveTemplate;
         public event Action OnCopy;
@@ -78,7 +127,7 @@ namespace NodeMarkup.UI.Editors
         private void CutClick(UIComponent component, UIMouseEventParameter eventParam) => OnCut?.Invoke();
     }
 
-    public abstract class TemplateHeaderPanel<TemplateType> : HeaderPanel
+    public abstract class TemplateHeaderPanel<TemplateType> : OptionsHeaderPanel
         where TemplateType : Template
     {
         public event Action OnSaveAsset;

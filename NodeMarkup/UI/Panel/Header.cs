@@ -12,71 +12,16 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
 {
-    public class PanelHeader : CustomUIDragHandle
+    public class PanelHeader : HeaderMoveablePanel<PanelHeaderContent>
     {
-        private bool CanMove { get; set; }
-        private CustomUILabel Caption { get; set; }
-        public PanelHeaderContent Buttons { get; private set; }
-
-        public string Text
-        {
-            get => Caption.text;
-            set => Caption.text = value;
-        }
         public MarkupType Type
         {
-            get => Buttons.Type;
-            set => Buttons.Type = value;
+            get => Content.Type;
+            set => Content.Type = value;
         }
-        public bool Available { set => Buttons.SetAvailable(value); }
-
-        public PanelHeader()
-        {
-            CreateCaption();
-            CreateButtonsPanel();
-        }
-
-        private void CreateCaption()
-        {
-            Caption = AddUIComponent<CustomUILabel>();
-            Caption.autoSize = false;
-            Caption.text = nameof(NodeMarkupPanel);
-            Caption.textAlignment = UIHorizontalAlignment.Center;
-            Caption.verticalAlignment = UIVerticalAlignment.Middle;
-        }
-        private void CreateButtonsPanel()
-        {
-            Buttons = AddUIComponent<PanelHeaderContent>();
-        }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            Buttons.autoLayout = true;
-            Buttons.autoLayout = false;
-            Buttons.FitChildrenHorizontally();
-            Buttons.height = height;
-
-            foreach (var item in Buttons.components)
-                item.relativePosition = new Vector2(item.relativePosition.x, (Buttons.height - item.height) / 2);
-
-            Caption.width = width - Buttons.width - 20;
-            Caption.relativePosition = new Vector2(10, (height - Caption.height) / 2);
-
-            Buttons.relativePosition = new Vector2(Caption.width - 5 + 20, (height - Buttons.height) / 2);
-        }
-        protected override void OnMouseDown(UIMouseEventParameter p)
-        {
-            CanMove = !new Rect(Buttons.absolutePosition, Buttons.size).Contains(SingletonTool<NodeMarkupTool>.Instance.MousePosition);
-            base.OnMouseDown(p);
-        }
-        protected override void OnMouseMove(UIMouseEventParameter p)
-        {
-            if (CanMove)
-                base.OnMouseMove(p);
-        }
+        public bool Available { set => Content.SetAvailable(value); }
     }
-    public class PanelHeaderContent : HeaderContent
+    public class PanelHeaderContent : BaseHeaderContent
     {
         private AdditionallyHeaderButton Additionally { get; }
         private PanelHeaderButton PasteButton { get; }

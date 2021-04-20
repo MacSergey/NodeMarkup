@@ -142,7 +142,7 @@ namespace NodeMarkup.UI.Panel
             Header = AddUIComponent<PanelHeader>();
             Header.size = new Vector2(Width, HeaderHeight);
             Header.relativePosition = new Vector2(0, 0);
-            Header.target = parent;
+            Header.Target = parent;
         }
         private void CreateTabStrip()
         {
