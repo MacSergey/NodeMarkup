@@ -12,42 +12,40 @@ namespace NodeMarkup.Manager
 {
     public static class MarkupManager
     {
-        public static NodeMarkupManager NodeManager { get; }
-        public static SegmentMarkupManager SegmentManager { get; }
         public static int Errors { get; set; } = 0;
         public static bool HasErrors => Errors != 0;
 
         static MarkupManager()
         {
-            NodeManager = new NodeMarkupManager();
-            SegmentManager = new SegmentMarkupManager();
+            SingletonItem<NodeMarkupManager>.Instance = new NodeMarkupManager();
+            SingletonItem<SegmentMarkupManager>.Instance = new SegmentMarkupManager();
         }
 
         public static void Clear()
         {
-            NodeManager.Clear();
-            SegmentManager.Clear();
+            SingletonItem<NodeMarkupManager>.Instance.Clear();
+            SingletonItem<SegmentMarkupManager>.Instance.Clear();
         }
 
-        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => NodeManager.Render(cameraInfo, nodeID, ref data);
+        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonItem<NodeMarkupManager>.Instance.Render(cameraInfo, nodeID, ref data);
 
-        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SegmentManager.Render(cameraInfo, segmentID, ref data);
+        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonItem<SegmentMarkupManager>.Instance.Render(cameraInfo, segmentID, ref data);
 
-        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => NodeManager.Remove(node);
-        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SegmentManager.Remove(segment);
-        public static void NetManagerUpdateNodePostfix(ushort node) => NodeManager.AddToUpdate(node);
-        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SegmentManager.AddToUpdate(segment);
+        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonItem<NodeMarkupManager>.Instance.Remove(node);
+        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonItem<SegmentMarkupManager>.Instance.Remove(segment);
+        public static void NetManagerUpdateNodePostfix(ushort node) => SingletonItem<NodeMarkupManager>.Instance.AddToUpdate(node);
+        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SingletonItem<SegmentMarkupManager>.Instance.AddToUpdate(segment);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
         {
-            SegmentManager.AddToUpdate(segmentID);
+            SingletonItem<SegmentMarkupManager>.Instance.AddToUpdate(segmentID);
             var segment = segmentID.GetSegment();
-            NodeManager.AddToUpdate(segment.m_startNode);
-            NodeManager.AddToUpdate(segment.m_endNode);
+            SingletonItem<NodeMarkupManager>.Instance.AddToUpdate(segment.m_startNode);
+            SingletonItem<NodeMarkupManager>.Instance.AddToUpdate(segment.m_endNode);
         }
         public static void NetManagerSimulationStepImplPostfix()
         {
-            NodeManager.Update();
-            SegmentManager.Update();
+            SingletonItem<NodeMarkupManager>.Instance.Update();
+            SingletonItem<SegmentMarkupManager>.Instance.Update();
         }
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
@@ -73,12 +71,13 @@ namespace NodeMarkup.Manager
         public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {
-            var config = new XElement(nameof(NodeMarkup), new XAttribute("V", SingletonMod<Mod>.Version));
+            var config = new XElement(nameof(NodeMarkup));
+            config.AddAttr("V", SingletonMod<Mod>.Version);
 
             Errors = 0;
 
-            NodeManager.ToXml(config);
-            SegmentManager.ToXml(config);
+            SingletonItem<NodeMarkupManager>.Instance.ToXml(config);
+            SingletonItem<SegmentMarkupManager>.Instance.ToXml(config);
 
             return config;
         }
@@ -91,8 +90,8 @@ namespace NodeMarkup.Manager
 
             var version = GetVersion(config);
 
-            NodeManager.FromXml(config, map, version);
-            SegmentManager.FromXml(config, map, version);
+            SingletonItem<NodeMarkupManager>.Instance.FromXml(config, map, version);
+            SingletonItem<SegmentMarkupManager>.Instance.FromXml(config, map, version);
         }
         private static Version GetVersion(XElement config)
         {
@@ -117,15 +116,18 @@ namespace NodeMarkup.Manager
         private static PropManager PropManager => Singleton<PropManager>.instance;
 
         public bool TryGetMarkup(ushort id, out TypeMarkup markup) => Markups.TryGetValue(id, out markup);
-        public TypeMarkup Get(ushort id)
+        public TypeMarkup this[ushort id]
         {
-            if (!Markups.TryGetValue(id, out TypeMarkup markup))
+            get
             {
-                markup = NewMarkup(id);
-                Markups[id] = markup;
-            }
+                if (!Markups.TryGetValue(id, out TypeMarkup markup))
+                {
+                    markup = NewMarkup(id);
+                    Markups[id] = markup;
+                }
 
-            return markup;
+                return markup;
+            }
         }
         protected abstract TypeMarkup NewMarkup(ushort id);
 
@@ -205,7 +207,7 @@ namespace NodeMarkup.Manager
                     while (tryGet(id, out var targetId))
                         id = targetId;
 
-                    var markup = Get(id);
+                    var markup = this[id];
 
                     markup.FromXml(version, markupConfig, map);
                     NeedUpdate.Add(markup.Id);

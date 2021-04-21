@@ -318,8 +318,8 @@ namespace NodeMarkup.Manager
             foreach (var def in DefaultTemplates)
             {
                 var defaultConfig = new XElement("D");
-                defaultConfig.Add(new XAttribute("T", (int)def.Key));
-                defaultConfig.Add(new XAttribute("Id", def.Value));
+                defaultConfig.AddAttr("T", (int)def.Key);
+                defaultConfig.AddAttr("Id", def.Value);
 
                 config.Add(defaultConfig);
             }

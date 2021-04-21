@@ -386,7 +386,7 @@ namespace NodeMarkup.Tools
                 var map = new ObjectsMap();
                 map.AddSegment(nearNodeId, beforeSegmentId);
                 map.AddSegment(farNodeId, nextSegmentId.Value);
-                var markup = MarkupManager.NodeManager.Get(nodeId);
+                var markup = SingletonItem<NodeMarkupManager>.Instance[nodeId];
                 markup.Clear();
                 markup.FromXml(SingletonMod<Mod>.Version, config, map);
             }
@@ -405,7 +405,7 @@ namespace NodeMarkup.Tools
             var map = new ObjectsMap();
             map.AddNode(farNodeId, beforeNodeId);
             map.AddNode(nearNodeId, nextNodeId);
-            var markup = MarkupManager.SegmentManager.Get(segmentId);
+            var markup = SingletonItem<SegmentMarkupManager>.Instance[segmentId];
             markup.Clear();
             markup.FromXml(SingletonMod<Mod>.Version, config, map);
 

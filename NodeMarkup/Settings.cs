@@ -245,8 +245,8 @@ namespace NodeMarkup
         }
         private static void UpdateAllMarkings()
         {
-            MarkupManager.NodeManager.AddAllToUpdate();
-            MarkupManager.SegmentManager.AddAllToUpdate();
+            SingletonItem<NodeMarkupManager>.Instance.AddAllToUpdate();
+            SingletonItem<SegmentMarkupManager>.Instance.AddAllToUpdate();
         }
 
         #endregion
