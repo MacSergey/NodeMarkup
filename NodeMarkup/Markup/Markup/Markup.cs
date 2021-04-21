@@ -591,7 +591,8 @@ namespace NodeMarkup.Manager
 
         public XElement ToXml()
         {
-            var config = new XElement(XmlSection, new XAttribute(nameof(Id), Id));
+            var config = new XElement(XmlSection);
+            config.AddAttr(nameof(Id), Id);
 
             foreach (var enter in Enters)
             {

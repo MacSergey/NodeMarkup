@@ -118,10 +118,9 @@ namespace NodeMarkup.Manager
 
         public virtual XElement ToXml()
         {
-            var config = new XElement(XmlSection,
-                new XAttribute(nameof(Id), Id),
-                new XAttribute("T", (int)Type)
-            );
+            var config = new XElement(XmlSection);
+            config.AddAttr(nameof(Id), Id);
+            config.AddAttr("T", (int)Type);
 
             return config;
         }

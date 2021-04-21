@@ -85,7 +85,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute(MarkupLine.XmlName, Slave.Id));
+            config.AddAttr(MarkupLine.XmlName, Slave.Id);
             return config;
         }
 
@@ -141,7 +141,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute("B", (int)Border));
+            config.AddAttr("B", (int)Border);
             return config;
         }
 

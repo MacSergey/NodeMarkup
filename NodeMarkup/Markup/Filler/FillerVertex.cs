@@ -211,7 +211,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute(MarkupLine.XmlName, Line.PointPair.Hash));
+            config.AddAttr(MarkupLine.XmlName, Line.PointPair.Hash);
             return config;
         }
     }
@@ -271,8 +271,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute(MarkupPointPair.XmlName1, First.Id));
-            config.Add(new XAttribute(MarkupPointPair.XmlName2, Second.Id));
+            config.AddAttr(MarkupPointPair.XmlName1, First.Id);
+            config.AddAttr(MarkupPointPair.XmlName2, Second.Id);
             return config;
         }
         public override int GetHashCode() => LinePair.GetHashCode();

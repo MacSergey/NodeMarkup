@@ -72,9 +72,9 @@ namespace NodeMarkup.Manager
         public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection);
-            config.Add(new XAttribute("T", (int)Type));
-            config.Add(new XAttribute(nameof(Id), Id));
-            config.Add(new XAttribute("N", Name));
+            config.AddAttr("T", (int)Type);
+            config.AddAttr(nameof(Id), Id);
+            config.AddAttr("N", Name);
             return config;
         }
         public virtual bool FromXml(XElement config)
@@ -232,9 +232,9 @@ namespace NodeMarkup.Manager
             foreach (var enter in Enters)
                 config.Add(enter.ToXml());
 
-            config.Add(new XAttribute("LC", Lines));
-            config.Add(new XAttribute("CC", Crosswalks));
-            config.Add(new XAttribute("FC", Fillers));
+            config.AddAttr("LC", Lines);
+            config.AddAttr("CC", Crosswalks);
+            config.AddAttr("FC", Fillers);
 
             return config;
         }

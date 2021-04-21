@@ -246,9 +246,9 @@ namespace NodeMarkup.Manager
         public XElement ToXml()
         {
             var config = new XElement(XmlSection);
-            config.Add(new XAttribute(nameof(Id), Id));
-            config.Add(new XAttribute("P", Points));
-            config.Add(new XAttribute("A", NormalAngle));
+            config.AddAttr(nameof(Id), Id);
+            config.AddAttr("P", Points);
+            config.AddAttr("A", NormalAngle);
             return config;
         }
     }

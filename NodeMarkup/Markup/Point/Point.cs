@@ -135,7 +135,8 @@ namespace NodeMarkup.Manager
 
         public virtual XElement ToXml()
         {
-            var config = new XElement(XmlSection, new XAttribute(nameof(Id), Id));
+            var config = new XElement(XmlSection);
+            config.AddAttr(nameof(Id), Id);
             Offset.ToXml(config);
             return config;
         }

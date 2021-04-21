@@ -168,11 +168,11 @@ namespace NodeMarkup.Manager
         public XElement ToXml()
         {
             var config = new XElement(XmlName);
-            config.Add(new XAttribute(MarkupLine.XmlName, CrosswalkLine.PointPair.Hash));
+            config.AddAttr(MarkupLine.XmlName, CrosswalkLine.PointPair.Hash);
             if (RightBorder.Value != null)
-                config.Add(new XAttribute("RB", RightBorder.Value.PointPair.Hash));
+                config.AddAttr("RB", RightBorder.Value.PointPair.Hash);
             if (LeftBorder.Value != null)
-                config.Add(new XAttribute("LB", LeftBorder.Value.PointPair.Hash));
+                config.AddAttr("LB", LeftBorder.Value.PointPair.Hash);
             config.Add(Style.Value.ToXml());
             return config;
         }

@@ -46,9 +46,8 @@ namespace NodeMarkup.Manager
 
         public virtual XElement ToXml()
         {
-            var config = new XElement(XmlSection,
-                new XAttribute("T", (int)Type)
-            );
+            var config = new XElement(XmlSection);
+            config.AddAttr("T", (int)Type);
             return config;
         }
     }
@@ -89,7 +88,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.Add(new XAttribute(MarkupPoint.XmlName, Point.Id));
+            config.AddAttr(MarkupPoint.XmlName, Point.Id);
             return config;
         }
         public override string ToString() => Point.ToString();
