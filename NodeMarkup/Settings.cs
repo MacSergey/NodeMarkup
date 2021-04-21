@@ -245,8 +245,8 @@ namespace NodeMarkup
         }
         private static void UpdateAllMarkings()
         {
-            SingletonItem<NodeMarkupManager>.Instance.AddAllToUpdate();
-            SingletonItem<SegmentMarkupManager>.Instance.AddAllToUpdate();
+            SingletonManager<NodeMarkupManager>.Instance.AddAllToUpdate();
+            SingletonManager<SegmentMarkupManager>.Instance.AddAllToUpdate();
         }
 
         #endregion
@@ -309,7 +309,7 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonItem<StyleTemplateManager>.Instance.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonManager<StyleTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
             AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
@@ -318,7 +318,7 @@ namespace NodeMarkup
         {
             UIHelper group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
 
-            AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonItem<IntersectionTemplateManager>.Instance.DeleteAll());
+            AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonManager<IntersectionTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
             AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }

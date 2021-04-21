@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
         private Style EditStyle { get; set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
-        protected override IEnumerable<StyleTemplate> GetObjects() => SingletonItem<StyleTemplateManager>.Instance.Templates;
+        protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
         protected override void OnFillPropertiesPanel(StyleTemplate template)
         {
@@ -65,13 +65,13 @@ namespace NodeMarkup.UI.Editors
 
         private void ToggleAsDefault()
         {
-            SingletonItem<StyleTemplateManager>.Instance.ToggleAsDefaultTemplate(EditObject);
+            SingletonManager<StyleTemplateManager>.Instance.ToggleAsDefaultTemplate(EditObject);
             ItemsPanel.RefreshItems();
             HeaderPanel.Init(EditObject);
         }
         private void Duplicate()
         {
-            if (SingletonItem<StyleTemplateManager>.Instance.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
+            if (SingletonManager<StyleTemplateManager>.Instance.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
                 Panel.EditStyleTemplate(duplicate, false);
         }
         protected override void OnApplyChanges()

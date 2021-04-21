@@ -39,7 +39,7 @@ namespace NodeMarkup.Manager
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
-            if (SingletonItem<StyleTemplateManager>.Instance.GetDefault<T>(type) is T defaultStyle)
+            if (SingletonManager<StyleTemplateManager>.Instance.GetDefault<T>(type) is T defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config, map, invert);

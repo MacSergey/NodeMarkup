@@ -27,9 +27,9 @@ namespace NodeMarkup.Tools
         {
             var markup = default(Markup);
             if (IsHoverNode)
-                markup = SingletonItem<NodeMarkupManager>.Instance[HoverNode.Id];
+                markup = SingletonManager<NodeMarkupManager>.Instance[HoverNode.Id];
             else if (IsHoverSegment)
-                markup = SingletonItem<SegmentMarkupManager>.Instance[HoverSegment.Id];
+                markup = SingletonManager<SegmentMarkupManager>.Instance[HoverSegment.Id];
             else
                 return;
 

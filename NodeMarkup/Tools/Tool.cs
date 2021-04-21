@@ -270,7 +270,7 @@ namespace NodeMarkup.Tools
 
             void Callback(Image image)
             {
-                if (SingletonItem<IntersectionTemplateManager>.Instance.AddTemplate(Markup, image, out IntersectionTemplate template))
+                if (SingletonManager<IntersectionTemplateManager>.Instance.AddTemplate(Markup, image, out IntersectionTemplate template))
                     Panel.EditIntersectionTemplate(template);
             }
         }
@@ -386,7 +386,7 @@ namespace NodeMarkup.Tools
                 var map = new ObjectsMap();
                 map.AddSegment(nearNodeId, beforeSegmentId);
                 map.AddSegment(farNodeId, nextSegmentId.Value);
-                var markup = SingletonItem<NodeMarkupManager>.Instance[nodeId];
+                var markup = SingletonManager<NodeMarkupManager>.Instance[nodeId];
                 markup.Clear();
                 markup.FromXml(SingletonMod<Mod>.Version, config, map);
             }
@@ -405,7 +405,7 @@ namespace NodeMarkup.Tools
             var map = new ObjectsMap();
             map.AddNode(farNodeId, beforeNodeId);
             map.AddNode(nearNodeId, nextNodeId);
-            var markup = SingletonItem<SegmentMarkupManager>.Instance[segmentId];
+            var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
             markup.Clear();
             markup.FromXml(SingletonMod<Mod>.Version, config, map);
 
@@ -580,7 +580,7 @@ namespace NodeMarkup.Tools
                         if (FromStyleBuffer<TStyle>(style.GetGroup(), out var bufferStyle))
                             return bufferStyle;
                     }
-                    else if (SingletonItem<StyleTemplateManager>.Instance.GetDefault<TStyle>(style) is TStyle defaultStyle)
+                    else if (SingletonManager<StyleTemplateManager>.Instance.GetDefault<TStyle>(style) is TStyle defaultStyle)
                         return defaultStyle;
                     else if (allowNull)
                         return null;
@@ -589,7 +589,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            return SingletonItem<StyleTemplateManager>.Instance.GetDefault<TStyle>(ifNotFound.ToEnum<Style.StyleType, TStyleType>());
+            return SingletonManager<StyleTemplateManager>.Instance.GetDefault<TStyle>(ifNotFound.ToEnum<Style.StyleType, TStyleType>());
         }
 
         private static SavedInt GetSavedStylesModifier(Style.StyleType type) => new SavedInt($"{nameof(StylesModifier)}{type.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(type), true);

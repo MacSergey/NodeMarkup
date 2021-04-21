@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class TemplateManager
+    public abstract class TemplateManager : IManager
     {
         public static ulong UserId { get; } = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
         protected static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
@@ -38,12 +38,6 @@ namespace NodeMarkup.Manager
 
         public abstract SavedString Saved { get; }
 
-        static TemplateManager()
-        {
-            SingletonItem<StyleTemplateManager>.Instance = new StyleTemplateManager();
-            SingletonItem<IntersectionTemplateManager>.Instance = new IntersectionTemplateManager();
-        }
-
         public abstract void AddTemplate(Template template);
         public abstract void Load();
 
@@ -51,15 +45,15 @@ namespace NodeMarkup.Manager
         {
             SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Reload)}");
 
-            SingletonItem<StyleTemplateManager>.Instance.Load();
-            SingletonItem<IntersectionTemplateManager>.Instance.Load();
+            SingletonManager<StyleTemplateManager>.Instance.Load();
+            SingletonManager<IntersectionTemplateManager>.Instance.Load();
         }
         public static void Clear()
         {
             SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Clear)}");
 
-            SingletonItem<StyleTemplateManager>.Instance.Clear(true);
-            SingletonItem<IntersectionTemplateManager>.Instance.Clear(true);
+            SingletonManager<StyleTemplateManager>.Instance.Clear(true);
+            SingletonManager<IntersectionTemplateManager>.Instance.Clear(true);
             Authors.Clear();
         }
     }
@@ -258,12 +252,6 @@ namespace NodeMarkup.Manager
     }
     public class StyleTemplateManager : TemplateManager<StyleTemplate, Style>
     {
-        public static new StyleTemplateManager Instance
-        {
-            get => TemplateManager<StyleTemplate>.Instance as StyleTemplateManager;
-            set => TemplateManager<StyleTemplate>.Instance = value;
-        }
-
         protected override string DefaultName => Localize.Template_NewTemplate;
         public override SavedString Saved => Settings.Templates;
 
@@ -343,12 +331,6 @@ namespace NodeMarkup.Manager
     }
     public class IntersectionTemplateManager : TemplateManager<IntersectionTemplate, Markup>
     {
-        public static new IntersectionTemplateManager Instance
-        {
-            get => TemplateManager<IntersectionTemplate>.Instance as IntersectionTemplateManager;
-            set => TemplateManager<IntersectionTemplate>.Instance = value;
-        }
-
         protected override string DefaultName => Localize.Preset_NewPreset;
         public override SavedString Saved => Settings.Intersections;
 

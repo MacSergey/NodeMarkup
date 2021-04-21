@@ -31,8 +31,8 @@ namespace NodeMarkup.Utilities
 
         public override object Copy(InstanceID sourceInstanceID) => sourceInstanceID.Type switch
         {
-            InstanceType.NetNode when SingletonItem<NodeMarkupManager>.Instance.TryGetMarkup(sourceInstanceID.NetNode, out Manager.NodeMarkup nodeMarkup) => nodeMarkup.ToXml(),
-            InstanceType.NetSegment when SingletonItem<SegmentMarkupManager>.Instance.TryGetMarkup(sourceInstanceID.NetSegment, out SegmentMarkup segmentMarkup) => segmentMarkup.ToXml(),
+            InstanceType.NetNode when SingletonManager<NodeMarkupManager>.Instance.TryGetMarkup(sourceInstanceID.NetNode, out Manager.NodeMarkup nodeMarkup) => nodeMarkup.ToXml(),
+            InstanceType.NetSegment when SingletonManager<SegmentMarkupManager>.Instance.TryGetMarkup(sourceInstanceID.NetSegment, out SegmentMarkup segmentMarkup) => segmentMarkup.ToXml(),
             _ => null,
         };
 
@@ -78,10 +78,10 @@ namespace NodeMarkup.Utilities
             switch (targetInstanceID.Type)
             {
                 case InstanceType.NetNode:
-                    markup = SingletonItem<NodeMarkupManager>.Instance[targetInstanceID.NetNode];
+                    markup = SingletonManager<NodeMarkupManager>.Instance[targetInstanceID.NetNode];
                     break;
                 case InstanceType.NetSegment:
-                    markup = SingletonItem<SegmentMarkupManager>.Instance[targetInstanceID.NetSegment];
+                    markup = SingletonManager<SegmentMarkupManager>.Instance[targetInstanceID.NetSegment];
                     break;
                 default:
                     return;

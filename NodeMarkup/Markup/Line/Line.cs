@@ -248,7 +248,7 @@ namespace NodeMarkup.Manager
         }
 
         public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true)
-            => AddRule(SingletonItem<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
+            => AddRule(SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
             RawRules.Remove(rule);
@@ -329,7 +329,7 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, update: false)
         {
             if (style == null)
-                style = SingletonItem<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
+                style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
 
             Crosswalk = new MarkupCrosswalk(Markup, this, style);
             Update(true);
@@ -431,7 +431,7 @@ namespace NodeMarkup.Manager
         protected override bool Visible => true;
         public override LineType Type => LineType.Stop;
 
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, style ?? SingletonItem<StyleTemplateManager>.Instance.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid), firstAlignment, secondAlignment) { }
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, style ?? SingletonManager<StyleTemplateManager>.Instance.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid), firstAlignment, secondAlignment) { }
 
         public override IEnumerable<ILinePartEdge> RulesEdges => RulesEnterPointEdge;
     }

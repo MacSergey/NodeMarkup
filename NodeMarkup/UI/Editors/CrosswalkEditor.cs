@@ -178,7 +178,7 @@ namespace NodeMarkup.UI.Editors
             if (style == EditObject.Style.Value.Type)
                 return;
 
-            var newStyle = SingletonItem<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(style);
+            var newStyle = SingletonManager<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(style);
             EditObject.Style.Value.CopyTo(newStyle);
             EditObject.Style.Value = newStyle;
 
@@ -206,7 +206,7 @@ namespace NodeMarkup.UI.Editors
 
         private void SaveTemplate()
         {
-            if (SingletonItem<StyleTemplateManager>.Instance.AddTemplate(EditObject.Style, out StyleTemplate template))
+            if (SingletonManager<StyleTemplateManager>.Instance.AddTemplate(EditObject.Style, out StyleTemplate template))
                 Panel.EditStyleTemplate(template);
         }
         private void SelectTemplate(StyleTemplate template)

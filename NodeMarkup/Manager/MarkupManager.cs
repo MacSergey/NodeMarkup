@@ -15,37 +15,31 @@ namespace NodeMarkup.Manager
         public static int Errors { get; set; } = 0;
         public static bool HasErrors => Errors != 0;
 
-        static MarkupManager()
-        {
-            SingletonItem<NodeMarkupManager>.Instance = new NodeMarkupManager();
-            SingletonItem<SegmentMarkupManager>.Instance = new SegmentMarkupManager();
-        }
-
         public static void Clear()
         {
-            SingletonItem<NodeMarkupManager>.Instance.Clear();
-            SingletonItem<SegmentMarkupManager>.Instance.Clear();
+            SingletonManager<NodeMarkupManager>.Instance.Clear();
+            SingletonManager<SegmentMarkupManager>.Instance.Clear();
         }
 
-        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonItem<NodeMarkupManager>.Instance.Render(cameraInfo, nodeID, ref data);
+        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonManager<NodeMarkupManager>.Instance.Render(cameraInfo, nodeID, ref data);
 
-        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonItem<SegmentMarkupManager>.Instance.Render(cameraInfo, segmentID, ref data);
+        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonManager<SegmentMarkupManager>.Instance.Render(cameraInfo, segmentID, ref data);
 
-        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonItem<NodeMarkupManager>.Instance.Remove(node);
-        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonItem<SegmentMarkupManager>.Instance.Remove(segment);
-        public static void NetManagerUpdateNodePostfix(ushort node) => SingletonItem<NodeMarkupManager>.Instance.AddToUpdate(node);
-        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SingletonItem<SegmentMarkupManager>.Instance.AddToUpdate(segment);
+        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkupManager>.Instance.Remove(node);
+        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkupManager>.Instance.Remove(segment);
+        public static void NetManagerUpdateNodePostfix(ushort node) => SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(node);
+        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SingletonManager<SegmentMarkupManager>.Instance.AddToUpdate(segment);
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
         {
-            SingletonItem<SegmentMarkupManager>.Instance.AddToUpdate(segmentID);
+            SingletonManager<SegmentMarkupManager>.Instance.AddToUpdate(segmentID);
             var segment = segmentID.GetSegment();
-            SingletonItem<NodeMarkupManager>.Instance.AddToUpdate(segment.m_startNode);
-            SingletonItem<NodeMarkupManager>.Instance.AddToUpdate(segment.m_endNode);
+            SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(segment.m_startNode);
+            SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(segment.m_endNode);
         }
         public static void NetManagerSimulationStepImplPostfix()
         {
-            SingletonItem<NodeMarkupManager>.Instance.Update();
-            SingletonItem<SegmentMarkupManager>.Instance.Update();
+            SingletonManager<NodeMarkupManager>.Instance.Update();
+            SingletonManager<SegmentMarkupManager>.Instance.Update();
         }
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
@@ -76,8 +70,8 @@ namespace NodeMarkup.Manager
 
             Errors = 0;
 
-            SingletonItem<NodeMarkupManager>.Instance.ToXml(config);
-            SingletonItem<SegmentMarkupManager>.Instance.ToXml(config);
+            SingletonManager<NodeMarkupManager>.Instance.ToXml(config);
+            SingletonManager<SegmentMarkupManager>.Instance.ToXml(config);
 
             return config;
         }
@@ -90,8 +84,8 @@ namespace NodeMarkup.Manager
 
             var version = GetVersion(config);
 
-            SingletonItem<NodeMarkupManager>.Instance.FromXml(config, map, version);
-            SingletonItem<SegmentMarkupManager>.Instance.FromXml(config, map, version);
+            SingletonManager<NodeMarkupManager>.Instance.FromXml(config, map, version);
+            SingletonManager<SegmentMarkupManager>.Instance.FromXml(config, map, version);
         }
         private static Version GetVersion(XElement config)
         {
@@ -104,7 +98,7 @@ namespace NodeMarkup.Manager
             Errors = -1;
         }
     }
-    public abstract class MarkupManager<TypeMarkup>
+    public abstract class MarkupManager<TypeMarkup> : IManager
         where TypeMarkup : Markup
     {
         protected Dictionary<ushort, TypeMarkup> Markups { get; } = new Dictionary<ushort, TypeMarkup>();

@@ -79,12 +79,12 @@ namespace NodeMarkup
         public static bool ImportStylesData(string file)
         {
             SingletonMod<Mod>.Logger.Debug($"Import styles data");
-            return ImportTemplatesData(file, SingletonItem<StyleTemplateManager>.Instance);
+            return ImportTemplatesData(file, SingletonManager<StyleTemplateManager>.Instance);
         }
         public static bool ImportIntersectionsData(string file)
         {
             SingletonMod<Mod>.Logger.Debug($"Import intersections data");
-            return ImportTemplatesData(file, SingletonItem<IntersectionTemplateManager>.Instance);
+            return ImportTemplatesData(file, SingletonManager<IntersectionTemplateManager>.Instance);
         }
         private static bool ImportTemplatesData(string file, TemplateManager manager)
         {

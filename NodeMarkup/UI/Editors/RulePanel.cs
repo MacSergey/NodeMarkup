@@ -171,7 +171,7 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if (SingletonItem<StyleTemplateManager>.Instance.AddTemplate(Rule.Style, out StyleTemplate template))
+            if (SingletonManager<StyleTemplateManager>.Instance.AddTemplate(Rule.Style, out StyleTemplate template))
                 Editor.Panel.EditStyleTemplate(template);
         }
         public void ApplyStyle(LineStyle style)
@@ -199,7 +199,7 @@ namespace NodeMarkup.UI.Editors
             if (style == Rule.Style.Value.Type)
                 return;
 
-            var newStyle = SingletonItem<StyleTemplateManager>.Instance.GetDefault<LineStyle>(style);
+            var newStyle = SingletonManager<StyleTemplateManager>.Instance.GetDefault<LineStyle>(style);
             Rule.Style.Value.CopyTo(newStyle);
             Rule.Style.Value = newStyle;
 

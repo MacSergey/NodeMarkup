@@ -23,7 +23,7 @@ namespace NodeMarkup.UI.Editors
 
         private PropertyGroupPanel Screenshot { get; set; }
 
-        protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonItem<IntersectionTemplateManager>.Instance.Templates;
+        protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonManager<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
         {
             base.OnObjectSelect(editObject);

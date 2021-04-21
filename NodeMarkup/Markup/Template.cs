@@ -104,7 +104,7 @@ namespace NodeMarkup.Manager
     public class StyleTemplate : Template<StyleTemplate>
     {
         public override TemplateType Type => TemplateType.Style;
-        public override TemplateManager Manager => SingletonItem<StyleTemplateManager>.Instance;
+        public override TemplateManager Manager => SingletonManager<StyleTemplateManager>.Instance;
 
         public override bool HasPreview => true;
         public override Texture2D Preview => GetTexture("StylesPreviewBackground");
@@ -147,7 +147,7 @@ namespace NodeMarkup.Manager
         public override string Description => Style.Type.ToString();
 
         public Style Style { get; set; }
-        public bool IsDefault => SingletonItem<StyleTemplateManager>.Instance.IsDefault(this);
+        public bool IsDefault => SingletonManager<StyleTemplateManager>.Instance.IsDefault(this);
 
         private StyleTemplate() : base() { }
         public StyleTemplate(string name, Style style) : base(name) => Style = style.Copy();
@@ -178,7 +178,7 @@ namespace NodeMarkup.Manager
     public class IntersectionTemplate : Template<IntersectionTemplate>
     {
         public override TemplateType Type => TemplateType.Intersection;
-        public override TemplateManager Manager => SingletonItem<IntersectionTemplateManager>.Instance;
+        public override TemplateManager Manager => SingletonManager<IntersectionTemplateManager>.Instance;
 
         public override string DeleteCaptionDescription => Localize.PresetEditor_DeleteCaptionDescription;
         public override string DeleteMessageDescription => Localize.PresetEditor_DeleteMessageDescription;
