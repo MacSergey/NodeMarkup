@@ -270,7 +270,7 @@ namespace NodeMarkup.Tools
 
             void Callback(Image image)
             {
-                if (TemplateManager.IntersectionManager.AddTemplate(Markup, image, out IntersectionTemplate template))
+                if (SingletonItem<IntersectionTemplateManager>.Instance.AddTemplate(Markup, image, out IntersectionTemplate template))
                     Panel.EditIntersectionTemplate(template);
             }
         }
@@ -580,7 +580,7 @@ namespace NodeMarkup.Tools
                         if (FromStyleBuffer<TStyle>(style.GetGroup(), out var bufferStyle))
                             return bufferStyle;
                     }
-                    else if (TemplateManager.StyleManager.GetDefault<TStyle>(style) is TStyle defaultStyle)
+                    else if (SingletonItem<StyleTemplateManager>.Instance.GetDefault<TStyle>(style) is TStyle defaultStyle)
                         return defaultStyle;
                     else if (allowNull)
                         return null;
@@ -589,7 +589,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            return TemplateManager.StyleManager.GetDefault<TStyle>(ifNotFound.ToEnum<Style.StyleType, TStyleType>());
+            return SingletonItem<StyleTemplateManager>.Instance.GetDefault<TStyle>(ifNotFound.ToEnum<Style.StyleType, TStyleType>());
         }
 
         private static SavedInt GetSavedStylesModifier(Style.StyleType type) => new SavedInt($"{nameof(StylesModifier)}{type.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(type), true);

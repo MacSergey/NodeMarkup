@@ -1,4 +1,5 @@
-﻿using ModsCommon.UI;
+﻿using ModsCommon;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
@@ -177,7 +178,7 @@ namespace NodeMarkup.UI.Editors
             if (style == EditObject.Style.Value.Type)
                 return;
 
-            var newStyle = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(style);
+            var newStyle = SingletonItem<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(style);
             EditObject.Style.Value.CopyTo(newStyle);
             EditObject.Style.Value = newStyle;
 
@@ -205,7 +206,7 @@ namespace NodeMarkup.UI.Editors
 
         private void SaveTemplate()
         {
-            if (TemplateManager.StyleManager.AddTemplate(EditObject.Style, out StyleTemplate template))
+            if (SingletonItem<StyleTemplateManager>.Instance.AddTemplate(EditObject.Style, out StyleTemplate template))
                 Panel.EditStyleTemplate(template);
         }
         private void SelectTemplate(StyleTemplate template)

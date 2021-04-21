@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI;
@@ -38,7 +39,7 @@ namespace NodeMarkup.Manager
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
-            if (TemplateManager.StyleManager.GetDefault<T>(type) is T defaultStyle)
+            if (SingletonItem<StyleTemplateManager>.Instance.GetDefault<T>(type) is T defaultStyle)
             {
                 style = defaultStyle;
                 style.FromXml(config, map, invert);

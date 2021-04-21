@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
 using System;
@@ -22,7 +23,7 @@ namespace NodeMarkup.UI.Editors
 
         private PropertyGroupPanel Screenshot { get; set; }
 
-        protected override IEnumerable<IntersectionTemplate> GetObjects() => TemplateManager.IntersectionManager.Templates;
+        protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonItem<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
         {
             base.OnObjectSelect(editObject);

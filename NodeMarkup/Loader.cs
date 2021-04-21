@@ -17,50 +17,10 @@ using UnityEngine;
 
 namespace NodeMarkup
 {
-    public static class Loader
+    public abstract class Loader : ModsCommon.Utilities.Loader
     {
         public static string Id { get; } = nameof(NodeMarkup);
-        public static string GetString(XElement config) => config.ToString(SaveOptions.DisableFormatting);
-
-        public static byte[] Compress(string xml)
-        {
-            var buffer = Encoding.UTF8.GetBytes(xml);
-
-            using var outStream = new MemoryStream();
-            using (var zipStream = new GZipStream(outStream, CompressionMode.Compress))
-            {
-                zipStream.Write(buffer, 0, buffer.Length);
-            }
-            var compresed = outStream.ToArray();
-            return compresed;
-        }
-
-        public static string Decompress(byte[] data)
-        {
-            using var inStream = new MemoryStream(data);
-            using var zipStream = new GZipStream(inStream, CompressionMode.Decompress);
-            using var outStream = new MemoryStream();
-            byte[] buffer = new byte[1000000];
-            int readed;
-            while ((readed = zipStream.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                outStream.Write(buffer, 0, readed);
-            }
-
-            var decompressed = outStream.ToArray();
-            var xml = Encoding.UTF8.GetString(decompressed);
-            return xml;
-        }
-
-        public static string GetSaveName()
-        {
-            var lastSaveField = AccessTools.Field(typeof(SavePanel), "m_LastSaveName");
-            var lastSave = lastSaveField.GetValue(null) as string;
-            if (string.IsNullOrEmpty(lastSave))
-                lastSave = Locale.Get("DEFAULTSAVENAMES", "NewSave");
-
-            return lastSave;
-        }
+   
         public static string MarkingRecovery => nameof(MarkingRecovery);
         public static string TemplatesRecovery => nameof(TemplatesRecovery);
         public static string PresetsRecovery => nameof(PresetsRecovery);
@@ -119,12 +79,12 @@ namespace NodeMarkup
         public static bool ImportStylesData(string file)
         {
             SingletonMod<Mod>.Logger.Debug($"Import styles data");
-            return ImportTemplatesData(file, TemplateManager.StyleManager);
+            return ImportTemplatesData(file, SingletonItem<StyleTemplateManager>.Instance);
         }
         public static bool ImportIntersectionsData(string file)
         {
             SingletonMod<Mod>.Logger.Debug($"Import intersections data");
-            return ImportTemplatesData(file, TemplateManager.IntersectionManager);
+            return ImportTemplatesData(file, SingletonItem<IntersectionTemplateManager>.Instance);
         }
         private static bool ImportTemplatesData(string file, TemplateManager manager)
         {

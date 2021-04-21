@@ -73,14 +73,14 @@ namespace NodeMarkup.Manager
         public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {
-            var confix = new XElement(nameof(NodeMarkup), new XAttribute("V", SingletonMod<Mod>.Version));
+            var config = new XElement(nameof(NodeMarkup), new XAttribute("V", SingletonMod<Mod>.Version));
 
             Errors = 0;
 
-            NodeManager.ToXml(confix);
-            SegmentManager.ToXml(confix);
+            NodeManager.ToXml(config);
+            SegmentManager.ToXml(config);
 
-            return confix;
+            return config;
         }
         public static void FromXml(XElement config, ObjectsMap map, bool clear = true)
         {

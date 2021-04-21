@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -170,7 +171,7 @@ namespace NodeMarkup.UI.Editors
 
         private void OnSaveTemplate()
         {
-            if (TemplateManager.StyleManager.AddTemplate(Rule.Style, out StyleTemplate template))
+            if (SingletonItem<StyleTemplateManager>.Instance.AddTemplate(Rule.Style, out StyleTemplate template))
                 Editor.Panel.EditStyleTemplate(template);
         }
         public void ApplyStyle(LineStyle style)
@@ -198,7 +199,7 @@ namespace NodeMarkup.UI.Editors
             if (style == Rule.Style.Value.Type)
                 return;
 
-            var newStyle = TemplateManager.StyleManager.GetDefault<LineStyle>(style);
+            var newStyle = SingletonItem<StyleTemplateManager>.Instance.GetDefault<LineStyle>(style);
             Rule.Style.Value.CopyTo(newStyle);
             Rule.Style.Value = newStyle;
 

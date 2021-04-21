@@ -13,17 +13,6 @@ namespace NodeMarkup.Manager
 {
     public abstract class TemplateManager
     {
-        public static StyleTemplateManager StyleManager
-        {
-            get => StyleTemplateManager.Instance;
-            private set => StyleTemplateManager.Instance = value;
-        }
-        public static IntersectionTemplateManager IntersectionManager
-        {
-            get => IntersectionTemplateManager.Instance;
-            set => IntersectionTemplateManager.Instance = value;
-        }
-
         public static ulong UserId { get; } = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
         protected static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
         public static string GetAuthor(ulong steamId)
@@ -51,8 +40,8 @@ namespace NodeMarkup.Manager
 
         static TemplateManager()
         {
-            StyleManager = new StyleTemplateManager();
-            IntersectionManager = new IntersectionTemplateManager();
+            SingletonItem<StyleTemplateManager>.Instance = new StyleTemplateManager();
+            SingletonItem<IntersectionTemplateManager>.Instance = new IntersectionTemplateManager();
         }
 
         public abstract void AddTemplate(Template template);
@@ -62,15 +51,15 @@ namespace NodeMarkup.Manager
         {
             SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Reload)}");
 
-            StyleManager.Load();
-            IntersectionManager.Load();
+            SingletonItem<StyleTemplateManager>.Instance.Load();
+            SingletonItem<IntersectionTemplateManager>.Instance.Load();
         }
         public static void Clear()
         {
             SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Clear)}");
 
-            StyleManager.Clear(true);
-            IntersectionManager.Clear(true);
+            SingletonItem<StyleTemplateManager>.Instance.Clear(true);
+            SingletonItem<IntersectionTemplateManager>.Instance.Clear(true);
             Authors.Clear();
         }
     }

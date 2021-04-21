@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Math;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
@@ -248,7 +249,7 @@ namespace NodeMarkup.Manager
         }
 
         public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true)
-            => AddRule(TemplateManager.StyleManager.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
+            => AddRule(SingletonItem<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
             RawRules.Remove(rule);
@@ -329,7 +330,7 @@ namespace NodeMarkup.Manager
         public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, update: false)
         {
             if (style == null)
-                style = TemplateManager.StyleManager.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
+                style = SingletonItem<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
 
             Crosswalk = new MarkupCrosswalk(Markup, this, style);
             Update(true);
@@ -431,7 +432,7 @@ namespace NodeMarkup.Manager
         protected override bool Visible => true;
         public override LineType Type => LineType.Stop;
 
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, style ?? TemplateManager.StyleManager.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid), firstAlignment, secondAlignment) { }
+        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, style ?? SingletonItem<StyleTemplateManager>.Instance.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid), firstAlignment, secondAlignment) { }
 
         public override IEnumerable<ILinePartEdge> RulesEdges => RulesEnterPointEdge;
     }
