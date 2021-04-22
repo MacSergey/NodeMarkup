@@ -241,7 +241,7 @@ namespace NodeMarkup.Manager
 
         public override bool FromXml(XElement config)
         {
-            if (base.FromXml(config) && config.Element(NodeMarkup.XmlName) is XElement data)
+            if (base.FromXml(config) && config.Elements().FirstOrDefault() is XElement data)
             {
                 Data = data;
                 Enters = config.Elements(Enter.XmlName).Select(c => EnterData.FromXml(c)).ToArray();
