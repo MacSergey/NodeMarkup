@@ -69,26 +69,26 @@ namespace NodeMarkup
                 GameSettings.AddSettingsFile(new SettingsFile[] { new SettingsFile() { fileName = SettingsFile } });
         }
 
-        protected override void OnSettingsUI(UIPanel mainPanel)
+        protected override void OnSettingsUI()
         {
             AddLanguage(GeneralTab);
             AddGeneral(GeneralTab);
             AddGrouping(GeneralTab);
             AddNotifications(GeneralTab);
 
-            var shortcutTab = CreateTab(mainPanel, Localize.Settings_ShortcutsAndModifiersTab);
+            var shortcutTab = CreateTab(Localize.Settings_ShortcutsAndModifiersTab);
             AddKeyMapping(shortcutTab);
 
-            var backupTab = CreateTab(mainPanel, Localize.Settings_BackupTab);
+            var backupTab = CreateTab(Localize.Settings_BackupTab);
             AddBackupMarking(backupTab);
             AddBackupStyleTemplates(backupTab);
             AddBackupIntersectionTemplates(backupTab);
 
-            var supportTab = CreateTab(mainPanel, Localize.Settings_SupportTab);
+            var supportTab = CreateTab(Localize.Settings_SupportTab);
             AddSupport(supportTab);
 
 #if DEBUG
-            var debugTab = CreateTab(mainPanel, "Debug");
+            var debugTab = CreateTab("Debug");
             AddDebug(debugTab);
 #endif
         }
