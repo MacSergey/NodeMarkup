@@ -59,7 +59,11 @@ namespace NodeMarkup
 
         #region BASIC
 
-        protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
+        protected override void GetSettings(UIHelperBase helper)
+        {
+            var settings = new Settings();
+            settings.OnSettingsUI(helper);
+        }
 
         public override void LocaleChanged()
         {

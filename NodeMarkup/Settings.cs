@@ -19,7 +19,7 @@ using UnityEngine.SceneManagement;
 
 namespace NodeMarkup
 {
-    public static class Settings
+    public class Settings : BaseSettings<Mod>
     {
         #region PROPERTIES
 
@@ -57,12 +57,11 @@ namespace NodeMarkup
         public static SavedBool RenderOverlayCentre { get; } = new SavedBool(nameof(RenderOverlayCentre), SettingsFile, false, true);
         public static SavedBool RenderOverlayBorders { get; } = new SavedBool(nameof(RenderOverlayBorders), SettingsFile, false, true);
 #endif
-        private static TabStrip TabStrip { get; set; }
-        private static List<CustomUIPanel> TabPanels { get; set; }
 
         #endregion
 
         #region BASIC
+        protected override string GeneralTabName => Localize.Settings_GeneralTab;
 
         static Settings()
         {
@@ -70,25 +69,12 @@ namespace NodeMarkup
                 GameSettings.AddSettingsFile(new SettingsFile[] { new SettingsFile() { fileName = SettingsFile } });
         }
 
-        public static void OnSettingsUI(UIHelperBase helper)
+        protected override void OnSettingsUI(UIPanel mainPanel)
         {
-            var scrollable = (helper as UIHelper).self as UIScrollablePanel;
-            var mainPanel = scrollable.parent as UIPanel;
-
-            foreach (var components in mainPanel.components)
-                components.isVisible = false;
-
-            mainPanel.autoLayout = true;
-            mainPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            mainPanel.autoLayoutPadding = new RectOffset(0, 0, 0, 15);
-            CreateTabStrip(mainPanel);
-
-            var generalTab = CreateTab(mainPanel, Localize.Settings_GeneralTab);
-            generalTab.AddGroup(SingletonMod<Mod>.Instance.Name);
-            AddLanguage(generalTab);
-            AddGeneral(generalTab);
-            AddGrouping(generalTab);
-            AddNotifications(generalTab);
+            AddLanguage(GeneralTab);
+            AddGeneral(GeneralTab);
+            AddGrouping(GeneralTab);
+            AddNotifications(GeneralTab);
 
             var shortcutTab = CreateTab(mainPanel, Localize.Settings_ShortcutsAndModifiersTab);
             AddKeyMapping(shortcutTab);
@@ -105,52 +91,6 @@ namespace NodeMarkup
             var debugTab = CreateTab(mainPanel, "Debug");
             AddDebug(debugTab);
 #endif
-
-            TabStrip.SelectedTab = 0;
-        }
-        private static void CreateTabStrip(UIPanel mainPanel)
-        {
-            TabPanels = new List<CustomUIPanel>();
-
-            TabStrip = mainPanel.AddUIComponent<TabStrip>();
-            TabStrip.SelectedTabChanged += OnSelectedTabChanged;
-            TabStrip.SelectedTab = -1;
-            TabStrip.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal;
-            TabStrip.eventSizeChanged += (UIComponent component, Vector2 value) => TabStripSizeChanged(mainPanel);
-        }
-
-        private static void TabStripSizeChanged(UIPanel mainPanel)
-        {
-            foreach (var tab in TabPanels)
-                SetTabSize(tab, mainPanel);
-        }
-
-        private static UIHelper CreateTab(UIPanel mainPanel, string name)
-        {
-            TabStrip.AddTab(name, 1.25f);
-
-            var tabPanel = mainPanel.AddUIComponent<AdvancedScrollablePanel>();
-            tabPanel.Content.autoLayoutPadding = new RectOffset(8, 8, 0, 0);
-            SetTabSize(tabPanel, mainPanel);
-            tabPanel.isVisible = false;
-            TabPanels.Add(tabPanel);
-
-            return new UIHelper(tabPanel.Content);
-        }
-        private static void SetTabSize(UIPanel panel, UIPanel mainPanel)
-        {
-            panel.size = new Vector2(mainPanel.width, mainPanel.height - mainPanel.autoLayoutPadding.vertical - TabStrip.height);
-        }
-
-        private static void OnSelectedTabChanged(int index)
-        {
-            if (index >= 0 && TabPanels.Count > index)
-            {
-                foreach (var tab in TabPanels)
-                    tab.isVisible = false;
-
-                TabPanels[index].isVisible = true;
-            }
         }
 
         #endregion
@@ -159,19 +99,17 @@ namespace NodeMarkup
 
         #region LANGUAGE
 
-        private static void AddLanguage(UIHelperBase helper)
+        private void AddLanguage(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_Language) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_Language) as UIHelper;
             AddLanguageList(group);
         }
-        private static void AddLanguageList(UIHelper group)
+        private void AddLanguageList(UIHelper group)
         {
-            var locales = GetSupportLanguages().ToArray();
             var dropDown = (group.self as UIComponent).AddUIComponent<LanguageDropDown>();
-
             dropDown.AddItem(string.Empty, Localize.Mod_LocaleGame);
 
-            foreach (var locale in locales)
+            foreach (var locale in GetSupportLanguages())
             {
                 var localizeString = $"Mod_Locale_{locale}";
                 var localeText = Localize.ResourceManager.GetString(localizeString, Localize.Culture);
@@ -182,7 +120,6 @@ namespace NodeMarkup
             }
 
             dropDown.SelectedObject = Locale.value;
-
             dropDown.eventSelectedIndexChanged += IndexChanged;
 
             void IndexChanged(UIComponent component, int value)
@@ -194,36 +131,20 @@ namespace NodeMarkup
             }
         }
 
-        private static string[] GetSupportLanguages()
-        {
-            var languages = new HashSet<string> { "en" };
-
-            var resourceAssembly = $"{Assembly.GetExecutingAssembly().GetName().Name}.resources";
-
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                var assemblyName = assembly.GetName();
-                if (assemblyName.Name == resourceAssembly)
-                    languages.Add(assemblyName.CultureInfo.Name.ToLower());
-            }
-
-            return languages.OrderBy(l => l).ToArray();
-        }
-
         #endregion
 
         #region DISPLAY&USAGE
-        private static void AddGeneral(UIHelperBase helper)
+        private void AddGeneral(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
 
             AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
             AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
             AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
-            group.AddLabel(Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
-            group.AddLabel(Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
+            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
@@ -232,9 +153,9 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(group, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
         }
-        private static void AddGrouping(UIHelperBase helper)
+        private void AddGrouping(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
 
             AddCheckBox(group, Localize.Settings_GroupPoints, GroupPoints, OnChanged);
             AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
@@ -243,19 +164,14 @@ namespace NodeMarkup
 
             static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();
         }
-        private static void UpdateAllMarkings()
-        {
-            SingletonManager<NodeMarkupManager>.Instance.AddAllToUpdate();
-            SingletonManager<SegmentMarkupManager>.Instance.AddAllToUpdate();
-        }
 
         #endregion
 
         #region NOTIFICATIONS
 
-        private static void AddNotifications(UIHelperBase helper)
+        private void AddNotifications(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
 
             AddCheckBox(group, Localize.Settings_ShowWhatsNew, ShowWhatsNew);
             AddCheckBox(group, Localize.Settings_ShowOnlyMajor, ShowOnlyMajor);
@@ -266,11 +182,10 @@ namespace NodeMarkup
         #endregion
 
         #region KEYMAPPING
-        private static void AddKeyMapping(UIHelperBase helper)
+        private void AddKeyMapping(UIHelperBase helper)
         {
-            var keymappingsPanel = (helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper).self as UIPanel;
-
-            var keymappings = keymappingsPanel.gameObject.AddComponent<KeymappingsPanel>();
+            var group = helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper;
+            var keymappings = AddKeyMappingPanel(group);
             keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(NodeMarkupTool.AddRuleShortcut);
             foreach (var shortcut in NodeMarkupTool.Shortcuts)
@@ -281,7 +196,7 @@ namespace NodeMarkup
             AddModifier<CrosswalkModifierPanel>(helper, Localize.Settings_CrosswalksModifier);
             AddModifier<FillerModifierPanel>(helper, Localize.Settings_FillersModifier);
         }
-        private static void AddModifier<PanelType>(UIHelperBase helper, string title)
+        private void AddModifier<PanelType>(UIHelperBase helper, string title)
             where PanelType : StyleModifierPanel
         {
             var panel = (helper.AddGroup(title) as UIHelper).self as UIPanel;
@@ -294,36 +209,36 @@ namespace NodeMarkup
         #endregion
 
         #region BACKUP
-        private static void AddBackupMarking(UIHelperBase helper)
+        private void AddBackupMarking(UIHelperBase helper)
         {
             if (!ItemsExtension.InGame)
                 return;
 
-            UIHelper group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}", () => MarkupManager.Clear());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
             AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
-        private static void AddBackupStyleTemplates(UIHelperBase helper)
+        private void AddBackupStyleTemplates(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonManager<StyleTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
             AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
 
-        private static void AddBackupIntersectionTemplates(UIHelperBase helper)
+        private void AddBackupIntersectionTemplates(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
 
             AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonManager<IntersectionTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
             AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
 
-        private static void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
+        private void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
         {
             var button = AddButton(group, buttonText, Click, 600);
             button.textColor = Color.red;
@@ -342,7 +257,7 @@ namespace NodeMarkup
             }
         }
         private delegate bool Dump(out string path);
-        private static void AddDump(UIHelper group, string buttonText, string caption, Dump dump)
+        private void AddDump(UIHelper group, string buttonText, string caption, Dump dump)
         {
             AddButton(group, buttonText, Click, 600);
 
@@ -374,7 +289,7 @@ namespace NodeMarkup
                 }
             }
         }
-        private static void AddRestore<Modal>(UIHelper group, string buttonText, string caption, string message)
+        private void AddRestore<Modal>(UIHelper group, string buttonText, string caption, string message)
             where Modal : ImportMessageBox
         {
             AddButton(group, buttonText, Click, 600);
@@ -388,25 +303,24 @@ namespace NodeMarkup
             }
         }
 
-
         #endregion
 
         #region SUPPORT
 
-        private static void AddSupport(UIHelperBase helper)
+        private void AddSupport(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup() as UIHelper;
+            var group = helper.AddGroup() as UIHelper;
             AddWiki(group);
             AddTroubleshooting(group);
             AddDiscord(group);
             AddChangeLog(group);
         }
-        private static void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.Utilities.OpenUrl(Mod.WikiUrl));
-        private static void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
-        private static void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
-        private static void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, ShowChangeLog);
+        private void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.Utilities.OpenUrl(Mod.WikiUrl));
+        private void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
+        private void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
+        private void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, ShowChangeLog);
 
-        private static void ShowChangeLog()
+        private void ShowChangeLog()
         {
             var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
             var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
@@ -420,9 +334,9 @@ namespace NodeMarkup
         #region DEBUG
 
 #if DEBUG
-        private static void AddDebug(UIHelperBase helper)
+        private void AddDebug(UIHelperBase helper)
         {
-            UIHelper group = helper.AddGroup("Debug") as UIHelper;
+            var group = helper.AddGroup("Debug") as UIHelper;
 
             AddCheckBox(group, "Alpha blend overlay", AlphaBlendOverlay);
             AddCheckBox(group, "Render overlay center", RenderOverlayCentre);
@@ -430,116 +344,6 @@ namespace NodeMarkup
             AddFloatField(group, "Overlay width", BorderOverlayWidth, 3f, 1f);
         }
 #endif
-
-        #endregion
-
-        #region UTILITY
-
-        private static void AddFloatField(UIHelper group, string label, SavedFloat saved, float? defaultValue, float? min = null, float? max = null, Action onSubmit = null)
-        {
-            UITextField field = null;
-            field = group.AddTextfield(label, saved.ToString(), OnChanged, OnSubmitted) as UITextField;
-
-            static void OnChanged(string distance) { }
-            void OnSubmitted(string text)
-            {
-                if (float.TryParse(text, out float value))
-                {
-                    if ((min.HasValue && value < min.Value) || (max.HasValue && value > max.Value))
-                        value = defaultValue ?? 0;
-
-                    saved.value = value;
-                    field.text = value.ToString();
-                }
-                else
-                    field.text = saved.ToString();
-
-                onSubmit?.Invoke();
-            }
-        }
-
-        private static void AddCheckBox(UIHelper group, string label, SavedBool saved, Action onChanged = null)
-        {
-            group.AddCheckbox(label, saved, OnValueChanged);
-
-            void OnValueChanged(bool value)
-            {
-                saved.value = value;
-                onChanged?.Invoke();
-            }
-        }
-
-        private static void AddCheckboxPanel(UIHelper group, string mainLabel, SavedBool mainSaved, SavedInt optionsSaved, string[] labels, Action onChanged = null)
-        {
-            var inProcess = false;
-            var checkBoxes = new UICheckBox[labels.Length];
-            var optionsPanel = default(CustomUIPanel);
-
-            var mainCheckBox = group.AddCheckbox(mainLabel, mainSaved, OnMainChanged) as UICheckBox;
-
-            optionsPanel = (group.self as UIComponent).AddUIComponent<CustomUIPanel>();
-            optionsPanel.autoLayout = true;
-            optionsPanel.autoLayoutDirection = LayoutDirection.Vertical;
-            optionsPanel.autoFitChildrenHorizontally = true;
-            optionsPanel.autoFitChildrenVertically = true;
-            optionsPanel.autoLayoutPadding = new RectOffset(25, 0, 0, 5);
-            var panelHelper = new UIHelper(optionsPanel);
-
-            for (var i = 0; i < checkBoxes.Length; i += 1)
-            {
-                var index = i;
-                checkBoxes[i] = panelHelper.AddCheckbox(labels[i], optionsSaved == i, (value) => Set(index, value)) as UICheckBox;
-            }
-
-            SetVisible();
-
-            void OnMainChanged(bool value)
-            {
-                mainSaved.value = value;
-                onChanged?.Invoke();
-                SetVisible();
-            }
-            void SetVisible() => optionsPanel.isVisible = mainSaved;
-            void Set(int index, bool value)
-            {
-                if (!inProcess)
-                {
-                    inProcess = true;
-                    optionsSaved.value = index;
-                    onChanged?.Invoke();
-                    for (var i = 0; i < checkBoxes.Length; i += 1)
-                        checkBoxes[i].isChecked = optionsSaved == i;
-                    inProcess = false;
-                }
-            }
-        }
-        private static UIButton AddButton(UIHelper group, string text, OnButtonClicked click, float width = 400)
-        {
-            var button = group.AddButton(text, click) as UIButton;
-            button.autoSize = false;
-            button.textHorizontalAlignment = UIHorizontalAlignment.Center;
-            button.width = width;
-
-            return button;
-        }
-        public static void AddLabel(this UIHelper helper, string text, float size = 1.125f, Color? color = null, int padding = 0)
-        {
-            var component = helper.self as UIComponent;
-
-            var label = component.AddUIComponent<CustomUILabel>();
-            label.text = text;
-            label.textScale = size;
-            label.textColor = color ?? Color.white;
-            label.padding = new RectOffset(padding, 0, 0, 0);
-        }
-
-        private class LanguageDropDown : UIDropDown<string>
-        {
-            public LanguageDropDown()
-            {
-                SetSettingsStyle(new Vector2(300, 31));
-            }
-        }
 
         #endregion
     }
