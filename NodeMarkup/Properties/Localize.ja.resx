@@ -561,8 +561,6 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>現在、 {0} のβ版を使用しています。
 新機能をテストするMODで、エラーやマーキングの破損・消える可能性があります。
 間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>ゲームの既定言語</value>

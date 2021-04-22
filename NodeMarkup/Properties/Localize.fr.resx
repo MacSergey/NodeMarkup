@@ -558,8 +558,6 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Vous utilisez la version d'{0}. C'est une version de test avec de nouvelles fonctionnalités et cela peut contenir des erreurs qui vont casser ou supprimer vos marquages. Si vous vous êtes abonné par erreur, veuillez vous abonner à la version stable.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Langue du jeu</value>

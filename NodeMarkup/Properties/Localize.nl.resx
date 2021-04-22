@@ -558,8 +558,6 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Je gebruikt de bèta versie van {0}. Deze wordt gebruikt voor het testen van nieuwe functies en kan fouten bevatten die je huidige markeringen kunnen verwijderen of veranderen. Als je per ongeluk geabonneerd bent op de bèta, kan je naar de stabiele versie overstappen.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Gebruik zelfde taal als spel</value>
