@@ -61,5 +61,6 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
+        protected override bool CheckItemClass(ItemClass itemClass) => itemClass.m_service == ItemClass.Service.Road || (itemClass.m_service == ItemClass.Service.PublicTransport && itemClass.m_subService == ItemClass.SubService.PublicTransportPlane);
     }
 }
