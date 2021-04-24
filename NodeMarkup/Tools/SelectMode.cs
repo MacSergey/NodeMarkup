@@ -62,6 +62,12 @@ namespace NodeMarkup.Tools
             }
         }
         protected override bool IsValidNode(ushort nodeId) => nodeId.GetNode().m_flags.CheckFlags(0, NetNode.Flags.Middle);
-        protected override bool CheckItemClass(ItemClass itemClass) => itemClass.m_service == ItemClass.Service.Road || (itemClass.m_service == ItemClass.Service.PublicTransport && itemClass.m_subService == ItemClass.SubService.PublicTransportPlane);
+
+        protected override bool CheckItemClass(ItemClass itemClass) => itemClass switch
+        {
+            { m_service: ItemClass.Service.Road } => true,
+            { m_service: ItemClass.Service.PublicTransport, m_subService: ItemClass.SubService.PublicTransportPlane } => true,
+            _ => false,
+        };
     }
 }
