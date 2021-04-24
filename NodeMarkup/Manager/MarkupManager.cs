@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
         public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
         {
             SingletonManager<SegmentMarkupManager>.Instance.AddToUpdate(segmentID);
-            var segment = segmentID.GetSegment();
+            ref var segment = ref segmentID.GetSegment();
             SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(segment.m_startNode);
             SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(segment.m_endNode);
         }

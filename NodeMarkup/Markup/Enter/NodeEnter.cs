@@ -14,7 +14,7 @@ namespace NodeMarkup.Manager
         public NodeEnter(SegmentMarkup markup, ushort nodeId) : base(markup, nodeId) { }
 
         protected override ushort GetSegmentId() => Markup.Id;
-        protected override NetSegment GetSegment() => Markup.Id.GetSegment();
+        protected override ref NetSegment GetSegment() => ref Markup.Id.GetSegment();
         protected override bool GetIsStartSide() => GetSegment().m_startNode == Id;
 
     }

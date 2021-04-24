@@ -122,7 +122,7 @@ namespace NodeMarkup.Manager
         }
 
         protected abstract ushort GetSegmentId();
-        protected abstract NetSegment GetSegment();
+        protected abstract ref NetSegment GetSegment();
         protected abstract bool GetIsStartSide();
         public virtual bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
         {
