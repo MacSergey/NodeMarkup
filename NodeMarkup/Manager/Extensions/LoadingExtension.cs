@@ -12,6 +12,8 @@ namespace NodeMarkup
         {
             TemplateManager.Reload();
             SingletonMod<Mod>.Instance.ShowLoadError();
+
+            base.OnLoad();
         }
     }
 }
