@@ -9,6 +9,7 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -48,7 +49,11 @@ namespace NodeMarkup
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
         public override string WorkshopUrl => StableURL;
-        protected override string Locale => Settings.Locale.value;
+        public override CultureInfo Culture
+        {
+            get => Localize.Culture;
+            protected set => Localize.Culture = value;
+        }
 
 #if BETA
         public override bool IsBeta => true;
@@ -63,12 +68,6 @@ namespace NodeMarkup
         {
             var settings = new Settings();
             settings.OnSettingsUI(helper);
-        }
-
-        public override void LocaleChanged()
-        {
-            Localize.Culture = Culture;
-            Logger.Debug($"Current cultute - {Localize.Culture?.Name ?? "null"}");
         }
 
         public static bool OpenTroubleshooting()
@@ -87,6 +86,7 @@ namespace NodeMarkup
             var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
             messageBox.MessageText = Localize.Mod_LoaledWithErrors;
         }
+        public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
 
         #endregion
 

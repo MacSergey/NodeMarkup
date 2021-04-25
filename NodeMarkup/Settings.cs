@@ -23,8 +23,6 @@ namespace NodeMarkup
     {
         #region PROPERTIES
 
-        public static string SettingsFile => $"{nameof(NodeMarkup)}{nameof(SettingsFile)}";
-
         public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, SingletonMod<Mod>.Version.PrevMinor(SingletonMod<Mod>.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 700f, true);
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
@@ -43,7 +41,6 @@ namespace NodeMarkup
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
-        public static SavedString Locale { get; } = new SavedString(nameof(Locale), SettingsFile, string.Empty, true);
 
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
@@ -103,32 +100,6 @@ namespace NodeMarkup
         {
             var group = helper.AddGroup(Localize.Settings_Language) as UIHelper;
             AddLanguageList(group);
-        }
-        private void AddLanguageList(UIHelper group)
-        {
-            var dropDown = (group.self as UIComponent).AddUIComponent<LanguageDropDown>();
-            dropDown.AddItem(string.Empty, Localize.Mod_LocaleGame);
-
-            foreach (var locale in GetSupportLanguages())
-            {
-                var localizeString = $"Mod_Locale_{locale}";
-                var localeText = Localize.ResourceManager.GetString(localizeString, Localize.Culture);
-                if (Localize.Culture.Name.ToLower() != locale)
-                    localeText += $" ({Localize.ResourceManager.GetString(localizeString, new CultureInfo(locale))})";
-
-                dropDown.AddItem(locale, localeText);
-            }
-
-            dropDown.SelectedObject = Locale.value;
-            dropDown.eventSelectedIndexChanged += IndexChanged;
-
-            void IndexChanged(UIComponent component, int value)
-            {
-                var locale = dropDown.SelectedObject;
-                Locale.value = locale;
-                SingletonMod<Mod>.Instance.LocaleChanged();
-                LocaleManager.ForceReload();
-            }
         }
 
         #endregion
