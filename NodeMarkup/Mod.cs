@@ -49,6 +49,7 @@ namespace NodeMarkup
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
         public override string WorkshopUrl => StableURL;
+        public override string BetaWorkshopUrl => BetaURL;
         public override CultureInfo Culture
         {
             get => Localize.Culture;
@@ -72,12 +73,7 @@ namespace NodeMarkup
 
         public static bool OpenTroubleshooting()
         {
-            Utilities.Utilities.OpenUrl(TroubleshootingUrl);
-            return true;
-        }
-        public static bool GetStable()
-        {
-            Utilities.Utilities.OpenUrl(StableURL);
+            TroubleshootingUrl.OpenUrl();
             return true;
         }
 
@@ -92,94 +88,6 @@ namespace NodeMarkup
 
         #region ADDITIONAL
 
-        public void ShowWhatsNew()
-        {
-            var fromVersion = new Version(Settings.WhatsNewVersion);
-
-            if (!Settings.ShowWhatsNew || Version <= fromVersion)
-                return;
-
-            var messages = GetWhatsNewMessages(fromVersion);
-            if (!messages.Any())
-                return;
-
-            if (!IsBeta)
-            {
-                var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
-                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, NameRaw);
-                messageBox.OnButtonClick = Confirm;
-                messageBox.OkText = NodeMarkupMessageBox.Ok;
-                messageBox.Init(messages, GetVersionString);
-            }
-            else
-            {
-                var messageBox = MessageBoxBase.ShowModal<BetaWhatsNewMessageBox>();
-                messageBox.CaptionText = string.Format(Localize.Mod_WhatsNewCaption, NameRaw);
-                messageBox.OnButtonClick = Confirm;
-                messageBox.OnGetStableClick = GetStable;
-                messageBox.OkText = NodeMarkupMessageBox.Ok;
-                messageBox.GetStableText = Localize.Mod_BetaWarningGetStable;
-                messageBox.Init(messages, string.Format(Localize.Mod_BetaWarningMessage, NameRaw), GetVersionString);
-            }
-
-            static bool Confirm()
-            {
-                Settings.WhatsNewVersion.value = SingletonMod<Mod>.Version.ToString();
-                return true;
-            }
-            static bool GetStable()
-            {
-                Mod.GetStable();
-                return true;
-            }
-        }
-        public Dictionary<Version, string> GetWhatsNewMessages(Version whatNewVersion)
-        {
-            var messages = new Dictionary<Version, string>(Versions.Count);
-#if BETA
-            messages[Version] = Localize.Mod_WhatsNewMessageBeta;
-#endif
-            foreach (var version in Versions)
-            {
-                if (Version < version)
-                    continue;
-
-                if (version <= whatNewVersion)
-                    break;
-
-                if (Settings.ShowOnlyMajor && !version.IsMinor())
-                    continue;
-
-                if (GetWhatsNew(version) is string message && !string.IsNullOrEmpty(message))
-                    messages[version] = message;
-            }
-
-            return messages;
-        }
-        public string GetVersionString(Version version) => string.Format(Localize.Mod_WhatsNewVersion, version == Version ? VersionString : version.ToString());
-        private string GetWhatsNew(Version version) => Localize.ResourceManager.GetString($"Mod_WhatsNewMessage{version.ToString().Replace('.', '_')}", Localize.Culture);
-
-        public void ShowBetaWarning()
-        {
-            if (!IsBeta)
-                Settings.BetaWarning.value = true;
-            else if (Settings.BetaWarning.value)
-            {
-                var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
-                messageBox.CaptionText = Localize.Mod_BetaWarningCaption;
-                messageBox.MessageText = string.Format(Localize.Mod_BetaWarningMessage, NameRaw);
-                messageBox.Button1Text = Localize.Mod_BetaWarningAgree;
-                messageBox.Button2Text = Localize.Mod_BetaWarningGetStable;
-                messageBox.OnButton1Click = AgreeClick;
-                messageBox.OnButton2Click = GetStable;
-
-                static bool AgreeClick()
-                {
-                    Settings.BetaWarning.value = false;
-                    return true;
-                }
-            }
-        }
         public void ShowLoadError()
         {
             if (MarkupManager.HasErrors)

@@ -6,27 +6,12 @@ using NodeMarkup.Tools;
 
 namespace NodeMarkup
 {
-    public class LoadingExtension : LoadingExtensionBase
+    public class LoadingExtension : BaseLoadingExtension<Mod>
     {
-        public override void OnLevelLoaded(LoadMode mode)
+        protected override void OnLoad()
         {
-            SingletonMod<Mod>.Instance.Logger.Debug($"On level loaded");
-            switch (mode)
-            {
-                case LoadMode.NewGame:
-                case LoadMode.LoadGame:
-                case LoadMode.NewGameFromScenario:
-                case LoadMode.NewAsset:
-                case LoadMode.LoadAsset:
-                case LoadMode.NewMap:
-                case LoadMode.LoadMap:
-                    TemplateManager.Reload();
-
-                    SingletonMod<Mod>.Instance.ShowWhatsNew();
-                    SingletonMod<Mod>.Instance.ShowBetaWarning();
-                    SingletonMod<Mod>.Instance.ShowLoadError();
-                    break;
-            }
+            TemplateManager.Reload();
+            SingletonMod<Mod>.Instance.ShowLoadError();
         }
     }
 }

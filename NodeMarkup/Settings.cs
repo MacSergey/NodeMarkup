@@ -23,7 +23,6 @@ namespace NodeMarkup
     {
         #region PROPERTIES
 
-        public static SavedString WhatsNewVersion { get; } = new SavedString(nameof(WhatsNewVersion), SettingsFile, SingletonMod<Mod>.Version.PrevMinor(SingletonMod<Mod>.Versions).ToString(), true);
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 700f, true);
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
@@ -36,11 +35,8 @@ namespace NodeMarkup
         public static SavedBool QuickBorderSetup { get; } = new SavedBool(nameof(QuickBorderSetup), SettingsFile, true, true);
         public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
         public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
-        public static SavedBool ShowWhatsNew { get; } = new SavedBool(nameof(ShowWhatsNew), SettingsFile, true, true);
-        public static SavedBool ShowOnlyMajor { get; } = new SavedBool(nameof(ShowOnlyMajor), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
-        public static SavedBool BetaWarning { get; } = new SavedBool(nameof(BetaWarning), SettingsFile, true, true);
 
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
@@ -242,7 +238,7 @@ namespace NodeMarkup
                     messageBox.CaptionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
-                    messageBox.Button2Text = NodeMarkupMessageBox.Ok;
+                    messageBox.Button2Text = ModLocalize<Mod>.Ok;
                     messageBox.OnButton1Click = CopyToClipboard;
                     messageBox.SetButtonsRatio(2, 1);
 
@@ -286,9 +282,9 @@ namespace NodeMarkup
             AddDiscord(group);
             AddChangeLog(group);
         }
-        private void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Utilities.Utilities.OpenUrl(Mod.WikiUrl));
-        private void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Utilities.Utilities.OpenUrl(Mod.DiscordURL));
-        private void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Utilities.Utilities.OpenUrl(Mod.TroubleshootingUrl));
+        private void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Mod.WikiUrl.OpenUrl());
+        private void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Mod.DiscordURL.OpenUrl());
+        private void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Mod.TroubleshootingUrl.OpenUrl());
         private void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, ShowChangeLog);
 
         private void ShowChangeLog()
@@ -296,7 +292,7 @@ namespace NodeMarkup
             var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
             var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
             messageBox.CaptionText = Localize.Settings_ChangeLog;
-            messageBox.OkText = NodeMarkupMessageBox.Ok;
+            messageBox.OkText = ModLocalize<Mod>.Ok;
             messageBox.Init(messages, SingletonMod<Mod>.Instance.GetVersionString, false);
         }
 

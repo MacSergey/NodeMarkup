@@ -5,10 +5,6 @@ namespace NodeMarkup.UI
 {
     public static class NodeMarkupMessageBox
     {
-        public static string Yes => Localize.MessageBox_Yes;
-        public static string No => Localize.MessageBox_No;
-        public static string Ok => Localize.MessageBox_OK;
-        public static string Cancel => Localize.MessageBox_Cancel;
         public static string CantUndone => Localize.MessageBox_CantUndone;
         public static string ItWillReplace => Localize.MessageBox_ItWillReplace;
     }
@@ -16,15 +12,15 @@ namespace NodeMarkup.UI
     {
         public OkMessageBox()
         {
-            ButtonText = NodeMarkupMessageBox.Ok;
+            ButtonText = ModLocalize<Mod>.Ok;
         }
     }
     public class YesNoMessageBox : TwoButtonMessageBox
     {
         public YesNoMessageBox()
         {
-            Button1Text = NodeMarkupMessageBox.Yes;
-            Button2Text = NodeMarkupMessageBox.No;
+            Button1Text = ModLocalize<Mod>.Yes;
+            Button2Text = ModLocalize<Mod>.No;
         }
     }
 
@@ -33,7 +29,7 @@ namespace NodeMarkup.UI
         public ErrorLoadedMessageBox()
         {
             CaptionText = SingletonMod<Mod>.Instance.Name;
-            Button1Text = NodeMarkupMessageBox.Ok;
+            Button1Text = ModLocalize<Mod>.Ok;
             Button2Text = NodeMarkup.Localize.Mod_Support;
             OnButton2Click = Mod.OpenTroubleshooting;
         }

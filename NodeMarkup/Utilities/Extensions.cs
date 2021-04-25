@@ -14,13 +14,6 @@ namespace NodeMarkup.Utilities
 {
     public static class Utilities
     {
-        public static void OpenUrl(string url)
-        {
-            if (PlatformService.IsOverlayEnabled())
-                PlatformService.ActivateGameOverlayToWebPage(url);
-            else
-                Process.Start(url);
-        }
         public static string Description<T>(this T value) where T : Enum => value.Description<T, Mod>();
         public static string Description(this StyleModifier modifier)
         {

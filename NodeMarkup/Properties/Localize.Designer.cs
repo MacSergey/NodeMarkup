@@ -1533,10 +1533,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too small parts.
+        ///   Ищет локализованную строку, похожую на - New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too close together nodes.
         ///- Added automatic line creation when create filler. No more need add lines before create filler.
         ///- Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
-        ///- Added style modifier &quot;From clipboard&quot;. Hold Ctrl+Alt to apply s [остаток строки не уместился]&quot;;.
+        ///- Added style modifier &quot;From clipboard&quot;. Hold Ctrl+Alt t [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_7 {
             get {

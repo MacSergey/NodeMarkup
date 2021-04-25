@@ -1,4 +1,5 @@
-﻿using ModsCommon.UI;
+﻿using ModsCommon;
+using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using System.Collections.Generic;
@@ -251,9 +252,9 @@ namespace NodeMarkup.UI.Editors
                 var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
                 messageBox.CaptionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
                 messageBox.MessageText = SaveChangesMessage;
-                messageBox.Button1Text = NodeMarkupMessageBox.Yes;
-                messageBox.Button2Text = NodeMarkupMessageBox.No;
-                messageBox.Button3Text = NodeMarkupMessageBox.Cancel;
+                messageBox.Button1Text = ModLocalize<Mod>.Yes;
+                messageBox.Button2Text = ModLocalize<Mod>.No;
+                messageBox.Button3Text = ModLocalize<Mod>.Cancel;
                 messageBox.OnButton1Click = OnSave;
                 messageBox.OnButton2Click = OnNotSave;
             }
