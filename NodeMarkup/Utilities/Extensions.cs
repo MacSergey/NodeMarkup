@@ -21,13 +21,7 @@ namespace NodeMarkup.Utilities
             else
                 Process.Start(url);
         }
-
-        public static string Description<T>(this T value)
-            where T : Enum
-        {
-            var description = value.GetAttr<DescriptionAttribute, T>()?.Description ?? value.ToString();
-            return Localize.ResourceManager.GetString(description, Localize.Culture);
-        }
+        public static string Description<T>(this T value) where T : Enum => value.Description<T, Mod>();
         public static string Description(this StyleModifier modifier)
         {
             var localeID = "KEYNAME";
