@@ -16,6 +16,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static ModsCommon.SettingsHelper;
 
 namespace NodeMarkup
 {
@@ -44,12 +45,6 @@ namespace NodeMarkup
         public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
         public static SavedBool GroupPointsOverlay { get; } = new SavedBool(nameof(GroupPointsOverlay), SettingsFile, true, true);
         public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
-#if DEBUG
-        public static SavedBool AlphaBlendOverlay { get; } = new SavedBool(nameof(AlphaBlendOverlay), SettingsFile, true, true);
-        public static SavedFloat BorderOverlayWidth { get; } = new SavedFloat(nameof(BorderOverlayWidth), SettingsFile, 3f, true);
-        public static SavedBool RenderOverlayCentre { get; } = new SavedBool(nameof(RenderOverlayCentre), SettingsFile, false, true);
-        public static SavedBool RenderOverlayBorders { get; } = new SavedBool(nameof(RenderOverlayBorders), SettingsFile, false, true);
-#endif
 
         #endregion
 
@@ -305,10 +300,10 @@ namespace NodeMarkup
         {
             var group = helper.AddGroup("Debug") as UIHelper;
 
-            AddCheckBox(group, "Alpha blend overlay", AlphaBlendOverlay);
-            AddCheckBox(group, "Render overlay center", RenderOverlayCentre);
-            AddCheckBox(group, "Render overlay borders", RenderOverlayBorders);
-            AddFloatField(group, "Overlay width", BorderOverlayWidth, 3f, 1f);
+            AddCheckBox(group, "Alpha blend overlay", Selection.AlphaBlendOverlay);
+            AddCheckBox(group, "Render overlay center", Selection.RenderOverlayCentre);
+            AddCheckBox(group, "Render overlay borders", Selection.RenderOverlayBorders);
+            AddFloatField(group, "Overlay width", Selection.OverlayWidth, 3f, 1f);
         }
 #endif
 
