@@ -1343,7 +1343,7 @@ Bist du dir sicher, dass du mehrere Kreuzungsvorlagen mit dem gleichen Namen hab
     <value>Gras</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>Bürgersteig</value>
+    <value>Randstein</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
     <value>LOD Distanz</value>
