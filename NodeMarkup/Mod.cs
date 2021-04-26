@@ -114,14 +114,13 @@ namespace NodeMarkup
             success &= AddNetToolButton();
             success &= ToolOnEscape();
             success &= AssetDataExtensionFix();
+            success &= AssetDataLoad();
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
             PatchNetSegment(ref success);
             PatchNetInfo(ref success);
             PatchLoading(ref success);
-
-            success &= Patch_BuildingDecoration_LoadPaths();
 
             return success;
         }
@@ -132,25 +131,32 @@ namespace NodeMarkup
         {
             return AddTranspiler(typeof(Mod), nameof(Mod.ToolControllerAwakeTranspiler), typeof(ToolController), "Awake");
         }
-        public static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ToolControllerAwakeTranspiler<NodeMarkupTool>(generator, instructions);
+        private static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ToolControllerAwakeTranspiler<NodeMarkupTool>(generator, instructions);
 
         private bool AddNetToolButton()
         {
             return AddPostfix(typeof(Mod), nameof(Mod.GeneratedScrollPanelCreateOptionPanelPostfix), typeof(GeneratedScrollPanel), "CreateOptionPanel");
         }
-        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => GeneratedScrollPanelCreateOptionPanelPostfix<NodeMarkupButton>(templateName, ref __result);
+        private static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => GeneratedScrollPanelCreateOptionPanelPostfix<NodeMarkupButton>(templateName, ref __result);
 
-        protected bool ToolOnEscape()
+        private bool ToolOnEscape()
         {
             return AddTranspiler(typeof(Mod), nameof(Mod.GameKeyShortcutsEscapeTranspiler), typeof(GameKeyShortcuts), "Escape");
         }
-        protected static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => GameKeyShortcutsEscapeTranspiler<NodeMarkupTool>(generator, instructions);
+        private static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => GameKeyShortcutsEscapeTranspiler<NodeMarkupTool>(generator, instructions);
 
-        protected bool AssetDataExtensionFix()
+        private bool AssetDataExtensionFix()
         {
             return AddPostfix(typeof(Mod), nameof(Mod.LoadAssetPanelOnLoadPostfix), typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
-        public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => AssetDataExtension.LoadAssetPanelOnLoadPostfix(__instance, ___m_SaveList);
+        private static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => AssetDataExtension.LoadAssetPanelOnLoadPostfix(__instance, ___m_SaveList);
+        
+        private bool AssetDataLoad()
+        {
+            return AddTranspiler(typeof(Mod), nameof(Mod.BuildingDecorationLoadPathsTranspiler), typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
+        }
+        private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(IEnumerable<CodeInstruction> instructions) => AssetDataExtension.BuildingDecorationLoadPathsTranspiler(instructions);
+
 
         #endregion
 
@@ -345,53 +351,6 @@ namespace NodeMarkup
             while (enumerator.MoveNext())
                 yield return enumerator.Current;
         }
-
-        #endregion
-
-        #region OTHERS
-
-        private bool Patch_BuildingDecoration_LoadPaths()
-        {
-            return AddTranspiler(typeof(Mod), nameof(Mod.BuildingDecorationLoadPathsTranspiler), typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
-        }
-        private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
-        {
-            var segmentBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempSegmentBuffer));
-            var nodeBufferField = AccessTools.DeclaredField(typeof(NetManager), nameof(NetManager.m_tempNodeBuffer));
-            var clearMethod = AccessTools.DeclaredMethod(nodeBufferField.FieldType, nameof(FastList<ushort>.Clear));
-
-            var matchCount = 0;
-            var inserted = false;
-            var enumerator = instructions.GetEnumerator();
-            var prevInstruction = (CodeInstruction)null;
-            while (enumerator.MoveNext())
-            {
-                var instruction = enumerator.Current;
-
-                if (prevInstruction != null && prevInstruction.opcode == OpCodes.Ldfld && prevInstruction.operand == nodeBufferField && instruction.opcode == OpCodes.Callvirt && instruction.operand == clearMethod)
-                    matchCount += 1;
-
-                if (!inserted && matchCount == 2)
-                {
-                    yield return new CodeInstruction(OpCodes.Ldarg_0);
-                    yield return new CodeInstruction(OpCodes.Ldloc_0);
-                    yield return new CodeInstruction(OpCodes.Ldfld, segmentBufferField);
-                    yield return new CodeInstruction(OpCodes.Ldloc_0);
-                    yield return new CodeInstruction(OpCodes.Ldfld, nodeBufferField);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(MarkupManager), nameof(MarkupManager.PlaceIntersection)));
-                    inserted = true;
-                }
-
-                if (prevInstruction != null)
-                    yield return prevInstruction;
-
-                prevInstruction = instruction;
-            }
-
-            if (prevInstruction != null)
-                yield return prevInstruction;
-        }
-
 
         #endregion
 

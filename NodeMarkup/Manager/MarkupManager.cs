@@ -52,16 +52,6 @@ namespace NodeMarkup.Manager
                 info.m_segmentMaterial.renderQueue = 2470;
         }
 
-
-        public static void PlaceIntersection(BuildingInfo buildingInfo, FastList<ushort> segments, FastList<ushort> nodes)
-        {
-            if (!AssetDataExtension.TryGetValue(buildingInfo, out AssetMarking assetMarking))
-                return;
-
-            var map = assetMarking.GetMap(segments.m_buffer, nodes.m_buffer);
-            FromXml(assetMarking.Config, map, false);
-        }
-
         public static void Import(XElement config) => FromXml(config, new ObjectsMap());
         public static XElement ToXml()
         {

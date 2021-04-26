@@ -14,52 +14,47 @@ using System.Xml.Linq;
 
 namespace NodeMarkup
 {
-    public class AssetDataExtension : BaseAssetDataExtension<AssetDataExtension>
+    public class AssetDataExtension : BaseAssetDataExtension<AssetDataExtension, AssetMarking>
     {
-        private static string DataId => $"{Loader.Id}.Data";
-        private static string MapId => $"{Loader.Id}.Map";
+        private static string DataId { get; } = $"{Loader.Id}.Data";
+        private static string MapId { get; } = $"{Loader.Id}.Map";
 
-        public static AssetDataExtension Instance { get; private set; }
-
-        private static Dictionary<BuildingInfo, AssetMarking> AssetMarkings { get; } = new Dictionary<BuildingInfo, AssetMarking>();
-
-        public override void OnAssetLoaded(string name, object asset, Dictionary<string, byte[]> userData)
+        public override bool Load(BuildingInfo prefab, Dictionary<string, byte[]> userData, out AssetMarking markingData)
         {
-            if (asset is not BuildingInfo prefab || userData == null || !userData.TryGetValue(DataId, out byte[] data) || !userData.TryGetValue(MapId, out byte[] map))
-                return;
-
-            SingletonMod<Mod>.Logger.Debug($"Start load prefab data \"{prefab.name}\"");
-            try
+            if (userData.TryGetValue(DataId, out byte[] data) && userData.TryGetValue(MapId, out byte[] map))
             {
-                var decompress = Loader.Decompress(data);
-                var config = XmlExtension.Parse(decompress);
-
-                var count = map.Length / 6;
-                var segments = new ushort[count];
-                var nodes = new ushort[count * 2];
-
-                for (var i = 0; i < count; i += 1)
+                SingletonMod<Mod>.Logger.Debug($"Start load prefab data \"{prefab.name}\"");
+                try
                 {
-                    segments[i] = GetUShort(map[i * 6], map[i * 6 + 1]);
-                    nodes[i * 2] = GetUShort(map[i * 6 + 2], map[i * 6 + 3]);
-                    nodes[i * 2 + 1] = GetUShort(map[i * 6 + 4], map[i * 6 + 5]);
+                    var decompress = Loader.Decompress(data);
+                    var config = XmlExtension.Parse(decompress);
+
+                    var count = map.Length / 6;
+                    var segments = new ushort[count];
+                    var nodes = new ushort[count * 2];
+
+                    for (var i = 0; i < count; i += 1)
+                    {
+                        segments[i] = GetUShort(map[i * 6], map[i * 6 + 1]);
+                        nodes[i * 2] = GetUShort(map[i * 6 + 2], map[i * 6 + 3]);
+                        nodes[i * 2 + 1] = GetUShort(map[i * 6 + 4], map[i * 6 + 5]);
+                    }
+
+                    markingData = new AssetMarking(config, segments, nodes);
+                    SingletonMod<Mod>.Logger.Debug($"Prefab data was loaded; Size = {data.Length} bytes");
+                    return true;
                 }
-
-                AssetMarkings[prefab] = new AssetMarking(config, segments, nodes);
-
-                SingletonMod<Mod>.Logger.Debug($"Prefab data was loaded; Size = {data.Length} bytes");
+                catch (Exception error)
+                {
+                    SingletonMod<Mod>.Logger.Error("Could not load prefab data", error);
+                }
             }
-            catch (Exception error)
-            {
-                SingletonMod<Mod>.Logger.Error("Could not load prefab data", error);
-            }
+
+            markingData = default;
+            return false;
         }
-        public override void OnAssetSaved(string name, object asset, out Dictionary<string, byte[]> userData)
+        public override void Save(BuildingInfo prefab, Dictionary<string, byte[]> userData)
         {
-            userData = new Dictionary<string, byte[]>();
-            if (asset is not BuildingInfo prefab || !prefab.m_paths.Any())
-                return;
-
             SingletonMod<Mod>.Logger.Debug($"Start save prefab data \"{prefab.name}\"");
             try
             {
@@ -97,14 +92,18 @@ namespace NodeMarkup
                 SingletonMod<Mod>.Logger.Error("Could not save prefab data", error);
             }
         }
+        protected override void PlaceAsset(AssetMarking data, FastList<ushort> segments, FastList<ushort> nodes)
+        {
+            var map = data.GetMap(segments.m_buffer, nodes.m_buffer);
+            MarkupManager.FromXml(data.Config, map, false);
+        }
+
         private void GetBytes(ushort n, out byte b1, out byte b2)
         {
             b1 = (byte)(n >> 8);
             b2 = (byte)n;
         }
         private ushort GetUShort(byte b1, byte b2) => (ushort)((b1 << 8) + b2);
-
-        public static bool TryGetValue(BuildingInfo buildingInfo, out AssetMarking assetMarking) => AssetMarkings.TryGetValue(buildingInfo, out assetMarking);
     }
     public struct AssetMarking
     {
