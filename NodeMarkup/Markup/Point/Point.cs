@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using ObjectId = NodeMarkup.Utilities.ObjectId;
 
 namespace NodeMarkup.Manager
 {

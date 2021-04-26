@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using ObjectId = NodeMarkup.Utilities.ObjectId;
 
 namespace NodeMarkup.Manager
 {
@@ -172,7 +173,7 @@ namespace NodeMarkup.Manager
 
             if (NeedSetOrder && delete != add)
             {
-                if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectType.Segment && p.Value.Segment == delete) is KeyValuePair<ObjectId, ObjectId> pair)
+                if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectId.SegmentType && p.Value.Segment == delete) is KeyValuePair<ObjectId, ObjectId> pair)
                 {
                     Backup.Map.Remove(pair.Key);
                     Backup.Map.AddSegment(pair.Key.Segment, add);
