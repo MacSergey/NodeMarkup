@@ -18,7 +18,7 @@ namespace NodeMarkup
         protected override string DataId { get; } = $"{Loader.Id}.Data";
         protected override string MapId { get; } = $"{Loader.Id}.Map";
 
-        protected override Utilities.ObjectsMap CreateMap(bool isSimple) => new Utilities.ObjectsMap(isSimple);
+        protected override Utilities.ObjectsMap CreateMap(bool isSimple) => new Utilities.ObjectsMap(isSimple: isSimple);
         protected override XElement GetConfig() => MarkupManager.ToXml();
 
         protected override void PlaceAsset(XElement config, Utilities.ObjectsMap map) => MarkupManager.FromXml(config, map, false);
