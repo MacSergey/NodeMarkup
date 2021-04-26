@@ -41,7 +41,7 @@ namespace NodeMarkup.Utilities
         public override string ToString()
         {
             if (Type == PointType)
-                return $"{Type}: {MarkupPoint.GetEnter(Point)}-{MarkupPoint.GetNum(Point)}{MarkupPoint.GetType(Point).ToString().FirstOrDefault()}";
+                return $"{nameof(Point)}: {MarkupPoint.GetEnter(Point)}-{MarkupPoint.GetNum(Point)}{MarkupPoint.GetType(Point).ToString().FirstOrDefault()}";
             else
                 return base.ToString();
         }
