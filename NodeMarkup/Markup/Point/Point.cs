@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
         private static Vector3 MarkerSize => Vector3.one;
         protected static float DefaultWidth => 1f;
 
-        public static bool FromId(int id, Markup markup, ObjectsMap map, out MarkupPoint point)
+        public static bool FromId(int id, Markup markup, Utilities.ObjectsMap map, out MarkupPoint point)
         {
             point = null;
 
@@ -141,13 +141,13 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public static void FromXml(XElement config, Markup markup, ObjectsMap map)
+        public static void FromXml(XElement config, Markup markup, Utilities.ObjectsMap map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
             if (FromId(id, markup, map, out MarkupPoint point))
                 point.FromXml(config, map);
         }
-        public virtual void FromXml(XElement config, ObjectsMap map)
+        public virtual void FromXml(XElement config, Utilities.ObjectsMap map)
         {
             Offset.FromXml(config, 0);
             Offset.Value *= (map.IsMirror ? -1 : 1);
@@ -239,7 +239,7 @@ namespace NodeMarkup.Manager
                 rightPos.RenderCircle(data);
             }
         }
-        public override void FromXml(XElement config, ObjectsMap map)
+        public override void FromXml(XElement config, Utilities.ObjectsMap map)
         {
             base.FromXml(config, map);
             Split.FromXml(config, false);
@@ -326,7 +326,7 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
+        public static bool FromHash(ulong hash, Markup markup, Utilities.ObjectsMap map, out MarkupPointPair pair, out bool invert)
         {
             var secondId = (int)hash;
             var firstId = (int)(hash >> 32);

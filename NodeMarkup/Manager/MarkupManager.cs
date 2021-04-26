@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
                 info.m_segmentMaterial.renderQueue = 2470;
         }
 
-        public static void Import(XElement config) => FromXml(config, new ObjectsMap());
+        public static void Import(XElement config) => FromXml(config, new Utilities.ObjectsMap());
         public static XElement ToXml()
         {
             var config = new XElement(nameof(NodeMarkup));
@@ -65,7 +65,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static void FromXml(XElement config, ObjectsMap map, bool clear = true)
+        public static void FromXml(XElement config, Utilities.ObjectsMap map, bool clear = true)
         {
             if (clear)
                 Clear();
@@ -95,7 +95,7 @@ namespace NodeMarkup.Manager
         protected HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
         protected abstract MarkupType Type { get; }
         protected abstract string XmlName { get; }
-        protected abstract ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map);
+        protected abstract Utilities.ObjectsMap.TryGetDelegate<ushort> MapTryGet(Utilities.ObjectsMap map);
 
         private static PropManager PropManager => Singleton<PropManager>.instance;
 
@@ -178,7 +178,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public void FromXml(XElement config, ObjectsMap map, Version version)
+        public void FromXml(XElement config, Utilities.ObjectsMap map, Version version)
         {
             var tryGet = MapTryGet(map);
             foreach (var markupConfig in config.Elements(XmlName))
@@ -223,13 +223,13 @@ namespace NodeMarkup.Manager
         protected override NodeMarkup NewMarkup(ushort id) => new NodeMarkup(id);
         protected override MarkupType Type => MarkupType.Node;
         protected override string XmlName => NodeMarkup.XmlName;
-        protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetNode;
+        protected override Utilities.ObjectsMap.TryGetDelegate<ushort> MapTryGet(Utilities.ObjectsMap map) => map.TryGetNode;
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
         protected override SegmentMarkup NewMarkup(ushort id) => new SegmentMarkup(id);
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
-        protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
+        protected override Utilities.ObjectsMap.TryGetDelegate<ushort> MapTryGet(Utilities.ObjectsMap map) => map.TryGetSegment;
     }
 }

@@ -176,7 +176,7 @@ namespace NodeMarkup.Manager
             config.Add(Style.Value.ToXml());
             return config;
         }
-        public void FromXml(XElement config, ObjectsMap map)
+        public void FromXml(XElement config, Utilities.ObjectsMap map)
         {
             RightBorder.Value = GetBorder(map.IsMirror ? "LB" : "RB");
             LeftBorder.Value = GetBorder(map.IsMirror ? "RB" : "LB");
@@ -190,7 +190,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupCrosswalk crosswalk)
+        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out MarkupCrosswalk crosswalk)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             if (markup.TryGetLine(lineId, map, out MarkupCrosswalkLine line))

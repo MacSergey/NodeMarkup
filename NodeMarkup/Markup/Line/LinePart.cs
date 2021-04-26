@@ -71,7 +71,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkupLine line, ObjectsMap map)
+        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkupLine line, Utilities.ObjectsMap map)
         {
             foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
             {

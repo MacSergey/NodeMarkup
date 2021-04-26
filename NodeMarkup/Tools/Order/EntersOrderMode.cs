@@ -173,7 +173,7 @@ namespace NodeMarkup.Tools
         private void SetBackup()
         {
             Markup.Clear();
-            Markup.FromXml(SingletonMod<Mod>.Version, Backup, new ObjectsMap());
+            Markup.FromXml(SingletonMod<Mod>.Version, Backup, new Utilities.ObjectsMap());
         }
 
         public override void OnToolGUI(Event e)

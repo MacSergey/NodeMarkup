@@ -61,7 +61,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
+        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out MarkupFiller filler)
         {
             filler = default;
 

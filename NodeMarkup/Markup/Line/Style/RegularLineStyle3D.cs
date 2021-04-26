@@ -54,7 +54,7 @@ namespace NodeMarkup.Manager
             Elevation.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
         {
             Width.FromXml(config, Default3DWidth);
             Elevation.FromXml(config, Default3DHeigth);

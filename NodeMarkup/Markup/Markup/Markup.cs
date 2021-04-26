@@ -141,7 +141,7 @@ namespace NodeMarkup.Manager
                 return;
 
             var auto = false;
-            var map = new ObjectsMap();
+            var map = new Utilities.ObjectsMap();
 
             if (delete.Length == 1 && add.Length == 1 && UpdateBackup(delete[0], add[0], oldEnters, newEnters))
             {
@@ -518,7 +518,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool TryGetLine<LineType>(ulong lineId, ObjectsMap map, out LineType line)
+        public bool TryGetLine<LineType>(ulong lineId, Utilities.ObjectsMap map, out LineType line)
             where LineType : MarkupLine
         {
             if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair, out _))
@@ -612,7 +612,7 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public virtual void FromXml(Version version, XElement config, ObjectsMap map)
+        public virtual void FromXml(Version version, XElement config, Utilities.ObjectsMap map)
         {
             LoadInProgress = true;
 
