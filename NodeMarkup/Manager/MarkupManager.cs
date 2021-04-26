@@ -189,7 +189,11 @@ namespace NodeMarkup.Manager
                 try
                 {
                     while (tryGet(id, out var targetId))
+                    {
                         id = targetId;
+                        if (map.IsSimple)
+                            break;
+                    }
 
                     var markup = this[id];
 

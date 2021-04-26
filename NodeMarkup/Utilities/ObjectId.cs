@@ -45,7 +45,9 @@ namespace NodeMarkup.Utilities
     }
     public class ObjectsMap : IEnumerable<KeyValuePair<ObjectId, ObjectId>>
     {
-        public bool IsMirror { get; set; }
+        public bool IsMirror { get; }
+        public bool IsSimple { get; }
+
         public bool IsEmpty => !Map.Any();
         private Dictionary<ObjectId, ObjectId> Map { get; } = new Dictionary<ObjectId, ObjectId>();
 
@@ -61,9 +63,10 @@ namespace NodeMarkup.Utilities
             }
         }
 
-        public ObjectsMap(bool isMirror = false)
+        public ObjectsMap(bool isMirror = false, bool isSimple = false)
         {
             IsMirror = isMirror;
+            IsSimple = isSimple;
         }
         public bool TryGetValue(ObjectId key, out ObjectId value) => Map.TryGetValue(key, out value);
         public bool TryGetNode(ushort nodeIdKey, out ushort nodeIdValue)
