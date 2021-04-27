@@ -11,6 +11,10 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
+    public class SimpleHeaderButton : HeaderButton
+    {
+        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
+    }
     public abstract class OptionsHeaderPanel : BaseHeaderPanel<BaseHeaderContent>
     {
         public event Action OnDelete;
