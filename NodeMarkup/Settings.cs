@@ -51,12 +51,6 @@ namespace NodeMarkup
         #region BASIC
         protected override string GeneralTabName => Localize.Settings_GeneralTab;
 
-        static Settings()
-        {
-            if (GameSettings.FindSettingsFileByName(SettingsFile) == null)
-                GameSettings.AddSettingsFile(new SettingsFile[] { new SettingsFile() { fileName = SettingsFile } });
-        }
-
         protected override void OnSettingsUI()
         {
             AddLanguage(GeneralTab);
