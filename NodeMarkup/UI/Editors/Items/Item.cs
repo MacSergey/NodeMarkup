@@ -81,6 +81,8 @@ namespace NodeMarkup.UI.Editors
     {
         public event Action<EditItem<ObjectType>> OnDelete;
 
+        bool IReusable.InCache { get; set; }
+
         private ObjectType _object;
         public ObjectType Object
         {

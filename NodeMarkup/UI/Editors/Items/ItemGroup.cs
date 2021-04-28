@@ -11,6 +11,8 @@ namespace NodeMarkup.UI.Editors
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
+        bool IReusable.InCache { get; set; }
+
         private bool _isExpand = true;
         public bool IsExpand
         {

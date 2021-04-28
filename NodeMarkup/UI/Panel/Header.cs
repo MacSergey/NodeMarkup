@@ -30,7 +30,7 @@ namespace NodeMarkup.UI.Panel
         {
             AddButton(NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
 
-            AddButton(NodeMarkupTextures.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut, CopyClick);
+            AddButton(NodeMarkupTextures.Copy, GetText(NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut), CopyClick);
             PasteButton = AddButton(NodeMarkupTextures.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
             AddButton(NodeMarkupTextures.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
 

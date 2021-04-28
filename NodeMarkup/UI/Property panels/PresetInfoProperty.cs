@@ -17,6 +17,7 @@ namespace NodeMarkup.UI
             font.lineHeight = 24;
             return font;
         }
+        bool IReusable.InCache { get; set; }
 
         private float Size => 200f;
         protected override float DefaultHeight => Size + 10;
