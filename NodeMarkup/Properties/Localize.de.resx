@@ -582,8 +582,6 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="Mod_BetaWarningMessage" xml:space="preserve">
     <value>Du verwendest die BETA Version von {0}. Diese ist zum Testen neuer Funktionen gedacht und kann Fehler beinhalten, die deine erstellten Markierungen verändern oder löschen könnten. Wenn du diese Version ungewollt abonniert haben solltest, wechsele zur stabilen Version.</value>
-    <comment>Mod_BetaWarningMessage
-</comment>
   </data>
   <data name="Mod_LocaleGame" xml:space="preserve">
     <value>Spiel-Sprache</value>
@@ -1330,7 +1328,7 @@ Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
     <value>Gras</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>Bürgersteig</value>
+    <value>Randstein</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
     <value>LOD Distanz</value>
