@@ -173,7 +173,9 @@ namespace NodeMarkup.Manager
 
             if (NeedSetOrder && delete != add)
             {
-                if (Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectId.SegmentType && p.Value.Segment == delete) is KeyValuePair<ObjectId, ObjectId> pair)
+                var pair = Backup.Map.FirstOrDefault(p => p.Value.Type == ObjectId.SegmentType && p.Value.Segment == delete);
+
+                if (pair.Key is not null && pair.Value is not null)
                 {
                     Backup.Map.Remove(pair.Key);
                     Backup.Map.AddSegment(pair.Key.Segment, add);
