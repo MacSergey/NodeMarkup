@@ -28,7 +28,7 @@ namespace NodeMarkup.UI
     {
         public ErrorLoadedMessageBox()
         {
-            CaptionText = SingletonMod<Mod>.Instance.Name;
+            CaptionText = SingletonMod<Mod>.Instance.NameRaw;
             Button1Text = ModLocalize<Mod>.Ok;
             Button2Text = NodeMarkup.Localize.Mod_Support;
             OnButton2Click = Mod.OpenTroubleshooting;
