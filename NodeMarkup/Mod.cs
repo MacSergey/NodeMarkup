@@ -84,10 +84,6 @@ namespace NodeMarkup
         }
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
 
-        #endregion
-
-        #region ADDITIONAL
-
         public void ShowLoadError()
         {
             if (MarkupManager.HasErrors)
@@ -96,7 +92,6 @@ namespace NodeMarkup
                 messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
             }
         }
-
         #endregion
 
         #region PATCHES
