@@ -56,12 +56,12 @@ namespace NodeMarkup.UI
         {
             if (Buffer != null)
             {
-                Value = Buffer.Value;
+                ValueChanged(Buffer.Value, true, OnChangedValue);
                 if (Popup != null)
                     Popup.component.Hide();
             }
         }
-        private void SetDefault() => Value = Manager.Style.DefaultColor;
+        private void SetDefault() => ValueChanged(Manager.Style.DefaultColor, true, OnChangedValue);
     }
 }
 
