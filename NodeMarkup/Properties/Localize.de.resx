@@ -215,7 +215,7 @@ Shift x10, Strg x0.1</value>
     <value>Dies ist eine BETA Version. Stabilität und Fehlerfreiheit sind nicht garantiert!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>Markierungen von Node #{0} bearbeiten</value>
+    <value>Markierungen von Netzwerk-Knoten #{0} bearbeiten</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>Punkt</value>
@@ -236,7 +236,7 @@ Shift x10, Strg x0.1</value>
     <value>Neue Linienregel hinzufügen</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>Alle Linien an Nodes löschen</value>
+    <value>Alle Linien an Netzwerk-Knoten löschen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
     <value>Markierungen von allen Kreuzungen löschen</value>
@@ -322,7 +322,7 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
 Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Node oder Segment zum Ändern der Markierungen auswählen</value>
+    <value>Netzwerk-Knoten oder Segment zum Ändern der Markierungen auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Endpunkt für eine reguläre Linie auswählen</value>
@@ -907,7 +907,7 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
     <value>Versätze aller Punkte zurücksetzen</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Versätze der Punkte von Node #{0} zurücksetzen?</value>
+    <value>Willst Du wirklich alle Versätze der Punkte des Netzwerk-Knotens #{0} zurücksetzen?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>Kreis halten, ziehen und loslassen um die Straßen-Reihenfolge zu ändern
