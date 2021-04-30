@@ -43,9 +43,8 @@ namespace NodeMarkup.Tools
 
         public void Init(EditorType editor) => Editor = editor;
 
-        public override void Update()
+        public void Update()
         {
-            base.Update();
             if (SelectPanel is PanelType panel)
                 panel.Selected = true;
         }
