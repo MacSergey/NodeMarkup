@@ -305,8 +305,7 @@
       <FilesToDelete Include="$(OutDir)ICSharpCode.SharpZipLib.dll" />
       <FilesToDelete Include="$(OutDir)PopsApiWrapper.dll" />
     </ItemGroup>
-    <Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high">
-    </Message>
+    <Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high" />
     <Delete Files="@(FilesToDelete)" />
     <RemoveDir Directories="$(LocalDir)" />
     <ItemGroup>
