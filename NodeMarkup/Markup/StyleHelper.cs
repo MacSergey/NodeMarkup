@@ -123,6 +123,9 @@ namespace NodeMarkup.Manager
         private static Vector2[] GetDashesBezierPoints(ITrajectory trajectory)
         {
             var length = trajectory.Length;
+            if (length > 200f)
+                return new Vector2[0];
+
             var count = (int)(length * 20);
             var points = new Vector2[count + 1];
             for (var i = 0; i <= count; i += 1)
