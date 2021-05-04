@@ -14,6 +14,8 @@ namespace NodeMarkup.Manager
     {
         public static int Errors { get; set; } = 0;
         public static bool HasErrors => Errors != 0;
+        private static ushort[] NodeIds { get; set; }
+        private static ushort[] SegmentIds { get; set; }
 
         public static void Clear()
         {
@@ -27,19 +29,16 @@ namespace NodeMarkup.Manager
 
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkupManager>.Instance.Remove(node);
         public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkupManager>.Instance.Remove(segment);
-        public static void NetManagerUpdateNodePostfix(ushort node) => SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(node);
-        public static void NetManagerUpdateSegmentPostfix(ushort segment) => SingletonManager<SegmentMarkupManager>.Instance.AddToUpdate(segment);
-        public static void NetSegmentUpdateLanesPostfix(ushort segmentID)
+
+        public static void GetToUpdate()
         {
-            SingletonManager<SegmentMarkupManager>.Instance.AddToUpdate(segmentID);
-            ref var segment = ref segmentID.GetSegment();
-            SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(segment.m_startNode);
-            SingletonManager<NodeMarkupManager>.Instance.AddToUpdate(segment.m_endNode);
+            NodeIds = NetManager.instance.GetUpdateNodes().ToArray();
+            SegmentIds = NetManager.instance.GetUpdateSegments().ToArray();
         }
-        public static void NetManagerSimulationStepImplPostfix()
+        public static void Update()
         {
-            SingletonManager<NodeMarkupManager>.Instance.Update();
-            SingletonManager<SegmentMarkupManager>.Instance.Update();
+            SingletonManager<NodeMarkupManager>.Instance.Update(NodeIds);
+            SingletonManager<SegmentMarkupManager>.Instance.Update(SegmentIds);
         }
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
@@ -92,7 +91,6 @@ namespace NodeMarkup.Manager
         where TypeMarkup : Markup
     {
         protected Dictionary<ushort, TypeMarkup> Markups { get; } = new Dictionary<ushort, TypeMarkup>();
-        protected HashSet<ushort> NeedUpdate { get; } = new HashSet<ushort>();
         protected abstract MarkupType Type { get; }
         protected abstract string XmlName { get; }
         protected abstract Utilities.ObjectsMap.TryGetDelegate<ushort> MapTryGet(Utilities.ObjectsMap map);
@@ -115,13 +113,12 @@ namespace NodeMarkup.Manager
         }
         protected abstract TypeMarkup NewMarkup(ushort id);
 
-        public void Update()
+        protected abstract void AddToUpdate(ushort id);
+        public void Update(ushort[] ids)
         {
-            var needUpdate = NeedUpdate.ToArray();
-            NeedUpdate.Clear();
-            foreach (var nodeId in needUpdate)
+            foreach (var id in ids)
             {
-                if (Markups.TryGetValue(nodeId, out TypeMarkup markup))
+                if (Markups.TryGetValue(id, out TypeMarkup markup))
                     markup.Update();
             }
         }
@@ -150,17 +147,10 @@ namespace NodeMarkup.Manager
                 item.Draw(data);
         }
 
-        public void AddToUpdate(ushort id)
-        {
-            if (Markups.ContainsKey(id))
-                NeedUpdate.Add(id);
-        }
-        public void AddAllToUpdate() => NeedUpdate.AddRange(Markups.Keys);
         public void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {
             SingletonMod<Mod>.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
-            NeedUpdate.Clear();
             Markups.Clear();
         }
         public void ToXml(XElement config)
@@ -198,7 +188,7 @@ namespace NodeMarkup.Manager
                     var markup = this[id];
 
                     markup.FromXml(version, markupConfig, map);
-                    NeedUpdate.Add(markup.Id);
+                    AddToUpdate(markup.Id);
                 }
                 catch (NotExistItemException error)
                 {
@@ -224,6 +214,7 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Node;
         protected override string XmlName => NodeMarkup.XmlName;
         protected override Utilities.ObjectsMap.TryGetDelegate<ushort> MapTryGet(Utilities.ObjectsMap map) => map.TryGetNode;
+        protected override void AddToUpdate(ushort id) => NetManager.instance.UpdateNode(id);
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
@@ -231,5 +222,6 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
         protected override Utilities.ObjectsMap.TryGetDelegate<ushort> MapTryGet(Utilities.ObjectsMap map) => map.TryGetSegment;
+        protected override void AddToUpdate(ushort id) => NetManager.instance.UpdateSegment(id);
     }
 }

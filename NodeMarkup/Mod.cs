@@ -161,9 +161,8 @@ namespace NodeMarkup
         {
             success &= Patch_NetManagerRelease_NodeImplementation();
             success &= Patch_NetManagerReleas_SegmentImplementation();
-            success &= Patch_NetManager_UpdateNode();
-            success &= Patch_NetManager_UpdateSegment();
-            success &= Patch_NetManager_SimulationStepImpl();
+            success &= Patch_NetManager_SimulationStepImpl_Prefix();
+            success &= Patch_NetManager_SimulationStepImpl_Postfix();
         }
 
         private bool Patch_NetManagerRelease_NodeImplementation()
@@ -176,19 +175,13 @@ namespace NodeMarkup
             var parameters = new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) };
             return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix), typeof(NetManager), "ReleaseSegmentImplementation", parameters);
         }
-        private bool Patch_NetManager_UpdateNode()
+        private bool Patch_NetManager_SimulationStepImpl_Prefix()
         {
-            var parameters = new Type[] { typeof(ushort), typeof(ushort), typeof(int) };
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateNodePostfix), typeof(NetManager), nameof(NetManager.UpdateNode), parameters);
+            return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.GetToUpdate), typeof(NetManager), "SimulationStepImpl");
         }
-        private bool Patch_NetManager_UpdateSegment()
+        private bool Patch_NetManager_SimulationStepImpl_Postfix()
         {
-            var parameters = new Type[] { typeof(ushort), typeof(ushort), typeof(int) };
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetManagerUpdateSegmentPostfix), typeof(NetManager), nameof(NetManager.UpdateSegment), parameters);
-        }
-        private bool Patch_NetManager_SimulationStepImpl()
-        {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetManagerSimulationStepImplPostfix), typeof(NetManager), "SimulationStepImpl");
+            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.Update), typeof(NetManager), "SimulationStepImpl");
         }
 
         #endregion
@@ -212,16 +205,11 @@ namespace NodeMarkup
         private void PatchNetSegment(ref bool success)
         {
             success &= Patch_NetSegment_RenderInstance();
-            success &= Patch_NetSegment_UpdateLanes();
         }
         private bool Patch_NetSegment_RenderInstance()
         {
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(int), typeof(NetInfo), typeof(RenderManager.Instance).MakeByRefType() };
             return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetSegmentRenderInstancePostfix), typeof(NetSegment), nameof(NetSegment.RenderInstance), parameters);
-        }
-        private bool Patch_NetSegment_UpdateLanes()
-        {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetSegmentUpdateLanesPostfix), typeof(NetSegment), nameof(NetSegment.UpdateLanes));
         }
 
         #endregion
