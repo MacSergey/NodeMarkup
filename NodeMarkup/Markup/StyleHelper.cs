@@ -149,7 +149,6 @@ namespace NodeMarkup.Manager
 
                 while (nextI < points.Length)
                 {
-                    //var l = (points[nextI] - points[currentI]).magnitude;
                     if (isPart)
                     {
                         partsI.Add(currentI);
