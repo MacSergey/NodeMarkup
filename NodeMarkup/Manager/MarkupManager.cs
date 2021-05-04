@@ -14,8 +14,8 @@ namespace NodeMarkup.Manager
     {
         public static int Errors { get; set; } = 0;
         public static bool HasErrors => Errors != 0;
-        private static ushort[] NodeIds { get; set; }
-        private static ushort[] SegmentIds { get; set; }
+        private static ushort[] NeedUpdateNodeIds { get; set; }
+        private static ushort[] NeedUpdateSegmentIds { get; set; }
 
         public static void Clear()
         {
@@ -32,13 +32,13 @@ namespace NodeMarkup.Manager
 
         public static void GetToUpdate()
         {
-            NodeIds = NetManager.instance.GetUpdateNodes().ToArray();
-            SegmentIds = NetManager.instance.GetUpdateSegments().ToArray();
+            NeedUpdateNodeIds = NetManager.instance.GetUpdateNodes().ToArray();
+            NeedUpdateSegmentIds = NetManager.instance.GetUpdateSegments().ToArray();
         }
         public static void Update()
         {
-            SingletonManager<NodeMarkupManager>.Instance.Update(NodeIds);
-            SingletonManager<SegmentMarkupManager>.Instance.Update(SegmentIds);
+            SingletonManager<NodeMarkupManager>.Instance.Update(NeedUpdateNodeIds);
+            SingletonManager<SegmentMarkupManager>.Instance.Update(NeedUpdateSegmentIds);
         }
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
