@@ -1367,4 +1367,10 @@ Haga clic para editar las marcas</value>
     <value>Seleccione punto final para línea normal o transversal</value>
   </data>
   
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Alineamento de extremo de línea</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Alineamento de inicio de línea</value>
+  </data>
 </root>

@@ -1483,4 +1483,10 @@ Click to edit markings</value>
 - Crosswalk mode no more activate by hold shift when change value by scroll wheel.
 - Set panel default size by double click on panel resizer.</value>
   </data>
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Line end alignment</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Line start alignment</value>
+  </data>
 </root>
