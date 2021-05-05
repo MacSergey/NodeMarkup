@@ -104,15 +104,17 @@ namespace NodeMarkup.UI.Panel
             CreateEditors();
             CreateSizeChanger();
 
-            minimumSize = new Vector2(Width, Header.height + TabStrip.height + 200);
+            minimumSize = GetSize(400);
 
             Active = false;
         }
         public override void Start()
         {
             base.Start();
+
             SetDefaultPosition();
             SetDefaulSize();
+            minimumSize = GetSize(200);
         }
         public override void OnEnable()
         {
@@ -131,7 +133,12 @@ namespace NodeMarkup.UI.Panel
             SingletonMod<Mod>.Logger.Debug($"Set default panel position");
             absolutePosition = DefaultPosition;
         }
-        private void SetDefaulSize() => size = new Vector2(Width, Header.height + TabStrip.height + 400);
+        private void SetDefaulSize()
+        {
+            SingletonMod<Mod>.Logger.Debug($"Set default panel size");
+            size = GetSize(400);
+        }
+        private Vector2 GetSize(float additional) => new Vector2(Width, Header.height + TabStrip.height + additional);
 
         #endregion
 
