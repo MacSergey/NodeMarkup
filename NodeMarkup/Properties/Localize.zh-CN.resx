@@ -121,7 +121,7 @@
     <value>删除{0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>确定要删除 {0} "{1}" 吗?</value>
+    <value>确定要删除 {0} {1} 吗?</value>
   </data>
   <data name="FieldPanel_ScrollWheel" xml:space="preserve">
     <value>使用滚轮改变参数
@@ -325,10 +325,16 @@ Shift x10，Ctrl x0.1</value>
     <value>选择节点或段落以编辑地标线</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>点选终点来创建线</value>
+    <value>选择终止点
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>点选起始点来创建/擦除线段</value>
+    <value>点选起始点
+来创建/擦除线段
++Ctrl 偏移端点
+按住Alt创建填充图案
+按住Shift创建人行横道</value>
   </data>
   <data name="Mod_WhatsNewCaption" xml:space="preserve">
     <value>{0} 版本的新功能</value>
@@ -461,7 +467,7 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>没有模板可选。
-在线段或填充格式上点击 «{0}» 来创建新模板。</value>
+在线段页点击 «{0}» 来创建新模板。</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>使用密钥激活</value>
@@ -570,7 +576,7 @@ Shift x10，Ctrl x0.1</value>
     <value>德语</value>
   </data>
   <data name="Mod_Locale_en" xml:space="preserve">
-    <value>美式英语</value>
+    <value>英语</value>
   </data>
   <data name="Mod_Locale_es" xml:space="preserve">
     <value>西班牙语</value>
@@ -606,7 +612,9 @@ Shift x10，Ctrl x0.1</value>
     <value>语言</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>点击以创建垂直线</value>
+    <value>点击以创建垂直线
++Shift 实线
++Ctrl 双线</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>点击以擦除垂直线</value>
@@ -800,7 +808,8 @@ Shift x10，Ctrl x0.1</value>
     <value>粘贴标记</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>确定要粘贴标记吗?</value>
+    <value>确定要粘贴标记吗?
+粘贴后会清除既存的地标线。</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>人行横道修饰键</value>
@@ -1054,7 +1063,7 @@ Shift x10，Ctrl x0.1</value>
     <value>快速设置人行横道边界</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>标线显示在轨道下方</value>
+    <value>标线显示在轨道下方 (重新载入后有效)</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：此设置会改变游戏渲染顺序</value>
@@ -1256,14 +1265,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>未知作者</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>-改善了加载错误弹窗信息
--纠正及更新了翻译文档</value>
-  </data>
-  <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>导入完毕，但出现了以下错误：
-全部交叉口的地标线导入失败</value>
-  </data>
+  
+  
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>编辑段落 #{0} 的地标线</value>
   </data>
@@ -1345,7 +1348,7 @@ Shift x10，Ctrl x0.1</value>
     <value>更新日志</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>端点整合成组</value>
+    <value>显示节点归类</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
     <value>应用在两个路口之间</value>
