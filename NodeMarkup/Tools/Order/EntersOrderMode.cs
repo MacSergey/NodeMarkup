@@ -9,6 +9,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
@@ -260,7 +261,7 @@ namespace NodeMarkup.Tools
             var dir1 = (points[i] - points[j]).Turn90(true).normalized;
             var dir2 = (points[j] - points[k]).Turn90(true).normalized;
 
-            Line2.Intersect(pos1.XZ(), (pos1 + dir1).XZ(), pos2.XZ(), (pos2 + dir2).XZ(), out float p, out _);
+            Line2.Intersect(XZ(pos1), XZ(pos1 + dir1), XZ(pos2), XZ(pos2 + dir2), out float p, out _);
             var newCentre = pos1 + dir1 * p;
             var newRadius = (newCentre - points[i]).magnitude;
 

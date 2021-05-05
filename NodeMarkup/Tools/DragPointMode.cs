@@ -5,6 +5,7 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
@@ -21,7 +22,7 @@ namespace NodeMarkup.Tools
         {
             var normal = DragPoint.Enter.CornerDir.Turn90(true);
             var position = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
-            Line2.Intersect(DragPoint.Position.XZ(), (DragPoint.Position + DragPoint.Enter.CornerDir).XZ(), position.XZ(), (position + normal).XZ(), out float offsetChange, out _);
+            Line2.Intersect(XZ(DragPoint.Position), XZ(DragPoint.Position + DragPoint.Enter.CornerDir), XZ(position), XZ(position + normal), out float offsetChange, out _);
             DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
             Panel.EditPoint(DragPoint);
         }

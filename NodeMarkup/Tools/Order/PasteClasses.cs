@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
@@ -172,7 +173,7 @@ namespace NodeMarkup.Tools
             var dir = (ZeroPosition - toolMode.Markup.Position).normalized;
             var normal = dir.Turn90(true);
 
-            Line2.Intersect(toolMode.Centre.XZ(), (toolMode.Centre + normal).XZ(), toolMode.Markup.Position.XZ(), (toolMode.Markup.Position + dir).XZ(), out float p, out _);
+            Line2.Intersect(XZ(toolMode.Centre), XZ(toolMode.Centre + normal), XZ(toolMode.Markup.Position), XZ(toolMode.Markup.Position + dir), out float p, out _);
             var point = toolMode.Centre + normal * p;
             var distance = Mathf.Sqrt(Mathf.Pow(toolMode.Radius, 2) - Mathf.Pow(Math.Abs(p), 2));
             return point + dir * distance;

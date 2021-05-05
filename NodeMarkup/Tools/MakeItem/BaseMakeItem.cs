@@ -4,6 +4,7 @@ using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
@@ -41,7 +42,7 @@ namespace NodeMarkup.Tools
             if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
             {
                 var connectLine = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
-                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(SelectPoint.Direction.XZ(), connectLine.XZ()) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(XZ(SelectPoint.Direction), XZ(connectLine)) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
                     return;

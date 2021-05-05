@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
@@ -529,8 +530,8 @@ namespace NodeMarkup.Tools
             var rect = new Rect();
             foreach (var point in points)
             {
-                Line2.Intersect(Markup.Position.XZ(), (Markup.Position + dir).XZ(), point.XZ(), (point + normal).XZ(), out float x, out _);
-                Line2.Intersect(Markup.Position.XZ(), (Markup.Position + normal).XZ(), point.XZ(), (point + dir).XZ(), out float y, out _);
+                Line2.Intersect(XZ(Markup.Position), XZ(Markup.Position + dir), XZ(point), XZ(point + normal), out float x, out _);
+                Line2.Intersect(XZ(Markup.Position), XZ(Markup.Position + normal), XZ(point), XZ(point + dir), out float y, out _);
 
                 Set(ref rect, x, y);
             }

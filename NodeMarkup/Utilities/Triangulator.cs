@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Utilities
 {
     public class Triangulator
     {
-        public static int[] Triangulate(IEnumerable<Vector3> points, PolygonDirection direction) => Triangulate(points.Select(p => p.XZ()), direction);
+        public static int[] Triangulate(IEnumerable<Vector3> points, PolygonDirection direction) => Triangulate(points.Select(p => XZ(p)), direction);
         public static int[] Triangulate(IEnumerable<Vector2> points, PolygonDirection direction)
         {
             var triangulator = new Triangulator(points, direction);

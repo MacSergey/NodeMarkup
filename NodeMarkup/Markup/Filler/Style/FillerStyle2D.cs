@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Manager
 {
@@ -328,7 +329,7 @@ namespace NodeMarkup.Manager
             static Vector3 GetDirection(Vector3 left, Vector3 right, Vector3 straight)
             {
                 var dir = (left + right).normalized;
-                if (Vector2.Angle(left.XZ(), right.XZ()) > 150f || Vector2.Angle(dir.XZ(), straight.XZ()) > 90f)
+                if (Vector2.Angle(XZ(left), XZ(right)) > 150f || Vector2.Angle(XZ(dir), XZ(straight)) > 90f)
                     dir = straight;
 
                 return dir;
@@ -361,7 +362,7 @@ namespace NodeMarkup.Manager
 
             float GetT(Vector3 railPos, Vector3 railDir)
             {
-                Line2.Intersect(pos.XZ(), (pos + dir).XZ(), railPos.XZ(), (railPos + railDir).XZ(), out float p, out _);
+                Line2.Intersect(XZ(pos), XZ(pos + dir), XZ(railPos), XZ(railPos + railDir), out float p, out _);
                 return p;
             }
         }

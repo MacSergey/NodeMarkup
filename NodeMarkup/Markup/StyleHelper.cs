@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Manager
 {
@@ -129,7 +130,7 @@ namespace NodeMarkup.Manager
             var count = (int)(length * 20);
             var points = new Vector2[count + 1];
             for (var i = 0; i <= count; i += 1)
-                points[i] = trajectory.Position(1f / count * i).XZ();
+                points[i] = XZ(trajectory.Position(1f / count * i));
 
             return points;
         }
