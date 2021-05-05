@@ -262,7 +262,10 @@ namespace NodeMarkup.Manager
                 }
 
                 if (line is MarkupCrosswalkLine crosswalkLine)
+                {
+                    crosswalkLine.Crosswalk.Update(true);
                     toRecalculate.Add(crosswalkLine.Crosswalk);
+                }
             }
 
             if (recalculate && !UpdateInProgress)
