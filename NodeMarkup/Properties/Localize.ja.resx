@@ -552,7 +552,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>早期アクセス</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
-    <value>位置揃え</value>
+    <value>位置合わせ</value>
   </data>
   <data name="Mod_BetaWarningAgree" xml:space="preserve">
     <value>同意します</value>
@@ -1333,7 +1333,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>クリップボードから追加</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
-    <value>ラインの位置合わせ</value>
+    <value>拡大したポイントの位置合わせ</value>
   </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
     <value>ポイントを拡大する</value>
