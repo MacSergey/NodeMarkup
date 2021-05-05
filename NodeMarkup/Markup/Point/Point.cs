@@ -114,9 +114,9 @@ namespace NodeMarkup.Manager
         {
             if (IsSplit && alignment != Alignment.Centre)
             {
-                var normal = Direction.Turn90(true);
+                var direction = -Enter.CornerDir / Enter.TranformCoef;
                 var shift = SplitOffsetValue * alignment.Sign();
-                return Position + normal * shift;
+                return Position + direction * shift;
             }
             else
                 return Position;
@@ -175,6 +175,8 @@ namespace NodeMarkup.Manager
 
     public class MarkupEnterPoint : MarkupPoint
     {
+        public static float DefaultSplitOffse => 0.5f;
+
         public override PointType Type => PointType.Enter;
         public override bool IsSplit => Split;
         public override float SplitOffsetValue => SplitOffset;
@@ -186,7 +188,7 @@ namespace NodeMarkup.Manager
         public MarkupEnterPoint(Enter enter, IPointSource source) : base(enter, source)
         {
             Split = new PropertyBoolValue("S", PointChanged, false);
-            SplitOffset = new PropertyStructValue<float>("SO", PointChanged, 0f);
+            SplitOffset = new PropertyStructValue<float>("SO", PointChanged, DefaultSplitOffse);
         }
         public override void UpdateProcess()
         {
@@ -216,7 +218,7 @@ namespace NodeMarkup.Manager
         {
             base.Reset();
             Split.Value = false;
-            SplitOffset.Value = 0f;
+            SplitOffset.Value = DefaultSplitOffse;
         }
         public override void Render(OverlayData data)
         {
@@ -224,7 +226,7 @@ namespace NodeMarkup.Manager
 
             if (Split && data.SplitPoint)
             {
-                var normal = Direction.Turn90(true);
+                var normal = -Enter.CornerDir / Enter.TranformCoef;
 
                 var leftPos = Position - normal * SplitOffset - Direction;
                 var rightPos = Position + normal * SplitOffset - Direction;
@@ -243,7 +245,7 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map);
             Split.FromXml(config, false);
-            SplitOffset.FromXml(config, 0);
+            SplitOffset.FromXml(config, DefaultSplitOffse);
         }
         public override XElement ToXml()
         {

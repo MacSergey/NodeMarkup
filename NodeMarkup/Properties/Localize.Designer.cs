@@ -841,11 +841,29 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Line end alignment.
+        /// </summary>
+        public static string LineEditor_LineEndAlignment {
+            get {
+                return ResourceManager.GetString("LineEditor_LineEndAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Lines.
         /// </summary>
         public static string LineEditor_Lines {
             get {
                 return ResourceManager.GetString("LineEditor_Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Line start alignment.
+        /// </summary>
+        public static string LineEditor_LineStartAlignment {
+            get {
+                return ResourceManager.GetString("LineEditor_LineStartAlignment", resourceCulture);
             }
         }
         

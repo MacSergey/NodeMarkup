@@ -35,7 +35,7 @@ namespace NodeMarkup.UI.Editors
         public bool SupportRules => EditObject is MarkupRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
-        public bool IsSplit => SupportRules && EditObject.PointPair.IsSplit;
+        public bool IsSplit => EditObject.PointPair.IsSplit;
 
         private RuleEdgeSelectPropertyPanel HoverPartEdgePanel { get; set; }
         private RulePanel HoverRulePanel { get; set; }
@@ -84,6 +84,7 @@ namespace NodeMarkup.UI.Editors
             base.OnClear();
             HoverRulePanel = null;
             LineProperties = null;
+            LinePropertiesVisibleAction = null;
             AddButton = null;
         }
         private void GetRuleEdges(MarkupLine editObject)
@@ -91,6 +92,7 @@ namespace NodeMarkup.UI.Editors
             SupportPoints.Clear();
             SupportPoints.AddRange(editObject.RulesEdges);
         }
+        Action LinePropertiesVisibleAction { get; set; }
         private void AddLineProperties(MarkupLine editObject)
         {
 
@@ -99,15 +101,35 @@ namespace NodeMarkup.UI.Editors
 
             if (editObject is MarkupRegularLine line)
             {
-                var lineAlignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
-                lineAlignment.Text = NodeMarkup.Localize.LineEditor_LineAlignment;
-                lineAlignment.Init();
-                lineAlignment.SelectedObject = line.RawAlignment;
-                lineAlignment.OnSelectObjectChanged += (value) => line.RawAlignment.Value = value;
+                AddAlignmentProperty(line.RawAlignment, NodeMarkup.Localize.LineEditor_LineAlignment);
+                LinePropertiesVisibleAction = () => LineProperties.isVisible = IsSplit;
+            }
+            else if (editObject is MarkupStopLine stopLine)
+            {
+                var start = AddAlignmentProperty(stopLine.RawStartAlignment, NodeMarkup.Localize.LineEditor_LineStartAlignment);
+                var end = AddAlignmentProperty(stopLine.RawEndAlignment, NodeMarkup.Localize.LineEditor_LineEndAlignment);
+                LinePropertiesVisibleAction = () =>
+                {
+                    LineProperties.isVisible = IsSplit;
+                    start.isVisible = stopLine.Start.IsSplit;
+                    end.isVisible = stopLine.End.IsSplit;
+                };
             }
 
             SetLinePropertiesVisible();
         }
+        private LineAlignmentPropertyPanel AddAlignmentProperty(PropertyEnumValue<Alignment> property, string label)
+        {
+            var alignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
+
+            alignment.Text = label;
+            alignment.Init();
+            alignment.SelectedObject = property;
+            alignment.OnSelectObjectChanged += (value) => property.Value = value;
+
+            return alignment;
+        }
+
         private void AddRulePanels(MarkupLine editObject)
         {
             foreach (var rule in editObject.Rules)
@@ -137,7 +159,7 @@ namespace NodeMarkup.UI.Editors
             AddButton.OnButtonClick += AddRule;
             SetAddButtonVisible();
         }
-        private void SetLinePropertiesVisible() => LineProperties.isVisible = IsSplit;
+        private void SetLinePropertiesVisible() => LinePropertiesVisibleAction?.Invoke();
         private void SetAddButtonVisible()
         {
             AddButton.zOrder = -1;
