@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Editors
 
             foreach (var template in templates)
             {
-                var item = Content.AddUIComponent<TemplatePopupItem>();
+                var item = ComponentPool.Get<TemplatePopupItem>(Content);
                 item.Init(template);
                 item.eventClick += ItemClick;
             }
