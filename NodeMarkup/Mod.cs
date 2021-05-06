@@ -31,6 +31,7 @@ namespace NodeMarkup
         protected override string IdRaw => nameof(NodeMarkup);
         public override List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.7.1"),
             new Version("1.7"),
             new Version("1.6"),
             new Version("1.5.3"),
@@ -59,7 +60,7 @@ namespace NodeMarkup
 #if BETA
         public override bool IsBeta => true;
 #else
-        protected override bool ModIsBeta => false;
+        public override bool IsBeta => false;
 #endif
         #endregion
 

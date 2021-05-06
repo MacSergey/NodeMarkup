@@ -1563,6 +1563,21 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added the ability to set alignment for stop lines.
+        ///- Additional templates sort: 
+        ///	1 - Default templates sorted by type
+        ///	2 - Other tempates sorted by type then by name
+        ///	3 - Other author templates sort by author name then by type then by name
+        ///- Fix load segment presets.
+        ///- Fix default panel size..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_7_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_7_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Look for actual beta change log on Discord.
         /// </summary>
         public static string Mod_WhatsNewMessageBeta {

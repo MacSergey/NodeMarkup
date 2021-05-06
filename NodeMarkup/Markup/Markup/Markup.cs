@@ -26,7 +26,7 @@ namespace NodeMarkup.Manager
         public abstract string XmlSection { get; }
         public abstract string PanelCaption { get; }
 
-        protected List<Enter> RowEntersList { get; set; } = new List<Enter>();
+        protected List<Enter> RawEntersList { get; set; } = new List<Enter>();
         protected List<Enter> EntersList { get; set; } = new List<Enter>();
         protected Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
         protected Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
@@ -100,7 +100,7 @@ namespace NodeMarkup.Manager
         {
             Position = GetPosition();
 
-            var oldEnters = RowEntersList;
+            var oldEnters = RawEntersList;
             var before = oldEnters.Select(e => e.Id).ToArray();
             var after = GetEnters().ToArray();
 
@@ -120,8 +120,8 @@ namespace NodeMarkup.Manager
 
             UpdateBackup(delete, add, changed, oldEnters, newEnters);
 
-            RowEntersList = newEnters;
-            EntersList = RowEntersList.Where(e => e.PointCount != 0).ToList();
+            RawEntersList = newEnters;
+            EntersList = RawEntersList.Where(e => e.PointCount != 0).ToList();
 
             UpdateRadius();
             UpdateEntersProcess();
@@ -156,7 +156,7 @@ namespace NodeMarkup.Manager
                 return;
 
             var currentData = ToXml();
-            RowEntersList = newEnters;
+            RawEntersList = newEnters;
             Clear();
             FromXml(SingletonMod<Mod>.Version, currentData, map);
         }
@@ -537,10 +537,10 @@ namespace NodeMarkup.Manager
 
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {
-            enter = RowEntersList.Find(e => e.Id == enterId);
+            enter = RawEntersList.Find(e => e.Id == enterId);
             return enter != null;
         }
-        public bool ContainsEnter(ushort enterId) => RowEntersList.Find(e => e.Id == enterId) != null;
+        public bool ContainsEnter(ushort enterId) => RawEntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
         public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false)
@@ -665,7 +665,7 @@ namespace NodeMarkup.Manager
 
         #endregion
 
-        public override string ToString() => $"{Id}:{RowEntersList.Count}";
+        public override string ToString() => $"{Id}:{RawEntersList.Count}";
 
         public enum Item
         {
