@@ -1379,4 +1379,5 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>拡大したポイント（始点）の位置合わせ</value>
   </data>
+  
 </root>

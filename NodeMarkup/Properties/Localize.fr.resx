@@ -1374,4 +1374,5 @@ Cliquez pour modifier le marquage</value>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alignement du début de la ligne</value>
   </data>
+  
 </root>

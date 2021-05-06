@@ -1400,4 +1400,5 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>线段起点对齐</value>
   </data>
+  
 </root>
