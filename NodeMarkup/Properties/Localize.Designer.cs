@@ -1566,7 +1566,7 @@ namespace NodeMarkup {
         ///   Ищет локализованную строку, похожую на - Added the ability to set alignment for stop lines.
         ///- Additional templates sort: 
         ///	1 - Default templates sorted by type
-        ///	2 - Other tempates sorted by type then by name
+        ///	2 - Other templates sorted by type then by name
         ///	3 - Other author templates sort by author name then by type then by name
         ///- Fix load segment presets.
         ///- Fix default panel size..
