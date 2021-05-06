@@ -22,6 +22,11 @@ namespace NodeMarkup.Manager
             SingletonManager<NodeMarkupManager>.Instance.Clear();
             SingletonManager<SegmentMarkupManager>.Instance.Clear();
         }
+        public static void Destroy()
+        {
+            SingletonManager<NodeMarkupManager>.Destroy();
+            SingletonManager<SegmentMarkupManager>.Destroy();
+        }
 
         public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonManager<NodeMarkupManager>.Instance.Render(cameraInfo, nodeID, ref data);
 
@@ -51,7 +56,11 @@ namespace NodeMarkup.Manager
                 info.m_segmentMaterial.renderQueue = 2470;
         }
 
-        public static void Import(XElement config) => FromXml(config, new Utilities.ObjectsMap());
+        public static void Import(XElement config)
+        {
+            Clear();
+            FromXml(config, new Utilities.ObjectsMap());
+        }
         public static XElement ToXml()
         {
             var config = new XElement(nameof(NodeMarkup));
@@ -64,11 +73,8 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static void FromXml(XElement config, Utilities.ObjectsMap map, bool clear = true)
+        public static void FromXml(XElement config, Utilities.ObjectsMap map)
         {
-            if (clear)
-                Clear();
-
             Errors = 0;
 
             var version = GetVersion(config);
@@ -210,6 +216,11 @@ namespace NodeMarkup.Manager
     }
     public class NodeMarkupManager : MarkupManager<NodeMarkup>
     {
+        public NodeMarkupManager()
+        {
+            SingletonMod<Mod>.Logger.Debug("Create node markup manager");
+        }
+
         protected override NodeMarkup NewMarkup(ushort id) => new NodeMarkup(id);
         protected override MarkupType Type => MarkupType.Node;
         protected override string XmlName => NodeMarkup.XmlName;
@@ -218,6 +229,11 @@ namespace NodeMarkup.Manager
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
+        public SegmentMarkupManager()
+        {
+            SingletonMod<Mod>.Logger.Debug("Create segment markup manager");
+        }
+
         protected override SegmentMarkup NewMarkup(ushort id) => new SegmentMarkup(id);
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;

@@ -21,6 +21,6 @@ namespace NodeMarkup
         protected override Utilities.ObjectsMap CreateMap(bool isSimple) => new Utilities.ObjectsMap(isSimple: isSimple);
         protected override XElement GetConfig() => MarkupManager.ToXml();
 
-        protected override void PlaceAsset(XElement config, Utilities.ObjectsMap map) => MarkupManager.FromXml(config, map, false);
+        protected override void PlaceAsset(XElement config, Utilities.ObjectsMap map) => MarkupManager.FromXml(config, map);
     }
 }

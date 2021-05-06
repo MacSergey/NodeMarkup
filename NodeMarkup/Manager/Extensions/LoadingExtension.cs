@@ -15,5 +15,10 @@ namespace NodeMarkup
 
             base.OnLoad();
         }
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            MarkupManager.Destroy();
+        }
     }
 }
