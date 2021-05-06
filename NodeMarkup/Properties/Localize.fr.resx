@@ -1368,4 +1368,10 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un point de fin pour une ligne ou ligne de stop</value>
   </data>
   
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Alignement de l'extrémité de la ligne</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Alignement du début de la ligne</value>
+  </data>
 </root>

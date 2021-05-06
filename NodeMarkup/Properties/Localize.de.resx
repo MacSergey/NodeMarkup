@@ -1430,4 +1430,10 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen</value>
   </data>
   
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Ausrichtung des Linien-Endes</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Ausrichtung des Linien-Starts</value>
+  </data>
 </root>

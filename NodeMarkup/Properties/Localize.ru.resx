@@ -1484,4 +1484,10 @@ Shift X10, Ctrl X0.1</value>
 - Инструмент больше не переключается на режим создания перехода, если вы удерживаете shift во время изменения значений при помощи колесика мышки.
 - Сброс размера панели до стандартного значения по двойному нажатию на курсор изменения размера панели.</value>
   </data>
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Вырав. конца линии</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Вырав. начала линии</value>
+  </data>
 </root>

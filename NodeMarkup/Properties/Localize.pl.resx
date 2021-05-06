@@ -1369,4 +1369,10 @@ Kliknij aby edytować oznaczenia</value>
     <value>Wybierz punkt końcowy dla linii zwykłej lub zatrzymania</value>
   </data>
   
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Wyrównanie końca linii</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Wyrównanie początku linii</value>
+  </data>
 </root>

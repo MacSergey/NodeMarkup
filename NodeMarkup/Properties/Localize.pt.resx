@@ -1378,4 +1378,10 @@ Clique para editar marcações</value>
     <value>Selecione um ponto próprio para uma linha normal ou de paragem</value>
   </data>
   
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Alinhamento do fim da linha</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Alinhamento do inicio da linha</value>
+  </data>
 </root>

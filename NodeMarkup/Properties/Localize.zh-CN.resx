@@ -1394,4 +1394,10 @@ Shift x10，Ctrl x0.1</value>
 - 修复了按住shift同时用滚轮改变参数时误激活人行道模式的错误
 - 现可双击改变面板大小按钮来恢复默认大小</value>
   </data>
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>线段终点对齐</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>线段起点对齐</value>
+  </data>
 </root>
