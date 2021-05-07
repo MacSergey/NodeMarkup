@@ -388,7 +388,7 @@ namespace NodeMarkup.Manager
         public void Render(OverlayData data)
         {
             foreach (var trajectory in TrajectoriesRaw)
-                trajectory.Render(data);
+                trajectory?.Render(data);
         }
 
         private class Comparer : IEqualityComparer<IFillerVertex>
