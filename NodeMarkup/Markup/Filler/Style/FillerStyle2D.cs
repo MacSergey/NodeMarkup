@@ -64,7 +64,7 @@ namespace NodeMarkup.Manager
         protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour);
         protected Rect GetRect(ITrajectory[] contour)
         {
-            var firstPos = contour.Any() ? contour[0].StartPosition : default;
+            var firstPos = contour.FirstOrDefault(t => t != null)?.StartPosition ?? default;
             var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
 
             foreach (var trajectory in contour)
