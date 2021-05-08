@@ -60,7 +60,7 @@ namespace NodeMarkup.Tools
                 {
                     foreach(var part in Contour.RawParts)
                     {
-                        if(part.Line is MarkupRegularLine line && !Markup.ContainsLine(line.PointPair))
+                        if(part.Line is MarkupFillerTempLine line)
                         {
                             var newLine = Markup.AddRegularLine(part.Line.PointPair, null, line.Alignment);
                             Panel.AddLine(newLine);

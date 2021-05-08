@@ -121,7 +121,7 @@ namespace NodeMarkup.Manager
                             if (!Markup.TryGetLine(lastEnterVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
                             {
                                 var alignment = lastEnterVertex.Point.IsSplit ? lastEnterVertex.Alignment : newEnterVertex.Alignment.Invert();
-                                line = new MarkupRegularLine(Markup, lastEnterVertex.Point, newEnterVertex.Point, alignment: alignment);
+                                line = new MarkupFillerTempLine(Markup, lastEnterVertex.Point, newEnterVertex.Point, alignment);
                             }
                             SupportPoints.Remove(lastEnterVertex);
                             SupportPoints.Add(FixPointByLine(lastEnterVertex, line));
@@ -135,7 +135,7 @@ namespace NodeMarkup.Manager
                             if (!Markup.TryGetLine(lastLineEndVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
                             {
                                 var alignment = lastLineEndVertex.Point.IsSplit ? lastLineEndVertex.Alignment : newEnterVertex.Alignment.Invert();
-                                line = new MarkupRegularLine(Markup, lastLineEndVertex.Point, newEnterVertex.Point, alignment: alignment);
+                                line = new MarkupFillerTempLine(Markup, lastLineEndVertex.Point, newEnterVertex.Point, alignment: alignment);
                             }
                             if (Prev is not LineEndFillerVertex prevLineEndVertex || prevLineEndVertex.Point != lastLineEndVertex.Point)
                                 SupportPoints.Add(FixPointByLine(lastLineEndVertex, line));
@@ -380,7 +380,7 @@ namespace NodeMarkup.Manager
             {
                 var vertex1 = SupportPoints[i];
                 var vertex2 = SupportPoints[(i + 1) % VertexCount];
-                if (vertex1 is not LineEndFillerVertex lineEnd1 || vertex2 is not LineEndFillerVertex lineEnd2 || lineEnd1.Point != lineEnd2.Point || (isRaw && lineEnd1.Alignment != lineEnd2.Alignment))
+                if (vertex1 is not LineEndFillerVertex lineEnd1 || vertex2 is not LineEndFillerVertex lineEnd2 || lineEnd1.Point != lineEnd2.Point || isRaw)
                     yield return GetFillerLine(vertex1, vertex2);
             }
         }

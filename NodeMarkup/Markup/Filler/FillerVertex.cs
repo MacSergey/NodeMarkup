@@ -89,7 +89,7 @@ namespace NodeMarkup.Manager
             EnterFillerVertexBase otherE when Enter == otherE.Enter => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
             EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line => line,
             EnterFillerVertexBase otherE when Enter.Markup.EntersCount > 2 && ((Enter.Next == otherE.Enter && Point.IsLast && otherE.Point.IsFirst) || (Enter.Prev == otherE.Enter && Point.IsFirst && otherE.Point.IsLast)) => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
-            EnterFillerVertexBase otherE => new MarkupRegularLine(Point.Markup, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
+            EnterFillerVertexBase otherE => new MarkupFillerTempLine(Point.Markup, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
             IntersectFillerVertex otherI => otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second,
             _ => null,
         };
@@ -173,7 +173,7 @@ namespace NodeMarkup.Manager
 
                         foreach (var alignment in alignments)
                         {
-                            line = new MarkupRegularLine(point.Markup, Point, point, alignment: alignment);
+                            line = new MarkupFillerTempLine(point.Markup, Point, point, alignment: alignment);
                             contour.GetMinMaxT(this, line, out float t, out float minT, out float maxT);
                             if ((t == 0f && maxT >= 1f) || (t == 1f && minT <= 0f))
                                 yield return new EnterFillerVertex(point, alignment.Invert());
@@ -200,12 +200,20 @@ namespace NodeMarkup.Manager
     {
         public override Alignment Alignment => Line?.GetAlignment(Point) ?? Alignment.Centre;
         public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
-        public MarkupRegularLine Line { get; }
+        public MarkupRegularLine Line { get; private set; }
         public LineEndFillerVertex(MarkupPoint point, MarkupRegularLine line) : base(point)
         {
             Line = line;
             Update();
         }
+        public override void Update()
+        {
+            if (Line is MarkupFillerTempLine && Point.Markup.TryGetLine<MarkupRegularLine>(Line.PointPair, out var regularLine))
+                Line = regularLine;
+
+            base.Update();
+        }
+
         public override string ToString() => $"{Point} ({Line}) - {Alignment}";
 
         public override XElement ToXml()
