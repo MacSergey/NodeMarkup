@@ -66,6 +66,7 @@ namespace NodeMarkup.Tools
                             Panel.AddLine(newLine);
                         }    
                     }
+                    Contour.Update();
 
                     var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
                     var filler = new MarkupFiller(Contour, style);
