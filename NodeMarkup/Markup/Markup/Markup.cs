@@ -41,6 +41,7 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
 
+        public int EntersCount => EntersList.Count;
         public int LinesCount => LinesDictionary.Count;
         public int CrosswalksCount => CrosswalksDictionary.Count;
         public int FillersCount => FillersList.Count;

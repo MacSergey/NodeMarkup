@@ -311,6 +311,7 @@ namespace NodeMarkup.UI.Panel
 
         public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
         public void DeleteCrosswalk(MarkupCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+        public void DeleteFiller(MarkupFiller filler) => DeleteObject<FillerEditor, MarkupFiller>(filler);
 
         #endregion
 
