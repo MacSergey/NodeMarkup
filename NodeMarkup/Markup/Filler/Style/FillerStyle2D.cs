@@ -128,15 +128,9 @@ namespace NodeMarkup.Manager
         {
             foreach (var part in StyleHelper.CalculateDashesBezierT(rail, dash, space, 1))
             {
-                var startI = GetI(part.Start);
-                var endI = GetI(part.End);
+                var startI = Math.Min((int)part.Start, rail.Count - 1);
+                var endI = Math.Min((int)part.End, rail.Count - 1);
                 yield return new StraightTrajectory(rail[startI].Position(part.Start - startI), rail[endI].Position(part.End - endI));
-            }
-
-            static int GetI(float t)
-            {
-                var i = (int)t;
-                return i > 0 && i == t ? i - 1 : i;
             }
         }
         protected void GetItemParams(ref float width, float angle, MarkupLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
