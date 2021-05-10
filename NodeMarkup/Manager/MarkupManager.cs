@@ -126,7 +126,7 @@ namespace NodeMarkup.Manager
             {
                 if (Markups.TryGetValue(id, out TypeMarkup markup))
                 {
-                    try { throw new Exception(); }
+                    try { markup.Update(); }
                     catch (Exception error) { SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{markup.Id}", error); }
                 }
             }
