@@ -12,6 +12,10 @@ namespace NodeMarkup.Manager
         List<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
         IFillerVertex ProcessedVertex { get; }
     }
+    public interface IFillerLineVertex : IFillerVertex
+    {
+        bool Contains(MarkupLine line);
+    }
     public static class FillerVertex
     {
         public static string XmlName { get; } = "V";
@@ -202,7 +206,7 @@ namespace NodeMarkup.Manager
             Update();
         }
     }
-    public class LineEndFillerVertex : EnterFillerVertexBase
+    public class LineEndFillerVertex : EnterFillerVertexBase, IFillerLineVertex
     {
         public override Alignment Alignment => Line?.GetAlignment(Point) ?? Alignment.Centre;
         public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
@@ -219,6 +223,8 @@ namespace NodeMarkup.Manager
 
             base.Update();
         }
+        public bool Contains(MarkupLine line) => Line == line;
+        public override bool Equals(EnterSupportPoint other) => base.Equals(other) && other is LineEndFillerVertex lineEndVertex && lineEndVertex.Line == Line;
 
         public override string ToString() => $"{Point} ({Line}) - {Alignment}";
 
@@ -230,7 +236,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex
+    public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex, IFillerLineVertex
     {
         public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out IntersectFillerVertex linePoint)
         {
@@ -280,6 +286,8 @@ namespace NodeMarkup.Manager
             points.AddRange(contour.GetLinePoints(this, Second));
             return points;
         }
+
+        public bool Contains(MarkupLine line) => LinePair.ContainLine(line);
 
         public override XElement ToXml()
         {
