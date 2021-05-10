@@ -150,7 +150,10 @@ namespace NodeMarkup.Manager
                 foreach (var point in enter.Points)
                 {
                     if (point.Markup.TryGetLine(Point, point, out MarkupRegularLine line))
-                        points.AddRange(contour.GetLinePoints(this, line));
+                    {
+                        if (!Point.IsSplit || line.GetAlignment(Point) == Alignment)
+                            points.AddRange(contour.GetLinePoints(this, line));
+                    }
                     else
                     {
                         var alignments = new List<Alignment>();
