@@ -124,17 +124,10 @@ namespace NodeMarkup.Manager
         {
             foreach (var id in ids)
             {
-
                 if (Markups.TryGetValue(id, out TypeMarkup markup))
                 {
-                    try
-                    {
-                        markup.Update();
-                    }
-                    catch (Exception error)
-                    {
-                        SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{markup.Id}", error);
-                    }
+                    try { throw new Exception(); }
+                    catch (Exception error) { SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{markup.Id}", error); }
                 }
             }
         }
