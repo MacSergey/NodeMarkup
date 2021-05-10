@@ -133,7 +133,7 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            if (contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Num == minNum || first.Point.Num == maxNum))
+            if (contour.PossibleComplite && contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Num == minNum || first.Point.Num == maxNum))
                 points.Add(first);
 
             return points;

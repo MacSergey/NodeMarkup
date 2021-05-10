@@ -45,8 +45,9 @@ namespace NodeMarkup.Manager
 
         public IEnumerable<IFillerVertex> RawVertices => SupportPoints;
         public IFillerVertex[] ProcessedVertex { get; private set; } = new IFillerVertex[0];
-        private int VertexCount => SupportPoints.Count;
+        public int VertexCount => SupportPoints.Count;
         public bool IsEmpty => VertexCount == 0;
+        public bool PossibleComplite => VertexCount >= 3;
 
         public FillerLinePart[] RawParts { get; private set; } = new FillerLinePart[0];
         public FillerLinePart[] ProcessedParts { get; private set; } = new FillerLinePart[0];
@@ -156,7 +157,7 @@ namespace NodeMarkup.Manager
                     break;
             }
 
-            if (VertexCount >= 3 && newPoint.Equals(First))
+            if (PossibleComplite && newPoint.Equals(First))
                 IsComplite = true;
 
             if (!IsComplite || Last is not EnterFillerVertexBase lastVertex || newPoint is not EnterFillerVertexBase newVertex || newVertex.Enter != lastVertex.Enter)
