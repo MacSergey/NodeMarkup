@@ -60,6 +60,7 @@ namespace NodeMarkup.Manager
                 trajectory.Render(data);
         }
 
+        public override string ToString() => $"From [{From}] To [{To}]";
         public virtual XElement ToXml()
         {
             var config = new XElement(XmlSection);

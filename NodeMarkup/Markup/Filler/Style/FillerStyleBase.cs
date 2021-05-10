@@ -69,8 +69,8 @@ namespace NodeMarkup.Manager
 
         public ITrajectory[] SetMedianOffset(MarkupFiller filler)
         {
-            var lineParts = filler.Contour.RawParts.ToArray();
-            var trajectories = filler.Contour.TrajectoriesRaw.ToArray();
+            var lineParts = filler.Contour.RawParts;
+            var trajectories = filler.Contour.TrajectoriesRaw;
 
             for (var i = 0; i < lineParts.Length; i += 1)
             {

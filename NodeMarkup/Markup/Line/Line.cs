@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
         public Dependences GetDependences() => Markup.GetLineDependences(this);
         public bool IsStart(MarkupPoint point) => Start == point;
         public bool IsEnd(MarkupPoint point) => End == point;
-        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainsPoint(point) ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
+        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainsPoint(point) && point.IsSplit ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
 
 
         public virtual XElement ToXml()

@@ -9,7 +9,7 @@ namespace NodeMarkup.Manager
     public interface IFillerVertex : ISupportPoint
     {
         MarkupLine GetCommonLine(IFillerVertex other);
-        IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
+        List<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
         IFillerVertex ProcessedVertex { get; }
     }
     public static class FillerVertex
@@ -59,7 +59,7 @@ namespace NodeMarkup.Manager
 
         public EnterFillerVertexBase(MarkupPoint point) : base(point) { }
         public override void Update() => Init(Point.GetPosition(Alignment));
-        public override bool Equals(EnterSupportPoint other) => base.Equals(other) && (other is not EnterFillerVertexBase otherVertex || otherVertex.Alignment == Alignment);
+        public override bool Equals(EnterSupportPoint other) => base.Equals(other) && (!Point.IsSplit || other is not EnterFillerVertexBase otherVertex || otherVertex.Alignment == Alignment);
 
         public override bool GetT(MarkupLine line, out float t)
         {
@@ -94,16 +94,16 @@ namespace NodeMarkup.Manager
             _ => null,
         };
 
-        public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
+        public List<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
-            foreach (var vertex in GetEnterOtherPoints(contour, prev))
-                yield return vertex;
-
-            foreach (var vertex in GetPointLinesPoints(contour))
-                yield return vertex;
+            var points = new List<IFillerVertex>();
+            points.AddRange(GetEnterOtherPoints(contour, prev));
+            points.AddRange(GetPointLinesPoints(contour));
+            return points;
         }
-        private IEnumerable<IFillerVertex> GetEnterOtherPoints(FillerContour contour, IFillerVertex prev)
+        private List<IFillerVertex> GetEnterOtherPoints(FillerContour contour, IFillerVertex prev)
         {
+            var points = new List<IFillerVertex>();
             contour.GetMinMaxNum(Point, out byte minNum, out byte maxNum);
 
             if (prev is not EnterFillerVertexBase prevE || Enter != prevE.Point.Enter)
@@ -114,11 +114,11 @@ namespace NodeMarkup.Manager
                     {
                         if (point != Point)
                         {
-                            yield return new EnterFillerVertex(point);
+                            points.Add(new EnterFillerVertex(point));
                             if (point.IsSplit)
                             {
-                                yield return new EnterFillerVertex(point, Alignment.Left);
-                                yield return new EnterFillerVertex(point, Alignment.Right);
+                                points.Add(new EnterFillerVertex(point, Alignment.Left));
+                                points.Add(new EnterFillerVertex(point, Alignment.Right));
                             }
                         }
                         else if (Point.IsSplit)
@@ -126,7 +126,7 @@ namespace NodeMarkup.Manager
                             foreach (var alingment in EnumExtension.GetEnumValues<Alignment>())
                             {
                                 if (alingment != Alignment)
-                                    yield return new EnterFillerVertex(point, alingment);
+                                    points.Add(new EnterFillerVertex(point, alingment));
                             }
                         }
                     }
@@ -134,10 +134,14 @@ namespace NodeMarkup.Manager
             }
 
             if (contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Num == minNum || first.Point.Num == maxNum))
-                yield return first;
+                points.Add(first);
+
+            return points;
         }
-        private IEnumerable<IFillerVertex> GetPointLinesPoints(FillerContour contour)
+        private List<IFillerVertex> GetPointLinesPoints(FillerContour contour)
         {
+            var points = new List<IFillerVertex>();
+
             foreach (var enter in Point.Markup.Enters)
             {
                 if (enter == Point.Enter)
@@ -146,10 +150,7 @@ namespace NodeMarkup.Manager
                 foreach (var point in enter.Points)
                 {
                     if (point.Markup.TryGetLine(Point, point, out MarkupRegularLine line))
-                    {
-                        foreach (var vertex in contour.GetLinePoints(this, line))
-                            yield return vertex;
-                    }
+                        points.AddRange(contour.GetLinePoints(this, line));
                     else
                     {
                         var alignments = new List<Alignment>();
@@ -176,11 +177,13 @@ namespace NodeMarkup.Manager
                             line = new MarkupFillerTempLine(point.Markup, Point, point, alignment: alignment);
                             contour.GetMinMaxT(this, line, out float t, out float minT, out float maxT);
                             if ((t == 0f && maxT >= 1f) || (t == 1f && minT <= 0f))
-                                yield return new EnterFillerVertex(point, alignment.Invert());
+                                points.Add(new EnterFillerVertex(point, alignment.Invert()));
                         }
                     }
                 }
             }
+
+            return points;
         }
         public override int GetHashCode() => Point.GetHashCode();
         public override string ToString() => $"{Point} - {Alignment}";
@@ -258,7 +261,7 @@ namespace NodeMarkup.Manager
             };
         }
 
-        public IEnumerable<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
+        public List<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev)
         {
             return prev switch
             {
@@ -267,13 +270,12 @@ namespace NodeMarkup.Manager
                 _ => GetNextEmptyCandidates(contour),
             };
         }
-        private IEnumerable<IFillerVertex> GetNextEmptyCandidates(FillerContour contour)
+        private List<IFillerVertex> GetNextEmptyCandidates(FillerContour contour)
         {
-            foreach (var vertex in contour.GetLinePoints(this, First))
-                yield return vertex;
-
-            foreach (var vertex in contour.GetLinePoints(this, Second))
-                yield return vertex;
+            var points = new List<IFillerVertex>();
+            points.AddRange(contour.GetLinePoints(this, First));
+            points.AddRange(contour.GetLinePoints(this, Second));
+            return points;
         }
 
         public override XElement ToXml()

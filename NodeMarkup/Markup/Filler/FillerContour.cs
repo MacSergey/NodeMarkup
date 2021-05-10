@@ -10,23 +10,27 @@ namespace NodeMarkup.Manager
     public class FillerContour : IOverlay
     {
         private static Comparer VertexComparer { get; } = new Comparer();
-        public static IEnumerable<IFillerVertex> GetBeginCandidates(Markup markup)
+        public static List<IFillerVertex> GetBeginCandidates(Markup markup)
         {
+            var points = new List<IFillerVertex>();
+
             foreach (var intersect in markup.Intersects)
-                yield return new IntersectFillerVertex(intersect.Pair);
+                points.Add(new IntersectFillerVertex(intersect.Pair));
 
             foreach (var enter in markup.Enters)
             {
                 foreach (var point in enter.Points)
                 {
-                    yield return new EnterFillerVertex(point, Alignment.Centre);
+                    points.Add(new EnterFillerVertex(point, Alignment.Centre));
                     if (point.IsSplit)
                     {
-                        yield return new EnterFillerVertex(point, Alignment.Left);
-                        yield return new EnterFillerVertex(point, Alignment.Right);
+                        points.Add(new EnterFillerVertex(point, Alignment.Left));
+                        points.Add(new EnterFillerVertex(point, Alignment.Right));
                     }
                 }
             }
+
+            return points;
         }
 
         public Markup Markup { get; }
@@ -49,8 +53,8 @@ namespace NodeMarkup.Manager
         public int RawCount => RawParts.Length;
         public int ProcessedCount => ProcessedParts.Length;
 
-        public IEnumerable<ITrajectory> TrajectoriesRaw => GetTrajectories(RawParts);
-        public IEnumerable<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
+        public List<ITrajectory> TrajectoriesRaw => GetTrajectories(RawParts);
+        public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
 
         public bool IsMedian
         {
@@ -94,9 +98,9 @@ namespace NodeMarkup.Manager
             {
                 if (First is EnterFillerVertexBase firstEnter && Last is EnterFillerVertexBase lastEnter && firstEnter.Enter == lastEnter.Enter)
                 {
-                    if(Prev is EnterFillerVertexBase prevEnter && prevEnter.Enter == lastEnter.Enter)
+                    if (Prev is EnterFillerVertexBase prevEnter && prevEnter.Enter == lastEnter.Enter)
                         SupportPoints.Remove(lastEnter);
-                    else if(Second is EnterFillerVertexBase secondEnter && firstEnter.Enter == secondEnter.Enter)
+                    else if (Second is EnterFillerVertexBase secondEnter && firstEnter.Enter == secondEnter.Enter)
                         SupportPoints.Remove(firstEnter);
                 }
 
@@ -191,7 +195,7 @@ namespace NodeMarkup.Manager
             var linePart = new FillerLinePart(line, first, second);
             return linePart;
         }
-        public IEnumerable<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
+        public List<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
 
         public void GetMinMaxT(IFillerVertex fillerVertex, MarkupLine line, out float resultT, out float resultMinT, out float resultMaxT)
         {
@@ -283,43 +287,46 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public IEnumerable<IFillerVertex> GetLinePoints(IFillerVertex fillerVertex, MarkupLine line)
+        public List<IFillerVertex> GetLinePoints(IFillerVertex fillerVertex, MarkupLine line)
         {
+            var points = new List<IFillerVertex>();
             GetMinMaxT(fillerVertex, line, out float t, out float minT, out float maxT);
 
             foreach (var intersectLine in line.IntersectLines)
             {
                 var vertex = new IntersectFillerVertex(line, intersectLine);
                 if (vertex.GetT(line, out float tt) && tt != t && minT < tt && tt < maxT)
-                    yield return vertex;
+                    points.Add(vertex);
             }
 
             switch (First)
             {
                 case EnterFillerVertex firstE when line.ContainsPoint(firstE.Point) && ((line.IsStart(firstE.Point) && minT == 0) || (line.IsEnd(firstE.Point) && maxT == 1)):
-                    yield return firstE;
+                    points.Add(firstE);
                     break;
                 case IntersectFillerVertex firstI when firstI.LinePair.ContainLine(line) && firstI.GetT(line, out float firstT) && (firstT == minT || firstT == maxT):
-                    yield return firstI;
+                    points.Add(firstI);
                     break;
             }
 
             if (line.Start.Type == MarkupPoint.PointType.Enter && t != 0 && minT < 0 && 0 < maxT)
-                yield return new EnterFillerVertex(line.Start, line.GetAlignment(line.Start));
+                points.Add(new EnterFillerVertex(line.Start, line.GetAlignment(line.Start)));
 
             if (line.End.Type == MarkupPoint.PointType.Enter && t != 1 && minT < 1 && 1 < maxT)
-                yield return new EnterFillerVertex(line.End, line.GetAlignment(line.End));
+                points.Add(new EnterFillerVertex(line.End, line.GetAlignment(line.End)));
+
+            return points;
         }
 
-        private IEnumerable<ITrajectory> GetTrajectories(FillerLinePart[] parts)
+        private List<ITrajectory> GetTrajectories(FillerLinePart[] parts)
         {
+            var trajectories = new List<ITrajectory>(parts.Length);
             foreach (var part in parts)
             {
-                if (part.GetTrajectory(out ITrajectory trajectory))
-                    yield return trajectory;
-                else
-                    yield return null;
+                part.GetTrajectory(out ITrajectory trajectory);
+                trajectories.Add(trajectory);
             }
+            return trajectories;
         }
         public ITrajectory GetRail(int a1, int b1, int a2, int b2)
         {
