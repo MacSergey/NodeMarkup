@@ -124,8 +124,18 @@ namespace NodeMarkup.Manager
         {
             foreach (var id in ids)
             {
+
                 if (Markups.TryGetValue(id, out TypeMarkup markup))
-                    markup.Update();
+                {
+                    try
+                    {
+                        markup.Update();
+                    }
+                    catch (Exception error)
+                    {
+                        SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{markup.Id}", error);
+                    }
+                }
             }
         }
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
