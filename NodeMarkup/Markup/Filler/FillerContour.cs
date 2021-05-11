@@ -90,26 +90,71 @@ namespace NodeMarkup.Manager
         {
             for (var i = 0; i < SupportPoints.Count; i += 1)
             {
-                var prevI = i.PrevIndex(SupportPoints.Count);
-                var nextI = i.NextIndex(SupportPoints.Count);
-
-                if (SupportPoints[i] is LineEndFillerVertex iEnd && SupportPoints[nextI] is LineEndFillerVertex jEnd)
+                switch (SupportPoints[i])
                 {
-                    if (iEnd.Point.Enter != jEnd.Point.Enter && iEnd.Line != jEnd.Line)
-                    {
-                        var line = new MarkupFillerTempLine(Markup, iEnd.Point, jEnd.Point, Alignment.Centre);
-                        SupportPoints.Insert(i + 1, new LineEndFillerVertex(iEnd.Point, line));
-                        SupportPoints.Insert(i + 2, new LineEndFillerVertex(jEnd.Point, line));
-                        i += 2;
-                    }
+                    case LineEndFillerVertex endVertex:
+                        FixLineEndVertex(endVertex, ref i);
+                        break;
+                    case EnterFillerVertex enterVertex:
+                        FixEnterVertex(enterVertex, ref i);
+                        break;
+                    case IntersectFillerVertex intersectVertex:
+                        FixIntersect(intersectVertex, ref i);
+                        break;
                 }
-                else if (SupportPoints[i] is IntersectFillerVertex intersect && SupportPoints[nextI] is LineEndFillerVertex nextEnd && !intersect.Contains(nextEnd.Line))
+            }
+        }
+        private void FixLineEndVertex(LineEndFillerVertex end, ref int i)
+        {
+            if (SupportPoints[i.NextIndex(SupportPoints.Count)] is LineEndFillerVertex nextEnd)
+            {
+                if (end.Point.Enter != nextEnd.Point.Enter && end.Line != nextEnd.Line && end.GetCommonLine(nextEnd) is MarkupRegularLine line)
                 {
-                    if (SupportPoints[prevI] is IFillerLineVertex prev && (prev.Contains(intersect.First) ? intersect.Second : intersect.First) is MarkupRegularLine line)
-                    {
-                        SupportPoints.Insert(i + 1, new LineEndFillerVertex(nextEnd.Point, line));
-                        i += 1;
-                    }
+                    SupportPoints.Insert(i + 1, new LineEndFillerVertex(end.Point, line));
+                    SupportPoints.Insert(i + 2, new LineEndFillerVertex(nextEnd.Point, line));
+                    i += 2;
+                }
+            }
+        }
+        private void FixEnterVertex(EnterFillerVertex enter, ref int i)
+        {
+            var prevI = i.PrevIndex(SupportPoints.Count);
+            var nextI = i.NextIndex(SupportPoints.Count);
+
+            if ((SupportPoints[prevI] is LineEndFillerVertex prevEnd && enter.Some(prevEnd)) || (SupportPoints[nextI] is LineEndFillerVertex nextEnd && enter.Some(nextEnd)))
+            {
+                SupportPoints.RemoveAt(i);
+                i -= 1;
+            }
+            else
+            {
+                if (SupportPoints[prevI] is EnterFillerVertexBase prevEnter && enter.GetCommonLine(prevEnter) is MarkupRegularLine prevLine)
+                {
+                    SupportPoints.RemoveAt(i);
+                    SupportPoints.Insert(prevI < i ? i : prevI, new LineEndFillerVertex(prevLine.PointPair.GetOther(enter.Point), prevLine));
+                    SupportPoints.Insert(prevI < i ? i + 1 : i, new LineEndFillerVertex(enter.Point, prevLine));
+                    i += prevI < i ? 1 : 0;
+                }
+                else if (SupportPoints[nextI] is EnterFillerVertexBase nextEnter && enter.GetCommonLine(nextEnter) is MarkupRegularLine nextLine)
+                {
+                    SupportPoints.RemoveAt(i);
+                    SupportPoints.Insert(i, new LineEndFillerVertex(enter.Point, nextLine));
+                    SupportPoints.Insert(i + 1, new LineEndFillerVertex(nextLine.PointPair.GetOther(enter.Point), nextLine));
+                    i += 1;
+                }
+            }
+        }
+        private void FixIntersect(IntersectFillerVertex intersect, ref int i)
+        {
+            var prevI = i.PrevIndex(SupportPoints.Count);
+            var nextI = i.NextIndex(SupportPoints.Count);
+
+            if (SupportPoints[nextI] is LineEndFillerVertex nextEnd && !intersect.Contains(nextEnd.Line))
+            {
+                if (SupportPoints[prevI] is IFillerLineVertex prev && (prev.Contains(intersect.First) ? intersect.Second : intersect.First) is MarkupRegularLine line)
+                {
+                    SupportPoints.Insert(i + 1, new LineEndFillerVertex(nextEnd.Point, line));
+                    i += 1;
                 }
             }
         }
@@ -145,15 +190,29 @@ namespace NodeMarkup.Manager
 
             if (!IsComplite)
                 SupportPoints.Add(newVertex);
+            else if (newVertex is LineEndFillerVertex newEnd && First is EnterFillerVertex firstEnter)
+            {
+                SupportPoints.Remove(firstEnter);
+                SupportPoints.Add(newEnd);
+            }
             else if (newVertex is EnterFillerVertexBase newEnter)
             {
+                var removedFirst = false;
                 {
-                    if (First is EnterFillerVertexBase firstEnter && Second is EnterFillerVertexBase secondEnter && firstEnter.Enter == secondEnter.Enter && firstEnter.Enter == newEnter.Enter)
-                        SupportPoints.Remove(firstEnter);
+                    if (First is EnterFillerVertexBase firstBaseEnter && Second is EnterFillerVertexBase secondEnter && firstBaseEnter.Enter == secondEnter.Enter && firstBaseEnter.Enter == newEnter.Enter)
+                    {
+                        SupportPoints.Remove(firstBaseEnter);
+                        removedFirst = true;
+                    }
                 }
                 {
-                    if (First is EnterFillerVertexBase firstEnter && Last is EnterFillerVertexBase lastEnter && (firstEnter.Enter != newEnter.Enter || newEnter.Enter != lastEnter.Enter))
-                        SupportPoints.Add(newVertex);
+                    if (First is EnterFillerVertexBase firstBaseEnter && Last is EnterFillerVertexBase lastEnter && (firstBaseEnter.Enter != newEnter.Enter || newEnter.Enter != lastEnter.Enter))
+                    {
+                        if (removedFirst)
+                            SupportPoints.Insert(0, newVertex);
+                        else
+                            SupportPoints.Add(newVertex);
+                    }
                 }
             }
         }

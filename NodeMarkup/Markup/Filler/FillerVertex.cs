@@ -233,7 +233,7 @@ namespace NodeMarkup.Manager
         bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is LineEndFillerVertex otherEnd && Equals(otherEnd);
         public bool Equals(LineEndFillerVertex other) => base.Equals(other) && other.Line == Line;
 
-        public override string ToString() => $"{Point}-{Alignment} ({Line})";
+        public override string ToString() => $"{Point} - {Alignment} ({Line})";
 
         public override XElement ToXml()
         {
