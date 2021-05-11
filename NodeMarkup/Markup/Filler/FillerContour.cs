@@ -193,7 +193,7 @@ namespace NodeMarkup.Manager
             else if (newVertex is LineEndFillerVertex newEnd && First is EnterFillerVertex firstEnter)
             {
                 SupportPoints.Remove(firstEnter);
-                SupportPoints.Add(newEnd);
+                SupportPoints.Insert(0, newEnd);
             }
             else if (newVertex is EnterFillerVertexBase newEnter)
             {
