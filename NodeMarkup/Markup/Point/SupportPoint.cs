@@ -31,7 +31,7 @@ namespace NodeMarkup.Manager
         public abstract string XmlSection { get; }
         public abstract SupportType Type { get; }
 
-        public abstract bool Equals(ISupportPoint other);
+        bool IEquatable<ISupportPoint>.Equals(ISupportPoint other) => true;
         public abstract bool GetT(MarkupLine line, out float t);
 
         public void Render(OverlayData data)
@@ -52,7 +52,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public abstract class EnterSupportPoint : SupportPoint, IEquatable<EnterSupportPoint>
+    public abstract class EnterSupportPoint : SupportPoint, ISupportPoint, IEquatable<EnterSupportPoint>
     {
         public override SupportType Type { get; } = SupportType.EnterPoint;
         public MarkupPoint Point { get; }
@@ -81,9 +81,11 @@ namespace NodeMarkup.Manager
                 return false;
             }  
         }
-        public override bool Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && Equals(otherEnterPoint);
-        public virtual bool Equals(EnterSupportPoint other) => other.Point == Point;
+
         public override void Update() => Init(Point.Position);
+
+        bool IEquatable<ISupportPoint>.Equals(ISupportPoint other) => other is EnterSupportPoint otherEnterPoint && Equals(otherEnterPoint);
+        public bool Equals(EnterSupportPoint other) => other.Point == Point;
 
         public override XElement ToXml()
         {
@@ -93,7 +95,7 @@ namespace NodeMarkup.Manager
         }
         public override string ToString() => Point.ToString();
     }
-    public abstract class IntersectSupportPoint : SupportPoint
+    public abstract class IntersectSupportPoint : SupportPoint, ISupportPoint, IEquatable<IntersectSupportPoint>
     {
         public override SupportType Type { get; } = SupportType.LinesIntersect;
         public MarkupLinePair LinePair { get; set; }
@@ -120,8 +122,11 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public override bool Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && otherIntersect.LinePair == LinePair;
         public override void Update() => Init(LinePair.Markup.GetIntersect(LinePair).Position);
+
+        bool IEquatable<ISupportPoint>.Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && Equals(otherIntersect);
+        public bool Equals(IntersectSupportPoint other) => other.LinePair == LinePair;
+
         public new void Render(OverlayData data)
         {
             First.Render(data);

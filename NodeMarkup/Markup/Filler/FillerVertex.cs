@@ -1,16 +1,18 @@
 ﻿using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public interface IFillerVertex : ISupportPoint
+    public interface IFillerVertex : ISupportPoint, IEquatable<IFillerVertex>
     {
+        IFillerVertex ProcessedVertex { get; }
         MarkupLine GetCommonLine(IFillerVertex other);
         List<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
-        IFillerVertex ProcessedVertex { get; }
+        bool Some(IFillerVertex other);
     }
     public interface IFillerLineVertex : IFillerVertex
     {
@@ -36,7 +38,7 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public abstract class EnterFillerVertexBase : EnterSupportPoint, IFillerVertex
+    public abstract class EnterFillerVertexBase : EnterSupportPoint, IFillerVertex, IEquatable<EnterFillerVertexBase>
     {
         public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out EnterFillerVertexBase enterPoint)
         {
@@ -63,7 +65,10 @@ namespace NodeMarkup.Manager
 
         public EnterFillerVertexBase(MarkupPoint point) : base(point) { }
         public override void Update() => Init(Point.GetPosition(Alignment));
-        public override bool Equals(EnterSupportPoint other) => base.Equals(other) && (!Point.IsSplit || other is not EnterFillerVertexBase otherVertex || otherVertex.Alignment == Alignment);
+
+        bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is EnterFillerVertexBase otherEnter && Equals(otherEnter);
+        public bool Equals(EnterFillerVertexBase other) => base.Equals(other) && (!Point.IsSplit || other.Alignment == Alignment);
+        public bool Some(IFillerVertex other) => other is EnterFillerVertexBase otherEnter && Equals(otherEnter);
 
         public override bool GetT(MarkupLine line, out float t)
         {
@@ -206,7 +211,7 @@ namespace NodeMarkup.Manager
             Update();
         }
     }
-    public class LineEndFillerVertex : EnterFillerVertexBase, IFillerLineVertex
+    public class LineEndFillerVertex : EnterFillerVertexBase, IFillerLineVertex, IEquatable<LineEndFillerVertex>
     {
         public override Alignment Alignment => Line?.GetAlignment(Point) ?? Alignment.Centre;
         public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
@@ -224,9 +229,11 @@ namespace NodeMarkup.Manager
             base.Update();
         }
         public bool Contains(MarkupLine line) => Line == line;
-        public override bool Equals(EnterSupportPoint other) => base.Equals(other) && other is LineEndFillerVertex lineEndVertex && lineEndVertex.Line == Line;
 
-        public override string ToString() => $"{Point} ({Line}) - {Alignment}";
+        bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is LineEndFillerVertex otherEnd && Equals(otherEnd);
+        public bool Equals(LineEndFillerVertex other) => base.Equals(other) && other.Line == Line;
+
+        public override string ToString() => $"{Point}-{Alignment} ({Line})";
 
         public override XElement ToXml()
         {
@@ -297,5 +304,8 @@ namespace NodeMarkup.Manager
             return config;
         }
         public override int GetHashCode() => LinePair.GetHashCode();
+
+        bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is IntersectFillerVertex otherIntersect && Equals(otherIntersect);
+        public bool Some(IFillerVertex other) => Equals(other);
     }
 }
