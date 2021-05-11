@@ -51,7 +51,7 @@ namespace NodeMarkup.Manager
 
         public EnterPointEdge(MarkupPoint point) : base(point) { }
 
-        public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+        bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is EnterSupportPoint otherEnter && Equals(otherEnter);
 
         public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
     }
@@ -80,7 +80,7 @@ namespace NodeMarkup.Manager
         public LinesIntersectEdge(MarkupLinePair pair) : base(pair) { }
         public LinesIntersectEdge(MarkupLine first, MarkupLine second) : base(first, second) { }
 
-        public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+        bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is IntersectSupportPoint otherIntersect && Equals(otherIntersect);
 
         public override XElement ToXml()
         {
