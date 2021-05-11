@@ -176,33 +176,27 @@ namespace NodeMarkup.Manager
         {
             switch (Last)
             {
-                case EnterFillerVertex lastEnterVertex:
-                    if (lastEnterVertex.Enter != newEnterVertex.Enter)
+                case EnterFillerVertex lastEnterVertex when lastEnterVertex.Enter != newEnterVertex.Enter:
                     {
-                        if (!Markup.TryGetLine(lastEnterVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
+                        if (lastEnterVertex.GetCommonLine(newEnterVertex) is MarkupRegularLine line)
                         {
-                            var alignment = lastEnterVertex.Point.IsSplit ? lastEnterVertex.Alignment : newEnterVertex.Alignment.Invert();
-                            line = new MarkupFillerTempLine(Markup, lastEnterVertex.Point, newEnterVertex.Point, alignment);
-                        }
-                        SupportPoints.Remove(lastEnterVertex);
-                        SupportPoints.Add(FixVertexByLine(lastEnterVertex, line));
+                            SupportPoints.Remove(lastEnterVertex);
+                            SupportPoints.Add(FixVertexByLine(lastEnterVertex, line));
 
-                        newVertex = FixVertexByLine(newEnterVertex, line);
+                            newVertex = FixVertexByLine(newEnterVertex, line);
+                        }
                     }
                     break;
 
-                case LineEndFillerVertex lastLineEndVertex:
-                    if (newEnterVertex.Enter != lastLineEndVertex.Enter)
+                case LineEndFillerVertex lastLineEndVertex when newEnterVertex.Enter != lastLineEndVertex.Enter:
                     {
-                        if (!Markup.TryGetLine(lastLineEndVertex.Point, newEnterVertex.Point, out MarkupRegularLine line))
+                        if (lastLineEndVertex.GetCommonLine(newEnterVertex) is MarkupRegularLine line)
                         {
-                            var alignment = lastLineEndVertex.Point.IsSplit ? lastLineEndVertex.Alignment : newEnterVertex.Alignment.Invert();
-                            line = new MarkupFillerTempLine(Markup, lastLineEndVertex.Point, newEnterVertex.Point, alignment: alignment);
-                        }
-                        if (Prev is not LineEndFillerVertex prevLineEndVertex || prevLineEndVertex.Point != lastLineEndVertex.Point)
-                            SupportPoints.Add(FixVertexByLine(lastLineEndVertex, line));
+                            if (Prev is not LineEndFillerVertex prevLineEndVertex || prevLineEndVertex.Point != lastLineEndVertex.Point)
+                                SupportPoints.Add(FixVertexByLine(lastLineEndVertex, line));
 
-                        newVertex = FixVertexByLine(newEnterVertex, line);
+                            newVertex = FixVertexByLine(newEnterVertex, line);
+                        }
                     }
                     break;
 
