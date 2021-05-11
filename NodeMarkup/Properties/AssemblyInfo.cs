@@ -17,6 +17,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.8.0.313")]
 [assembly: AssemblyFileVersion("1.8.0.313")]
 #else
-[assembly: AssemblyVersion("1.7.1.5")]
-[assembly: AssemblyFileVersion("1.7.1.5")] 
+[assembly: AssemblyVersion("1.7.1.6")]
+[assembly: AssemblyFileVersion("1.7.1.6")] 
 #endif
