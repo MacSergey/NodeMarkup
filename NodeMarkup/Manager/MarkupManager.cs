@@ -45,6 +45,9 @@ namespace NodeMarkup.Manager
             SingletonManager<NodeMarkupManager>.Instance.Update(NeedUpdateNodeIds);
             SingletonManager<SegmentMarkupManager>.Instance.Update(NeedUpdateSegmentIds);
         }
+        public static void UpdateNode(ushort nodeId) => SingletonManager<NodeMarkupManager>.Instance.Update(nodeId);
+        public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkupManager>.Instance.Update(segmentId);
+
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
             if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
@@ -120,7 +123,7 @@ namespace NodeMarkup.Manager
         protected abstract TypeMarkup NewMarkup(ushort id);
 
         protected abstract void AddToUpdate(ushort id);
-        public void Update(ushort[] ids)
+        public void Update(params ushort[] ids)
         {
             foreach (var id in ids)
             {

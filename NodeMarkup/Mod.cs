@@ -146,7 +146,7 @@ namespace NodeMarkup
             return AddPostfix(typeof(Mod), nameof(Mod.LoadAssetPanelOnLoadPostfix), typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
         private static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => AssetDataExtension.LoadAssetPanelOnLoadPostfix(__instance, ___m_SaveList);
-        
+
         private bool AssetDataLoad()
         {
             return AddTranspiler(typeof(Mod), nameof(Mod.BuildingDecorationLoadPathsTranspiler), typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
@@ -192,11 +192,36 @@ namespace NodeMarkup
         private void PatchNetNode(ref bool success)
         {
             success &= Patch_NetNode_RenderInstance();
+            success &= Patch_NetNode_CheckHeightOffset();
         }
         private bool Patch_NetNode_RenderInstance()
         {
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() };
             return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix), typeof(NetNode), nameof(NetNode.RenderInstance), parameters);
+        }
+        private bool Patch_NetNode_CheckHeightOffset()
+        {
+            return AddTranspiler(typeof(Mod), nameof(Mod.NetNode_CheckHeightOffset_Transpiler), typeof(NetNode), "CheckHeightOffset");
+        }
+        private static IEnumerable<CodeInstruction> NetNode_CheckHeightOffset_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original)
+        {
+            var heightOffset = AccessTools.Field(typeof(NetNode), nameof(NetNode.m_heightOffset));
+            var updateLanes = AccessTools.Method(typeof(NetSegment), nameof(NetSegment.UpdateLanes));
+
+            foreach (var instruction in instructions)
+            {
+                yield return instruction;
+                if (instruction.opcode == OpCodes.Stfld && instruction.operand == heightOffset)
+                {
+                    yield return TranspilerUtilities.GetLDArg(original, "nodeID");
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateNode)));
+                }
+                else if(instruction.opcode == OpCodes.Call && instruction.operand == updateLanes)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, 13);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateSegment)));
+                }
+            }
         }
 
         #endregion
