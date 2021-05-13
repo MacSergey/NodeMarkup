@@ -123,15 +123,11 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Haluatko varmasti poistaa {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Vieritä hiiren rullalla vaihtaaksesi
-Shift X10, Ctrl X0,1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Käytä mallinetta</value>
+    <value>Käytä mallia</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Tallenna mallineena</value>
+    <value>Tallenna mallina</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
     <value>Aseta oletukseksi</value>
@@ -199,20 +195,8 @@ Shift X10, Ctrl X0,1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Viiva</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Ei</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Kyllä</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Tee tiemerkintöjä risteyksiin</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Muokkaa risteyksen #{0} merkintöjä</value>
@@ -284,26 +268,20 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Piirtoetäisyys</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Pikanäppäimet</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Vahvista ennen poistamista</value>
   </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Näytä työkaluvihjeet</value>
-  </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>malline</value>
+    <value>malli</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
     <value>Nimi</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Mallineet</value>
+    <value>Mallit</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Uusi malline</value>
+    <value>Uusi malli</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
     <value>Poista risteyksen merkinnät</value>
@@ -330,18 +308,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Uutta modissa {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Näytä, mikä on uutta</value>
-  </data>
   
   <data name="Settings_Restore" xml:space="preserve">
     <value>Palauta</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Peruuta</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Käännä</value>
@@ -368,7 +337,7 @@ Napauta muokataksesi merkintöjä</value>
     <value>sulkualue</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Raidat</value>
+    <value>Viivasulkualue</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
     <value>Ruudukko</value>
@@ -417,19 +386,9 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   
   
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Versio {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Ilmoitukset</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Ilmoita vain merkittävistä päivityksistä</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Lisää uusi sulkualue</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Kaksoissulkuviiva</value>
   </data>
@@ -443,7 +402,7 @@ Napauta muokataksesi merkintöjä</value>
     <value>Liitä</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Chevron</value>
+    <value>Kulmasulkualue</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Viivojen välinen kulma</value>
@@ -460,8 +419,8 @@ Yhdistä kaksi pistettä luodaksesi viivan.</value>
 Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Mallinelista on tyhjä.
-Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi mallineen.</value>
+    <value>Malleja ei ole.
+Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi mallin.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivoi avaimella</value>
@@ -546,63 +505,6 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Sijoittelu</value>
   </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Ymmärrän</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Varoitus BETA-versiosta</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Hanki vakaa versio</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Käytät beta-versiota {0}:sta. Se on tarkoitettu uusien ominaisuuksien testaamiseen ja siinä voi olla virheitä, jotka rikkovat tai poistavat merkintöjäsi. Jos tilasit sen vahingossa, vaihda vakaaseen versioon.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Pelin kieli</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Tsekki</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Saksa</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englanti US</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Espanja</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Suomi</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Ranska</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italia</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japani</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Hollanti</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Puola</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugali</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Venäjä</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Yksinkertaistettu kiina</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Kieli</value>
-  </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Napauta luodaksesi kohtisuora viiva</value>
   </data>
@@ -623,7 +525,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Risteyksessä ei ole vielä suojateitä.
-Pidä Shif-näppäintä pohjassa luodaksesi suojatien.</value>
+Pidä Shift-näppäintä pohjassa luodaksesi suojatien.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>suojatie</value>
@@ -644,7 +546,7 @@ Pidä Shif-näppäintä pohjassa luodaksesi suojatien.</value>
     <value>Ryhmittele viivat</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Ryhmittele mallineet</value>
+    <value>Ryhmittele mallit</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Napauta luodaksesi suojatien</value>
@@ -724,7 +626,7 @@ poistaaksesi suojatien</value>
     <value>Tikkaat</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>Ei mallineita</value>
+    <value>Ei malleja</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
     <value>Kiinteä</value>
@@ -745,18 +647,12 @@ poistaaksesi suojatien</value>
     <value>piste</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>malline</value>
+    <value>malli</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
 {0}:n risteyksen merkintöjen lataus epäonnistui.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Tuki</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Vianmääritys</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Shakkiruudukko</value>
@@ -848,17 +744,11 @@ poistaaksesi suojatien</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Käyttäytyminen</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Yleiset</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Ryhmittely</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Pikanäppäimet</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Tuki</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Monista</value>
@@ -916,51 +806,51 @@ Napauta ympurää muokataksesi pisteiden järjestystä</value>
     <value>Oikealla</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>Nimeämätön malline</value>
+    <value>Nimeämätön malli</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
     <value>Nimi on jo käytössä</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Nimi "{0}" on jo käytössä toisella mallineella.
-Haluatko varmasti, että sama nimi on käytössä useammalla mallineella?</value>
+    <value>Nimi "{0}" on jo käytössä toisella mallilla.
+Haluatko varmasti, että sama nimi on käytössä useammalla mallilla?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
     <value>Merkintöjen varmuuskopiointi</value>
   </data>
   <data name="Settings_BackupTemplates" xml:space="preserve">
-    <value>Mallineiden varmuuskopiointi</value>
+    <value>Mallien varmuuskopiointi</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>Poista kaikki mallineet</value>
+    <value>Poista kaikki mallit</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>Poista kaikki mallineet</value>
+    <value>Poista kaikki mallit</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Haluatko varmasti poistaa kaikki mallineet?</value>
+    <value>Haluatko varmasti poistaa kaikki mallit?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Vie mallineet tiedostoon</value>
+    <value>Vie mallit tiedostoon</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>Vie mallineet</value>
+    <value>Vie mallit</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Palauta mallineet tiedostosta</value>
+    <value>Palauta mallit tiedostosta</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>Palauta mallineet</value>
+    <value>Palauta mallit</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>Haluatko varmasti palauttaa mallineet?
-Palautetut mallineet korvaavat kaikki olemassa olevat mallineet.</value>
+    <value>Haluatko varmasti palauttaa mallit?
+Palautetut mallit korvaavat kaikki olemassa olevat mallit.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>Mallineiden palautus epäonnistui</value>
+    <value>Mallien palautus epäonnistui</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>Mallineet palautettu onnistuneesti</value>
+    <value>Mallit palautettu onnistuneesti</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
     <value>Aseta</value>
@@ -1045,9 +935,6 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Nollaa pisteiden siirtymät</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Lisää</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Nopea suojateiden reunojen luominen</value>
   </data>
@@ -1101,11 +988,6 @@ Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Lataa tiemerkintäesineet</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Modi latautui virheellisesti.
-Ei ole suositeltavaa käyttää modia tässä tilassa, koska se voi johtaa ennalta-arvaamattomaan käyttäytymiseen.
-Käynnistä peli uudelleen.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Suojatiet:</value>
@@ -1171,9 +1053,6 @@ Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Lopeta viivat suojateihin</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Englanti UK</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Uudelleenkirjoita esiasetusesine</value>
   </data>
@@ -1181,7 +1060,7 @@ Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
     <value>Vaihtaaksesi sen nimen, esineen tiedosto on uudelleenkirjoitettava. Haluatko jatkaa?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Uudelleenkirjoita malline-esine</value>
+    <value>Uudelleenkirjoita malli-esine</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>Vaihtaaksesi sen nimen ja arvot, esineen tiedosto on uudelleenkirjoitettava. Haluatko jatkaa?</value>
@@ -1204,9 +1083,6 @@ Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Hylkää muutokset</value>
   </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Peruuta</value>
-  </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Haluatko tallentaa esiasetuksen nimen muutoksen?</value>
   </data>
@@ -1214,7 +1090,7 @@ Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
     <value>Tallenna muutokset</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Haluatko tallentaa mallineen arvojen muutokset?</value>
+    <value>Haluatko tallentaa mallin arvojen muutokset?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
     <value>Nimi "{0}" on jo käytössä toisella esiasetuksella.
@@ -1236,7 +1112,7 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
     <value>Et voi muokata sitä ja voit poistaa sen vain pelin sisällönhallinnasta tai perua sen tilauksen Steam Workshopista.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>Tämä malline on esine.</value>
+    <value>Tämä malli on esine.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>esiasetus</value>
@@ -1288,19 +1164,19 @@ Kaikkien risteyksien merkintöjen lataus epäonnistui.</value>
 Napauta muokataksesi merkintöjä</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Seuraa ratoja</value>
+    <value>Seuraa ohjeviivoja</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Vasen rata</value>
+    <value>Vasen ohjausviiva</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Oikea rata</value>
+    <value>Oikea ohjausviiva</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Valitse viiva tai radan ensimmäinen piste</value>
+    <value>Valitse viiva ohjausviivaksi tai ohjausviivan ensimmäinen piste</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Valitse radan toinen piste</value>
+    <value>Valitse ohjausviivan toinen piste</value>
   </data>
   
   
@@ -1335,9 +1211,6 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Jaon siirtymä</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Muutosloki</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Ryhmittele pisteet</value>
@@ -1376,7 +1249,11 @@ Napauta muokataksesi merkintöjä</value>
     <value>Valitse viivan tai pysäytysviivan päätepiste</value>
   </data>
   
-  
-  
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Viivan lopun kohdistus</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Viivan alun kohdistus</value>
+  </data>
   
 </root>

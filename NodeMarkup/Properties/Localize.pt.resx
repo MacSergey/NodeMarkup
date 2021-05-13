@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Faça scroll para mudar
-Shift X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Aplicar modelo</value>
   </data>
@@ -199,20 +195,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Sim</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Faz apenas marcações nas intersecções</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Isto é uma versão BETA, podem ocorrer erros e não é garantida a estabilidade!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Editar marcações do nó #{0}</value>
@@ -284,14 +268,8 @@ Os dados recuperados vão substituir todas as marcações existentes.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distância de renderização</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Atalhos</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Confirmar antes de remover</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Mostrar dicas</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modelo</value>
@@ -330,12 +308,6 @@ Clique para editar marcações</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>O que há de novo em {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Mostrar as novidades</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
 - Adicionada Linha de Paragem. Agora é possível conectar dois pontos da mesma estrada para criar uma linha de paragem. 2 estilos disponíveis: "Sólida" e "Tracejada".
@@ -349,9 +321,6 @@ Clique para editar marcações</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Recuperar</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Cancelar</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverter</value>
@@ -427,19 +396,9 @@ Clique para editar marcações</value>
   </data>
   
   
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Versão {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Notificações</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Notificar apenas sobre actualizações principais</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Sólida dupla</value>
   </data>
@@ -555,63 +514,6 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alinhamento</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Concordo</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Aviso de versão BETA</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Obter versão estável</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Está a usar a versão BETA da {0}. Serve para testar novas funcionalidades e pode conter erros que façam você perder todas as marcações. Se subscreveu por engano troque para a versão estável.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Língua do jogo</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Checo</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Alemão</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglês EUA</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Espanhol</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finlandês</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Francês</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italiano</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japonês</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Holandês</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polaco</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Português</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russo</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinês Simplificado</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Linguagem</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clique para criar uma linha perpendicular
@@ -763,12 +665,6 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
     <value>O carregamento foi completado com erros.
 O carregamento de {0} marcações falhou.</value>
   </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Apoio</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Resolução de problemas</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Xadrez</value>
   </data>
@@ -859,17 +755,11 @@ O carregamento de {0} marcações falhou.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Apresentação e utilização</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Geral</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Grupos</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Atalhos e modificadores</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Apoio</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Duplicar</value>
@@ -1056,9 +946,6 @@ Quer aplicar as marcações manualmente?</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Repor o deslocamento de todos os pontos</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Adicional</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Definição rápida de bordas das passadeiras</value>
   </data>
@@ -1111,10 +998,6 @@ Para criar uma predefinição, clique «{0}» no cabeçalho.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Carregar assets de marcações</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>O mod carregou com erros.
-Não é recomendado usar o mod neste estado pois pode levar a comportamento imprevisível.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Passadeiras:</value>
@@ -1180,9 +1063,6 @@ As predefinições recuperadas vão substituir todas as predefinições existent
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Cortar linhas por todas as passadeiras</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Inglês RU</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Reescrever a predefinição asset</value>
   </data>
@@ -1212,9 +1092,6 @@ As predefinições recuperadas vão substituir todas as predefinições existent
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Descartar alterações</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Cancelar</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Quer guardar as alterações da predefinição?</value>
@@ -1337,9 +1214,6 @@ Clique para editar marcações</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Dividir deslocamento</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Registo de alterações</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Agrupar pontos</value>

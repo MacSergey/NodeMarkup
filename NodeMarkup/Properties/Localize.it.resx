@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Vuoi veramente cancellare {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scorri con la rotella per cambiare
-Shift X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Applica modello</value>
   </data>
@@ -199,20 +195,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Si</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Basta solo aggiungere le marcature alle intersezioni</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Questa è una versione BETA, potrebbero verificarsi errori e la stabilità non è garantita!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifica il marcatore del nodo #{0}</value>
@@ -284,14 +268,8 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distanza di rendering</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Scorciatoie da tastiera</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Richiedi conferma prima di eliminare</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Mostra i suggerimenti</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modello</value>
@@ -321,16 +299,14 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
     <value>Nodo #{0}
 Clicca per modificare il marcatore</value>
   </data>
-  
-  
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Seleziona un nodo o segmento per cambiare la segnaletica orizzontale</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Seleziona un secondo punto per creare la linea</value>
+  </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleziona un punto per creare o cancellare una linea</value>
-  </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Cosa c'è di nuovo in {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Mostra cosa c'è di nuovo</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>Riempimento. Lo spazio tra le linee può essere riempito per indicare le aree vietate per l'arresto o la guida. Sono disponibili 3 stili: Linee, Griglia e Riempimento solido. Per creare tenere premuto Alt.
@@ -345,9 +321,6 @@ Clicca per modificare il marcatore</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Ripristina</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Annulla</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverti</value>
@@ -438,19 +411,9 @@ Clicca per modificare il marcatore</value>
 - Le linee non verranno più visualizzate quando sono mostrate le informazioni della visualizzazione delle sovrapposizioni.
 - La scorciatoia di attivazione ora si attiverà quando si apre un altro strumento mentre lo strumento di marcatura è già aperto.</value>
   </data>
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Versione {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Notifiche</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Notifica solo gli update maggiore</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppia continua</value>
   </data>
@@ -566,63 +529,6 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Allineamento</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Accetto</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Avviso versione BETA</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Ottieni la versione stabile</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Stai utilizzando la versione BETA di {0}. Serve per testare nuove funzionalità e potrebbe contenere errori che interromperanno o cancelleranno i contrassegni. Se ti sei iscritto per errore, passa alla versione stabile.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Lingua del gioco</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Ceco</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Tedesco</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Inglese US</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Spagnolo</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finlandese</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Francese</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italiano</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Giapponese</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Olandese</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polacco</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portoghese</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russo</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Cinese Semplificato</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Lingua</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clicca per creare una linea perpendicolare</value>
@@ -773,12 +679,6 @@ cancellare le strisce pedonali</value>
     <value>Il caricamento è stato completato con errori.
 Impossibile caricare i contrassegni per {0} intersezioni.</value>
   </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Supporto</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Risoluzione problemi</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Scacchiera</value>
   </data>
@@ -869,17 +769,11 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Visualizzazione ed utilizzo</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Generali</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Raggruppamento</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Scorciatoie e modificari</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Supporto</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Duplicato</value>
@@ -1066,9 +960,6 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Resetta tutti gli spostamenti</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Impostazioni aggiuntive</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Impostazione rapida bordi attraversamento pedonale</value>
   </data>
@@ -1118,8 +1009,12 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nuovo preimpostato</value>
   </data>
-  
-  
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Esci dall'interfaccia di applicazione dei preset</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Vuoi applicare un preset?</value>
+  </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autore</value>
   </data>
@@ -1129,7 +1024,6 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Carica risorse di marcatura</value>
   </data>
-  
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Attraversamento pedonale:</value>
   </data>
@@ -1148,8 +1042,12 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="PresetInfo_Roads" xml:space="preserve">
     <value>Strade:</value>
   </data>
-  
-  
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Impedisci alle linee tracciate di interferire con gli attraversamenti pedonali</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Impedisci alle linee tracciate di interferire con questo attraversamento pedonale</value>
+  </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
     <value>Backup preimpostati</value>
   </data>
@@ -1162,22 +1060,46 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
     <value>Vuoi veramente rimuovere tutti i preimpostati?</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Inglese UK</value>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Salva preset nel file</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Salva preset</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Ripristinare preset da file</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Ripristina preset</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Sei sicuro di voler ripristinare i preset?
+I preset ripristinati sostituiranno tutti i preset attuali.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Ripristino preset fallito</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Preset ripristinati correttamente</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Impedire alle linee tracciate di interferire con qualsiasi attraversamento pedonale</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Impedire alle linee tracciate di interferire con qualsiasi attraversamento pedonale</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Riscrivere l'asset del preset</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Cambiare il nome richiede la riscrittura del file dell'asset. Continuare?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Riscrivere l'asset del template</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Cambiare il nome e i valori richiede la riscrittura del file dell'asset. Continuare?</value>
+  </data>
   
   
   
@@ -1189,9 +1111,6 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Non salvare le modifiche</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Annulla</value>
   </data>
   
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
@@ -1205,8 +1124,12 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
-  
-  
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>preset</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>preset</value>
+  </data>
   
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Questo tipo di linea non supporta le regole</value>
@@ -1219,13 +1142,30 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   </data>
   
   
-  
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Modifica segnaletica orizzontale del segmento #{0}</value>
+  </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
     <value>Erba</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
     <value>Pavimentazione</value>
   </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Altezza</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Altezza</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Erba</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Pavimentazione</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Distanza LOD</value>
+  </data>
   
   
   
@@ -1236,19 +1176,25 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   
   
   
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Uno</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Due</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Dagli appunti</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Allineamento della linea</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Dividi in due</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Raggruppare i punti</value>
+  </data>
   
   
   

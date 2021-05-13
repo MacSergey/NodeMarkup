@@ -124,23 +124,9 @@
   
   
   
-  
   <data name="StyleOption_Color" xml:space="preserve">
     <value>Colour</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -268,25 +254,6 @@ To create a template, click «{0}» at the line or pedestrian crossing or filler
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existing pedestrian crossing</value>
   </data>
@@ -377,8 +344,6 @@ create or delete a pedestrian crossing</value>
   
   
   
-  
-  
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Pedestrian crossings modifier</value>
   </data>
@@ -396,8 +361,6 @@ create or delete a pedestrian crossing</value>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
     <value>Pedestrian Crossings - {0}</value>
   </data>
-  
-  
   
   
   
@@ -474,7 +437,6 @@ create or delete a pedestrian crossing</value>
   
   
   
-  
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Quick pedestrian crossing borders setup</value>
   </data>
@@ -495,11 +457,6 @@ create or delete a pedestrian crossing</value>
   
   
   
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Mod loaded with errors.
-It is not recommended to use the mod in this state, it can lead to unpredictable behaviour.
-Restart the game.</value>
-  </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Pedestrian
 crossings:</value>
@@ -536,7 +493,6 @@ crossings:</value>
   
   
   
-  
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>To be able to set the pedestrian crossing borders, you must have lines started from the same points as the crossing</value>
   </data>
@@ -559,11 +515,9 @@ crossings:</value>
   
   
   
-  
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Don't cut line by pedestrian crossing if it is their border</value>
   </data>
-  
   
   
   

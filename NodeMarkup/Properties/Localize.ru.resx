@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Крутите колесико для изменения
-Shift X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Выбрать шаблон</value>
   </data>
@@ -199,20 +195,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Нет</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>ОК</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Да</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Просто сделай разметку на перекрестках</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Это BETA версия, стабильная работа и отсутствие ошибок не гарантировано!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Редактирование перекрестка #{0}</value>
@@ -284,14 +268,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Дистанция отображения</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Горячие клавиши</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Подтверждение удаления</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Показывать подсказки</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>шаблон</value>
@@ -332,12 +310,6 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите начальную точку
 для создания или удаления линии</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Что нового в {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Показывать что нового</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Заполнители. Пространство между линиями можно заполнить, обозначив место куда нельзя заезжать или останавливаться. Доступно 3 стиля: Полоски, сетка и сплошная заливка. Для создания удерживайте клавишу ALT.
 - Стоп линии. Теперь возможно соединить две точки одной дороги для создания стоп линии. Доступно 2 стиля: Сплошная и прерывистая.
@@ -351,9 +323,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Восстановление</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Отмена</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Инвертировать</value>
@@ -444,19 +413,9 @@ Shift X10, Ctrl X0.1</value>
 - Линии больше не отображаются когда открыты информационные оверлеи.
 - Комбинация для активации работает когда выбран другой инструмент.</value>
   </data>
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Версия {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Уведомления</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Уведомления только о важных обновлениях</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Создать  заполнитель</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Двойная сплошная</value>
   </data>
@@ -572,63 +531,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Выравнивание</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Я согласен</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Предупреждение о BETA версии</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Получить стабильную</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Вы используете BETA версию {0}. Она предназначена для тестирования новых функций и может содержать ошибки которые приведут к поломке или удалению вашей разметки. Если вы подписались по ошибки, то перейдите на стабильную версию.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Язык игры</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Чешский</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Немецкий</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Английский США</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Испанский</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Финский</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Французский</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Итальянский</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Японский</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Голландский</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Польский</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Португальский</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Русский</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Китайский упрощенный</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Язык</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Нажмите для создания перпендикулярной линии</value>
@@ -794,12 +696,6 @@ Shift X10, Ctrl X0.1</value>
     <value>Загрузка завершилась с ошибками.
 Не удалось загрузить разметку для {0} перекрестков.</value>
   </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Поддержка</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Устранение неполадок</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Шахматная доска</value>
   </data>
@@ -890,17 +786,11 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Отображение и использование</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Основные</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Группировка</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Назначение клавиш</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Поддержка</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Дублировать</value>
@@ -1109,9 +999,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Сброс смещения всех точек</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Дополнительно</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Быстрая настройка границ перехода</value>
   </data>
@@ -1177,11 +1064,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Загружать маркировку из игровых ресурсов</value>
   </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Мод загрузился с ошибками.
-Не рекомендуется использовать мод в таком состояние, это может привести к непредсказуемым результатам.
-Перезагрузите игру.</value>
-  </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Переходов:</value>
   </data>
@@ -1246,9 +1128,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Обрезать линии до всех переходов</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Английский Великобритания</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Перезапись игрового ресурса трафарета</value>
   </data>
@@ -1278,9 +1157,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Не сохранять изменения</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Отмена</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Вы хотите сохранить изменения имени трафарета?</value>
@@ -1429,9 +1305,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Сдвиг разделенных точек</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Список изменений</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Группировать точки</value>

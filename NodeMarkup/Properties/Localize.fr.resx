@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Voulez-vous vraiment supprimer {0} "{1}" ?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Utilisez la molette pour changer
-Maj X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Appliquer le modèle</value>
   </data>
@@ -199,20 +195,8 @@ Maj X10, Ctrl X0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Non</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>Valider</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Oui</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Faire marquages aux intersections seulement</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Ceci est une version BETA, des erreurs peuvent se produire et la stabilité n'est pas garantie!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifier le marquage du nœud #{0}</value>
@@ -284,14 +268,8 @@ Les données restaurées ont remplacer tout les marquages existants.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distance d'affichage</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Raccourcis</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Confirmer avant de supprimer</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Afficher les infobulles</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modèle</value>
@@ -331,18 +309,9 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un point pour
 créer ou supprimer une ligne</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Nouveautés dans {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Afficher les nouveautés</value>
-  </data>
   
   <data name="Settings_Restore" xml:space="preserve">
     <value>Restaurer</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Annuler</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverser</value>
@@ -418,19 +387,9 @@ créer ou supprimer une ligne</value>
   </data>
   
   
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Paramètres de notification</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Uniquement notifier les mise à jour majeures</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Ajouter un nouveau remplisseur</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solide</value>
   </data>
@@ -546,63 +505,6 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignement</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>J'accepte</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Alerte de version BETA</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Obtenez la version stable</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Vous utilisez la version d'{0}. C'est une version de test avec de nouvelles fonctionnalités et cela peut contenir des erreurs qui vont casser ou supprimer vos marquages. Si vous vous êtes abonné par erreur, veuillez vous abonner à la version stable.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Langue du jeu</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Tchèque</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Allemand</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais États-Unis</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Espagnol</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finnois</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Français</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italien</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japonais</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Néerlandais</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polonais</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugais</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russe</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinois simplifié</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Langue</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Cliquez pour créer une ligne perpendiculaire
@@ -755,12 +657,6 @@ créer ou supprimer un passage piéton</value>
     <value>Erreurs lors du chargement.
 Le marquage de {0} intersections n'a pas pu être chargé.</value>
   </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Support</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Dépannage</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Damiers</value>
   </data>
@@ -851,17 +747,11 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Affichage et utilisation</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Général</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Catégories</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Raccourcis</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Support</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Dupliquer</value>
@@ -1048,9 +938,6 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Réinitialiser tout les décalages de points</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Autres</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Bordures de passage piétons rapide</value>
   </data>
@@ -1103,11 +990,6 @@ Pour créer un préréglages, cliquez sur {0} sur le haut de la fenêtre.</value
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Charger les ressources de marquages</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Le mod a chargé avec des erreurs. 
-Il n'est pas conseillé d'utiliser le mod dans cet état car il peut avoir un comportement instable. 
-Rechargez le jeu.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Passages piétons :</value>
@@ -1173,9 +1055,6 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Couper les lignes au niveau de tout les passages piétons</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Anglais Royaume-Uni</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Réécriture de la ressource du préréglage</value>
   </data>
@@ -1205,9 +1084,6 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Ne pas sauvegarder les changements</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Annuler</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Voulez-vous enregistrer les modifications ?</value>
@@ -1327,9 +1203,6 @@ Cliquez pour modifier le marquage</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Décalage de la division</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Notes de mise à jour</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Grouper les points</value>

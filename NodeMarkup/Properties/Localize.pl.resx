@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Czy na pewno chcesz usunąć {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Użyj kółka myszy aby zmienić wartość
-Shift x10, Ctrl x0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Zastosuj szablon</value>
   </data>
@@ -199,20 +195,8 @@ Shift x10, Ctrl x0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Ciągła</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Nie</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Tak</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Po prostu twórz oznaczenia na skrzyżowaniach</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Wersja BETA, mogą pojawić się błędy oraz może działać niestabilnie!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia skrzyżowania #{0}</value>
@@ -284,14 +268,8 @@ Wszystkie istniejące oznaczenia zostaną zastąpione.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Odległość renderowania</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Skróty klawiszowe</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Potwierdzaj przed usunięciem</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Pokaż podpowiedzi</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>szablon</value>
@@ -330,18 +308,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Co nowego w {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Pokaż "Co nowego?"</value>
-  </data>
   
   <data name="Settings_Restore" xml:space="preserve">
     <value>Przywróć</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Anuluj</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Odwróć</value>
@@ -417,19 +386,9 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   
   
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Wersja {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Powiadomienia</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Powiadamiaj tylko o ważnych aktualizacjach</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Podwójna ciągła</value>
   </data>
@@ -545,63 +504,6 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Wyrównanie</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Zgadzam się</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Ostrzeżenie o wersji BETA</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Subskrybuj wersję stabilną</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Używasz {0} w wersji BETA. Została ona stworzona w celu testowania nowych funkcjonalności i może zawierać błędy lub skasować wcześniej zapisane wypełnienia. Jeśli została ona zasubskrybowana przypadkiem, przejdź na wersję stabilną.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Język gry</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Czeski</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Niemiecki</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Angielski - USA</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Hiszpański</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Fiński</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Francuski</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Włoski</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japoński</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Holenderski</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polski</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugalski</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Rosyjski</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chiński uproszczony</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Język</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Kliknij, aby utworzyć prostopadłą linię</value>
@@ -752,12 +654,6 @@ utworzyć lub usunąć przejście dla pieszych</value>
     <value>Wystąpiły błędy podczas ładowania danych.
 Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Wsparcie</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Rozwiązywanie problemów</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Szachownica</value>
   </data>
@@ -848,17 +744,11 @@ Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Wyświetl i używaj</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Ogólne</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Grupowanie</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Skróty klawiszowe i modyfikatory</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Wsparcie</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Kopia</value>
@@ -1045,9 +935,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Resetuj przesunięcie wszystkich punktów</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Dodatkowe</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Szybkie tworzenie obramowania przejścia dla pieszych</value>
   </data>
@@ -1101,11 +988,6 @@ Aby, utworzyć preset, kliknij «{0}» na nagłówku panelu.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Załaduj assety oznaczeń</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Wystąpiły błędy podczas ładowania moda.
-Nie zalecamy używania moda w tym stanie, ponieważ może to doprowadzić do nieprzewidzianego zachowania.
-Uruchom ponownie grę.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Przejścia dla pieszych:</value>
@@ -1171,9 +1053,6 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Przetnij linie przecinające przejścia dla pieszych</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Angielski - Wielka Brytania</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Zmień nazwę asseta zestawu ustawień</value>
   </data>
@@ -1203,9 +1082,6 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Nie zapisuj zmian</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Anuluj</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Czy chcesz zapisać zmianę nazwy presetu?</value>
@@ -1328,9 +1204,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Przesunięcie podziału</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Dziennik zmian</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Grupuj punkty</value>

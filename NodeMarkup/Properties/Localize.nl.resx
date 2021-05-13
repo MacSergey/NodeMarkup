@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Wil je {0} "{1}" echt verwijderen?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scroll het wiel om te veranderen
-Shift X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Sjabloon toepassen</value>
   </data>
@@ -199,20 +195,8 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Nee</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ja</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Maak gewoon markeringen op kruispunten</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dit is een bèta-versie, er kunnen fouten optreden en de stabiliteit is niet gegarandeerd!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Bewerk markering van knooppunt #{0}</value>
@@ -284,14 +268,8 @@ De herstelde data zal alle bestaande markeringen vervangen.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Render afstand</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Snelkoppelingen</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Bevestig voordat u verwijdert</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Tooltips weergeven</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>sjabloon</value>
@@ -331,18 +309,9 @@ Klik om de markering te wijzigen</value>
     <value>Selecteer een punt om
 een lijn te creëren of te verwijderen</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Wat is er nieuw in {0}</value>
-  </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Toon wat nieuw is</value>
-  </data>
   
   <data name="Settings_Restore" xml:space="preserve">
     <value>Herstel</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Annuleer</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Omkeren</value>
@@ -418,19 +387,9 @@ een lijn te creëren of te verwijderen</value>
   </data>
   
   
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Versie {0}</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Meldingen</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Alleen meldingen over grote updates</value>
-  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Nieuwe opvulling toevoegen</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dubbel ononderbroken</value>
   </data>
@@ -546,63 +505,6 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Uitlijning</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Ik ga akkoord</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Bèta versie waarschuwing</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Overstappen naar stabiele versie</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Je gebruikt de bèta versie van {0}. Deze wordt gebruikt voor het testen van nieuwe functies en kan fouten bevatten die je huidige markeringen kunnen verwijderen of veranderen. Als je per ongeluk geabonneerd bent op de bèta, kan je naar de stabiele versie overstappen.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Gebruik zelfde taal als spel</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Tsjechisch</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Duits</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Engels VS</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Spaans</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Fins</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Frans</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italiaans</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japans</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Nederlands</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Pools</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugees</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russisch</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinees vereenvoudigd</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Taal</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Klik om een loodrechte lijn te maken</value>
@@ -753,12 +655,6 @@ een zebrapad te creëren of te verwijderen</value>
     <value>Er zijn fouten opgetreden tijdens het laden.
 Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Support</value>
-  </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Probleemoplossing</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Schaakbord</value>
   </data>
@@ -849,17 +745,11 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Weergave en gebruik</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Algemeen</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Groeperingen</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Snelkoppelingen en Sneltoetsen</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Support</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Dupliceren</value>
@@ -1046,9 +936,6 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Reset alle punt correctieafstanden</value>
   </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Extra</value>
-  </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Snelle zebrapad randen setup</value>
   </data>
@@ -1102,11 +989,6 @@ Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Markerings assets laden</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Mod is geladen met errors.
-Het is niet aanbevolen om de mod te gebruiken in de huidige staat omdat het tot onvoorspelbaar gedrag kan leiden.
-Herstart het spel.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Zebrapaden:</value>
@@ -1172,9 +1054,6 @@ De herstelde presets zullen alle bestaande presets vervangen.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Lijnen bij alle zebrapaden afsnijden</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Engels VK</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Preset asset overschrijven</value>
   </data>
@@ -1204,9 +1083,6 @@ De herstelde presets zullen alle bestaande presets vervangen.</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Wijzigingen niet opslaan</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Annuleren</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Wil je de preset naamsverandering opslaan?</value>
@@ -1327,9 +1203,6 @@ Klik om de markering te wijzigen</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Splits offset</value>
   </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Wijzigingenlogboek</value>
-  </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Groepeer punten</value>
   </data>
@@ -1367,7 +1240,11 @@ Klik om de markering te wijzigen</value>
     <value>Selecteer een eindpunt voor een normale lijn of stoplijn</value>
   </data>
   
-  
-  
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Uitlijning lijn einde</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Uitlijning lijn start</value>
+  </data>
   
 </root>
