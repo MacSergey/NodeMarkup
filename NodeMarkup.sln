@@ -15,13 +15,29 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UIShared", "ModsCommon\UISh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HeaderShared", "ModsCommon\HeaderShared\HeaderShared.shproj", "{0BF47C3F-C968-4759-8D99-D088B0D58FBA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LoadExtensionShared", "ModsCommon\LoadExtensionShared\LoadExtensionShared.shproj", "{B0DEA36D-46FD-4D66-9285-57E85AB0BCDF}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBoxShared", "ModsCommon\MessageBoxShared\MessageBoxShared.shproj", "{D5B649EC-0FEC-48F3-8316-6E266169CDCC}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PropertyPanelShared", "ModsCommon\PropertyPanelShared\PropertyPanelShared.shproj", "{ABE0F508-441B-4871-A17F-3F345F5DC42B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ModsCommon\HeaderShared\HeaderShared.projitems*{0bf47c3f-c968-4759-8d99-d088b0d58fba}*SharedItemsImports = 13
 		ModsCommon\ModShared\ModsCommonShared.projitems*{24615a21-afa6-42c0-8b7a-4fb3329b056f}*SharedItemsImports = 13
+		ModsCommon\HeaderShared\HeaderShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\MessageBoxShared\MessageBoxShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\ModShared\ModsCommonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\ToolShared\ModsToolShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\UIShared\ModsUIShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{abe0f508-441b-4871-a17f-3f345f5dc42b}*SharedItemsImports = 13
+		ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems*{b0dea36d-46fd-4d66-9285-57e85ab0bcdf}*SharedItemsImports = 13
 		ModsCommon\UIShared\ModsUIShared.projitems*{be979510-7832-4714-95a3-305065d9ded6}*SharedItemsImports = 13
+		ModsCommon\MessageBoxShared\MessageBoxShared.projitems*{d5b649ec-0fec-48f3-8316-6e266169cdcc}*SharedItemsImports = 13
 		ModsCommon\ToolShared\ModsToolShared.projitems*{ea585899-16c8-4ff0-ae8d-078f15a7a126}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,13 +80,17 @@ Global
 		{24615A21-AFA6-42C0-8B7A-4FB3329B056F} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{EA585899-16C8-4FF0-AE8D-078F15A7A126} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{BE979510-7832-4714-95A3-305065D9DED6} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{0BF47C3F-C968-4759-8D99-D088B0D58FBA} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{B0DEA36D-46FD-4D66-9285-57E85AB0BCDF} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{D5B649EC-0FEC-48F3-8316-6E266169CDCC} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{ABE0F508-441B-4871-A17F-3F345F5DC42B} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
-		RESX_ExcelExportMode = MultipleSheets
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_RemoveEmptyEntries = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ExcelExportMode = MultipleSheets
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal
