@@ -7,16 +7,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeMarkup", "NodeMarkup\No
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsBridge", "ModsCommon\ModsBridge\ModsBridge.csproj", "{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ModsCommonShared", "ModsCommon\ModsCommonShared\ModsCommonShared.shproj", "{24615A21-AFA6-42C0-8B7A-4FB3329B056F}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ModShared", "ModsCommon\ModShared\ModShared.shproj", "{24615A21-AFA6-42C0-8B7A-4FB3329B056F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ToolShared", "ModsCommon\ToolShared\ToolShared.shproj", "{EA585899-16C8-4FF0-AE8D-078F15A7A126}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UIShared", "ModsCommon\UIShared\UIShared.shproj", "{BE979510-7832-4714-95A3-305065D9DED6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ModsCommon\ModsCommonShared\ModsCommonShared.projitems*{24615a21-afa6-42c0-8b7a-4fb3329b056f}*SharedItemsImports = 13
-		ModsCommon\ModsCommonShared\ModsCommonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\ModShared\ModsCommonShared.projitems*{24615a21-afa6-42c0-8b7a-4fb3329b056f}*SharedItemsImports = 13
+		ModsCommon\ModShared\ModsCommonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\ToolShared\ModsToolShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\UIShared\ModsUIShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\UIShared\ModsUIShared.projitems*{be979510-7832-4714-95a3-305065d9ded6}*SharedItemsImports = 13
+		ModsCommon\ToolShared\ModsToolShared.projitems*{ea585899-16c8-4ff0-ae8d-078f15a7a126}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta Debug|Any CPU = Beta Debug|Any CPU
 		Beta Release|Any CPU = Beta Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 		Stable Debug|Any CPU = Stable Debug|Any CPU
 		Stable Release|Any CPU = Stable Release|Any CPU
 	EndGlobalSection
@@ -25,6 +37,8 @@ Global
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Debug|Any CPU.Build.0 = Beta Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Release|Any CPU.ActiveCfg = Beta Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Release|Any CPU.Build.0 = Beta Release|Any CPU
+		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
+		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.ActiveCfg = Stable Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Debug|Any CPU.Build.0 = Stable Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Release|Any CPU.ActiveCfg = Stable Release|Any CPU
@@ -33,6 +47,10 @@ Global
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -40,6 +58,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{24615A21-AFA6-42C0-8B7A-4FB3329B056F} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{EA585899-16C8-4FF0-AE8D-078F15A7A126} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{BE979510-7832-4714-95A3-305065D9DED6} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		BuildVersion_StartDate = 2000/1/1
