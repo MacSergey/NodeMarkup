@@ -167,7 +167,7 @@ namespace NodeMarkup
         #region BACKUP
         private void AddBackupMarking(UIHelperBase helper)
         {
-            if (!ItemsExtension.InGame)
+            if (!Utilites.InGame)
                 return;
 
             var group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
