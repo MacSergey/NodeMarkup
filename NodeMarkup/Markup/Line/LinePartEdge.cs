@@ -51,7 +51,7 @@ namespace NodeMarkup.Manager
 
         public EnterPointEdge(MarkupPoint point) : base(point) { }
 
-        public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+        bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is EnterSupportPoint otherEnter && Equals(otherEnter);
 
         public override string ToString() => string.Format(Localize.LineRule_SelfEdgePoint, Point);
     }
@@ -80,7 +80,7 @@ namespace NodeMarkup.Manager
         public LinesIntersectEdge(MarkupLinePair pair) : base(pair) { }
         public LinesIntersectEdge(MarkupLine first, MarkupLine second) : base(first, second) { }
 
-        public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+        bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is IntersectSupportPoint otherIntersect && Equals(otherIntersect);
 
         public override XElement ToXml()
         {
@@ -91,7 +91,7 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => string.Format(Localize.LineRule_IntersectWith, Second);
     }
-    public class CrosswalkBorderEdge : SupportPoint, ILinePartEdge
+    public class CrosswalkBorderEdge : SupportPoint, ISupportPoint, ILinePartEdge, IEquatable<CrosswalkBorderEdge>
     {
         public static bool FromXml(XElement config, MarkupLine line, Utilities.ObjectsMap map, out CrosswalkBorderEdge borderPoint)
         {
@@ -135,8 +135,9 @@ namespace NodeMarkup.Manager
             }
         }
         public override void Update() => Init(CrosswalkLine.Trajectory.Position(CrosswalkLine.GetT(Border)));
-        public override bool Equals(ISupportPoint other) => other is CrosswalkBorderEdge otherBorder && otherBorder.Border == Border;
-        public bool Equals(ILinePartEdge other) => Equals((ISupportPoint)other);
+
+        bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is CrosswalkBorderEdge otherBorder && Equals(otherBorder);
+        public bool Equals(CrosswalkBorderEdge other) => other.Border == Border;
 
         public override XElement ToXml()
         {

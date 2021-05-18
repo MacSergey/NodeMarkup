@@ -49,7 +49,7 @@ namespace NodeMarkup.Manager
             direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
 
             var part = (RightLane.HalfWidth + SideDelta / 2) / CenterDelte;
-            position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Mathf.Sin(Enter.CornerAndNormalAngle));
+            position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Enter.TranformCoef);
         }
         private void GetEdgePositionAndDirection(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
@@ -69,7 +69,7 @@ namespace NodeMarkup.Manager
             }
             direction = (direction * Enter.SideSign).normalized;
 
-            var shift = (lineShift + offset) / Mathf.Sin(Enter.CornerAndNormalAngle);
+            var shift = (lineShift + offset) / Enter.TranformCoef;
 
             position += Enter.CornerDir * shift;
         }

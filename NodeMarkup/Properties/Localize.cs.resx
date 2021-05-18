@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -308,7 +308,6 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Obnovit</value>
   </data>
@@ -384,8 +383,6 @@ Klikněte pro změnu značení</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Plná</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
@@ -649,7 +646,6 @@ nebo odstranění přechodu</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>šablonu</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Při načítání se vyskytly chyby.
 Nepodařilo se načíst značení pro {0} křižovatek.</value>
@@ -919,7 +915,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Táhněte s Ctrl pro posun bodu</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tuto akci nelze vrátit zpět.</value>
   </data>
@@ -944,7 +939,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Uložit jako asset</value>
   </data>
@@ -1120,7 +1114,6 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>předvolba</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Tento typ čáry nepodporuje pravidla</value>
   </data>
@@ -1181,8 +1174,6 @@ Klikněte pro změnu značení</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Vyberte koncový bod koleje</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>- Přidána možnost značení silnic a segmentů.
 - Přidány 3D výplně "Chodník" a "Tráva".
@@ -1251,8 +1242,4 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Vyberte koncový bod čáry</value>
   </data>
-  
-  
-  
-  
 </root>

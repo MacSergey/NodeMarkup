@@ -496,16 +496,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Scroll the wheel to change
-        ///Shift X10, Ctrl X0.1.
-        /// </summary>
-        public static string FieldPanel_ScrollWheel {
-            get {
-                return ResourceManager.GetString("FieldPanel_ScrollWheel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на filler.
         /// </summary>
         public static string FillerEditor_DeleteCaptionDescription {
@@ -1121,15 +1111,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cancel.
-        /// </summary>
-        public static string MessageBox_Cancel {
-            get {
-                return ResourceManager.GetString("MessageBox_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на This action cannot be undone..
         /// </summary>
         public static string MessageBox_CantUndone {
@@ -1148,83 +1129,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на No.
-        /// </summary>
-        public static string MessageBox_No {
-            get {
-                return ResourceManager.GetString("MessageBox_No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на OK.
-        /// </summary>
-        public static string MessageBox_OK {
-            get {
-                return ResourceManager.GetString("MessageBox_OK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Yes.
-        /// </summary>
-        public static string MessageBox_Yes {
-            get {
-                return ResourceManager.GetString("MessageBox_Yes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на I agree.
-        /// </summary>
-        public static string Mod_BetaWarningAgree {
-            get {
-                return ResourceManager.GetString("Mod_BetaWarningAgree", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на BETA version warning.
-        /// </summary>
-        public static string Mod_BetaWarningCaption {
-            get {
-                return ResourceManager.GetString("Mod_BetaWarningCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Get stable version.
-        /// </summary>
-        public static string Mod_BetaWarningGetStable {
-            get {
-                return ResourceManager.GetString("Mod_BetaWarningGetStable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на You are using the BETA version of {0}. It is for testing new features and may contain errors that could break or delete your markings. If you subscribed to it by mistake, then switch to the stable version..
-        /// </summary>
-        public static string Mod_BetaWarningMessage {
-            get {
-                return ResourceManager.GetString("Mod_BetaWarningMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Just do make markings at intersections.
         /// </summary>
         public static string Mod_Description {
             get {
                 return ResourceManager.GetString("Mod_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на This is a BETA version, errors may occur and stability is not guaranteed!.
-        /// </summary>
-        public static string Mod_DescriptionBeta {
-            get {
-                return ResourceManager.GetString("Mod_DescriptionBeta", resourceCulture);
             }
         }
         
@@ -1245,170 +1154,6 @@ namespace NodeMarkup {
         public static string Mod_LoadFailedAll {
             get {
                 return ResourceManager.GetString("Mod_LoadFailedAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Mod loaded with errors.
-        ///It is not recommended to use the mod in this state as it can lead to unpredictable behavior.
-        ///Restart the game..
-        /// </summary>
-        public static string Mod_LoaledWithErrors {
-            get {
-                return ResourceManager.GetString("Mod_LoaledWithErrors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Czech.
-        /// </summary>
-        public static string Mod_Locale_cs {
-            get {
-                return ResourceManager.GetString("Mod_Locale_cs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на German.
-        /// </summary>
-        public static string Mod_Locale_de {
-            get {
-                return ResourceManager.GetString("Mod_Locale_de", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на English US.
-        /// </summary>
-        public static string Mod_Locale_en {
-            get {
-                return ResourceManager.GetString("Mod_Locale_en", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на English UK.
-        /// </summary>
-        public static string Mod_Locale_en_gb {
-            get {
-                return ResourceManager.GetString("Mod_Locale_en-gb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Spanish.
-        /// </summary>
-        public static string Mod_Locale_es {
-            get {
-                return ResourceManager.GetString("Mod_Locale_es", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Finnish.
-        /// </summary>
-        public static string Mod_Locale_fi {
-            get {
-                return ResourceManager.GetString("Mod_Locale_fi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на French.
-        /// </summary>
-        public static string Mod_Locale_fr {
-            get {
-                return ResourceManager.GetString("Mod_Locale_fr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Italian.
-        /// </summary>
-        public static string Mod_Locale_it {
-            get {
-                return ResourceManager.GetString("Mod_Locale_it", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Japanese.
-        /// </summary>
-        public static string Mod_Locale_ja {
-            get {
-                return ResourceManager.GetString("Mod_Locale_ja", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Dutch.
-        /// </summary>
-        public static string Mod_Locale_nl {
-            get {
-                return ResourceManager.GetString("Mod_Locale_nl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Polish.
-        /// </summary>
-        public static string Mod_Locale_pl {
-            get {
-                return ResourceManager.GetString("Mod_Locale_pl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Portuguese.
-        /// </summary>
-        public static string Mod_Locale_pt {
-            get {
-                return ResourceManager.GetString("Mod_Locale_pt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Russian.
-        /// </summary>
-        public static string Mod_Locale_ru {
-            get {
-                return ResourceManager.GetString("Mod_Locale_ru", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Chinese Simplified.
-        /// </summary>
-        public static string Mod_Locale_zh_cn {
-            get {
-                return ResourceManager.GetString("Mod_Locale_zh-cn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Game Language.
-        /// </summary>
-        public static string Mod_LocaleGame {
-            get {
-                return ResourceManager.GetString("Mod_LocaleGame", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Support.
-        /// </summary>
-        public static string Mod_Support {
-            get {
-                return ResourceManager.GetString("Mod_Support", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на What&apos;s new in {0}.
-        /// </summary>
-        public static string Mod_WhatsNewCaption {
-            get {
-                return ResourceManager.GetString("Mod_WhatsNewCaption", resourceCulture);
             }
         }
         
@@ -1574,33 +1319,6 @@ namespace NodeMarkup {
         public static string Mod_WhatsNewMessage1_7_1 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_7_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Look for actual beta change log on Discord.
-        /// </summary>
-        public static string Mod_WhatsNewMessageBeta {
-            get {
-                return ResourceManager.GetString("Mod_WhatsNewMessageBeta", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Version {0}.
-        /// </summary>
-        public static string Mod_WhatsNewVersion {
-            get {
-                return ResourceManager.GetString("Mod_WhatsNewVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Additional.
-        /// </summary>
-        public static string Panel_Additional {
-            get {
-                return ResourceManager.GetString("Panel_Additional", resourceCulture);
             }
         }
         
@@ -1994,24 +1712,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cancel.
-        /// </summary>
-        public static string Settings_Cancel {
-            get {
-                return ResourceManager.GetString("Settings_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Change log.
-        /// </summary>
-        public static string Settings_ChangeLog {
-            get {
-                return ResourceManager.GetString("Settings_ChangeLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy path to clipboard.
         /// </summary>
         public static string Settings_CopyPathToClipboard {
@@ -2228,15 +1928,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на General.
-        /// </summary>
-        public static string Settings_GeneralTab {
-            get {
-                return ResourceManager.GetString("Settings_GeneralTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Groupings.
         /// </summary>
         public static string Settings_Groupings {
@@ -2318,15 +2009,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Language.
-        /// </summary>
-        public static string Settings_Language {
-            get {
-                return ResourceManager.GetString("Settings_Language", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Load markings assets.
         /// </summary>
         public static string Settings_LoadMarkingAssets {
@@ -2341,15 +2023,6 @@ namespace NodeMarkup {
         public static string Settings_LODDistance {
             get {
                 return ResourceManager.GetString("Settings_LODDistance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Notifications.
-        /// </summary>
-        public static string Settings_Notifications {
-            get {
-                return ResourceManager.GetString("Settings_Notifications", resourceCulture);
             }
         }
         
@@ -2663,15 +2336,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Shortcuts.
-        /// </summary>
-        public static string Settings_Shortcuts {
-            get {
-                return ResourceManager.GetString("Settings_Shortcuts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Shortcuts and modifiers.
         /// </summary>
         public static string Settings_ShortcutsAndModifiersTab {
@@ -2717,38 +2381,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Notification only about major updates.
-        /// </summary>
-        public static string Settings_ShowOnlyMajor {
-            get {
-                return ResourceManager.GetString("Settings_ShowOnlyMajor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Show hints on panel.
         /// </summary>
         public static string Settings_ShowPaneltips {
             get {
                 return ResourceManager.GetString("Settings_ShowPaneltips", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Show tooltips.
-        /// </summary>
-        public static string Settings_ShowTooltips {
-            get {
-                return ResourceManager.GetString("Settings_ShowTooltips", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Show what&apos;s new.
-        /// </summary>
-        public static string Settings_ShowWhatsNew {
-            get {
-                return ResourceManager.GetString("Settings_ShowWhatsNew", resourceCulture);
             }
         }
         
@@ -2776,24 +2413,6 @@ namespace NodeMarkup {
         public static string Settings_StyleModifierWithout {
             get {
                 return ResourceManager.GetString("Settings_StyleModifierWithout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Support.
-        /// </summary>
-        public static string Settings_SupportTab {
-            get {
-                return ResourceManager.GetString("Settings_SupportTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Troubleshooting.
-        /// </summary>
-        public static string Settings_Troubleshooting {
-            get {
-                return ResourceManager.GetString("Settings_Troubleshooting", resourceCulture);
             }
         }
         

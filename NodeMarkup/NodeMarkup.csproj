@@ -198,9 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Localize.cs.resx" />
-    <EmbeddedResource Include="Properties\Localize.de.resx">
-      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Localize.de.resx" />
     <EmbeddedResource Include="Properties\Localize.en-GB.resx" />
     <EmbeddedResource Include="Properties\Localize.es.resx" />
     <EmbeddedResource Include="Properties\Localize.fi.resx" />
@@ -210,38 +208,69 @@
     <EmbeddedResource Include="Properties\Localize.nl.resx" />
     <EmbeddedResource Include="Properties\Localize.pl.resx" />
     <EmbeddedResource Include="Properties\Localize.pt.resx" />
+    <EmbeddedResource Include="Properties\Localize.ru.resx" />
+    <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
     <EmbeddedResource Include="Properties\Localize.resx">
       <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
       <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Localize.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Localize.ru.resx">
-      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
+	<EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.cs.resx">
+      <Link>Properties\CommonLocalize.cs.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.de.resx">
+      <Link>Properties\CommonLocalize.de.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.en-GB.resx">
+      <Link>Properties\CommonLocalize.en-GB.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.es.resx">
+      <Link>Properties\CommonLocalize.es.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.fi.resx">
+      <Link>Properties\CommonLocalize.fi.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.fr.resx">
+      <Link>Properties\CommonLocalize.fr.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.it.resx">
+      <Link>Properties\CommonLocalize.it.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.ja.resx">
+      <Link>Properties\CommonLocalize.ja.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.nl.resx">
+      <Link>Properties\CommonLocalize.nl.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.pl.resx">
+      <Link>Properties\CommonLocalize.pl.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.pt.resx">
+      <Link>Properties\CommonLocalize.pt.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.ru.resx">
+      <Link>Properties\CommonLocalize.ru.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.zh-CN.resx">
+      <Link>Properties\CommonLocalize.zh-CN.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.resx">
+      <CustomToolNamespace>ModsCommon</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Link>Properties\CommonLocalize.resx</Link>
+      <LastGenOutput>CommonLocalize.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Arrows.tga" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\ListItem.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\SharkTooth.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\HeaderButtons.png" />
     <EmbeddedResource Include="Resources\OrderButtons.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewBackground.png" />
     <EmbeddedResource Include="Resources\StylesPreview\CrosswalkChessBoard.png" />
     <EmbeddedResource Include="Resources\StylesPreview\CrosswalkDoubleZebra.png" />
@@ -279,7 +308,21 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\ModsCommon\ModsCommonShared\ModsCommonShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ToolShared\ModsToolShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\UIShared\ModsUIShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\HeaderShared\HeaderShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\MessageBoxShared\MessageBoxShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ObjectMapShared\ObjectMapShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\TrajectoryShared\TrajectoryShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\PropertyValueShared\PropertyValueShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\RenderExtension\RenderExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\XmlExtension\XmlExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\NetExtension\NetExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\MathExtension\MathExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

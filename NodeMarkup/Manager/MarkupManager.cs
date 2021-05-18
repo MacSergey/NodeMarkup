@@ -45,6 +45,9 @@ namespace NodeMarkup.Manager
             SingletonManager<NodeMarkupManager>.Instance.Update(NeedUpdateNodeIds);
             SingletonManager<SegmentMarkupManager>.Instance.Update(NeedUpdateSegmentIds);
         }
+        public static void UpdateNode(ushort nodeId) => SingletonManager<NodeMarkupManager>.Instance.Update(nodeId);
+        public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkupManager>.Instance.Update(segmentId);
+
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
             if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
@@ -120,12 +123,15 @@ namespace NodeMarkup.Manager
         protected abstract TypeMarkup NewMarkup(ushort id);
 
         protected abstract void AddToUpdate(ushort id);
-        public void Update(ushort[] ids)
+        public void Update(params ushort[] ids)
         {
             foreach (var id in ids)
             {
                 if (Markups.TryGetValue(id, out TypeMarkup markup))
-                    markup.Update();
+                {
+                    try { markup.Update(); }
+                    catch (Exception error) { SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{markup.Id}", error); }
+                }
             }
         }
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)

@@ -257,11 +257,18 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Create edge lines");
 
-            var lines = Markup.Enters.Select(e => Markup.AddRegularLine(new MarkupPointPair(e.LastPoint, e.Next.FirstPoint), null)).ToArray();
-            foreach (var line in lines)
-                Panel.AddLine(line);
+            foreach (var enter in Markup.Enters)
+            {
+                var pair = new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint);
+                if (!Markup.TryGetLine(pair, out MarkupLine line))
+                {
+                    line = Markup.AddRegularLine(pair, null);
+                    Panel.AddLine(line);
+                }
 
-            Panel.EditLine(lines.Last());
+                if(line != null)
+                    Panel.EditLine(line);
+            }
         }
         private void SaveAsIntersectionTemplate()
         {

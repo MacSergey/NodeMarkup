@@ -110,7 +110,7 @@ namespace NodeMarkup.Manager
         public override int GetHashCode() => Id;
         protected void PointChanged() => Markup.Update(this, true, true);
 
-        public Vector3 GetPosition(Alignment alignment)
+        public virtual Vector3 GetPosition(Alignment alignment)
         {
             if (IsSplit && alignment != Alignment.Centre)
             {
@@ -320,6 +320,7 @@ namespace NodeMarkup.Manager
             Position = SourcePoint.Position + SourcePoint.Direction * t;
             Direction = -SourcePoint.Direction;
         }
+        public override Vector3 GetPosition(Alignment alignment) => base.GetPosition(alignment.Invert());
         public override string ToString() => $"{base.ToString()}N";
     }
 

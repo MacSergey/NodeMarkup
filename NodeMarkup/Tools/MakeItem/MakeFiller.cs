@@ -28,7 +28,7 @@ namespace NodeMarkup.Tools
 
         public override void OnToolUpdate()
         {
-            if (DisableByAlt && !InputExtension.AltIsPressed && Contour.IsEmpty)
+            if (DisableByAlt && !Utilites.AltIsPressed && Contour.IsEmpty)
                 Tool.SetDefaultMode();
             else
                 FillerPointsSelector.OnUpdate();
@@ -60,12 +60,13 @@ namespace NodeMarkup.Tools
                 {
                     foreach(var part in Contour.RawParts)
                     {
-                        if(part.Line is MarkupRegularLine line && !Markup.ContainsLine(line.PointPair))
+                        if(part.Line is MarkupFillerTempLine line)
                         {
                             var newLine = Markup.AddRegularLine(part.Line.PointPair, null, line.Alignment);
                             Panel.AddLine(newLine);
                         }    
                     }
+                    Contour.Update();
 
                     var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
                     var filler = new MarkupFiller(Contour, style);

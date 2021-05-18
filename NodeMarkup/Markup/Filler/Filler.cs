@@ -37,7 +37,7 @@ namespace NodeMarkup.Manager
         }
         private void FillerChanged() => Markup?.Update(this, true);
         public bool ContainsLine(MarkupLine line) => Contour.RawParts.Any(p => p.Line is not MarkupEnterLine && p.Line.PointPair == line.PointPair);
-        public bool ContainsPoint(MarkupPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertex vertex && vertex.Point == point);
+        public bool ContainsPoint(MarkupPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertexBase vertex && vertex.Point == point);
 
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
         public void RecalculateStyleData()

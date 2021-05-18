@@ -64,7 +64,7 @@ namespace NodeMarkup.Manager
         protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour);
         protected Rect GetRect(ITrajectory[] contour)
         {
-            var firstPos = contour.Any() ? contour[0].StartPosition : default;
+            var firstPos = contour.FirstOrDefault(t => t != null)?.StartPosition ?? default;
             var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
 
             foreach (var trajectory in contour)
@@ -128,15 +128,9 @@ namespace NodeMarkup.Manager
         {
             foreach (var part in StyleHelper.CalculateDashesBezierT(rail, dash, space, 1))
             {
-                var startI = GetI(part.Start);
-                var endI = GetI(part.End);
+                var startI = Math.Min((int)part.Start, rail.Count - 1);
+                var endI = Math.Min((int)part.End, rail.Count - 1);
                 yield return new StraightTrajectory(rail[startI].Position(part.Start - startI), rail[endI].Position(part.End - endI));
-            }
-
-            static int GetI(float t)
-            {
-                var i = (int)t;
-                return i > 0 && i == t ? i - 1 : i;
             }
         }
         protected void GetItemParams(ref float width, float angle, MarkupLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
@@ -716,7 +710,7 @@ namespace NodeMarkup.Manager
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Editor.WheelTip;
+            angleProperty.WheelTip = Settings.ShowToolTip;
             angleProperty.CheckMin = true;
             angleProperty.MinValue = 30;
             angleProperty.CheckMax = true;

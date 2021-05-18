@@ -36,7 +36,7 @@ namespace NodeMarkup.UI.Panel
 
             SetPasteEnabled();
         }
-        protected override AdditionallyHeaderButton GetAdditionally() => AddButton<AdditionallyHeaderButton>(NodeMarkupTextures.Additionally, NodeMarkup.Localize.Panel_Additional);
+        protected override AdditionallyHeaderButton GetAdditionally() => AddButton<AdditionallyHeaderButton>(NodeMarkupTextures.Additionally, CommonLocalize.Panel_Additional);
 
         protected override void AddAdditionallyButtons(UIComponent parent)
         {

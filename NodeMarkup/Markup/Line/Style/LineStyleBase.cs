@@ -71,7 +71,7 @@ namespace NodeMarkup.Manager
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Editor.WheelTip;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0.05f;
             offsetProperty.Init();
@@ -86,7 +86,7 @@ namespace NodeMarkup.Manager
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
-            baseProperty.WheelTip = Editor.WheelTip;
+            baseProperty.WheelTip = Settings.ShowToolTip;
             baseProperty.CheckMin = true;
             baseProperty.MinValue = 0.3f;
             baseProperty.Init();
@@ -101,7 +101,7 @@ namespace NodeMarkup.Manager
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
-            heightProperty.WheelTip = Editor.WheelTip;
+            heightProperty.WheelTip = Settings.ShowToolTip;
             heightProperty.CheckMin = true;
             heightProperty.MinValue = 0.3f;
             heightProperty.Init();
@@ -116,7 +116,7 @@ namespace NodeMarkup.Manager
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
-            spaceProperty.WheelTip = Editor.WheelTip;
+            spaceProperty.WheelTip = Settings.ShowToolTip;
             spaceProperty.CheckMin = true;
             spaceProperty.MinValue = 0.1f;
             spaceProperty.Init();

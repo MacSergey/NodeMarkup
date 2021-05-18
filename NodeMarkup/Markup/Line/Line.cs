@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
         public Dependences GetDependences() => Markup.GetLineDependences(this);
         public bool IsStart(MarkupPoint point) => Start == point;
         public bool IsEnd(MarkupPoint point) => End == point;
-        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainsPoint(point) ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
+        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainsPoint(point) && point.IsSplit ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
 
 
         public virtual XElement ToXml()
@@ -319,6 +319,11 @@ namespace NodeMarkup.Manager
     {
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre) : base(markup, pointPair, style, alignment) { }
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(RawAlignment), End.GetPosition(RawAlignment.Value.Invert()));
+    }
+    public class MarkupFillerTempLine : MarkupRegularLine
+    {
+        public MarkupFillerTempLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment alignment) : base(markup, first, second, null, alignment) { }
+        public MarkupFillerTempLine(Markup markup, MarkupPointPair pair, Alignment alignment) : base(markup, pair, null, alignment) { }
     }
     public class MarkupCrosswalkLine : MarkupRegularLine
     {

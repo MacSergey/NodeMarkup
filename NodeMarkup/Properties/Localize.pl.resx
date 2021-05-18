@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -308,7 +308,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Przywróć</value>
   </data>
@@ -384,8 +383,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Wypełnienie</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
   </data>
@@ -649,7 +646,6 @@ utworzyć lub usunąć przejście dla pieszych</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>szablon</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Wystąpiły błędy podczas ładowania danych.
 Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
@@ -919,7 +915,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Przeciągnij trzymając Ctrl aby przesunąć ten punkt</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Nie będzie można cofnąć tej operacji.</value>
   </data>
@@ -944,7 +939,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Ostrzeżenie: Ta opcja zmiena kolejność renderowania obiektów w grze</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Zapisz jako zasób</value>
   </data>
@@ -1120,7 +1114,6 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preset</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Ten typ linii nie obsługuje reguł</value>
   </data>
@@ -1181,9 +1174,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Wybierz drugi punkt linii pomocniczej</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Liczba kolorów</value>
   </data>
@@ -1241,12 +1231,10 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Wybierz punkt końcowy dla linii zwykłej lub zatrzymania</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Wyrównanie końca linii</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Wyrównanie początku linii</value>
   </data>
-  
 </root>
